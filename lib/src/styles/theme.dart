@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show Typography;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+//todo: documentation
 class Theme extends InheritedWidget {
   const Theme({
     Key? key,
@@ -37,18 +39,26 @@ extension brightnessExtension on Brightness {
   Brightness get opposite => isLight ? Brightness.dark : Brightness.light;
 }
 
+//todo: documentation
 class Style with Diagnosticable {
   const Style({
     this.brightness,
+    this.typography,
   });
 
   final Brightness? brightness;
+
+  //fixme: replace with custom Typography class
+  final Typography? typography;
 
   Style build() {
     final brightness = this.brightness ?? Brightness.light;
     final defaultStyle = Style(
       brightness: brightness,
+      /*typography: Typography.defaultTypography(brightness: brightness)
+          .copyWith(typography),*/ //todo: custom Typography class
     );
+
     return defaultStyle.copyWith(Style());
   }
 
@@ -60,6 +70,7 @@ class Style with Diagnosticable {
     if (other == null) return this;
     return Style(
       brightness: other.brightness ?? brightness,
+      typography: other.typography ?? typography,
     );
   }
 
