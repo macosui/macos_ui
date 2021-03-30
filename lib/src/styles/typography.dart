@@ -3,6 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/painting.dart';
 
+/// Defines macOS text styling.
+///
+/// todo: More documentation
+/// todo: Figure out how to implement leading (see guidelines)
+///
 /// https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/
 class Typography with Diagnosticable {
   const Typography({
@@ -19,18 +24,43 @@ class Typography with Diagnosticable {
     this.caption2,
   });
 
+  /// Style used for large titles.
   final TextStyle? largeTitle;
+
+  /// Style used for first-level hierarchical headings.
   final TextStyle? title1;
+
+  /// Style used for second-level hierarchical headings.
   final TextStyle? title2;
+
+  /// Style used for third-level hierarchical headings.
   final TextStyle? title3;
+
+  /// Style used for headings.
   final TextStyle? headline;
+
+  /// Style used for subheadings.
   final TextStyle? subheadline;
+
+  /// Style used for body text.
   final TextStyle? body;
+
+  /// Style used for callouts.
   final TextStyle? callout;
+
+  /// Style used in footnotes
   final TextStyle? footnote;
+
+  /// Style used for standard captions.
   final TextStyle? caption1;
+
+  /// Style used for alternate captions.
   final TextStyle? caption2;
 
+  /// Provides the default macOS Typography.
+  ///
+  /// Font sizes, weights, line heights, and emphasized weights (??) are defined
+  /// at https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/
   static Typography defaultTypography({
     required Brightness brightness,
     Color? color,
@@ -96,6 +126,7 @@ class Typography with Diagnosticable {
     );
   }
 
+  /// Returns the default Typography along with customized properties.
   Typography copyWith(Typography? typography) {
     if (typography == null) return this;
     return Typography(
@@ -116,5 +147,16 @@ class Typography with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<TextStyle>('largeTitle', largeTitle));
+    properties.add(DiagnosticsProperty<TextStyle>('title1', title1));
+    properties.add(DiagnosticsProperty<TextStyle>('title2', title2));
+    properties.add(DiagnosticsProperty<TextStyle>('title3', title3));
+    properties.add(DiagnosticsProperty<TextStyle>('headline', headline));
+    properties.add(DiagnosticsProperty<TextStyle>('subheadline', subheadline));
+    properties.add(DiagnosticsProperty<TextStyle>('body', body));
+    properties.add(DiagnosticsProperty<TextStyle>('callout', callout));
+    properties.add(DiagnosticsProperty<TextStyle>('footnote', footnote));
+    properties.add(DiagnosticsProperty<TextStyle>('caption1', caption1));
+    properties.add(DiagnosticsProperty<TextStyle>('caption2', caption2));
   }
 }
