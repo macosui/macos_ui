@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/material.dart' as m;
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/src/styles/theme.dart';
@@ -20,7 +21,7 @@ class MacosApp extends StatefulWidget {
     this.builder,
     this.title = '',
     this.onGenerateTitle,
-    this.color,
+    this.primaryColor,
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -45,7 +46,9 @@ class MacosApp extends StatefulWidget {
         super(key: key);
 
   final Style? style;
+
   final Style? darkStyle;
+
   final m.ThemeMode? themeMode;
 
   final GlobalKey<NavigatorState>? navigatorKey;
@@ -80,7 +83,7 @@ class MacosApp extends StatefulWidget {
 
   final GenerateAppTitle? onGenerateTitle;
 
-  final Color? color;
+  final Color? primaryColor;
 
   final Locale? locale;
 
@@ -162,7 +165,7 @@ class _MacosAppState extends State<MacosApp> {
   }
 
   Widget _buildApp(BuildContext context) {
-    final defaultColor = widget.color ?? Color(0xFF007AFF);
+    final defaultColor = widget.primaryColor ?? CupertinoColors.systemBlue;
     if (_usesRouter) {
       return m.MaterialApp.router(
         key: GlobalObjectKey(this),
