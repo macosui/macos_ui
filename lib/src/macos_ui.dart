@@ -1,1 +1,1 @@
-//todo: export widget files
+export 'macos_app.dart';
