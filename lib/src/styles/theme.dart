@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show Typography;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:macos_ui/src/styles/typography.dart';
 
 //todo: documentation
 class Theme extends InheritedWidget {
@@ -48,15 +48,14 @@ class Style with Diagnosticable {
 
   final Brightness? brightness;
 
-  //fixme: replace with custom Typography class
   final Typography? typography;
 
   Style build() {
     final brightness = this.brightness ?? Brightness.light;
     final defaultStyle = Style(
       brightness: brightness,
-      /*typography: Typography.defaultTypography(brightness: brightness)
-          .copyWith(typography),*/ //todo: custom Typography class
+      typography: Typography.defaultTypography(brightness: brightness)
+          .copyWith(typography),
     );
 
     return defaultStyle.copyWith(Style());

@@ -149,16 +149,16 @@ class _MacosAppState extends State<MacosApp> {
   Widget _builder(BuildContext context, Widget? child) {
     final theme = this.theme(context);
     return m.Material(
-        /*child: m.Theme(
-        data: theme, //fixme
+      child: Theme(
+        style: theme,
         child: DefaultTextStyle(
           style: TextStyle(
-            color: theme.typography?.body?.color, //todo: Typography class
+            color: theme.typography?.body?.color,
           ),
           child: child!,
         ),
-      ),*/
-        );
+      ),
+    );
   }
 
   Widget _buildApp(BuildContext context) {
