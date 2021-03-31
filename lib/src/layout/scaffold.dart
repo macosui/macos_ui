@@ -24,9 +24,9 @@ class Scaffold extends StatelessWidget {
       color = backgroundColor ?? CupertinoColors.systemGrey4.darkColor;
     }
     return AnimatedContainer(
-      //duration: style.mediumAnimationDuration ?? Duration.zero,
+      //duration: style.mediumAnimationDuration ?? Duration.zero, //NOT IMPLEMENTED YET
       duration: Duration.zero,
-      //curve: style.animationCurve ?? Curves.linear,
+      //curve: style.animationCurve ?? Curves.linear, //NOT IMPLEMENTED YET
       curve: Curves.linear,
       color: color,
       child: Row(
