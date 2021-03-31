@@ -1,11 +1,9 @@
+import 'package:macos_ui/macos_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:macos_ui/src/styles/typography.dart';
 
 //todo: documentation
-class Theme extends InheritedWidget {
-  const Theme({
+class MacosTheme extends InheritedWidget {
+  const MacosTheme({
     Key? key,
     required this.style,
     required this.child,
@@ -15,21 +13,27 @@ class Theme extends InheritedWidget {
   final Widget child;
 
   static Style of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<Theme>()!.style.build();
+    return context
+        .dependOnInheritedWidgetOfExactType<MacosTheme>()!
+        .style
+        .build();
   }
 
   static Style maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<Theme>()!.style.build();
+    return context
+        .dependOnInheritedWidgetOfExactType<MacosTheme>()!
+        .style
+        .build();
   }
 
   @override
-  bool updateShouldNotify(covariant Theme oldWidget) =>
+  bool updateShouldNotify(covariant MacosTheme oldWidget) =>
       oldWidget.style != style;
 }
 
 extension themeContext on BuildContext {
-  Style get theme => Theme.of(this);
-  Style? get maybeTheme => Theme.maybeOf(this);
+  Style get theme => MacosTheme.of(this);
+  Style? get maybeTheme => MacosTheme.maybeOf(this);
 }
 
 extension brightnessExtension on Brightness {
@@ -42,13 +46,16 @@ extension brightnessExtension on Brightness {
 //todo: documentation
 class Style with Diagnosticable {
   const Style({
-    this.brightness,
     this.typography,
+    this.brightness,
+    this.accentColor,
   });
+
+  final Typography? typography;
 
   final Brightness? brightness;
 
-  final Typography? typography;
+  final CupertinoDynamicColor? accentColor;
 
   Style build() {
     final brightness = this.brightness ?? Brightness.light;
@@ -56,9 +63,11 @@ class Style with Diagnosticable {
       brightness: brightness,
       typography: Typography.defaultTypography(brightness: brightness)
           .copyWith(typography),
+      accentColor: accentColor ?? CupertinoColors.systemBlue,
     );
 
-    return defaultStyle.copyWith(Style());
+    //return defaultStyle.copyWith(Style());
+    return defaultStyle;
   }
 
   static Style fallback([Brightness? brightness]) {

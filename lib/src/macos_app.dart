@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart' show CupertinoColors;
+import 'package:macos_ui/macos_ui.dart';
 import 'package:flutter/material.dart' as m;
-import 'package:flutter/widgets.dart';
-import 'package:macos_ui/src/styles/theme.dart';
 
 /// Defines an application that uses macOS design
 ///
@@ -45,11 +43,54 @@ class MacosApp extends StatefulWidget {
         backButtonDispatcher = null,
         super(key: key);
 
+  MacosApp.router({
+    Key? key,
+    this.style,
+    this.darkStyle,
+    this.themeMode,
+    this.routeInformationProvider,
+    required this.routeInformationParser,
+    required this.routerDelegate,
+    BackButtonDispatcher? backButtonDispatcher,
+    this.builder,
+    this.title = '',
+    this.onGenerateTitle,
+    required Color this.primaryColor,
+    this.locale,
+    this.localizationsDelegates,
+    this.localeListResolutionCallback,
+    this.localeResolutionCallback,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.showPerformanceOverlay = false,
+    this.checkerboardRasterCacheImages = false,
+    this.checkerboardOffscreenLayers = false,
+    this.showSemanticsDebugger = false,
+    this.debugShowWidgetInspector = false,
+    this.debugShowCheckedModeBanner = true,
+    this.inspectorSelectButtonBuilder,
+    this.shortcuts,
+    this.actions,
+  })  : assert(routeInformationParser != null && routerDelegate != null,
+            'The routeInformationParser and routerDelegate cannot be null.'),
+        assert(supportedLocales.isNotEmpty),
+        navigatorObservers = null,
+        backButtonDispatcher =
+            backButtonDispatcher ?? RootBackButtonDispatcher(),
+        navigatorKey = null,
+        onGenerateRoute = null,
+        pageRouteBuilder = null,
+        home = null,
+        onGenerateInitialRoutes = null,
+        onUnknownRoute = null,
+        routes = null,
+        initialRoute = null,
+        super(key: key);
+
   final Style? style;
 
   final Style? darkStyle;
 
-  final m.ThemeMode? themeMode;
+  final ThemeMode? themeMode;
 
   final GlobalKey<NavigatorState>? navigatorKey;
 
@@ -132,18 +173,17 @@ class _MacosAppState extends State<MacosApp> {
   }
 
   Style theme(BuildContext context) {
-    final mode = widget.themeMode ?? m.ThemeMode.system;
+    final mode = widget.themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
-    final useDarkStyle = mode == m.ThemeMode.dark ||
-        (mode == m.ThemeMode.system && platformBrightness == m.Brightness.dark);
+    final useDarkStyle = mode == ThemeMode.dark ||
+        (mode == ThemeMode.system && platformBrightness == Brightness.dark);
 
-    Style data = (useDarkStyle
-            ? (widget.darkStyle ?? widget.style)
-            : widget.style) ??
-        Style.fallback(useDarkStyle ? m.Brightness.dark : m.Brightness.light);
+    Style data =
+        (useDarkStyle ? (widget.darkStyle ?? widget.style) : widget.style) ??
+            Style.fallback(useDarkStyle ? Brightness.dark : Brightness.light);
     if (data.brightness == null) {
       data = data.copyWith(Style(
-        brightness: useDarkStyle ? m.Brightness.dark : m.Brightness.light,
+        brightness: useDarkStyle ? Brightness.dark : Brightness.light,
       ));
     }
     return data.build();
@@ -152,7 +192,7 @@ class _MacosAppState extends State<MacosApp> {
   Widget _builder(BuildContext context, Widget? child) {
     final theme = this.theme(context);
     return m.Material(
-      child: Theme(
+      child: MacosTheme(
         style: theme,
         child: DefaultTextStyle(
           style: TextStyle(

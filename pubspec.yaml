@@ -18,4 +18,4 @@ flutter:
   fonts:
     - family: SanFranciscoPro
       fonts:
-        - asset: fonts/SFProText-Regular.ttf
+        - asset: fonts/SFProTTF/SFProText-Regular.ttf
