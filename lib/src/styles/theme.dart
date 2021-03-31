@@ -49,6 +49,8 @@ class Style with Diagnosticable {
     this.typography,
     this.brightness,
     this.accentColor,
+    this.animationCurve,
+    this.mediumAnimationDuration,
   });
 
   final Typography? typography;
@@ -57,6 +59,10 @@ class Style with Diagnosticable {
 
   final CupertinoDynamicColor? accentColor;
 
+  final Curve? animationCurve;
+
+  final Duration? mediumAnimationDuration;
+
   Style build() {
     final brightness = this.brightness ?? Brightness.light;
     final defaultStyle = Style(
@@ -64,6 +70,8 @@ class Style with Diagnosticable {
       typography: Typography.defaultTypography(brightness: brightness)
           .copyWith(typography),
       accentColor: accentColor ?? CupertinoColors.systemBlue,
+      mediumAnimationDuration: Duration(milliseconds: 300),
+      animationCurve: Curves.easeInOut,
     );
 
     //return defaultStyle.copyWith(Style());
@@ -79,6 +87,9 @@ class Style with Diagnosticable {
     return Style(
       brightness: other.brightness ?? brightness,
       typography: other.typography ?? typography,
+      animationCurve: other.animationCurve ?? animationCurve,
+      mediumAnimationDuration:
+          other.mediumAnimationDuration ?? mediumAnimationDuration,
     );
   }
 
