@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
 class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(context.theme.brightness);
     return Scaffold(
       body: Center(
         child: Container(
