@@ -15,3 +15,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  fonts:
+    - family: SanFranciscoPro
+      fonts:
+        - asset: fonts/SFProTTF/SFProText-Regular.ttf
