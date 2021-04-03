@@ -93,6 +93,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  split_view:
+    dependency: "direct main"
+    description:
+      name: split_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   stack_trace:
     dependency: transitive
     description:

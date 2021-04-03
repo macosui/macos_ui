@@ -1,3 +1,10 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.2]
+* `Scaffold` widget
+* Fix `Typography` so that text color is shown appropriately based on Brightness
 
-* TODO: Describe initial release.
+## [0.0.1]
+
+* Project creation
+  * `MacosApp` widget
+  * Basic `Typography`
+  * Basic theming via `MacosTheme` and `Style`
