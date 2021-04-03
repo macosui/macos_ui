@@ -9,8 +9,8 @@ class MacosTheme extends InheritedWidget {
     required this.child,
   }) : super(key: key, child: child);
 
-  final Style style;
   final Widget child;
+  final Style style;
 
   static Style of(BuildContext context) {
     return context
@@ -53,15 +53,15 @@ class Style with Diagnosticable {
     this.mediumAnimationDuration,
   });
 
-  final Typography? typography;
-
-  final Brightness? brightness;
-
   final CupertinoDynamicColor? accentColor;
 
   final Curve? animationCurve;
 
+  final Brightness? brightness;
+
   final Duration? mediumAnimationDuration;
+
+  final Typography? typography;
 
   Style build() {
     final brightness = this.brightness ?? Brightness.light;

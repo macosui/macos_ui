@@ -21,37 +21,21 @@ class Scaffold extends StatelessWidget {
   })  : assert(splitOffset > 0.0 && splitOffset < 1.0),
         super(key: key);
 
-  /// Main content area.
-  final Widget body;
-
-  /// Secondary content area.
-  final Widget? sidebar;
-
   /// Background color for the [body].
   final Color? backgroundColor;
 
-  /// Background color for the [sidebar]
-  final Color? sidebarBackgroundColor;
-
-  /// The color of the body/sidebar splitter
-  final Color? sidebarGripColor;
-
-  /// Determines where the split between [body] and [sidebar] occurs.
-  ///
-  /// If specified, it must be a value greater than 0.0 and less than 1.0.
-  ///
-  /// Defaults to `0.25`, which is 1/4 of the available space from the left.
-  final double splitOffset;
-
-  /// The width of the split between [body] and [sidebar].
-  ///
-  /// Defaults to 0.80, which seems to be the default in Apple's macOS apps
-  /// (I eyeballed this so it's not perfect but it's very close).
-  final double sidebarGripSize;
+  /// Main content area.
+  final Widget body;
 
   /// Defines an area to which [sidebar] cannot be expanded or shrunk past on
   /// the left and right.
   final double resizeBoundary;
+
+  /// Secondary content area.
+  final Widget? sidebar;
+
+  /// Background color for the [sidebar]
+  final Color? sidebarBackgroundColor;
 
   /// Defines a breakpoint for showing and hiding the [sidebar].
   ///
@@ -61,6 +45,22 @@ class Scaffold extends StatelessWidget {
   ///
   /// Defaults to `0.0`, which means the sidebar will always be shown.
   final double sidebarBreakpoint;
+
+  /// The color of the body/sidebar splitter
+  final Color? sidebarGripColor;
+
+  /// The width of the split between [body] and [sidebar].
+  ///
+  /// Defaults to 0.80, which seems to be the default in Apple's macOS apps
+  /// (I eyeballed this so it's not perfect but it's very close).
+  final double sidebarGripSize;
+
+  /// Determines where the split between [body] and [sidebar] occurs.
+  ///
+  /// If specified, it must be a value greater than 0.0 and less than 1.0.
+  ///
+  /// Defaults to `0.25`, which is 1/4 of the available space from the left.
+  final double splitOffset;
 
   @override
   Widget build(BuildContext context) {

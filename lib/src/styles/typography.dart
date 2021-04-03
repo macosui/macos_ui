@@ -24,8 +24,29 @@ class Typography with Diagnosticable {
     this.caption2,
   });
 
+  /// Style used for body text.
+  final TextStyle? body;
+
+  /// Style used for callouts.
+  final TextStyle? callout;
+
+  /// Style used for standard captions.
+  final TextStyle? caption1;
+
+  /// Style used for alternate captions.
+  final TextStyle? caption2;
+
+  /// Style used in footnotes
+  final TextStyle? footnote;
+
+  /// Style used for headings.
+  final TextStyle? headline;
+
   /// Style used for large titles.
   final TextStyle? largeTitle;
+
+  /// Style used for subheadings.
+  final TextStyle? subheadline;
 
   /// Style used for first-level hierarchical headings.
   final TextStyle? title1;
@@ -35,27 +56,6 @@ class Typography with Diagnosticable {
 
   /// Style used for third-level hierarchical headings.
   final TextStyle? title3;
-
-  /// Style used for headings.
-  final TextStyle? headline;
-
-  /// Style used for subheadings.
-  final TextStyle? subheadline;
-
-  /// Style used for body text.
-  final TextStyle? body;
-
-  /// Style used for callouts.
-  final TextStyle? callout;
-
-  /// Style used in footnotes
-  final TextStyle? footnote;
-
-  /// Style used for standard captions.
-  final TextStyle? caption1;
-
-  /// Style used for alternate captions.
-  final TextStyle? caption2;
 
   /// Provides the default macOS Typography.
   ///
