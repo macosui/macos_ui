@@ -20,4 +20,4 @@ Implements Apple's macOS Design System in Flutter. Based on the official documen
 
 <img src="https://imgur.com/e41j2aT.jpg" width="75%"/>
 
-<img src="https://imgur.com/gMh8f0a.gif" width="75%"/>
+<img src="https://imgur.com/jTPXGuq.gif" width="75%"/>
