@@ -47,11 +47,11 @@ class Scaffold extends StatelessWidget {
   ///
   /// Defaults to 0.80, which seems to be the default in Apple's macOS apps
   /// (I eyeballed this so it's not perfect but it's very close).
-  final double? sidebarGripSize;
+  final double sidebarGripSize;
 
   /// Defines an area to which [sidebar] cannot be expanded or shrunk past on
   /// the left and right.
-  final double? resizeBoundary;
+  final double resizeBoundary;
 
   /// Defines a breakpoint for showing and hiding the [sidebar].
   ///
@@ -60,7 +60,7 @@ class Scaffold extends StatelessWidget {
   /// will be shown again.
   ///
   /// Defaults to `0.0`, which means the sidebar will always be shown.
-  final double? sidebarBreakpoint;
+  final double sidebarBreakpoint;
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +91,7 @@ class Scaffold extends StatelessWidget {
       child: sidebar != null
           ? LayoutBuilder(
               builder: (context, constraints) {
-                print(constraints.maxWidth);
-                if (constraints.maxWidth > sidebarBreakpoint!) {
+                if (constraints.maxWidth > sidebarBreakpoint) {
                   return SplitView(
                     positionLimit: resizeBoundary,
                     initialWeight: splitOffset,
