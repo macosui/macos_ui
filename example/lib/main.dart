@@ -7,7 +7,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -37,10 +36,14 @@ class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      sidebar: Center(
+        child: Text('Sidebar'),
+      ),
+      //sidebarBreakpoint: 500,
       body: Center(
         child: Container(
-          height: 50,
-          width: 50,
+          height: 50.0,
+          width: 50.0,
           color: context.theme.accentColor,
         ),
       ),

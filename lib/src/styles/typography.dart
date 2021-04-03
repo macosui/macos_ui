@@ -71,57 +71,68 @@ class Typography with Diagnosticable {
         fontFamily: 'SanFranciscoPro',
         fontSize: 26,
         height: 32,
+        color: color,
       ),
       title1: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 22,
         height: 26,
+        color: color,
       ),
       title2: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 17,
         height: 22,
+        color: color,
       ),
       title3: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 15,
         height: 20,
+        color: color,
       ),
       headline: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontWeight: FontWeight.bold,
         fontSize: 13,
         height: 16,
+        color: color,
       ),
       subheadline: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 11,
         height: 14,
+        color: color,
       ),
       body: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 13,
         height: 16,
+        color: color,
       ),
       callout: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 12,
         height: 15,
+        color: color,
       ),
       footnote: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 10,
         height: 13,
+        color: color,
       ),
       caption1: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 10,
         height: 13,
+        color: color,
       ),
       caption2: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 10,
         height: 13,
+        color: color,
       ),
     );
   }

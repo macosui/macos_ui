@@ -1,6 +1,6 @@
 name: macos_ui
 description: Implements Apple's macOS Design System in Flutter. Based on the official documentation.
-version: 0.0.1
+version: 0.0.2
 homepage: 'https://github.com/GroovinChip/macos_ui'
 
 environment:
@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
+  split_view: ^1.0.4
 
 dev_dependencies:
   flutter_test:

@@ -1,45 +1,118 @@
 import 'package:macos_ui/macos_ui.dart';
+import 'package:split_view/split_view.dart'; //todo: fork and migrate to nnbd
 
-/// Experimental
+/// A basic screen-layout widget.
+///
+/// Provides a [body] for main content and a [sidebar] for secondary content
+/// (like navigation buttons). If no [sidebar] is specified, only the [body]
+/// will be shown.
 class Scaffold extends StatelessWidget {
   const Scaffold({
     Key? key,
-    this.left,
-    this.body,
+    required this.body,
+    this.sidebar,
     this.backgroundColor,
-  }) : super(key: key);
+    this.sidebarBackgroundColor,
+    this.sidebarGripColor,
+    this.splitOffset = 0.25,
+    this.sidebarGripSize = 0.80,
+    this.resizeBoundary = 20.0,
+    this.sidebarBreakpoint = 0.0,
+  })  : assert(splitOffset > 0.0 && splitOffset < 1.0),
+        super(key: key);
 
+  /// Main content area.
+  final Widget body;
+
+  /// Secondary content area.
+  final Widget? sidebar;
+
+  /// Background color for the [body].
   final Color? backgroundColor;
-  final Widget? left;
-  final Widget? body;
+
+  /// Background color for the [sidebar]
+  final Color? sidebarBackgroundColor;
+
+  /// The color of the body/sidebar splitter
+  final Color? sidebarGripColor;
+
+  /// Determines where the split between [body] and [sidebar] occurs.
+  ///
+  /// If specified, it must be a value greater than 0.0 and less than 1.0.
+  ///
+  /// Defaults to `0.25`, which is 1/4 of the available space from the left.
+  final double splitOffset;
+
+  /// The width of the split between [body] and [sidebar].
+  ///
+  /// Defaults to 0.80, which seems to be the default in Apple's macOS apps
+  /// (I eyeballed this so it's not perfect but it's very close).
+  final double? sidebarGripSize;
+
+  /// Defines an area to which [sidebar] cannot be expanded or shrunk past on
+  /// the left and right.
+  final double? resizeBoundary;
+
+  /// Defines a breakpoint for showing and hiding the [sidebar].
+  ///
+  /// If the window is resized along its width to a value below this one, the
+  /// sidebar will be hidden. If resized back above this value, the sidebar
+  /// will be shown again.
+  ///
+  /// Defaults to `0.0`, which means the sidebar will always be shown.
+  final double? sidebarBreakpoint;
 
   @override
   Widget build(BuildContext context) {
     debugCheckHasMacosTheme(context);
+
     final style = context.theme;
-    late Color color;
+    late Color bodyColor;
+    late Color sidebarColor;
+    late Color gripColor;
+
     if (style.brightness == Brightness.light) {
-      color = backgroundColor ?? CupertinoColors.systemBackground.color;
+      bodyColor = backgroundColor ?? CupertinoColors.systemBackground.color;
+      sidebarColor =
+          sidebarBackgroundColor ?? CupertinoColors.tertiarySystemBackground;
+      gripColor = sidebarGripColor ?? CupertinoColors.systemFill;
     } else {
-      color = backgroundColor ?? CupertinoColors.systemGrey4.darkColor;
+      bodyColor =
+          backgroundColor ?? CupertinoColors.systemBackground.darkElevatedColor;
+      sidebarColor = sidebarBackgroundColor ??
+          CupertinoColors.tertiarySystemBackground.darkColor;
+      gripColor = sidebarGripColor ?? CupertinoColors.black;
     }
+
     return AnimatedContainer(
       duration: style.mediumAnimationDuration ?? Duration.zero,
       curve: style.animationCurve ?? Curves.linear,
-      color: color,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (this.left != null) left!,
-          Expanded(
-            child: Column(
-              children: [
-                if (body != null) Expanded(child: body!),
-              ],
-            ),
-          ),
-        ],
-      ),
+      color: bodyColor,
+      child: sidebar != null
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                print(constraints.maxWidth);
+                if (constraints.maxWidth > sidebarBreakpoint!) {
+                  return SplitView(
+                    positionLimit: resizeBoundary,
+                    initialWeight: splitOffset,
+                    gripSize: sidebarGripSize,
+                    gripColor: gripColor,
+                    view1: AnimatedContainer(
+                      duration: style.mediumAnimationDuration ?? Duration.zero,
+                      curve: style.animationCurve ?? Curves.linear,
+                      color: sidebarColor,
+                      child: sidebar,
+                    ),
+                    view2: body,
+                    viewMode: SplitViewMode.Horizontal,
+                  );
+                } else {
+                  return body;
+                }
+              },
+            )
+          : body,
     );
   }
 }
