@@ -1,17 +1,21 @@
 import 'package:macos_ui/macos_ui.dart';
 
 /// Experimental
+///
+/// todo: determine breakpoints for showing/hiding sidebars
 class Scaffold extends StatelessWidget {
   const Scaffold({
     Key? key,
-    this.left,
+    this.leftSidebar,
     this.body,
     this.backgroundColor,
+    this.rightSidebar,
   }) : super(key: key);
 
   final Color? backgroundColor;
-  final Widget? left;
+  final Widget? leftSidebar;
   final Widget? body;
+  final Widget? rightSidebar;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class Scaffold extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (this.left != null) left!,
+          if (this.leftSidebar != null) leftSidebar!,
           Expanded(
             child: Column(
               children: [
@@ -38,6 +42,7 @@ class Scaffold extends StatelessWidget {
               ],
             ),
           ),
+          if (this.rightSidebar != null) rightSidebar!,
         ],
       ),
     );
