@@ -86,79 +86,79 @@ class MacosApp extends StatefulWidget {
         initialRoute = null,
         super(key: key);
 
-  final Style? style;
-
-  final Style? darkStyle;
-
-  final ThemeMode? themeMode;
-
-  final GlobalKey<NavigatorState>? navigatorKey;
-
-  final RouteFactory? onGenerateRoute;
-
-  final InitialRouteListFactory? onGenerateInitialRoutes;
-
-  final PageRouteFactory? pageRouteBuilder;
-
-  final RouteInformationParser<Object>? routeInformationParser;
-
-  final RouterDelegate<Object>? routerDelegate;
+  final Map<Type, Action<Intent>>? actions;
 
   final BackButtonDispatcher? backButtonDispatcher;
 
-  final RouteInformationProvider? routeInformationProvider;
+  final TransitionBuilder? builder;
+
+  final bool checkerboardOffscreenLayers;
+
+  final bool checkerboardRasterCacheImages;
+
+  final Style? darkStyle;
+
+  static bool debugAllowBannerOverride = true;
+
+  final bool debugShowCheckedModeBanner;
+
+  final bool debugShowWidgetInspector;
+
+  static bool debugShowWidgetInspectorOverride = false;
 
   final Widget? home;
 
-  final Map<String, WidgetBuilder>? routes;
-
-  final RouteFactory? onUnknownRoute;
-
   final String? initialRoute;
 
-  final List<NavigatorObserver>? navigatorObservers;
-
-  final TransitionBuilder? builder;
-
-  final String title;
-
-  final GenerateAppTitle? onGenerateTitle;
-
-  final Color? primaryColor;
+  final InspectorSelectButtonBuilder? inspectorSelectButtonBuilder;
 
   final Locale? locale;
-
-  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   final LocaleListResolutionCallback? localeListResolutionCallback;
 
   final LocaleResolutionCallback? localeResolutionCallback;
 
-  final Iterable<Locale> supportedLocales;
+  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
-  final bool showPerformanceOverlay;
+  final GlobalKey<NavigatorState>? navigatorKey;
 
-  final bool checkerboardRasterCacheImages;
+  final List<NavigatorObserver>? navigatorObservers;
 
-  final bool checkerboardOffscreenLayers;
+  final InitialRouteListFactory? onGenerateInitialRoutes;
 
-  final bool showSemanticsDebugger;
+  final RouteFactory? onGenerateRoute;
 
-  final bool debugShowWidgetInspector;
+  final GenerateAppTitle? onGenerateTitle;
 
-  final InspectorSelectButtonBuilder? inspectorSelectButtonBuilder;
+  final RouteFactory? onUnknownRoute;
 
-  final bool debugShowCheckedModeBanner;
+  final PageRouteFactory? pageRouteBuilder;
+
+  final Color? primaryColor;
+
+  final RouteInformationParser<Object>? routeInformationParser;
+
+  final RouteInformationProvider? routeInformationProvider;
+
+  final RouterDelegate<Object>? routerDelegate;
+
+  final Map<String, WidgetBuilder>? routes;
 
   final Map<LogicalKeySet, Intent>? shortcuts;
 
-  final Map<Type, Action<Intent>>? actions;
+  final bool showPerformanceOverlay;
 
   static bool showPerformanceOverlayOverride = false;
 
-  static bool debugShowWidgetInspectorOverride = false;
+  final bool showSemanticsDebugger;
 
-  static bool debugAllowBannerOverride = true;
+  final Style? style;
+
+  final Iterable<Locale> supportedLocales;
+
+  final ThemeMode? themeMode;
+
+  final String title;
 
   @override
   _MacosAppState createState() => _MacosAppState();
