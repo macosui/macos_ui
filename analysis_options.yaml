@@ -1,0 +1,15 @@
+analyzer:
+  plugins:
+    - dart_code_metrics
+    
+dart_code_metrics:
+  metrics-exclude:
+    - test/**
+    - example/test/**
+  rules:
+    - prefer-trailing-comma
+    - member-ordering:
+        alphabetize: true
+        order:
+          - constructors
+          - public_fields
