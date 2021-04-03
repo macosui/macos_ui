@@ -18,6 +18,6 @@ Implements Apple's macOS Design System in Flutter. Based on the official documen
 ## Scaffold
 `Scaffold` provides a basic structure for laying out widgets in a way you would expect on macOS. You must specify a `body` as the main content area, and you can optionally provide a `sidebar` that will show to the left of `body`. The `sidebar` can be resized by grabbing the split and dragging left or right. See the documentation for all customization options.
 
-<img src="https://imgur.com/e41j2aT.jpg" alt="drawing" width="75%"/>
+<img src="https://imgur.com/e41j2aT.jpg" width="75%"/>
 
-<img src="https://imgur.com/gMh8f0a.gif" alt="drawing" width="75%"/>
+<img src="https://imgur.com/gMh8f0a.gif" width="75%"/>
