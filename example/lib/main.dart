@@ -39,7 +39,6 @@ class Demo extends StatelessWidget {
       sidebar: Center(
         child: Text('Sidebar'),
       ),
-      //sidebarBreakpoint: 500,
       body: Center(
         child: Container(
           height: 50.0,
