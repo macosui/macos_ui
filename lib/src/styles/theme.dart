@@ -51,15 +51,48 @@ class Style with Diagnosticable {
     this.accentColor,
     this.animationCurve,
     this.mediumAnimationDuration,
+    this.bevelButtonStyle,
+    this.checkboxStyle,
+    this.disclosureControlStyle,
+    this.gradientButtonStyle,
+    this.helpButtonStyle,
+    this.imageButtonStyle,
+    this.popupButtonStyle,
+    this.pulldownButtonStyle,
+    this.radioButtonStyle,
+    this.roundButtonStyle,
+    this.switchStyle,
   });
 
   final CupertinoDynamicColor? accentColor;
 
   final Curve? animationCurve;
 
+  final BevelButtonStyle? bevelButtonStyle;
+
   final Brightness? brightness;
 
+  final CheckboxStyle? checkboxStyle;
+
+  final DisclosureControlStyle? disclosureControlStyle;
+
+  final GradientButtonStyle? gradientButtonStyle;
+
+  final HelpButtonStyle? helpButtonStyle;
+
+  final ImageButtonStyle? imageButtonStyle;
+
   final Duration? mediumAnimationDuration;
+
+  final PopupButtonStyle? popupButtonStyle;
+
+  final PulldownButtonStyle? pulldownButtonStyle;
+
+  final RadioButtonStyle? radioButtonStyle;
+
+  final RoundButtonStyle? roundButtonStyle;
+
+  final SwitchStyle? switchStyle;
 
   final Typography? typography;
 
