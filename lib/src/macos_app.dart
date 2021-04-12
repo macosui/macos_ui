@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart' as c;
 /// An application that uses macOS design.
 ///
 /// A convenience widget that wraps a number of widgets that are commonly
-/// required for an iOS-design targeting application. It builds upon a
-/// [WidgetsApp] by iOS specific defaulting such as fonts and scrolling
+/// required for an macOS-design targeting application. It builds upon a
+/// [WidgetsApp] by macOS specific defaulting such as fonts and scrolling
 /// physics.
 ///
 /// The [MacosApp] configures the top-level [Navigator] to search for routes
@@ -52,7 +52,7 @@ class MacosApp extends StatefulWidget {
     this.builder,
     this.title = '',
     this.onGenerateTitle,
-    this.color,
+    this.primaryColor,
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -85,7 +85,7 @@ class MacosApp extends StatefulWidget {
     this.builder,
     this.title = '',
     this.onGenerateTitle,
-    this.color,
+    this.primaryColor,
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -170,7 +170,7 @@ class MacosApp extends StatefulWidget {
   final GenerateAppTitle? onGenerateTitle;
 
   /// {@macro flutter.widgets.widgetsApp.color}
-  final Color? color;
+  final Color? primaryColor;
 
   /// {@macro flutter.widgets.widgetsApp.locale}
   final Locale? locale;
@@ -329,7 +329,7 @@ class _MacosAppState extends State<MacosApp> {
   }
 
   Widget _buildApp(BuildContext context) {
-    final defaultColor = widget.color ?? CupertinoColors.systemBlue;
+    final defaultColor = widget.primaryColor ?? CupertinoColors.systemBlue;
     if (_usesRouter) {
       return c.CupertinoApp.router(
         key: GlobalObjectKey(this),
