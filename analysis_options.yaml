@@ -13,7 +13,7 @@ dart_code_metrics:
   rules:
     - prefer-trailing-comma
     - member-ordering:
-        alphabetize: true
+        alphabetize: false
         order:
           - constructors
           - public_fields
