@@ -14,7 +14,6 @@ export 'package:flutter/material.dart'
 /// todo: package-level docs
 export 'package:flutter/widgets.dart' hide Icon, IconTheme, TextBox;
 
-export 'src/buttons/bevel_button.dart';
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/disclosure_control.dart';
 export 'src/buttons/gradient_button.dart';
@@ -24,7 +23,6 @@ export 'src/buttons/popup_button.dart';
 export 'src/buttons/pulldown_button.dart';
 export 'src/buttons/push_button.dart';
 export 'src/buttons/radio_button.dart';
-export 'src/buttons/round_button.dart';
 export 'src/buttons/switch.dart';
 export 'src/fields_and_labels/combo_box.dart';
 export 'src/fields_and_labels/label.dart';
