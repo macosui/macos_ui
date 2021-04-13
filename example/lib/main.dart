@@ -40,10 +40,10 @@ class Demo extends StatelessWidget {
         child: Text('Sidebar'),
       ),
       body: Center(
-        child: Container(
-          height: 50.0,
-          width: 50.0,
-          color: context.theme.accentColor,
+        child: PushButton(
+          color: CupertinoColors.systemBlue,
+          child: Text('Button'),
+          onPressed: () => print('click'),
         ),
       ),
     );
