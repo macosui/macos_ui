@@ -52,7 +52,7 @@ class MacosApp extends StatefulWidget {
     this.builder,
     this.title = '',
     this.onGenerateTitle,
-    this.primaryColor,
+    this.color,
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -85,7 +85,7 @@ class MacosApp extends StatefulWidget {
     this.builder,
     this.title = '',
     this.onGenerateTitle,
-    this.primaryColor,
+    this.color,
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -170,7 +170,7 @@ class MacosApp extends StatefulWidget {
   final GenerateAppTitle? onGenerateTitle;
 
   /// {@macro flutter.widgets.widgetsApp.color}
-  final Color? primaryColor;
+  final Color? color;
 
   /// {@macro flutter.widgets.widgetsApp.locale}
   final Locale? locale;
@@ -329,7 +329,7 @@ class _MacosAppState extends State<MacosApp> {
   }
 
   Widget _buildApp(BuildContext context) {
-    final defaultColor = widget.primaryColor ?? CupertinoColors.systemBlue;
+    final defaultColor = widget.color ?? CupertinoColors.systemBlue;
     if (_usesRouter) {
       return c.CupertinoApp.router(
         key: GlobalObjectKey(this),
