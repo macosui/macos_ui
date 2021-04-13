@@ -10,7 +10,7 @@ class PushButton extends StatefulWidget {
     required this.child,
     this.padding,
     this.color,
-    this.disabledColor = CupertinoColors.quaternarySystemFill,
+    this.disabledColor = CupertinoColors.tertiarySystemFill,
     this.onPressed,
     this.pressedOpacity = 0.4,
     this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
