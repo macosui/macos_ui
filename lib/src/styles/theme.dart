@@ -59,6 +59,7 @@ class Style with Diagnosticable {
     this.imageButtonStyle,
     this.popupButtonStyle,
     this.pulldownButtonStyle,
+    this.pushButtonStyle,
     this.radioButtonStyle,
     this.switchStyle,
   });
@@ -86,6 +87,8 @@ class Style with Diagnosticable {
   final PopupButtonStyle? popupButtonStyle;
 
   final PulldownButtonStyle? pulldownButtonStyle;
+
+  final PushButtonStyle? pushButtonStyle;
 
   final RadioButtonStyle? radioButtonStyle;
 

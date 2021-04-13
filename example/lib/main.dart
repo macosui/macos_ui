@@ -1,5 +1,6 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
+
 import 'theme.dart';
 
 void main() {
@@ -17,14 +18,14 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           style: Style(
             brightness: Brightness.light,
-            primaryColor: CupertinoColors.systemIndigo,
+            //primaryColor: CupertinoColors.systemIndigo,
           ),
           darkStyle: Style(
             brightness: Brightness.dark,
-            primaryColor: CupertinoColors.systemIndigo,
+            //primaryColor: CupertinoColors.systemIndigo,
           ),
           themeMode: appTheme.mode,
-          debugShowCheckedModeBanner: false, //yay!
+          debugShowCheckedModeBanner: false,
           home: Demo(),
         );
       },
@@ -40,9 +41,9 @@ class Demo extends StatelessWidget {
         child: Text('Sidebar'),
       ),
       body: Center(
-        child: Container(
-          height: 50.0,
-          width: 50.0,
+        child: PushButton(
+          child: Text('Button'),
+          onPressed: () => print('click'),
         ),
       ),
     );

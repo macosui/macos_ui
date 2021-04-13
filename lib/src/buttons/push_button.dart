@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 const EdgeInsets _kButtonPadding = EdgeInsets.symmetric(horizontal: 16.0);
@@ -151,10 +152,9 @@ class _PushButtonState extends State<PushButton>
   @override
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
-    final style = context.theme;
-    //todo: get primary color (add it to Style)
-    final Color? buttonColor = widget.color == null
-        ? widget.disabledColor
+    final style = context.style;
+    final Color? backgroundColor = widget.color == null
+        ? style.primaryColor
         : CupertinoDynamicColor.maybeResolve(widget.color, context);
 
     return GestureDetector(
@@ -175,10 +175,10 @@ class _PushButtonState extends State<PushButton>
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: widget.borderRadius,
-                color: buttonColor != null && !enabled
+                color: backgroundColor != null && !enabled
                     ? CupertinoDynamicColor.resolve(
                         widget.disabledColor, context)
-                    : buttonColor,
+                    : backgroundColor,
               ),
               child: Padding(
                 padding: widget.padding ?? _kButtonPadding,
@@ -197,4 +197,4 @@ class _PushButtonState extends State<PushButton>
   }
 }
 
-class PushButtonStyle {}
+class PushButtonStyle with Diagnosticable {}
