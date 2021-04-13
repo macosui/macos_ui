@@ -106,6 +106,7 @@ class Style with Diagnosticable {
       accentColor: accentColor ?? CupertinoColors.systemBlue,
       mediumAnimationDuration: Duration(milliseconds: 300),
       animationCurve: Curves.easeInOut,
+      pushButtonStyle: pushButtonStyle,
     );
 
     //return defaultStyle.copyWith(Style());

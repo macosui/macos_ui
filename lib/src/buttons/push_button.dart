@@ -154,8 +154,14 @@ class _PushButtonState extends State<PushButton>
     final bool enabled = widget.enabled;
     final style = context.style;
     final Color? backgroundColor = widget.color == null
-        ? style.primaryColor
+        ? style.pushButtonStyle == null
+            ? style.primaryColor
+            : style.pushButtonStyle!.color
         : CupertinoDynamicColor.maybeResolve(widget.color, context);
+
+    // todo: apply disabledColor from style.pushButtonStyle
+    // todo: apply padding from style.pushButtonStyle
+    // todo: apply borderRadius from style.pushButtonStyle
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -197,4 +203,37 @@ class _PushButtonState extends State<PushButton>
   }
 }
 
-class PushButtonStyle with Diagnosticable {}
+class PushButtonStyle with Diagnosticable {
+  const PushButtonStyle({
+    this.color,
+    this.disabledColor,
+    this.padding,
+    this.borderRadius,
+  });
+
+  final Color? color;
+  final Color? disabledColor;
+  final EdgeInsetsGeometry? padding;
+  final BorderRadius? borderRadius;
+
+  PushButtonStyle copyWith(PushButtonStyle? style) {
+    if (style == null) {
+      return this;
+    }
+    return PushButtonStyle(
+      color: style.color ?? color,
+      disabledColor: style.disabledColor ?? disabledColor,
+      padding: style.padding ?? padding,
+      borderRadius: style.borderRadius ?? borderRadius,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('color', color));
+    properties.add(DiagnosticsProperty('disabledColor', disabledColor));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
+    properties.add(DiagnosticsProperty('borderRadius', borderRadius));
+  }
+}
