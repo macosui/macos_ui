@@ -1,7 +1,7 @@
 import 'package:macos_ui/macos_ui.dart';
 
 bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
-  final has = context.maybeTheme != null;
+  final has = context.maybeStyle != null;
   if (check)
     assert(
       has,

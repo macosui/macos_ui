@@ -32,8 +32,8 @@ class MacosTheme extends InheritedWidget {
 }
 
 extension themeContext on BuildContext {
-  Style get theme => MacosTheme.of(this);
-  Style? get maybeTheme => MacosTheme.maybeOf(this);
+  Style get style => MacosTheme.of(this);
+  Style? get maybeStyle => MacosTheme.maybeOf(this);
 }
 
 extension brightnessExtension on Brightness {
@@ -48,6 +48,7 @@ class Style with Diagnosticable {
   const Style({
     this.typography,
     this.brightness,
+    this.primaryColor,
     this.accentColor,
     this.animationCurve,
     this.mediumAnimationDuration,
@@ -61,6 +62,8 @@ class Style with Diagnosticable {
     this.radioButtonStyle,
     this.switchStyle,
   });
+
+  final CupertinoDynamicColor? primaryColor;
 
   final CupertinoDynamicColor? accentColor;
 
@@ -96,6 +99,7 @@ class Style with Diagnosticable {
       brightness: brightness,
       typography: Typography.defaultTypography(brightness: brightness)
           .copyWith(typography),
+      primaryColor: primaryColor ?? CupertinoColors.systemBlue,
       accentColor: accentColor ?? CupertinoColors.systemBlue,
       mediumAnimationDuration: Duration(milliseconds: 300),
       animationCurve: Curves.easeInOut,
@@ -117,6 +121,8 @@ class Style with Diagnosticable {
       animationCurve: other.animationCurve ?? animationCurve,
       mediumAnimationDuration:
           other.mediumAnimationDuration ?? mediumAnimationDuration,
+      primaryColor: other.primaryColor ?? primaryColor,
+      accentColor: other.accentColor ?? accentColor,
     );
   }
 
@@ -124,5 +130,7 @@ class Style with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty('brightness', brightness));
+    properties.add(EnumProperty('primaryColor', primaryColor));
+    properties.add(EnumProperty('accentColor', accentColor));
   }
 }

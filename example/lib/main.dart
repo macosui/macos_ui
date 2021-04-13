@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           style: Style(
             brightness: Brightness.light,
-            accentColor: CupertinoColors.systemIndigo,
+            primaryColor: CupertinoColors.systemIndigo,
           ),
           darkStyle: Style(
             brightness: Brightness.dark,
-            accentColor: CupertinoColors.systemIndigo,
+            primaryColor: CupertinoColors.systemIndigo,
           ),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false, //yay!
@@ -40,10 +40,9 @@ class Demo extends StatelessWidget {
         child: Text('Sidebar'),
       ),
       body: Center(
-        child: PushButton(
-          color: CupertinoColors.systemBlue,
-          child: Text('Button'),
-          onPressed: () => print('click'),
+        child: Container(
+          height: 50.0,
+          width: 50.0,
         ),
       ),
     );

@@ -66,7 +66,7 @@ class Scaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     debugCheckHasMacosTheme(context);
 
-    final style = context.theme;
+    final style = context.style;
     late Color bodyColor;
     late Color sidebarColor;
     late Color gripColor;
