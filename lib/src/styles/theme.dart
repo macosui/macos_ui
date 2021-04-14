@@ -19,10 +19,10 @@ class MacosTheme extends InheritedWidget {
         .build();
   }
 
-  static Style maybeOf(BuildContext context) {
+  static Style? maybeOf(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<MacosTheme>()!
-        .style
+        .dependOnInheritedWidgetOfExactType<MacosTheme>()
+        ?.style
         .build();
   }
 
@@ -61,7 +61,6 @@ class Style with Diagnosticable {
     this.pulldownButtonStyle,
     this.pushButtonStyle,
     this.radioButtonStyle,
-    this.switchStyle,
   });
 
   final CupertinoDynamicColor? primaryColor;
@@ -91,8 +90,6 @@ class Style with Diagnosticable {
   final PushButtonStyle? pushButtonStyle;
 
   final RadioButtonStyle? radioButtonStyle;
-
-  final SwitchStyle? switchStyle;
 
   final Typography? typography;
 

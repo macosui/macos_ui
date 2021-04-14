@@ -33,18 +33,33 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Demo extends StatelessWidget {
+class Demo extends StatefulWidget {
+  @override
+  _DemoState createState() => _DemoState();
+}
+
+class _DemoState extends State<Demo> {
+
+  bool value = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       sidebar: Center(
         child: Text('Sidebar'),
       ),
-      body: Center(
-        child: PushButton(
-          child: Text('Button'),
-          onPressed: () => print('click'),
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          PushButton(
+            child: Text('Button'),
+            onPressed: () => print('click'),
+          ),
+          Switch(
+            value: value,
+            onChanged: (v) => setState(() => value = v),
+          ),
+        ],
       ),
     );
   }
