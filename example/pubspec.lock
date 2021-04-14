@@ -121,15 +121,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  split_view:
-    dependency: transitive
-    description:
-      path: "."
-      ref: null_safety
-      resolved-ref: e9b5f42d8072e3a5f91d3abbd6df902560d79703
-      url: "https://github.com/GroovinChip/split_view.git"
-    source: git
-    version: "2.0.0+2"
   stack_trace:
     dependency: transitive
     description:
