@@ -24,6 +24,7 @@ export 'src/buttons/pulldown_button.dart';
 export 'src/buttons/push_button.dart';
 export 'src/buttons/radio_button.dart';
 export 'src/buttons/switch.dart';
+export 'src/buttons/switch.dart';
 export 'src/fields_and_labels/combo_box.dart';
 export 'src/fields_and_labels/label.dart';
 export 'src/fields_and_labels/search_field.dart';
