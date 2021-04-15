@@ -1,5 +1,6 @@
 ## [0.0.3]
 
+* Implemented `ProgressCircle` and `ProgressBar`
 * Implemented the `Switch` widget
 
 ## [0.0.2]
