@@ -3,9 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart' as c;
 import 'package:macos_ui/macos_ui.dart';
 
-/// A [ProgressCircle] show progress in a circular form,
-/// either as a spinner or as a circle that fills in as
-/// progress continues.
+/// A [ProgressCircle] that shows progress in a circular form, either as a
+/// spinner or as a circle that fills in as progress continues.
 class ProgressCircle extends StatelessWidget {
   /// Creates a new progress circle.
   ///
@@ -126,7 +125,7 @@ class _DeterminateCirclePainter extends CustomPainter {
   bool shouldRebuildSemantics(_DeterminateCirclePainter oldDelegate) => false;
 }
 
-/// A [ProgressBar] show progress in a horizontal bar.
+/// A [ProgressBar] that shows progress in a horizontal bar.
 class ProgressBar extends StatelessWidget {
   /// Creates a new progress bar
   ///
