@@ -11,8 +11,8 @@ Implements Apple's macOS Design System in Flutter. Based on the official documen
 - [Buttons](#buttons)
   - [Switch](#switch)
 - [Indicators](#indicators)
-  - [ProgressCircle](#progress_circle)
-  - [ProgressBar](#progress_bar)
+  - [ProgressCircle](#progresscircle)
+  - [ProgressBar](#progressbar)
 
 ## Resources
 
