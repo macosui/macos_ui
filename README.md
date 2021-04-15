@@ -32,19 +32,19 @@ dragging left or right. See the documentation for all customization options.
 
 # Buttons
 ## Switch
-<img src="https://imgur.com/IBh5jkz.jpg" />
+<img src="https://imgur.com/IBh5jkz.jpg" width="50%" height="50%"/>
 
-<img src="https://imgur.com/qK1VCVr.jpg" />
+<img src="https://imgur.com/qK1VCVr.jpg" width="50%" height="50%"/>
 
 # Indicators
 ## ProgressCircle
 A `ProgressCircle` can be either determinate or indeterminate. If indeterminate, Flutter's
 `CupertinoActivityIndicator` will be shown.
 
-<img src="https://imgur.com/hr3dHn9.jpg" />
+<img src="https://imgur.com/hr3dHn9.jpg" width="50%" height="50%"/>
 
-<img src="https://imgur.com/LOO9GEj.gif" />
+<img src="https://imgur.com/LOO9GEj.mp4" width="50%" height="50%"/>
 
 ## ProgressBar
 
-<img src="https://imgur.com/tdYgJmB.jpg" />
+<img src="https://imgur.com/tdYgJmB.jpg" width="50%" height="50%"/>
