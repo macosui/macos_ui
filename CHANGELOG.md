@@ -1,5 +1,6 @@
 ## [0.0.3]
 
+* Implemented `RadioButton`
 * Implemented `ProgressCircle` and `ProgressBar`
 * Implemented the `Switch` widget
 

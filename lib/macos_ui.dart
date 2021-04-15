@@ -21,4 +21,5 @@ export 'src/styles/theme.dart';
 export 'src/styles/typography.dart';
 export 'src/layout/scaffold.dart';
 export 'src/buttons/switch.dart';
+export 'src/buttons/radio_button.dart';
 export 'src/indicators/progress_indicators.dart';

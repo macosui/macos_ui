@@ -54,6 +54,10 @@ class _DemoState extends State<Demo> {
             value: value,
             onChanged: (v) => setState(() => value = v),
           ),
+          RadioButton(
+            value: value,
+            onChanged: (v) => setState(() => value = v),
+          ),
         ],
       ),
     );
