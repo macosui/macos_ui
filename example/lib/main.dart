@@ -54,6 +54,13 @@ class _DemoState extends State<Demo> {
             value: value,
             onChanged: (v) => setState(() => value = v),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CapacityIndicator(
+              value: 70,
+              discrete: true,
+            ),
+          ),
         ],
       ),
     );
