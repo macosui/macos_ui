@@ -1,8 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:macos_ui/macos_ui.dart';
-
 import 'package:flutter/cupertino.dart' as c;
+import 'package:macos_ui/macos_ui.dart';
 
 /// A [ProgressCircle] show progress in a circular form,
 /// either as a spinner or as a circle that fills in as
@@ -74,16 +73,15 @@ class ProgressCircle extends StatelessWidget {
 }
 
 class _DeterminateCirclePainter extends CustomPainter {
-  final double value;
-
-  final Color? innerColor;
-  final Color? borderColor;
-
   const _DeterminateCirclePainter(
     this.value, {
     this.innerColor,
     this.borderColor,
   });
+
+  final double value;
+  final Color? innerColor;
+  final Color? borderColor;
 
   static const double _twoPi = math.pi * 2.0;
   static const double _epsilon = .001;
@@ -188,16 +186,15 @@ class ProgressBar extends StatelessWidget {
 }
 
 class _DeterminateBarPainter extends CustomPainter {
-  final double value;
-
-  final Color? backgroundColor;
-  final Color? activeColor;
-
   const _DeterminateBarPainter(
     this.value, {
     this.backgroundColor,
     this.activeColor,
   });
+
+  final double value;
+  final Color? backgroundColor;
+  final Color? activeColor;
 
   @override
   void paint(Canvas canvas, Size size) {
