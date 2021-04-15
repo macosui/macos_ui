@@ -43,7 +43,7 @@ A `ProgressCircle` can be either determinate or indeterminate. If indeterminate,
 
 <img src="https://imgur.com/hr3dHn9.jpg" width="50%" height="50%"/>
 
-<img src="https://imgur.com/LOO9GEj.mp4" width="50%" height="50%"/>
+<img src="https://imgur.com/NSbKqLK.gif" width="50%" height="50%"/>
 
 ## ProgressBar
 
