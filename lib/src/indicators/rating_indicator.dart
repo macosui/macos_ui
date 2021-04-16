@@ -24,6 +24,7 @@ class RatingIndicator extends StatelessWidget {
     this.unratedIcon = CupertinoIcons.star,
     this.iconColor,
     this.iconSize = 16,
+    this.onChanged,
   })  : assert(iconSize >= 0),
         assert(amount > 0),
         assert(value >= 0 && value <= amount),
@@ -51,20 +52,36 @@ class RatingIndicator extends StatelessWidget {
   /// The current value. It must be in range of 0 to [amount]
   final double value;
 
+  /// Called when the current value of the indicator changes.
+  final ValueChanged<double>? onChanged;
+
+  void _handleUpdate(Offset lp) {
+    double value = lp.dx / iconSize;
+    if (value.isNegative)
+      value = 0;
+    else if (value > amount) value = amount.toDouble();
+    onChanged?.call(value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(amount, (index) {
-        final rated = value > index;
-        return Icon(
-          rated ? ratedIcon : unratedIcon,
-          color: iconColor ??
-              context.maybeStyle?.primaryColor ??
-              CupertinoColors.activeBlue,
-          size: iconSize,
-        );
-      }),
+    return GestureDetector(
+      onPanStart: (event) => _handleUpdate(event.localPosition),
+      onPanUpdate: (event) => _handleUpdate(event.localPosition),
+      onPanDown: (event) => _handleUpdate(event.localPosition),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(amount, (index) {
+          final rated = value > index;
+          return Icon(
+            rated ? ratedIcon : unratedIcon,
+            color: iconColor ??
+                context.maybeStyle?.primaryColor ??
+                CupertinoColors.activeBlue,
+            size: iconSize,
+          );
+        }),
+      ),
     );
   }
 }

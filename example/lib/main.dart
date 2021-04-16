@@ -40,6 +40,9 @@ class Demo extends StatefulWidget {
 class _DemoState extends State<Demo> {
   bool value = false;
 
+  double sliderValue = 0;
+  double ratingValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,14 +59,16 @@ class _DemoState extends State<Demo> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CapacityIndicator(
-              value: 70,
+              value: sliderValue,
+              onChanged: (v) => setState(() => sliderValue = v),
               discrete: true,
             ),
           ),
-          RatingIndicator(value: 2.5),
-          RelevanceIndicator(
-            value: 10,
+          RatingIndicator(
+            value: ratingValue,
+            onChanged: (v) => setState(() => ratingValue = v),
           ),
+          RelevanceIndicator(value: 10),
         ],
       ),
     );

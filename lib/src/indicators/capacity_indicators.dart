@@ -32,6 +32,7 @@ class CapacityIndicator extends StatelessWidget {
   const CapacityIndicator({
     Key? key,
     required this.value,
+    this.onChanged,
     this.discrete = false,
     this.splits = 10,
   })  : assert(value >= 0 && value <= 100),
@@ -40,8 +41,11 @@ class CapacityIndicator extends StatelessWidget {
   /// The current value of the indicator. Must be in range of 0 to 100.
   final double value;
 
+  /// Called when the current value of the indicator changes.
+  final ValueChanged<double>? onChanged;
+
   /// Whether the indicator is discrete or not
-  /// 
+  ///
   /// ![Discrete Capacity Indicator](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-discrete.png)
   final bool discrete;
 
@@ -49,36 +53,48 @@ class CapacityIndicator extends StatelessWidget {
   /// is true. Defaults to 10.
   final int splits;
 
+  void _handleUpdate(Offset lp) {
+    double value = discrete ? lp.dx / splits : lp.dx;
+    if (value.isNegative)
+      value = 0;
+    else if (value > 100) value = 100;
+    onChanged?.call(value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        minWidth: 100,
+    return GestureDetector(
+      onPanStart: (event) => _handleUpdate(event.localPosition),
+      onPanUpdate: (event) => _handleUpdate(event.localPosition),
+      onPanDown: (event) => _handleUpdate(event.localPosition),
+      child: Container(
+        constraints: BoxConstraints(minWidth: 100),
+        child: discrete
+            ? LayoutBuilder(builder: (context, consts) {
+                double width = consts.biggest.width;
+                if (width.isInfinite) width = 100;
+                final splitWidth = width / splits;
+                final fillToIndex = (100 - -(value - 100)) * (splits / 10);
+                return SizedBox(
+                  width: width,
+                  child: Row(
+                    children: List.generate(splits, (index) {
+                      return Container(
+                        padding: EdgeInsets.only(
+                          right: index == splits - 1 ? 0 : 2.0,
+                        ),
+                        width: splitWidth,
+                        child: CapacityIndicatorCell(
+                          value:
+                              value > 0 && fillToIndex / 10 >= index ? 100 : 0,
+                        ),
+                      );
+                    }),
+                  ),
+                );
+              })
+            : CapacityIndicatorCell(value: value),
       ),
-      child: discrete
-          ? LayoutBuilder(builder: (context, consts) {
-              double width = consts.biggest.width;
-              if (width.isInfinite) width = 100;
-              final splitWidth = width / splits;
-              final fillToIndex = (100 - -(value - 100)) * (splits / 10);
-              return SizedBox(
-                width: width,
-                child: Row(
-                  children: List.generate(splits, (index) {
-                    return Container(
-                      padding: EdgeInsets.only(
-                        right: index == splits - 1 ? 0 : 2.0,
-                      ),
-                      width: splitWidth,
-                      child: CapacityIndicatorCell(
-                        value: fillToIndex / 10 >= index ? 100 : 0,
-                      ),
-                    );
-                  }),
-                ),
-              );
-            })
-          : CapacityIndicatorCell(value: value),
     );
   }
 }

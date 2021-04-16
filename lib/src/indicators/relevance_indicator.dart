@@ -49,6 +49,9 @@ class RelevanceIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: List.generate(amount, (index) {
         final selected = value > index;
         return Container(
