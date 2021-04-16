@@ -1,16 +1,30 @@
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-const EdgeInsets _kButtonPadding = EdgeInsets.symmetric(horizontal: 16.0);
+enum ButtonSize {
+  large,
+  small,
+}
+
+const EdgeInsetsGeometry _kSmallButtonPadding =
+    EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0);
+const EdgeInsetsGeometry _kLargeButtonPadding =
+    EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0);
+
+const BorderRadius _kSmallButtonRadius =
+    const BorderRadius.all(Radius.circular(5.0));
+const BorderRadius _kLargeButtonRadius =
+    const BorderRadius.all(Radius.circular(7.0));
 
 /// A macOS-style button.
 class PushButton extends StatefulWidget {
   const PushButton({
     Key? key,
     required this.child,
+    required this.buttonSize,
     this.padding,
     this.color,
-    this.disabledColor = CupertinoColors.tertiarySystemFill,
+    this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
     this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
@@ -24,9 +38,19 @@ class PushButton extends StatefulWidget {
   /// Typically a [Text] widget.
   final Widget child;
 
+  /// The size of the button.
+  ///
+  /// Must be either [ButtonSize.small] or [ButtonSize.large].
+  ///
+  /// Small buttons have a `padding` of [_kSmallButtonPadding] and a
+  /// `borderRadius` of [_kSmallButtonRadius]. Large buttons have a `padding`
+  /// of [_kLargeButtonPadding] and a `borderRadius` of [_kLargeButtonRadius].
+  final ButtonSize buttonSize;
+
   /// The amount of space to surround the child inside the bounds of the button.
   ///
-  /// Defaults to [_kButtonPadding].
+  /// Leave blank to use the default padding provided by [_kSmallButtonPadding]
+  /// or [_kLargeButtonPadding].
   final EdgeInsetsGeometry? padding;
 
   /// The color of the button's background.
@@ -38,7 +62,7 @@ class PushButton extends StatefulWidget {
   ///
   /// Defaults to [CupertinoColors.quaternarySystemFill] when [color] is
   /// specified. Must not be null.
-  final Color disabledColor;
+  final Color? disabledColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
@@ -54,7 +78,8 @@ class PushButton extends StatefulWidget {
 
   /// The radius of the button's corners when it has a background color.
   ///
-  /// Defaults to round corners of 4 logical pixels.
+  /// Leave blank to use the default radius provided by [_kSmallButtonRadius]
+  /// or [_kLargeButtonRadius].
   final BorderRadius? borderRadius;
 
   /// The alignment of the button's [child].
@@ -159,9 +184,25 @@ class _PushButtonState extends State<PushButton>
             : style.pushButtonStyle!.color
         : CupertinoDynamicColor.maybeResolve(widget.color, context);
 
-    // todo: apply disabledColor from style.pushButtonStyle
-    // todo: apply padding from style.pushButtonStyle
-    // todo: apply borderRadius from style.pushButtonStyle
+    final Color? disabledColor = widget.disabledColor == null
+        ? style.brightness!.isDark
+            ? Color.fromRGBO(255, 255, 255, 0.1)
+            : Color.fromRGBO(244, 245, 245, 1.0)
+        : CupertinoDynamicColor.maybeResolve(widget.disabledColor, context);
+
+    // todo: apply padding from style.pushButtonStyle if it exists
+    final EdgeInsetsGeometry? buttonPadding = widget.padding == null
+        ? widget.buttonSize == ButtonSize.small
+            ? _kSmallButtonPadding
+            : _kLargeButtonPadding
+        : widget.padding;
+
+    // todo: apply borderRadius from style.pushButtonStyle if it exists
+    final BorderRadius? borderRadius = widget.borderRadius == null
+        ? widget.buttonSize == ButtonSize.small
+            ? _kSmallButtonRadius
+            : _kLargeButtonRadius
+        : widget.borderRadius;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -180,18 +221,18 @@ class _PushButtonState extends State<PushButton>
             opacity: _opacityAnimation,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: widget.borderRadius,
+                borderRadius: borderRadius,
                 color: backgroundColor != null && !enabled
-                    ? CupertinoDynamicColor.resolve(
-                        widget.disabledColor, context)
+                    ? CupertinoDynamicColor.resolve(disabledColor!, context)
                     : backgroundColor,
               ),
               child: Padding(
-                padding: widget.padding ?? _kButtonPadding,
+                padding: buttonPadding!,
                 child: Align(
                   alignment: widget.alignment,
                   widthFactor: 1.0,
                   heightFactor: 1.0,
+                  //todo: show proper text color in light theme
                   child: widget.child,
                 ),
               ),
@@ -206,13 +247,11 @@ class _PushButtonState extends State<PushButton>
 class PushButtonStyle with Diagnosticable {
   const PushButtonStyle({
     this.color,
-    this.disabledColor,
     this.padding,
     this.borderRadius,
   });
 
   final Color? color;
-  final Color? disabledColor;
   final EdgeInsetsGeometry? padding;
   final BorderRadius? borderRadius;
 
@@ -222,7 +261,6 @@ class PushButtonStyle with Diagnosticable {
     }
     return PushButtonStyle(
       color: style.color ?? color,
-      disabledColor: style.disabledColor ?? disabledColor,
       padding: style.padding ?? padding,
       borderRadius: style.borderRadius ?? borderRadius,
     );
@@ -232,7 +270,6 @@ class PushButtonStyle with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty('color', color));
-    properties.add(DiagnosticsProperty('disabledColor', disabledColor));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(DiagnosticsProperty('borderRadius', borderRadius));
   }
