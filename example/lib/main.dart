@@ -38,7 +38,6 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-
   bool value = false;
 
   @override
@@ -61,6 +60,7 @@ class _DemoState extends State<Demo> {
               discrete: true,
             ),
           ),
+          RatingIndicator(value: 0),
         ],
       ),
     );
