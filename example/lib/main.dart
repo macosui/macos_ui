@@ -15,15 +15,9 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          style: Style(
-            brightness: Brightness.light,
-            primaryColor: CupertinoColors.systemIndigo,
-          ),
-          darkStyle: Style(
-            brightness: Brightness.dark,
-            primaryColor: CupertinoColors.systemIndigo,
-          ),
-          themeMode: appTheme.mode,
+          theme: MacosThemeData.light(),
+          darkTheme: MacosThemeData.dark(),
+          themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false, //yay!
           home: Demo(),
         );
@@ -38,7 +32,6 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-
   bool value = false;
 
   @override

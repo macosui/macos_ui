@@ -1,5 +1,6 @@
-import 'package:macos_ui/macos_ui.dart';
 import 'package:flutter/cupertino.dart' as c;
+import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 /// An application that uses macOS design.
 ///
@@ -67,8 +68,8 @@ class MacosApp extends StatefulWidget {
     this.actions,
     this.restorationScopeId,
     this.themeMode,
-    this.style,
-    this.darkStyle,
+    this.theme,
+    this.darkTheme,
   })  : routeInformationProvider = null,
         routeInformationParser = null,
         routerDelegate = null,
@@ -100,8 +101,8 @@ class MacosApp extends StatefulWidget {
     this.actions,
     this.restorationScopeId,
     this.themeMode,
-    this.style,
-    this.darkStyle,
+    this.theme,
+    this.darkTheme,
   })  : assert(supportedLocales.isNotEmpty),
         navigatorObservers = null,
         navigatorKey = null,
@@ -281,10 +282,10 @@ class MacosApp extends StatefulWidget {
   final ThemeMode? themeMode;
 
   /// The style used if [themeMode] is [ThemeMode.dark]
-  final Style? darkStyle;
+  final MacosThemeData? darkTheme;
 
   /// The style used if [themeMode] is [ThemeMode.light]
-  final Style? style;
+  final MacosThemeData? theme;
 
   @override
   _MacosAppState createState() => _MacosAppState();
@@ -295,30 +296,27 @@ class _MacosAppState extends State<MacosApp> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildApp(context);
+    // leaves room for assertions, etc
+    Widget result = _buildMacosApp(context);
+    return result;
   }
 
-  Style theme(BuildContext context) {
+  Widget _macosBuilder(BuildContext context, Widget? child) {
     final mode = widget.themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
-    final useDarkStyle = mode == ThemeMode.dark ||
+    final useDarkTheme = mode == ThemeMode.dark ||
         (mode == ThemeMode.system && platformBrightness == Brightness.dark);
 
-    Style data =
-        (useDarkStyle ? (widget.darkStyle ?? widget.style) : widget.style) ??
-            Style.fallback(useDarkStyle ? Brightness.dark : Brightness.light);
-    if (data.brightness == null) {
-      data = data.copyWith(Style(
-        brightness: useDarkStyle ? Brightness.dark : Brightness.light,
-      ));
+    MacosThemeData? theme;
+    if (useDarkTheme) {
+      theme = widget.darkTheme;
+    } else {
+      theme = widget.theme;
     }
-    return data.build();
-  }
+    theme ??= widget.theme ?? MacosThemeData.light();
 
-  Widget _builder(BuildContext context, Widget? child) {
-    final theme = this.theme(context);
     return MacosTheme(
-      style: theme,
+      data: theme,
       child: DefaultTextStyle(
         style: TextStyle(
           color: theme.typography?.body?.color,
@@ -328,7 +326,7 @@ class _MacosAppState extends State<MacosApp> {
     );
   }
 
-  Widget _buildApp(BuildContext context) {
+  Widget _buildMacosApp(BuildContext context) {
     final defaultColor = widget.color ?? CupertinoColors.systemBlue;
     if (_usesRouter) {
       return c.CupertinoApp.router(
@@ -337,7 +335,7 @@ class _MacosAppState extends State<MacosApp> {
         routeInformationParser: widget.routeInformationParser!,
         routerDelegate: widget.routerDelegate!,
         backButtonDispatcher: widget.backButtonDispatcher,
-        builder: _builder,
+        builder: _macosBuilder,
         title: widget.title,
         onGenerateTitle: widget.onGenerateTitle,
         color: defaultColor,
@@ -364,7 +362,7 @@ class _MacosAppState extends State<MacosApp> {
       onGenerateRoute: widget.onGenerateRoute,
       onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
       onUnknownRoute: widget.onUnknownRoute,
-      builder: _builder,
+      builder: _macosBuilder,
       title: widget.title,
       onGenerateTitle: widget.onGenerateTitle,
       color: defaultColor,
