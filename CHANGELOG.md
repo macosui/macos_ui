@@ -1,4 +1,10 @@
+## [0.0.3]
+
+* Implemented `ProgressCircle` and `ProgressBar`
+* Implemented the `Switch` widget
+
 ## [0.0.2]
+
 * `Scaffold` widget
 * Fix `Typography` so that text color is shown appropriately based on Brightness
 

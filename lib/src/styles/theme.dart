@@ -19,10 +19,10 @@ class MacosTheme extends InheritedWidget {
         .build();
   }
 
-  static Style maybeOf(BuildContext context) {
+  static Style? maybeOf(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<MacosTheme>()!
-        .style
+        .dependOnInheritedWidgetOfExactType<MacosTheme>()
+        ?.style
         .build();
   }
 

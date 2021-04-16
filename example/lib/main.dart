@@ -32,19 +32,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Demo extends StatelessWidget {
+class Demo extends StatefulWidget {
+  @override
+  _DemoState createState() => _DemoState();
+}
+
+class _DemoState extends State<Demo> {
+
+  bool value = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       sidebar: Center(
         child: Text('Sidebar'),
       ),
-      body: Center(
-        child: Container(
-          height: 50.0,
-          width: 50.0,
-          color: context.style.primaryColor,
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Switch(
+            value: value,
+            onChanged: (v) => setState(() => value = v),
+          ),
+        ],
       ),
     );
   }
