@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             //primaryColor: CupertinoColors.systemIndigo,
           ),
-          themeMode: appTheme.mode,
+          themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           home: Demo(),
         );
@@ -39,7 +39,6 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-
   bool value = false;
 
   @override
@@ -51,9 +50,10 @@ class _DemoState extends State<Demo> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Switch(
-            value: value,
-            onChanged: (v) => setState(() => value = v),
+          PushButton(
+            buttonSize: ButtonSize.small,
+            child: Text('Button'),
+            onPressed: () {},
           ),
         ],
       ),
