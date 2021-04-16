@@ -60,7 +60,10 @@ class _DemoState extends State<Demo> {
               discrete: true,
             ),
           ),
-          RatingIndicator(value: 0),
+          RatingIndicator(value: 2.5),
+          RelevanceIndicator(
+            value: 10,
+          ),
         ],
       ),
     );

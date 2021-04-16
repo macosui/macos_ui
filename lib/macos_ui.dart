@@ -24,3 +24,4 @@ export 'src/buttons/switch.dart';
 export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
 export 'src/indicators/rating_indicator.dart';
+export 'src/indicators/relevance_indicator.dart';
