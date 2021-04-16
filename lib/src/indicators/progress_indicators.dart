@@ -170,9 +170,7 @@ class ProgressBar extends StatelessWidget {
         child: CustomPaint(
           painter: _DeterminateBarPainter(
             value,
-            activeColor: trackColor ??
-                context.macosTheme.accentColor ??
-                CupertinoColors.activeBlue,
+            activeColor: trackColor ?? context.macosTheme.accentColor,
             backgroundColor: CupertinoDynamicColor.resolve(
               backgroundColor ?? CupertinoColors.secondarySystemFill,
               context,

@@ -64,9 +64,7 @@ class Switch extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       dragStartBehavior: dragStartBehavior,
-      activeColor: activeColor ??
-          context.macosTheme.primaryColor ??
-          CupertinoColors.activeBlue,
+      activeColor: activeColor ?? context.macosTheme.primaryColor,
       trackColor: trackColor,
     );
   }
