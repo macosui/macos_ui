@@ -1,5 +1,6 @@
 library macos_ui;
 
+/// todo: package-level docs
 export 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor;
 export 'package:flutter/material.dart'
@@ -11,7 +12,6 @@ export 'package:flutter/material.dart'
         PageTransitionsBuilder,
         FlutterLogo,
         CircleAvatar;
-/// todo: package-level docs
 export 'package:flutter/widgets.dart' hide Icon, TextBox;
 
 export 'src/buttons/checkbox.dart';
@@ -22,6 +22,7 @@ export 'src/buttons/image_button.dart';
 export 'src/buttons/popup_button.dart';
 export 'src/buttons/pulldown_button.dart';
 export 'src/buttons/push_button.dart';
+export 'src/buttons/push_button_theme.dart';
 export 'src/buttons/radio_button.dart';
 export 'src/buttons/switch.dart';
 export 'src/buttons/switch.dart';
