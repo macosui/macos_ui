@@ -41,14 +41,14 @@ dragging left or right. See the documentation for all customization options.
 
 ## PushButton
 
-<img src="https://imgur.com/D7CSk09.jpg"/>
-<img src="https://imgur.com/JDPdmWo.jpg"/>
-<img src="https://imgur.com/E5gECIP.jpg"/>
-<img src="https://imgur.com/lpT18wZ.jpg"/>
-<img src="https://imgur.com/W8ZA9nv.jpg"/>
-<img src="https://imgur.com/uKRyLph.jpg"/>
-<img src="https://imgur.com/w4hvYZQ.jpg"/>
-<img src="https://imgur.com/ztwz6ut.jpg"/>
+<img src="https://imgur.com/v99ekWA.jpg"/>
+<img src="https://imgur.com/GsShoF6.jpg"/>
+<img src="https://imgur.com/TgfjJdQ.jpg"/>
+<img src="https://imgur.com/wt0K6u4.jpg"/>
+<img src="https://imgur.com/hj6uGhI.jpg"/>
+<img src="https://imgur.com/klWHTAX.jpg"/>
+<img src="https://imgur.com/83cEMeP.jpg"/>
+<img src="https://imgur.com/7khWnwt.jpg"/>
 
 ## Switch
 <img src="https://imgur.com/IBh5jkz.jpg" width="50%" height="50%"/>
