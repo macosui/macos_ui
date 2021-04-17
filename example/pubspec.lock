@@ -73,7 +73,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.6"
   matcher:
     dependency: transitive
     description:
@@ -124,12 +124,10 @@ packages:
   split_view:
     dependency: transitive
     description:
-      path: "."
-      ref: null_safety
-      resolved-ref: e9b5f42d8072e3a5f91d3abbd6df902560d79703
-      url: "https://github.com/GroovinChip/split_view.git"
-    source: git
-    version: "2.0.0+2"
+      name: split_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1+1"
   stack_trace:
     dependency: transitive
     description:
