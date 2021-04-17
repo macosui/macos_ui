@@ -1,3 +1,8 @@
+## [0.0.5]
+* Adds the `PushButton` widget along with `PushButtonTheme` and `PushButtonThemeData`
+* Removes the `height` property from `Typography`'s `TextStyle`s
+* Updates `Typography.headline`'s weight and letter spacing
+
 ## [0.0.4]
 * Major theme refactor that more closely resembles flutter/material and flutter/cupertino
   * The `Style` class is now `MacosThemeData`

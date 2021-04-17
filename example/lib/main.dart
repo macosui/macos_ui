@@ -1,5 +1,6 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
+
 import 'theme.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
           themeMode: ThemeMode.dark,
-          debugShowCheckedModeBanner: false, //yay!
+          debugShowCheckedModeBanner: false,
           home: Demo(),
         );
       },
@@ -43,9 +44,10 @@ class _DemoState extends State<Demo> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Switch(
-            value: value,
-            onChanged: (v) => setState(() => value = v),
+          PushButton(
+            buttonSize: ButtonSize.small,
+            child: Text('Button'),
+            onPressed: () {},
           ),
         ],
       ),

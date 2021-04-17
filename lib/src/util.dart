@@ -11,3 +11,9 @@ bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
     );
   return has;
 }
+
+Color textLuminance(Color backgroundColor) {
+  return backgroundColor.computeLuminance() > 0.5
+      ? CupertinoColors.black
+      : CupertinoColors.white;
+}

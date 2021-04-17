@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/buttons/push_button_theme.dart';
 
 import '../../macos_ui.dart';
 
@@ -21,6 +22,7 @@ class MacosThemeData with Diagnosticable {
     Curve? animationCurve,
     Duration? mediumAnimationDuration,
     Typography? typography,
+    PushButtonThemeData? pushButtonTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -34,6 +36,12 @@ class MacosThemeData with Diagnosticable {
     mediumAnimationDuration = Duration(milliseconds: 300);
     typography = Typography.defaultTypography(brightness: _brightness)
         .copyWith(typography);
+    pushButtonTheme ??= PushButtonThemeData(
+      color: primaryColor,
+      disabledColor: isDark
+          ? Color.fromRGBO(255, 255, 255, 0.1)
+          : Color.fromRGBO(244, 245, 245, 1.0),
+    );
 
     return MacosThemeData._raw(
       brightness: _brightness,
@@ -42,6 +50,7 @@ class MacosThemeData with Diagnosticable {
       animationCurve: animationCurve,
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
+      pushButtonTheme: pushButtonTheme,
     );
   }
 
@@ -52,6 +61,7 @@ class MacosThemeData with Diagnosticable {
     required this.animationCurve,
     required this.mediumAnimationDuration,
     required this.typography,
+    required this.pushButtonTheme,
   });
 
   // todo: documentation
@@ -67,12 +77,14 @@ class MacosThemeData with Diagnosticable {
   /// The brightness override for macOS descendants.
   final Brightness? brightness;
 
-  /// A color used on interactive elements of the theme.
+  /// A color used on primary interactive elements of the theme.
   ///
   /// Defaults to [CupertinoColors.activeBlue].
   final Color? primaryColor;
 
-  // todo: documentation
+  /// A color used on accent interactive elements of the theme.
+  ///
+  /// Defaults to [CupertinoColors.activeBlue].
   final Color? accentColor;
 
   // todo: documentation
@@ -81,8 +93,11 @@ class MacosThemeData with Diagnosticable {
   // todo: documentation
   final Duration? mediumAnimationDuration;
 
-  // todo: documentation
+  /// The default text styling for this theme.
   final Typography? typography;
+
+  /// The default style for [PushButton]s below the overall [MacosTheme].
+  final PushButtonThemeData pushButtonTheme;
 
   MacosThemeData resolveFrom(BuildContext context) {
     /*Color? convertColor(Color? color) =>
@@ -95,6 +110,11 @@ class MacosThemeData with Diagnosticable {
       animationCurve: animationCurve,
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
+      pushButtonTheme: pushButtonTheme,
     );
   }
+}
+
+extension BrightnessX on Brightness {
+  bool get isDark => this == Brightness.dark;
 }
