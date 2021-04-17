@@ -10,11 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
     
-  #split_view: ^1.0.4
-  split_view:
-    git:
-      url: https://github.com/GroovinChip/split_view.git
-      ref: null_safety
+  split_view: ^2.0.1+1
 
 dev_dependencies:
   flutter_test:
