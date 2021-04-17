@@ -11,6 +11,7 @@ export 'package:flutter/material.dart'
         PageTransitionsBuilder,
         FlutterLogo,
         CircleAvatar;
+
 /// todo: package-level docs
 export 'package:flutter/widgets.dart' hide Icon, IconTheme, TextBox;
 
