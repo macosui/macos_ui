@@ -16,14 +16,8 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          style: Style(
-            brightness: Brightness.light,
-            //primaryColor: CupertinoColors.systemIndigo,
-          ),
-          darkStyle: Style(
-            brightness: Brightness.dark,
-            //primaryColor: CupertinoColors.systemIndigo,
-          ),
+          theme: MacosThemeData.light(),
+          darkTheme: MacosThemeData.dark(),
           themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           home: Demo(),

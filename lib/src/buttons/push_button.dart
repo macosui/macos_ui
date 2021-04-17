@@ -177,32 +177,31 @@ class _PushButtonState extends State<PushButton>
   @override
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
-    final style = context.style;
+    final MacosThemeData theme = MacosTheme.of(context);
     final Color? backgroundColor = widget.color == null
-        ? style.pushButtonStyle == null
-            ? style.primaryColor
-            : style.pushButtonStyle!.color
+        ? theme.pushButtonTheme.color
         : CupertinoDynamicColor.maybeResolve(widget.color, context);
 
     final Color? disabledColor = widget.disabledColor == null
-        ? style.brightness!.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.1)
-            : Color.fromRGBO(244, 245, 245, 1.0)
+        ? theme.pushButtonTheme.disabledColor
         : CupertinoDynamicColor.maybeResolve(widget.disabledColor, context);
 
-    // todo: apply padding from style.pushButtonStyle if it exists
     final EdgeInsetsGeometry? buttonPadding = widget.padding == null
         ? widget.buttonSize == ButtonSize.small
             ? _kSmallButtonPadding
             : _kLargeButtonPadding
         : widget.padding;
 
-    // todo: apply borderRadius from style.pushButtonStyle if it exists
     final BorderRadius? borderRadius = widget.borderRadius == null
         ? widget.buttonSize == ButtonSize.small
             ? _kSmallButtonRadius
             : _kLargeButtonRadius
         : widget.borderRadius;
+
+    final Color? foregroundColor = textLuminance(backgroundColor!);
+
+    final TextStyle textStyle =
+        theme.typography!.headline!.copyWith(color: foregroundColor);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -222,7 +221,7 @@ class _PushButtonState extends State<PushButton>
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: borderRadius,
-                color: backgroundColor != null && !enabled
+                color: !enabled
                     ? CupertinoDynamicColor.resolve(disabledColor!, context)
                     : backgroundColor,
               ),
@@ -233,7 +232,10 @@ class _PushButtonState extends State<PushButton>
                   widthFactor: 1.0,
                   heightFactor: 1.0,
                   //todo: show proper text color in light theme
-                  child: widget.child,
+                  child: DefaultTextStyle(
+                    style: textStyle,
+                    child: widget.child,
+                  ),
                 ),
               ),
             ),
@@ -241,36 +243,5 @@ class _PushButtonState extends State<PushButton>
         ),
       ),
     );
-  }
-}
-
-class PushButtonStyle with Diagnosticable {
-  const PushButtonStyle({
-    this.color,
-    this.padding,
-    this.borderRadius,
-  });
-
-  final Color? color;
-  final EdgeInsetsGeometry? padding;
-  final BorderRadius? borderRadius;
-
-  PushButtonStyle copyWith(PushButtonStyle? style) {
-    if (style == null) {
-      return this;
-    }
-    return PushButtonStyle(
-      color: style.color ?? color,
-      padding: style.padding ?? padding,
-      borderRadius: style.borderRadius ?? borderRadius,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('color', color));
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
-    properties.add(DiagnosticsProperty('borderRadius', borderRadius));
   }
 }
