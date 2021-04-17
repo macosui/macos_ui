@@ -41,7 +41,14 @@ dragging left or right. See the documentation for all customization options.
 
 ## PushButton
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/ekGggq3"><pre><a href="//imgur.com/a/ekGggq3">macos_ui PushButtons</a></pre></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<img src="https://imgur.com/D7CSk09.jpg"/>
+<img src="https://imgur.com/JDPdmWo.jpg"/>
+<img src="https://imgur.com/E5gECIP.jpg"/>
+<img src="https://imgur.com/lpT18wZ.jpg"/>
+<img src="https://imgur.com/W8ZA9nv.jpg"/>
+<img src="https://imgur.com/uKRyLph.jpg"/>
+<img src="https://imgur.com/w4hvYZQ.jpg"/>
+<img src="https://imgur.com/ztwz6ut.jpg"/>
 
 ## Switch
 <img src="https://imgur.com/IBh5jkz.jpg" width="50%" height="50%"/>
