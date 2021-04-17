@@ -198,7 +198,11 @@ class _PushButtonState extends State<PushButton>
             : _kLargeButtonRadius
         : widget.borderRadius;
 
-    final Color? foregroundColor = textLuminance(backgroundColor!);
+    final Color? foregroundColor = widget.enabled
+        ? textLuminance(backgroundColor!)
+        : theme.brightness!.isDark
+            ? Color.fromRGBO(255, 255, 255, 0.25)
+            : Color.fromRGBO(0, 0, 0, 0.25);
 
     final TextStyle textStyle =
         theme.typography!.headline!.copyWith(color: foregroundColor);
