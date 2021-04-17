@@ -50,7 +50,7 @@ class Switch extends StatelessWidget {
 
   /// The color to use when this switch is on.
   ///
-  /// Defaults to [Style.primaryColor] when null.
+  /// Defaults to [MacosThemeData.primaryColor] when null.
   final Color? activeColor;
 
   /// The color to use for the background when the switch is off.
@@ -64,9 +64,7 @@ class Switch extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       dragStartBehavior: dragStartBehavior,
-      activeColor: activeColor ??
-          context.maybeStyle?.primaryColor ??
-          CupertinoColors.activeBlue,
+      activeColor: activeColor ?? context.macosTheme.primaryColor,
       trackColor: trackColor,
     );
   }

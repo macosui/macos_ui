@@ -1,9 +1,9 @@
 library macos_ui;
 
 /// todo: package-level docs
-
 export 'package:flutter/widgets.dart';
-export 'package:flutter/cupertino.dart' show CupertinoIcons;
+export 'package:flutter/cupertino.dart'
+    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
 export 'package:flutter/material.dart'
     show
         Brightness,
@@ -13,14 +13,25 @@ export 'package:flutter/material.dart'
         PageTransitionsBuilder,
         FlutterLogo,
         CircleAvatar;
-export 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor;
+export 'package:flutter/widgets.dart' hide Icon, TextBox;
 
-export 'src/macos_app.dart';
-export 'src/util.dart';
-export 'src/styles/theme.dart';
-export 'src/styles/typography.dart';
-export 'src/layout/scaffold.dart';
-export 'src/buttons/checkbox.dart';
+export 'src/buttons/push_button.dart';
+export 'src/buttons/push_button_theme.dart';
+export 'src/buttons/switch.dart';
+export 'src/buttons/switch.dart';
+export 'src/buttons/switch.dart';
 export 'src/buttons/switch.dart';
 export 'src/indicators/progress_indicators.dart';
+export 'src/indicators/progress_indicators.dart';
+export 'src/layout/scaffold.dart';
+export 'src/layout/scaffold.dart';
+export 'src/layout/scaffold.dart';
+export 'src/macos_app.dart';
+export 'src/macos_app.dart';
+export 'src/styles/macos_theme.dart';
+export 'src/styles/macos_theme_data.dart';
+export 'src/styles/typography.dart';
+export 'src/buttons/checkbox.dart';
+export 'src/styles/typography.dart';
+export 'src/util.dart';
+export 'src/util.dart';

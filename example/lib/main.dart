@@ -1,5 +1,6 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
+
 import 'theme.dart';
 
 void main() {
@@ -15,16 +16,10 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          style: Style(
-            brightness: Brightness.light,
-            primaryColor: CupertinoColors.systemIndigo,
-          ),
-          darkStyle: Style(
-            brightness: Brightness.dark,
-            primaryColor: CupertinoColors.systemIndigo,
-          ),
-          themeMode: appTheme.mode,
-          debugShowCheckedModeBanner: false, //yay!
+          theme: MacosThemeData.light(),
+          darkTheme: MacosThemeData.dark(),
+          themeMode: ThemeMode.dark,
+          debugShowCheckedModeBanner: false,
           home: Demo(),
         );
       },
@@ -38,7 +33,6 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-
   bool value = false;
 
   @override
@@ -50,9 +44,10 @@ class _DemoState extends State<Demo> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Switch(
-            value: value,
-            onChanged: (v) => setState(() => value = v),
+          PushButton(
+            buttonSize: ButtonSize.small,
+            child: Text('Button'),
+            onPressed: () {},
           ),
           Checkbox(
             value: value,

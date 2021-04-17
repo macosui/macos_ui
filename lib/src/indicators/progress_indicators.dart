@@ -150,7 +150,7 @@ class ProgressBar extends StatelessWidget {
   /// The height of the line. Default to 4.5px
   final double height;
 
-  /// The color of the track. If null, [Style.accentColor] is used
+  /// The color of the track. If null, [MacosThemeData.accentColor] is used
   final Color? trackColor;
 
   /// The color of the background. If null, [CupertinoColors.secondarySystemFill]
@@ -170,9 +170,7 @@ class ProgressBar extends StatelessWidget {
         child: CustomPaint(
           painter: _DeterminateBarPainter(
             value,
-            activeColor: trackColor ??
-                context.maybeStyle?.accentColor ??
-                CupertinoColors.activeBlue,
+            activeColor: trackColor ?? context.macosTheme.accentColor,
             backgroundColor: CupertinoDynamicColor.resolve(
               backgroundColor ?? CupertinoColors.secondarySystemFill,
               context,
