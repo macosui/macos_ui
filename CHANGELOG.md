@@ -1,3 +1,6 @@
+## [0.0.6]
+* Update `Typography` with correct letter spacing and font weights
+
 ## [0.0.5]
 * Adds the `PushButton` widget along with `PushButtonTheme` and `PushButtonThemeData`
 * Removes the `height` property from `Typography`'s `TextStyle`s
