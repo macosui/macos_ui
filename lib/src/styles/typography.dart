@@ -70,38 +70,44 @@ class Typography with Diagnosticable {
       largeTitle: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 26,
+        letterSpacing: 0.22,
         color: color,
       ),
       title1: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 22,
+        letterSpacing: -0.26,
         color: color,
       ),
       title2: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 17,
+        letterSpacing: -0.43,
         color: color,
       ),
       title3: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 15,
+        letterSpacing: -0.23,
         color: color,
       ),
       headline: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontWeight: FontWeight.w400,
         fontSize: 13,
-        letterSpacing: 0.08,
+        letterSpacing: -0.08,
         color: color,
       ),
       subheadline: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 11,
+        letterSpacing: 0.06,
         color: color,
       ),
       body: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 13,
+        letterSpacing: 0.06,
         color: color,
       ),
       callout: TextStyle(
@@ -112,16 +118,19 @@ class Typography with Diagnosticable {
       footnote: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 10,
+        letterSpacing: 0.12,
         color: color,
       ),
       caption1: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 10,
+        letterSpacing: 0.12,
         color: color,
       ),
       caption2: TextStyle(
         fontFamily: 'SanFranciscoPro',
         fontSize: 10,
+        letterSpacing: 0.12,
         color: color,
       ),
     );
