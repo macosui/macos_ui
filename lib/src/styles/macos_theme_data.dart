@@ -77,12 +77,14 @@ class MacosThemeData with Diagnosticable {
   /// The brightness override for macOS descendants.
   final Brightness? brightness;
 
-  /// A color used on interactive elements of the theme.
+  /// A color used on primary interactive elements of the theme.
   ///
   /// Defaults to [CupertinoColors.activeBlue].
   final Color? primaryColor;
 
-  // todo: documentation
+  /// A color used on accent interactive elements of the theme.
+  ///
+  /// Defaults to [CupertinoColors.activeBlue].
   final Color? accentColor;
 
   // todo: documentation
@@ -91,10 +93,10 @@ class MacosThemeData with Diagnosticable {
   // todo: documentation
   final Duration? mediumAnimationDuration;
 
-  // todo: documentation
+  /// The default text styling for this theme.
   final Typography? typography;
 
-  // todo: documentation
+  /// The default style for [PushButton]s below the overall [MacosTheme].
   final PushButtonThemeData pushButtonTheme;
 
   MacosThemeData resolveFrom(BuildContext context) {
