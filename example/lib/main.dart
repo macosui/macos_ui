@@ -38,8 +38,10 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-
   bool value = false;
+
+  double sliderValue = 0;
+  double ratingValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,19 @@ class _DemoState extends State<Demo> {
             value: value,
             onChanged: (v) => setState(() => value = v),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CapacityIndicator(
+              value: sliderValue,
+              onChanged: (v) => setState(() => sliderValue = v),
+              discrete: true,
+            ),
+          ),
+          RatingIndicator(
+            value: ratingValue,
+            onChanged: (v) => setState(() => ratingValue = v),
+          ),
+          RelevanceIndicator(value: 10),
         ],
       ),
     );
