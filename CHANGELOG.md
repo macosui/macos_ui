@@ -1,5 +1,6 @@
 ## [0.0.6]
 * Update `Typography` with correct letter spacing and font weights
+* Add `brightnessOf` and `maybeBrightnessOf` functions to `MacosTheme`
 
 ## [0.0.5]
 * Adds the `PushButton` widget along with `PushButtonTheme` and `PushButtonThemeData`
