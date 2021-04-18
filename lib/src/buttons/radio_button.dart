@@ -5,11 +5,11 @@ import 'package:macos_ui/macos_ui.dart';
 /// buttons provide the user a set of related but mutually exclusive
 /// choices. A radio button’s state is either on (a filled circle)
 /// or off (an empty circle).
-/// 
+///
 /// ![RadioButton example](https://developer.apple.com/design/human-interface-guidelines/macos/images/radioButtons.png)
 class RadioButton extends StatelessWidget {
   /// Creates a radio button.
-  /// 
+  ///
   /// [size] must be non-negative
   const RadioButton({
     Key? key,
@@ -48,10 +48,12 @@ class RadioButton extends StatelessWidget {
   ///   - Off: [CupertinoColors.tertiarySystemFill]
   final Color? innerColor;
 
+  /// Whether the button is disabled or not
   bool get isDisabled => onChanged == null;
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
     return GestureDetector(
       onTap: () => onChanged?.call(!value),
       child: Container(
@@ -64,7 +66,7 @@ class RadioButton extends StatelessWidget {
             color: CupertinoDynamicColor.resolve(
               value
                   ? onColor ??
-                      context.maybeStyle?.primaryColor ??
+                      context.macosTheme.primaryColor ??
                       CupertinoColors.activeBlue
                   : offColor,
               context,
