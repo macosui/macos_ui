@@ -51,6 +51,7 @@ class Checkbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
     return GestureDetector(
       onTap: () {
         if (value == null || value == false) {
@@ -69,7 +70,7 @@ class Checkbox extends StatelessWidget {
                   isDisabled
                       ? disabledColor
                       : activeColor ??
-                          context.maybeStyle?.accentColor ??
+                          context.macosTheme.accentColor ??
                           CupertinoColors.activeBlue,
                   context,
                 ),
