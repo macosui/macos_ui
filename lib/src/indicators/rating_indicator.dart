@@ -76,7 +76,7 @@ class RatingIndicator extends StatelessWidget {
           return Icon(
             rated ? ratedIcon : unratedIcon,
             color: iconColor ??
-                context.maybeStyle?.primaryColor ??
+                context.macosTheme.primaryColor ??
                 CupertinoColors.activeBlue,
             size: iconSize,
           );
