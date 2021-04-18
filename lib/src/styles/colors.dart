@@ -35,7 +35,6 @@ extension DynamicColorX on CupertinoDynamicColor {
     if (this.isPlatformBrightnessDependent) {
       brightness = MacosTheme.maybeBrightnessOf(context) ?? Brightness.light;
     }
-    print(brightness);
     bool isHighContrastEnabled = false;
     if (this.isHighContrastDependent) {
       isHighContrastEnabled =
