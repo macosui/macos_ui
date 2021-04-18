@@ -35,11 +35,61 @@ class MacosTheme extends StatelessWidget {
   /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
 
+  /// Retrieves the [MacosThemeData] from the closest ancestor [MacosTheme]
+  /// widget, or a default [MacosThemeData] if no [MacosTheme] ancestor
+  /// exists.
+  ///
+  /// Resolves all the colors defined in that [MacosThemeData] against the
+  /// given [BuildContext] on a best-effort basis.
   static MacosThemeData of(BuildContext context) {
     final _InheritedMacosTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
     return (inheritedTheme?.theme.data ?? MacosThemeData())
         .resolveFrom(context);
+  }
+
+  /// Retrieves the [Brightness] to use for descendant macOS widgets, based
+  /// on the value of [MacosThemeData.brightness] in the given [context].
+  ///
+  /// If no [MacosTheme] can be found in the given [context], or its `brightness`
+  /// is null, it will fall back to [MediaQueryData.platformBrightness].
+  ///
+  /// Throws an exception if no valid [MacosTheme] or [MediaQuery] widgets
+  /// exist in the ancestry tree.
+  ///
+  /// See also:
+  ///
+  /// * [maybeBrightnessOf], which returns null if no valid [MacosTheme] or
+  ///   [MediaQuery] exists, instead of throwing.
+  /// * [MacosThemeData.brightness], the property takes precedence over
+  ///   [MediaQueryData.platformBrightness] for descendant Cupertino widgets.
+  static Brightness brightnessOf(BuildContext context) {
+    final _InheritedMacosTheme? inheritedTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    return inheritedTheme?.theme.data.brightness ??
+        MediaQuery.of(context).platformBrightness;
+  }
+
+  /// Retrieves the [Brightness] to use for descendant macOS widgets, based
+  /// on the value of [MacosThemeData.brightness] in the given [context].
+  ///
+  /// If no [MacosTheme] can be found in the given [context], it will fall
+  /// back to [MediaQueryData.platformBrightness].
+  ///
+  /// Returns null if no valid [MacosTheme] or [MediaQuery] widgets exist in
+  /// the ancestry tree.
+  ///
+  /// See also:
+  ///
+  /// * [MacosThemeData.brightness], the property takes precedence over
+  ///   [MediaQueryData.platformBrightness] for descendant macOS widgets.
+  /// * [brightnessOf], which throws if no valid [MacosTheme] or
+  ///   [MediaQuery] exists, instead of returning null.
+  static Brightness? maybeBrightnessOf(BuildContext context) {
+    final _InheritedMacosTheme? inheritedTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    return inheritedTheme?.theme.data.brightness ??
+        MediaQuery.maybeOf(context)?.platformBrightness;
   }
 
   @override
