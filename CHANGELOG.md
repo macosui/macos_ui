@@ -1,5 +1,6 @@
 ## [0.0.6]
 * Update `Typography` with correct letter spacing and font weights
+* Implemented `RadioButton`
 
 ## [0.0.5]
 * Adds the `PushButton` widget along with `PushButtonTheme` and `PushButtonThemeData`
@@ -17,7 +18,6 @@
 
 ## [0.0.3]
 
-* Implemented `RadioButton`
 * Implemented `ProgressCircle` and `ProgressBar`
 * Implemented the `Switch` widget
 
