@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'macos_theme.dart';
 
 extension DynamicColorX on CupertinoDynamicColor {
-  Color macosResolve(Color resolvable, BuildContext context) {
+  static Color macosResolve(Color resolvable, BuildContext context) {
     return (resolvable is CupertinoDynamicColor)
         ? resolvable.macosResolveFrom(context)
         : resolvable;
@@ -35,6 +35,7 @@ extension DynamicColorX on CupertinoDynamicColor {
     if (this.isPlatformBrightnessDependent) {
       brightness = MacosTheme.maybeBrightnessOf(context) ?? Brightness.light;
     }
+    print(brightness);
     bool isHighContrastEnabled = false;
     if (this.isHighContrastDependent) {
       isHighContrastEnabled =

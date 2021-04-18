@@ -121,10 +121,9 @@ class CapacityIndicatorCell extends StatelessWidget {
       height: 16,
       child: CustomPaint(
         painter: _CapacityCellPainter(
-          color: CupertinoDynamicColor.resolve(color, context),
-          backgroundColor:
-              CupertinoDynamicColor.resolve(backgroundColor, context),
-          borderColor: CupertinoDynamicColor.resolve(borderColor, context),
+          color: DynamicColorX.macosResolve(color, context),
+          backgroundColor: DynamicColorX.macosResolve(backgroundColor, context),
+          borderColor: DynamicColorX.macosResolve(borderColor, context),
           value: value,
         ),
       ),

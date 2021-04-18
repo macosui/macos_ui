@@ -34,6 +34,7 @@ export 'src/styles/typography.dart';
 export 'src/layout/scaffold.dart';
 export 'src/buttons/switch.dart';
 export 'src/styles/typography.dart';
+export 'src/styles/colors.dart';
 export 'src/util.dart';
 export 'src/util.dart';
 export 'src/indicators/capacity_indicators.dart';

@@ -75,9 +75,12 @@ class RatingIndicator extends StatelessWidget {
           final rated = value > index;
           return Icon(
             rated ? ratedIcon : unratedIcon,
-            color: iconColor ??
-                context.macosTheme.primaryColor ??
-                CupertinoColors.activeBlue,
+            color: DynamicColorX.macosResolve(
+              iconColor ??
+                  context.macosTheme.primaryColor ??
+                  CupertinoColors.activeBlue,
+              context,
+            ),
             size: iconSize,
           );
         }),
