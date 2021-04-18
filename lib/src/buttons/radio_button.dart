@@ -54,6 +54,7 @@ class RadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
+    final isLight = context.macosTheme.brightness != Brightness.dark;
     return GestureDetector(
       onTap: () => onChanged?.call(!value),
       child: Container(
@@ -62,7 +63,7 @@ class RadioButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             style: isDisabled ? BorderStyle.none : BorderStyle.solid,
-            width: value ? size / 4.0 : 0.5,
+            width: value ? size / 4.0 : 1,
             color: CupertinoDynamicColor.resolve(
               value
                   ? onColor ??
@@ -83,11 +84,25 @@ class RadioButton extends StatelessWidget {
               innerColor ??
                   (isDisabled
                       ? CupertinoColors.quaternarySystemFill
-                      : value
+                      : value || isLight
                           ? CupertinoColors.white
                           : CupertinoColors.tertiarySystemFill),
               context,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.05),
+                offset: Offset(-0.05, -0.05),
+              ),
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.05),
+                offset: Offset(0.05, 0.05),
+              ),
+              BoxShadow(
+                color: CupertinoColors.tertiarySystemFill,
+                offset: Offset(0, 0),
+              ),
+            ],
           ),
         ),
       ),
