@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
-          themeMode: ThemeMode.dark,
+          // themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           home: Demo(),
         );
