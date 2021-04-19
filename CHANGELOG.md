@@ -21,6 +21,7 @@
 
 ## [0.0.3]
 
+* Implemented `Checkbox`
 * Implemented `ProgressCircle` and `ProgressBar`
 * Implemented the `Switch` widget
 

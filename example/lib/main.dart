@@ -42,7 +42,7 @@ class _DemoState extends State<Demo> {
         child: Text('Sidebar'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           PushButton(
             buttonSize: ButtonSize.small,
@@ -50,6 +50,10 @@ class _DemoState extends State<Demo> {
             onPressed: () {},
           ),
           RadioButton(
+            value: value,
+            onChanged: (v) => setState(() => value = v),
+          ),
+          Checkbox(
             value: value,
             onChanged: (v) => setState(() => value = v),
           ),

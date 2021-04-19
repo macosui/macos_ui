@@ -39,6 +39,12 @@ dragging left or right. See the documentation for all customization options.
 
 # Buttons
 
+## Checkbox
+
+| off | on | mixed |
+| --- | -- | ----- |
+| ![](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Deselected.svg) | ![](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Selected.svg) | ![](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Mixed.svg) |
+
 ## PushButton
 
 <img src="https://imgur.com/v99ekWA.jpg"/>
