@@ -1,4 +1,5 @@
 ## [0.0.7]
+* Implemented `Checkbox`
 * Implemented `RadioButton`
 
 ## [0.0.6]
