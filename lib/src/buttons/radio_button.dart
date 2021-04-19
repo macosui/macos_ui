@@ -64,7 +64,7 @@ class RadioButton extends StatelessWidget {
           border: Border.all(
             style: isDisabled ? BorderStyle.none : BorderStyle.solid,
             width: value ? size / 4.0 : 1,
-            color: CupertinoDynamicColor.resolve(
+            color: DynamicColorX.macosResolve(
               value
                   ? onColor ??
                       context.macosTheme.primaryColor ??
@@ -80,7 +80,7 @@ class RadioButton extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: CupertinoDynamicColor.resolve(
+            color: DynamicColorX.macosResolve(
               innerColor ??
                   (isDisabled
                       ? CupertinoColors.quaternarySystemFill

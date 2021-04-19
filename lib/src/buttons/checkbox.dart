@@ -67,7 +67,7 @@ class Checkbox extends StatelessWidget {
         alignment: Alignment.center,
         decoration: isDisabled || value == null || value == true
             ? BoxDecoration(
-                color: CupertinoDynamicColor.resolve(
+                color: DynamicColorX.macosResolve(
                   isDisabled
                       ? disabledColor
                       : activeColor ??
@@ -82,7 +82,7 @@ class Checkbox extends StatelessWidget {
                 border: Border.all(
                   style: isLight ? BorderStyle.solid : BorderStyle.none,
                   width: 0.5,
-                  color: CupertinoDynamicColor.resolve(
+                  color: DynamicColorX.macosResolve(
                     offBorderColor,
                     context,
                   ),
