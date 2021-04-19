@@ -1,3 +1,6 @@
+## [0.0.7]
+* Implemented `RadioButton`
+
 ## [0.0.6]
 * Update `Typography` with correct letter spacing and font weights
 * Add `brightnessOf` and `maybeBrightnessOf` functions to `MacosTheme`
