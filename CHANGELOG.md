@@ -1,3 +1,6 @@
+## [0.0.8]
+* Fixed [#49](https://github.com/GroovinChip/macos_ui/issues/49)
+
 ## [0.0.7]
 * Implemented `Checkbox`
 * Implemented `RadioButton`

@@ -68,6 +68,13 @@ class _DemoState extends State<Demo> {
               discrete: true,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CapacityIndicator(
+              value: sliderValue,
+              onChanged: (v) => setState(() => sliderValue = v),
+            ),
+          ),
           RatingIndicator(
             value: ratingValue,
             onChanged: (v) => setState(() => ratingValue = v),
