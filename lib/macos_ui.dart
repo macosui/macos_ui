@@ -6,13 +6,13 @@ export 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
 export 'package:flutter/material.dart'
     show
-        Brightness,
-        ThemeMode,
-        Feedback,
-        DefaultMaterialLocalizations,
-        PageTransitionsBuilder,
-        FlutterLogo,
-        CircleAvatar;
+    Brightness,
+    ThemeMode,
+    Feedback,
+    DefaultMaterialLocalizations,
+    PageTransitionsBuilder,
+    FlutterLogo,
+    CircleAvatar;
 
 export 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
@@ -45,3 +45,6 @@ export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
 export 'src/indicators/rating_indicator.dart';
 export 'src/indicators/relevance_indicator.dart';
+export 'src/buttons/help_button.dart';
+export 'src/buttons/help_button_theme.dart';
+
