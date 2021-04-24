@@ -1,3 +1,10 @@
+## [0.0.8]
+* Fixed [#49](https://github.com/GroovinChip/macos_ui/issues/49)
+
+## [0.0.7]
+* Implemented `Checkbox`
+* Implemented `RadioButton`
+
 ## [0.0.6]
 * Update `Typography` with correct letter spacing and font weights
 * Add `brightnessOf` and `maybeBrightnessOf` functions to `MacosTheme`
@@ -18,6 +25,7 @@
 
 ## [0.0.3]
 
+* Implemented `Checkbox`
 * Implemented `ProgressCircle` and `ProgressBar`
 * Implemented the `Switch` widget
 

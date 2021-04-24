@@ -2,6 +2,8 @@ library macos_ui;
 
 /// todo: package-level docs
 export 'package:flutter/widgets.dart';
+export 'package:flutter/cupertino.dart'
+    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
 export 'package:flutter/material.dart'
     show
         Brightness,
@@ -31,6 +33,8 @@ export 'src/macos_app.dart';
 export 'src/styles/macos_theme.dart';
 export 'src/styles/macos_theme_data.dart';
 export 'src/styles/typography.dart';
+export 'src/buttons/radio_button.dart';
+export 'src/buttons/checkbox.dart';
 export 'src/layout/scaffold.dart';
 export 'src/buttons/switch.dart';
 export 'src/styles/typography.dart';

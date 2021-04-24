@@ -63,12 +63,12 @@ class CapacityIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanStart: (event) => _handleUpdate(event.localPosition),
-      onPanUpdate: (event) => _handleUpdate(event.localPosition),
-      onPanDown: (event) => _handleUpdate(event.localPosition),
-      child: Container(
-        constraints: BoxConstraints(minWidth: 100),
+    return Container(
+      constraints: BoxConstraints(minWidth: 100),
+      child: GestureDetector(
+        onPanStart: (event) => _handleUpdate(event.localPosition),
+        onPanUpdate: (event) => _handleUpdate(event.localPosition),
+        onPanDown: (event) => _handleUpdate(event.localPosition),
         child: discrete
             ? LayoutBuilder(builder: (context, consts) {
                 double width = consts.biggest.width;

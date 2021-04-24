@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
-          themeMode: ThemeMode.dark,
+          themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: Demo(),
         );
@@ -45,12 +45,20 @@ class _DemoState extends State<Demo> {
         child: Text('Sidebar'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           PushButton(
             buttonSize: ButtonSize.small,
             child: Text('Button'),
             onPressed: () {},
+          ),
+          RadioButton(
+            value: value,
+            onChanged: (v) => setState(() => value = v),
+          ),
+          Checkbox(
+            value: value,
+            onChanged: (v) => setState(() => value = v),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -58,6 +66,13 @@ class _DemoState extends State<Demo> {
               value: sliderValue,
               onChanged: (v) => setState(() => sliderValue = v),
               discrete: true,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CapacityIndicator(
+              value: sliderValue,
+              onChanged: (v) => setState(() => sliderValue = v),
             ),
           ),
           RatingIndicator(
