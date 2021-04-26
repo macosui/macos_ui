@@ -45,7 +45,8 @@ class ResizablePane extends StatefulWidget {
   final bool? isResizable;
 
   /// Specifies the maximum width that this [ResizablePane] can have.
-  /// The value can be null.
+  ///
+  /// The value can be null and defaults to `500.0`.
   final double? maxWidth;
 
   /// Specifies the minimum width that this [ResizablePane] can have.
@@ -66,6 +67,8 @@ class ResizablePaneState extends State<ResizablePane> {
   final _scrollController = ScrollController();
   late double _width;
 
+  Color? get _dividerColor => context.macosTheme.dividerColor;
+
   ScaffoldScope get _scaffoldScope => ScaffoldScope.of(context);
 
   ResizablePaneNotifier get _notifier => _scaffoldScope.valueNotifier;
@@ -79,7 +82,7 @@ class ResizablePaneState extends State<ResizablePane> {
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
   BoxDecoration get _decoration {
-    final _borderSide = BorderSide(color: Color(0x1F000000));
+    final _borderSide = BorderSide(color: _dividerColor!);
     final right = Border(right: _borderSide);
     final left = Border(left: _borderSide);
     return BoxDecoration(border: _resizeOnRight ? right : left).copyWith(
@@ -97,6 +100,10 @@ class ResizablePaneState extends State<ResizablePane> {
   Widget get _resizeArea {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.resizeColumn,
+        child: SizedBox(width: 5),
+      ),
       onHorizontalDragUpdate: (details) {
         setState(() {
           _width = math.max(
@@ -113,10 +120,6 @@ class ResizablePaneState extends State<ResizablePane> {
           }
         });
       },
-      child: MouseRegion(
-        cursor: SystemMouseCursors.resizeColumn,
-        child: Container(color: Color(0x00000000), width: 3),
-      ),
     );
   }
 
@@ -146,21 +149,25 @@ class ResizablePaneState extends State<ResizablePane> {
         decoration: _decoration,
         child: Stack(
           children: [
-            Scrollbar(
-              controller: _scrollController,
-              child: widget.builder(context, _scrollController),
+            SafeArea(
+              left: false,
+              right: false,
+              child: Scrollbar(
+                controller: _scrollController,
+                child: widget.builder(context, _scrollController),
+              ),
             ),
             if (widget.isResizable! && !_resizeOnRight)
               Positioned(
                 left: 0,
-                width: 3,
+                width: 5,
                 height: _maxHeight,
                 child: _resizeArea,
               ),
             if (widget.isResizable! && _resizeOnRight)
               Positioned(
                 right: 0,
-                width: 3,
+                width: 5,
                 height: _maxHeight,
                 child: _resizeArea,
               ),
