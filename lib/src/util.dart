@@ -1,7 +1,8 @@
 import 'package:macos_ui/macos_ui.dart';
 
 bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
-  final has = context.maybeTheme != null;
+  // ignore: unnecessary_null_comparison
+  final has = context.macosTheme != null;
   if (check)
     assert(
       has,
@@ -9,4 +10,10 @@ bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
       'To fix this, wrap a Theme widget upper in this layout or implement a MacosApp.',
     );
   return has;
+}
+
+Color textLuminance(Color backgroundColor) {
+  return backgroundColor.computeLuminance() > 0.5
+      ? CupertinoColors.black
+      : CupertinoColors.white;
 }

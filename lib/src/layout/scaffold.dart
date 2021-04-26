@@ -101,10 +101,12 @@ class _ScaffoldState extends State<Scaffold> {
   // ignore: code-metrics
   Widget build(BuildContext context) {
     debugCheckHasMacosTheme(context);
+
+    final theme = context.macosTheme;
     late Color background;
     late Color sidebarColor;
 
-    if (context.theme.brightness!.isLight) {
+    if (!theme.brightness!.isDark) {
       background =
           widget.backgroundColor ?? CupertinoColors.systemBackground.color;
       sidebarColor =
@@ -120,7 +122,6 @@ class _ScaffoldState extends State<Scaffold> {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
-        final style = context.theme;
         final mediaQuery = MediaQuery.of(context);
         final children = widget.children;
         final titleBarHeight = widget.titleBar?.size == TitleBarSize.large
@@ -135,8 +136,8 @@ class _ScaffoldState extends State<Scaffold> {
                 height: height,
                 width: _sidebarWidth,
                 child: AnimatedContainer(
-                  duration: style.mediumAnimationDuration ?? Duration.zero,
-                  curve: style.animationCurve ?? Curves.linear,
+                  duration: theme.mediumAnimationDuration ?? Duration.zero,
+                  curve: theme.animationCurve ?? Curves.linear,
                   color: sidebarColor,
                   child: Padding(
                     padding: widget.sidebar?.padding ??
@@ -165,9 +166,8 @@ class _ScaffoldState extends State<Scaffold> {
               left: _sidebarWidth,
               height: height,
               child: AnimatedContainer(
-                duration:
-                    context.theme.mediumAnimationDuration ?? Duration.zero,
-                curve: context.theme.animationCurve ?? Curves.linear,
+                duration: theme.mediumAnimationDuration ?? Duration.zero,
+                curve: theme.animationCurve ?? Curves.linear,
                 color: background,
                 child: MediaQuery(
                   child: Row(
