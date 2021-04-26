@@ -23,6 +23,7 @@ class MacosThemeData with Diagnosticable {
     Duration? mediumAnimationDuration,
     Typography? typography,
     PushButtonThemeData? pushButtonTheme,
+    Color? dividerColor,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -42,6 +43,7 @@ class MacosThemeData with Diagnosticable {
           ? Color.fromRGBO(255, 255, 255, 0.1)
           : Color.fromRGBO(244, 245, 245, 1.0),
     );
+    dividerColor ??= isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000);
 
     return MacosThemeData._raw(
       brightness: _brightness,
@@ -51,6 +53,7 @@ class MacosThemeData with Diagnosticable {
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
+      dividerColor: dividerColor,
     );
   }
 
@@ -62,6 +65,7 @@ class MacosThemeData with Diagnosticable {
     required this.mediumAnimationDuration,
     required this.typography,
     required this.pushButtonTheme,
+    required this.dividerColor,
   });
 
   // todo: documentation
@@ -99,6 +103,9 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [PushButton]s below the overall [MacosTheme].
   final PushButtonThemeData pushButtonTheme;
 
+  /// The color to use when painting the line used for the [TitleBar] bottom, [Sidebar] and [ResizableBar] sides
+  final Color? dividerColor;
+
   MacosThemeData resolveFrom(BuildContext context) {
     /*Color? convertColor(Color? color) =>
         CupertinoDynamicColor.maybeResolve(color, context);*/
@@ -111,6 +118,7 @@ class MacosThemeData with Diagnosticable {
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
+      dividerColor: dividerColor,
     );
   }
 }
