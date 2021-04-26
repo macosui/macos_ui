@@ -26,9 +26,13 @@ class ContentArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: ScaffoldScope.of(context).contentAreaWidth,
-      child: Scrollbar(
-        controller: _scrollController,
-        child: builder!(context, _scrollController),
+      child: SafeArea(
+        left: false,
+        right: false,
+        child: Scrollbar(
+          controller: _scrollController,
+          child: builder!(context, _scrollController),
+        ),
       ),
     );
   }
