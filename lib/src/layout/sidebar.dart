@@ -25,7 +25,7 @@ class Sidebar {
   final ScrollableWidgetBuilder builder;
 
   /// The [BoxDecoration] to paint behind the child in the [builder].
-  final Decoration? decoration;
+  final BoxDecoration? decoration;
 
   /// Specifies whether the [Sidebar] can be resized by dragging or not.
   final bool? isResizable;
