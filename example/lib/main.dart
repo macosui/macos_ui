@@ -36,16 +36,35 @@ class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      sidebar: Center(
-        child: Text('Sidebar'),
+      titleBar: TitleBar(
+        child: Text("Titlebar"),
       ),
-      body: Center(
-        child: Container(
-          height: 50.0,
-          width: 50.0,
-          color: context.theme.accentColor,
+      sidebar: Sidebar(
+        minWidth: 200,
+        builder: (context, _) {
+          return Center(
+            child: Text("Sidebar"),
+          );
+        },
+      ),
+      children: <Widget>[
+        ContentArea(
+          builder: (context, _) {
+            return Center(
+              child: Text("ContentArea"),
+            );
+          },
         ),
-      ),
+        ResizablePane(
+          minWidth: 200,
+          resizableSide: ResizableSide.left,
+          builder: (context, _) {
+            return Center(
+              child: Text("ResizablePane"),
+            );
+          },
+        ),
+      ],
     );
   }
 }
