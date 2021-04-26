@@ -11,7 +11,10 @@ export 'package:flutter/material.dart'
         DefaultMaterialLocalizations,
         PageTransitionsBuilder,
         FlutterLogo,
-        CircleAvatar;
+        CircleAvatar,
+        Scrollbar,
+        VerticalDivider,
+        Divider;
 export 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor;
 
@@ -20,3 +23,7 @@ export 'src/util.dart';
 export 'src/styles/theme.dart';
 export 'src/styles/typography.dart';
 export 'src/layout/scaffold.dart';
+export 'src/layout/content_area.dart';
+export 'src/layout/resizable_pane.dart';
+export 'src/layout/sidebar.dart';
+export 'src/layout/title_bar.dart';
