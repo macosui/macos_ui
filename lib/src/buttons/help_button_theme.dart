@@ -31,7 +31,7 @@ class HelpButtonTheme extends InheritedTheme {
   /// ```
   static HelpButtonThemeData of(BuildContext context) {
     final HelpButtonTheme? buttonTheme =
-    context.dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
+        context.dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).helpButtonTheme;
   }
 

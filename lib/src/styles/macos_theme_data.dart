@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import '../../macos_ui.dart';
 
 /// Styling specifications for a [MacosTheme].

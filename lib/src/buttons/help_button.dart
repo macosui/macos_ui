@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
-import '../../macos_ui.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
+import '../../macos_ui.dart';
 
 /// A macOS-style button.
 class HelpButton extends StatefulWidget {
@@ -133,10 +133,8 @@ class _HelpButtonState extends State<HelpButton>
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color? backgroundColor = widget.color == null
@@ -150,8 +148,8 @@ class _HelpButtonState extends State<HelpButton>
     final Color? foregroundColor = widget.enabled
         ? iconLuminance(backgroundColor!, theme.brightness!.isDark)
         : theme.brightness!.isDark
-        ? Color.fromRGBO(255, 255, 255, 0.25)
-        : Color.fromRGBO(0, 0, 0, 0.25);
+            ? Color.fromRGBO(255, 255, 255, 0.25)
+            : Color.fromRGBO(0, 0, 0, 0.25);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -170,24 +168,25 @@ class _HelpButtonState extends State<HelpButton>
             opacity: _opacityAnimation,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: !enabled
-                      ? CupertinoDynamicColor.resolve(disabledColor!, context)
-                      : backgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(-0.1, -0.1),
-                    ),
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(0.1, 0.1),
-                    ),
-                    BoxShadow(
-                      color: CupertinoColors.tertiarySystemFill,
-                      offset: Offset(0, 0),
-                    ),
-                  ],),
+                shape: BoxShape.circle,
+                color: !enabled
+                    ? CupertinoDynamicColor.resolve(disabledColor!, context)
+                    : backgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(-0.1, -0.1),
+                  ),
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(0.1, 0.1),
+                  ),
+                  BoxShadow(
+                    color: CupertinoColors.tertiarySystemFill,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
               child: Padding(
                 padding: EdgeInsets.all(8),
                 child: Align(

@@ -1,3 +1,6 @@
+## [0.0.8]
+* Implemented 'HelpButton'
+
 ## [0.0.7]
 * Implemented `Checkbox`
 * Implemented `RadioButton`
