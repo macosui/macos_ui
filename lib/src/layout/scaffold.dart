@@ -103,18 +103,19 @@ class _ScaffoldState extends State<Scaffold> {
     debugCheckHasMacosTheme(context);
 
     final theme = context.macosTheme;
-    late Color background;
-    late Color sidebarColor;
+    late Color backgroundColor;
+    late Color sidebarBackgroundColor;
+    Color dividerColor = theme.dividerColor!;
 
     if (!theme.brightness!.isDark) {
-      background =
+      backgroundColor =
           widget.backgroundColor ?? CupertinoColors.systemBackground.color;
-      sidebarColor =
-          widget.sidebar?.resizerColor ?? CupertinoColors.systemGrey6.color;
+      sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
+          CupertinoColors.systemGrey6.color;
     } else {
-      background = widget.backgroundColor ??
+      backgroundColor = widget.backgroundColor ??
           CupertinoColors.systemBackground.darkElevatedColor;
-      sidebarColor = widget.sidebar?.resizerColor ??
+      sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
           CupertinoColors.tertiarySystemBackground.darkColor;
     }
 
@@ -138,7 +139,7 @@ class _ScaffoldState extends State<Scaffold> {
                 child: AnimatedContainer(
                   duration: theme.mediumAnimationDuration ?? Duration.zero,
                   curve: theme.animationCurve ?? Curves.linear,
-                  color: sidebarColor,
+                  color: sidebarBackgroundColor,
                   child: Padding(
                     padding: widget.sidebar?.padding ??
                         EdgeInsets.only(top: titleBarHeight - 1),
@@ -146,7 +147,7 @@ class _ScaffoldState extends State<Scaffold> {
                       children: [
                         if (_sidebarScrollController.hasClients &&
                             _sidebarScrollController.offset > 0.0)
-                          Divider(thickness: 1, height: 1),
+                          Divider(thickness: 1, height: 1, color: dividerColor),
                         Expanded(
                           child: Scrollbar(
                             controller: _sidebarScrollController,
@@ -168,7 +169,7 @@ class _ScaffoldState extends State<Scaffold> {
               child: AnimatedContainer(
                 duration: theme.mediumAnimationDuration ?? Duration.zero,
                 curve: theme.animationCurve ?? Curves.linear,
-                color: background,
+                color: backgroundColor,
                 child: MediaQuery(
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -193,23 +194,18 @@ class _ScaffoldState extends State<Scaffold> {
                   child: BackdropFilter(
                     filter: widget.titleBar?.decoration?.color?.alpha == 255
                         ? ImageFilter.blur()
-                        : ImageFilter.blur(
-                            sigmaX: 5.0,
-                            sigmaY: 5.0,
-                          ),
+                        : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                     child: Container(
                       alignment: widget.titleBar?.alignment ?? Alignment.center,
                       padding: widget.titleBar?.padding ?? EdgeInsets.all(8),
                       child: FittedBox(child: widget.titleBar?.child),
                       decoration: BoxDecoration(
-                        color: background,
+                        color: backgroundColor,
                       ).copyWith(
                         color: widget.titleBar?.decoration?.color,
                         image: widget.titleBar?.decoration?.image,
                         border: widget.titleBar?.decoration?.border ??
-                            Border(
-                              bottom: BorderSide(color: Color(0x1F000000)),
-                            ),
+                            Border(bottom: BorderSide(color: dividerColor)),
                         borderRadius: widget.titleBar?.decoration?.borderRadius,
                         boxShadow: widget.titleBar?.decoration?.boxShadow,
                         gradient: widget.titleBar?.decoration?.gradient,
@@ -220,36 +216,37 @@ class _ScaffoldState extends State<Scaffold> {
               ),
 
             // Sidebar resizer
-            Positioned(
-              left: _sidebarWidth - 4,
-              width: 7,
-              height: height,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onHorizontalDragUpdate: (details) {
-                  setState(() {
-                    _sidebarWidth = math.max(
-                      widget.sidebar!.minWidth,
-                      math.min(
-                        math.min(widget.sidebar!.maxWidth!, width),
-                        _sidebarWidth + details.delta.dx,
+            if (widget.sidebar?.isResizable ?? false)
+              Positioned(
+                left: _sidebarWidth - 4,
+                width: 7,
+                height: height,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onHorizontalDragUpdate: (details) {
+                    setState(() {
+                      _sidebarWidth = math.max(
+                        widget.sidebar!.minWidth,
+                        math.min(
+                          math.min(widget.sidebar!.maxWidth!, width),
+                          _sidebarWidth + details.delta.dx,
+                        ),
+                      );
+                    });
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.resizeColumn,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: VerticalDivider(
+                        thickness: 1,
+                        width: 1,
+                        color: dividerColor,
                       ),
-                    );
-                  });
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.resizeColumn,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: VerticalDivider(
-                      thickness: 1,
-                      width: 1,
-                      color: Color(0x1F000000),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         );
 
