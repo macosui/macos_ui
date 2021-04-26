@@ -91,6 +91,13 @@ class _DemoState extends State<Demo> {
             );
           },
         ),
+        ResizablePane(
+          minWidth: 200,
+          resizableSide: ResizableSide.left,
+          builder: (_, __) {
+            return Center(child: Text("Resizable Pane"));
+          },
+        ),
       ],
     );
   }
