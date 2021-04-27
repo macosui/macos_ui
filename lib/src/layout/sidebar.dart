@@ -6,15 +6,14 @@ class Sidebar {
   ///
   /// The [builder] and [minWidth] properties are required.
   /// The sidebar builds with a scrollbar internally.
-  Sidebar({
+  const Sidebar({
     required this.builder,
     required this.minWidth,
     this.key,
     this.decoration,
-    this.resizerColor,
     this.isResizable = true,
     this.maxWidth = 400.0,
-    this.padding,
+    this.padding = EdgeInsets.zero,
   });
 
   /// The builder that creates a child to display in this widget, which will
@@ -61,9 +60,6 @@ class Sidebar {
   /// Empty space to inscribe inside the title bar. The [child], if any, is
   /// placed inside this padding.
   ///
-  /// Defaults to `EdgeInsets.only(top: 52.0)`.
-  final EdgeInsets? padding;
-
-  /// Specifies the color the resizer on the right side of the [Sidebar].
-  final Color? resizerColor;
+  /// Defaults to `EdgeInsets.zero`.
+  final EdgeInsets padding;
 }
