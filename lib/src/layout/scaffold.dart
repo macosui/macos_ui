@@ -23,19 +23,13 @@ class Scaffold extends StatefulWidget {
   /// Creates a macOS window layout.
   ///
   /// The [children] can only include one [ContentArea], but can no or multiple [ResizablePane] widgets.
-  Scaffold({
+  const Scaffold({
     Key? key,
     this.children = const <Widget>[],
     this.sidebar,
     this.titleBar,
     this.backgroundColor,
-  })  : assert(
-          children.every((e) => e is ContentArea || e is ResizablePane),
-          'Scaffold children must either be ResizablePane or ContentArea',
-        ),
-        assert(children.whereType<ContentArea>().length <= 1,
-            'Scaffold cannot have more than one ContentArea widget'),
-        super(key: key);
+  }) : super(key: key);
 
   /// Specifies the background color for the Scaffold.
   ///
@@ -101,6 +95,14 @@ class _ScaffoldState extends State<Scaffold> {
   // ignore: code-metrics
   Widget build(BuildContext context) {
     debugCheckHasMacosTheme(context);
+    assert(
+      widget.children.every((e) => e is ContentArea || e is ResizablePane),
+      'Scaffold children must either be ResizablePane or ContentArea',
+    );
+    assert(
+      widget.children.whereType<ContentArea>().length <= 1,
+      'Scaffold cannot have more than one ContentArea widget',
+    );
 
     final theme = context.macosTheme;
     late Color backgroundColor;
@@ -140,23 +142,23 @@ class _ScaffoldState extends State<Scaffold> {
                   duration: theme.mediumAnimationDuration ?? Duration.zero,
                   curve: theme.animationCurve ?? Curves.linear,
                   color: sidebarBackgroundColor,
-                  child: Padding(
-                    padding: widget.sidebar?.padding ??
-                        EdgeInsets.only(top: titleBarHeight - 1),
-                    child: Column(
-                      children: [
-                        if (_sidebarScrollController.hasClients &&
-                            _sidebarScrollController.offset > 0.0)
-                          Divider(thickness: 1, height: 1, color: dividerColor),
-                        Expanded(
-                          child: Scrollbar(
-                            controller: _sidebarScrollController,
+                  child: Column(
+                    children: [
+                      SizedBox(height: titleBarHeight - 1),
+                      if (_sidebarScrollController.hasClients &&
+                          _sidebarScrollController.offset > 0.0)
+                        Divider(thickness: 1, height: 1, color: dividerColor),
+                      Expanded(
+                        child: Scrollbar(
+                          controller: _sidebarScrollController,
+                          child: Padding(
+                            padding: widget.sidebar?.padding ?? EdgeInsets.zero,
                             child: widget.sidebar!
                                 .builder(context, _sidebarScrollController),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -197,7 +199,7 @@ class _ScaffoldState extends State<Scaffold> {
                         : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                     child: Container(
                       alignment: widget.titleBar?.alignment ?? Alignment.center,
-                      padding: widget.titleBar?.padding ?? EdgeInsets.all(8),
+                      padding: widget.titleBar?.padding,
                       child: FittedBox(child: widget.titleBar?.child),
                       decoration: BoxDecoration(
                         color: backgroundColor,
