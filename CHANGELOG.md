@@ -1,3 +1,6 @@
+## [0.0.9]
+* Revamp Scaffold [#26] (https://github.com/GroovinChip/macos_ui/issues/26)
+
 ## [0.0.8]
 * Fixed [#49](https://github.com/GroovinChip/macos_ui/issues/49)
 
