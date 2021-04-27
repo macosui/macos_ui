@@ -18,7 +18,7 @@ class ResizablePane extends StatefulWidget {
   /// The [builder], [minWidth] and [resizableSide] can not be null.
   /// The [maxWidth] and the [scaffoldBreakpoint] default to `500.00`.
   /// [isResizable] defaults to `true`.
-  ResizablePane({
+  const ResizablePane({
     Key? key,
     required this.builder,
     this.decoration,
@@ -27,8 +27,7 @@ class ResizablePane extends StatefulWidget {
     this.isResizable = true,
     required this.resizableSide,
     this.scaffoldBreakpoint = 500,
-  })  : assert(maxWidth! >= minWidth),
-        super(key: key);
+  }) : super(key: key);
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -138,6 +137,8 @@ class ResizablePaneState extends State<ResizablePane> {
 
   @override
   Widget build(BuildContext context) {
+    assert(widget.maxWidth! >= widget.minWidth);
+
     if (!_notifier.value.containsKey(_key)) {
       _notifier.update(_key, _width, notify: false);
     }
