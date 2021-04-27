@@ -7,10 +7,10 @@ class TitleBar {
   ///
   /// The [size] value includes the padding.
   /// All the values of the [TitleBar] can be null.
-  TitleBar({
+  const TitleBar({
     this.alignment,
     this.child,
-    this.padding,
+    this.padding = const EdgeInsets.all(8),
     this.decoration,
     this.size = TitleBarSize.large,
   });
@@ -40,7 +40,7 @@ class TitleBar {
   /// placed inside this padding.
   ///
   /// Defaults to `EdgeInsets.all(8)`
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
 
   /// Height of the title bar. This defaults to [TitleBarSize.large]
   final TitleBarSize? size;
