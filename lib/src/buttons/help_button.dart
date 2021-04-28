@@ -1,19 +1,21 @@
-import 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 import '../../macos_ui.dart';
 
-/// A macOS-style button.
+/// A help button appears within a view and opens app-specific help documentation when clicked.
+/// For help documentation creation guidance, see Help. All help buttons are circular,
+/// consistently sized buttons that contain a question mark icon. Whenever possible,
+/// open a help topic related to the current context. For example,
+/// the Rules pane of Mail preferences includes a help button.
+/// When clicked, it opens directly to a Rules preferences help topic.
 class HelpButton extends StatefulWidget {
+  ///pressedOpacity, if non-null, must be in the range if 0.0 to 1.0
   const HelpButton({
     Key? key,
     this.color,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
-    this.alignment = Alignment.center,
+    this.alignment = Alignment.center, this.semanticLabel,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -26,7 +28,7 @@ class HelpButton extends StatefulWidget {
   /// Ignored if the [HelpButton] doesn't also have a [color].
   ///
   /// Defaults to [CupertinoColors.quaternarySystemFill] when [color] is
-  /// specified. Must not be null.
+  /// specified.
   final Color? disabledColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
@@ -50,6 +52,9 @@ class HelpButton extends StatefulWidget {
   ///
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
+
+  ///Provides a textual description of the button.
+  final String? semanticLabel;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -137,13 +142,9 @@ class _HelpButtonState extends State<HelpButton>
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color? backgroundColor = widget.color == null
-        ? theme.helpButtonTheme.color
-        : CupertinoDynamicColor.maybeResolve(widget.color, context);
+    final Color? backgroundColor = DynamicColorX.macosResolve(widget.color ?? theme.helpButtonTheme.color, context);
 
-    final Color? disabledColor = widget.disabledColor == null
-        ? theme.helpButtonTheme.disabledColor
-        : CupertinoDynamicColor.maybeResolve(widget.disabledColor, context);
+    final Color? disabledColor = DynamicColorX.macosResolve(widget.disabledColor ?? theme.helpButtonTheme.disabledColor, context);
 
     final Color? foregroundColor = widget.enabled
         ? iconLuminance(backgroundColor!, theme.brightness!.isDark)
@@ -158,6 +159,7 @@ class _HelpButtonState extends State<HelpButton>
       onTapCancel: enabled ? _handleTapCancel : null,
       onTap: widget.onPressed,
       child: Semantics(
+        label: widget.semanticLabel,
         button: true,
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -170,7 +172,7 @@ class _HelpButtonState extends State<HelpButton>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: !enabled
-                    ? CupertinoDynamicColor.resolve(disabledColor!, context)
+                    ? DynamicColorX.macosResolve(disabledColor!, context)
                     : backgroundColor,
                 boxShadow: [
                   BoxShadow(

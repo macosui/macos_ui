@@ -81,7 +81,7 @@ class HelpButtonThemeData with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('color', color));
-    properties.add(DiagnosticsProperty('disabledColor', disabledColor));
+    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('disabledColor', disabledColor));
   }
 }
