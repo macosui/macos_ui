@@ -33,7 +33,7 @@ jobs:
       
       # This step is useful for PR's coming from forks. It takes the raw JSON and formats a report from it.
       - name: Format scores json
-          env:
-            JSON_OUTPUT: ${{ steps.analysis.outputs.json_output }}
-          run: |
-            TOTAL_SCORE=$(jq -r '.scores.grantedPoints' <<< "$JSON_OUTPUT")
+        env:
+          JSON_OUTPUT: ${{ steps.analysis.outputs.json_output }}
+        run: |
+          TOTAL_SCORE=$(jq -r '.scores.grantedPoints' <<< "$JSON_OUTPUT")
