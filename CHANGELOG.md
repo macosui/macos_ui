@@ -1,4 +1,6 @@
-## [0.0.8]
+## [0.0.9]
+* Implemented 'HelpButton'
+=======
 * Fixed [#49](https://github.com/GroovinChip/macos_ui/issues/49)
 
 ## [0.0.7]

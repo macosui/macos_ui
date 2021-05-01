@@ -17,3 +17,13 @@ Color textLuminance(Color backgroundColor) {
       ? CupertinoColors.black
       : CupertinoColors.white;
 }
+
+Color iconLuminance(Color backgroundColor, bool isDark) {
+  return !isDark
+      ? backgroundColor.computeLuminance() > 0.5
+          ? CupertinoColors.black
+          : CupertinoColors.white
+      : backgroundColor.computeLuminance() < 0.5
+          ? CupertinoColors.black
+          : CupertinoColors.white;
+}

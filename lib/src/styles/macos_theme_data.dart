@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:macos_ui/src/buttons/push_button_theme.dart';
 
 import '../../macos_ui.dart';
 
@@ -23,6 +22,7 @@ class MacosThemeData with Diagnosticable {
     Duration? mediumAnimationDuration,
     Typography? typography,
     PushButtonThemeData? pushButtonTheme,
+    HelpButtonThemeData? helpButtonTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -42,6 +42,14 @@ class MacosThemeData with Diagnosticable {
           ? Color.fromRGBO(255, 255, 255, 0.1)
           : Color.fromRGBO(244, 245, 245, 1.0),
     );
+    helpButtonTheme ??= HelpButtonThemeData(
+      color: isDark
+          ? Color.fromRGBO(255, 255, 255, 0.1)
+          : Color.fromRGBO(244, 245, 245, 1.0),
+      disabledColor: isDark
+          ? Color.fromRGBO(255, 255, 255, 0.1)
+          : Color.fromRGBO(244, 245, 245, 1.0),
+    );
 
     return MacosThemeData._raw(
       brightness: _brightness,
@@ -51,6 +59,7 @@ class MacosThemeData with Diagnosticable {
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
+      helpButtonTheme: helpButtonTheme,
     );
   }
 
@@ -62,6 +71,7 @@ class MacosThemeData with Diagnosticable {
     required this.mediumAnimationDuration,
     required this.typography,
     required this.pushButtonTheme,
+    required this.helpButtonTheme,
   });
 
   // todo: documentation
@@ -99,6 +109,9 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [PushButton]s below the overall [MacosTheme].
   final PushButtonThemeData pushButtonTheme;
 
+  /// The default style for [HelpButton]s below the overall [MacosTheme].
+  final HelpButtonThemeData helpButtonTheme;
+
   MacosThemeData resolveFrom(BuildContext context) {
     /*Color? convertColor(Color? color) =>
         CupertinoDynamicColor.maybeResolve(color, context);*/
@@ -111,6 +124,7 @@ class MacosThemeData with Diagnosticable {
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
+      helpButtonTheme: helpButtonTheme,
     );
   }
 }

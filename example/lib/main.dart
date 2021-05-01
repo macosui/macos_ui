@@ -60,6 +60,9 @@ class _DemoState extends State<Demo> {
             value: value,
             onChanged: (v) => setState(() => value = v),
           ),
+          HelpButton(
+            onPressed: () {},
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CapacityIndicator(
