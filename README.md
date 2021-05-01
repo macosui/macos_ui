@@ -111,9 +111,24 @@ PushButton(
 
 ## Switch
 
-<img src="https://imgur.com/IBh5jkz.jpg" width="50%" height="50%"/>
+A switch is a visual toggle between two mutually exclusive states — on and off. A switch shows that it's on when the accent color is visible and off when the switch appears colorless. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/switches/)
 
-<img src="https://imgur.com/qK1VCVr.jpg" width="50%" height="50%"/>
+| On                                         | Off                                        |
+| ------------------------------------------ | ------------------------------------------ |
+| <img src="https://imgur.com/qK1VCVr.jpg"/> | <img src="https://imgur.com/IBh5jkz.jpg"/> |
+
+Here's an example of how to create a basic toggle switch:
+
+```dart
+bool selected = false;
+
+Switch(
+  value: selected,
+  onChanged: (value) {
+    setState(() => selected = value);
+  },
+),
+```
 
 # Indicators
 
