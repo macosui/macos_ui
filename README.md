@@ -66,7 +66,22 @@ To make a checkbox in the `mixed` state, set `value` to `null`.
 
 ## RadioButton
 
-![](https://developer.apple.com/design/human-interface-guidelines/macos/images/radioButtons.png)
+A radio button is a small, circular button followed by a title. Typically presented in groups of two to five, radio buttons provide the user a set of related but mutually exclusive choices. A radio button’s state is either on (a filled circle) or off (an empty circle). [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/radio-buttons/)
+
+![RadioButton Preview](https://developer.apple.com/design/human-interface-guidelines/macos/images/radioButtons.png)
+
+Here's an example of how to create a basic radio button:
+
+```dart
+bool selected = false;
+
+RadioButton(
+  value: selected,
+  onChanged: (value) {
+    setState(() => selected = value);
+  },
+),
+```
 
 ## PushButton
 
