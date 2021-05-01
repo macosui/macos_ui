@@ -30,3 +30,10 @@ jobs:
             echo Score too low!
             exit 1
           fi
+      
+      #
+      - name: Format scores json
+          env:
+            JSON_OUTPUT: ${{ steps.analysis.outputs.json_output }}
+          run: |
+            TOTAL_SCORE=$(jq -r '.scores.grantedPoints' <<< "$JSON_OUTPUT")
