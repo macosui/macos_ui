@@ -43,9 +43,26 @@ dragging left or right. See the documentation for all customization options.
 
 ## Checkbox
 
-| off | on | mixed |
+A checkbox is a type of button that lets the user choose between two opposite states, actions, or values. A selected checkbox is considered on when it contains a checkmark and off when it's empty. A checkbox is almost always followed by a title unless it appears in a checklist. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/checkboxes/)
+
+| Off | On | Mixed |
 | --- | -- | ----- |
-| ![](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Deselected.svg) | ![](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Selected.svg) | ![](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Mixed.svg) |
+| ![Off Checkbox](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Deselected.svg) | ![On Checkbox](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Selected.svg) | ![Mixed Checkbox](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Mixed.svg) |
+
+Here's an example of how to create a basic checkbox:
+
+```dart
+bool selected = false;
+
+Checkbox(
+  value: selected,
+  onChanged: (value) {
+    setState(() => selected = value);
+  },
+)
+```
+
+To make a checkbox in the `mixed` state, set `value` to `null`.
 
 ## RadioButton
 
