@@ -15,7 +15,8 @@ class HelpButton extends StatefulWidget {
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
-    this.alignment = Alignment.center, this.semanticLabel,
+    this.alignment = Alignment.center,
+    this.semanticLabel,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -142,9 +143,11 @@ class _HelpButtonState extends State<HelpButton>
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color? backgroundColor = DynamicColorX.macosResolve(widget.color ?? theme.helpButtonTheme.color, context);
+    final Color? backgroundColor = DynamicColorX.macosResolve(
+        widget.color ?? theme.helpButtonTheme.color, context);
 
-    final Color? disabledColor = DynamicColorX.macosResolve(widget.disabledColor ?? theme.helpButtonTheme.disabledColor, context);
+    final Color? disabledColor = DynamicColorX.macosResolve(
+        widget.disabledColor ?? theme.helpButtonTheme.disabledColor, context);
 
     final Color? foregroundColor = widget.enabled
         ? iconLuminance(backgroundColor!, theme.brightness!.isDark)
