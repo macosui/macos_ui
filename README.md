@@ -16,8 +16,13 @@ Implements Apple's macOS Design System in Flutter. Based on the official documen
   - [PushButton](#pushbutton)
   - [Switch](#switch)
 - [Indicators](#indicators)
-  - [ProgressCircle](#progresscircle)
-  - [ProgressBar](#progressbar)
+  - [Progress Indicators](#progress-indicators)
+    - [ProgressCircle](#progresscircle)
+    - [ProgressBar](#progressbar)
+  - [Level Indicators](#level-indicators)
+    - [CapacityIndicator](#capacityindicator)
+    - [RatingIndicator](#ratingindicator)
+    - [RelevanceIndicator](#relevanceindicator)
 
 ## Contributing
 
@@ -132,15 +137,113 @@ Switch(
 
 # Indicators
 
-## ProgressCircle
+## Progress Indicators
 
-A `ProgressCircle` can be either determinate or indeterminate. If indeterminate, Flutter's
-`CupertinoActivityIndicator` will be shown.
+Don’t make people sit around staring at a static screen waiting for your app to load content or perform lengthy data processing operations. Use progress indicators to let people know your app hasn't stalled and to give them some idea of how long they’ll be waiting.
 
-<img src="https://imgur.com/hr3dHn9.jpg" width="50%" height="50%"/>
+Progress indicators have two distinct styles:
 
-<img src="https://imgur.com/NSbKqLK.gif" width="50%" height="50%"/>
+- **Bar indicators**, more commonly known as progress bars, show progress in a horizontal bar.
+- **Spinning indicators** show progress in a circular form, either as a spinner or as a circle that fills in as progress continues.
 
-## ProgressBar
+People don't interact with progress indicators; however, they are often accompanied by a button for canceling the corresponding operation. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/progress-indicators/)
+
+![Progress Indicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/ProgressIndicators_Lead.png)
+
+### ProgressCircle
+
+A `ProgressCircle` can be either determinate or indeterminate.
+
+| Determinate Progress Circle                | Indeterminate Progress Circle              |
+| ------------------------------------------ | ------------------------------------------ |
+| <img src="https://imgur.com/hr3dHn9.jpg"/> | <img src="https://imgur.com/NSbKqLK.gif"/> |
+
+Here's an example of how to create an indeterminate progress circle:
+
+```dart
+ProgressCircle(
+  value: null,
+),
+```
+
+You can provide a non-null value to `value` to make the progress circle determinate.
+
+### ProgressBar
+
+A `ProgressBar` can only be determinate.
 
 <img src="https://imgur.com/tdYgJmB.jpg" width="50%" height="50%"/>
+
+Here's an example of how to create a determinate progress bar:
+
+```dart
+ProgressBar(
+  value: 30,
+)
+```
+
+## Level Indicators
+
+A level indicator graphically represents of a specific value within a range of numeric values. It’s similar to a [slider](#slider) in purpose, but more visual and doesn’t contain a distinct control for selecting a value—clicking and dragging across the level indicator itself to select a value is supported, however. A level indicator can also include tick marks, making it easy for the user to pinpoint a specific value in the range. There are three different level indicator styles, each with a different appearance, for communicating capacity, rating, and relevance.
+
+### CapacityIndicator
+
+A capacity indicator illustrates the current level in relation to a finite capacity. Capacity indicators are often used when communicating factors like disk and battery usage. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/level-indicators#capacity-indicators)
+
+| Continuous | Discrete |
+| ---------- | -------- |
+| ![Continuous CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-continous.png) | ![Discrete CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-discrete.png) |
+| A horizontal translucent track that fills with a colored bar to indicate the current value. Tick marks are often displayed to provide context. | A horizontal row of separate, equally sized, rectangular segments. The number of segments matches the total capacity, and the segments fill completely—never partially—with color to indicate the current value. |
+
+Here's an example of how to create an interactive continuous capacity indicator:
+
+```dart
+double value = 30;
+
+CapacityIndicator(
+  value: value,
+  discrete: false,
+  onChanged: (v) {
+    setState(() => value = v);
+  },
+),
+```
+
+You can set `discrete` to `true` to make it a discrete capacity indicator.
+
+### RatingIndicator
+
+A rating indicator uses a series of horizontally arranged graphical symbols to communicate a ranking level. The default symbol is a star.
+
+![RatingIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicator-rating.png)
+
+A rating indicator doesn’t display partial symbols—its value is rounded in order to display complete symbols only. Within a rating indicator, symbols are always the same distance apart and don't expand or shrink to fit the control. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/level-indicators#rating-indicators)
+
+Here's an example of how to create an interactive rating indicator:
+
+```dart
+double value = 3;
+
+RatingIndicator(
+  amount: 5,
+  value: value,
+  onChanged: (v) {
+    setState(() => value = v);
+  }
+)
+```
+
+### RelevanceIndicator
+
+A relevance indicator communicates relevancy using a series of vertical bars. It often appears in a list of search results for reference when sorting and comparing multiple items. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/level-indicators#relevance-indicators)
+
+![RelevanceIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicator-relevance.png)
+
+Here's an example of how to create a relevance indicator:
+
+```dart
+RelevanceIndicator(
+  value: 15,
+  amount: 20,
+)
+```
