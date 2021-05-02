@@ -1,5 +1,6 @@
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:split_view/split_view.dart'; //todo: fork and migrate to nnbd
+import 'package:split_view/split_view.dart';
 
 /// A basic screen-layout widget.
 ///

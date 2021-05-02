@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// A rating indicator uses a series of horizontally arranged

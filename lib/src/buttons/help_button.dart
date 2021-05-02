@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import '../../macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 /// A help button appears within a view and opens app-specific help documentation when clicked.
 /// For help documentation creation guidance, see Help. All help buttons are circular,
@@ -154,10 +155,14 @@ class _HelpButtonState extends State<HelpButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color? backgroundColor = DynamicColorX.macosResolve(
-        widget.color ?? theme.helpButtonTheme.color, context);
+      widget.color ?? theme.helpButtonTheme.color,
+      context,
+    );
 
     final Color? disabledColor = DynamicColorX.macosResolve(
-        widget.disabledColor ?? theme.helpButtonTheme.disabledColor, context);
+      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
+      context,
+    );
 
     final Color? foregroundColor = widget.enabled
         ? iconLuminance(backgroundColor!, theme.brightness!.isDark)

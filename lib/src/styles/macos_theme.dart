@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/macos_ui.dart';
 
-import '../../macos_ui.dart';
 import 'macos_theme_data.dart';
 
 /// Applies a macOS-style theme to descendant macOS widgets.
