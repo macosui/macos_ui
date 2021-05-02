@@ -12,6 +12,7 @@ export 'package:flutter/material.dart'
         FlutterLogo,
         CircleAvatar;
 
+// TODO: package-level docs
 export 'package:flutter/widgets.dart';
 
 export 'src/buttons/checkbox.dart';
