@@ -1,5 +1,3 @@
-library macos_ui;
-
 /// Flutter widgets and themes implementing the current macOS design language.
 ///
 /// To use, `import 'package:macos_ui/macos_ui.dart';`
@@ -9,6 +7,8 @@ library macos_ui;
 /// libraries for apps that run on other desktop platforms:
 /// * For Windows, [fluent_ui](https://pub.dev/packages/fluent_ui)
 /// * For Linux, [yaru](https://pub.dev/packages/yaru)
+
+library macos_ui;
 
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/help_button.dart';
