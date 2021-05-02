@@ -1,5 +1,5 @@
 ## [0.0.9+1]
-* `CapacityIndicator` colors can now be setted on its constructor
+* `CapacityIndicator` colors can now be set on its constructor
 * Accessibility support for most of the widgets
 * Diagnostics Properties (dev tools) for most of the widgets
 
