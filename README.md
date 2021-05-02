@@ -12,6 +12,7 @@ Implements Apple's macOS Design System in Flutter. Based on the official documen
   - [Scaffold](#scaffold)
 - [Buttons](#buttons)
   - [Checkbox](#checkbox)
+  - [HelpButton](#helpbutton)
   - [RadioButton](#radiobutton)
   - [PushButton](#pushbutton)
   - [Switch](#switch)
@@ -71,6 +72,24 @@ Checkbox(
 ```
 
 To make a checkbox in the `mixed` state, set `value` to `null`.
+
+## HelpButton
+
+A help button appears within a view and opens app-specific help documentation when clicked. All help buttons are circular, consistently sized buttons that contain a question mark icon. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/help-buttons/)
+
+![HelpButton Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/buttonsHelp.png)
+
+Here's an example of how to create a help button:
+
+```dart
+HelpButton(
+  onPressed: () {
+    print('pressed help button'),
+  },
+)
+```
+
+You can customize the help button appearance and behaviour using the `HelpButtonTheme`, but it's not recommended by apple to change help button's appearance.
 
 ## RadioButton
 
