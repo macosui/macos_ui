@@ -1,9 +1,9 @@
 name: Gh-Pages
 on:
   push:
-    branches: [ dev, master ]
+    branches: [ dev, stable ]
   pull_request:
-    branches: [dev, master]
+    branches: [dev, stable]
 
 jobs:
   build:
