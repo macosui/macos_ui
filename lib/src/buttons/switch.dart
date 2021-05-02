@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart' as c;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// A switch is a visual toggle between two mutually exclusive
@@ -13,6 +15,7 @@ class Switch extends StatelessWidget {
     this.dragStartBehavior = DragStartBehavior.start,
     this.activeColor,
     this.trackColor,
+    this.semanticLabel,
   }) : super(key: key);
 
   /// Whether this switch is on or off.
@@ -57,14 +60,40 @@ class Switch extends StatelessWidget {
   /// Defaults to [CupertinoColors.secondarySystemFill] when null.
   final Color? trackColor;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(FlagProperty(
+      'checked',
+      value: value,
+      ifFalse: 'unchecked',
+    ));
+    properties.add(EnumProperty('dragStartBehavior', dragStartBehavior));
+    properties.add(FlagProperty(
+      'enabled',
+      value: onChanged == null,
+      ifFalse: 'disabled',
+    ));
+    properties.add(ColorProperty('activeColor', activeColor));
+    properties.add(ColorProperty('trackColor', trackColor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return c.CupertinoSwitch(
-      value: value,
-      onChanged: onChanged,
-      dragStartBehavior: dragStartBehavior,
-      activeColor: activeColor ?? context.macosTheme.primaryColor,
-      trackColor: trackColor,
+    return Semantics(
+      label: semanticLabel,
+      checked: value,
+      child: c.CupertinoSwitch(
+        value: value,
+        onChanged: onChanged,
+        dragStartBehavior: dragStartBehavior,
+        activeColor: activeColor ?? context.macosTheme.primaryColor,
+        trackColor: trackColor,
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import '../../macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 /// A help button appears within a view and opens app-specific help documentation when clicked.
 /// For help documentation creation guidance, see Help. All help buttons are circular,
@@ -54,12 +55,22 @@ class HelpButton extends StatefulWidget {
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
 
-  ///Provides a textual description of the button.
+  /// The semantic label used by screen readers.
   final String? semanticLabel;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
 
   @override
   _HelpButtonState createState() => _HelpButtonState();
@@ -144,10 +155,14 @@ class _HelpButtonState extends State<HelpButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color? backgroundColor = DynamicColorX.macosResolve(
-        widget.color ?? theme.helpButtonTheme.color, context);
+      widget.color ?? theme.helpButtonTheme.color,
+      context,
+    );
 
     final Color? disabledColor = DynamicColorX.macosResolve(
-        widget.disabledColor ?? theme.helpButtonTheme.disabledColor, context);
+      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
+      context,
+    );
 
     final Color? foregroundColor = widget.enabled
         ? iconLuminance(backgroundColor!, theme.brightness!.isDark)

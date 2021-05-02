@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' hide Scaffold, Checkbox;
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
 

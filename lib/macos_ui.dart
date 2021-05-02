@@ -1,21 +1,14 @@
+/// Flutter widgets and themes implementing the current macOS design language.
+///
+/// To use, `import 'package:macos_ui/macos_ui.dart';`
+///
+/// This library is designed for apps that run on macOS. While it will work on
+/// other Flutter-supported platforms, we encourage the use of the following
+/// libraries for apps that run on other desktop platforms:
+/// * For Windows, [fluent_ui](https://pub.dev/packages/fluent_ui)
+/// * For Linux, [yaru](https://pub.dev/packages/yaru)
+
 library macos_ui;
-
-export 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
-export 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
-export 'package:flutter/material.dart'
-    show
-        Brightness,
-        ThemeMode,
-        Feedback,
-        DefaultMaterialLocalizations,
-        PageTransitionsBuilder,
-        FlutterLogo,
-        CircleAvatar;
-
-/// todo: package-level docs
-export 'package:flutter/widgets.dart';
 
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/help_button.dart';

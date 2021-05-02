@@ -1,15 +1,31 @@
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+/// Asserts that the given context has a [MacosTheme] ancestor.
+///
+/// To call this function, use the following pattern, typically in the
+/// relevant Widget's build method:
+///
+/// ```dart
+/// assert(debugCheckHasMacosTheme(context));
+/// ```
+///
+/// Does nothing if asserts are disabled. Always returns true.
 bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
-  // ignore: unnecessary_null_comparison
-  final has = context.macosTheme != null;
-  if (check)
-    assert(
-      has,
-      'A Theme widget is necessary to draw this layout. It is implemented by default in MacosApp. '
-      'To fix this, wrap a Theme widget upper in this layout or implement a MacosApp.',
-    );
-  return has;
+  assert(() {
+    if (MacosTheme.maybeOf(context) == null)
+      throw FlutterError.fromParts(<DiagnosticsNode>[
+        ErrorSummary('A MacosTheme widget is necessary to draw this layout.'),
+        ErrorHint(
+          'To introduce a MacosTheme widget, you can either directly '
+          'include one, or use a widget that contains MacosTheme itself, '
+          'such as MacosApp',
+        ),
+        ...context.describeMissingAncestor(expectedAncestorType: MacosTheme),
+      ]);
+    return true;
+  }());
+  return true;
 }
 
 Color textLuminance(Color backgroundColor) {

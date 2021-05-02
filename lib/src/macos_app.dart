@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart' as c;
-import 'package:flutter/material.dart';
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// An application that uses macOS design.

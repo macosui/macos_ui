@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-
-import '../../macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 /// Styling specifications for a [MacosTheme].
 ///
@@ -74,14 +74,14 @@ class MacosThemeData with Diagnosticable {
     required this.helpButtonTheme,
   });
 
-  // todo: documentation
+  // TODO: documentation
   factory MacosThemeData.light() =>
       MacosThemeData(brightness: Brightness.light);
 
-  // todo: documentation
+  // TODO: documentation
   factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
 
-  // todo: documentation
+  // TODO: documentation
   factory MacosThemeData.fallback() => MacosThemeData.light();
 
   /// The brightness override for macOS descendants.
@@ -97,10 +97,10 @@ class MacosThemeData with Diagnosticable {
   /// Defaults to [CupertinoColors.activeBlue].
   final Color? accentColor;
 
-  // todo: documentation
+  // TODO: documentation
   final Curve? animationCurve;
 
-  // todo: documentation
+  // TODO: documentation
   final Duration? mediumAnimationDuration;
 
   /// The default text styling for this theme.
