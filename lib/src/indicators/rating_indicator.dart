@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'package:macos_ui/macos_ui.dart';
 
 /// A rating indicator uses a series of horizontally arranged
@@ -25,6 +27,7 @@ class RatingIndicator extends StatelessWidget {
     this.iconColor,
     this.iconSize = 16,
     this.onChanged,
+    this.semanticLabel,
   })  : assert(iconSize >= 0),
         assert(amount > 0),
         assert(value >= 0 && value <= amount),
@@ -55,6 +58,22 @@ class RatingIndicator extends StatelessWidget {
   /// Called when the current value of the indicator changes.
   final ValueChanged<double>? onChanged;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IconDataProperty('ratedIcon', ratedIcon));
+    properties.add(IconDataProperty('unratedIcon', unratedIcon));
+    properties.add(ColorProperty('iconColor', iconColor));
+    properties.add(DoubleProperty('iconSize', iconSize));
+    properties.add(IntProperty('amount', amount));
+    properties.add(DoubleProperty('value', value));
+    properties.add(ObjectFlagProperty.has('onChanged', onChanged));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
+
   void _handleUpdate(Offset lp) {
     double value = lp.dx / iconSize;
     if (value.isNegative)
@@ -69,21 +88,26 @@ class RatingIndicator extends StatelessWidget {
       onPanStart: (event) => _handleUpdate(event.localPosition),
       onPanUpdate: (event) => _handleUpdate(event.localPosition),
       onPanDown: (event) => _handleUpdate(event.localPosition),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(amount, (index) {
-          final rated = value > index;
-          return Icon(
-            rated ? ratedIcon : unratedIcon,
-            color: DynamicColorX.macosResolve(
-              iconColor ??
-                  context.macosTheme.primaryColor ??
-                  CupertinoColors.activeBlue,
-              context,
-            ),
-            size: iconSize,
-          );
-        }),
+      child: Semantics(
+        slider: true,
+        label: semanticLabel,
+        value: value.toStringAsFixed(2),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(amount, (index) {
+            final rated = value > index;
+            return Icon(
+              rated ? ratedIcon : unratedIcon,
+              color: DynamicColorX.macosResolve(
+                iconColor ??
+                    context.macosTheme.primaryColor ??
+                    CupertinoColors.activeBlue,
+                context,
+              ),
+              size: iconSize,
+            );
+          }),
+        ),
       ),
     );
   }

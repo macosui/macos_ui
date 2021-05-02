@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
+
+import 'package:flutter/foundation.dart';
 
 enum ButtonSize {
   large,
@@ -29,6 +30,7 @@ class PushButton extends StatefulWidget {
     this.pressedOpacity = 0.4,
     this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     this.alignment = Alignment.center,
+    this.semanticLabel,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -80,7 +82,7 @@ class PushButton extends StatefulWidget {
   ///
   /// Leave blank to use the default radius provided by [_kSmallButtonRadius]
   /// or [_kLargeButtonRadius].
-  final BorderRadius? borderRadius;
+  final BorderRadiusGeometry? borderRadius;
 
   /// The alignment of the button's [child].
   ///
@@ -92,9 +94,29 @@ class PushButton extends StatefulWidget {
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(EnumProperty<ButtonSize>('buttonSize', buttonSize));
+    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+    properties.add(DiagnosticsProperty('borderRadius', borderRadius));
+    properties.add(FlagProperty(
+      'enabled',
+      value: enabled,
+      ifFalse: 'disabled',
+    ));
+  }
 
   @override
   _PushButtonState createState() => _PushButtonState();
@@ -176,15 +198,18 @@ class _PushButtonState extends State<PushButton>
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color? backgroundColor = widget.color == null
-        ? theme.pushButtonTheme.color
-        : CupertinoDynamicColor.maybeResolve(widget.color, context);
+    final Color backgroundColor = DynamicColorX.macosResolve(
+      widget.color ?? theme.pushButtonTheme.color,
+      context,
+    );
 
-    final Color? disabledColor = widget.disabledColor == null
-        ? theme.pushButtonTheme.disabledColor
-        : CupertinoDynamicColor.maybeResolve(widget.disabledColor, context);
+    final Color disabledColor = DynamicColorX.macosResolve(
+      widget.disabledColor ?? theme.pushButtonTheme.disabledColor,
+      context,
+    );
 
     final EdgeInsetsGeometry? buttonPadding = widget.padding == null
         ? widget.buttonSize == ButtonSize.small
@@ -192,14 +217,14 @@ class _PushButtonState extends State<PushButton>
             : _kLargeButtonPadding
         : widget.padding;
 
-    final BorderRadius? borderRadius = widget.borderRadius == null
+    final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
         ? widget.buttonSize == ButtonSize.small
             ? _kSmallButtonRadius
             : _kLargeButtonRadius
         : widget.borderRadius;
 
     final Color? foregroundColor = widget.enabled
-        ? textLuminance(backgroundColor!)
+        ? textLuminance(backgroundColor)
         : theme.brightness!.isDark
             ? Color.fromRGBO(255, 255, 255, 0.25)
             : Color.fromRGBO(0, 0, 0, 0.25);
@@ -215,6 +240,7 @@ class _PushButtonState extends State<PushButton>
       onTap: widget.onPressed,
       child: Semantics(
         button: true,
+        label: widget.semanticLabel,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minWidth: 49,
@@ -226,7 +252,7 @@ class _PushButtonState extends State<PushButton>
               decoration: BoxDecoration(
                 borderRadius: borderRadius,
                 color: !enabled
-                    ? CupertinoDynamicColor.resolve(disabledColor!, context)
+                    ? DynamicColorX.macosResolve(disabledColor, context)
                     : backgroundColor,
               ),
               child: Padding(
@@ -235,7 +261,7 @@ class _PushButtonState extends State<PushButton>
                   alignment: widget.alignment,
                   widthFactor: 1.0,
                   heightFactor: 1.0,
-                  //todo: show proper text color in light theme
+                  // TODO(groovin): show proper text color in light theme
                   child: DefaultTextStyle(
                     style: textStyle,
                     child: widget.child,

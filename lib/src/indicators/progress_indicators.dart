@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart' as c;
+import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// A [ProgressCircle] that shows progress in a circular form, either as a
@@ -17,6 +18,7 @@ class ProgressCircle extends StatelessWidget {
     this.radius = 10,
     this.innerColor,
     this.borderColor,
+    this.semanticLabel,
   })  : assert(value == null || value >= 0 && value <= 100),
         assert(radius >= 0),
         super(key: key);
@@ -37,13 +39,32 @@ class ProgressCircle extends StatelessWidget {
   /// is used
   final Color? borderColor;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
   /// Whether the progress circle is determinate or not
   bool get isDeterminate => value != null;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DoubleProperty('value', value));
+    properties.add(DoubleProperty('radius', radius));
+    properties.add(ColorProperty('innerColor', innerColor));
+    properties.add(ColorProperty('borderColor', borderColor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+    properties.add(FlagProperty(
+      'determinate',
+      value: isDeterminate,
+      ifFalse: 'indeterminate',
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     if (isDeterminate) {
       return Semantics(
+        label: semanticLabel,
         value: value!.toStringAsFixed(2),
         child: SizedBox(
           height: radius * 2,
@@ -51,11 +72,11 @@ class ProgressCircle extends StatelessWidget {
           child: CustomPaint(
             painter: _DeterminateCirclePainter(
               value!,
-              innerColor: CupertinoDynamicColor.resolve(
+              innerColor: DynamicColorX.macosResolve(
                 innerColor ?? CupertinoColors.secondarySystemFill,
                 context,
               ),
-              borderColor: CupertinoDynamicColor.resolve(
+              borderColor: DynamicColorX.macosResolve(
                 borderColor ?? CupertinoColors.secondarySystemFill,
                 context,
               ),
@@ -64,8 +85,11 @@ class ProgressCircle extends StatelessWidget {
         ),
       );
     } else {
-      return c.CupertinoActivityIndicator(
-        radius: radius,
+      return Semantics(
+        label: semanticLabel,
+        child: c.CupertinoActivityIndicator(
+          radius: radius,
+        ),
       );
     }
   }
@@ -138,6 +162,7 @@ class ProgressBar extends StatelessWidget {
     required this.value,
     this.trackColor,
     this.backgroundColor,
+    this.semanticLabel,
   })  : assert(value >= 0 && value <= 100),
         assert(height >= 0),
         super(key: key);
@@ -157,9 +182,23 @@ class ProgressBar extends StatelessWidget {
   /// is used
   final Color? backgroundColor;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DoubleProperty('value', value));
+    properties.add(DoubleProperty('height', height));
+    properties.add(ColorProperty('trackColor', trackColor));
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      label: semanticLabel,
       value: value.toStringAsFixed(2),
       child: Container(
         constraints: BoxConstraints(

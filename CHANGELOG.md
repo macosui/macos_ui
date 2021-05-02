@@ -1,6 +1,10 @@
+## [0.0.9+1]
+* `CapacityIndicator` colors can now be setted on its constructor
+* Accessibility support for most of the widgets
+* Diagnostics Properties (dev tools) for most of the widgets
+
 ## [0.0.9]
-* Implemented 'HelpButton'
-=======
+* Implemented `HelpButton`
 * Fixed [#49](https://github.com/GroovinChip/macos_ui/issues/49)
 
 ## [0.0.7]

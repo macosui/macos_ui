@@ -48,6 +48,18 @@ class MacosTheme extends StatelessWidget {
         .resolveFrom(context);
   }
 
+  /// Retrieves the [MacosThemeData] from the closest ancestor [MacosTheme]
+  /// widget, or a default [MacosThemeData] if no [MacosTheme] ancestor
+  /// exists. The result may be null
+  ///
+  /// Resolves all the colors defined in that [MacosThemeData] against the
+  /// given [BuildContext] on a best-effort basis.
+  static MacosThemeData? maybeOf(BuildContext context) {
+    final _InheritedMacosTheme? inheritedTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    return inheritedTheme?.theme.data.resolveFrom(context);
+  }
+
   /// Retrieves the [Brightness] to use for descendant macOS widgets, based
   /// on the value of [MacosThemeData.brightness] in the given [context].
   ///

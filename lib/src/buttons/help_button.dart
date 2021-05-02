@@ -54,12 +54,22 @@ class HelpButton extends StatefulWidget {
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
 
-  ///Provides a textual description of the button.
+  /// The semantic label used by screen readers.
   final String? semanticLabel;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
 
   @override
   _HelpButtonState createState() => _HelpButtonState();

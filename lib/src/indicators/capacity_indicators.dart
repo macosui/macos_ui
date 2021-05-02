@@ -1,5 +1,9 @@
 import 'package:macos_ui/macos_ui.dart';
 
+import 'package:flutter/foundation.dart';
+
+const double _kCapacityIndicatorMinWidth = 100.0;
+
 /// A capacity indicator illustrates the current level in
 /// relation to a finite capacity. Capacity indicators are
 /// often used when communicating factors like disk and
@@ -35,10 +39,14 @@ class CapacityIndicator extends StatelessWidget {
     this.onChanged,
     this.discrete = false,
     this.splits = 10,
+    this.color = CupertinoColors.systemGreen,
+    this.borderColor = CupertinoColors.tertiaryLabel,
+    this.backgroundColor = CupertinoColors.tertiarySystemGroupedBackground,
+    this.semanticLabel,
   })  : assert(value >= 0 && value <= 100),
         super(key: key);
 
-  /// The current value of the indicator. Must be in range of 0 to 100.
+  /// The current value of the indicator. Must be in the range of 0 to 100.
   final double value;
 
   /// Called when the current value of the indicator changes.
@@ -53,6 +61,35 @@ class CapacityIndicator extends StatelessWidget {
   /// is true. Defaults to 10.
   final int splits;
 
+  /// The color to fill the cells. [CupertinoColors.systemGreen] is
+  /// used by default.
+  final Color color;
+
+  /// The background color of the cells. [CupertinoColors.tertiarySystemGroupedBackground]
+  /// is used by default
+  final Color backgroundColor;
+
+  /// The border color of the cells. [CupertinoColors.tertiaryLabel]
+  /// is used by default
+  final Color borderColor;
+
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DoubleProperty('value', value));
+    properties.add(ObjectFlagProperty.has('onChanged', onChanged));
+    properties
+        .add(FlagProperty('discrete', value: discrete, ifFalse: 'continuous'));
+    properties.add(IntProperty('splits', splits));
+    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
+    properties.add(ColorProperty('borderColor', borderColor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
+
   void _handleUpdate(Offset lp) {
     double value = discrete ? lp.dx / splits : lp.dx;
     if (value.isNegative)
@@ -63,43 +100,61 @@ class CapacityIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(minWidth: 100),
-      child: GestureDetector(
-        onPanStart: (event) => _handleUpdate(event.localPosition),
-        onPanUpdate: (event) => _handleUpdate(event.localPosition),
-        onPanDown: (event) => _handleUpdate(event.localPosition),
-        child: discrete
-            ? LayoutBuilder(builder: (context, consts) {
-                double width = consts.biggest.width;
-                if (width.isInfinite) width = 100;
-                final splitWidth = width / splits;
-                final fillToIndex = (100 - -(value - 100)) * (splits / 10);
-                return SizedBox(
-                  width: width,
-                  child: Row(
-                    children: List.generate(splits, (index) {
-                      return Container(
-                        padding: EdgeInsets.only(
-                          right: index == splits - 1 ? 0 : 2.0,
-                        ),
-                        width: splitWidth,
-                        child: CapacityIndicatorCell(
-                          value:
-                              value > 0 && fillToIndex / 10 >= index ? 100 : 0,
-                        ),
-                      );
-                    }),
-                  ),
-                );
-              })
-            : CapacityIndicatorCell(value: value),
+    return Semantics(
+      slider: true,
+      label: semanticLabel,
+      value: value.toStringAsFixed(2),
+      child: Container(
+        constraints: BoxConstraints(minWidth: _kCapacityIndicatorMinWidth),
+        child: GestureDetector(
+          onPanStart: (event) => _handleUpdate(event.localPosition),
+          onPanUpdate: (event) => _handleUpdate(event.localPosition),
+          onPanDown: (event) => _handleUpdate(event.localPosition),
+          child: discrete
+              ? LayoutBuilder(builder: (context, consts) {
+                  double width = consts.biggest.width;
+                  if (width.isInfinite) width = 100;
+                  final splitWidth = width / splits;
+                  final fillToIndex = (100 - -(value - 100)) * (splits / 10);
+                  return SizedBox(
+                    width: width,
+                    child: Row(
+                      children: List.generate(splits, (index) {
+                        return Container(
+                          padding: EdgeInsets.only(
+                            right: index == splits - 1 ? 0 : 2.0,
+                          ),
+                          width: splitWidth,
+                          child: CapacityIndicatorCell(
+                            value: value > 0 && fillToIndex / 10 >= index
+                                ? 100
+                                : 0,
+                            backgroundColor: backgroundColor,
+                            borderColor: borderColor,
+                            color: color,
+                          ),
+                        );
+                      }),
+                    ),
+                  );
+                })
+              : CapacityIndicatorCell(
+                  value: value,
+                  backgroundColor: backgroundColor,
+                  borderColor: borderColor,
+                  color: color,
+                ),
+        ),
       ),
     );
   }
 }
 
+/// The cell [CapacityIndicator] uses to draw itself.
 class CapacityIndicatorCell extends StatelessWidget {
+  /// Creates a capacity indicator cell.
+  ///
+  /// [value] must be in the range of 0 to 100
   const CapacityIndicatorCell({
     Key? key,
     this.value = 100,

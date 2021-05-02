@@ -2,8 +2,6 @@ library macos_ui;
 
 export 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
-export 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
 export 'package:flutter/material.dart'
     show
         Brightness,
@@ -14,7 +12,6 @@ export 'package:flutter/material.dart'
         FlutterLogo,
         CircleAvatar;
 
-/// todo: package-level docs
 export 'package:flutter/widgets.dart';
 
 export 'src/buttons/checkbox.dart';
