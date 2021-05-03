@@ -1,6 +1,6 @@
 # macos_ui
 
-Implements Apple's macOS Design System in Flutter. Based on the official documentation.
+Flutter widgets and themes implementing the current macOS design language.
 
 ## Content
 
