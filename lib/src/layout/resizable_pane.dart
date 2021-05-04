@@ -27,7 +27,8 @@ class ResizablePane extends StatefulWidget {
     this.isResizable = true,
     required this.resizableSide,
     this.scaffoldBreakpoint = 500,
-  }) : super(key: key);
+  })  : assert(maxWidth >= minWidth),
+        super(key: key);
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -41,12 +42,12 @@ class ResizablePane extends StatefulWidget {
 
   /// Specifies if this [ResizablePane] can be resized by dragging the
   /// resizable side of this widget.
-  final bool? isResizable;
+  final bool isResizable;
 
   /// Specifies the maximum width that this [ResizablePane] can have.
   ///
   /// The value can be null and defaults to `500.0`.
-  final double? maxWidth;
+  final double maxWidth;
 
   /// Specifies the minimum width that this [ResizablePane] can have.
   final double minWidth;
@@ -55,7 +56,7 @@ class ResizablePane extends StatefulWidget {
   final ResizableSide resizableSide;
 
   /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
-  final double? scaffoldBreakpoint;
+  final double scaffoldBreakpoint;
 
   @override
   ResizablePaneState createState() => ResizablePaneState();
@@ -108,13 +109,13 @@ class ResizablePaneState extends State<ResizablePane> {
           _width = math.max(
             widget.minWidth,
             math.min(
-              math.min(widget.maxWidth ?? 0, _maxWidth!),
+              math.min(widget.maxWidth, _maxWidth!),
               _resizeOnRight
                   ? _width + details.delta.dx
                   : _width - details.delta.dx,
             ),
           );
-          if (_width >= widget.minWidth && _width < widget.maxWidth!) {
+          if (_width >= widget.minWidth && _width < widget.maxWidth) {
             _notifier.update(_key, _width);
           }
         });
@@ -137,12 +138,11 @@ class ResizablePaneState extends State<ResizablePane> {
 
   @override
   Widget build(BuildContext context) {
-    assert(widget.maxWidth! >= widget.minWidth);
-
     if (!_notifier.value.containsKey(_key)) {
       _notifier.update(_key, _width, notify: false);
     }
-    if (_maxWidth! <= widget.scaffoldBreakpoint!) return SizedBox.shrink();
+    if (_maxWidth! <= widget.scaffoldBreakpoint) return SizedBox.shrink();
+
     return SizedBox(
       width: _width,
       height: _maxHeight,
@@ -158,14 +158,14 @@ class ResizablePaneState extends State<ResizablePane> {
                 child: widget.builder(context, _scrollController),
               ),
             ),
-            if (widget.isResizable! && !_resizeOnRight)
+            if (widget.isResizable && !_resizeOnRight)
               Positioned(
                 left: 0,
                 width: 5,
                 height: _maxHeight,
                 child: _resizeArea,
               ),
-            if (widget.isResizable! && _resizeOnRight)
+            if (widget.isResizable && _resizeOnRight)
               Positioned(
                 right: 0,
                 width: 5,
