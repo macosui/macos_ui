@@ -46,6 +46,14 @@ const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(7.0)),
 );
 
+const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
+  color: CupertinoDynamicColor.withBrightness(
+    color: CupertinoColors.white,
+    darkColor: CupertinoColors.black,
+  ),
+  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+);
+
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
   color: Color(0xFFFAFAFA),
   darkColor: Color(0xFF050505),
@@ -226,6 +234,7 @@ class TextField extends StatefulWidget {
     this.controller,
     this.focusNode,
     this.decoration = _kDefaultRoundedBorderDecoration,
+    this.focusedDecoration = _kDefaultFocusedBorderDecoration,
     this.padding = const EdgeInsets.all(6.0),
     this.placeholder,
     this.placeholderStyle = const TextStyle(
@@ -360,6 +369,7 @@ class TextField extends StatefulWidget {
     this.controller,
     this.focusNode,
     this.decoration,
+    this.focusedDecoration,
     this.padding = const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 4.0),
     this.placeholder,
     this.placeholderStyle = _kDefaultPlaceholderStyle,
@@ -463,6 +473,12 @@ class TextField extends StatefulWidget {
   /// Defaults to having a rounded rectangle grey border and can be null to have
   /// no box decoration.
   final BoxDecoration? decoration;
+
+  /// Controls the [BoxDecoration] of the box behind the text input when focused.
+  ///
+  /// Defaults to having a rounded rectangle blue border and can be null to have
+  /// no box decoration.
+  final BoxDecoration? focusedDecoration;
 
   /// Padding around the text entry area between the [prefix] and [suffix]
   /// or the clear button when [clearButtonMode] is not never.
@@ -1167,7 +1183,9 @@ class _TextFieldState extends State<TextField>
     final TextStyle? resolvedStyle = widget.style?.copyWith(
       color: DynamicColorX.maybeMacosResolve(widget.style?.color, context),
       backgroundColor: DynamicColorX.maybeMacosResolve(
-          widget.style?.backgroundColor, context),
+        widget.style?.backgroundColor,
+        context,
+      ),
     );
 
     final textStyle = themeData.typography!.body!.merge(resolvedStyle);
@@ -1203,9 +1221,7 @@ class _TextFieldState extends State<TextField>
         return side == BorderSide.none
             ? side
             : side.copyWith(
-                color: _effectiveFocusNode.hasFocus
-                    ? themeData.primaryColor
-                    : DynamicColorX.macosResolve(side.color, context),
+                color: DynamicColorX.macosResolve(side.color, context),
               );
       }
 
@@ -1222,6 +1238,36 @@ class _TextFieldState extends State<TextField>
     final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
       border: resolvedBorder,
       color: enabled ? decorationColor : (decorationColor ?? disabledColor),
+    );
+
+    final BoxDecoration? focusedDecoration = widget.focusedDecoration?.copyWith(
+      border: Border.all(
+        width: 3.0,
+        color: themeData.primaryColor ?? CupertinoColors.systemBlue,
+      ),
+    );
+
+    final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
+      border: () {
+        if (focusedDecoration.border is Border) {
+          BorderSide borderSide(BorderSide fromSide) {
+            return BorderSide(
+              color: Color(0x00000000),
+              style: fromSide.style,
+              width: fromSide.width,
+            );
+          }
+
+          return Border(
+            bottom: borderSide((focusedDecoration.border as Border).bottom),
+            top: borderSide((focusedDecoration.border as Border).top),
+            left: borderSide((focusedDecoration.border as Border).left),
+            right: borderSide((focusedDecoration.border as Border).right),
+          );
+        }
+        return focusedDecoration.border;
+      }(),
+      color: Color(0x00000000),
     );
 
     final Color selectionColor =
@@ -1304,15 +1350,24 @@ class _TextFieldState extends State<TextField>
       child: IgnorePointer(
         ignoring: !enabled,
         child: Container(
-          decoration: effectiveDecoration,
-          child: _selectionGestureDetectorBuilder.buildGestureDetector(
-            behavior: HitTestBehavior.translucent,
-            child: Align(
-              alignment: Alignment(-1.0, _textAlignVertical.y),
-              widthFactor: 1.0,
-              heightFactor: 1.0,
-              child: _addTextDependentAttachments(
-                  paddedEditable, textStyle, placeholderStyle),
+          decoration: _effectiveFocusNode.hasFocus
+              ? focusedDecoration
+              : focusedPlaceholderDecoration,
+          child: Container(
+            decoration:
+                _effectiveFocusNode.hasFocus ? null : effectiveDecoration,
+            child: _selectionGestureDetectorBuilder.buildGestureDetector(
+              behavior: HitTestBehavior.translucent,
+              child: Align(
+                alignment: Alignment(-1.0, _textAlignVertical.y),
+                widthFactor: 1.0,
+                heightFactor: 1.0,
+                child: _addTextDependentAttachments(
+                  paddedEditable,
+                  textStyle,
+                  placeholderStyle,
+                ),
+              ),
             ),
           ),
         ),
