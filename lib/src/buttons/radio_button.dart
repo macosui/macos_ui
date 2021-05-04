@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// A radio button is a small, circular button followed by a
@@ -19,6 +21,7 @@ class RadioButton extends StatelessWidget {
     this.onColor,
     this.offColor = CupertinoColors.tertiaryLabel,
     this.innerColor,
+    this.semanticLabel,
   })  : assert(size >= 0),
         super(key: key);
 
@@ -48,8 +51,30 @@ class RadioButton extends StatelessWidget {
   ///   - Off: [CupertinoColors.tertiarySystemFill]
   final Color? innerColor;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
   /// Whether the button is disabled or not
   bool get isDisabled => onChanged == null;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty(
+      'state',
+      value ? 'checked' : 'unchecked',
+    ));
+    properties.add(FlagProperty(
+      'disabled',
+      value: isDisabled,
+      ifFalse: 'enabled',
+    ));
+    properties.add(DoubleProperty('size', size));
+    properties.add(ColorProperty('onColor', onColor));
+    properties.add(ColorProperty('offColor', offColor));
+    properties.add(ColorProperty('innerColor', innerColor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,52 +82,56 @@ class RadioButton extends StatelessWidget {
     final isLight = context.macosTheme.brightness != Brightness.dark;
     return GestureDetector(
       onTap: () => onChanged?.call(!value),
-      child: Container(
-        height: size,
-        width: size,
-        decoration: BoxDecoration(
-          border: Border.all(
-            style: isDisabled ? BorderStyle.none : BorderStyle.solid,
-            width: value ? size / 4.0 : 1,
-            color: DynamicColorX.macosResolve(
-              value
-                  ? onColor ??
-                      context.macosTheme.primaryColor ??
-                      CupertinoColors.activeBlue
-                  : offColor,
-              context,
-            ),
-          ),
-          shape: BoxShape.circle,
-        ),
-        // The inner color is inside another container because it sometimes
-        // overlap the border when used together
+      child: Semantics(
+        checked: value,
+        label: semanticLabel,
         child: Container(
+          height: size,
+          width: size,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: DynamicColorX.macosResolve(
-              innerColor ??
-                  (isDisabled
-                      ? CupertinoColors.quaternarySystemFill
-                      : value || isLight
-                          ? CupertinoColors.white
-                          : CupertinoColors.tertiarySystemFill),
-              context,
+            border: Border.all(
+              style: isDisabled ? BorderStyle.none : BorderStyle.solid,
+              width: value ? size / 4.0 : 1,
+              color: DynamicColorX.macosResolve(
+                value
+                    ? onColor ??
+                        context.macosTheme.primaryColor ??
+                        CupertinoColors.activeBlue
+                    : offColor,
+                context,
+              ),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.05),
-                offset: Offset(-0.05, -0.05),
+            shape: BoxShape.circle,
+          ),
+          // The inner color is inside another container because it sometimes
+          // overlap the border when used together
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: DynamicColorX.macosResolve(
+                innerColor ??
+                    (isDisabled
+                        ? CupertinoColors.quaternarySystemFill
+                        : value || isLight
+                            ? CupertinoColors.white
+                            : CupertinoColors.tertiarySystemFill),
+                context,
               ),
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.05),
-                offset: Offset(0.05, 0.05),
-              ),
-              BoxShadow(
-                color: CupertinoColors.tertiarySystemFill,
-                offset: Offset(0, 0),
-              ),
-            ],
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.05),
+                  offset: Offset(-0.05, -0.05),
+                ),
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.05),
+                  offset: Offset(0.05, 0.05),
+                ),
+                BoxShadow(
+                  color: CupertinoColors.tertiarySystemFill,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
           ),
         ),
       ),

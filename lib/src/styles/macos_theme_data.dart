@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:macos_ui/src/buttons/push_button_theme.dart';
-
-import '../../macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 /// Styling specifications for a [MacosTheme].
 ///
@@ -24,6 +23,7 @@ class MacosThemeData with Diagnosticable {
     Typography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
+    HelpButtonThemeData? helpButtonTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -44,6 +44,14 @@ class MacosThemeData with Diagnosticable {
           : Color.fromRGBO(244, 245, 245, 1.0),
     );
     dividerColor ??= isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000);
+    helpButtonTheme ??= HelpButtonThemeData(
+      color: isDark
+          ? Color.fromRGBO(255, 255, 255, 0.1)
+          : Color.fromRGBO(244, 245, 245, 1.0),
+      disabledColor: isDark
+          ? Color.fromRGBO(255, 255, 255, 0.1)
+          : Color.fromRGBO(244, 245, 245, 1.0),
+    );
 
     return MacosThemeData._raw(
       brightness: _brightness,
@@ -54,6 +62,7 @@ class MacosThemeData with Diagnosticable {
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
+      helpButtonTheme: helpButtonTheme,
     );
   }
 
@@ -66,16 +75,17 @@ class MacosThemeData with Diagnosticable {
     required this.typography,
     required this.pushButtonTheme,
     required this.dividerColor,
+    required this.helpButtonTheme,
   });
 
-  // todo: documentation
+  // TODO: documentation
   factory MacosThemeData.light() =>
       MacosThemeData(brightness: Brightness.light);
 
-  // todo: documentation
+  // TODO: documentation
   factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
 
-  // todo: documentation
+  // TODO: documentation
   factory MacosThemeData.fallback() => MacosThemeData.light();
 
   /// The brightness override for macOS descendants.
@@ -91,10 +101,10 @@ class MacosThemeData with Diagnosticable {
   /// Defaults to [CupertinoColors.activeBlue].
   final Color? accentColor;
 
-  // todo: documentation
+  // TODO: documentation
   final Curve? animationCurve;
 
-  // todo: documentation
+  // TODO: documentation
   final Duration? mediumAnimationDuration;
 
   /// The default text styling for this theme.
@@ -105,6 +115,9 @@ class MacosThemeData with Diagnosticable {
 
   /// The color to use when painting the line used for the [TitleBar] bottom, [Sidebar] and [ResizableBar] sides
   final Color? dividerColor;
+
+  /// The default style for [HelpButton]s below the overall [MacosTheme].
+  final HelpButtonThemeData helpButtonTheme;
 
   MacosThemeData resolveFrom(BuildContext context) {
     /*Color? convertColor(Color? color) =>
@@ -119,6 +132,7 @@ class MacosThemeData with Diagnosticable {
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
+      helpButtonTheme: helpButtonTheme,
     );
   }
 }

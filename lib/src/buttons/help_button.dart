@@ -2,68 +2,35 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-enum ButtonSize {
-  large,
-  small,
-}
-
-const EdgeInsetsGeometry _kSmallButtonPadding =
-    EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0);
-const EdgeInsetsGeometry _kLargeButtonPadding =
-    EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0);
-
-const BorderRadius _kSmallButtonRadius =
-    const BorderRadius.all(Radius.circular(5.0));
-const BorderRadius _kLargeButtonRadius =
-    const BorderRadius.all(Radius.circular(7.0));
-
-/// A macOS-style button.
-class PushButton extends StatefulWidget {
-  const PushButton({
+/// A help button appears within a view and opens app-specific help documentation when clicked.
+/// For help documentation creation guidance, see Help. All help buttons are circular,
+/// consistently sized buttons that contain a question mark icon. Whenever possible,
+/// open a help topic related to the current context. For example,
+/// the Rules pane of Mail preferences includes a help button.
+/// When clicked, it opens directly to a Rules preferences help topic.
+class HelpButton extends StatefulWidget {
+  ///pressedOpacity, if non-null, must be in the range if 0.0 to 1.0
+  const HelpButton({
     Key? key,
-    required this.child,
-    required this.buttonSize,
-    this.padding,
     this.color,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
-    this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     this.alignment = Alignment.center,
     this.semanticLabel,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
 
-  /// The widget below this widget in the tree.
-  ///
-  /// Typically a [Text] widget.
-  final Widget child;
-
-  /// The size of the button.
-  ///
-  /// Must be either [ButtonSize.small] or [ButtonSize.large].
-  ///
-  /// Small buttons have a `padding` of [_kSmallButtonPadding] and a
-  /// `borderRadius` of [_kSmallButtonRadius]. Large buttons have a `padding`
-  /// of [_kLargeButtonPadding] and a `borderRadius` of [_kLargeButtonRadius].
-  final ButtonSize buttonSize;
-
-  /// The amount of space to surround the child inside the bounds of the button.
-  ///
-  /// Leave blank to use the default padding provided by [_kSmallButtonPadding]
-  /// or [_kLargeButtonPadding].
-  final EdgeInsetsGeometry? padding;
-
   /// The color of the button's background.
   final Color? color;
 
   /// The color of the button's background when the button is disabled.
   ///
-  /// Ignored if the [PushButton] doesn't also have a [color].
+  /// Ignored if the [HelpButton] doesn't also have a [color].
   ///
   /// Defaults to [CupertinoColors.quaternarySystemFill] when [color] is
-  /// specified. Must not be null.
+  /// specified.
   final Color? disabledColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
@@ -77,12 +44,6 @@ class PushButton extends StatefulWidget {
   /// This defaults to 0.4. If null, opacity will not change on pressed if using
   /// your own custom effects is desired.
   final double? pressedOpacity;
-
-  /// The radius of the button's corners when it has a background color.
-  ///
-  /// Leave blank to use the default radius provided by [_kSmallButtonRadius]
-  /// or [_kLargeButtonRadius].
-  final BorderRadiusGeometry? borderRadius;
 
   /// The alignment of the button's [child].
   ///
@@ -104,25 +65,18 @@ class PushButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(EnumProperty<ButtonSize>('buttonSize', buttonSize));
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
     properties.add(StringProperty('semanticLabel', semanticLabel));
-    properties.add(DiagnosticsProperty('borderRadius', borderRadius));
-    properties.add(FlagProperty(
-      'enabled',
-      value: enabled,
-      ifFalse: 'disabled',
-    ));
   }
 
   @override
-  _PushButtonState createState() => _PushButtonState();
+  _HelpButtonState createState() => _HelpButtonState();
 }
 
-class _PushButtonState extends State<PushButton>
+class _HelpButtonState extends State<HelpButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -147,7 +101,7 @@ class _PushButtonState extends State<PushButton>
   }
 
   @override
-  void didUpdateWidget(PushButton old) {
+  void didUpdateWidget(HelpButton old) {
     super.didUpdateWidget(old);
     _setTween();
   }
@@ -198,39 +152,23 @@ class _PushButtonState extends State<PushButton>
 
   @override
   Widget build(BuildContext context) {
-    assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color backgroundColor = DynamicColorX.macosResolve(
-      widget.color ?? theme.pushButtonTheme.color,
+    final Color? backgroundColor = DynamicColorX.macosResolve(
+      widget.color ?? theme.helpButtonTheme.color,
       context,
     );
 
-    final Color disabledColor = DynamicColorX.macosResolve(
-      widget.disabledColor ?? theme.pushButtonTheme.disabledColor,
+    final Color? disabledColor = DynamicColorX.macosResolve(
+      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
       context,
     );
-
-    final EdgeInsetsGeometry? buttonPadding = widget.padding == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonPadding
-            : _kLargeButtonPadding
-        : widget.padding;
-
-    final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonRadius
-            : _kLargeButtonRadius
-        : widget.borderRadius;
 
     final Color? foregroundColor = widget.enabled
-        ? textLuminance(backgroundColor)
+        ? iconLuminance(backgroundColor!, theme.brightness!.isDark)
         : theme.brightness!.isDark
             ? Color.fromRGBO(255, 255, 255, 0.25)
             : Color.fromRGBO(0, 0, 0, 0.25);
-
-    final TextStyle textStyle =
-        theme.typography!.headline!.copyWith(color: foregroundColor);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -239,32 +177,45 @@ class _PushButtonState extends State<PushButton>
       onTapCancel: enabled ? _handleTapCancel : null,
       onTap: widget.onPressed,
       child: Semantics(
-        button: true,
         label: widget.semanticLabel,
+        button: true,
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            minWidth: 49,
+            minWidth: 20,
             minHeight: 20,
           ),
           child: FadeTransition(
             opacity: _opacityAnimation,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: borderRadius,
+                shape: BoxShape.circle,
                 color: !enabled
-                    ? DynamicColorX.macosResolve(disabledColor, context)
+                    ? DynamicColorX.macosResolve(disabledColor!, context)
                     : backgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(-0.1, -0.1),
+                  ),
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(0.1, 0.1),
+                  ),
+                  BoxShadow(
+                    color: CupertinoColors.tertiarySystemFill,
+                    offset: Offset(0, 0),
+                  ),
+                ],
               ),
               child: Padding(
-                padding: buttonPadding!,
+                padding: EdgeInsets.all(8),
                 child: Align(
                   alignment: widget.alignment,
                   widthFactor: 1.0,
                   heightFactor: 1.0,
-                  // TODO(groovin): show proper text color in light theme
-                  child: DefaultTextStyle(
-                    style: textStyle,
-                    child: widget.child,
+                  child: Icon(
+                    CupertinoIcons.question,
+                    color: foregroundColor,
                   ),
                 ),
               ),

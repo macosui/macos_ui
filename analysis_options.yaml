@@ -1,3 +1,7 @@
+linter:
+  rules:
+    - avoid_relative_lib_imports
+
 analyzer:
   plugins:
     - dart_code_metrics

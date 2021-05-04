@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' hide Scaffold, Checkbox;
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -67,6 +68,10 @@ class _DemoState extends State<Demo> {
                   Checkbox(
                     value: value,
                     onChanged: (v) => setState(() => value = v),
+                  ),
+                  SizedBox(height: 20),
+                  HelpButton(
+                    onPressed: () {},
                   ),
                   SizedBox(height: 20),
                   CapacityIndicator(

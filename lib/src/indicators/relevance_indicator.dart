@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// A relevance indicator communicates relevancy using a series
@@ -19,6 +21,7 @@ class RelevanceIndicator extends StatelessWidget {
     this.barWidth = 0.8,
     this.selectedColor = CupertinoColors.label,
     this.unselectedolor = CupertinoColors.secondaryLabel,
+    this.semanticLabel,
   })  : assert(value >= 0 && value <= amount),
         assert(amount > 0),
         assert(barHeight >= 0),
@@ -46,24 +49,43 @@ class RelevanceIndicator extends StatelessWidget {
   /// is used by default
   final Color unselectedolor;
 
+  /// The semantic label used by screen readers.
+  final String? semanticLabel;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IntProperty('value', value));
+    properties.add(IntProperty('amount', amount));
+    properties.add(DoubleProperty('barHeight', barHeight));
+    properties.add(DoubleProperty('barWidth', barWidth));
+    properties.add(ColorProperty('selectedColor', selectedColor));
+    properties.add(ColorProperty('unselectedColor', unselectedolor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: List.generate(amount, (index) {
-        final selected = value > index;
-        return Container(
-          height: barHeight,
-          width: barWidth,
-          margin: EdgeInsets.only(right: index + 1 == amount ? 0 : 2.5),
-          color: DynamicColorX.macosResolve(
-            selected ? selectedColor : unselectedolor,
-            context,
-          ),
-        );
-      }),
+    return Semantics(
+      value: value.toStringAsFixed(2),
+      label: semanticLabel,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: List.generate(amount, (index) {
+          final selected = value > index;
+          return Container(
+            height: barHeight,
+            width: barWidth,
+            margin: EdgeInsets.only(right: index + 1 == amount ? 0 : 2.5),
+            color: DynamicColorX.macosResolve(
+              selected ? selectedColor : unselectedolor,
+              context,
+            ),
+          );
+        }),
+      ),
     );
   }
 }

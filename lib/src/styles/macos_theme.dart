@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/macos_ui.dart';
 
-import '../../macos_ui.dart';
 import 'macos_theme_data.dart';
 
 /// Applies a macOS-style theme to descendant macOS widgets.
@@ -46,6 +47,18 @@ class MacosTheme extends StatelessWidget {
         context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
     return (inheritedTheme?.theme.data ?? MacosThemeData())
         .resolveFrom(context);
+  }
+
+  /// Retrieves the [MacosThemeData] from the closest ancestor [MacosTheme]
+  /// widget, or a default [MacosThemeData] if no [MacosTheme] ancestor
+  /// exists. The result may be null
+  ///
+  /// Resolves all the colors defined in that [MacosThemeData] against the
+  /// given [BuildContext] on a best-effort basis.
+  static MacosThemeData? maybeOf(BuildContext context) {
+    final _InheritedMacosTheme? inheritedTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    return inheritedTheme?.theme.data.resolveFrom(context);
   }
 
   /// Retrieves the [Brightness] to use for descendant macOS widgets, based

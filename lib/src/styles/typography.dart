@@ -5,8 +5,8 @@ import 'package:flutter/painting.dart';
 
 /// Defines macOS text styling.
 ///
-/// todo: More documentation
-/// todo: Figure out how to implement leading (see guidelines)
+/// TODO: More documentation
+/// TODO: Figure out how to implement leading (see guidelines)
 ///
 /// https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/
 class Typography with Diagnosticable {

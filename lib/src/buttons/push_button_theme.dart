@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// Overrides the default style of its [PushButton] descendants.
@@ -81,7 +82,7 @@ class PushButtonThemeData with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('color', color));
-    properties.add(DiagnosticsProperty('disabledColor', disabledColor));
+    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('disabledColor', disabledColor));
   }
 }

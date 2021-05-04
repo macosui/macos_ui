@@ -1,7 +1,13 @@
-## [0.0.9]
-* Revamp Scaffold [#26] (https://github.com/GroovinChip/macos_ui/issues/26)
+## [0.0.10]
+* Revamp `Scaffold` [#26] (https://github.com/GroovinChip/macos_ui/issues/26)
 
-## [0.0.8]
+## [0.0.9+1]
+* `CapacityIndicator` colors can now be set on its constructor
+* Accessibility support for most of the widgets
+* Diagnostics Properties (dev tools) for most of the widgets
+
+## [0.0.9]
+* Implemented `HelpButton`
 * Fixed [#49](https://github.com/GroovinChip/macos_ui/issues/49)
 
 ## [0.0.7]
