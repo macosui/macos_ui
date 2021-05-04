@@ -9,7 +9,13 @@ import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-export 'package:flutter/services.dart' show TextInputType, TextInputAction, TextCapitalization, SmartQuotesType, SmartDashesType;
+export 'package:flutter/services.dart'
+    show
+        TextInputType,
+        TextInputAction,
+        TextCapitalization,
+        SmartQuotesType,
+        SmartDashesType;
 
 const TextStyle _kDefaultPlaceholderStyle = TextStyle(
   fontWeight: FontWeight.w400,
@@ -48,7 +54,7 @@ const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
 
 // Value inspected from Xcode 12 & iOS 14.0 Simulator.
 // Note it may not be consistent with https://developer.apple.com/design/resources/.
-const CupertinoDynamicColor _kClearButtonColor = CupertinoDynamicColor.withBrightness(
+const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
   color: Color(0x33000000),
   darkColor: Color(0x33FFFFFF),
 );
@@ -85,11 +91,12 @@ enum OverlayVisibilityMode {
   always,
 }
 
-class _TextFieldSelectionGestureDetectorBuilder extends TextSelectionGestureDetectorBuilder {
+class _TextFieldSelectionGestureDetectorBuilder
+    extends TextSelectionGestureDetectorBuilder {
   _TextFieldSelectionGestureDetectorBuilder({
     required _TextFieldState state,
-  }) : _state = state,
-       super(delegate: state);
+  })   : _state = state,
+        super(delegate: state);
 
   final _TextFieldState _state;
 
@@ -100,16 +107,17 @@ class _TextFieldSelectionGestureDetectorBuilder extends TextSelectionGestureDete
     // this handler. If the clear button widget recognizes the up event,
     // then do not handle it.
     if (_state._clearGlobalKey.currentContext != null) {
-      final RenderBox renderBox = _state._clearGlobalKey.currentContext!.findRenderObject()! as RenderBox;
-      final Offset localOffset = renderBox.globalToLocal(details.globalPosition);
+      final RenderBox renderBox = _state._clearGlobalKey.currentContext!
+          .findRenderObject()! as RenderBox;
+      final Offset localOffset =
+          renderBox.globalToLocal(details.globalPosition);
       if (renderBox.hitTest(BoxHitTestResult(), position: localOffset)) {
         return;
       }
     }
     super.onSingleTapUp(details);
     _state._requestKeyboard();
-    if (_state.widget.onTap != null)
-      _state.widget.onTap!();
+    if (_state.widget.onTap != null) _state.widget.onTap!();
   }
 
   @override
@@ -275,39 +283,44 @@ class TextField extends StatefulWidget {
     this.scrollPhysics,
     this.autofillHints,
     this.restorationId,
-  }) : 
-       smartDashesType = smartDashesType ?? (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-       smartQuotesType = smartQuotesType ?? (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-       assert(maxLines == null || maxLines > 0),
-       assert(minLines == null || minLines > 0),
-       assert(
-         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-         "minLines can't be greater than maxLines",
-       ),
-       assert(
-         !expands || (maxLines == null && minLines == null),
-         'minLines and maxLines must be null when expands is true.',
-       ),
-       assert(!obscureText || maxLines == 1, 'Obscured fields cannot be multiline.'),
-       assert(maxLength == null || maxLength > 0),
-       // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
-       assert(!identical(textInputAction, TextInputAction.newline) ||
-         maxLines == 1 ||
-         !identical(keyboardType, TextInputType.text),
-         'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
-       keyboardType = keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-       toolbarOptions = toolbarOptions ?? (obscureText ?
-         const ToolbarOptions(
-           selectAll: true,
-           paste: true,
-         ) :
-         const ToolbarOptions(
-           copy: true,
-           cut: true,
-           selectAll: true,
-           paste: true,
-         )),
-       super(key: key);
+  })  : smartDashesType = smartDashesType ??
+            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ??
+            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        assert(
+          !expands || (maxLines == null && minLines == null),
+          'minLines and maxLines must be null when expands is true.',
+        ),
+        assert(!obscureText || maxLines == 1,
+            'Obscured fields cannot be multiline.'),
+        assert(maxLength == null || maxLength > 0),
+        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+        assert(
+            !identical(textInputAction, TextInputAction.newline) ||
+                maxLines == 1 ||
+                !identical(keyboardType, TextInputType.text),
+            'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        toolbarOptions = toolbarOptions ??
+            (obscureText
+                ? const ToolbarOptions(
+                    selectAll: true,
+                    paste: true,
+                  )
+                : const ToolbarOptions(
+                    copy: true,
+                    cut: true,
+                    selectAll: true,
+                    paste: true,
+                  )),
+        super(key: key);
 
   /// Creates a borderless iOS-style text field.
   ///
@@ -401,39 +414,44 @@ class TextField extends StatefulWidget {
     this.scrollPhysics,
     this.autofillHints,
     this.restorationId,
-  }) : 
-       smartDashesType = smartDashesType ?? (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-       smartQuotesType = smartQuotesType ?? (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-       assert(maxLines == null || maxLines > 0),
-       assert(minLines == null || minLines > 0),
-       assert(
-         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-         "minLines can't be greater than maxLines",
-       ),
-       assert(
-         !expands || (maxLines == null && minLines == null),
-         'minLines and maxLines must be null when expands is true.',
-       ),
-       assert(!obscureText || maxLines == 1, 'Obscured fields cannot be multiline.'),
-       assert(maxLength == null || maxLength > 0),
-       // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
-       assert(!identical(textInputAction, TextInputAction.newline) ||
-         maxLines == 1 ||
-         !identical(keyboardType, TextInputType.text),
-         'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
-       keyboardType = keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-       toolbarOptions = toolbarOptions ?? (obscureText ?
-         const ToolbarOptions(
-           selectAll: true,
-           paste: true,
-         ) :
-         const ToolbarOptions(
-           copy: true,
-           cut: true,
-           selectAll: true,
-           paste: true,
-         )),
-       super(key: key);
+  })  : smartDashesType = smartDashesType ??
+            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ??
+            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        assert(
+          !expands || (maxLines == null && minLines == null),
+          'minLines and maxLines must be null when expands is true.',
+        ),
+        assert(!obscureText || maxLines == 1,
+            'Obscured fields cannot be multiline.'),
+        assert(maxLength == null || maxLength > 0),
+        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+        assert(
+            !identical(textInputAction, TextInputAction.newline) ||
+                maxLines == 1 ||
+                !identical(keyboardType, TextInputType.text),
+            'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        toolbarOptions = toolbarOptions ??
+            (obscureText
+                ? const ToolbarOptions(
+                    selectAll: true,
+                    paste: true,
+                  )
+                : const ToolbarOptions(
+                    copy: true,
+                    cut: true,
+                    selectAll: true,
+                    paste: true,
+                  )),
+        super(key: key);
 
   /// Controls the text being edited.
   ///
@@ -703,64 +721,180 @@ class TextField extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<TextEditingController>('controller', controller, defaultValue: null));
-    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode, defaultValue: null));
-    properties.add(DiagnosticsProperty<BoxDecoration>('decoration', decoration));
+    properties.add(DiagnosticsProperty<TextEditingController>(
+      'controller',
+      controller,
+      defaultValue: null,
+    ));
+    properties.add(DiagnosticsProperty<FocusNode>(
+      'focusNode',
+      focusNode,
+      defaultValue: null,
+    ));
+    properties.add(DiagnosticsProperty<BoxDecoration>(
+      'decoration',
+      decoration,
+      defaultValue: _kDefaultRoundedBorderDecoration,
+    ));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
-    properties.add(DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle));
-    properties.add(DiagnosticsProperty<OverlayVisibilityMode>('prefix', prefix == null ? null : prefixMode));
-    properties.add(DiagnosticsProperty<OverlayVisibilityMode>('suffix', suffix == null ? null : suffixMode));
-    properties.add(DiagnosticsProperty<OverlayVisibilityMode>('clearButtonMode', clearButtonMode));
-    properties.add(DiagnosticsProperty<TextInputType>('keyboardType', keyboardType, defaultValue: TextInputType.text));
-    properties.add(DiagnosticsProperty<TextStyle>('style', style, defaultValue: null));
-    properties.add(DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false));
-    properties.add(DiagnosticsProperty<String>('obscuringCharacter', obscuringCharacter, defaultValue: '•'));
-    properties.add(DiagnosticsProperty<bool>('obscureText', obscureText, defaultValue: false));
-    properties.add(DiagnosticsProperty<bool>('autocorrect', autocorrect, defaultValue: true));
-    properties.add(EnumProperty<SmartDashesType>('smartDashesType', smartDashesType, defaultValue: obscureText ? SmartDashesType.disabled : SmartDashesType.enabled));
-    properties.add(EnumProperty<SmartQuotesType>('smartQuotesType', smartQuotesType, defaultValue: obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled));
-    properties.add(DiagnosticsProperty<bool>('enableSuggestions', enableSuggestions, defaultValue: true));
+    properties.add(
+        DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle));
+    properties.add(EnumProperty<OverlayVisibilityMode>(
+      'prefix',
+      prefix == null ? null : prefixMode,
+    ));
+    properties.add(EnumProperty<OverlayVisibilityMode>(
+      'suffix',
+      suffix == null ? null : suffixMode,
+    ));
+    properties.add(EnumProperty<OverlayVisibilityMode>(
+      'clearButtonMode',
+      clearButtonMode,
+    ));
+    properties.add(EnumProperty<TextInputType>(
+      'keyboardType',
+      keyboardType,
+      defaultValue: TextInputType.text,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'style',
+      style,
+      defaultValue: null,
+    ));
+    properties.add(DiagnosticsProperty<bool>(
+      'autofocus',
+      autofocus,
+      defaultValue: false,
+    ));
+    properties.add(DiagnosticsProperty<String>(
+      'obscuringCharacter',
+      obscuringCharacter,
+      defaultValue: '•',
+    ));
+    properties.add(DiagnosticsProperty<bool>(
+      'obscureText',
+      obscureText,
+      defaultValue: false,
+    ));
+    properties.add(DiagnosticsProperty<bool>(
+      'autocorrect',
+      autocorrect,
+      defaultValue: true,
+    ));
+    properties.add(EnumProperty<SmartDashesType>(
+      'smartDashesType',
+      smartDashesType,
+      defaultValue:
+          obscureText ? SmartDashesType.disabled : SmartDashesType.enabled,
+    ));
+    properties.add(EnumProperty<SmartQuotesType>(
+      'smartQuotesType',
+      smartQuotesType,
+      defaultValue:
+          obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled,
+    ));
+    properties.add(DiagnosticsProperty<bool>(
+      'enableSuggestions',
+      enableSuggestions,
+      defaultValue: true,
+    ));
     properties.add(IntProperty('maxLines', maxLines, defaultValue: 1));
     properties.add(IntProperty('minLines', minLines, defaultValue: null));
-    properties.add(DiagnosticsProperty<bool>('expands', expands, defaultValue: false));
+    properties.add(DiagnosticsProperty<bool>(
+      'expands',
+      expands,
+      defaultValue: false,
+    ));
     properties.add(IntProperty('maxLength', maxLength, defaultValue: null));
-    properties.add(EnumProperty<MaxLengthEnforcement>('maxLengthEnforcement', maxLengthEnforcement, defaultValue: null));
-    properties.add(DoubleProperty('cursorWidth', cursorWidth, defaultValue: 2.0));
-    properties.add(DoubleProperty('cursorHeight', cursorHeight, defaultValue: null));
-    properties.add(DiagnosticsProperty<Radius>('cursorRadius', cursorRadius, defaultValue: null));
-    properties.add(createCupertinoColorProperty('cursorColor', cursorColor, defaultValue: null));
-    properties.add(FlagProperty('selectionEnabled', value: selectionEnabled, defaultValue: true, ifFalse: 'selection disabled'));
-    properties.add(DiagnosticsProperty<TextSelectionControls>('selectionControls', selectionControls, defaultValue: null));
-    properties.add(DiagnosticsProperty<ScrollController>('scrollController', scrollController, defaultValue: null));
-    properties.add(DiagnosticsProperty<ScrollPhysics>('scrollPhysics', scrollPhysics, defaultValue: null));
-    properties.add(EnumProperty<TextAlign>('textAlign', textAlign, defaultValue: TextAlign.start));
-    properties.add(DiagnosticsProperty<TextAlignVertical>('textAlignVertical', textAlignVertical, defaultValue: null));
+    properties.add(EnumProperty<MaxLengthEnforcement>(
+      'maxLengthEnforcement',
+      maxLengthEnforcement,
+      defaultValue: null,
+    ));
+    properties.add(DoubleProperty(
+      'cursorWidth',
+      cursorWidth,
+      defaultValue: 2.0,
+    ));
+    properties.add(DoubleProperty(
+      'cursorHeight',
+      cursorHeight,
+      defaultValue: null,
+    ));
+    properties.add(DiagnosticsProperty<Radius>(
+      'cursorRadius',
+      cursorRadius,
+      defaultValue: null,
+    ));
+    properties.add(createCupertinoColorProperty(
+      'cursorColor',
+      cursorColor,
+      defaultValue: null,
+    ));
+    properties.add(FlagProperty(
+      'selectionEnabled',
+      value: selectionEnabled,
+      defaultValue: true,
+      ifFalse: 'selection disabled',
+    ));
+    properties.add(DiagnosticsProperty<TextSelectionControls>(
+      'selectionControls',
+      selectionControls,
+      defaultValue: null,
+    ));
+    properties.add(DiagnosticsProperty<ScrollController>(
+      'scrollController',
+      scrollController,
+      defaultValue: null,
+    ));
+    properties.add(DiagnosticsProperty<ScrollPhysics>(
+      'scrollPhysics',
+      scrollPhysics,
+      defaultValue: null,
+    ));
+    properties.add(EnumProperty<TextAlign>(
+      'textAlign',
+      textAlign,
+      defaultValue: TextAlign.start,
+    ));
+    properties.add(DiagnosticsProperty<TextAlignVertical>(
+      'textAlignVertical',
+      textAlignVertical,
+      defaultValue: null,
+    ));
   }
 }
 
-class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticKeepAliveClientMixin<TextField> implements TextSelectionGestureDetectorBuilderDelegate {
+class _TextFieldState extends State<TextField>
+    with RestorationMixin, AutomaticKeepAliveClientMixin<TextField>
+    implements TextSelectionGestureDetectorBuilderDelegate {
   final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
-  TextEditingController get _effectiveController => widget.controller ?? _controller!.value;
+  TextEditingController get _effectiveController =>
+      widget.controller ?? _controller!.value;
 
   FocusNode? _focusNode;
-  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
+  FocusNode get _effectiveFocusNode =>
+      widget.focusNode ?? (_focusNode ??= FocusNode());
 
-  MaxLengthEnforcement get _effectiveMaxLengthEnforcement => widget.maxLengthEnforcement
-    ?? LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement();
+  MaxLengthEnforcement get _effectiveMaxLengthEnforcement =>
+      widget.maxLengthEnforcement ??
+      LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement();
 
   bool _showSelectionHandles = false;
 
-  late _TextFieldSelectionGestureDetectorBuilder _selectionGestureDetectorBuilder;
+  late _TextFieldSelectionGestureDetectorBuilder
+      _selectionGestureDetectorBuilder;
 
   // API for TextSelectionGestureDetectorBuilderDelegate.
   @override
   bool get forcePressEnabled => true;
 
   @override
-  final GlobalKey<EditableTextState> editableTextKey = GlobalKey<EditableTextState>();
+  final GlobalKey<EditableTextState> editableTextKey =
+      GlobalKey<EditableTextState>();
 
   @override
   bool get selectionEnabled => widget.selectionEnabled;
@@ -769,7 +903,8 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
   @override
   void initState() {
     super.initState();
-    _selectionGestureDetectorBuilder = _TextFieldSelectionGestureDetectorBuilder(state: this);
+    _selectionGestureDetectorBuilder =
+        _TextFieldSelectionGestureDetectorBuilder(state: this);
     if (widget.controller == null) {
       _createLocalController();
     }
@@ -835,19 +970,17 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
       return false;
 
     // On macOS, we don't show handles when the selection is collapsed.
-    if (_effectiveController.selection.isCollapsed)
-      return false;
+    if (_effectiveController.selection.isCollapsed) return false;
 
-    if (cause == SelectionChangedCause.keyboard)
-      return false;
+    if (cause == SelectionChangedCause.keyboard) return false;
 
-    if (_effectiveController.text.isNotEmpty)
-      return true;
+    if (_effectiveController.text.isNotEmpty) return true;
 
     return false;
   }
 
-  void _handleSelectionChanged(TextSelection selection, SelectionChangedCause? cause) {
+  void _handleSelectionChanged(
+      TextSelection selection, SelectionChangedCause? cause) {
     if (cause == SelectionChangedCause.longPress) {
       _editableText.bringIntoView(selection.base);
     }
@@ -879,17 +1012,19 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
   }
 
   bool _showPrefixWidget(TextEditingValue text) {
-    return widget.prefix != null && _shouldShowAttachment(
-      attachment: widget.prefixMode,
-      hasText: text.text.isNotEmpty,
-    );
+    return widget.prefix != null &&
+        _shouldShowAttachment(
+          attachment: widget.prefixMode,
+          hasText: text.text.isNotEmpty,
+        );
   }
 
   bool _showSuffixWidget(TextEditingValue text) {
-    return widget.suffix != null && _shouldShowAttachment(
-      attachment: widget.suffixMode,
-      hasText: text.text.isNotEmpty,
-    );
+    return widget.suffix != null &&
+        _shouldShowAttachment(
+          attachment: widget.suffixMode,
+          hasText: text.text.isNotEmpty,
+        );
   }
 
   bool _showClearButton(TextEditingValue text) {
@@ -902,9 +1037,9 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
   // True if any surrounding decoration widgets will be shown.
   bool get _hasDecoration {
     return widget.placeholder != null ||
-      widget.clearButtonMode != OverlayVisibilityMode.never ||
-      widget.prefix != null ||
-      widget.suffix != null;
+        widget.clearButtonMode != OverlayVisibilityMode.never ||
+        widget.prefix != null ||
+        widget.suffix != null;
   }
 
   // Provide default behavior if widget.textAlignVertical is not set.
@@ -917,7 +1052,8 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
     return _hasDecoration ? TextAlignVertical.center : TextAlignVertical.top;
   }
 
-  Widget _addTextDependentAttachments(Widget editableText, TextStyle textStyle, TextStyle placeholderStyle) {
+  Widget _addTextDependentAttachments(
+      Widget editableText, TextStyle textStyle, TextStyle placeholderStyle) {
     // If there are no surrounding widgets, just return the core editable text
     // part.
     if (!_hasDecoration) {
@@ -963,20 +1099,24 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
           else if (_showClearButton(text))
             GestureDetector(
               key: _clearGlobalKey,
-              onTap: widget.enabled ?? true ? () {
-                // Special handle onChanged for ClearButton
-                // Also call onChanged when the clear button is tapped.
-                final bool textChanged = _effectiveController.text.isNotEmpty;
-                _effectiveController.clear();
-                if (widget.onChanged != null && textChanged)
-                  widget.onChanged!(_effectiveController.text);
-              } : null,
+              onTap: widget.enabled ?? true
+                  ? () {
+                      // Special handle onChanged for ClearButton
+                      // Also call onChanged when the clear button is tapped.
+                      final bool textChanged =
+                          _effectiveController.text.isNotEmpty;
+                      _effectiveController.clear();
+                      if (widget.onChanged != null && textChanged)
+                        widget.onChanged!(_effectiveController.text);
+                    }
+                  : null,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: Icon(
                   CupertinoIcons.clear_thick_circled,
                   size: 18.0,
-                  color: DynamicColorX.macosResolve(_kClearButtonColor, context),
+                  color:
+                      DynamicColorX.macosResolve(_kClearButtonColor, context),
                 ),
               ),
             ),
@@ -1008,7 +1148,10 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
     }
 
     final bool enabled = widget.enabled ?? true;
-    final Offset cursorOffset = Offset(_iOSHorizontalCursorOffsetPixels / MediaQuery.of(context).devicePixelRatio, 0);
+    final Offset cursorOffset = Offset(
+        _iOSHorizontalCursorOffsetPixels /
+            MediaQuery.of(context).devicePixelRatio,
+        0);
     final List<TextInputFormatter> formatters = <TextInputFormatter>[
       ...?widget.inputFormatters,
       if (widget.maxLength != null)
@@ -1021,40 +1164,56 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
 
     final TextStyle? resolvedStyle = widget.style?.copyWith(
       color: DynamicColorX.maybeMacosResolve(widget.style?.color, context),
-      backgroundColor: DynamicColorX.maybeMacosResolve(widget.style?.backgroundColor, context),
+      backgroundColor: DynamicColorX.maybeMacosResolve(
+          widget.style?.backgroundColor, context),
     );
 
-    final TextStyle textStyle = themeData.typography!.body!.merge(resolvedStyle);
+    final TextStyle textStyle =
+        themeData.typography!.body!.merge(resolvedStyle);
 
-    final TextStyle? resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
-      color: DynamicColorX.maybeMacosResolve(widget.placeholderStyle?.color , context),
-      backgroundColor: DynamicColorX.maybeMacosResolve(widget.placeholderStyle?.backgroundColor , context),
+    final TextStyle? resolvedPlaceholderStyle =
+        widget.placeholderStyle?.copyWith(
+      color: DynamicColorX.maybeMacosResolve(
+        widget.placeholderStyle?.color,
+        context,
+      ),
+      backgroundColor: DynamicColorX.maybeMacosResolve(
+        widget.placeholderStyle?.backgroundColor,
+        context,
+      ),
     );
 
-    final TextStyle placeholderStyle = textStyle.merge(resolvedPlaceholderStyle);
+    final placeholderStyle = textStyle.merge(resolvedPlaceholderStyle);
 
-    final Brightness keyboardAppearance = widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
-    final Color cursorColor = DynamicColorX.maybeMacosResolve(widget.cursorColor, context) ?? themeData.primaryColor!;
-    final Color disabledColor = DynamicColorX.macosResolve(_kDisabledBackground, context);
+    final Brightness keyboardAppearance =
+        widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
+    final Color cursorColor =
+        DynamicColorX.maybeMacosResolve(widget.cursorColor, context) ??
+            themeData.primaryColor!;
+    final Color disabledColor =
+        DynamicColorX.macosResolve(_kDisabledBackground, context);
 
-    final Color? decorationColor = DynamicColorX.maybeMacosResolve(widget.decoration?.color, context);
+    final Color? decorationColor =
+        DynamicColorX.maybeMacosResolve(widget.decoration?.color, context);
 
     final BoxBorder? border = widget.decoration?.border;
     Border? resolvedBorder = border as Border?;
     if (border is Border) {
       BorderSide resolveBorderSide(BorderSide side) {
         return side == BorderSide.none
-          ? side
-          : side.copyWith(color: DynamicColorX.macosResolve(side.color, context));
+            ? side
+            : side.copyWith(
+                color: DynamicColorX.macosResolve(side.color, context));
       }
+
       resolvedBorder = border.runtimeType != Border
-        ? border
-        : Border(
-          top: resolveBorderSide(border.top),
-          left: resolveBorderSide(border.left),
-          bottom: resolveBorderSide(border.bottom),
-          right: resolveBorderSide(border.right),
-        );
+          ? border
+          : Border(
+              top: resolveBorderSide(border.top),
+              left: resolveBorderSide(border.left),
+              bottom: resolveBorderSide(border.bottom),
+              right: resolveBorderSide(border.right),
+            );
     }
 
     final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
@@ -1062,7 +1221,8 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
       color: enabled ? decorationColor : (decorationColor ?? disabledColor),
     );
 
-    final Color selectionColor = MacosTheme.of(context).primaryColor!.withOpacity(0.2);
+    final Color selectionColor =
+        MacosTheme.of(context).primaryColor!.withOpacity(0.2);
 
     final Widget paddedEditable = Padding(
       padding: widget.padding,
@@ -1094,8 +1254,8 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
             minLines: widget.minLines,
             expands: widget.expands,
             selectionColor: selectionColor,
-            selectionControls: widget.selectionEnabled
-              ? textSelectionControls : null,
+            selectionControls:
+                widget.selectionEnabled ? textSelectionControls : null,
             onChanged: widget.onChanged,
             onSelectionChanged: _handleSelectionChanged,
             onEditingComplete: widget.onEditingComplete,
@@ -1110,7 +1270,8 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
             cursorOffset: cursorOffset,
             paintCursorAboveText: true,
             autocorrectionTextRectColor: selectionColor,
-            backgroundCursorColor: DynamicColorX.macosResolve(CupertinoColors.inactiveGray, context),
+            backgroundCursorColor: DynamicColorX.macosResolve(
+                CupertinoColors.inactiveGray, context),
             selectionHeightStyle: widget.selectionHeightStyle,
             selectionWidthStyle: widget.selectionWidthStyle,
             scrollPadding: widget.scrollPadding,
@@ -1128,12 +1289,15 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
 
     final Widget child = Semantics(
       enabled: enabled,
-      onTap: !enabled || widget.readOnly ? null : () {
-        if (!controller.selection.isValid) {
-          controller.selection = TextSelection.collapsed(offset: controller.text.length);
-        }
-        _requestKeyboard();
-      },
+      onTap: !enabled || widget.readOnly
+          ? null
+          : () {
+              if (!controller.selection.isValid) {
+                controller.selection =
+                    TextSelection.collapsed(offset: controller.text.length);
+              }
+              _requestKeyboard();
+            },
       child: IgnorePointer(
         ignoring: !enabled,
         child: Container(
@@ -1144,7 +1308,8 @@ class _TextFieldState extends State<TextField> with RestorationMixin, AutomaticK
               alignment: Alignment(-1.0, _textAlignVertical.y),
               widthFactor: 1.0,
               heightFactor: 1.0,
-              child: _addTextDependentAttachments(paddedEditable, textStyle, placeholderStyle),
+              child: _addTextDependentAttachments(
+                  paddedEditable, textStyle, placeholderStyle),
             ),
           ),
         ),
