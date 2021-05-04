@@ -16,6 +16,8 @@ Flutter widgets and themes implementing the current macOS design language.
   - [RadioButton](#radiobutton)
   - [PushButton](#pushbutton)
   - [Switch](#switch)
+- [Fields and Labels](#fields-and-labels)
+  - [TextField](#textfield)
 - [Indicators](#indicators)
   - [Progress Indicators](#progress-indicators)
     - [ProgressCircle](#progresscircle)
@@ -152,6 +154,20 @@ Switch(
     setState(() => selected = value);
   },
 ),
+```
+
+# Fields and Labels
+
+## TextField
+
+A text field is a rectangular area in which the user enters or edits one or more lines of text. A text field can contain plain or styled text.
+
+![](https://developer.apple.com/design/human-interface-guidelines/macos/images/TextFields_PlaceHolder.png)
+
+Here's an example of how to create a basic text field:
+
+```dart
+TextField(),
 ```
 
 # Indicators
