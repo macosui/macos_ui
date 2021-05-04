@@ -22,7 +22,6 @@ const TextStyle _kDefaultPlaceholderStyle = TextStyle(
   color: CupertinoColors.placeholderText,
 );
 
-// Value inspected from Xcode 11 & iOS 13.0 Simulator.
 const BorderSide _kDefaultRoundedBorderSide = BorderSide(
   color: CupertinoDynamicColor.withBrightness(
     color: Color(0x33000000),
@@ -52,8 +51,6 @@ const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
   darkColor: Color(0xFF050505),
 );
 
-// Value inspected from Xcode 12 & iOS 14.0 Simulator.
-// Note it may not be consistent with https://developer.apple.com/design/resources/.
 const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
   color: Color(0x33000000),
   darkColor: Color(0x33FFFFFF),
@@ -322,7 +319,7 @@ class TextField extends StatefulWidget {
                   )),
         super(key: key);
 
-  /// Creates a borderless iOS-style text field.
+  /// Creates a borderless macOS-style text field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with
   /// an initial value to the [controller] parameter.
@@ -515,7 +512,7 @@ class TextField extends StatefulWidget {
   /// Has no effect when [suffix] is null.
   final OverlayVisibilityMode suffixMode;
 
-  /// Show an iOS-style clear button to clear the current text entry.
+  /// Show an macOS-style clear button to clear the current text entry.
   ///
   /// Can be made to appear depending on various text states of the
   /// [TextEditingController].
@@ -541,7 +538,7 @@ class TextField extends StatefulWidget {
   ///
   /// Also serves as a base for the [placeholder] text's style.
   ///
-  /// Defaults to the standard iOS font style from [MacosTheme] if null.
+  /// Defaults to the standard font style from [MacosTheme] if null.
   final TextStyle? style;
 
   /// {@macro flutter.widgets.editableText.strutStyle}
@@ -909,6 +906,11 @@ class _TextFieldState extends State<TextField>
       _createLocalController();
     }
     _effectiveFocusNode.canRequestFocus = widget.enabled ?? true;
+    _effectiveFocusNode.addListener(_handleFocusChanged);
+  }
+
+  void _handleFocusChanged() {
+    setState(() {});
   }
 
   @override
@@ -1168,11 +1170,9 @@ class _TextFieldState extends State<TextField>
           widget.style?.backgroundColor, context),
     );
 
-    final TextStyle textStyle =
-        themeData.typography!.body!.merge(resolvedStyle);
+    final textStyle = themeData.typography!.body!.merge(resolvedStyle);
 
-    final TextStyle? resolvedPlaceholderStyle =
-        widget.placeholderStyle?.copyWith(
+    final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
       color: DynamicColorX.maybeMacosResolve(
         widget.placeholderStyle?.color,
         context,
@@ -1203,7 +1203,10 @@ class _TextFieldState extends State<TextField>
         return side == BorderSide.none
             ? side
             : side.copyWith(
-                color: DynamicColorX.macosResolve(side.color, context));
+                color: _effectiveFocusNode.hasFocus
+                    ? themeData.primaryColor
+                    : DynamicColorX.macosResolve(side.color, context),
+              );
       }
 
       resolvedBorder = border.runtimeType != Border

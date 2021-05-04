@@ -86,10 +86,32 @@ class _DemoState extends State<Demo> {
           ),
           RelevanceIndicator(value: 10),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: TextField(
+              prefix: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Icon(CupertinoIcons.search),
+              ),
               placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+              /// If both suffix and clear button mode is provided,
+              /// suffix will override the clear button.
+              // suffix: Text('SUFFIX'),
               clearButtonMode: OverlayVisibilityMode.always,
+              maxLines: null,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: TextField.borderless(
+              prefix: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Icon(CupertinoIcons.search),
+              ),
+              placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+              /// If both suffix and clear button mode is provided,
+              /// suffix will override the clear button.
+              suffix: Text('SUFFIX'),
+              // clearButtonMode: OverlayVisibilityMode.always,
               maxLines: null,
             ),
           ),
