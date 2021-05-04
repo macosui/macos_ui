@@ -3,6 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'macos_theme.dart';
 
 extension DynamicColorX on CupertinoDynamicColor {
+  static Color? maybeMacosResolve(Color? resolvable, BuildContext context) {
+    if (resolvable == null) return null;
+    return macosResolve(resolvable, context);
+  }
+
   static Color macosResolve(Color resolvable, BuildContext context) {
     return (resolvable is CupertinoDynamicColor)
         ? resolvable.macosResolveFrom(context)
@@ -80,6 +85,7 @@ extension DynamicColorX on CupertinoDynamicColor {
       _debugContext = context as Element;
       return true;
     }());
+
     return ResolvedCupertinoDynamicColor(
       resolved,
       color,
@@ -91,14 +97,15 @@ extension DynamicColorX on CupertinoDynamicColor {
       highContrastElevatedColor,
       darkHighContrastElevatedColor,
       _debugContext,
-      //_debugLabel,
     );
   }
 }
 
 class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
+  final Color resolvedColor;
+
   const ResolvedCupertinoDynamicColor(
-    Color resolvedColor,
+    this.resolvedColor,
     Color color,
     Color darkColor,
     Color highContrastColor,
@@ -118,4 +125,7 @@ class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
           highContrastElevatedColor: highContrastElevatedColor,
           darkHighContrastElevatedColor: darkHighContrastElevatedColor,
         );
+
+  @override
+  int get value => resolvedColor.value;
 }

@@ -40,3 +40,4 @@ export 'src/styles/typography.dart';
 export 'src/styles/typography.dart';
 export 'src/util.dart';
 export 'src/util.dart';
+export 'src/fields/text_field.dart';

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart' hide Scaffold, Checkbox;
+import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 import 'package:provider/provider.dart';
 
 import 'theme.dart';
@@ -84,6 +85,14 @@ class _DemoState extends State<Demo> {
             onChanged: (v) => setState(() => ratingValue = v),
           ),
           RelevanceIndicator(value: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+              clearButtonMode: OverlayVisibilityMode.always,
+              maxLines: null,
+            ),
+          ),
         ],
       ),
     );
