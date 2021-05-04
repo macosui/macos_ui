@@ -47,10 +47,6 @@ const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
 );
 
 const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
-  color: CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: CupertinoColors.black,
-  ),
   borderRadius: BorderRadius.all(Radius.circular(7.0)),
 );
 
@@ -475,6 +471,7 @@ class TextField extends StatefulWidget {
   final BoxDecoration? decoration;
 
   /// Controls the [BoxDecoration] of the box behind the text input when focused.
+  /// This decoration is drawn above [decoration].
   ///
   /// Defaults to having a rounded rectangle blue border and can be null to have
   /// no box decoration.
@@ -1252,7 +1249,7 @@ class _TextFieldState extends State<TextField>
         if (focusedDecoration.border is Border) {
           BorderSide borderSide(BorderSide fromSide) {
             return BorderSide(
-              color: Color(0x00000000),
+              color: fromSide.color.withOpacity(0.0),
               style: fromSide.style,
               width: fromSide.width,
             );
@@ -1267,7 +1264,7 @@ class _TextFieldState extends State<TextField>
         }
         return focusedDecoration.border;
       }(),
-      color: Color(0x00000000),
+      color: focusedDecoration.color ?? Color(0x00000000),
     );
 
     final Color selectionColor =
@@ -1320,7 +1317,9 @@ class _TextFieldState extends State<TextField>
             paintCursorAboveText: true,
             autocorrectionTextRectColor: selectionColor,
             backgroundCursorColor: DynamicColorX.macosResolve(
-                CupertinoColors.inactiveGray, context),
+              CupertinoColors.inactiveGray,
+              context,
+            ),
             selectionHeightStyle: widget.selectionHeightStyle,
             selectionWidthStyle: widget.selectionWidthStyle,
             scrollPadding: widget.scrollPadding,
@@ -1349,7 +1348,9 @@ class _TextFieldState extends State<TextField>
             },
       child: IgnorePointer(
         ignoring: !enabled,
-        child: Container(
+        child: AnimatedContainer(
+          /// Value eyeballed from MacOS Big Sur
+          duration: const Duration(milliseconds: 125),
           decoration: _effectiveFocusNode.hasFocus
               ? focusedDecoration
               : focusedPlaceholderDecoration,
