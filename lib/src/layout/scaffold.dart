@@ -295,10 +295,7 @@ class ScaffoldScope extends InheritedWidget {
   }
 
   static ScaffoldScope? maybeOf(BuildContext context) {
-    final ScaffoldScope? result =
-        context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
-    assert(result != null, 'No ScaffoldContraints found in context');
-    return result;
+    return context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
   }
 
   @override
