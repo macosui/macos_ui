@@ -14,6 +14,7 @@ class Sidebar {
     this.isResizable = true,
     this.maxWidth = 400.0,
     this.padding = EdgeInsets.zero,
+    this.scaffoldBreakpoint = 556.0,
   });
 
   /// The builder that creates a child to display in this widget, which will
@@ -62,4 +63,7 @@ class Sidebar {
   ///
   /// Defaults to `EdgeInsets.zero`.
   final EdgeInsets padding;
+
+  /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
+  final double scaffoldBreakpoint;
 }
