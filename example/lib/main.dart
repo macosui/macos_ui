@@ -57,7 +57,7 @@ class _DemoState extends State<Demo> {
                   PushButton(
                     buttonSize: ButtonSize.small,
                     child: Text('Button'),
-                    onPressed: () {},
+                    onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
                   ),
                   SizedBox(height: 20),
                   RadioButton(
@@ -97,7 +97,8 @@ class _DemoState extends State<Demo> {
           },
         ),
         ResizablePane(
-          minWidth: 200,
+          minWidth: 300,
+          scaffoldBreakpoint: 400,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
             return Center(child: Text("Resizable Pane"));
