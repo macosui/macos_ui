@@ -26,7 +26,7 @@ class ResizablePane extends StatefulWidget {
     required this.minWidth,
     this.isResizable = true,
     required this.resizableSide,
-    this.scaffoldBreakpoint = 500,
+    this.scaffoldBreakpoint,
   })  : assert(maxWidth >= minWidth),
         super(key: key);
 
@@ -56,14 +56,18 @@ class ResizablePane extends StatefulWidget {
   final ResizableSide resizableSide;
 
   /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
-  final double scaffoldBreakpoint;
+  final double? scaffoldBreakpoint;
+
+  static UniqueKey _uniqueKey = UniqueKey();
 
   @override
-  ResizablePaneState createState() => ResizablePaneState();
+  _ResizablePaneState createState() => _ResizablePaneState(_uniqueKey);
 }
 
-class ResizablePaneState extends State<ResizablePane> {
-  final _key = UniqueKey();
+class _ResizablePaneState extends State<ResizablePane> {
+  final UniqueKey _key;
+  _ResizablePaneState(this._key);
+
   final _scrollController = ScrollController();
   late double _width;
 
@@ -137,11 +141,33 @@ class ResizablePaneState extends State<ResizablePane> {
   }
 
   @override
+  void didUpdateWidget(covariant ResizablePane oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.scaffoldBreakpoint != widget.scaffoldBreakpoint ||
+        oldWidget.minWidth != widget.minWidth ||
+        oldWidget.maxWidth != widget.maxWidth)
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        _notifier.remove(_key, notify: false);
+        setState(() {
+          if (widget.minWidth > _width) _width = widget.minWidth;
+          if (widget.maxWidth < _width) _width = widget.maxWidth;
+        });
+        _notifier.update(_key, _width);
+      });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (!_notifier.value.containsKey(_key)) {
+    if (widget.scaffoldBreakpoint != null) {
+      if (_maxWidth! <= widget.scaffoldBreakpoint!) {
+        _notifier.remove(_key, notify: false);
+        return SizedBox.shrink();
+      } else {
+        _notifier.update(_key, _width, notify: false);
+      }
+    } else if (!_notifier.value.containsKey(_key)) {
       _notifier.update(_key, _width, notify: false);
     }
-    if (_maxWidth! <= widget.scaffoldBreakpoint) return SizedBox.shrink();
 
     return SizedBox(
       width: _width,
