@@ -54,6 +54,29 @@ class _ScaffoldState extends State<Scaffold> {
   final _minContentAreaWidth = 300.0;
   ResizablePaneNotifier _valueNotifier = ResizablePaneNotifier({});
   double _sidebarWidth = 0.0;
+  bool _showSidebar = true;
+
+  void _recalculateLayout() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _valueNotifier.reset();
+      setState(() {
+        if (widget.sidebar == null)
+          _sidebarWidth = 0.0;
+        else {
+          if (widget.sidebar!.minWidth > _sidebarWidth)
+            _sidebarWidth = widget.sidebar!.minWidth;
+          if (widget.sidebar!.maxWidth! < _sidebarWidth)
+            _sidebarWidth = widget.sidebar!.maxWidth!;
+        }
+      });
+      _valueNotifier.notify();
+    });
+  }
+
+  void toggleSidebar() {
+    setState(() => _showSidebar = !_showSidebar);
+    _recalculateLayout();
+  }
 
   @override
   void initState() {
@@ -75,20 +98,7 @@ class _ScaffoldState extends State<Scaffold> {
   @override
   void didUpdateWidget(covariant Scaffold old) {
     super.didUpdateWidget(old);
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _valueNotifier.reset();
-      setState(() {
-        if (widget.sidebar == null)
-          _sidebarWidth = 0.0;
-        else {
-          if (widget.sidebar!.minWidth > _sidebarWidth)
-            _sidebarWidth = widget.sidebar!.minWidth;
-          if (widget.sidebar!.maxWidth! < _sidebarWidth)
-            _sidebarWidth = widget.sidebar!.maxWidth!;
-        }
-      });
-      _valueNotifier.notify();
-    });
+    _recalculateLayout();
   }
 
   @override
@@ -130,11 +140,15 @@ class _ScaffoldState extends State<Scaffold> {
         final titleBarHeight = widget.titleBar?.size == TitleBarSize.large
             ? _kTitleBarHeight
             : _kSmallTitleBarHeight;
+        final isAtBreakpoint =
+            width <= (widget.sidebar?.scaffoldBreakpoint ?? 0);
+        final canShowSidebar = _showSidebar && !isAtBreakpoint;
+        final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
 
         final layout = Stack(
           children: [
             // Sidebar
-            if (widget.sidebar != null)
+            if (widget.sidebar != null && canShowSidebar)
               Positioned(
                 height: height,
                 width: _sidebarWidth,
@@ -163,25 +177,26 @@ class _ScaffoldState extends State<Scaffold> {
                 ),
               ),
 
+            // Background color
+            Positioned.fill(
+              left: visibleSidebarWidth,
+              child: ColoredBox(color: backgroundColor),
+            ),
+
             // Content Area
             Positioned(
               top: 0,
-              left: _sidebarWidth,
+              left: visibleSidebarWidth,
               height: height,
-              child: AnimatedContainer(
-                duration: theme.mediumAnimationDuration ?? Duration.zero,
-                curve: theme.animationCurve ?? Curves.linear,
-                color: backgroundColor,
-                child: MediaQuery(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: children,
-                  ),
-                  data: mediaQuery.copyWith(
-                    padding: widget.titleBar != null
-                        ? EdgeInsets.only(top: titleBarHeight)
-                        : null,
-                  ),
+              child: MediaQuery(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: children,
+                ),
+                data: mediaQuery.copyWith(
+                  padding: widget.titleBar != null
+                      ? EdgeInsets.only(top: titleBarHeight)
+                      : null,
                 ),
               ),
             ),
@@ -190,8 +205,8 @@ class _ScaffoldState extends State<Scaffold> {
             if (widget.titleBar != null)
               Positioned(
                 height: titleBarHeight,
-                left: _sidebarWidth,
-                width: math.max(width - _sidebarWidth, 0),
+                left: visibleSidebarWidth,
+                width: math.max(width - visibleSidebarWidth, 0),
                 child: ClipRect(
                   child: BackdropFilter(
                     filter: widget.titleBar?.decoration?.color?.alpha == 255
@@ -218,7 +233,7 @@ class _ScaffoldState extends State<Scaffold> {
               ),
 
             // Sidebar resizer
-            if (widget.sidebar?.isResizable ?? false)
+            if ((widget.sidebar?.isResizable ?? false) && canShowSidebar)
               Positioned(
                 left: _sidebarWidth - 4,
                 width: 7,
@@ -257,10 +272,11 @@ class _ScaffoldState extends State<Scaffold> {
           valueListenable: _valueNotifier,
           builder: (_, panes, child) {
             double sum = panes.values.fold(0.0, (prev, curr) => prev + curr);
-            double _remainingWidth = width - (_sidebarWidth + sum);
+            double _remainingWidth = width - (visibleSidebarWidth + sum);
 
             return ScaffoldScope(
               child: child!,
+              scaffoldState: this,
               constraints: constraints,
               valueNotifier: _valueNotifier,
               contentAreaWidth: math.max(_minContentAreaWidth, _remainingWidth),
@@ -279,23 +295,31 @@ class ScaffoldScope extends InheritedWidget {
     required this.contentAreaWidth,
     required Widget child,
     required this.valueNotifier,
-  }) : super(key: key, child: child);
+    required _ScaffoldState scaffoldState,
+  })   : _scaffoldState = scaffoldState,
+        super(key: key, child: child);
 
   final BoxConstraints constraints;
 
   final double contentAreaWidth;
+
+  final _ScaffoldState _scaffoldState;
 
   final ResizablePaneNotifier valueNotifier;
 
   static ScaffoldScope of(BuildContext context) {
     final ScaffoldScope? result =
         context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
-    assert(result != null, 'No ScaffoldContraints found in context');
+    assert(result != null, 'No ScaffoldScope found in context');
     return result!;
   }
 
   static ScaffoldScope? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
+  }
+
+  void toggleSidebar() {
+    return _scaffoldState.toggleSidebar();
   }
 
   @override
