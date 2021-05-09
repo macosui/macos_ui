@@ -1,6 +1,6 @@
+import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
-
-import '../../macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// The widget that fills the rest of the body of the macOS [Scaffold].
 ///

@@ -10,26 +10,6 @@
 
 library macos_ui;
 
-export 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
-export 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoIcons;
-export 'package:flutter/material.dart'
-    show
-        Brightness,
-        ThemeMode,
-        Feedback,
-        DefaultMaterialLocalizations,
-        PageTransitionsBuilder,
-        FlutterLogo,
-        CircleAvatar,
-        Scrollbar,
-        VerticalDivider,
-        Divider;
-
-/// todo: package-level docs
-export 'package:flutter/widgets.dart';
-
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/help_button.dart';
 export 'src/buttons/help_button_theme.dart';

@@ -1,10 +1,10 @@
 import 'dart:math' as math show max, min;
 
 import 'package:flutter/rendering.dart' show SystemMouseCursors;
+import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/resizable_pane_notifier.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
-
-import '../../macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// Default value for [SideBar] top padding
 const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 50);

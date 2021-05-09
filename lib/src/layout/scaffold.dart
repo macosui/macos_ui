@@ -9,20 +9,24 @@ import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/resizable_pane_notifier.dart';
 import 'package:macos_ui/src/layout/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
+import 'package:macos_ui/src/library.dart';
 
-const _kTitleBarHeight = 52.0;
+/// Defines the height of a regular-sized [TitleBar]
+const kTitleBarHeight = 52.0;
 
-const _kSmallTitleBarHeight = 30.0;
+/// Defines the height of a small-sized [TitleBar]
+const kSmallTitleBarHeight = 30.0;
 
 /// A basic screen-layout widget.
 ///
-/// Provides a [body] for main content and a [sidebar] for secondary content
-/// (like navigation buttons). If no [sidebar] is specified, only the [body]
-/// will be shown.
+/// Provides a body for main content, via [children], and a [sidebar] for
+/// secondary content (like navigation buttons). If no [sidebar] is specified,
+/// only the [children] will be shown.
 class Scaffold extends StatefulWidget {
   /// Creates a macOS window layout.
   ///
-  /// The [children] can only include one [ContentArea], but can no or multiple [ResizablePane] widgets.
+  /// The [children] can only include one [ContentArea], but can include
+  /// multiple [ResizablePane] widgets.
   const Scaffold({
     Key? key,
     this.children = const <Widget>[],
@@ -36,7 +40,8 @@ class Scaffold extends StatefulWidget {
   /// The default colors from the theme would be used if no color is specified.
   final Color? backgroundColor;
 
-  /// The children to display in the rest of the scaffold, excluding the [Sidebar] and [Titlebar] regions.
+  /// The children to display in the rest of the scaffold, excluding the
+  /// [Sidebar] and [TitleBar] regions.
   final List<Widget> children;
 
   /// A sidebar to display at the left of the scaffold.
@@ -138,8 +143,8 @@ class _ScaffoldState extends State<Scaffold> {
         final mediaQuery = MediaQuery.of(context);
         final children = widget.children;
         final titleBarHeight = widget.titleBar?.size == TitleBarSize.large
-            ? _kTitleBarHeight
-            : _kSmallTitleBarHeight;
+            ? kTitleBarHeight
+            : kSmallTitleBarHeight;
         final isAtBreakpoint =
             width <= (widget.sidebar?.scaffoldBreakpoint ?? 0);
         final canShowSidebar = _showSidebar && !isAtBreakpoint;
