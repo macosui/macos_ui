@@ -1349,7 +1349,7 @@ class _TextFieldState extends State<TextField>
       ),
     );
 
-    final Widget child = Semantics(
+    Widget child = Semantics(
       enabled: enabled,
       onTap: !enabled || widget.readOnly
           ? null
@@ -1387,6 +1387,11 @@ class _TextFieldState extends State<TextField>
           ),
         ),
       ),
+    );
+
+    child = MouseRegion(
+      cursor: SystemMouseCursors.text,
+      child: child,
     );
 
     if (kIsWeb) {
