@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -30,6 +29,7 @@ const BorderSide _kDefaultRoundedBorderSide = BorderSide(
   style: BorderStyle.solid,
   width: 0.0,
 );
+
 const Border _kDefaultRoundedBorder = Border(
   top: _kDefaultRoundedBorderSide,
   bottom: _kDefaultRoundedBorderSide,
