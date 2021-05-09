@@ -99,7 +99,8 @@ class _DemoState extends State<Demo> {
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: Icon(CupertinoIcons.search),
                       ),
-                      placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+                      placeholder: 'Type some text here',
+
                       /// If both suffix and clear button mode is provided,
                       /// suffix will override the clear button.
                       // suffix: Text('SUFFIX'),
@@ -114,7 +115,8 @@ class _DemoState extends State<Demo> {
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: Icon(CupertinoIcons.search),
                       ),
-                      placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+                      placeholder: 'Type some text here',
+
                       /// If both suffix and clear button mode is provided,
                       /// suffix will override the clear button.
                       suffix: Text('SUFFIX'),
