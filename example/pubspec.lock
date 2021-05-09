@@ -121,13 +121,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  split_view:
-    dependency: transitive
-    description:
-      name: split_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1+2"
   stack_trace:
     dependency: transitive
     description:

@@ -749,7 +749,11 @@ class TextField extends StatefulWidget {
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
     properties.add(
-        DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle));
+      DiagnosticsProperty<TextStyle>(
+        'placeholderStyle',
+        placeholderStyle,
+      ),
+    );
     properties.add(EnumProperty<OverlayVisibilityMode>(
       'prefix',
       prefix == null ? null : prefixMode,
@@ -995,7 +999,9 @@ class _TextFieldState extends State<TextField>
   }
 
   void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause? cause) {
+    TextSelection selection,
+    SelectionChangedCause? cause,
+  ) {
     if (cause == SelectionChangedCause.longPress) {
       _editableText.bringIntoView(selection.base);
     }
@@ -1068,7 +1074,10 @@ class _TextFieldState extends State<TextField>
   }
 
   Widget _addTextDependentAttachments(
-      Widget editableText, TextStyle textStyle, TextStyle placeholderStyle) {
+    Widget editableText,
+    TextStyle textStyle,
+    TextStyle placeholderStyle,
+  ) {
     // If there are no surrounding widgets, just return the core editable text
     // part.
     if (!_hasDecoration) {
@@ -1141,6 +1150,7 @@ class _TextFieldState extends State<TextField>
   }
 
   @override
+  // ignore: code-metrics
   Widget build(BuildContext context) {
     super.build(context); // See AutomaticKeepAliveClientMixin.
     assert(debugCheckHasDirectionality(context));
@@ -1164,9 +1174,10 @@ class _TextFieldState extends State<TextField>
 
     final bool enabled = widget.enabled ?? true;
     final Offset cursorOffset = Offset(
-        _iOSHorizontalCursorOffsetPixels /
-            MediaQuery.of(context).devicePixelRatio,
-        0);
+      _iOSHorizontalCursorOffsetPixels /
+          MediaQuery.of(context).devicePixelRatio,
+      0,
+    );
     final List<TextInputFormatter> formatters = <TextInputFormatter>[
       ...?widget.inputFormatters,
       if (widget.maxLength != null)

@@ -102,8 +102,6 @@ extension DynamicColorX on CupertinoDynamicColor {
 }
 
 class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
-  final Color resolvedColor;
-
   const ResolvedCupertinoDynamicColor(
     this.resolvedColor,
     Color color,
@@ -125,6 +123,8 @@ class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
           highContrastElevatedColor: highContrastElevatedColor,
           darkHighContrastElevatedColor: darkHighContrastElevatedColor,
         );
+
+  final Color resolvedColor;
 
   @override
   int get value => resolvedColor.value;

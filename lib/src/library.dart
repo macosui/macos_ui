@@ -14,6 +14,8 @@ export 'package:flutter/material.dart'
         DefaultMaterialLocalizations,
         PageTransitionsBuilder,
         FlutterLogo,
-        CircleAvatar;
-
+        CircleAvatar,
+        Scrollbar,
+        VerticalDivider,
+        Divider;
 export 'package:flutter/widgets.dart';

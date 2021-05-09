@@ -35,88 +35,107 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-  bool value = false;
-
-  double sliderValue = 0;
   double ratingValue = 0;
+  double sliderValue = 0;
+  bool value = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      sidebar: Center(
-        child: Text('Sidebar'),
+      titleBar: TitleBar(child: Text("Titlebar")),
+      sidebar: Sidebar(
+        minWidth: 200,
+        builder: (context, _) => Center(child: Text("Sidebar")),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          PushButton(
-            buttonSize: ButtonSize.small,
-            child: Text('Button'),
-            onPressed: () {},
-          ),
-          RadioButton(
-            value: value,
-            onChanged: (v) => setState(() => value = v),
-          ),
-          Checkbox(
-            value: value,
-            onChanged: (v) => setState(() => value = v),
-          ),
-          HelpButton(
-            onPressed: () {},
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CapacityIndicator(
-              value: sliderValue,
-              onChanged: (v) => setState(() => sliderValue = v),
-              discrete: true,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CapacityIndicator(
-              value: sliderValue,
-              onChanged: (v) => setState(() => sliderValue = v),
-            ),
-          ),
-          RatingIndicator(
-            value: ratingValue,
-            onChanged: (v) => setState(() => ratingValue = v),
-          ),
-          RelevanceIndicator(value: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TextField(
-              prefix: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(CupertinoIcons.search),
+      children: <Widget>[
+        ContentArea(
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  PushButton(
+                    buttonSize: ButtonSize.small,
+                    child: Text('Button'),
+                    onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
+                  ),
+                  SizedBox(height: 20),
+                  RadioButton(
+                    value: value,
+                    onChanged: (v) => setState(() => value = v),
+                  ),
+                  SizedBox(height: 20),
+                  Checkbox(
+                    value: value,
+                    onChanged: (v) => setState(() => value = v),
+                  ),
+                  SizedBox(height: 20),
+                  HelpButton(
+                    onPressed: () {},
+                  ),
+                  SizedBox(height: 20),
+                  CapacityIndicator(
+                    value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
+                    discrete: true,
+                  ),
+                  SizedBox(height: 20),
+                  CapacityIndicator(
+                    value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
+                  ),
+                  SizedBox(height: 20),
+                  RatingIndicator(
+                    value: ratingValue,
+                    onChanged: (v) => setState(() => ratingValue = v),
+                  ),
+                  SizedBox(height: 20),
+                  RelevanceIndicator(value: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TextField(
+                      prefix: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Icon(CupertinoIcons.search),
+                      ),
+                      placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+                      /// If both suffix and clear button mode is provided,
+                      /// suffix will override the clear button.
+                      // suffix: Text('SUFFIX'),
+                      clearButtonMode: OverlayVisibilityMode.always,
+                      maxLines: null,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TextField.borderless(
+                      prefix: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Icon(CupertinoIcons.search),
+                      ),
+                      placeholder: 'PLACE A TEXT HERE NEHEEHEH',
+                      /// If both suffix and clear button mode is provided,
+                      /// suffix will override the clear button.
+                      suffix: Text('SUFFIX'),
+                      // clearButtonMode: OverlayVisibilityMode.always,
+                      maxLines: null,
+                    ),
+                  ),
+                ],
               ),
-              placeholder: 'PLACE A TEXT HERE NEHEEHEH',
-              /// If both suffix and clear button mode is provided,
-              /// suffix will override the clear button.
-              // suffix: Text('SUFFIX'),
-              clearButtonMode: OverlayVisibilityMode.always,
-              maxLines: null,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TextField.borderless(
-              prefix: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(CupertinoIcons.search),
-              ),
-              placeholder: 'PLACE A TEXT HERE NEHEEHEH',
-              /// If both suffix and clear button mode is provided,
-              /// suffix will override the clear button.
-              suffix: Text('SUFFIX'),
-              // clearButtonMode: OverlayVisibilityMode.always,
-              maxLines: null,
-            ),
-          ),
-        ],
-      ),
+            );
+          },
+        ),
+        ResizablePane(
+          minWidth: 300,
+          scaffoldBreakpoint: 400,
+          resizableSide: ResizableSide.left,
+          builder: (_, __) {
+            return Center(child: Text("Resizable Pane"));
+          },
+        ),
+      ],
     );
   }
 }
