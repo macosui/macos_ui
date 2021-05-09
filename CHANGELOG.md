@@ -1,3 +1,6 @@
+## [0.0.11]
+* Implement `TextField`
+
 ## [0.0.10]
 * Revamp `Scaffold` [#26] (https://github.com/GroovinChip/macos_ui/issues/26)
 
