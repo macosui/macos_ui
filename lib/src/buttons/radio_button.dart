@@ -81,60 +81,57 @@ class RadioButton extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final isLight = context.macosTheme.brightness != Brightness.dark;
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => onChanged?.call(!value),
-        child: Semantics(
-          checked: value,
-          label: semanticLabel,
-          child: Container(
-            height: size,
-            width: size,
-            decoration: BoxDecoration(
-              border: Border.all(
-                style: isDisabled ? BorderStyle.none : BorderStyle.solid,
-                width: value ? size / 4.0 : 1,
-                color: DynamicColorX.macosResolve(
-                  value
-                      ? onColor ??
-                          context.macosTheme.primaryColor ??
-                          CupertinoColors.activeBlue
-                      : offColor,
-                  context,
-                ),
+    return GestureDetector(
+      onTap: () => onChanged?.call(!value),
+      child: Semantics(
+        checked: value,
+        label: semanticLabel,
+        child: Container(
+          height: size,
+          width: size,
+          decoration: BoxDecoration(
+            border: Border.all(
+              style: isDisabled ? BorderStyle.none : BorderStyle.solid,
+              width: value ? size / 4.0 : 1,
+              color: DynamicColorX.macosResolve(
+                value
+                    ? onColor ??
+                        context.macosTheme.primaryColor ??
+                        CupertinoColors.activeBlue
+                    : offColor,
+                context,
               ),
-              shape: BoxShape.circle,
             ),
-            // The inner color is inside another container because it sometimes
-            // overlap the border when used together
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: DynamicColorX.macosResolve(
-                  innerColor ??
-                      (isDisabled
-                          ? CupertinoColors.quaternarySystemFill
-                          : value || isLight
-                              ? CupertinoColors.white
-                              : CupertinoColors.tertiarySystemFill),
-                  context,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.05),
-                    offset: Offset(-0.05, -0.05),
-                  ),
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.05),
-                    offset: Offset(0.05, 0.05),
-                  ),
-                  BoxShadow(
-                    color: CupertinoColors.tertiarySystemFill,
-                    offset: Offset(0, 0),
-                  ),
-                ],
+            shape: BoxShape.circle,
+          ),
+          // The inner color is inside another container because it sometimes
+          // overlap the border when used together
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: DynamicColorX.macosResolve(
+                innerColor ??
+                    (isDisabled
+                        ? CupertinoColors.quaternarySystemFill
+                        : value || isLight
+                            ? CupertinoColors.white
+                            : CupertinoColors.tertiarySystemFill),
+                context,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.05),
+                  offset: Offset(-0.05, -0.05),
+                ),
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.05),
+                  offset: Offset(0.05, 0.05),
+                ),
+                BoxShadow(
+                  color: CupertinoColors.tertiarySystemFill,
+                  offset: Offset(0, 0),
+                ),
+              ],
             ),
           ),
         ),
