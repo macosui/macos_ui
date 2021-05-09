@@ -22,6 +22,7 @@ class MacosThemeData with Diagnosticable {
     Duration? mediumAnimationDuration,
     Typography? typography,
     PushButtonThemeData? pushButtonTheme,
+    Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
@@ -42,6 +43,7 @@ class MacosThemeData with Diagnosticable {
           ? Color.fromRGBO(255, 255, 255, 0.1)
           : Color.fromRGBO(244, 245, 245, 1.0),
     );
+    dividerColor ??= isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000);
     helpButtonTheme ??= HelpButtonThemeData(
       color: isDark
           ? Color.fromRGBO(255, 255, 255, 0.1)
@@ -59,6 +61,7 @@ class MacosThemeData with Diagnosticable {
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
+      dividerColor: dividerColor,
       helpButtonTheme: helpButtonTheme,
     );
   }
@@ -71,6 +74,7 @@ class MacosThemeData with Diagnosticable {
     required this.mediumAnimationDuration,
     required this.typography,
     required this.pushButtonTheme,
+    required this.dividerColor,
     required this.helpButtonTheme,
   });
 
@@ -109,6 +113,9 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [PushButton]s below the overall [MacosTheme].
   final PushButtonThemeData pushButtonTheme;
 
+  /// The color to use when painting the line used for the [TitleBar] bottom, [Sidebar] and [ResizableBar] sides
+  final Color? dividerColor;
+
   /// The default style for [HelpButton]s below the overall [MacosTheme].
   final HelpButtonThemeData helpButtonTheme;
 
@@ -124,6 +131,7 @@ class MacosThemeData with Diagnosticable {
       mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
+      dividerColor: dividerColor,
       helpButtonTheme: helpButtonTheme,
     );
   }
