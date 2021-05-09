@@ -1121,26 +1121,29 @@ class _TextFieldState extends State<TextField>
             widget.suffix!
           // Otherwise, try to show a clear button if its visibility mode matches.
           else if (_showClearButton(text))
-            GestureDetector(
-              key: _clearGlobalKey,
-              onTap: widget.enabled ?? true
-                  ? () {
-                      // Special handle onChanged for ClearButton
-                      // Also call onChanged when the clear button is tapped.
-                      final bool textChanged =
-                          _effectiveController.text.isNotEmpty;
-                      _effectiveController.clear();
-                      if (widget.onChanged != null && textChanged)
-                        widget.onChanged!(_effectiveController.text);
-                    }
-                  : null,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                child: Icon(
-                  CupertinoIcons.clear_thick_circled,
-                  size: 18.0,
-                  color:
-                      DynamicColorX.macosResolve(_kClearButtonColor, context),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                key: _clearGlobalKey,
+                onTap: widget.enabled ?? true
+                    ? () {
+                        // Special handle onChanged for ClearButton
+                        // Also call onChanged when the clear button is tapped.
+                        final bool textChanged =
+                            _effectiveController.text.isNotEmpty;
+                        _effectiveController.clear();
+                        if (widget.onChanged != null && textChanged)
+                          widget.onChanged!(_effectiveController.text);
+                      }
+                    : null,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  child: Icon(
+                    CupertinoIcons.clear_thick_circled,
+                    size: 18.0,
+                    color:
+                        DynamicColorX.macosResolve(_kClearButtonColor, context),
+                  ),
                 ),
               ),
             ),
