@@ -71,8 +71,11 @@ class _DemoState extends State<Demo> {
                     onChanged: (v) => setState(() => value = v),
                   ),
                   SizedBox(height: 20),
-                  HelpButton(
-                    onPressed: () {},
+                  Tooltip(
+                    message: 'This button shows help',
+                    child: HelpButton(
+                      onPressed: () {},
+                    ),
                   ),
                   SizedBox(height: 20),
                   CapacityIndicator(

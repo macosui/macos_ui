@@ -24,6 +24,7 @@ class MacosThemeData with Diagnosticable {
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
+    TooltipThemeData? tooltipTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -52,6 +53,10 @@ class MacosThemeData with Diagnosticable {
           ? Color.fromRGBO(255, 255, 255, 0.1)
           : Color.fromRGBO(244, 245, 245, 1.0),
     );
+    tooltipTheme ??= TooltipThemeData.standard(
+      brightness: _brightness,
+      textStyle: typography.callout ?? TextStyle(),
+    );
 
     return MacosThemeData._raw(
       brightness: _brightness,
@@ -63,6 +68,7 @@ class MacosThemeData with Diagnosticable {
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
       helpButtonTheme: helpButtonTheme,
+      tooltipTheme: tooltipTheme,
     );
   }
 
@@ -76,6 +82,7 @@ class MacosThemeData with Diagnosticable {
     required this.pushButtonTheme,
     required this.dividerColor,
     required this.helpButtonTheme,
+    required this.tooltipTheme,
   });
 
   // TODO: documentation
@@ -119,6 +126,9 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [HelpButton]s below the overall [MacosTheme].
   final HelpButtonThemeData helpButtonTheme;
 
+  /// The default style for [Tooltip]s below the overall [MacosTheme]
+  final TooltipThemeData tooltipTheme;
+
   MacosThemeData resolveFrom(BuildContext context) {
     /*Color? convertColor(Color? color) =>
         CupertinoDynamicColor.maybeResolve(color, context);*/
@@ -133,6 +143,7 @@ class MacosThemeData with Diagnosticable {
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
       helpButtonTheme: helpButtonTheme,
+      tooltipTheme: tooltipTheme,
     );
   }
 }
