@@ -16,7 +16,7 @@ Flutter widgets and themes implementing the current macOS design language.
   - [RadioButton](#radiobutton)
   - [PushButton](#pushbutton)
   - [Switch](#switch)
-- [Fields and Labels](#fields-and-labels)
+- [Fields](#fields)
   - [TextField](#textfield)
 - [Indicators](#indicators)
   - [Progress Indicators](#progress-indicators)
@@ -156,7 +156,7 @@ Switch(
 ),
 ```
 
-# Fields and Labels
+# Fields
 
 ## TextField
 
@@ -169,6 +169,27 @@ Here's an example of how to create a basic text field:
 ```dart
 TextField(),
 ```
+
+# Labels
+
+Labels are a short description of what an element on the screen does.
+
+## Tooltip
+
+Tooltips succinctly describe how to use controls without shifting people’s focus away from the primary interface. Help tags appear when the user positions the pointer over a control for a few seconds. A tooltip remains visible for 10 seconds, or until the pointer moves away from the control.
+
+![Tooltip Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/help_Tooltip.png)
+
+To create a tooltip, wrap any widget on a `Tooltip`:
+
+```dart
+Tooltip(
+  message: 'This is a tooltip',
+  child: Text('Hover or long press to show a tooltip'),
+),
+```
+
+You can customize the tooltip the way you want using its `style` property. A tooltip automatically adapts to its environment, responding to touch and pointer events.
 
 # Indicators
 

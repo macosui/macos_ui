@@ -17,5 +17,6 @@ export 'package:flutter/material.dart'
         CircleAvatar,
         Scrollbar,
         VerticalDivider,
-        Divider;
+        Divider,
+        kElevationToShadow;
 export 'package:flutter/widgets.dart';
