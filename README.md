@@ -176,7 +176,7 @@ Labels are a short description of what an element on the screen does.
 
 ## Tooltip
 
-Tooltips, succinctly describe how to use controls without shifting people’s focus away from the primary interface. Help tags appear when the user positions the pointer over a control for a few seconds. A tooltip remains visible for 10 seconds, or until the pointer moves away from the control.
+Tooltips succinctly describe how to use controls without shifting people’s focus away from the primary interface. Help tags appear when the user positions the pointer over a control for a few seconds. A tooltip remains visible for 10 seconds, or until the pointer moves away from the control.
 
 ![Tooltip Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/help_Tooltip.png)
 
