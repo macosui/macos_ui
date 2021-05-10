@@ -21,7 +21,7 @@ export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
 export 'src/indicators/rating_indicator.dart';
 export 'src/indicators/relevance_indicator.dart';
-export 'src/indicators/tooltip.dart';
+export 'src/labels/tooltip.dart';
 export 'src/layout/content_area.dart';
 export 'src/layout/resizable_pane.dart';
 export 'src/layout/scaffold.dart';

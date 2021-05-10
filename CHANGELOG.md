@@ -1,3 +1,6 @@
+## [0.0.12]
+* Implement `Tooltip`
+
 ## [0.0.11]
 * Implement `TextField`
 
