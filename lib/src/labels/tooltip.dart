@@ -13,12 +13,12 @@ import 'package:macos_ui/src/library.dart';
 /// the user positions the pointer over a control for a few seconds. A
 /// tooltip remains visible for 10 seconds, or until the pointer moves
 /// away from the control.
-/// 
+///
 /// The tooltip can respond to long press, on mobile, and to pointer events,
 /// on desktop.
 ///
 /// ![Tooltip Preview](https://developer.apple.com/design/human-interface-guidelines/macos/images/help_Tooltip.png)
-/// 
+///
 /// See also:
 ///   * [TooltipThemeData], used to define how the tooltip will look like
 class Tooltip extends StatefulWidget {
