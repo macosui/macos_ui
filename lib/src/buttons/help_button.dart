@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -170,52 +171,55 @@ class _HelpButtonState extends State<HelpButton>
             ? Color.fromRGBO(255, 255, 255, 0.25)
             : Color.fromRGBO(0, 0, 0, 0.25);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: enabled ? _handleTapDown : null,
-      onTapUp: enabled ? _handleTapUp : null,
-      onTapCancel: enabled ? _handleTapCancel : null,
-      onTap: widget.onPressed,
-      child: Semantics(
-        label: widget.semanticLabel,
-        button: true,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 20,
-            minHeight: 20,
-          ),
-          child: FadeTransition(
-            opacity: _opacityAnimation,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: !enabled
-                    ? DynamicColorX.macosResolve(disabledColor!, context)
-                    : backgroundColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                    offset: Offset(-0.1, -0.1),
-                  ),
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                    offset: Offset(0.1, 0.1),
-                  ),
-                  BoxShadow(
-                    color: CupertinoColors.tertiarySystemFill,
-                    offset: Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Align(
-                  alignment: widget.alignment,
-                  widthFactor: 1.0,
-                  heightFactor: 1.0,
-                  child: Icon(
-                    CupertinoIcons.question,
-                    color: foregroundColor,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: enabled ? _handleTapDown : null,
+        onTapUp: enabled ? _handleTapUp : null,
+        onTapCancel: enabled ? _handleTapCancel : null,
+        onTap: widget.onPressed,
+        child: Semantics(
+          label: widget.semanticLabel,
+          button: true,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 20,
+              minHeight: 20,
+            ),
+            child: FadeTransition(
+              opacity: _opacityAnimation,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: !enabled
+                      ? DynamicColorX.macosResolve(disabledColor!, context)
+                      : backgroundColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(-0.1, -0.1),
+                    ),
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(0.1, 0.1),
+                    ),
+                    BoxShadow(
+                      color: CupertinoColors.tertiarySystemFill,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Align(
+                    alignment: widget.alignment,
+                    widthFactor: 1.0,
+                    heightFactor: 1.0,
+                    child: Icon(
+                      CupertinoIcons.question,
+                      color: foregroundColor,
+                    ),
                   ),
                 ),
               ),

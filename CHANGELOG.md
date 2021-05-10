@@ -1,5 +1,6 @@
 ## [0.0.12]
 * Implement `Tooltip`
+* Add mouse cursors to help button, push button and `TextField`
 
 ## [0.0.11]
 * Implement `TextField`

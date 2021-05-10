@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -232,39 +233,42 @@ class _PushButtonState extends State<PushButton>
     final TextStyle textStyle =
         theme.typography!.headline!.copyWith(color: foregroundColor);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: enabled ? _handleTapDown : null,
-      onTapUp: enabled ? _handleTapUp : null,
-      onTapCancel: enabled ? _handleTapCancel : null,
-      onTap: widget.onPressed,
-      child: Semantics(
-        button: true,
-        label: widget.semanticLabel,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 49,
-            minHeight: 20,
-          ),
-          child: FadeTransition(
-            opacity: _opacityAnimation,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: borderRadius,
-                color: !enabled
-                    ? DynamicColorX.macosResolve(disabledColor, context)
-                    : backgroundColor,
-              ),
-              child: Padding(
-                padding: buttonPadding!,
-                child: Align(
-                  alignment: widget.alignment,
-                  widthFactor: 1.0,
-                  heightFactor: 1.0,
-                  // TODO(groovin): show proper text color in light theme
-                  child: DefaultTextStyle(
-                    style: textStyle,
-                    child: widget.child,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: enabled ? _handleTapDown : null,
+        onTapUp: enabled ? _handleTapUp : null,
+        onTapCancel: enabled ? _handleTapCancel : null,
+        onTap: widget.onPressed,
+        child: Semantics(
+          button: true,
+          label: widget.semanticLabel,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 49,
+              minHeight: 20,
+            ),
+            child: FadeTransition(
+              opacity: _opacityAnimation,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius,
+                  color: !enabled
+                      ? DynamicColorX.macosResolve(disabledColor, context)
+                      : backgroundColor,
+                ),
+                child: Padding(
+                  padding: buttonPadding!,
+                  child: Align(
+                    alignment: widget.alignment,
+                    widthFactor: 1.0,
+                    heightFactor: 1.0,
+                    // TODO(groovin): show proper text color in light theme
+                    child: DefaultTextStyle(
+                      style: textStyle,
+                      child: widget.child,
+                    ),
                   ),
                 ),
               ),
