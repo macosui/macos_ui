@@ -9,6 +9,8 @@ import 'package:flutter/painting.dart';
 /// TODO: Figure out how to implement leading (see guidelines)
 ///
 /// https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/
+///
+/// {@category Theme}
 class Typography with Diagnosticable {
   const Typography({
     this.largeTitle,

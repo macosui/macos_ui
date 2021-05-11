@@ -18,6 +18,8 @@ import 'macos_theme_data.dart';
 ///  * [MacosThemeData], specifies the theme's visual styling
 ///  * [MacosApp], which will automatically add a [MacosTheme] based on the
 ///    value of [MacosApp.theme].
+///
+/// {@category Theme}
 class MacosTheme extends StatelessWidget {
   /// Creates a [MacosTheme] to change descendant macOS widgets' styling.
   ///
@@ -136,6 +138,10 @@ class _InheritedMacosTheme extends InheritedWidget {
       theme.data != old.theme.data;
 }
 
-extension themeContext on BuildContext {
+/// {@category Theme}
+extension ThemeX on BuildContext {
+  /// A shortcut for getting the closest [MacosTheme]
+  ///
+  /// {@category Theme}
   MacosThemeData get macosTheme => MacosTheme.of(this);
 }

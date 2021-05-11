@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 import 'macos_theme.dart';
 
+/// DynamicColorX is an extension that allows a [CupertinoDynamicColor] to
+/// determine resolve colors when used with a [MacosTheme].
+///
+/// {@category Theme}
 extension DynamicColorX on CupertinoDynamicColor {
   static Color? maybeMacosResolve(Color? resolvable, BuildContext context) {
     if (resolvable == null) return null;
@@ -101,6 +105,9 @@ extension DynamicColorX on CupertinoDynamicColor {
   }
 }
 
+/// A color resolved from a [MacosTheme]
+///
+/// {@category Theme}
 class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
   const ResolvedCupertinoDynamicColor(
     this.resolvedColor,

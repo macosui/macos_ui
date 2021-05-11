@@ -1,3 +1,5 @@
+library internal;
+
 export 'package:flutter/cupertino.dart'
     show
         CupertinoColors,

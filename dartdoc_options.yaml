@@ -1,4 +1,10 @@
 dartdoc:
+  categories:
+    "Theme":
+      markdown: doc/theme.md
+      name: Awesome
+    categoryOrder: ["Theme"]
+  exclude: ['internal']
   tools:
     snippet:
       command: ["dev/snippets/lib/main.dart", "--type=snippet"]

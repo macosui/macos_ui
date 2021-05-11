@@ -10,6 +10,8 @@ import 'package:macos_ui/macos_ui.dart';
 /// See also:
 ///
 ///  * [MacosTheme], in which this [MacosThemeData] is inserted.
+///
+/// {@category Theme}
 class MacosThemeData with Diagnosticable {
   /// Creates a [MacosTheme] styling specification.
   ///
@@ -148,6 +150,7 @@ class MacosThemeData with Diagnosticable {
   }
 }
 
+/// {@category Theme}
 extension BrightnessX on Brightness {
   bool get isDark => this == Brightness.dark;
 }
