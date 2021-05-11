@@ -375,6 +375,53 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 }
 
 class TooltipThemeData with Diagnosticable {
+  const TooltipThemeData({
+    this.height,
+    this.verticalOffset,
+    this.padding,
+    this.margin,
+    this.preferBelow,
+    this.decoration,
+    this.showDuration,
+    this.waitDuration,
+    this.textStyle,
+  });
+
+  /// Creates a default tooltip theme.
+  ///
+  /// [textStyle] is usually [Typography.caption2]
+  factory TooltipThemeData.standard({
+    required Brightness brightness,
+    required TextStyle textStyle,
+  }) {
+    return TooltipThemeData(
+      height: 32.0,
+      verticalOffset: 24.0,
+      preferBelow: false,
+      margin: EdgeInsets.zero,
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      waitDuration: const Duration(seconds: 1),
+      textStyle: textStyle,
+      decoration: () {
+        const radius = BorderRadius.zero;
+        final shadow = kElevationToShadow[4];
+        if (brightness == Brightness.light) {
+          return BoxDecoration(
+            color: CupertinoColors.systemGrey6.color,
+            borderRadius: radius,
+            boxShadow: shadow,
+          );
+        } else {
+          return BoxDecoration(
+            color: CupertinoColors.systemGrey6.darkColor,
+            borderRadius: radius,
+            boxShadow: shadow,
+          );
+        }
+      }(),
+    );
+  }
+
   /// The height of the tooltip's [child].
   ///
   /// If the [child] is null, then this is the tooltip's intrinsic height.
@@ -435,54 +482,6 @@ class TooltipThemeData with Diagnosticable {
   ///
   /// If null, [Typography.caption] is used
   final TextStyle? textStyle;
-
-  const TooltipThemeData({
-    this.height,
-    this.verticalOffset,
-    this.padding,
-    this.margin,
-    this.preferBelow,
-    this.decoration,
-    this.showDuration,
-    this.waitDuration,
-    this.textStyle,
-  });
-
-  /// Creates a default tooltip theme.
-  ///
-  /// [textStyle] is usually [Typography.caption2]
-  factory TooltipThemeData.standard({
-    required Brightness brightness,
-    required TextStyle textStyle,
-  }) {
-    return TooltipThemeData(
-      height: 32.0,
-      verticalOffset: 24.0,
-      preferBelow: false,
-      margin: EdgeInsets.zero,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      waitDuration: const Duration(seconds: 1),
-      textStyle: textStyle,
-      decoration: () {
-        const radius = BorderRadius.zero;
-        final shadow = kElevationToShadow[4];
-        CupertinoColors.activeBlue;
-        if (brightness == Brightness.light) {
-          return BoxDecoration(
-            color: CupertinoColors.systemGrey6.color,
-            borderRadius: radius,
-            boxShadow: shadow,
-          );
-        } else {
-          return BoxDecoration(
-            color: CupertinoColors.systemGrey6.darkColor,
-            borderRadius: radius,
-            boxShadow: shadow,
-          );
-        }
-      }(),
-    );
-  }
 
   /// Copy this tooltip with [style]
   TooltipThemeData copyWith(TooltipThemeData? style) {
