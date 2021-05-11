@@ -499,8 +499,6 @@ class TooltipThemeData with Diagnosticable {
   /// If null, [Typography.caption] is used
   final TextStyle? textStyle;
 
-
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
