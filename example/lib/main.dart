@@ -95,6 +95,7 @@ class _DemoState extends State<Demo> {
                   ),
                   SizedBox(height: 20),
                   RelevanceIndicator(value: 10),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
@@ -111,6 +112,7 @@ class _DemoState extends State<Demo> {
                       maxLines: null,
                     ),
                   ),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField.borderless(
