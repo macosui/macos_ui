@@ -46,9 +46,13 @@ You must specify a `body` as the main content area, and you can optionally provi
 that will show to the left of `body`. The `sidebar` can be resized by grabbing the split and
 dragging left or right. See the documentation for all customization options.
 
-<img src="https://imgur.com/e41j2aT.jpg" width="75%"/>
+<img src="https://imgur.com/RXhTJj4.jpg" width="75%"/>
 
-<img src="https://imgur.com/jTPXGuq.gif" width="75%"/>
+<img src="https://imgur.com/GzKJsbn.png" width="75%"/>
+
+<img src="https://imgur.com/owpkOPC.png" width="75%"/>
+
+<img src="https://imgur.com/f9ZFiLv.png" width="75%"/>
 
 # Buttons
 
