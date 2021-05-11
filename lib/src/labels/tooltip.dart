@@ -422,6 +422,22 @@ class TooltipThemeData with Diagnosticable {
     );
   }
 
+  /// Copy this tooltip with [style]
+  TooltipThemeData copyWith(TooltipThemeData? style) {
+    if (style == null) return this;
+    return TooltipThemeData(
+      decoration: style.decoration ?? decoration,
+      height: style.height ?? height,
+      margin: style.margin ?? margin,
+      padding: style.padding ?? padding,
+      preferBelow: style.preferBelow ?? preferBelow,
+      showDuration: style.showDuration ?? showDuration,
+      textStyle: style.textStyle ?? textStyle,
+      verticalOffset: style.verticalOffset ?? verticalOffset,
+      waitDuration: style.waitDuration ?? waitDuration,
+    );
+  }
+
   /// The height of the tooltip's [child].
   ///
   /// If the [child] is null, then this is the tooltip's intrinsic height.
@@ -483,21 +499,7 @@ class TooltipThemeData with Diagnosticable {
   /// If null, [Typography.caption] is used
   final TextStyle? textStyle;
 
-  /// Copy this tooltip with [style]
-  TooltipThemeData copyWith(TooltipThemeData? style) {
-    if (style == null) return this;
-    return TooltipThemeData(
-      decoration: style.decoration ?? decoration,
-      height: style.height ?? height,
-      margin: style.margin ?? margin,
-      padding: style.padding ?? padding,
-      preferBelow: style.preferBelow ?? preferBelow,
-      showDuration: style.showDuration ?? showDuration,
-      textStyle: style.textStyle ?? textStyle,
-      verticalOffset: style.verticalOffset ?? verticalOffset,
-      waitDuration: style.waitDuration ?? waitDuration,
-    );
-  }
+
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
