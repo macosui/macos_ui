@@ -1,5 +1,11 @@
 import 'package:flutter/foundation.dart';
 
+/// The [ResizablePaneNotifier] is a `ValueNotifier` that keeps track
+/// of [ResizablePane] widgets of a [ScaffoldScope].
+///
+/// The [ResizablePane] widgets register and unregister their widths
+/// and keys using this notifier. This process helps in the calculation
+/// of values needed in laying parts out the [Scaffold].
 class ResizablePaneNotifier extends ValueNotifier<Map<Key, double>> {
   /// Creates a [ValueNotifier] that wraps this [value] for a [ResizablePane]
   ResizablePaneNotifier(Map<Key, double> value) : super(value);

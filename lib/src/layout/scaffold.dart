@@ -293,7 +293,23 @@ class _ScaffoldState extends State<Scaffold> {
   }
 }
 
+/// A [ScaffoldScope] serves as a scope for its descendants to rely on
+/// values needed for the layout of the descendants.
+///
+/// It is embedded in the [Scaffold] and available to the widgets just below
+/// it in the widget tree. The [ScaffoldScope] passes down the values which
+/// are calculated inside [Scaffold] to its descendants.
+///
+/// Descendants of the [ScaffoldScope] automatically work with the values
+/// they need, so you will hardly need to manually use the [ScaffoldScope].
 class ScaffoldScope extends InheritedWidget {
+  /// Creates a widget that manages the layout of the [Scaffold].
+  ///
+  /// [ResizablePane] and [ContentArea] are other widgets that depend
+  /// on the [ScaffoldScope] for layout.
+  ///
+  /// The [constraints], [contentAreaWidth], [child], [valueNotifier]
+  /// and [_scaffoldState] arguments are required and must not be null.
   const ScaffoldScope({
     Key? key,
     required this.constraints,
@@ -304,14 +320,30 @@ class ScaffoldScope extends InheritedWidget {
   })   : _scaffoldState = scaffoldState,
         super(key: key, child: child);
 
+  /// Provides the constraints from the [Scaffold] to its descendants.
   final BoxConstraints constraints;
 
+  /// The calculated width of the rest of the content area excluding
+  /// [ResizablePane] and [Sidebar]. This sizes the width of [ContentArea]
   final double contentAreaWidth;
 
+  /// Provides internal access to the [_ScaffoldState] for calling methods
+  /// such as [toggleSidebar]
   final _ScaffoldState _scaffoldState;
 
+  /// Retrieves the [ResizablePaneNotifier] inside [Scaffold].
+  ///
+  /// [ResizablePane] widgets in this scope register and unregister their
+  /// widths and keys using this [valueNotifier]
   final ResizablePaneNotifier valueNotifier;
 
+  /// Returns the [ScaffoldScope] of the [Scaffold] that most tightly encloses
+  /// the given [context].
+  ///
+  /// If the [context] does not have a [Scaffold] as its ancestor, an assertion
+  /// is thrown.
+  ///
+  /// The [context] argument must not be null.
   static ScaffoldScope of(BuildContext context) {
     final ScaffoldScope? result =
         context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
@@ -319,10 +351,21 @@ class ScaffoldScope extends InheritedWidget {
     return result!;
   }
 
+  /// Returns a [ScaffoldScope] of the [Scaffold] that most tightly
+  /// encloses the given [context]. The result can be null.
+  ///
+  /// If this [context] does not have a [Scaffold] as its ancestor, the result
+  /// returned is null.
+  ///
+  /// The [context] argument must not be null.
   static ScaffoldScope? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
   }
 
+  /// Toggles the [Sidebar] of the [Scaffold].
+  ///
+  /// This does not change the current width of the [Sidebar]. It only
+  /// hides or shows it.
   void toggleSidebar() {
     return _scaffoldState.toggleSidebar();
   }
