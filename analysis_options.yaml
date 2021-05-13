@@ -1,0 +1,23 @@
+linter:
+  rules:
+    - avoid_relative_lib_imports
+
+analyzer:
+  plugins:
+    - dart_code_metrics
+    
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 4
+    maximum-nesting-level: 5
+  metrics-exclude:
+    - test/**
+    - example/test/**
+  rules:
+    - prefer-trailing-comma
+    - member-ordering:
+        alphabetize: false
+        order:
+          - constructors
+          - public_fields

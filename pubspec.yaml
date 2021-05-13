@@ -1,7 +1,7 @@
 name: macos_ui
-description: Implements Apple's macOS Design System in Flutter. Based on the official documentation.
-version: 0.0.1
-homepage: '' #todo
+description: Flutter widgets and themes implementing the current macOS design language.
+version: 0.1.0
+homepage: 'https://github.com/GroovinChip/macos_ui'
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -9,9 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  dart_code_metrics: ^3.2.2
 
 flutter:
+  fonts:
+    - family: SanFranciscoPro
+      fonts:
+        - asset: fonts/SFProTTF/SFProText-Regular.ttf
