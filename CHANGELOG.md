@@ -1,3 +1,6 @@
+## [0.1.0]
+* pub.dev release
+
 ## [0.0.13]
 * Documentation for `ScaffoldScope`
 
