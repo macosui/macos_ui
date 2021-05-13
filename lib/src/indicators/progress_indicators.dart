@@ -2,8 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart' as c;
 import 'package:flutter/foundation.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// A [ProgressCircle] that shows progress in a circular form, either as a
 /// spinner or as a circle that fills in as progress continues.

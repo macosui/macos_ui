@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// A help button appears within a view and opens app-specific help documentation when clicked.
 /// For help documentation creation guidance, see Help. All help buttons are circular,

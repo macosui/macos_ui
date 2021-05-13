@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// A relevance indicator communicates relevancy using a series
 /// of vertical bars. It often appears in a list of search results

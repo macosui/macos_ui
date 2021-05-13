@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// A radio button is a small, circular button followed by a
 /// title. Typically presented in groups of two to five, radio
