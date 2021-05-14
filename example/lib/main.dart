@@ -117,7 +117,10 @@ class _DemoState extends State<Demo> {
                   ),
                   const SizedBox(height: 20),
                   Label(
-                    icon: Icon(CupertinoIcons.tag, color: CupertinoColors.activeBlue),
+                    icon: Icon(
+                      CupertinoIcons.tag,
+                      color: CupertinoColors.activeBlue,
+                    ),
                     text: SelectableText('A borderless textfield: '),
                     child: Expanded(
                       child: Padding(

@@ -1,7 +1,7 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// A label is a static text field that describes an onscreen interface 
+/// A label is a static text field that describes an onscreen interface
 /// element or provides a short message. Although people can’t edit labels,
 /// they can sometimes copy label contents.
 ///
@@ -17,7 +17,7 @@ class Label extends StatelessWidget {
 
   /// The icon used by the label. If non-null, it's rendered horizontally
   /// before [text].
-  /// 
+  ///
   /// Usually an [Icon].
   final Widget? icon;
 
