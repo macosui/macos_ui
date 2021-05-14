@@ -1,4 +1,5 @@
 ## [0.1.1]
+* Implemented `Label` ([#61](https://github.com/GroovinChip/macos_ui/issues/61))
 * Capacity Indicator now works as expected ([#49](https://github.com/GroovinChip/macos_ui/issues/49))
 * Clear button is now aligned to text ([#82](https://github.com/GroovinChip/macos_ui/issues/82))
 

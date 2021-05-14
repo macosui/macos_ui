@@ -18,5 +18,6 @@ export 'package:flutter/material.dart'
         Scrollbar,
         VerticalDivider,
         Divider,
+        SelectableText,
         kElevationToShadow;
 export 'package:flutter/widgets.dart';
