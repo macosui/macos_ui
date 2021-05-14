@@ -90,12 +90,12 @@ class CapacityIndicator extends StatelessWidget {
     properties.add(StringProperty('semanticLabel', semanticLabel));
   }
 
-  void _handleUpdate(Offset lp) {
-    double value = discrete ? lp.dx / splits : lp.dx;
-    if (value.isNegative)
-      value = 0;
-    else if (value > 100) value = 100;
-    onChanged?.call(value);
+  void _handleUpdate(Offset lp, double width) {
+    double value = () {
+      final value = (lp.dx / width) * splits;
+      return value;
+    }();
+    onChanged?.call(value.clamp(0.0, 100.0));
   }
 
   @override
@@ -106,45 +106,58 @@ class CapacityIndicator extends StatelessWidget {
       value: value.toStringAsFixed(2),
       child: Container(
         constraints: BoxConstraints(minWidth: _kCapacityIndicatorMinWidth),
-        child: GestureDetector(
-          onPanStart: (event) => _handleUpdate(event.localPosition),
-          onPanUpdate: (event) => _handleUpdate(event.localPosition),
-          onPanDown: (event) => _handleUpdate(event.localPosition),
-          child: discrete
-              ? LayoutBuilder(builder: (context, consts) {
-                  double width = consts.biggest.width;
-                  if (width.isInfinite) width = 100;
-                  final splitWidth = width / splits;
-                  final fillToIndex = (100 - -(value - 100)) * (splits / 10);
-                  return SizedBox(
-                    width: width,
-                    child: Row(
-                      children: List.generate(splits, (index) {
-                        return Container(
-                          padding: EdgeInsets.only(
-                            right: index == splits - 1 ? 0 : 2.0,
-                          ),
-                          width: splitWidth,
-                          child: CapacityIndicatorCell(
-                            value: value > 0 && fillToIndex / 10 >= index
-                                ? 100
-                                : 0,
-                            backgroundColor: backgroundColor,
-                            borderColor: borderColor,
-                            color: color,
-                          ),
-                        );
-                      }),
-                    ),
-                  );
-                })
-              : CapacityIndicatorCell(
+        child: LayoutBuilder(builder: (context, consts) {
+          double width = consts.maxWidth;
+          if (width.isInfinite) width = 100;
+          final splitWidth = width / splits;
+          if (discrete) {
+            final fillToIndex = value / splits - 1;
+            return SizedBox(
+              width: width,
+              child: GestureDetector(
+                onPanStart: (event) =>
+                    _handleUpdate(event.localPosition, splitWidth),
+                onPanUpdate: (event) =>
+                    _handleUpdate(event.localPosition, splitWidth),
+                onPanDown: (event) =>
+                    _handleUpdate(event.localPosition, splitWidth),
+                child: Row(
+                  children: List.generate(splits, (index) {
+                    return Container(
+                      padding: EdgeInsets.only(
+                        right: index == splits - 1 ? 0 : 2.0,
+                      ),
+                      width: splitWidth,
+                      child: CapacityIndicatorCell(
+                        value: value > 0 && fillToIndex >= index ? 100 : 0,
+                        backgroundColor: backgroundColor,
+                        borderColor: borderColor,
+                        color: color,
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            );
+          } else {
+            return SizedBox(
+              width: width,
+              child: GestureDetector(
+                onPanStart: (event) =>
+                    _handleUpdate(event.localPosition, width),
+                onPanUpdate: (event) =>
+                    _handleUpdate(event.localPosition, width),
+                onPanDown: (event) => _handleUpdate(event.localPosition, width),
+                child: CapacityIndicatorCell(
                   value: value,
                   backgroundColor: backgroundColor,
                   borderColor: borderColor,
                   color: color,
                 ),
-        ),
+              ),
+            );
+          }
+        }),
       ),
     );
   }
