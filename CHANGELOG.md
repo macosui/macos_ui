@@ -1,3 +1,6 @@
+## [0.1.1]
+* Clear button is now aligned to text ([#82](https://github.com/GroovinChip/macos_ui/issues/82))
+
 ## [0.1.0]
 * pub.dev release
 
@@ -12,7 +15,7 @@
 * Implement `TextField`
 
 ## [0.0.10]
-* Revamp `Scaffold` [#26] (https://github.com/GroovinChip/macos_ui/issues/26)
+* Revamp `Scaffold` [#26](https://github.com/GroovinChip/macos_ui/issues/26)
 
 ## [0.0.9+1]
 * `CapacityIndicator` colors can now be set on its constructor
