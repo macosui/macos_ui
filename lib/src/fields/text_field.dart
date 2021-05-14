@@ -1089,7 +1089,7 @@ class _TextFieldState extends State<TextField>
       valueListenable: _effectiveController,
       child: editableText,
       builder: (BuildContext context, TextEditingValue? text, Widget? child) {
-        return Row(children: <Widget>[
+        return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Insert a prefix at the front if the prefix visibility mode matches
           // the current text state.
           if (_showPrefixWidget(text!)) widget.prefix!,
@@ -1137,7 +1137,7 @@ class _TextFieldState extends State<TextField>
                       }
                     : null,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
                   child: Icon(
                     CupertinoIcons.clear_thick_circled,
                     size: 18.0,
