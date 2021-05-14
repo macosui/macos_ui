@@ -100,7 +100,10 @@ class _DemoState extends State<Demo> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
                       prefix: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4.0,
+                          vertical: 2.0,
+                        ),
                         child: Icon(CupertinoIcons.search),
                       ),
                       placeholder: 'Type some text here',

@@ -1137,7 +1137,10 @@ class _TextFieldState extends State<TextField>
                       }
                     : null,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6.0,
+                    vertical: 4.0,
+                  ),
                   child: Icon(
                     CupertinoIcons.clear_thick_circled,
                     size: 18.0,
