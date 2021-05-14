@@ -91,10 +91,7 @@ class CapacityIndicator extends StatelessWidget {
   }
 
   void _handleUpdate(Offset lp, double width) {
-    double value = () {
-      final value = (lp.dx / width) * splits;
-      return value;
-    }();
+    double value = (lp.dx / width) * splits;
     onChanged?.call(value.clamp(0.0, 100.0));
   }
 
@@ -144,10 +141,11 @@ class CapacityIndicator extends StatelessWidget {
               width: width,
               child: GestureDetector(
                 onPanStart: (event) =>
-                    _handleUpdate(event.localPosition, width),
+                    _handleUpdate(event.localPosition, splitWidth),
                 onPanUpdate: (event) =>
-                    _handleUpdate(event.localPosition, width),
-                onPanDown: (event) => _handleUpdate(event.localPosition, width),
+                    _handleUpdate(event.localPosition, splitWidth),
+                onPanDown: (event) =>
+                    _handleUpdate(event.localPosition, splitWidth),
                 child: CapacityIndicatorCell(
                   value: value,
                   backgroundColor: backgroundColor,
