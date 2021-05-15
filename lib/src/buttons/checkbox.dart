@@ -82,7 +82,8 @@ class Checkbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
-    bool isLight = context.macosTheme.brightness != Brightness.dark;
+    final MacosThemeData theme = MacosTheme.of(context);
+    bool isLight = !theme.brightness.isDark;
     return GestureDetector(
       onTap: () {
         if (value == null || value == false) {
@@ -104,9 +105,7 @@ class Checkbox extends StatelessWidget {
                   color: DynamicColorX.macosResolve(
                     isDisabled
                         ? disabledColor
-                        : activeColor ??
-                            context.macosTheme.primaryColor ??
-                            CupertinoColors.activeBlue,
+                        : activeColor ?? theme.primaryColor,
                     context,
                   ),
                   borderRadius: BorderRadius.circular(4.0),

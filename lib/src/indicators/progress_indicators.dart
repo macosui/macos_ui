@@ -198,6 +198,8 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final MacosThemeData theme = MacosTheme.of(context);
     return Semantics(
       label: semanticLabel,
       value: value.toStringAsFixed(2),
@@ -210,8 +212,11 @@ class ProgressBar extends StatelessWidget {
         child: CustomPaint(
           painter: _DeterminateBarPainter(
             value,
-            activeColor: trackColor ?? context.macosTheme.accentColor,
-            backgroundColor: CupertinoDynamicColor.resolve(
+            activeColor: DynamicColorX.macosResolve(
+              trackColor ?? theme.primaryColor,
+              context,
+            ),
+            backgroundColor: DynamicColorX.macosResolve(
               backgroundColor ?? CupertinoColors.secondarySystemFill,
               context,
             ),

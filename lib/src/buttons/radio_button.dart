@@ -80,7 +80,8 @@ class RadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
-    final isLight = context.macosTheme.brightness != Brightness.dark;
+    final MacosThemeData theme = MacosTheme.of(context);
+    final isLight = !theme.brightness.isDark;
     return GestureDetector(
       onTap: () => onChanged?.call(!value),
       child: Semantics(
@@ -94,11 +95,7 @@ class RadioButton extends StatelessWidget {
               style: isDisabled ? BorderStyle.none : BorderStyle.solid,
               width: value ? size / 4.0 : 1,
               color: DynamicColorX.macosResolve(
-                value
-                    ? onColor ??
-                        context.macosTheme.primaryColor ??
-                        CupertinoColors.activeBlue
-                    : offColor,
+                value ? onColor ?? theme.primaryColor : offColor,
                 context,
               ),
             ),

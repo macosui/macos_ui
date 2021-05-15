@@ -1,3 +1,6 @@
+## [0.1.2]
+* Updated the theme api
+
 ## [0.1.1]
 * Implemented `Label` ([#61](https://github.com/GroovinChip/macos_ui/issues/61))
 * Capacity Indicator now works as expected ([#49](https://github.com/GroovinChip/macos_ui/issues/49))

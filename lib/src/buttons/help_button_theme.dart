@@ -79,6 +79,16 @@ class HelpButtonThemeData with Diagnosticable {
     );
   }
 
+  /// Linearly interpolate between two tooltip themes.
+  /// 
+  /// All the properties must be non-null.
+  static HelpButtonThemeData lerp(HelpButtonThemeData a, HelpButtonThemeData b, double t) {
+    return HelpButtonThemeData(
+      color: Color.lerp(a.color, b.color, t)!,
+      disabledColor: Color.lerp(a.color, b.color, t)!,
+    );
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

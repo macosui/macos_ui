@@ -318,9 +318,7 @@ class _MacosAppState extends State<MacosApp> {
     return MacosTheme(
       data: theme,
       child: DefaultTextStyle(
-        style: TextStyle(
-          color: theme.typography?.body?.color,
-        ),
+        style: TextStyle(color: theme.typography.body.color),
         child: child!,
       ),
     );

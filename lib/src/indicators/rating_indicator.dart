@@ -84,6 +84,8 @@ class RatingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final MacosThemeData theme = MacosTheme.of(context);
     return GestureDetector(
       onPanStart: (event) => _handleUpdate(event.localPosition),
       onPanUpdate: (event) => _handleUpdate(event.localPosition),
@@ -99,9 +101,7 @@ class RatingIndicator extends StatelessWidget {
             return Icon(
               rated ? ratedIcon : unratedIcon,
               color: DynamicColorX.macosResolve(
-                iconColor ??
-                    context.macosTheme.primaryColor ??
-                    CupertinoColors.activeBlue,
+                iconColor ?? theme.primaryColor,
                 context,
               ),
               size: iconSize,

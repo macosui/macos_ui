@@ -79,6 +79,16 @@ class PushButtonThemeData with Diagnosticable {
     );
   }
 
+  /// Linearly interpolate between two tooltip themes.
+  /// 
+  /// All the properties must be non-null.
+  static PushButtonThemeData lerp(PushButtonThemeData a, PushButtonThemeData b, double t) {
+    return PushButtonThemeData(
+      color: Color.lerp(a.color, b.color, t)!,
+      disabledColor: Color.lerp(a.color, b.color, t)!,
+    );
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

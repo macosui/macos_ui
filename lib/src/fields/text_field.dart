@@ -1202,7 +1202,7 @@ class _TextFieldState extends State<TextField>
       ),
     );
 
-    final textStyle = themeData.typography!.body!.merge(resolvedStyle);
+    final textStyle = themeData.typography.body.merge(resolvedStyle);
 
     final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
       color: DynamicColorX.maybeMacosResolve(
@@ -1221,7 +1221,7 @@ class _TextFieldState extends State<TextField>
         widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
     final Color cursorColor =
         DynamicColorX.maybeMacosResolve(widget.cursorColor, context) ??
-            themeData.primaryColor!;
+            themeData.primaryColor;
     final Color disabledColor =
         DynamicColorX.macosResolve(_kDisabledBackground, context);
 
@@ -1255,10 +1255,7 @@ class _TextFieldState extends State<TextField>
     );
 
     final BoxDecoration? focusedDecoration = widget.focusedDecoration?.copyWith(
-      border: Border.all(
-        width: 3.0,
-        color: themeData.primaryColor ?? CupertinoColors.systemBlue,
-      ),
+      border: Border.all(width: 3.0, color: themeData.primaryColor),
     );
 
     final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
@@ -1285,7 +1282,7 @@ class _TextFieldState extends State<TextField>
     );
 
     final Color selectionColor =
-        MacosTheme.of(context).primaryColor!.withOpacity(0.2);
+        MacosTheme.of(context).primaryColor.withOpacity(0.2);
 
     final Widget paddedEditable = Padding(
       padding: widget.padding,

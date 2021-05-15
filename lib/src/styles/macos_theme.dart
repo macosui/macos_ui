@@ -45,8 +45,7 @@ class MacosTheme extends StatelessWidget {
   static MacosThemeData of(BuildContext context) {
     final _InheritedMacosTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
-    return (inheritedTheme?.theme.data ?? MacosThemeData())
-        .resolveFrom(context);
+    return (inheritedTheme?.theme.data ?? MacosThemeData.fallback());
   }
 
   /// Retrieves the [MacosThemeData] from the closest ancestor [MacosTheme]
@@ -58,7 +57,7 @@ class MacosTheme extends StatelessWidget {
   static MacosThemeData? maybeOf(BuildContext context) {
     final _InheritedMacosTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
-    return inheritedTheme?.theme.data.resolveFrom(context);
+    return inheritedTheme?.theme.data;
   }
 
   /// Retrieves the [Brightness] to use for descendant macOS widgets, based
@@ -134,8 +133,4 @@ class _InheritedMacosTheme extends InheritedWidget {
   @override
   bool updateShouldNotify(_InheritedMacosTheme old) =>
       theme.data != old.theme.data;
-}
-
-extension themeContext on BuildContext {
-  MacosThemeData get macosTheme => MacosTheme.of(this);
 }

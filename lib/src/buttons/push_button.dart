@@ -226,12 +226,12 @@ class _PushButtonState extends State<PushButton>
 
     final Color? foregroundColor = widget.enabled
         ? textLuminance(backgroundColor)
-        : theme.brightness!.isDark
+        : theme.brightness.isDark
             ? Color.fromRGBO(255, 255, 255, 0.25)
             : Color.fromRGBO(0, 0, 0, 0.25);
 
     final TextStyle textStyle =
-        theme.typography!.headline!.copyWith(color: foregroundColor);
+        theme.typography.headline.copyWith(color: foregroundColor);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
