@@ -34,7 +34,7 @@ class Label extends StatelessWidget {
     final theme = MacosTheme.of(context);
     final text = DefaultTextStyle(
       style: theme.typography.body.copyWith(
-        color: DynamicColorX.macosResolve(CupertinoColors.label, context),
+        color: MacosDynamicColor.resolve(CupertinoColors.label, context),
         fontWeight: FontWeight.w500,
       ),
       child: this.text,

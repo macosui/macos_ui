@@ -202,12 +202,12 @@ class _PushButtonState extends State<PushButton>
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color backgroundColor = DynamicColorX.macosResolve(
+    final Color backgroundColor = MacosDynamicColor.resolve(
       widget.color ?? theme.pushButtonTheme.color,
       context,
     );
 
-    final Color disabledColor = DynamicColorX.macosResolve(
+    final Color disabledColor = MacosDynamicColor.resolve(
       widget.disabledColor ?? theme.pushButtonTheme.disabledColor,
       context,
     );
@@ -224,7 +224,7 @@ class _PushButtonState extends State<PushButton>
             : _kLargeButtonRadius
         : widget.borderRadius;
 
-    final Color? foregroundColor = widget.enabled
+    final Color foregroundColor = widget.enabled
         ? textLuminance(backgroundColor)
         : theme.brightness.isDark
             ? Color.fromRGBO(255, 255, 255, 0.25)
@@ -255,7 +255,7 @@ class _PushButtonState extends State<PushButton>
                 decoration: BoxDecoration(
                   borderRadius: borderRadius,
                   color: !enabled
-                      ? DynamicColorX.macosResolve(disabledColor, context)
+                      ? disabledColor
                       : backgroundColor,
                 ),
                 child: Padding(

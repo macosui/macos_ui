@@ -43,7 +43,7 @@ class RatingIndicator extends StatelessWidget {
   /// ensure that its purpose is clear.
   final IconData unratedIcon;
 
-  /// The color of the icon. If null, [Style.primaryColor] is used
+  /// The color of the icon. If null, [MacosThemeData.primaryColor] is used
   final Color? iconColor;
 
   /// The size of the icon. Defaults to 16px
@@ -100,7 +100,7 @@ class RatingIndicator extends StatelessWidget {
             final rated = value > index;
             return Icon(
               rated ? ratedIcon : unratedIcon,
-              color: DynamicColorX.macosResolve(
+              color: MacosDynamicColor.resolve(
                 iconColor ?? theme.primaryColor,
                 context,
               ),

@@ -1145,7 +1145,7 @@ class _TextFieldState extends State<TextField>
                     CupertinoIcons.clear_thick_circled,
                     size: 18.0,
                     color:
-                        DynamicColorX.macosResolve(_kClearButtonColor, context),
+                        MacosDynamicColor.resolve(_kClearButtonColor, context),
                   ),
                 ),
               ),
@@ -1195,8 +1195,8 @@ class _TextFieldState extends State<TextField>
     final MacosThemeData themeData = MacosTheme.of(context);
 
     final TextStyle? resolvedStyle = widget.style?.copyWith(
-      color: DynamicColorX.maybeMacosResolve(widget.style?.color, context),
-      backgroundColor: DynamicColorX.maybeMacosResolve(
+      color: MacosDynamicColor.maybeResolve(widget.style?.color, context),
+      backgroundColor: MacosDynamicColor.maybeResolve(
         widget.style?.backgroundColor,
         context,
       ),
@@ -1205,11 +1205,11 @@ class _TextFieldState extends State<TextField>
     final textStyle = themeData.typography.body.merge(resolvedStyle);
 
     final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
-      color: DynamicColorX.maybeMacosResolve(
+      color: MacosDynamicColor.maybeResolve(
         widget.placeholderStyle?.color,
         context,
       ),
-      backgroundColor: DynamicColorX.maybeMacosResolve(
+      backgroundColor: MacosDynamicColor.maybeResolve(
         widget.placeholderStyle?.backgroundColor,
         context,
       ),
@@ -1220,13 +1220,13 @@ class _TextFieldState extends State<TextField>
     final Brightness keyboardAppearance =
         widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
     final Color cursorColor =
-        DynamicColorX.maybeMacosResolve(widget.cursorColor, context) ??
+        MacosDynamicColor.maybeResolve(widget.cursorColor, context) ??
             themeData.primaryColor;
     final Color disabledColor =
-        DynamicColorX.macosResolve(_kDisabledBackground, context);
+        MacosDynamicColor.resolve(_kDisabledBackground, context);
 
     final Color? decorationColor =
-        DynamicColorX.maybeMacosResolve(widget.decoration?.color, context);
+        MacosDynamicColor.maybeResolve(widget.decoration?.color, context);
 
     final BoxBorder? border = widget.decoration?.border;
     Border? resolvedBorder = border as Border?;
@@ -1235,7 +1235,7 @@ class _TextFieldState extends State<TextField>
         return side == BorderSide.none
             ? side
             : side.copyWith(
-                color: DynamicColorX.macosResolve(side.color, context),
+                color: MacosDynamicColor.resolve(side.color, context),
               );
       }
 
@@ -1330,7 +1330,7 @@ class _TextFieldState extends State<TextField>
             cursorOffset: cursorOffset,
             paintCursorAboveText: true,
             autocorrectionTextRectColor: selectionColor,
-            backgroundCursorColor: DynamicColorX.macosResolve(
+            backgroundCursorColor: MacosDynamicColor.resolve(
               CupertinoColors.inactiveGray,
               context,
             ),

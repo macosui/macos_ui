@@ -93,7 +93,7 @@ class Switch extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         dragStartBehavior: dragStartBehavior,
-        activeColor: DynamicColorX.macosResolve(
+        activeColor: MacosDynamicColor.resolve(
           activeColor ?? theme.primaryColor,
           context,
         ),

@@ -155,18 +155,18 @@ class _HelpButtonState extends State<HelpButton>
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color? backgroundColor = DynamicColorX.macosResolve(
+    final Color backgroundColor = MacosDynamicColor.resolve(
       widget.color ?? theme.helpButtonTheme.color,
       context,
     );
 
-    final Color? disabledColor = DynamicColorX.macosResolve(
+    final Color disabledColor = MacosDynamicColor.resolve(
       widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
       context,
     );
 
     final Color? foregroundColor = widget.enabled
-        ? iconLuminance(backgroundColor!, theme.brightness.isDark)
+        ? iconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
             ? Color.fromRGBO(255, 255, 255, 0.25)
             : Color.fromRGBO(0, 0, 0, 0.25);
@@ -193,7 +193,7 @@ class _HelpButtonState extends State<HelpButton>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: !enabled
-                      ? DynamicColorX.macosResolve(disabledColor!, context)
+                      ? disabledColor
                       : backgroundColor,
                   boxShadow: [
                     BoxShadow(

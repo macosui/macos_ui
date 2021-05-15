@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 import 'macos_theme.dart';
 
-extension DynamicColorX on CupertinoDynamicColor {
-  static Color? maybeMacosResolve(Color? resolvable, BuildContext context) {
+extension MacosDynamicColor on CupertinoDynamicColor {
+  static Color? maybeResolve(Color? resolvable, BuildContext context) {
     if (resolvable == null) return null;
-    return macosResolve(resolvable, context);
+    return resolve(resolvable, context);
   }
 
-  static Color macosResolve(Color resolvable, BuildContext context) {
+  static Color resolve(Color resolvable, BuildContext context) {
     return (resolvable is CupertinoDynamicColor)
-        ? resolvable.macosResolveFrom(context)
+        ? resolvable.resolveFrom(context)
         : resolvable;
   }
 
@@ -35,7 +35,7 @@ extension DynamicColorX on CupertinoDynamicColor {
         darkHighContrastColor != darkHighContrastElevatedColor;
   }
 
-  CupertinoDynamicColor macosResolveFrom(BuildContext context) {
+  CupertinoDynamicColor resolveFrom(BuildContext context) {
     Brightness brightness = Brightness.light;
     if (this.isPlatformBrightnessDependent) {
       brightness = MacosTheme.maybeBrightnessOf(context) ?? Brightness.light;
@@ -86,7 +86,7 @@ extension DynamicColorX on CupertinoDynamicColor {
       return true;
     }());
 
-    return ResolvedCupertinoDynamicColor(
+    return ResolvedMacosDynamicColor(
       resolved,
       color,
       darkColor,
@@ -101,8 +101,8 @@ extension DynamicColorX on CupertinoDynamicColor {
   }
 }
 
-class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
-  const ResolvedCupertinoDynamicColor(
+class ResolvedMacosDynamicColor extends CupertinoDynamicColor {
+  const ResolvedMacosDynamicColor(
     this.resolvedColor,
     Color color,
     Color darkColor,
