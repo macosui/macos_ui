@@ -475,9 +475,9 @@ class TooltipThemeData with Diagnosticable {
   /// Specifies the tooltip's shape and background color.
   ///
   /// The tooltip shape defaults to a rounded rectangle with a border radius of 4.0.
-  /// Tooltips will also default to an opacity of 90% and with the color [Colors.grey]
-  /// if [ThemeData.brightness] is [Brightness.dark], and [Colors.white] if it is
-  /// [Brightness.light].
+  /// Tooltips will also default to an opacity of 90% and with the color [CupertinoColors.systemGrey]
+  /// if [ThemeData.brightness] is [Brightness.dark], and [CupertinoColors.white] if
+  /// it is [Brightness.light].
   final Decoration? decoration;
 
   /// The length of time that a pointer must hover over a tooltip's widget before

@@ -158,8 +158,8 @@ class _ScaffoldState extends State<Scaffold> {
                 height: height,
                 width: _sidebarWidth,
                 child: AnimatedContainer(
-                  duration: theme.mediumAnimationDuration,
-                  curve: theme.animationCurve ?? Curves.linear,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
                   color: sidebarBackgroundColor,
                   child: Column(
                     children: [

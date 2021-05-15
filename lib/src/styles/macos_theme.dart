@@ -154,7 +154,7 @@ class _InheritedMacosTheme extends InheritedWidget {
 /// ```dart
 /// MacosTheme(
 ///   data: MacosThemeData(
-///     primaryColor: Colors.yellow,
+///     primaryColor: CupertinoColors.activeBlue,
 ///   ),
 ///   child: Builder(
 ///     builder: (BuildContext context) {
@@ -188,8 +188,6 @@ class MacosThemeData with Diagnosticable {
   factory MacosThemeData({
     Brightness? brightness,
     Color? primaryColor,
-    Curve? animationCurve,
-    Duration? mediumAnimationDuration,
     Typography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
@@ -201,9 +199,11 @@ class MacosThemeData with Diagnosticable {
     primaryColor ??= isDark
         ? CupertinoColors.activeBlue.darkColor
         : CupertinoColors.activeBlue.color;
-    animationCurve = Curves.easeInOut;
-    mediumAnimationDuration = Duration(milliseconds: 300);
-    typography ??= Typography(brightness: _brightness);
+    typography ??= Typography(
+      color: brightness == Brightness.light
+          ? CupertinoColors.black
+          : CupertinoColors.white,
+    );
     pushButtonTheme ??= PushButtonThemeData(
       color: primaryColor,
       disabledColor: isDark
@@ -227,8 +227,6 @@ class MacosThemeData with Diagnosticable {
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
-      animationCurve: animationCurve,
-      mediumAnimationDuration: mediumAnimationDuration,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
@@ -246,8 +244,6 @@ class MacosThemeData with Diagnosticable {
   const MacosThemeData.raw({
     required this.brightness,
     required this.primaryColor,
-    required this.animationCurve,
-    required this.mediumAnimationDuration,
     required this.typography,
     required this.pushButtonTheme,
     required this.dividerColor,
@@ -279,14 +275,6 @@ class MacosThemeData with Diagnosticable {
   /// Defaults to [CupertinoColors.activeBlue].
   final Color primaryColor;
 
-  /// Defaults to [Curves.easeInOut].
-  /// See also:
-  ///   * [Curves], a collection of common animation curves
-  final Curve? animationCurve;
-
-  /// Defaults to `Duration(milliseconds: 300)`
-  final Duration mediumAnimationDuration;
-
   /// The default text styling for this theme.
   final Typography typography;
 
@@ -306,11 +294,8 @@ class MacosThemeData with Diagnosticable {
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
-      animationCurve: t >= 0.5 ? b.animationCurve : a.animationCurve,
       brightness: t >= 0.5 ? b.brightness : a.brightness,
       dividerColor: Color.lerp(a.dividerColor, b.dividerColor, t)!,
-      mediumAnimationDuration:
-          t >= 0.5 ? b.mediumAnimationDuration : a.mediumAnimationDuration,
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       typography: Typography.lerp(a.typography, b.typography, t),
       helpButtonTheme:
@@ -325,8 +310,6 @@ class MacosThemeData with Diagnosticable {
   MacosThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
-    Curve? animationCurve,
-    Duration? mediumAnimationDuration,
     Typography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
@@ -336,9 +319,6 @@ class MacosThemeData with Diagnosticable {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
       primaryColor: primaryColor ?? this.primaryColor,
-      animationCurve: animationCurve ?? this.animationCurve,
-      mediumAnimationDuration:
-          mediumAnimationDuration ?? this.mediumAnimationDuration,
       dividerColor: dividerColor ?? this.dividerColor,
       typography: typography ?? this.typography,
       pushButtonTheme: this.pushButtonTheme.copyWith(pushButtonTheme),
@@ -351,13 +331,6 @@ class MacosThemeData with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty('brightness', brightness));
-    properties.add(
-      DiagnosticsProperty<Curve>('animationCurve', animationCurve),
-    );
-    properties.add(DiagnosticsProperty<Duration>(
-      'mediumAnimationDuration',
-      mediumAnimationDuration,
-    ));
     properties.add(ColorProperty('primaryColor', primaryColor));
     properties.add(ColorProperty('dividerColor', dividerColor));
     properties.add(DiagnosticsProperty<Typography>('typography', typography));

@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/painting.dart';
 
 const _kDefaultFontFamily = 'SanFranciscoPro';
 
-/// Defines macOS text styling.
+/// macOS typography.
+/// 
+/// To obtain the current typography, call [MacosTheme.of] with the current
+/// [BuildContext] and read the [MacosThemeData.typography] property.
 ///
-/// TODO: More documentation
-/// TODO: Figure out how to implement leading (see guidelines)
-///
-/// https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/
+/// See also:
+/// 
+///  * [MacosTheme], for aspects of a macos application that can be globally
+///    adjusted, such as the primary color.
+///  * <https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/>
 @immutable
 class Typography with Diagnosticable {
   factory Typography({
-    required Brightness brightness,
+    required Color color,
     TextStyle? largeTitle,
     TextStyle? title1,
     TextStyle? title2,
@@ -27,7 +30,6 @@ class Typography with Diagnosticable {
     TextStyle? caption1,
     TextStyle? caption2,
   }) {
-    final color = brightness == Brightness.light ? Colors.black : Colors.white;
     largeTitle ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
       fontWeight: FontWeight.w400,
