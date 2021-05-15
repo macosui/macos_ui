@@ -294,7 +294,7 @@ class MacosThemeData with Diagnosticable {
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
-      brightness: t >= 0.5 ? b.brightness : a.brightness,
+      brightness: t < 0.5 ? a.brightness : b.brightness,
       dividerColor: Color.lerp(a.dividerColor, b.dividerColor, t)!,
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       typography: Typography.lerp(a.typography, b.typography, t),

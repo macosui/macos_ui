@@ -504,14 +504,14 @@ class TooltipThemeData with Diagnosticable {
   static TooltipThemeData lerp(TooltipThemeData a, TooltipThemeData b, double t) {
     return TooltipThemeData(
       decoration: Decoration.lerp(a.decoration, b.decoration, t),
-      height: t <= 0.5 ? a.height : b.height,
+      height: t < 0.5 ? a.height : b.height,
       margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t),
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t),
-      preferBelow: t <= 0.5 ? a.preferBelow : b.preferBelow,
-      showDuration: t <= 0.5 ? a.showDuration : b.showDuration,
+      preferBelow: t < 0.5 ? a.preferBelow : b.preferBelow,
+      showDuration: t < 0.5 ? a.showDuration : b.showDuration,
       textStyle: TextStyle.lerp(a.textStyle, b.textStyle, t),
-      verticalOffset: t <= 0.5 ? a.verticalOffset : b.verticalOffset,
-      waitDuration: t <= 0.5 ? a.waitDuration : b.waitDuration,
+      verticalOffset: t < 0.5 ? a.verticalOffset : b.verticalOffset,
+      waitDuration: t < 0.5 ? a.waitDuration : b.waitDuration,
     );
   }
 

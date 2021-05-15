@@ -5,17 +5,24 @@ import 'package:flutter/painting.dart';
 const _kDefaultFontFamily = 'SanFranciscoPro';
 
 /// macOS typography.
-/// 
+///
 /// To obtain the current typography, call [MacosTheme.of] with the current
 /// [BuildContext] and read the [MacosThemeData.typography] property.
 ///
 /// See also:
-/// 
+///
 ///  * [MacosTheme], for aspects of a macos application that can be globally
 ///    adjusted, such as the primary color.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/>
 @immutable
 class Typography with Diagnosticable {
+  /// Creates a typography that uses the given values.
+  ///
+  /// Rather than creating a new typography, consider using [Typography.black]
+  /// or [Typography.white].
+  ///
+  /// If you do decide to create your own typography, consider using one of
+  /// those predefined themes as a starting point for [copyWith].
   factory Typography({
     required Color color,
     TextStyle? largeTitle,
@@ -135,6 +142,9 @@ class Typography with Diagnosticable {
     required this.caption2,
   });
 
+  static Typography black = Typography(color: CupertinoColors.black);
+  static Typography white = Typography(color: CupertinoColors.white);
+
   /// Style used for body text.
   final TextStyle body;
 
@@ -168,7 +178,42 @@ class Typography with Diagnosticable {
   /// Style used for third-level hierarchical headings.
   final TextStyle title3;
 
-  /// Linearly interpolate between two typographys.
+  /// Creates a new [Typography] where each text style from this object has been
+  /// merged with the matching text style from the `other` object.
+  ///
+  /// The merging is done by calling [TextStyle.merge] on each respective pair
+  /// of text styles from this and the [other] typographies and is subject to
+  /// the value of [TextStyle.inherit] flag. For more details, see the
+  /// documentation on [TextStyle.merge] and [TextStyle.inherit].
+  ///
+  /// If this theme, or the `other` theme has members that are null, then the
+  /// non-null one (if any) is used. If the `other` theme is itself null, then
+  /// this [Typography] is returned unchanged. If values in both are set, then
+  /// the values are merged using [TextStyle.merge].
+  ///
+  /// This is particularly useful if one [Typography] defines one set of
+  /// properties and another defines a different set, e.g. having colors
+  /// defined in one typography and font sizes in another, or when one
+  /// [Typography] has only some fields defined, and you want to define the rest
+  /// by merging it with a default theme.
+  Typography merge(Typography? other) {
+    if (other == null) return this;
+    return Typography.raw(
+      largeTitle: largeTitle.merge(other.largeTitle),
+      title1: title1.merge(other.title1),
+      title2: title2.merge(other.title2),
+      title3: title3.merge(other.title3),
+      headline: headline.merge(other.headline),
+      subheadline: subheadline.merge(other.subheadline),
+      body: body.merge(other.body),
+      callout: callout.merge(other.callout),
+      footnote: callout.merge(other.footnote),
+      caption1: caption1.merge(other.caption1),
+      caption2: caption2.merge(other.caption2),
+    );
+  }
+
+  /// Linearly interpolate between two typographies.
   static Typography lerp(Typography a, Typography b, double t) {
     return Typography.raw(
       largeTitle: TextStyle.lerp(a.largeTitle, b.largeTitle, t)!,
@@ -186,18 +231,81 @@ class Typography with Diagnosticable {
   }
 
   @override
+  int get hashCode {
+    // The hashValues() function supports up to 20 arguments.
+    return hashValues(
+      largeTitle,
+      title1,
+      title2,
+      title3,
+      headline,
+      subheadline,
+      body,
+      callout,
+      footnote,
+      caption1,
+      caption2,
+    );
+  }
+
+  @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<TextStyle>('largeTitle', largeTitle));
-    properties.add(DiagnosticsProperty<TextStyle>('title1', title1));
-    properties.add(DiagnosticsProperty<TextStyle>('title2', title2));
-    properties.add(DiagnosticsProperty<TextStyle>('title3', title3));
-    properties.add(DiagnosticsProperty<TextStyle>('headline', headline));
-    properties.add(DiagnosticsProperty<TextStyle>('subheadline', subheadline));
-    properties.add(DiagnosticsProperty<TextStyle>('body', body));
-    properties.add(DiagnosticsProperty<TextStyle>('callout', callout));
-    properties.add(DiagnosticsProperty<TextStyle>('footnote', footnote));
-    properties.add(DiagnosticsProperty<TextStyle>('caption1', caption1));
-    properties.add(DiagnosticsProperty<TextStyle>('caption2', caption2));
+    final defaultStyle = Typography.black;
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'largeTitle',
+      largeTitle,
+      defaultValue: defaultStyle.largeTitle,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'title1',
+      title1,
+      defaultValue: defaultStyle.title1,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'title2',
+      title2,
+      defaultValue: defaultStyle.title2,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'title3',
+      title3,
+      defaultValue: defaultStyle.title3,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'headline',
+      headline,
+      defaultValue: defaultStyle.headline,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'subheadline',
+      subheadline,
+      defaultValue: defaultStyle.subheadline,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'body',
+      body,
+      defaultValue: defaultStyle.body,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'callout',
+      callout,
+      defaultValue: defaultStyle.callout,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'footnote',
+      footnote,
+      defaultValue: defaultStyle.footnote,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'caption1',
+      caption1,
+      defaultValue: defaultStyle.caption1,
+    ));
+    properties.add(DiagnosticsProperty<TextStyle>(
+      'caption2',
+      caption2,
+      defaultValue: defaultStyle.caption2,
+    ));
   }
 }

@@ -1,6 +1,6 @@
 ## [0.1.2]
 * Updated the theme api
-  * Properties in `MacosThemeData` can't be null
+  * Properties in `MacosThemeData` and in `Typography` can't be null
   * Renamed `DynamicColorX` to `MacosDynamicColor`
   * Added the method `lerp` on all theme datas.
 
