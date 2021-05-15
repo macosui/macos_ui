@@ -12,9 +12,7 @@ library macos_ui;
 
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/help_button.dart';
-export 'src/buttons/help_button_theme.dart';
 export 'src/buttons/push_button.dart';
-export 'src/buttons/push_button_theme.dart';
 export 'src/buttons/radio_button.dart';
 export 'src/buttons/switch.dart';
 export 'src/fields/text_field.dart';
@@ -32,6 +30,5 @@ export 'src/layout/title_bar.dart';
 export 'src/macos_app.dart';
 export 'src/styles/colors.dart';
 export 'src/styles/macos_theme.dart';
-export 'src/styles/macos_theme_data.dart';
 export 'src/styles/typography.dart';
 export 'src/util.dart';
