@@ -254,9 +254,7 @@ class _PushButtonState extends State<PushButton>
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   borderRadius: borderRadius,
-                  color: !enabled
-                      ? disabledColor
-                      : backgroundColor,
+                  color: !enabled ? disabledColor : backgroundColor,
                 ),
                 child: Padding(
                   padding: buttonPadding!,

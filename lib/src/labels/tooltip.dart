@@ -499,9 +499,10 @@ class TooltipThemeData with Diagnosticable {
   final TextStyle? textStyle;
 
   /// Linearly interpolate between two tooltip themes.
-  /// 
+  ///
   /// All the properties must be non-null.
-  static TooltipThemeData lerp(TooltipThemeData a, TooltipThemeData b, double t) {
+  static TooltipThemeData lerp(
+      TooltipThemeData a, TooltipThemeData b, double t) {
     return TooltipThemeData(
       decoration: Decoration.lerp(a.decoration, b.decoration, t),
       height: t < 0.5 ? a.height : b.height,
