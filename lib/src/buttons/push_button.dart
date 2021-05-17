@@ -8,10 +8,14 @@ enum ButtonSize {
   small,
 }
 
-const EdgeInsetsGeometry _kSmallButtonPadding =
-    EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0);
-const EdgeInsetsGeometry _kLargeButtonPadding =
-    EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0);
+const EdgeInsetsGeometry _kSmallButtonPadding = EdgeInsets.symmetric(
+  vertical: 3.0,
+  horizontal: 8.0,
+);
+const EdgeInsetsGeometry _kLargeButtonPadding = EdgeInsets.symmetric(
+  vertical: 6.0,
+  horizontal: 8.0,
+);
 
 const BorderRadius _kSmallButtonRadius =
     const BorderRadius.all(Radius.circular(5.0));
@@ -359,7 +363,10 @@ class PushButtonThemeData with Diagnosticable {
   ///
   /// All the properties must be non-null.
   static PushButtonThemeData lerp(
-      PushButtonThemeData a, PushButtonThemeData b, double t) {
+    PushButtonThemeData a,
+    PushButtonThemeData b,
+    double t,
+  ) {
     return PushButtonThemeData(
       color: Color.lerp(a.color, b.color, t)!,
       disabledColor: Color.lerp(a.color, b.color, t)!,

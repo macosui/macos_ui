@@ -137,7 +137,7 @@ class _InheritedMacosTheme extends InheritedWidget {
 /// [MacosApp] or a widget subtree within the app.
 ///
 /// The [MacosApp] theme property can be used to configure the appearance
-/// of the entire app. Widget subtree's within an app can override the app's
+/// of the entire app. A widget's subtree within an app can override the app's
 /// theme by including a [MacosTheme] widget at the top of the subtree.
 ///
 /// Widgets whose appearance should align with the overall theme can obtain the
@@ -176,8 +176,8 @@ class _InheritedMacosTheme extends InheritedWidget {
 class MacosThemeData with Diagnosticable {
   /// Creates a [MacosThemeData] that's used to configure [MacosTheme].
   ///
-  /// The [typography] [TextStyle] colors are black if the color scheme's
-  /// brightness is [Brightness.light], and white for [Brightness.dark].
+  /// The [typography] [TextStyle] colors are black if the [brightness]
+  /// is [Brightness.light], and white for [Brightness.dark].
   ///
   /// Unspecified parameters default to a reasonable macOS default style.
   ///
@@ -251,11 +251,11 @@ class MacosThemeData with Diagnosticable {
     required this.tooltipTheme,
   });
 
-  /// A default light blue theme.
+  /// A default light theme.
   factory MacosThemeData.light() =>
       MacosThemeData(brightness: Brightness.light);
 
-  /// A default dark blue theme.
+  /// A default dark theme.
   factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
 
   /// The default color theme. Same as [ThemeData.light].

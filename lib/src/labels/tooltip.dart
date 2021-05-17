@@ -502,7 +502,10 @@ class TooltipThemeData with Diagnosticable {
   ///
   /// All the properties must be non-null.
   static TooltipThemeData lerp(
-      TooltipThemeData a, TooltipThemeData b, double t) {
+    TooltipThemeData a,
+    TooltipThemeData b,
+    double t,
+  ) {
     return TooltipThemeData(
       decoration: Decoration.lerp(a.decoration, b.decoration, t),
       height: t < 0.5 ? a.height : b.height,
