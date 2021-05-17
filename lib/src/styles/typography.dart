@@ -231,24 +231,6 @@ class Typography with Diagnosticable {
   }
 
   @override
-  int get hashCode {
-    // The hashValues() function supports up to 20 arguments.
-    return hashValues(
-      largeTitle,
-      title1,
-      title2,
-      title3,
-      headline,
-      subheadline,
-      body,
-      callout,
-      footnote,
-      caption1,
-      caption2,
-    );
-  }
-
-  @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     final defaultStyle = Typography.black;
