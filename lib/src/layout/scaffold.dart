@@ -317,7 +317,7 @@ class ScaffoldScope extends InheritedWidget {
     required Widget child,
     required this.valueNotifier,
     required _ScaffoldState scaffoldState,
-  })   : _scaffoldState = scaffoldState,
+  })  : _scaffoldState = scaffoldState,
         super(key: key, child: child);
 
   /// Provides the constraints from the [Scaffold] to its descendants.
