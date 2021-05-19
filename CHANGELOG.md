@@ -1,3 +1,6 @@
+## [0.1.3]
+* Fix `TextField` on Flutter v2.2.0
+
 ## [0.1.2]
 * Updated the theme api
   * Properties in `MacosThemeData` and in `Typography` can't be null
