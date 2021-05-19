@@ -96,7 +96,7 @@ class _TextFieldSelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
   _TextFieldSelectionGestureDetectorBuilder({
     required _TextFieldState state,
-  })   : _state = state,
+  })  : _state = state,
         super(delegate: state);
 
   final _TextFieldState _state;
