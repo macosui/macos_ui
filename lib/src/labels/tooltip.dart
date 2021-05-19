@@ -317,7 +317,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     final TextStyle? defaultTextStyle;
     final BoxDecoration defaultDecoration;
     if (theme.brightness == Brightness.dark) {
-      defaultTextStyle = theme.typography?.body?.copyWith(
+      defaultTextStyle = theme.typography.body.copyWith(
         color: CupertinoColors.black,
         fontSize: _getDefaultFontSize(),
       );
@@ -326,7 +326,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       );
     } else {
-      defaultTextStyle = theme.typography?.body?.copyWith(
+      defaultTextStyle = theme.typography.body.copyWith(
         color: CupertinoColors.white,
         fontSize: _getDefaultFontSize(),
       );
@@ -343,7 +343,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     preferBelow = tooltipTheme.preferBelow ?? _defaultPreferBelow;
     excludeFromSemantics = widget.excludeFromSemantics;
     decoration = tooltipTheme.decoration ?? defaultDecoration;
-    textStyle = tooltipTheme.textStyle ?? defaultTextStyle ?? TextStyle();
+    textStyle = tooltipTheme.textStyle ?? defaultTextStyle;
     waitDuration = tooltipTheme.waitDuration ?? _defaultWaitDuration;
     showDuration = tooltipTheme.showDuration ?? _getDefaultShowDuration();
 
@@ -475,9 +475,9 @@ class TooltipThemeData with Diagnosticable {
   /// Specifies the tooltip's shape and background color.
   ///
   /// The tooltip shape defaults to a rounded rectangle with a border radius of 4.0.
-  /// Tooltips will also default to an opacity of 90% and with the color [Colors.grey]
-  /// if [ThemeData.brightness] is [Brightness.dark], and [Colors.white] if it is
-  /// [Brightness.light].
+  /// Tooltips will also default to an opacity of 90% and with the color [CupertinoColors.systemGrey]
+  /// if [ThemeData.brightness] is [Brightness.dark], and [CupertinoColors.white] if
+  /// it is [Brightness.light].
   final Decoration? decoration;
 
   /// The length of time that a pointer must hover over a tooltip's widget before
@@ -497,6 +497,27 @@ class TooltipThemeData with Diagnosticable {
   ///
   /// If null, [Typography.caption] is used
   final TextStyle? textStyle;
+
+  /// Linearly interpolate between two tooltip themes.
+  ///
+  /// All the properties must be non-null.
+  static TooltipThemeData lerp(
+    TooltipThemeData a,
+    TooltipThemeData b,
+    double t,
+  ) {
+    return TooltipThemeData(
+      decoration: Decoration.lerp(a.decoration, b.decoration, t),
+      height: t < 0.5 ? a.height : b.height,
+      margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t),
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t),
+      preferBelow: t < 0.5 ? a.preferBelow : b.preferBelow,
+      showDuration: t < 0.5 ? a.showDuration : b.showDuration,
+      textStyle: TextStyle.lerp(a.textStyle, b.textStyle, t),
+      verticalOffset: t < 0.5 ? a.verticalOffset : b.verticalOffset,
+      waitDuration: t < 0.5 ? a.waitDuration : b.waitDuration,
+    );
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -611,7 +632,7 @@ class _TooltipOverlay extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: height),
               child: DefaultTextStyle(
-                style: MacosTheme.of(context).typography?.body ?? TextStyle(),
+                style: MacosTheme.of(context).typography.body,
                 child: Container(
                   decoration: decoration,
                   padding: padding,

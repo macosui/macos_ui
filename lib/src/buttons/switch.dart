@@ -84,6 +84,8 @@ class Switch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final MacosThemeData theme = MacosTheme.of(context);
     return Semantics(
       label: semanticLabel,
       checked: value,
@@ -91,7 +93,10 @@ class Switch extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         dragStartBehavior: dragStartBehavior,
-        activeColor: activeColor ?? context.macosTheme.primaryColor,
+        activeColor: MacosDynamicColor.resolve(
+          activeColor ?? theme.primaryColor,
+          context,
+        ),
         trackColor: trackColor,
       ),
     );

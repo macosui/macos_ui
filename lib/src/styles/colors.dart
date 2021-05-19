@@ -2,15 +2,40 @@ import 'package:flutter/cupertino.dart';
 
 import 'macos_theme.dart';
 
-extension DynamicColorX on CupertinoDynamicColor {
-  static Color? maybeMacosResolve(Color? resolvable, BuildContext context) {
+extension MacosDynamicColor on CupertinoDynamicColor {
+  /// Resolves the given [Color] by calling [resolveFrom].
+  ///
+  /// If the given color is already a concrete [Color], it will be returned as is.
+  /// If the given color is null, returns null.
+  /// If the given color is a [CupertinoDynamicColor], but the given [BuildContext]
+  /// lacks the dependencies required to the color resolution, the default trait
+  /// value will be used ([Brightness.light] platform brightness, normal contrast,
+  /// [CupertinoUserInterfaceLevelData.base] elevation level).
+  ///
+  /// See also:
+  ///
+  ///  * [resolve], which is similar to this function, but returns a
+  ///    non-nullable value, and does not allow a null `resolvable` color.
+  static Color? maybeResolve(Color? resolvable, BuildContext context) {
     if (resolvable == null) return null;
-    return macosResolve(resolvable, context);
+    return resolve(resolvable, context);
   }
 
-  static Color macosResolve(Color resolvable, BuildContext context) {
+  /// Resolves the given [Color] by calling [resolveFrom].
+  ///
+  /// If the given color is already a concrete [Color], it will be returned as is.
+  /// If the given color is a [CupertinoDynamicColor], but the given [BuildContext]
+  /// lacks the dependencies required to the color resolution, the default trait
+  /// value will be used ([Brightness.light] platform brightness, normal contrast,
+  /// [CupertinoUserInterfaceLevelData.base] elevation level).
+  ///
+  /// See also:
+  ///
+  ///  * [maybeResolve], which is similar to this function, but will allow a
+  ///    null `resolvable` color.
+  static Color resolve(Color resolvable, BuildContext context) {
     return (resolvable is CupertinoDynamicColor)
-        ? resolvable.macosResolveFrom(context)
+        ? resolvable._resolveFrom(context)
         : resolvable;
   }
 
@@ -35,7 +60,7 @@ extension DynamicColorX on CupertinoDynamicColor {
         darkHighContrastColor != darkHighContrastElevatedColor;
   }
 
-  CupertinoDynamicColor macosResolveFrom(BuildContext context) {
+  CupertinoDynamicColor _resolveFrom(BuildContext context) {
     Brightness brightness = Brightness.light;
     if (this.isPlatformBrightnessDependent) {
       brightness = MacosTheme.maybeBrightnessOf(context) ?? Brightness.light;
@@ -86,7 +111,7 @@ extension DynamicColorX on CupertinoDynamicColor {
       return true;
     }());
 
-    return ResolvedCupertinoDynamicColor(
+    return ResolvedMacosDynamicColor(
       resolved,
       color,
       darkColor,
@@ -101,8 +126,8 @@ extension DynamicColorX on CupertinoDynamicColor {
   }
 }
 
-class ResolvedCupertinoDynamicColor extends CupertinoDynamicColor {
-  const ResolvedCupertinoDynamicColor(
+class ResolvedMacosDynamicColor extends CupertinoDynamicColor {
+  const ResolvedMacosDynamicColor(
     this.resolvedColor,
     Color color,
     Color darkColor,

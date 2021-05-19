@@ -71,7 +71,7 @@ class _ResizablePaneState extends State<ResizablePane> {
   final _scrollController = ScrollController();
   late double _width;
 
-  Color? get _dividerColor => context.macosTheme.dividerColor;
+  Color get _dividerColor => MacosTheme.of(context).dividerColor;
 
   ScaffoldScope get _scaffoldScope => ScaffoldScope.of(context);
 
@@ -86,7 +86,7 @@ class _ResizablePaneState extends State<ResizablePane> {
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
   BoxDecoration get _decoration {
-    final _borderSide = BorderSide(color: _dividerColor!);
+    final _borderSide = BorderSide(color: _dividerColor);
     final right = Border(right: _borderSide);
     final left = Border(left: _borderSide);
     return BoxDecoration(border: _resizeOnRight ? right : left).copyWith(

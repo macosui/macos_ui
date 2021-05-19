@@ -33,8 +33,8 @@ class Label extends StatelessWidget {
     assert(debugCheckHasMacosTheme(context));
     final theme = MacosTheme.of(context);
     final text = DefaultTextStyle(
-      style: (theme.typography?.body ?? TextStyle()).copyWith(
-        color: DynamicColorX.macosResolve(CupertinoColors.label, context),
+      style: theme.typography.body.copyWith(
+        color: MacosDynamicColor.resolve(CupertinoColors.label, context),
         fontWeight: FontWeight.w500,
       ),
       child: this.text,
@@ -44,7 +44,7 @@ class Label extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 6),
           child: IconTheme(
-            data: IconThemeData(size: theme.typography?.body?.fontSize ?? 24),
+            data: IconThemeData(size: theme.typography.body.fontSize ?? 24),
             child: icon!,
           ),
         ),

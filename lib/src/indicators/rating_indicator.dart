@@ -43,7 +43,7 @@ class RatingIndicator extends StatelessWidget {
   /// ensure that its purpose is clear.
   final IconData unratedIcon;
 
-  /// The color of the icon. If null, [Style.primaryColor] is used
+  /// The color of the icon. If null, [MacosThemeData.primaryColor] is used
   final Color? iconColor;
 
   /// The size of the icon. Defaults to 16px
@@ -84,6 +84,8 @@ class RatingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final MacosThemeData theme = MacosTheme.of(context);
     return GestureDetector(
       onPanStart: (event) => _handleUpdate(event.localPosition),
       onPanUpdate: (event) => _handleUpdate(event.localPosition),
@@ -98,10 +100,8 @@ class RatingIndicator extends StatelessWidget {
             final rated = value > index;
             return Icon(
               rated ? ratedIcon : unratedIcon,
-              color: DynamicColorX.macosResolve(
-                iconColor ??
-                    context.macosTheme.primaryColor ??
-                    CupertinoColors.activeBlue,
+              color: MacosDynamicColor.resolve(
+                iconColor ?? theme.primaryColor,
                 context,
               ),
               size: iconSize,
