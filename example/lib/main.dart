@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart' show Colors;
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,21 @@ class _DemoState extends State<Demo> {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BackButton(
+                        onPressed: () {},
+                        fillColor: Colors.transparent,
+                      ),
+                      const SizedBox(width: 16.0),
+                      BackButton(
+                        onPressed: () {},
+                        //fillColor: Colors.transparent,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
                   PushButton(
                     buttonSize: ButtonSize.small,
                     child: Text('Button'),
