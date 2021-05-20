@@ -144,7 +144,7 @@ class _BackButtonState extends State<BackButton>
                   return DecoratedBox(
                     decoration: BoxDecoration(
                       color: _buttonHeldDown && brightness == Brightness.dark
-                          ? Color(0xff565B71)
+                          ? Color(0xff3C383C)
                           : _buttonHeldDown && brightness == Brightness.light
                               ? Color(0xffE5E5E5)
                               : _fillColor,
