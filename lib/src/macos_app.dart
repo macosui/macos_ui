@@ -67,6 +67,7 @@ class MacosApp extends StatefulWidget {
     this.shortcuts,
     this.actions,
     this.restorationScopeId,
+    this.scrollBehavior = const MacosScrollBehavior(),
     this.themeMode,
     this.theme,
     this.darkTheme,
@@ -100,6 +101,7 @@ class MacosApp extends StatefulWidget {
     this.shortcuts,
     this.actions,
     this.restorationScopeId,
+    this.scrollBehavior = const MacosScrollBehavior(),
     this.themeMode,
     this.theme,
     this.darkTheme,
@@ -278,6 +280,14 @@ class MacosApp extends StatefulWidget {
   /// {@macro flutter.widgets.widgetsApp.restorationScopeId}
   final String? restorationScopeId;
 
+  /// {@macro flutter.material.materialApp.scrollBehavior}
+  ///
+  /// See also:
+  ///
+  ///  * [ScrollConfiguration], which controls how [Scrollable] widgets behave
+  ///    in a subtree.
+  final ScrollBehavior scrollBehavior;
+
   /// The current theme mode.
   final ThemeMode? themeMode;
 
@@ -375,5 +385,45 @@ class _MacosAppState extends State<MacosApp> {
       shortcuts: widget.shortcuts,
       actions: widget.actions,
     );
+  }
+}
+
+/// Describes how [Scrollable] widgets behave for [FluentApp]s.
+///
+/// {@macro flutter.widgets.scrollBehavior}
+///
+/// When using the desktop platform, if the [Scrollable] widget scrolls in the
+/// [Axis.vertical], a [Scrollbar] is applied.
+///
+/// See also:
+///
+///  * [ScrollBehavior], the default scrolling behavior extended by this class.
+class MacosScrollBehavior extends ScrollBehavior {
+  /// Creates a MacosScrollBehavior that decorates [Scrollable]s with
+  /// [Scrollbar]s based on the current platform and provided [ScrollableDetails].
+  const MacosScrollBehavior();
+
+  @override
+  Widget buildScrollbar(context, child, details) {
+    // When modifying this function, consider modifying the implementation in
+    // the base class as well.
+    switch (axisDirectionToAxis(details.direction)) {
+      case Axis.horizontal:
+        return child;
+      case Axis.vertical:
+        switch (getPlatform(context)) {
+          case TargetPlatform.linux:
+          case TargetPlatform.macOS:
+          case TargetPlatform.windows:
+            return Scrollbar(
+              child: child,
+              controller: details.controller,
+            );
+          case TargetPlatform.android:
+          case TargetPlatform.fuchsia:
+          case TargetPlatform.iOS:
+            return child;
+        }
+    }
   }
 }
