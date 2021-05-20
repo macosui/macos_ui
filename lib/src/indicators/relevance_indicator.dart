@@ -79,7 +79,7 @@ class RelevanceIndicator extends StatelessWidget {
             height: barHeight,
             width: barWidth,
             margin: EdgeInsets.only(right: index + 1 == amount ? 0 : 2.5),
-            color: DynamicColorX.macosResolve(
+            color: MacosDynamicColor.resolve(
               selected ? selectedColor : unselectedolor,
               context,
             ),

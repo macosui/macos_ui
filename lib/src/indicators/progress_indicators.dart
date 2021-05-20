@@ -73,11 +73,11 @@ class ProgressCircle extends StatelessWidget {
           child: CustomPaint(
             painter: _DeterminateCirclePainter(
               value!,
-              innerColor: DynamicColorX.macosResolve(
+              innerColor: MacosDynamicColor.resolve(
                 innerColor ?? CupertinoColors.secondarySystemFill,
                 context,
               ),
-              borderColor: DynamicColorX.macosResolve(
+              borderColor: MacosDynamicColor.resolve(
                 borderColor ?? CupertinoColors.secondarySystemFill,
                 context,
               ),
@@ -198,6 +198,8 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final MacosThemeData theme = MacosTheme.of(context);
     return Semantics(
       label: semanticLabel,
       value: value.toStringAsFixed(2),
@@ -210,8 +212,11 @@ class ProgressBar extends StatelessWidget {
         child: CustomPaint(
           painter: _DeterminateBarPainter(
             value,
-            activeColor: trackColor ?? context.macosTheme.accentColor,
-            backgroundColor: CupertinoDynamicColor.resolve(
+            activeColor: MacosDynamicColor.resolve(
+              trackColor ?? theme.primaryColor,
+              context,
+            ),
+            backgroundColor: MacosDynamicColor.resolve(
               backgroundColor ?? CupertinoColors.secondarySystemFill,
               context,
             ),

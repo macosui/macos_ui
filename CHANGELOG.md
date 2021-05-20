@@ -1,3 +1,12 @@
+## [0.1.3]
+* Fix `TextField` on Flutter v2.2.0
+
+## [0.1.2]
+* Updated the theme api
+  * Properties in `MacosThemeData` and in `Typography` can't be null
+  * Renamed `DynamicColorX` to `MacosDynamicColor`
+  * Added the method `lerp` on all theme datas.
+
 ## [0.1.1]
 * Implemented `Label` ([#61](https://github.com/GroovinChip/macos_ui/issues/61))
 * Capacity Indicator now works as expected ([#49](https://github.com/GroovinChip/macos_ui/issues/49))

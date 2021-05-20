@@ -109,7 +109,7 @@ class _ScaffoldState extends State<Scaffold> {
   @override
   // ignore: code-metrics
   Widget build(BuildContext context) {
-    debugCheckHasMacosTheme(context);
+    assert(debugCheckHasMacosTheme(context));
     assert(
       widget.children.every((e) => e is ContentArea || e is ResizablePane),
       'Scaffold children must either be ResizablePane or ContentArea',
@@ -119,12 +119,12 @@ class _ScaffoldState extends State<Scaffold> {
       'Scaffold cannot have more than one ContentArea widget',
     );
 
-    final theme = context.macosTheme;
+    final MacosThemeData theme = MacosTheme.of(context);
     late Color backgroundColor;
     late Color sidebarBackgroundColor;
-    Color dividerColor = theme.dividerColor!;
+    Color dividerColor = theme.dividerColor;
 
-    if (!theme.brightness!.isDark) {
+    if (!theme.brightness.isDark) {
       backgroundColor =
           widget.backgroundColor ?? CupertinoColors.systemBackground.color;
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
@@ -158,8 +158,8 @@ class _ScaffoldState extends State<Scaffold> {
                 height: height,
                 width: _sidebarWidth,
                 child: AnimatedContainer(
-                  duration: theme.mediumAnimationDuration ?? Duration.zero,
-                  curve: theme.animationCurve ?? Curves.linear,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
                   color: sidebarBackgroundColor,
                   child: Column(
                     children: [
@@ -317,7 +317,7 @@ class ScaffoldScope extends InheritedWidget {
     required Widget child,
     required this.valueNotifier,
     required _ScaffoldState scaffoldState,
-  })   : _scaffoldState = scaffoldState,
+  })  : _scaffoldState = scaffoldState,
         super(key: key, child: child);
 
   /// Provides the constraints from the [Scaffold] to its descendants.

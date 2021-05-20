@@ -307,20 +307,17 @@ class _MacosAppState extends State<MacosApp> {
     final useDarkTheme = mode == ThemeMode.dark ||
         (mode == ThemeMode.system && platformBrightness == Brightness.dark);
 
-    MacosThemeData? theme;
+    late MacosThemeData theme;
     if (useDarkTheme) {
-      theme = widget.darkTheme;
+      theme = widget.darkTheme ?? MacosThemeData.dark();
     } else {
-      theme = widget.theme;
+      theme = widget.theme ?? MacosThemeData.light();
     }
-    theme ??= widget.theme ?? MacosThemeData.light();
 
     return MacosTheme(
       data: theme,
       child: DefaultTextStyle(
-        style: TextStyle(
-          color: theme.typography?.body?.color,
-        ),
+        style: TextStyle(color: theme.typography.body.color),
         child: child!,
       ),
     );

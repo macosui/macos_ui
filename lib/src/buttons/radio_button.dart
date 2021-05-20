@@ -37,7 +37,7 @@ class RadioButton extends StatelessWidget {
   final double size;
 
   /// The color of the border when [value] is true. If null,
-  /// [Style.primaryColor] is used
+  /// [MacosThemeData.primaryColor] is used
   final Color? onColor;
 
   /// The color of the border when [value] is false.
@@ -80,7 +80,8 @@ class RadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
-    final isLight = context.macosTheme.brightness != Brightness.dark;
+    final MacosThemeData theme = MacosTheme.of(context);
+    final isLight = !theme.brightness.isDark;
     return GestureDetector(
       onTap: () => onChanged?.call(!value),
       child: Semantics(
@@ -93,12 +94,8 @@ class RadioButton extends StatelessWidget {
             border: Border.all(
               style: isDisabled ? BorderStyle.none : BorderStyle.solid,
               width: value ? size / 4.0 : 1,
-              color: DynamicColorX.macosResolve(
-                value
-                    ? onColor ??
-                        context.macosTheme.primaryColor ??
-                        CupertinoColors.activeBlue
-                    : offColor,
+              color: MacosDynamicColor.resolve(
+                value ? onColor ?? theme.primaryColor : offColor,
                 context,
               ),
             ),
@@ -109,7 +106,7 @@ class RadioButton extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: DynamicColorX.macosResolve(
+              color: MacosDynamicColor.resolve(
                 innerColor ??
                     (isDisabled
                         ? CupertinoColors.quaternarySystemFill
