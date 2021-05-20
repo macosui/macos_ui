@@ -1,5 +1,4 @@
 import 'package:macos_ui/macos_ui.dart';
-import 'package:flutter/material.dart' show Material, NoSplash, InkWell;
 import 'package:macos_ui/src/library.dart';
 
 /// A macOS style back button.
