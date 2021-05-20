@@ -338,13 +338,18 @@ class ScrollbarThemeData with Diagnosticable {
   int get hashCode {
     return hashValues(
       thickness,
+      hoveringThickness,
       showTrackOnHover,
       isAlwaysShown,
       interactive,
       radius,
       thumbColor,
+      hoveringThumbColor,
+      draggingThumbColor,
       trackColor,
+      hoveringTrackColor,
       trackBorderColor,
+      hoveringTrackBorderColor,
       crossAxisMargin,
       mainAxisMargin,
       minThumbLength,
@@ -357,13 +362,18 @@ class ScrollbarThemeData with Diagnosticable {
     if (other.runtimeType != runtimeType) return false;
     return other is ScrollbarThemeData &&
         other.thickness == thickness &&
+        other.hoveringThickness == hoveringThickness &&
         other.showTrackOnHover == showTrackOnHover &&
         other.isAlwaysShown == isAlwaysShown &&
         other.interactive == interactive &&
         other.radius == radius &&
         other.thumbColor == thumbColor &&
+        other.hoveringThumbColor == hoveringThumbColor &&
+        other.draggingThumbColor == draggingThumbColor &&
         other.trackColor == trackColor &&
+        other.hoveringTrackColor == hoveringTrackColor &&
         other.trackBorderColor == trackBorderColor &&
+        other.hoveringTrackBorderColor == hoveringTrackBorderColor &&
         other.crossAxisMargin == crossAxisMargin &&
         other.mainAxisMargin == mainAxisMargin &&
         other.minThumbLength == minThumbLength;
