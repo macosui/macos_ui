@@ -60,12 +60,12 @@ class _DemoState extends State<Demo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BackButton(
-                        onPressed: () {},
+                        onPressed: () => print('click'),
                         fillColor: Colors.transparent,
                       ),
                       const SizedBox(width: 16.0),
                       BackButton(
-                        onPressed: () {},
+                        onPressed: () => print('click'),
                         //fillColor: Colors.transparent,
                       ),
                     ],

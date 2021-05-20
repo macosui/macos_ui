@@ -138,20 +138,25 @@ class _BackButtonState extends State<BackButton>
             ),
             child: FadeTransition(
               opacity: _opacityAnimation,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: _buttonHeldDown && brightness == Brightness.dark
-                      ? Color(0xff565B71)
-                      : _buttonHeldDown && brightness == Brightness.light
-                          ? Color(0xffE5E5E5)
-                          : _fillColor,
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: Icon(
-                  CupertinoIcons.back,
-                  size: 18, // eyeballed
-                  color: iconColor,
-                ),
+              child: AnimatedBuilder(
+                animation: _opacityAnimation,
+                builder: (context, widget) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: _buttonHeldDown && brightness == Brightness.dark
+                          ? Color(0xff565B71)
+                          : _buttonHeldDown && brightness == Brightness.light
+                              ? Color(0xffE5E5E5)
+                              : _fillColor,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Icon(
+                      CupertinoIcons.back,
+                      size: 18, // eyeballed
+                      color: iconColor,
+                    ),
+                  );
+                }
               ),
             ),
           ),
