@@ -15,7 +15,6 @@ export 'package:flutter/material.dart'
         PageTransitionsBuilder,
         FlutterLogo,
         CircleAvatar,
-        Scrollbar,
         VerticalDivider,
         Divider,
         SelectableText,

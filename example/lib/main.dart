@@ -50,11 +50,12 @@ class _DemoState extends State<Demo> {
       children: <Widget>[
         ContentArea(
           builder: (context, scrollController) {
-            return SingleChildScrollView(
+            return Scrollbar(
               controller: scrollController,
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
+              child: SingleChildScrollView(
+                controller: scrollController,
+                padding: const EdgeInsets.all(20),
+                child: Column(children: [
                   PushButton(
                     buttonSize: ButtonSize.small,
                     child: Text('Button'),
@@ -142,7 +143,7 @@ class _DemoState extends State<Demo> {
                       ),
                     ),
                   ),
-                ],
+                ]),
               ),
             );
           },

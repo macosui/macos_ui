@@ -20,6 +20,7 @@ export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
 export 'src/indicators/rating_indicator.dart';
 export 'src/indicators/relevance_indicator.dart';
+export 'src/indicators/scrollbar.dart';
 export 'src/labels/label.dart';
 export 'src/labels/tooltip.dart';
 export 'src/layout/content_area.dart';
