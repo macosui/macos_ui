@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -25,6 +26,18 @@ class BackButton extends StatefulWidget {
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ColorProperty('fillColor', fillColor));
+    properties.add(StringProperty('semanticLabel', semanticLabel));
+    properties.add(FlagProperty(
+      'enabled',
+      value: enabled,
+      ifFalse: 'disabled',
+    ));
+  }
 
   @override
   _BackButtonState createState() => _BackButtonState();
@@ -138,25 +151,24 @@ class _BackButtonState extends State<BackButton>
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: AnimatedBuilder(
-                animation: _opacityAnimation,
-                builder: (context, widget) {
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: _buttonHeldDown && brightness == Brightness.dark
-                          ? Color(0xff3C383C)
-                          : _buttonHeldDown && brightness == Brightness.light
-                              ? Color(0xffE5E5E5)
-                              : _fillColor,
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Icon(
-                      CupertinoIcons.back,
-                      size: 18, // eyeballed
-                      color: iconColor,
-                    ),
-                  );
-                }
-              ),
+                  animation: _opacityAnimation,
+                  builder: (context, widget) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: _buttonHeldDown && brightness == Brightness.dark
+                            ? Color(0xff3C383C)
+                            : _buttonHeldDown && brightness == Brightness.light
+                                ? Color(0xffE5E5E5)
+                                : _fillColor,
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      child: Icon(
+                        CupertinoIcons.back,
+                        size: 18, // eyeballed
+                        color: iconColor,
+                      ),
+                    );
+                  }),
             ),
           ),
         ),
