@@ -140,7 +140,13 @@ class _BackButtonState extends State<BackButton>
         onTapDown: enabled ? _handleTapDown : null,
         onTapUp: enabled ? _handleTapUp : null,
         onTapCancel: enabled ? _handleTapCancel : null,
-        onTap: widget.onPressed,
+        onTap: () {
+          if (enabled) {
+            widget.onPressed!();
+          } else {
+            Navigator.of(context).maybePop();
+          }
+        },
         child: Semantics(
           button: true,
           child: ConstrainedBox(
@@ -151,24 +157,25 @@ class _BackButtonState extends State<BackButton>
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: AnimatedBuilder(
-                  animation: _opacityAnimation,
-                  builder: (context, widget) {
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: _buttonHeldDown && brightness == Brightness.dark
-                            ? Color(0xff3C383C)
-                            : _buttonHeldDown && brightness == Brightness.light
-                                ? Color(0xffE5E5E5)
-                                : _fillColor,
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                      child: Icon(
-                        CupertinoIcons.back,
-                        size: 18, // eyeballed
-                        color: iconColor,
-                      ),
-                    );
-                  }),
+                animation: _opacityAnimation,
+                builder: (context, widget) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: _buttonHeldDown && brightness == Brightness.dark
+                          ? Color(0xff3C383C)
+                          : _buttonHeldDown && brightness == Brightness.light
+                              ? Color(0xffE5E5E5)
+                              : _fillColor,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Icon(
+                      CupertinoIcons.back,
+                      size: 18, // eyeballed
+                      color: iconColor,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),
