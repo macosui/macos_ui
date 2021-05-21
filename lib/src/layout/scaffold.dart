@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
@@ -60,6 +61,7 @@ class _ScaffoldState extends State<Scaffold> {
   ResizablePaneNotifier _valueNotifier = ResizablePaneNotifier({});
   double _sidebarWidth = 0.0;
   bool _showSidebar = true;
+  SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
 
   void _recalculateLayout() {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -68,7 +70,8 @@ class _ScaffoldState extends State<Scaffold> {
         if (widget.sidebar == null)
           _sidebarWidth = 0.0;
         else {
-          if (widget.sidebar!.minWidth > _sidebarWidth)
+          if (widget.sidebar!.minWidth > _sidebarWidth ||
+              widget.sidebar!.minWidth < _sidebarWidth)
             _sidebarWidth = widget.sidebar!.minWidth;
           if (widget.sidebar!.maxWidth! < _sidebarWidth)
             _sidebarWidth = widget.sidebar!.maxWidth!;
@@ -118,7 +121,10 @@ class _ScaffoldState extends State<Scaffold> {
       widget.children.whereType<ContentArea>().length <= 1,
       'Scaffold cannot have more than one ContentArea widget',
     );
-
+    if (widget.sidebar?.startWidth != null) {
+      assert((widget.sidebar!.startWidth! >= widget.sidebar!.minWidth) &&
+          (widget.sidebar!.startWidth! <= widget.sidebar!.maxWidth!));
+    }
     final MacosThemeData theme = MacosTheme.of(context);
     late Color backgroundColor;
     late Color sidebarBackgroundColor;
@@ -254,10 +260,16 @@ class _ScaffoldState extends State<Scaffold> {
                           _sidebarWidth + details.delta.dx,
                         ),
                       );
+                      if (_sidebarWidth == widget.sidebar!.minWidth)
+                        _sidebarCursor = SystemMouseCursors.resizeRight;
+                      else if (_sidebarWidth == widget.sidebar!.maxWidth)
+                        _sidebarCursor = SystemMouseCursors.resizeLeft;
+                      else
+                        _sidebarCursor = SystemMouseCursors.resizeColumn;
                     });
                   },
                   child: MouseRegion(
-                    cursor: SystemMouseCursors.resizeColumn,
+                    cursor: _sidebarCursor,
                     child: Align(
                       alignment: Alignment.center,
                       child: VerticalDivider(
