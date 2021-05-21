@@ -166,7 +166,7 @@ class _HelpButtonState extends State<HelpButton>
     );
 
     final Color? foregroundColor = widget.enabled
-        ? iconLuminance(backgroundColor, theme.brightness.isDark)
+        ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
             ? Color.fromRGBO(255, 255, 255, 0.25)
             : Color.fromRGBO(0, 0, 0, 0.25);

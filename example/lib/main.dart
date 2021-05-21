@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
-          themeMode: appTheme.mode,
+          themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           home: Demo(),
         );
@@ -70,7 +70,14 @@ class _DemoState extends State<Demo> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
+                  IconButton(
+                    iconData: CupertinoIcons.star_fill,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(7),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 20),
                   PushButton(
                     buttonSize: ButtonSize.small,
                     child: Text('Button'),
