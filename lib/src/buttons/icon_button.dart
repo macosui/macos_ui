@@ -15,6 +15,12 @@ class IconButton extends StatefulWidget {
     this.borderRadius,
     this.alignment = Alignment.center,
     this.semanticLabel,
+    this.boxConstraints = const BoxConstraints(
+      minHeight: 20,
+      minWidth: 20,
+      maxWidth: 30,
+      maxHeight: 30,
+    ),
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -28,6 +34,7 @@ class IconButton extends StatefulWidget {
   final BorderRadius?
       borderRadius; // use only if setting shape to BoxShape.rectangle
   final AlignmentGeometry alignment;
+  final BoxConstraints boxConstraints;
   final String? semanticLabel;
   bool get enabled => onPressed != null;
 
@@ -163,10 +170,7 @@ class _IconButtonState extends State<IconButton>
           label: widget.semanticLabel,
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: 20,
-              minHeight: 20,
-            ),
+            constraints: widget.boxConstraints,
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: DecoratedBox(
@@ -196,9 +200,12 @@ class _IconButtonState extends State<IconButton>
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
-                    child: Icon(
-                      widget.iconData,
-                      color: foregroundColor,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Icon(
+                        widget.iconData,
+                        color: foregroundColor,
+                      ),
                     ),
                   ),
                 ),
