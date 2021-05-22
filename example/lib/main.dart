@@ -173,9 +173,8 @@ class _DemoState extends State<Demo> {
           },
         ),
         ResizablePane(
-          minWidth: 180,
-          startWidth: 200,
-          scaffoldBreakpoint: 500,
+          minWidth: 300,
+          scaffoldBreakpoint: 400,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
             return Center(child: Text("Resizable Pane"));
