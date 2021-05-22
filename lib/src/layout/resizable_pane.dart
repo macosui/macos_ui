@@ -1,6 +1,7 @@
 import 'dart:math' as math show max, min;
 
 import 'package:flutter/rendering.dart' show SystemMouseCursors;
+import 'package:flutter/services.dart' show SystemMouseCursor;
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/resizable_pane_notifier.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
@@ -18,7 +19,9 @@ class ResizablePane extends StatefulWidget {
   /// The [builder], [minWidth] and [resizableSide] can not be null.
   /// The [maxWidth] and the [scaffoldBreakpoint] default to `500.00`.
   /// [isResizable] defaults to `true`.
-  const ResizablePane({
+  ///
+  /// The [startWidth] is the initial width.
+  ResizablePane({
     Key? key,
     required this.builder,
     this.decoration,
@@ -27,7 +30,16 @@ class ResizablePane extends StatefulWidget {
     this.isResizable = true,
     required this.resizableSide,
     this.scaffoldBreakpoint,
-  })  : assert(maxWidth >= minWidth),
+    double? startWidth,
+  })  : assert(
+          maxWidth >= minWidth,
+          'minWidth should not be more than maxWidth.',
+        ),
+        assert(
+          (startWidth! >= minWidth) && (startWidth <= maxWidth),
+          'startWidth must not be less than minWidth or more than maxWidth',
+        ),
+        startWidth = startWidth,
         super(key: key);
 
   /// The builder that creates a child to display in this widget, which will
@@ -52,6 +64,12 @@ class ResizablePane extends StatefulWidget {
   /// Specifies the minimum width that this [ResizablePane] can have.
   final double minWidth;
 
+  /// Specifies the width that this [ResizablePane] first starts width.
+  ///
+  /// The [startWidth] should not be more than the [maxWidth] or
+  /// less than the [minWidth].
+  final double? startWidth;
+
   /// Indicates the draggable side of the sidebar for resizing
   final ResizableSide resizableSide;
 
@@ -67,6 +85,7 @@ class ResizablePane extends StatefulWidget {
 class _ResizablePaneState extends State<ResizablePane> {
   final UniqueKey _key;
   _ResizablePaneState(this._key);
+  SystemMouseCursor _cursor = SystemMouseCursors.resizeColumn;
 
   final _scrollController = ScrollController();
   late double _width;
@@ -105,7 +124,7 @@ class _ResizablePaneState extends State<ResizablePane> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: MouseRegion(
-        cursor: SystemMouseCursors.resizeColumn,
+        cursor: _cursor,
         child: SizedBox(width: 5),
       ),
       onHorizontalDragUpdate: (details) {
@@ -122,6 +141,16 @@ class _ResizablePaneState extends State<ResizablePane> {
           if (_width >= widget.minWidth && _width < widget.maxWidth) {
             _notifier.update(_key, _width);
           }
+          if (_width == widget.minWidth)
+            _cursor = _resizeOnRight
+                ? SystemMouseCursors.resizeRight
+                : SystemMouseCursors.resizeLeft;
+          else if (_width == widget.maxWidth)
+            _cursor = _resizeOnRight
+                ? SystemMouseCursors.resizeLeft
+                : SystemMouseCursors.resizeRight;
+          else
+            _cursor = SystemMouseCursors.resizeColumn;
         });
       },
     );
@@ -130,7 +159,7 @@ class _ResizablePaneState extends State<ResizablePane> {
   @override
   void initState() {
     super.initState();
-    _width = widget.minWidth;
+    _width = widget.startWidth ?? widget.minWidth;
     _scrollController.addListener(() => setState(() {}));
   }
 
@@ -149,7 +178,8 @@ class _ResizablePaneState extends State<ResizablePane> {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         _notifier.remove(_key, notify: false);
         setState(() {
-          if (widget.minWidth > _width) _width = widget.minWidth;
+          if (widget.minWidth > _width || widget.minWidth < _width)
+            _width = widget.minWidth;
           if (widget.maxWidth < _width) _width = widget.maxWidth;
         });
         _notifier.update(_key, _width);
