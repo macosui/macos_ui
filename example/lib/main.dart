@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           darkTheme: MacosThemeData.dark().copyWith(
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          themeMode: ThemeMode.dark,
+          themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: Demo(),
         );
