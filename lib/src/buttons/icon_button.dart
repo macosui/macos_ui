@@ -183,10 +183,6 @@ class _IconButtonState extends State<IconButton>
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    /*final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.helpButtonTheme.color,
-      context,
-    );*/
 
     final Color backgroundColor = widget.color ?? CupertinoColors.systemBlue;
 
