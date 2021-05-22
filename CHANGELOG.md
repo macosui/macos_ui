@@ -1,5 +1,12 @@
+## [0.2.0]
+* New widget: `BackButton`, `IconButton`
+* Add `VisualDensity` to `MacosThemeData`
+* Ensure localizations get returned in `MacosApp`
+
 ## [0.1.4]
 * Add `startWidth` properties to `ResizablePane` and `Sidebar`
+* Implement `Scrollbar`
+* Implement `MacosScrollBehavior`
 
 ## [0.1.3]
 * Fix `TextField` on Flutter v2.2.0

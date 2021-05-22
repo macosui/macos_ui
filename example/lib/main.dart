@@ -52,98 +52,95 @@ class _DemoState extends State<Demo> {
           builder: (context, scrollController) {
             return SingleChildScrollView(
               controller: scrollController,
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  PushButton(
-                    buttonSize: ButtonSize.small,
-                    child: Text('Button'),
-                    onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
+              padding: const EdgeInsets.all(20),
+              child: Column(children: [
+                PushButton(
+                  buttonSize: ButtonSize.small,
+                  child: Text('Button'),
+                  onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
+                ),
+                SizedBox(height: 20),
+                RadioButton(
+                  value: value,
+                  onChanged: (v) => setState(() => value = v),
+                ),
+                SizedBox(height: 20),
+                Checkbox(
+                  value: value,
+                  onChanged: (v) => setState(() => value = v),
+                ),
+                SizedBox(height: 20),
+                Tooltip(
+                  message: 'This button shows help',
+                  child: HelpButton(
+                    onPressed: () {},
                   ),
-                  SizedBox(height: 20),
-                  RadioButton(
-                    value: value,
-                    onChanged: (v) => setState(() => value = v),
-                  ),
-                  SizedBox(height: 20),
-                  Checkbox(
-                    value: value,
-                    onChanged: (v) => setState(() => value = v),
-                  ),
-                  SizedBox(height: 20),
-                  Tooltip(
-                    message: 'This button shows help',
-                    child: HelpButton(
-                      onPressed: () {},
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
-                    discrete: true,
-                  ),
-                  SizedBox(height: 20),
-                  CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
-                  ),
-                  SizedBox(height: 20),
-                  RatingIndicator(
-                    value: ratingValue,
-                    onChanged: (v) => setState(() => ratingValue = v),
-                  ),
-                  SizedBox(height: 20),
-                  RelevanceIndicator(value: 10),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: TextField(
-                      prefix: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4.0,
-                          vertical: 2.0,
-                        ),
-                        child: Icon(CupertinoIcons.search),
+                ),
+                SizedBox(height: 20),
+                CapacityIndicator(
+                  value: sliderValue,
+                  onChanged: (v) => setState(() => sliderValue = v),
+                  discrete: true,
+                ),
+                SizedBox(height: 20),
+                CapacityIndicator(
+                  value: sliderValue,
+                  onChanged: (v) => setState(() => sliderValue = v),
+                ),
+                SizedBox(height: 20),
+                RatingIndicator(
+                  value: ratingValue,
+                  onChanged: (v) => setState(() => ratingValue = v),
+                ),
+                SizedBox(height: 20),
+                RelevanceIndicator(value: 10),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: TextField(
+                    prefix: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4.0,
+                        vertical: 2.0,
                       ),
-                      placeholder: 'Type some text here',
-
-                      /// If both suffix and clear button mode is provided,
-                      /// suffix will override the clear button.
-                      // suffix: Text('SUFFIX'),
-                      clearButtonMode: OverlayVisibilityMode.always,
-                      maxLines: null,
+                      child: Icon(CupertinoIcons.search),
                     ),
+                    placeholder: 'Type some text here',
+
+                    /// If both suffix and clear button mode is provided,
+                    /// suffix will override the clear button.
+                    // suffix: Text('SUFFIX'),
+                    clearButtonMode: OverlayVisibilityMode.always,
+                    maxLines: null,
                   ),
-                  const SizedBox(height: 20),
-                  Label(
-                    icon: Icon(
-                      CupertinoIcons.tag,
-                      color: CupertinoColors.activeBlue,
-                    ),
-                    text: SelectableText('A borderless textfield: '),
-                    child: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: TextField.borderless(
-                          prefix: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Icon(CupertinoIcons.search),
-                          ),
-                          placeholder: 'Type some text here',
-
-                          /// If both suffix and clear button mode is provided,
-                          /// suffix will override the clear button.
-                          suffix: Text('SUFFIX'),
-                          // clearButtonMode: OverlayVisibilityMode.always,
-                          maxLines: null,
+                ),
+                const SizedBox(height: 20),
+                Label(
+                  icon: Icon(
+                    CupertinoIcons.tag,
+                    color: CupertinoColors.activeBlue,
+                  ),
+                  text: SelectableText('A borderless textfield: '),
+                  child: Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField.borderless(
+                        prefix: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Icon(CupertinoIcons.search),
                         ),
+                        placeholder: 'Type some text here',
+
+                        /// If both suffix and clear button mode is provided,
+                        /// suffix will override the clear button.
+                        suffix: Text('SUFFIX'),
+                        // clearButtonMode: OverlayVisibilityMode.always,
+                        maxLines: null,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ]),
             );
           },
         ),
