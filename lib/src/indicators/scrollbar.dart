@@ -304,6 +304,7 @@ class ScrollbarThemeData with Diagnosticable {
   /// The argument `t` must not be null.
   ///
   /// {@macro dart.ui.shadow.lerp}
+  // ignore: code-metrics
   static ScrollbarThemeData lerp(
     ScrollbarThemeData? a,
     ScrollbarThemeData? b,
@@ -327,7 +328,10 @@ class ScrollbarThemeData with Diagnosticable {
           Color.lerp(a?.hoveringThumbColor, b?.hoveringThumbColor, t),
       trackBorderColor: Color.lerp(a?.trackBorderColor, b?.trackBorderColor, t),
       hoveringTrackBorderColor: Color.lerp(
-          a?.hoveringTrackBorderColor, b?.hoveringTrackBorderColor, t),
+        a?.hoveringTrackBorderColor,
+        b?.hoveringTrackBorderColor,
+        t,
+      ),
       crossAxisMargin: lerpDouble(a?.crossAxisMargin, b?.crossAxisMargin, t),
       mainAxisMargin: lerpDouble(a?.mainAxisMargin, b?.mainAxisMargin, t),
       minThumbLength: lerpDouble(a?.minThumbLength, b?.minThumbLength, t),
@@ -419,8 +423,11 @@ class ScrollbarThemeData with Diagnosticable {
     ));
     properties.add(ColorProperty('trackColor', trackColor, defaultValue: null));
     properties.add(
-      ColorProperty('hoveringTrackColor', hoveringTrackColor,
-          defaultValue: null),
+      ColorProperty(
+        'hoveringTrackColor',
+        hoveringTrackColor,
+        defaultValue: null,
+      ),
     );
     properties.add(
       ColorProperty('trackBorderColor', trackBorderColor, defaultValue: null),
