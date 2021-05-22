@@ -6,7 +6,7 @@ import 'package:macos_ui/src/library.dart';
 /// A macOS-style icon button.
 class IconButton extends StatefulWidget {
   /// Builds a macOS-style icon button
-  IconButton({
+  const IconButton({
     Key? key,
     required this.iconData,
     this.color,
