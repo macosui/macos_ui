@@ -306,6 +306,7 @@ class _MacosAppState extends State<MacosApp> {
       yield* widget.localizationsDelegates!;
     yield DefaultMaterialLocalizations.delegate;
     yield DefaultCupertinoLocalizations.delegate;
+    yield DefaultWidgetsLocalizations.delegate;
   }
 
   Widget _macosBuilder(BuildContext context, Widget? child) {
