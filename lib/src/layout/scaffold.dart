@@ -89,7 +89,8 @@ class _ScaffoldState extends State<Scaffold> {
   @override
   void initState() {
     super.initState();
-    _sidebarWidth = widget.sidebar?.minWidth ?? _sidebarWidth;
+    _sidebarWidth = (widget.sidebar?.startWidth ?? widget.sidebar?.minWidth) ??
+        _sidebarWidth;
     if (widget.sidebar?.builder != null)
       _sidebarScrollController.addListener(() => setState(() {}));
     WidgetsBinding.instance?.addPostFrameCallback((_) {
