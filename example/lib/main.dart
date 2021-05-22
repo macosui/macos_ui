@@ -86,23 +86,6 @@ class _DemoState extends State<Demo> {
                     onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
                   ),
                   SizedBox(height: 20),
-                  RadioButton(
-                    value: value,
-                    onChanged: (v) => setState(() => value = v),
-                  ),
-                  SizedBox(height: 20),
-                  Checkbox(
-                    value: value,
-                    onChanged: (v) => setState(() => value = v),
-                  ),
-                  SizedBox(height: 20),
-                  Tooltip(
-                    message: 'This button shows help',
-                    child: HelpButton(
-                      onPressed: () {},
-                    ),
-                  ),
-                  SizedBox(height: 20),
                   CapacityIndicator(
                     value: sliderValue,
                     onChanged: (v) => setState(() => sliderValue = v),

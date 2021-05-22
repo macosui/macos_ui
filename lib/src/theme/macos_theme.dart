@@ -194,6 +194,7 @@ class MacosThemeData with Diagnosticable {
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
+    ScrollbarThemeData? scrollbarTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -224,6 +225,7 @@ class MacosThemeData with Diagnosticable {
       brightness: _brightness,
       textStyle: typography.callout,
     );
+    scrollbarTheme ??= const ScrollbarThemeData();
 
     visualDensity ??= VisualDensity.adaptivePlatformDensity;
 
@@ -236,6 +238,7 @@ class MacosThemeData with Diagnosticable {
       helpButtonTheme: helpButtonTheme,
       tooltipTheme: tooltipTheme,
       visualDensity: visualDensity,
+      scrollbarTheme: scrollbarTheme,
     );
   }
 
@@ -254,6 +257,7 @@ class MacosThemeData with Diagnosticable {
     required this.helpButtonTheme,
     required this.tooltipTheme,
     required this.visualDensity,
+    required this.scrollbarTheme,
   });
 
   /// A default light theme.
@@ -306,6 +310,9 @@ class MacosThemeData with Diagnosticable {
   /// {@macro flutter.material.themedata.visualDensity}
   final VisualDensity visualDensity;
 
+  /// The default style for [Scrollbar]s below the overall [MacosTheme]
+  final ScrollbarThemeData scrollbarTheme;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
@@ -319,6 +326,8 @@ class MacosThemeData with Diagnosticable {
           PushButtonThemeData.lerp(a.pushButtonTheme, b.pushButtonTheme, t),
       tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
+      scrollbarTheme:
+          ScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
     );
   }
 
@@ -332,6 +341,7 @@ class MacosThemeData with Diagnosticable {
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
+    ScrollbarThemeData? scrollbarTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -342,6 +352,7 @@ class MacosThemeData with Diagnosticable {
       helpButtonTheme: this.helpButtonTheme.copyWith(helpButtonTheme),
       tooltipTheme: this.tooltipTheme.copyWith(tooltipTheme),
       visualDensity: visualDensity ?? this.visualDensity,
+      scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
     );
   }
 
