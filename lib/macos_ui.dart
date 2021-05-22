@@ -33,4 +33,3 @@ export 'src/macos_app.dart';
 export 'src/theme/colors.dart';
 export 'src/theme/macos_theme.dart';
 export 'src/theme/typography.dart';
-export 'src/util.dart';
