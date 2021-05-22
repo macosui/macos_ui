@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart' show Colors;
+import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
         return MacosApp(
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
-          darkTheme: MacosThemeData.dark(),
+          darkTheme: MacosThemeData.dark().copyWith(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
           themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           home: Demo(),

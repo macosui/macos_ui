@@ -301,6 +301,13 @@ class _MacosAppState extends State<MacosApp> {
     return result;
   }
 
+  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
+    if (widget.localizationsDelegates != null)
+      yield* widget.localizationsDelegates!;
+    yield DefaultMaterialLocalizations.delegate;
+    yield DefaultCupertinoLocalizations.delegate;
+  }
+
   Widget _macosBuilder(BuildContext context, Widget? child) {
     final mode = widget.themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
@@ -339,6 +346,7 @@ class _MacosAppState extends State<MacosApp> {
         locale: widget.locale,
         localeResolutionCallback: widget.localeResolutionCallback,
         localeListResolutionCallback: widget.localeListResolutionCallback,
+        localizationsDelegates: _localizationsDelegates,
         supportedLocales: widget.supportedLocales,
         showPerformanceOverlay: widget.showPerformanceOverlay,
         checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
@@ -366,6 +374,7 @@ class _MacosAppState extends State<MacosApp> {
       locale: widget.locale,
       localeResolutionCallback: widget.localeResolutionCallback,
       localeListResolutionCallback: widget.localeListResolutionCallback,
+      localizationsDelegates: _localizationsDelegates,
       supportedLocales: widget.supportedLocales,
       showPerformanceOverlay: widget.showPerformanceOverlay,
       checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,

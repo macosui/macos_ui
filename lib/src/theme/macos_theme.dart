@@ -193,6 +193,7 @@ class MacosThemeData with Diagnosticable {
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
+    VisualDensity? visualDensity,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -224,6 +225,8 @@ class MacosThemeData with Diagnosticable {
       textStyle: typography.callout,
     );
 
+    visualDensity ??= VisualDensity.adaptivePlatformDensity;
+
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -232,6 +235,7 @@ class MacosThemeData with Diagnosticable {
       dividerColor: dividerColor,
       helpButtonTheme: helpButtonTheme,
       tooltipTheme: tooltipTheme,
+      visualDensity: visualDensity,
     );
   }
 
@@ -249,6 +253,7 @@ class MacosThemeData with Diagnosticable {
     required this.dividerColor,
     required this.helpButtonTheme,
     required this.tooltipTheme,
+    required this.visualDensity,
   });
 
   /// A default light theme.
@@ -256,12 +261,17 @@ class MacosThemeData with Diagnosticable {
       MacosThemeData(brightness: Brightness.light);
 
   /// A default dark theme.
-  factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
+  factory MacosThemeData.dark() => MacosThemeData(
+        brightness: Brightness.dark,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
 
   /// The default color theme. Same as [ThemeData.light].
   ///
   /// This is used by [MacosTheme.of] when no theme has been specified.
-  factory MacosThemeData.fallback() => MacosThemeData.light();
+  factory MacosThemeData.fallback() => MacosThemeData.light().copyWith(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
 
   /// The overall theme brightness.
   ///
@@ -291,6 +301,35 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [Tooltip]s below the overall [MacosTheme]
   final TooltipThemeData tooltipTheme;
 
+  /// The density value for specifying the compactness of various UI components.
+  ///
+  /// {@template flutter.material.themedata.visualDensity}
+  /// Density, in the context of a UI, is the vertical and horizontal
+  /// "compactness" of the elements in the UI. It is unitless, since it means
+  /// different things to different UI elements. For buttons, it affects the
+  /// spacing around the centered label of the button. For lists, it affects the
+  /// distance between baselines of entries in the list.
+  ///
+  /// Typically, density values are integral, but any value in range may be
+  /// used. The range includes values from [VisualDensity.minimumDensity] (which
+  /// is -4), to [VisualDensity.maximumDensity] (which is 4), inclusive, where
+  /// negative values indicate a denser, more compact, UI, and positive values
+  /// indicate a less dense, more expanded, UI. If a component doesn't support
+  /// the value given, it will clamp to the nearest supported value.
+  ///
+  /// The default for visual densities is zero for both vertical and horizontal
+  /// densities, which corresponds to the default visual density of components
+  /// in the Material Design specification.
+  ///
+  /// As a rule of thumb, a change of 1 or -1 in density corresponds to 4
+  /// logical pixels. However, this is not a strict relationship since
+  /// components interpret the density values appropriately for their needs.
+  ///
+  /// A larger value translates to a spacing increase (less dense), and a
+  /// smaller value translates to a spacing decrease (more dense).
+  /// {@endtemplate}
+  final VisualDensity visualDensity;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
@@ -303,6 +342,7 @@ class MacosThemeData with Diagnosticable {
       pushButtonTheme:
           PushButtonThemeData.lerp(a.pushButtonTheme, b.pushButtonTheme, t),
       tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
+      visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
     );
   }
 
@@ -315,6 +355,7 @@ class MacosThemeData with Diagnosticable {
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
+    VisualDensity? visualDensity,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -324,6 +365,7 @@ class MacosThemeData with Diagnosticable {
       pushButtonTheme: this.pushButtonTheme.copyWith(pushButtonTheme),
       helpButtonTheme: this.helpButtonTheme.copyWith(helpButtonTheme),
       tooltipTheme: this.tooltipTheme.copyWith(tooltipTheme),
+      visualDensity: visualDensity ?? this.visualDensity,
     );
   }
 

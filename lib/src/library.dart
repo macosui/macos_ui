@@ -5,6 +5,7 @@ export 'package:flutter/cupertino.dart'
         CupertinoIcons,
         createCupertinoColorProperty,
         cupertinoTextSelectionControls,
+        DefaultCupertinoLocalizations,
         cupertinoDesktopTextSelectionControls;
 export 'package:flutter/material.dart'
     show
@@ -19,5 +20,6 @@ export 'package:flutter/material.dart'
         VerticalDivider,
         Divider,
         SelectableText,
+        VisualDensity,
         kElevationToShadow;
 export 'package:flutter/widgets.dart';
