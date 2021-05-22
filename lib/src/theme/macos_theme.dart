@@ -303,31 +303,7 @@ class MacosThemeData with Diagnosticable {
 
   /// The density value for specifying the compactness of various UI components.
   ///
-  /// {@template flutter.material.themedata.visualDensity}
-  /// Density, in the context of a UI, is the vertical and horizontal
-  /// "compactness" of the elements in the UI. It is unitless, since it means
-  /// different things to different UI elements. For buttons, it affects the
-  /// spacing around the centered label of the button. For lists, it affects the
-  /// distance between baselines of entries in the list.
-  ///
-  /// Typically, density values are integral, but any value in range may be
-  /// used. The range includes values from [VisualDensity.minimumDensity] (which
-  /// is -4), to [VisualDensity.maximumDensity] (which is 4), inclusive, where
-  /// negative values indicate a denser, more compact, UI, and positive values
-  /// indicate a less dense, more expanded, UI. If a component doesn't support
-  /// the value given, it will clamp to the nearest supported value.
-  ///
-  /// The default for visual densities is zero for both vertical and horizontal
-  /// densities, which corresponds to the default visual density of components
-  /// in the Material Design specification.
-  ///
-  /// As a rule of thumb, a change of 1 or -1 in density corresponds to 4
-  /// logical pixels. However, this is not a strict relationship since
-  /// components interpret the density values appropriately for their needs.
-  ///
-  /// A larger value translates to a spacing increase (less dense), and a
-  /// smaller value translates to a spacing decrease (more dense).
-  /// {@endtemplate}
+  /// {@macro flutter.material.themedata.visualDensity}
   final VisualDensity visualDensity;
 
   /// Linearly interpolate between two themes.
