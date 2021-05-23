@@ -13,6 +13,7 @@ class Sidebar {
     this.decoration,
     this.isResizable = true,
     this.maxWidth = 400.0,
+    this.startWidth,
     this.padding = EdgeInsets.zero,
     this.scaffoldBreakpoint = 556.0,
   });
@@ -53,10 +54,16 @@ class Sidebar {
   /// Defaults to `400.0`
   final double? maxWidth;
 
-  /// /// The minimum width that this sidebar can be resized to.
+  /// The minimum width that this sidebar can be resized to.
   ///
   /// The [minWidth] should not be more than the [maxWidth].
   final double minWidth;
+
+  /// The default width that this `Sidebar` first starts with.
+  ///
+  /// The [startWidth] should not be more than the [maxWidth] or
+  /// less than the [minWidth].
+  final double? startWidth;
 
   /// Empty space to inscribe inside the title bar. The [child], if any, is
   /// placed inside this padding.

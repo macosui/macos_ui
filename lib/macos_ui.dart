@@ -10,8 +10,10 @@
 
 library macos_ui;
 
+export 'src/buttons/back_button.dart';
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/help_button.dart';
+export 'src/buttons/icon_button.dart';
 export 'src/buttons/push_button.dart';
 export 'src/buttons/radio_button.dart';
 export 'src/buttons/switch.dart';
@@ -20,6 +22,7 @@ export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
 export 'src/indicators/rating_indicator.dart';
 export 'src/indicators/relevance_indicator.dart';
+export 'src/indicators/scrollbar.dart';
 export 'src/labels/label.dart';
 export 'src/labels/tooltip.dart';
 export 'src/layout/content_area.dart';
@@ -28,7 +31,6 @@ export 'src/layout/scaffold.dart';
 export 'src/layout/sidebar.dart';
 export 'src/layout/title_bar.dart';
 export 'src/macos_app.dart';
-export 'src/styles/colors.dart';
-export 'src/styles/macos_theme.dart';
-export 'src/styles/typography.dart';
-export 'src/util.dart';
+export 'src/theme/colors.dart';
+export 'src/theme/macos_theme.dart';
+export 'src/theme/typography.dart';

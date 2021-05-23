@@ -1,37 +1,42 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// A help button appears within a view and opens app-specific help documentation when clicked.
-/// For help documentation creation guidance, see Help. All help buttons are circular,
-/// consistently sized buttons that contain a question mark icon. Whenever possible,
-/// open a help topic related to the current context. For example,
-/// the Rules pane of Mail preferences includes a help button.
-/// When clicked, it opens directly to a Rules preferences help topic.
-class HelpButton extends StatefulWidget {
-  ///pressedOpacity, if non-null, must be in the range if 0.0 to 1.0
-  const HelpButton({
+/// A macOS-style icon button.
+class IconButton extends StatefulWidget {
+  /// Builds a macOS-style icon button
+  const IconButton({
     Key? key,
+    required this.iconData,
     this.color,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
+    this.shape = BoxShape.circle,
+    this.borderRadius,
     this.alignment = Alignment.center,
     this.semanticLabel,
+    this.boxConstraints = const BoxConstraints(
+      minHeight: 20,
+      minWidth: 20,
+      maxWidth: 30,
+      maxHeight: 30,
+    ),
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
 
-  /// The color of the button's background.
+  /// The icon to use
+  final IconData iconData;
+
+  /// The background color of this [IconButton].
+  ///
+  /// Defaults to [CupertinoColors.activeBlue]. Set to [Colors.transparent] for
+  /// a transparent background color.
   final Color? color;
 
   /// The color of the button's background when the button is disabled.
-  ///
-  /// Ignored if the [HelpButton] doesn't also have a [color].
-  ///
-  /// Defaults to [CupertinoColors.quaternarySystemFill] when [color] is
-  /// specified.
   final Color? disabledColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
@@ -46,7 +51,17 @@ class HelpButton extends StatefulWidget {
   /// your own custom effects is desired.
   final double? pressedOpacity;
 
-  /// The alignment of the button's [child].
+  /// The shape to make the button.
+  ///
+  /// Defaults to `BoxShape.circle`.
+  final BoxShape shape;
+
+  /// The border radius for the button.
+  ///
+  /// This should only be set if setting [shape] to `BoxShape.rectangle`.
+  final BorderRadius? borderRadius;
+
+  ///The alignment of the button's icon.
   ///
   /// Typically buttons are sized to be just big enough to contain the child and its
   /// [padding]. If the button's size is constrained to a fixed size, for example by
@@ -55,6 +70,19 @@ class HelpButton extends StatefulWidget {
   ///
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
+
+  /// The box constraints for the button.
+  ///
+  /// Defaults to
+  /// ```dart
+  /// const BoxConstraints(
+  ///   minHeight: 20,
+  ///   minWidth: 20,
+  ///   maxWidth: 30,
+  ///   maxHeight: 30,
+  /// ),
+  ///```
+  final BoxConstraints boxConstraints;
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
@@ -74,10 +102,10 @@ class HelpButton extends StatefulWidget {
   }
 
   @override
-  _HelpButtonState createState() => _HelpButtonState();
+  _IconButtonState createState() => _IconButtonState();
 }
 
-class _HelpButtonState extends State<HelpButton>
+class _IconButtonState extends State<IconButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -102,7 +130,7 @@ class _HelpButtonState extends State<HelpButton>
   }
 
   @override
-  void didUpdateWidget(HelpButton old) {
+  void didUpdateWidget(IconButton old) {
     super.didUpdateWidget(old);
     _setTween();
   }
@@ -155,21 +183,29 @@ class _HelpButtonState extends State<HelpButton>
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.helpButtonTheme.color,
-      context,
-    );
 
-    final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
-      context,
-    );
+    final Color backgroundColor = widget.color ?? CupertinoColors.systemBlue;
 
-    final Color? foregroundColor = widget.enabled
-        ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
-        : theme.brightness.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.25)
-            : Color.fromRGBO(0, 0, 0, 0.25);
+    final Color? disabledColor;
+
+    if (widget.disabledColor != null) {
+      disabledColor = MacosDynamicColor.resolve(
+        widget.disabledColor!,
+        context,
+      );
+    } else {
+      disabledColor =
+          theme.brightness.isDark ? Color(0xff353535) : Color(0xffE5E5E5);
+    }
+
+    final Color? foregroundColor;
+    if (widget.enabled) {
+      foregroundColor = iconLuminance(backgroundColor, theme.brightness.isDark);
+    } else {
+      foregroundColor = theme.brightness.isDark
+          ? Color.fromRGBO(255, 255, 255, 0.25)
+          : Color.fromRGBO(0, 0, 0, 0.25);
+    }
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -183,15 +219,14 @@ class _HelpButtonState extends State<HelpButton>
           label: widget.semanticLabel,
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: 20,
-              minHeight: 20,
-            ),
+            constraints: widget.boxConstraints,
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+                  shape: widget.shape,
+                  borderRadius:
+                      widget.borderRadius != null ? widget.borderRadius : null,
                   color: !enabled ? disabledColor : backgroundColor,
                   boxShadow: [
                     BoxShadow(
@@ -214,9 +249,12 @@ class _HelpButtonState extends State<HelpButton>
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
-                    child: Icon(
-                      CupertinoIcons.question,
-                      color: foregroundColor,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Icon(
+                        widget.iconData,
+                        color: foregroundColor,
+                      ),
                     ),
                   ),
                 ),
@@ -226,104 +264,5 @@ class _HelpButtonState extends State<HelpButton>
         ),
       ),
     );
-  }
-}
-
-/// Overrides the default style of its [HelpButton] descendants.
-///
-/// See also:
-///
-///  * [HelpButtonThemeData], which is used to configure this theme.
-class HelpButtonTheme extends InheritedTheme {
-  /// Create a [HelpButtonTheme].
-  ///
-  /// The [data] parameter must not be null.
-  const HelpButtonTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  /// The configuration of this theme.
-  final HelpButtonThemeData data;
-
-  /// The closest instance of this class that encloses the given context.
-  ///
-  /// If there is no enclosing [HelpButtonTheme] widget, then
-  /// [MacosThemeData.helpButtonTheme] is used.
-  ///
-  /// Typical usage is as follows:
-  ///
-  /// ```dart
-  /// HelpButtonTheme theme = HelpButtonTheme.of(context);
-  /// ```
-  static HelpButtonThemeData of(BuildContext context) {
-    final HelpButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
-    return buttonTheme?.data ?? MacosTheme.of(context).helpButtonTheme;
-  }
-
-  @override
-  Widget wrap(BuildContext context, Widget child) {
-    return HelpButtonTheme(data: data, child: child);
-  }
-
-  @override
-  bool updateShouldNotify(HelpButtonTheme oldWidget) => data != oldWidget.data;
-}
-
-/// A style that overrides the default appearance of
-/// [HelpButton]s when it's used with [HelpButtonTheme] or with the
-/// overall [MacosTheme]'s [MacosThemeData.helpButtonTheme].
-///
-/// See also:
-///
-///  * [HelpButtonTheme], the theme which is configured with this class.
-///  * [MacosThemeData.helpButtonTheme], which can be used to override the default
-///    style for [HelpButton]s below the overall [MacosTheme].
-class HelpButtonThemeData with Diagnosticable {
-  /// Creates a [HelpButtonThemeData].
-  ///
-  /// The [style] may be null.
-  const HelpButtonThemeData({
-    required this.color,
-    required this.disabledColor,
-  });
-
-  /// The default background color for [HelpButton]
-  final Color color;
-
-  /// The default disabled color for [HelpButton]
-  final Color disabledColor;
-
-  HelpButtonThemeData copyWith(HelpButtonThemeData? themeData) {
-    if (themeData == null) {
-      return this;
-    }
-    return HelpButtonThemeData(
-      color: themeData.color,
-      disabledColor: themeData.disabledColor,
-    );
-  }
-
-  /// Linearly interpolate between two tooltip themes.
-  ///
-  /// All the properties must be non-null.
-  static HelpButtonThemeData lerp(
-    HelpButtonThemeData a,
-    HelpButtonThemeData b,
-    double t,
-  ) {
-    return HelpButtonThemeData(
-      color: Color.lerp(a.color, b.color, t)!,
-      disabledColor: Color.lerp(a.color, b.color, t)!,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
-    properties.add(ColorProperty('disabledColor', disabledColor));
   }
 }

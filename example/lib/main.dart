@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
         return MacosApp(
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
-          darkTheme: MacosThemeData.dark(),
+          darkTheme: MacosThemeData.dark().copyWith(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: Demo(),
@@ -55,27 +58,32 @@ class _DemoState extends State<Demo> {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BackButton(
+                        onPressed: () => print('click'),
+                        fillColor: Colors.transparent,
+                      ),
+                      const SizedBox(width: 16.0),
+                      BackButton(
+                        onPressed: () => print('click'),
+                        //fillColor: Colors.transparent,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  IconButton(
+                    iconData: CupertinoIcons.star_fill,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(7),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 20),
                   PushButton(
                     buttonSize: ButtonSize.small,
                     child: Text('Button'),
                     onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
-                  ),
-                  SizedBox(height: 20),
-                  RadioButton(
-                    value: value,
-                    onChanged: (v) => setState(() => value = v),
-                  ),
-                  SizedBox(height: 20),
-                  Checkbox(
-                    value: value,
-                    onChanged: (v) => setState(() => value = v),
-                  ),
-                  SizedBox(height: 20),
-                  Tooltip(
-                    message: 'This button shows help',
-                    child: HelpButton(
-                      onPressed: () {},
-                    ),
                   ),
                   SizedBox(height: 20),
                   CapacityIndicator(
@@ -148,8 +156,9 @@ class _DemoState extends State<Demo> {
           },
         ),
         ResizablePane(
-          minWidth: 300,
-          scaffoldBreakpoint: 400,
+          minWidth: 180,
+          startWidth: 200,
+          scaffoldBreakpoint: 500,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
             return Center(child: Text("Resizable Pane"));
