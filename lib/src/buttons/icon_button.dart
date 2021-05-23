@@ -8,8 +8,8 @@ class IconButton extends StatefulWidget {
   /// Builds a macOS-style icon button
   const IconButton({
     Key? key,
-    required this.iconData,
-    this.color,
+    required this.icon,
+    this.backgroundColor,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
@@ -28,13 +28,13 @@ class IconButton extends StatefulWidget {
         super(key: key);
 
   /// The icon to use
-  final IconData iconData;
+  final Widget icon;
 
   /// The background color of this [IconButton].
   ///
   /// Defaults to [CupertinoColors.activeBlue]. Set to [Colors.transparent] for
   /// a transparent background color.
-  final Color? color;
+  final Color? backgroundColor;
 
   /// The color of the button's background when the button is disabled.
   final Color? disabledColor;
@@ -94,7 +94,7 @@ class IconButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('color', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
@@ -184,7 +184,8 @@ class _IconButtonState extends State<IconButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
 
-    final Color backgroundColor = widget.color ?? CupertinoColors.systemBlue;
+    final Color backgroundColor =
+        widget.backgroundColor ?? CupertinoColors.systemBlue;
 
     final Color? disabledColor;
 
@@ -251,10 +252,7 @@ class _IconButtonState extends State<IconButton>
                     heightFactor: 1.0,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Icon(
-                        widget.iconData,
-                        color: foregroundColor,
-                      ),
+                      child: widget.icon,
                     ),
                   ),
                 ),
