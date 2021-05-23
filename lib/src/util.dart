@@ -34,7 +34,7 @@ Color textLuminance(Color backgroundColor) {
       : CupertinoColors.white;
 }
 
-Color iconLuminance(Color backgroundColor, bool isDark) {
+Color helpIconLuminance(Color backgroundColor, bool isDark) {
   return !isDark
       ? backgroundColor.computeLuminance() > 0.5
           ? CupertinoColors.black
@@ -42,4 +42,16 @@ Color iconLuminance(Color backgroundColor, bool isDark) {
       : backgroundColor.computeLuminance() < 0.5
           ? CupertinoColors.black
           : CupertinoColors.white;
+}
+
+Color iconLuminance(Color backgroundColor, bool isDark) {
+  if (isDark) {
+    return backgroundColor.computeLuminance() > 0.5
+        ? CupertinoColors.black
+        : CupertinoColors.white;
+  } else {
+    return backgroundColor.computeLuminance() > 0.5
+        ? CupertinoColors.black
+        : CupertinoColors.white;
+  }
 }

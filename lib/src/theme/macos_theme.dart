@@ -193,6 +193,7 @@ class MacosThemeData with Diagnosticable {
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
+    VisualDensity? visualDensity,
     ScrollbarThemeData? scrollbarTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
@@ -226,6 +227,8 @@ class MacosThemeData with Diagnosticable {
     );
     scrollbarTheme ??= const ScrollbarThemeData();
 
+    visualDensity ??= VisualDensity.adaptivePlatformDensity;
+
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -234,6 +237,7 @@ class MacosThemeData with Diagnosticable {
       dividerColor: dividerColor,
       helpButtonTheme: helpButtonTheme,
       tooltipTheme: tooltipTheme,
+      visualDensity: visualDensity,
       scrollbarTheme: scrollbarTheme,
     );
   }
@@ -252,6 +256,7 @@ class MacosThemeData with Diagnosticable {
     required this.dividerColor,
     required this.helpButtonTheme,
     required this.tooltipTheme,
+    required this.visualDensity,
     required this.scrollbarTheme,
   });
 
@@ -260,12 +265,17 @@ class MacosThemeData with Diagnosticable {
       MacosThemeData(brightness: Brightness.light);
 
   /// A default dark theme.
-  factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
+  factory MacosThemeData.dark() => MacosThemeData(
+        brightness: Brightness.dark,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
 
   /// The default color theme. Same as [ThemeData.light].
   ///
   /// This is used by [MacosTheme.of] when no theme has been specified.
-  factory MacosThemeData.fallback() => MacosThemeData.light();
+  factory MacosThemeData.fallback() => MacosThemeData.light().copyWith(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
 
   /// The overall theme brightness.
   ///
@@ -295,6 +305,11 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [Tooltip]s below the overall [MacosTheme]
   final TooltipThemeData tooltipTheme;
 
+  /// The density value for specifying the compactness of various UI components.
+  ///
+  /// {@macro flutter.material.themedata.visualDensity}
+  final VisualDensity visualDensity;
+
   /// The default style for [Scrollbar]s below the overall [MacosTheme]
   final ScrollbarThemeData scrollbarTheme;
 
@@ -310,6 +325,7 @@ class MacosThemeData with Diagnosticable {
       pushButtonTheme:
           PushButtonThemeData.lerp(a.pushButtonTheme, b.pushButtonTheme, t),
       tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
+      visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
       scrollbarTheme:
           ScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
     );
@@ -324,6 +340,7 @@ class MacosThemeData with Diagnosticable {
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
+    VisualDensity? visualDensity,
     ScrollbarThemeData? scrollbarTheme,
   }) {
     return MacosThemeData.raw(
@@ -334,6 +351,7 @@ class MacosThemeData with Diagnosticable {
       pushButtonTheme: this.pushButtonTheme.copyWith(pushButtonTheme),
       helpButtonTheme: this.helpButtonTheme.copyWith(helpButtonTheme),
       tooltipTheme: this.tooltipTheme.copyWith(tooltipTheme),
+      visualDensity: visualDensity ?? this.visualDensity,
       scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
     );
   }
