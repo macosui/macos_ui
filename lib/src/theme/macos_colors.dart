@@ -1,13 +1,17 @@
 import 'dart:ui';
-///
+
+/// An immutable 32 bit color value in ARGB format.
 class MacosColor extends Color {
+  /// Construct a color from the lower 32 bits of an [int].
   const MacosColor(int value) : super(value);
-  ///
+
+  /// Linearly interpolate between two [MacosColor]s.
   static MacosColor lerp(MacosColor a, MacosColor b, double t) {
     final Color? color = Color.lerp(a, b, t);
     return MacosColor(color!.value);
   }
 }
+
 /// A collection of color values lifted from the macOS system color picker.
 class MacosColors {
   static const black = MacosColor(0xff000000);
