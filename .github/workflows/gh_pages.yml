@@ -1,9 +1,13 @@
 name: GH-Pages
 on:
   push:
-    branches: [ dev, stable, gh-pages ]
+    branches:
+      - dev
+      - stable
   pull_request:
-    branches: [ dev, stable ]
+    branches:
+      - dev
+      - stable
 
 jobs:
   build:
