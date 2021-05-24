@@ -1,3 +1,7 @@
+## [0.2.2]
+* Add new `MacosColor` and `MacosColors` classes
+* Rename `colors.dart` to `macos_dynamic_color`
+
 ## [0.2.1]
 * `IconButton` updates:
   - The `color` property is now `backgroundColor`
