@@ -27,7 +27,9 @@ class IconButton extends StatefulWidget {
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
 
-  /// The icon to use
+  /// The widget to use as the icon.
+  ///
+  /// Typically an [Icon] widget.
   final Widget icon;
 
   /// The background color of this [IconButton].
