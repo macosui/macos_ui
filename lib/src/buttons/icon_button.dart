@@ -8,8 +8,8 @@ class IconButton extends StatefulWidget {
   /// Builds a macOS-style icon button
   const IconButton({
     Key? key,
-    required this.iconData,
-    this.color,
+    required this.icon,
+    this.backgroundColor,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
@@ -27,14 +27,16 @@ class IconButton extends StatefulWidget {
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
 
-  /// The icon to use
-  final IconData iconData;
+  /// The widget to use as the icon.
+  ///
+  /// Typically an [Icon] widget.
+  final Widget icon;
 
   /// The background color of this [IconButton].
   ///
   /// Defaults to [CupertinoColors.activeBlue]. Set to [Colors.transparent] for
   /// a transparent background color.
-  final Color? color;
+  final Color? backgroundColor;
 
   /// The color of the button's background when the button is disabled.
   final Color? disabledColor;
@@ -94,7 +96,7 @@ class IconButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
@@ -184,7 +186,8 @@ class _IconButtonState extends State<IconButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
 
-    final Color backgroundColor = widget.color ?? CupertinoColors.systemBlue;
+    final Color backgroundColor =
+        widget.backgroundColor ?? CupertinoColors.systemBlue;
 
     final Color? disabledColor;
 
@@ -196,15 +199,6 @@ class _IconButtonState extends State<IconButton>
     } else {
       disabledColor =
           theme.brightness.isDark ? Color(0xff353535) : Color(0xffE5E5E5);
-    }
-
-    final Color? foregroundColor;
-    if (widget.enabled) {
-      foregroundColor = iconLuminance(backgroundColor, theme.brightness.isDark);
-    } else {
-      foregroundColor = theme.brightness.isDark
-          ? Color.fromRGBO(255, 255, 255, 0.25)
-          : Color.fromRGBO(0, 0, 0, 0.25);
     }
 
     return MouseRegion(
@@ -251,10 +245,7 @@ class _IconButtonState extends State<IconButton>
                     heightFactor: 1.0,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Icon(
-                        widget.iconData,
-                        color: foregroundColor,
-                      ),
+                      child: widget.icon,
                     ),
                   ),
                 ),

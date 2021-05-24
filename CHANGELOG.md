@@ -1,3 +1,9 @@
+## [0.2.1]
+* `IconButton` updates:
+  - The `color` property is now `backgroundColor`
+  - The widget now takes a `Widget icon` rather than `IconData iconData` for better control over widget properties
+  - Deprecate and remove internal `foregroundColor` value
+
 ## [0.2.0]
 * New widget: `BackButton`, `IconButton`
 * Add `VisualDensity` to `MacosThemeData`

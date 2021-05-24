@@ -74,7 +74,10 @@ class _DemoState extends State<Demo> {
                   ),
                   const SizedBox(height: 20),
                   IconButton(
-                    iconData: CupertinoIcons.star_fill,
+                    icon: Icon(
+                      CupertinoIcons.star_fill,
+                      color: Colors.white,
+                    ),
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(7),
                     onPressed: () {},
