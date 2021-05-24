@@ -199,15 +199,6 @@ class _IconButtonState extends State<IconButton>
           theme.brightness.isDark ? Color(0xff353535) : Color(0xffE5E5E5);
     }
 
-    final Color? foregroundColor;
-    if (widget.enabled) {
-      foregroundColor = iconLuminance(backgroundColor, theme.brightness.isDark);
-    } else {
-      foregroundColor = theme.brightness.isDark
-          ? Color.fromRGBO(255, 255, 255, 0.25)
-          : Color.fromRGBO(0, 0, 0, 0.25);
-    }
-
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
