@@ -11,6 +11,9 @@
   * `Typography` -> `MacosTypography`
   * `Switch` -> `MacosSwitch`
 
+## [0.2.4]
+* Fix textfield prefix icon alignment
+
 ## [0.2.3]
 * Add `canvasColor` to `MacosThemeData`. `Scaffold` now uses this as its default background color.
 
