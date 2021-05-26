@@ -8,11 +8,11 @@ import 'package:macos_ui/src/library.dart';
 /// considered on when it contains a checkmark and off when it's empty.
 /// A checkbox is almost always followed by a title unless it appears in
 /// a checklist.
-class Checkbox extends StatelessWidget {
+class MacosCheckbox extends StatelessWidget {
   /// Creates a checkbox.
   ///
   /// [size] must be non-negative
-  const Checkbox({
+  const MacosCheckbox({
     Key? key,
     required this.value,
     required this.onChanged,

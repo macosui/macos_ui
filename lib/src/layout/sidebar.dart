@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class Sidebar {
-  /// Creates a macOS-style side bar at left side of the [Scaffold].
+  /// Creates a macOS-style side bar at left side of the [MacosScaffold].
   ///
   /// The [builder] and [minWidth] properties are required.
   /// The sidebar builds with a scrollbar internally.
@@ -22,7 +22,7 @@ class Sidebar {
   /// use the provided [_scrollController] to enable the scrollbar to work.
   ///
   /// Pass the [scrollController] obtained from this method, to a scrollable
-  /// widget used in this method to work with the internal [Scrollbar].
+  /// widget used in this method to work with the internal [MacosScrollbar].
   final ScrollableWidgetBuilder builder;
 
   /// The [BoxDecoration] to paint behind the child in the [builder].

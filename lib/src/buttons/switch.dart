@@ -7,8 +7,8 @@ import 'package:macos_ui/src/library.dart';
 /// A switch is a visual toggle between two mutually exclusive
 /// states — on and off. A switch shows that it's on when the
 /// accent color is visible and off when the switch appears colorless.
-class Switch extends StatelessWidget {
-  const Switch({
+class MacosSwitch extends StatelessWidget {
+  const MacosSwitch({
     Key? key,
     required this.value,
     required this.onChanged,

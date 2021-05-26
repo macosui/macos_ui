@@ -23,12 +23,12 @@ const kSmallTitleBarHeight = 30.0;
 /// Provides a body for main content, via [children], and a [sidebar] for
 /// secondary content (like navigation buttons). If no [sidebar] is specified,
 /// only the [children] will be shown.
-class Scaffold extends StatefulWidget {
+class MacosScaffold extends StatefulWidget {
   /// Creates a macOS window layout.
   ///
   /// The [children] can only include one [ContentArea], but can include
   /// multiple [ResizablePane] widgets.
-  const Scaffold({
+  const MacosScaffold({
     Key? key,
     this.children = const <Widget>[],
     this.sidebar,
@@ -52,10 +52,10 @@ class Scaffold extends StatefulWidget {
   final TitleBar? titleBar;
 
   @override
-  _ScaffoldState createState() => _ScaffoldState();
+  _MacosScaffoldState createState() => _MacosScaffoldState();
 }
 
-class _ScaffoldState extends State<Scaffold> {
+class _MacosScaffoldState extends State<MacosScaffold> {
   final _sidebarScrollController = ScrollController();
   final _minContentAreaWidth = 300.0;
   ResizablePaneNotifier _valueNotifier = ResizablePaneNotifier({});
@@ -105,7 +105,7 @@ class _ScaffoldState extends State<Scaffold> {
   }
 
   @override
-  void didUpdateWidget(covariant Scaffold old) {
+  void didUpdateWidget(covariant MacosScaffold old) {
     super.didUpdateWidget(old);
     _recalculateLayout();
   }
@@ -127,18 +127,14 @@ class _ScaffoldState extends State<Scaffold> {
           (widget.sidebar!.startWidth! <= widget.sidebar!.maxWidth!));
     }
     final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor;
+    late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
     late Color sidebarBackgroundColor;
     Color dividerColor = theme.dividerColor;
 
     if (!theme.brightness.isDark) {
-      backgroundColor =
-          widget.backgroundColor ?? CupertinoColors.systemBackground.color;
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
           CupertinoColors.systemGrey6.color;
     } else {
-      backgroundColor = widget.backgroundColor ??
-          CupertinoColors.systemBackground.darkElevatedColor;
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
           CupertinoColors.tertiarySystemBackground.darkColor;
     }
@@ -175,7 +171,7 @@ class _ScaffoldState extends State<Scaffold> {
                           _sidebarScrollController.offset > 0.0)
                         Divider(thickness: 1, height: 1, color: dividerColor),
                       Expanded(
-                        child: Scrollbar(
+                        child: MacosScrollbar(
                           controller: _sidebarScrollController,
                           child: Padding(
                             padding: widget.sidebar?.padding ?? EdgeInsets.zero,
@@ -309,14 +305,14 @@ class _ScaffoldState extends State<Scaffold> {
 /// A [ScaffoldScope] serves as a scope for its descendants to rely on
 /// values needed for the layout of the descendants.
 ///
-/// It is embedded in the [Scaffold] and available to the widgets just below
+/// It is embedded in the [MacosScaffold] and available to the widgets just below
 /// it in the widget tree. The [ScaffoldScope] passes down the values which
-/// are calculated inside [Scaffold] to its descendants.
+/// are calculated inside [MacosScaffold] to its descendants.
 ///
 /// Descendants of the [ScaffoldScope] automatically work with the values
 /// they need, so you will hardly need to manually use the [ScaffoldScope].
 class ScaffoldScope extends InheritedWidget {
-  /// Creates a widget that manages the layout of the [Scaffold].
+  /// Creates a widget that manages the layout of the [MacosScaffold].
   ///
   /// [ResizablePane] and [ContentArea] are other widgets that depend
   /// on the [ScaffoldScope] for layout.
@@ -329,31 +325,31 @@ class ScaffoldScope extends InheritedWidget {
     required this.contentAreaWidth,
     required Widget child,
     required this.valueNotifier,
-    required _ScaffoldState scaffoldState,
+    required _MacosScaffoldState scaffoldState,
   })  : _scaffoldState = scaffoldState,
         super(key: key, child: child);
 
-  /// Provides the constraints from the [Scaffold] to its descendants.
+  /// Provides the constraints from the [MacosScaffold] to its descendants.
   final BoxConstraints constraints;
 
   /// The calculated width of the rest of the content area excluding
   /// [ResizablePane] and [Sidebar]. This sizes the width of [ContentArea]
   final double contentAreaWidth;
 
-  /// Provides internal access to the [_ScaffoldState] for calling methods
+  /// Provides internal access to the [_MacosScaffoldState] for calling methods
   /// such as [toggleSidebar]
-  final _ScaffoldState _scaffoldState;
+  final _MacosScaffoldState _scaffoldState;
 
-  /// Retrieves the [ResizablePaneNotifier] inside [Scaffold].
+  /// Retrieves the [ResizablePaneNotifier] inside [MacosScaffold].
   ///
   /// [ResizablePane] widgets in this scope register and unregister their
   /// widths and keys using this [valueNotifier]
   final ResizablePaneNotifier valueNotifier;
 
-  /// Returns the [ScaffoldScope] of the [Scaffold] that most tightly encloses
+  /// Returns the [ScaffoldScope] of the [MacosScaffold] that most tightly encloses
   /// the given [context].
   ///
-  /// If the [context] does not have a [Scaffold] as its ancestor, an assertion
+  /// If the [context] does not have a [MacosScaffold] as its ancestor, an assertion
   /// is thrown.
   ///
   /// The [context] argument must not be null.
@@ -364,10 +360,10 @@ class ScaffoldScope extends InheritedWidget {
     return result!;
   }
 
-  /// Returns a [ScaffoldScope] of the [Scaffold] that most tightly
+  /// Returns a [ScaffoldScope] of the [MacosScaffold] that most tightly
   /// encloses the given [context]. The result can be null.
   ///
-  /// If this [context] does not have a [Scaffold] as its ancestor, the result
+  /// If this [context] does not have a [MacosScaffold] as its ancestor, the result
   /// returned is null.
   ///
   /// The [context] argument must not be null.
@@ -375,7 +371,7 @@ class ScaffoldScope extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<ScaffoldScope>();
   }
 
-  /// Toggles the [Sidebar] of the [Scaffold].
+  /// Toggles the [Sidebar] of the [MacosScaffold].
   ///
   /// This does not change the current width of the [Sidebar]. It only
   /// hides or shows it.

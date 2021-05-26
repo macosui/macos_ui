@@ -403,14 +403,14 @@ class _MacosAppState extends State<MacosApp> {
 /// {@macro flutter.widgets.scrollBehavior}
 ///
 /// When using the desktop platform, if the [Scrollable] widget scrolls in the
-/// [Axis.vertical], a [Scrollbar] is applied.
+/// [Axis.vertical], a [MacosScrollbar] is applied.
 ///
 /// See also:
 ///
 ///  * [ScrollBehavior], the default scrolling behavior extended by this class.
 class MacosScrollBehavior extends ScrollBehavior {
   /// Creates a MacosScrollBehavior that decorates [Scrollable]s with
-  /// [Scrollbar]s based on the current platform and provided [ScrollableDetails].
+  /// [MacosScrollbar]s based on the current platform and provided [ScrollableDetails].
   const MacosScrollBehavior();
 
   @override
@@ -425,7 +425,7 @@ class MacosScrollBehavior extends ScrollBehavior {
           case TargetPlatform.linux:
           case TargetPlatform.macOS:
           case TargetPlatform.windows:
-            return Scrollbar(
+            return MacosScrollbar(
               child: child,
               controller: details.controller,
             );

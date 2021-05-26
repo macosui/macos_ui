@@ -44,11 +44,15 @@ class _DemoState extends State<Demo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      titleBar: TitleBar(child: Text("Titlebar")),
+    return MacosScaffold(
+      titleBar: TitleBar(
+        child: Text('Titlebar'),
+      ),
       sidebar: Sidebar(
         minWidth: 200,
-        builder: (context, _) => Center(child: Text("Sidebar")),
+        builder: (context, _) => Center(
+          child: Text('Sidebar'),
+        ),
       ),
       children: <Widget>[
         ContentArea(
@@ -61,19 +65,19 @@ class _DemoState extends State<Demo> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      BackButton(
+                      MacosBackButton(
                         onPressed: () => print('click'),
                         fillColor: Colors.transparent,
                       ),
                       const SizedBox(width: 16.0),
-                      BackButton(
+                      MacosBackButton(
                         onPressed: () => print('click'),
                         //fillColor: Colors.transparent,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  IconButton(
+                  MacosIconButton(
                     icon: Icon(
                       CupertinoIcons.star_fill,
                       color: Colors.white,
@@ -109,7 +113,7 @@ class _DemoState extends State<Demo> {
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: TextField(
+                    child: MacosTextField(
                       prefix: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 4.0,
@@ -136,7 +140,7 @@ class _DemoState extends State<Demo> {
                     child: Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: TextField.borderless(
+                        child: MacosTextField.borderless(
                           prefix: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 4.0),
@@ -164,7 +168,7 @@ class _DemoState extends State<Demo> {
           scaffoldBreakpoint: 500,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
-            return Center(child: Text("Resizable Pane"));
+            return Center(child: Text('Resizable Pane'));
           },
         ),
       ],

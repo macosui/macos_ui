@@ -188,7 +188,8 @@ class MacosThemeData with Diagnosticable {
   factory MacosThemeData({
     Brightness? brightness,
     Color? primaryColor,
-    Typography? typography,
+    Color? canvasColor,
+    MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
@@ -201,7 +202,10 @@ class MacosThemeData with Diagnosticable {
     primaryColor ??= isDark
         ? CupertinoColors.activeBlue.darkColor
         : CupertinoColors.activeBlue.color;
-    typography ??= Typography(
+    canvasColor ??= isDark
+        ? CupertinoColors.systemBackground.darkElevatedColor
+        : CupertinoColors.systemBackground;
+    typography ??= MacosTypography(
       color: brightness == Brightness.light
           ? CupertinoColors.black
           : CupertinoColors.white,
@@ -232,6 +236,7 @@ class MacosThemeData with Diagnosticable {
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
+      canvasColor: canvasColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
@@ -251,6 +256,7 @@ class MacosThemeData with Diagnosticable {
   const MacosThemeData.raw({
     required this.brightness,
     required this.primaryColor,
+    required this.canvasColor,
     required this.typography,
     required this.pushButtonTheme,
     required this.dividerColor,
@@ -289,8 +295,11 @@ class MacosThemeData with Diagnosticable {
   /// Defaults to [CupertinoColors.activeBlue].
   final Color primaryColor;
 
+  /// The default color of Scaffold backgrounds.
+  final Color canvasColor;
+
   /// The default text styling for this theme.
-  final Typography typography;
+  final MacosTypography typography;
 
   /// The default style for [PushButton]s below the overall [MacosTheme].
   final PushButtonThemeData pushButtonTheme;
@@ -302,7 +311,7 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [HelpButton]s below the overall [MacosTheme].
   final HelpButtonThemeData helpButtonTheme;
 
-  /// The default style for [Tooltip]s below the overall [MacosTheme]
+  /// The default style for [MacosTooltip]s below the overall [MacosTheme]
   final TooltipThemeData tooltipTheme;
 
   /// The density value for specifying the compactness of various UI components.
@@ -310,7 +319,7 @@ class MacosThemeData with Diagnosticable {
   /// {@macro flutter.material.themedata.visualDensity}
   final VisualDensity visualDensity;
 
-  /// The default style for [Scrollbar]s below the overall [MacosTheme]
+  /// The default style for [MacosScrollbar]s below the overall [MacosTheme]
   final ScrollbarThemeData scrollbarTheme;
 
   /// Linearly interpolate between two themes.
@@ -319,7 +328,8 @@ class MacosThemeData with Diagnosticable {
       brightness: t < 0.5 ? a.brightness : b.brightness,
       dividerColor: Color.lerp(a.dividerColor, b.dividerColor, t)!,
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
-      typography: Typography.lerp(a.typography, b.typography, t),
+      canvasColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
+      typography: MacosTypography.lerp(a.typography, b.typography, t),
       helpButtonTheme:
           HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
       pushButtonTheme:
@@ -335,7 +345,8 @@ class MacosThemeData with Diagnosticable {
   MacosThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
-    Typography? typography,
+    Color? canvasColor,
+    MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
@@ -346,6 +357,7 @@ class MacosThemeData with Diagnosticable {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
       primaryColor: primaryColor ?? this.primaryColor,
+      canvasColor: canvasColor ?? this.canvasColor,
       dividerColor: dividerColor ?? this.dividerColor,
       typography: typography ?? this.typography,
       pushButtonTheme: this.pushButtonTheme.copyWith(pushButtonTheme),
@@ -361,8 +373,10 @@ class MacosThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(EnumProperty('brightness', brightness));
     properties.add(ColorProperty('primaryColor', primaryColor));
+    properties.add(ColorProperty('canvasColor', canvasColor));
     properties.add(ColorProperty('dividerColor', dividerColor));
-    properties.add(DiagnosticsProperty<Typography>('typography', typography));
+    properties
+        .add(DiagnosticsProperty<MacosTypography>('typography', typography));
     properties.add(DiagnosticsProperty<PushButtonThemeData>(
       'pushButtonTheme',
       pushButtonTheme,
