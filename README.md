@@ -9,15 +9,17 @@ Flutter widgets and themes implementing the current macOS design language.
   - [Contributing](#contributing)
   - [Resources](#resources)
 - [Layout](#layout)
-  - [Scaffold](#scaffold)
+  - [MacosScaffold](#macosscaffold)
 - [Buttons](#buttons)
-  - [Checkbox](#checkbox)
+  - [MacosCheckbox](#macoscheckbox)
   - [HelpButton](#helpbutton)
   - [RadioButton](#radiobutton)
   - [PushButton](#pushbutton)
-  - [Switch](#switch)
+  - [MacosSwitch](#macosswitch)
 - [Fields](#fields)
-  - [TextField](#textfield)
+  - [MacosTextField](#macostextfield)
+- [Labels](#labels)
+  - [MacosTooltip](#macostooltip)
 - [Indicators](#indicators)
   - [Progress Indicators](#progress-indicators)
     - [ProgressCircle](#progresscircle)
@@ -39,9 +41,9 @@ macOS welcomes contributions. Please see CONTRIBUTING.md for more information.
 
 # Layout
 
-## Scaffold
+## MacosScaffold
 
-`Scaffold` provides a basic structure for laying out widgets in a way you would expect on macOS.
+`MacosScaffold` provides a basic structure for laying out widgets in a way you would expect on macOS.
 You must specify a `body` as the main content area, and you can optionally provide a `sidebar`
 that will show to the left of `body`. The `sidebar` can be resized by grabbing the split and
 dragging left or right. See the documentation for all customization options.
@@ -56,7 +58,7 @@ dragging left or right. See the documentation for all customization options.
 
 # Buttons
 
-## Checkbox
+## MacosCheckbox
 
 A checkbox is a type of button that lets the user choose between two opposite states, actions, or values. A selected checkbox is considered on when it contains a checkmark and off when it's empty. A checkbox is almost always followed by a title unless it appears in a checklist. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/checkboxes/)
 
@@ -69,7 +71,7 @@ Here's an example of how to create a basic checkbox:
 ```dart
 bool selected = false;
 
-Checkbox(
+MacosCheckbox(
   value: selected,
   onChanged: (value) {
     setState(() => selected = value);
@@ -108,7 +110,7 @@ Here's an example of how to create a basic radio button:
 ```dart
 bool selected = false;
 
-RadioButton(
+MacosRadioButton(
   value: selected,
   onChanged: (value) {
     setState(() => selected = value);
@@ -139,7 +141,7 @@ PushButton(
 ),
 ```
 
-## Switch
+## MacosSwitch
 
 A switch is a visual toggle between two mutually exclusive states — on and off. A switch shows that it's on when the accent color is visible and off when the switch appears colorless. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/switches/)
 
@@ -152,7 +154,7 @@ Here's an example of how to create a basic toggle switch:
 ```dart
 bool selected = false;
 
-Switch(
+MacosSwitch(
   value: selected,
   onChanged: (value) {
     setState(() => selected = value);
@@ -162,7 +164,7 @@ Switch(
 
 # Fields
 
-## TextField
+## MacosTextField
 
 A text field is a rectangular area in which the user enters or edits one or more lines of text. A text field can contain plain or styled text.
 
@@ -171,14 +173,14 @@ A text field is a rectangular area in which the user enters or edits one or more
 Here's an example of how to create a basic text field:
 
 ```dart
-TextField(),
+MacosTextField(),
 ```
 
 # Labels
 
 Labels are a short description of what an element on the screen does.
 
-## Tooltip
+## MacosTooltip
 
 Tooltips succinctly describe how to use controls without shifting people’s focus away from the primary interface. Help tags appear when the user positions the pointer over a control for a few seconds. A tooltip remains visible for 10 seconds, or until the pointer moves away from the control.
 
@@ -187,7 +189,7 @@ Tooltips succinctly describe how to use controls without shifting people’s foc
 To create a tooltip, wrap any widget on a `Tooltip`:
 
 ```dart
-Tooltip(
+MacosTooltip(
   message: 'This is a tooltip',
   child: Text('Hover or long press to show a tooltip'),
 ),
@@ -250,9 +252,9 @@ A level indicator graphically represents of a specific value within a range of n
 
 A capacity indicator illustrates the current level in relation to a finite capacity. Capacity indicators are often used when communicating factors like disk and battery usage. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/level-indicators#capacity-indicators)
 
-| Continuous | Discrete |
-| ---------- | -------- |
-| ![Continuous CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-continous.png) | ![Discrete CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-discrete.png) |
+| Continuous                                                                                                                                     | Discrete                                                                                                                                                                                                         |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Continuous CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-continous.png)   | ![Discrete CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-discrete.png)                                                                        |
 | A horizontal translucent track that fills with a colored bar to indicate the current value. Tick marks are often displayed to provide context. | A horizontal row of separate, equally sized, rectangular segments. The number of segments matches the total capacity, and the segments fill completely—never partially—with color to indicate the current value. |
 
 Here's an example of how to create an interactive continuous capacity indicator:

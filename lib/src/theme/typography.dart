@@ -15,15 +15,15 @@ const _kDefaultFontFamily = 'SanFranciscoPro';
 ///    adjusted, such as the primary color.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/>
 @immutable
-class Typography with Diagnosticable {
+class MacosTypography with Diagnosticable {
   /// Creates a typography that uses the given values.
   ///
-  /// Rather than creating a new typography, consider using [Typography.black]
-  /// or [Typography.white].
+  /// Rather than creating a new typography, consider using [MacosTypography.black]
+  /// or [MacosTypography.white].
   ///
   /// If you do decide to create your own typography, consider using one of
   /// those predefined themes as a starting point for [copyWith].
-  factory Typography({
+  factory MacosTypography({
     required Color color,
     TextStyle? largeTitle,
     TextStyle? title1,
@@ -113,7 +113,7 @@ class Typography with Diagnosticable {
       letterSpacing: 0.12,
       color: color,
     );
-    return Typography.raw(
+    return MacosTypography.raw(
       largeTitle: largeTitle,
       title1: title1,
       title2: title2,
@@ -128,7 +128,7 @@ class Typography with Diagnosticable {
     );
   }
 
-  const Typography.raw({
+  const MacosTypography.raw({
     required this.largeTitle,
     required this.title1,
     required this.title2,
@@ -142,8 +142,8 @@ class Typography with Diagnosticable {
     required this.caption2,
   });
 
-  static Typography black = Typography(color: CupertinoColors.black);
-  static Typography white = Typography(color: CupertinoColors.white);
+  static MacosTypography black = MacosTypography(color: CupertinoColors.black);
+  static MacosTypography white = MacosTypography(color: CupertinoColors.white);
 
   /// Style used for body text.
   final TextStyle body;
@@ -178,7 +178,7 @@ class Typography with Diagnosticable {
   /// Style used for third-level hierarchical headings.
   final TextStyle title3;
 
-  /// Creates a new [Typography] where each text style from this object has been
+  /// Creates a new [MacosTypography] where each text style from this object has been
   /// merged with the matching text style from the `other` object.
   ///
   /// The merging is done by calling [TextStyle.merge] on each respective pair
@@ -188,17 +188,17 @@ class Typography with Diagnosticable {
   ///
   /// If this theme, or the `other` theme has members that are null, then the
   /// non-null one (if any) is used. If the `other` theme is itself null, then
-  /// this [Typography] is returned unchanged. If values in both are set, then
+  /// this [MacosTypography] is returned unchanged. If values in both are set, then
   /// the values are merged using [TextStyle.merge].
   ///
-  /// This is particularly useful if one [Typography] defines one set of
+  /// This is particularly useful if one [MacosTypography] defines one set of
   /// properties and another defines a different set, e.g. having colors
   /// defined in one typography and font sizes in another, or when one
-  /// [Typography] has only some fields defined, and you want to define the rest
+  /// [MacosTypography] has only some fields defined, and you want to define the rest
   /// by merging it with a default theme.
-  Typography merge(Typography? other) {
+  MacosTypography merge(MacosTypography? other) {
     if (other == null) return this;
-    return Typography.raw(
+    return MacosTypography.raw(
       largeTitle: largeTitle.merge(other.largeTitle),
       title1: title1.merge(other.title1),
       title2: title2.merge(other.title2),
@@ -214,8 +214,8 @@ class Typography with Diagnosticable {
   }
 
   /// Linearly interpolate between two typographies.
-  static Typography lerp(Typography a, Typography b, double t) {
-    return Typography.raw(
+  static MacosTypography lerp(MacosTypography a, MacosTypography b, double t) {
+    return MacosTypography.raw(
       largeTitle: TextStyle.lerp(a.largeTitle, b.largeTitle, t)!,
       title1: TextStyle.lerp(a.title1, b.title1, t)!,
       title2: TextStyle.lerp(a.title2, b.title2, t)!,
@@ -233,7 +233,7 @@ class Typography with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    final defaultStyle = Typography.black;
+    final defaultStyle = MacosTypography.black;
     properties.add(DiagnosticsProperty<TextStyle>(
       'largeTitle',
       largeTitle,

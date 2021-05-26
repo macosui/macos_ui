@@ -2,9 +2,9 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// The widget that fills the rest of the body of the macOS [Scaffold].
+/// The widget that fills the rest of the body of the macOS [MacosScaffold].
 ///
-/// A [Scaffold] can contain only one [ContentArea].
+/// A [MacosScaffold] can contain only one [ContentArea].
 class ContentArea extends StatelessWidget {
   /// Creates a widget that fills the body of the scaffold.
   /// The [builder] can be null to show an empty widget.
@@ -17,7 +17,7 @@ class ContentArea extends StatelessWidget {
   /// use the provided [_scrollController] to enable the scrollbar to work.
   ///
   /// Pass the [_scrollController] obtained from this method, to a scrollable
-  /// widget used in this method to work with the internal [Scrollbar].
+  /// widget used in this method to work with the internal [MacosScrollbar].
   final ScrollableWidgetBuilder? builder;
 
   static final _scrollController = ScrollController();
@@ -29,7 +29,7 @@ class ContentArea extends StatelessWidget {
       child: SafeArea(
         left: false,
         right: false,
-        child: Scrollbar(
+        child: MacosScrollbar(
           controller: _scrollController,
           child: builder!(context, _scrollController),
         ),

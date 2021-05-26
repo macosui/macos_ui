@@ -4,9 +4,9 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// A macOS-style icon button.
-class IconButton extends StatefulWidget {
+class MacosIconButton extends StatefulWidget {
   /// Builds a macOS-style icon button
-  const IconButton({
+  const MacosIconButton({
     Key? key,
     required this.icon,
     this.backgroundColor,
@@ -32,7 +32,7 @@ class IconButton extends StatefulWidget {
   /// Typically an [Icon] widget.
   final Widget icon;
 
-  /// The background color of this [IconButton].
+  /// The background color of this [MacosIconButton].
   ///
   /// Defaults to [CupertinoColors.activeBlue]. Set to [Colors.transparent] for
   /// a transparent background color.
@@ -104,10 +104,10 @@ class IconButton extends StatefulWidget {
   }
 
   @override
-  _IconButtonState createState() => _IconButtonState();
+  _MacosIconButtonState createState() => _MacosIconButtonState();
 }
 
-class _IconButtonState extends State<IconButton>
+class _MacosIconButtonState extends State<MacosIconButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -132,7 +132,7 @@ class _IconButtonState extends State<IconButton>
   }
 
   @override
-  void didUpdateWidget(IconButton old) {
+  void didUpdateWidget(MacosIconButton old) {
     super.didUpdateWidget(old);
     _setTween();
   }

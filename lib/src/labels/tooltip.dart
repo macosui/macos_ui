@@ -20,12 +20,12 @@ import 'package:macos_ui/src/library.dart';
 ///
 /// See also:
 ///   * [TooltipThemeData], used to define how the tooltip will look like
-class Tooltip extends StatefulWidget {
+class MacosTooltip extends StatefulWidget {
   /// Creates a tooltip.
   ///
-  /// Wrap any widget in a [Tooltip] to show a message on mouse hover or
+  /// Wrap any widget in a [MacosTooltip] to show a message on mouse hover or
   /// long press event
-  const Tooltip({
+  const MacosTooltip({
     Key? key,
     required this.message,
     this.child,
@@ -49,7 +49,7 @@ class Tooltip extends StatefulWidget {
   /// semantics tree.
   ///
   /// Defaults to false. A tooltip will add a [Semantics] label that
-  /// is set to [Tooltip.message]. Set this property to true if the
+  /// is set to [MacosTooltip.message]. Set this property to true if the
   /// app is going to provide its own custom semantics label.
   final bool excludeFromSemantics;
 
@@ -63,10 +63,11 @@ class Tooltip extends StatefulWidget {
   final bool useMousePosition;
 
   @override
-  _TooltipState createState() => _TooltipState();
+  _MacosTooltipState createState() => _MacosTooltipState();
 }
 
-class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
+class _MacosTooltipState extends State<MacosTooltip>
+    with SingleTickerProviderStateMixin {
   static const double _defaultVerticalOffset = 24.0;
   static const bool _defaultPreferBelow = false;
   static const EdgeInsetsGeometry _defaultMargin = EdgeInsets.all(0.0);
@@ -388,7 +389,7 @@ class TooltipThemeData with Diagnosticable {
 
   /// Creates a default tooltip theme.
   ///
-  /// [textStyle] is usually [Typography.caption2]
+  /// [textStyle] is usually [MacosTypography.caption2]
   factory TooltipThemeData.standard({
     required Brightness brightness,
     required TextStyle textStyle,
@@ -495,7 +496,7 @@ class TooltipThemeData with Diagnosticable {
 
   /// The style to use for the message of the tooltip.
   ///
-  /// If null, [Typography.caption] is used
+  /// If null, [MacosTypography.caption] is used
   final TextStyle? textStyle;
 
   /// Linearly interpolate between two tooltip themes.

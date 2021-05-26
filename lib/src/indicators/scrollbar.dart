@@ -9,7 +9,7 @@ import 'package:flutter/material.dart' as m;
 /// A Macos Design scrollbar.
 ///
 /// To add a scrollbar to a [ScrollView], wrap the scroll view
-/// widget in a [Scrollbar] widget.
+/// widget in a [MacosScrollbar] widget.
 ///
 /// {@macro flutter.widgets.Scrollbar}
 ///
@@ -28,7 +28,7 @@ import 'package:flutter/material.dart' as m;
 ///  * [CupertinoScrollbar], an iOS style scrollbar.
 ///  * [ListView], which displays a linear, scrollable list of children.
 ///  * [GridView], which displays a 2 dimensional, scrollable array of children.
-class Scrollbar extends StatelessWidget {
+class MacosScrollbar extends StatelessWidget {
   /// Creates a macos design scrollbar that by default will connect to the
   /// closest Scrollable descendent of [child].
   ///
@@ -43,7 +43,7 @@ class Scrollbar extends StatelessWidget {
   /// of an 8.0 pixel circular radius about the corners of the scrollbar thumb,
   /// except for when executing on [TargetPlatform.android], which will render the
   /// thumb without a radius.
-  const Scrollbar({
+  const MacosScrollbar({
     Key? key,
     required this.child,
     this.controller,
@@ -153,7 +153,7 @@ class Scrollbar extends StatelessWidget {
   }
 }
 
-/// Defines default property values for descendant [Scrollbar] widgets.
+/// Defines default property values for descendant [MacosScrollbar] widgets.
 ///
 /// Descendant widgets obtain the current [ScrollbarThemeData] object with
 /// `ScrollbarTheme.of(context)`. Instances of [ScrollbarThemeData] can be customized
@@ -162,7 +162,7 @@ class Scrollbar extends StatelessWidget {
 /// Typically the [ScrollbarThemeData] of a [ScrollbarTheme] is specified as part of the overall
 /// [MacosTheme] with [MacosThemeData.scrollbarTheme].
 ///
-/// All [ScrollbarThemeData] properties are `null` by default. When null, the [Scrollbar]
+/// All [ScrollbarThemeData] properties are `null` by default. When null, the [MacosScrollbar]
 /// computes its own default values.
 ///
 /// See also:
@@ -191,62 +191,62 @@ class ScrollbarThemeData with Diagnosticable {
     this.interactive,
   });
 
-  /// Overrides the default value of [Scrollbar.thickness] in all
-  /// descendant [Scrollbar] widgets.
+  /// Overrides the default value of [MacosScrollbar.thickness] in all
+  /// descendant [MacosScrollbar] widgets.
   final double? thickness;
 
-  /// Overrides the default value of [Scrollbar.hoverThickness] in all
-  /// descendant [Scrollbar] widgtes when hovering is active.
+  /// Overrides the default value of [MacosScrollbar.hoverThickness] in all
+  /// descendant [MacosScrollbar] widgtes when hovering is active.
   final double? hoveringThickness;
 
-  /// Overrides the default value of [Scrollbar.showTrackOnHover] in all
-  /// descendant [Scrollbar] widgets.
+  /// Overrides the default value of [MacosScrollbar.showTrackOnHover] in all
+  /// descendant [MacosScrollbar] widgets.
   final bool? showTrackOnHover;
 
-  /// Overrides the default value of [Scrollbar.isAlwaysShown] in all
-  /// descendant [Scrollbar] widgets.
+  /// Overrides the default value of [MacosScrollbar.isAlwaysShown] in all
+  /// descendant [MacosScrollbar] widgets.
   final bool? isAlwaysShown;
 
-  /// Overrides the default value of [Scrollbar.interactive] in all
-  /// descendant [Scrollbar] widgets.
+  /// Overrides the default value of [MacosScrollbar.interactive] in all
+  /// descendant [MacosScrollbar] widgets.
   final bool? interactive;
 
-  /// Overrides the default value of [Scrollbar.radius] in all
+  /// Overrides the default value of [MacosScrollbar.radius] in all
   /// descendant widgets.
   final Radius? radius;
 
-  /// Overrides the default [Color] of the [Scrollbar] thumb in all descendant
-  /// [Scrollbar] widgets.
+  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
+  /// [MacosScrollbar] widgets.
   final Color? thumbColor;
 
-  /// Overrides the default [Color] of the [Scrollbar] thumb in all descendant
-  /// [Scrollbar] widgets when hovering is active.
+  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
+  /// [MacosScrollbar] widgets when hovering is active.
   final Color? hoveringThumbColor;
 
-  /// Overrides the default [Color] of the [Scrollbar] thumb in all descendant
-  /// [Scrollbar] widgets when dragging is active.
+  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
+  /// [MacosScrollbar] widgets when dragging is active.
   final Color? draggingThumbColor;
 
-  /// Overrides the default [Color] of the [Scrollbar] track when
-  /// [showTrackOnHover] is true in all descendant [Scrollbar] widgets.
+  /// Overrides the default [Color] of the [MacosScrollbar] track when
+  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets.
   final Color? trackColor;
 
-  /// Overrides the default [Color] of the [Scrollbar] track when
-  /// [showTrackOnHover] is true in all descendant [Scrollbar] widgets
+  /// Overrides the default [Color] of the [MacosScrollbar] track when
+  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets
   /// when hovering is active.
   final Color? hoveringTrackColor;
 
-  /// Overrides the default [Color] of the [Scrollbar] track border when
-  /// [showTrackOnHover] is true in all descendant [Scrollbar] widgets.
+  /// Overrides the default [Color] of the [MacosScrollbar] track border when
+  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets.
   final Color? trackBorderColor;
 
-  /// Overrides the default [Color] of the [Scrollbar] track border when
-  /// [showTrackOnHover] is true in all descendant [Scrollbar] widgets
+  /// Overrides the default [Color] of the [MacosScrollbar] track border when
+  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets
   /// when hovering is active.
   final Color? hoveringTrackBorderColor;
 
   /// Overrides the default value of the [ScrollbarPainter.crossAxisMargin]
-  /// property in all descendant [Scrollbar] widgets.
+  /// property in all descendant [MacosScrollbar] widgets.
   ///
   /// See also:
   ///
@@ -255,7 +255,7 @@ class ScrollbarThemeData with Diagnosticable {
   final double? crossAxisMargin;
 
   /// Overrides the default value of the [ScrollbarPainter.mainAxisMargin]
-  /// property in all descendant [Scrollbar] widgets.
+  /// property in all descendant [MacosScrollbar] widgets.
   ///
   /// See also:
   ///
@@ -264,7 +264,7 @@ class ScrollbarThemeData with Diagnosticable {
   final double? mainAxisMargin;
 
   /// Overrides the default value of the [ScrollbarPainter.minLength]
-  /// property in all descendant [Scrollbar] widgets.
+  /// property in all descendant [MacosScrollbar] widgets.
   ///
   /// See also:
   ///
@@ -455,7 +455,7 @@ class ScrollbarThemeData with Diagnosticable {
   }
 }
 
-/// Applies a scrollbar theme to descendant [Scrollbar] widgets.
+/// Applies a scrollbar theme to descendant [MacosScrollbar] widgets.
 ///
 /// Descendant widgets obtain the current theme's [ScrollbarThemeData] using
 /// [ScrollbarTheme.of]. When a widget uses [ScrollbarTheme.of], it is
@@ -469,7 +469,7 @@ class ScrollbarThemeData with Diagnosticable {
 ///  * [ScrollbarThemeData], which describes the configuration of a
 ///    scrollbar theme.
 class ScrollbarTheme extends InheritedWidget {
-  /// Constructs a scrollbar theme that configures all descendant [Scrollbar]
+  /// Constructs a scrollbar theme that configures all descendant [MacosScrollbar]
   /// widgets.
   const ScrollbarTheme({
     Key? key,
@@ -477,7 +477,7 @@ class ScrollbarTheme extends InheritedWidget {
     required Widget child,
   }) : super(key: key, child: child);
 
-  /// The properties used for all descendant [Scrollbar] widgets.
+  /// The properties used for all descendant [MacosScrollbar] widgets.
   final ScrollbarThemeData data;
 
   /// Returns the configuration [data] from the closest [ScrollbarTheme]

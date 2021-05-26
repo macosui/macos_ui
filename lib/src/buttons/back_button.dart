@@ -3,10 +3,10 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// A macOS style back button.
-class BackButton extends StatefulWidget {
+class MacosBackButton extends StatefulWidget {
   /// Creates a `BackButton` with the appropriate icon/background colors based
   /// on light/dark themes.
-  const BackButton({
+  const MacosBackButton({
     Key? key,
     this.onPressed,
     this.fillColor,
@@ -40,10 +40,10 @@ class BackButton extends StatefulWidget {
   }
 
   @override
-  _BackButtonState createState() => _BackButtonState();
+  _MacosBackButtonState createState() => _MacosBackButtonState();
 }
 
-class _BackButtonState extends State<BackButton>
+class _MacosBackButtonState extends State<MacosBackButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -68,7 +68,7 @@ class _BackButtonState extends State<BackButton>
   }
 
   @override
-  void didUpdateWidget(BackButton old) {
+  void didUpdateWidget(MacosBackButton old) {
     super.didUpdateWidget(old);
     _setTween();
   }

@@ -46,7 +46,7 @@ class ResizablePane extends StatefulWidget {
   /// use the provided [_scrollController] to enable the scrollbar to work.
   ///
   /// Pass the [scrollController] obtained from this method, to a scrollable
-  /// widget used in this method to work with the internal [Scrollbar].
+  /// widget used in this method to work with the internal [MacosScrollbar].
   final ScrollableWidgetBuilder builder;
 
   /// The [BoxDecoration] to paint behind the child in the [builder].
@@ -209,7 +209,7 @@ class _ResizablePaneState extends State<ResizablePane> {
             SafeArea(
               left: false,
               right: false,
-              child: Scrollbar(
+              child: MacosScrollbar(
                 controller: _scrollController,
                 child: widget.builder(context, _scrollController),
               ),
