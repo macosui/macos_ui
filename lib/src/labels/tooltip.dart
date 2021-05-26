@@ -66,7 +66,8 @@ class MacosTooltip extends StatefulWidget {
   _MacosTooltipState createState() => _MacosTooltipState();
 }
 
-class _MacosTooltipState extends State<MacosTooltip> with SingleTickerProviderStateMixin {
+class _MacosTooltipState extends State<MacosTooltip>
+    with SingleTickerProviderStateMixin {
   static const double _defaultVerticalOffset = 24.0;
   static const bool _defaultPreferBelow = false;
   static const EdgeInsetsGeometry _defaultMargin = EdgeInsets.all(0.0);
