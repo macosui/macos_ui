@@ -10,7 +10,7 @@ assignees: ''
 ## Use case
 
 <!--
-     Please tell us what that led to you wanting a new feature.
+     Please provide some background information on your use case for this new feature.
 
      Is your feature request related to a problem? Please give a clear and
      concise description of what the problem is.
