@@ -127,18 +127,14 @@ class _ScaffoldState extends State<Scaffold> {
           (widget.sidebar!.startWidth! <= widget.sidebar!.maxWidth!));
     }
     final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor;
+    late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
     late Color sidebarBackgroundColor;
     Color dividerColor = theme.dividerColor;
 
     if (!theme.brightness.isDark) {
-      backgroundColor =
-          widget.backgroundColor ?? CupertinoColors.systemBackground.color;
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
           CupertinoColors.systemGrey6.color;
     } else {
-      backgroundColor = widget.backgroundColor ??
-          CupertinoColors.systemBackground.darkElevatedColor;
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
           CupertinoColors.tertiarySystemBackground.darkColor;
     }
