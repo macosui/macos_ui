@@ -375,7 +375,8 @@ class MacosThemeData with Diagnosticable {
     properties.add(ColorProperty('primaryColor', primaryColor));
     properties.add(ColorProperty('canvasColor', canvasColor));
     properties.add(ColorProperty('dividerColor', dividerColor));
-    properties.add(DiagnosticsProperty<MacosTypography>('typography', typography));
+    properties
+        .add(DiagnosticsProperty<MacosTypography>('typography', typography));
     properties.add(DiagnosticsProperty<PushButtonThemeData>(
       'pushButtonTheme',
       pushButtonTheme,
