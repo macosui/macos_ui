@@ -1,3 +1,6 @@
+## [0.2.3]
+* Add `canvasColor` to `MacosThemeData`. `Scaffold` now uses this as its default background color.
+
 ## [0.2.2]
 * Add new `MacosColor` and `MacosColors` classes
 * Rename `colors.dart` to `macos_dynamic_color`
