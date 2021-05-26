@@ -1162,7 +1162,9 @@ class _MacosTextFieldState extends State<MacosTextField>
                       CupertinoIcons.clear_thick_circled,
                       size: 18.0,
                       color: MacosDynamicColor.resolve(
-                          _kClearButtonColor, context),
+                        _kClearButtonColor,
+                        context,
+                      ),
                     ),
                   ),
                 ),
