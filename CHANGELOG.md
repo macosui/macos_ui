@@ -3,7 +3,7 @@
   * `TextField` -> `MacosTextField`
   * `Scaffold` -> `MacosTextField`
   * `IconButton` -> `MacosIconButton`
-  * `BackButton -> `MacosBackButton`
+  * `BackButton` -> `MacosBackButton`
   * `Scrollbar` -> `MacosScrollbar`
   * `Checkbox` -> `MacosCheckbox`
   * `RadioButton` -> `MacosRadioButton`
