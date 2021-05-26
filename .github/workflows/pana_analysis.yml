@@ -11,12 +11,11 @@ jobs:
         with:
           channel: stable
 
-      - name: Install dependencies
-        run: flutter pub get
+      #- name: Install dependencies
+      #  run: flutter pub get
 
       - name: Run Code Metrics
-        run: flutter pub run dart_code_metrics:metrics --reporter=github lib
-
+        run: flutter pub global activate dart_code_metrics && flutter pub global run dart_code_metrics:metrics --reporter=github lib
       - uses: actions/checkout@v2
 
       - uses: axel-op/dart-package-analyzer@v3
