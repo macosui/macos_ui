@@ -2,20 +2,29 @@ name: Pana Analysis
 on: [pull_request, workflow_dispatch]
 
 jobs:
-  
   package-analysis:
-    
     runs-on: ubuntu-latest
-    
+
     steps:
+      - name: Install Flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Code Metrics
+        run: flutter pub run dart_code_metrics:metrics --reporter=github lib
+
       - uses: actions/checkout@v2
-      
+
       - uses: axel-op/dart-package-analyzer@v3
         # set an id for the current step
         id: analysis
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      
+
       # You can then use this id to retrieve the outputs in the next steps.
       # The following step shows how to exit the workflow with an error if the total score in percentage is below 50:
       - name: Check scores
@@ -30,7 +39,7 @@ jobs:
             echo Score too low!
             exit 1
           fi
-      
+
       # This step is useful for PR's coming from forks. It takes the raw JSON and formats a report from it.
       - name: Format scores json
         env:
