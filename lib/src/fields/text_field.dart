@@ -95,11 +95,11 @@ enum OverlayVisibilityMode {
 class _TextFieldSelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
   _TextFieldSelectionGestureDetectorBuilder({
-    required _TextFieldState state,
+    required _MacosTextFieldState state,
   })  : _state = state,
         super(delegate: state);
 
-  final _TextFieldState _state;
+  final _MacosTextFieldState _state;
 
   @override
   void onSingleTapUp(TapUpDetails details) {
@@ -183,12 +183,12 @@ class _TextFieldSelectionGestureDetectorBuilder
 /// See also:
 ///
 ///  * <https://developer.apple.com/design/human-interface-guidelines/macos/fields-and-labels/text-fields/>
-///  * [TextField], an alternative text field widget that follows the Material
+///  * [MacosTextField], an alternative text field widget that follows the Material
 ///    Design UI conventions.
 ///  * [EditableText], which is the raw text editing control at the heart of a
 ///    [TextField].
 ///  * Learn how to use a [TextEditingController] in one of our [cookbook recipes](https://flutter.dev/docs/cookbook/forms/text-field-changes#2-use-a-texteditingcontroller).
-class TextField extends StatefulWidget {
+class MacosTextField extends StatefulWidget {
   /// Creates an macos-style text field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with
@@ -225,7 +225,7 @@ class TextField extends StatefulWidget {
   ///  * [expands], to allow the widget to size itself to its parent's height.
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
-  const TextField({
+  const MacosTextField({
     Key? key,
     this.controller,
     this.focusNode,
@@ -360,7 +360,7 @@ class TextField extends StatefulWidget {
   ///  * [expands], to allow the widget to size itself to its parent's height.
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
-  const TextField.borderless({
+  const MacosTextField.borderless({
     Key? key,
     this.controller,
     this.focusNode,
@@ -726,7 +726,7 @@ class TextField extends StatefulWidget {
   final String? restorationId;
 
   @override
-  _TextFieldState createState() => _TextFieldState();
+  _MacosTextFieldState createState() => _MacosTextFieldState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -880,8 +880,8 @@ class TextField extends StatefulWidget {
   }
 }
 
-class _TextFieldState extends State<TextField>
-    with RestorationMixin, AutomaticKeepAliveClientMixin<TextField>
+class _MacosTextFieldState extends State<MacosTextField>
+    with RestorationMixin, AutomaticKeepAliveClientMixin<MacosTextField>
     implements TextSelectionGestureDetectorBuilderDelegate {
   final GlobalKey _clearGlobalKey = GlobalKey();
 
@@ -931,7 +931,7 @@ class _TextFieldState extends State<TextField>
   }
 
   @override
-  void didUpdateWidget(TextField oldWidget) {
+  void didUpdateWidget(MacosTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller == null && oldWidget.controller != null) {
       _createLocalController(oldWidget.controller!.value);

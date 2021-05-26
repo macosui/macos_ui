@@ -1,3 +1,16 @@
+## [0.3.0]
+* Add `MacosPrefix` to widgets/classes with names that overlap with the material/cupertino libraries:
+  * `TextField` -> `MacosTextField`
+  * `Scaffold` -> `MacosTextField`
+  * `IconButton` -> `MacosIconButton`
+  * `BackButton -> `MacosBackButton`
+  * `Scrollbar` -> `MacosScrollbar`
+  * `Checkbox` -> `MacosCheckbox`
+  * `RadioButton` -> `MacosRadioButton`
+  * `Tooltip` -> `MacosTooltip`
+  * `Typography` -> `MacosTypography`
+  * `Switch` -> `MacosSwitch`
+
 ## [0.2.3]
 * Add `canvasColor` to `MacosThemeData`. `Scaffold` now uses this as its default background color.
 

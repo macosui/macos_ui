@@ -10,11 +10,11 @@ import 'package:macos_ui/src/library.dart';
 /// or off (an empty circle).
 ///
 /// ![RadioButton example](https://developer.apple.com/design/human-interface-guidelines/macos/images/radioButtons.png)
-class RadioButton extends StatelessWidget {
+class MacosRadioButton extends StatelessWidget {
   /// Creates a radio button.
   ///
   /// [size] must be non-negative
-  const RadioButton({
+  const MacosRadioButton({
     Key? key,
     required this.value,
     required this.onChanged,
