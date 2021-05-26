@@ -110,13 +110,7 @@ class _DemoState extends State<Demo> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
-                      prefix: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4.0,
-                          vertical: 2.0,
-                        ),
-                        child: Icon(CupertinoIcons.search),
-                      ),
+                      prefix: Icon(CupertinoIcons.search, size: 18),
                       placeholder: 'Type some text here',
 
                       /// If both suffix and clear button mode is provided,
@@ -137,11 +131,7 @@ class _DemoState extends State<Demo> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: TextField.borderless(
-                          prefix: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Icon(CupertinoIcons.search),
-                          ),
+                          prefix: Icon(CupertinoIcons.search, size: 18),
                           placeholder: 'Type some text here',
 
                           /// If both suffix and clear button mode is provided,
