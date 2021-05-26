@@ -481,7 +481,7 @@ class TextField extends StatefulWidget {
   /// or the clear button when [clearButtonMode] is not never.
   ///
   /// Defaults to a padding of 6 pixels on all sides and can be null.
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
 
   /// A lighter colored placeholder hint that appears on the first line of the
   /// text field when the text entry is empty.
@@ -1089,68 +1089,86 @@ class _TextFieldState extends State<TextField>
       valueListenable: _effectiveController,
       child: editableText,
       builder: (BuildContext context, TextEditingValue? text, Widget? child) {
-        return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          // Insert a prefix at the front if the prefix visibility mode matches
-          // the current text state.
-          if (_showPrefixWidget(text!)) widget.prefix!,
-          // In the middle part, stack the placeholder on top of the main EditableText
-          // if needed.
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                if (widget.placeholder != null && text.text.isEmpty)
-                  SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: widget.padding,
-                      child: Text(
-                        widget.placeholder!,
-                        maxLines: widget.maxLines,
-                        overflow: TextOverflow.ellipsis,
-                        style: placeholderStyle,
-                        textAlign: widget.textAlign,
+        return Row(
+          crossAxisAlignment: widget.maxLines == null || widget.maxLines! > 1
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
+          children: [
+            // Insert a prefix at the front if the prefix visibility mode matches
+            // the current text state.
+            if (_showPrefixWidget(text!))
+              Padding(
+                padding: EdgeInsets.only(
+                  top: widget.padding.top,
+                  bottom: widget.padding.bottom,
+                  left: 6.0,
+                  right: 6.0,
+                ),
+                child: widget.prefix!,
+              ),
+            // In the middle part, stack the placeholder on top of the main EditableText
+            // if needed.
+            Expanded(
+              child: Stack(
+                fit: StackFit.passthrough,
+                alignment: Alignment.center,
+                children: <Widget>[
+                  if (widget.placeholder != null && text.text.isEmpty)
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: widget.padding,
+                        child: Text(
+                          widget.placeholder!,
+                          maxLines: widget.maxLines,
+                          overflow: TextOverflow.ellipsis,
+                          style: placeholderStyle,
+                          textAlign: widget.textAlign,
+                        ),
                       ),
                     ),
-                  ),
-                child!,
-              ],
+                  child!,
+                ],
+              ),
             ),
-          ),
-          // First add the explicit suffix if the suffix visibility mode matches.
-          if (_showSuffixWidget(text))
-            widget.suffix!
-          // Otherwise, try to show a clear button if its visibility mode matches.
-          else if (_showClearButton(text))
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                key: _clearGlobalKey,
-                onTap: widget.enabled ?? true
-                    ? () {
-                        // Special handle onChanged for ClearButton
-                        // Also call onChanged when the clear button is tapped.
-                        final bool textChanged =
-                            _effectiveController.text.isNotEmpty;
-                        _effectiveController.clear();
-                        if (widget.onChanged != null && textChanged)
-                          widget.onChanged!(_effectiveController.text);
-                      }
-                    : null,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6.0,
-                    vertical: 4.0,
-                  ),
-                  child: Icon(
-                    CupertinoIcons.clear_thick_circled,
-                    size: 18.0,
-                    color:
-                        MacosDynamicColor.resolve(_kClearButtonColor, context),
+            // First add the explicit suffix if the suffix visibility mode matches.
+            if (_showSuffixWidget(text))
+              widget.suffix!
+            // Otherwise, try to show a clear button if its visibility mode matches.
+            else if (_showClearButton(text))
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  key: _clearGlobalKey,
+                  onTap: widget.enabled ?? true
+                      ? () {
+                          // Special handle onChanged for ClearButton
+                          // Also call onChanged when the clear button is tapped.
+                          final bool textChanged =
+                              _effectiveController.text.isNotEmpty;
+                          _effectiveController.clear();
+                          if (widget.onChanged != null && textChanged)
+                            widget.onChanged!(_effectiveController.text);
+                        }
+                      : null,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 6.0,
+                      right: 6.0,
+                      top: widget.padding.top,
+                      bottom: widget.padding.bottom,
+                    ),
+                    child: Icon(
+                      CupertinoIcons.clear_thick_circled,
+                      size: 18.0,
+                      color: MacosDynamicColor.resolve(
+                          _kClearButtonColor, context),
+                    ),
                   ),
                 ),
               ),
-            ),
-        ]);
+          ],
+        );
       },
     );
   }
@@ -1168,11 +1186,11 @@ class _TextFieldState extends State<TextField>
       case TargetPlatform.iOS:
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
         textSelectionControls ??= cupertinoTextSelectionControls;
         break;
 
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
       case TargetPlatform.macOS:
         textSelectionControls ??= cupertinoDesktopTextSelectionControls;
         break;
