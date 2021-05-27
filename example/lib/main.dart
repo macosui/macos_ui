@@ -67,12 +67,12 @@ class _DemoState extends State<Demo> {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() => pageIndex = 0);
-                  },
+              child: GestureDetector(
+                onTap: () {
+                  setState(() => pageIndex = 0);
+                },
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.square_on_circle),
@@ -90,12 +90,12 @@ class _DemoState extends State<Demo> {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() => pageIndex = 1);
-                  },
+              child: GestureDetector(
+                onTap: () {
+                  setState(() => pageIndex = 1);
+                },
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.arrow_2_circlepath),
@@ -113,12 +113,12 @@ class _DemoState extends State<Demo> {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() => pageIndex = 2);
-                  },
+              child: GestureDetector(
+                onTap: () {
+                  setState(() => pageIndex = 2);
+                },
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.textbox),
