@@ -49,8 +49,8 @@ class _DemoState extends State<Demo> {
 
   final List<Widget> pages = [
     ButtonsPage(),
-    FieldsPage(),
     IndicatorsPage(),
+    FieldsPage(),
   ];
 
   @override
@@ -70,6 +70,9 @@ class _DemoState extends State<Demo> {
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
+                  onTap: () {
+                    setState(() => pageIndex = 0);
+                  },
                   child: Text('Buttons'),
                 ),
               ),
@@ -84,6 +87,9 @@ class _DemoState extends State<Demo> {
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
+                  onTap: () {
+                    setState(() => pageIndex = 1);
+                  },
                   child: Text('Indicators'),
                 ),
               ),
@@ -98,6 +104,9 @@ class _DemoState extends State<Demo> {
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
+                  onTap: () {
+                    setState(() => pageIndex = 2);
+                  },
                   child: Text('Fields'),
                 ),
               ),
@@ -119,105 +128,6 @@ class _DemoState extends State<Demo> {
                 index: pageIndex,
                 children: pages,
               ),
-              // child: Column(
-              //   children: [
-              //     Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         MacosBackButton(
-              //           onPressed: () => print('click'),
-              //           fillColor: Colors.transparent,
-              //         ),
-              //         const SizedBox(width: 16.0),
-              //         MacosBackButton(
-              //           onPressed: () => print('click'),
-              //           //fillColor: Colors.transparent,
-              //         ),
-              //       ],
-              //     ),
-              //     const SizedBox(height: 20),
-              //     MacosIconButton(
-              //       icon: Icon(
-              //         CupertinoIcons.star_fill,
-              //         color: Colors.white,
-              //       ),
-              //       shape: BoxShape.rectangle,
-              //       borderRadius: BorderRadius.circular(7),
-              //       onPressed: () {},
-              //     ),
-              //     const SizedBox(height: 20),
-              //     PushButton(
-              //       buttonSize: ButtonSize.small,
-              //       child: Text('Button'),
-              //       onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
-              //     ),
-              //     SizedBox(height: 20),
-              //     CapacityIndicator(
-              //       value: sliderValue,
-              //       onChanged: (v) => setState(() => sliderValue = v),
-              //       discrete: true,
-              //     ),
-              //     SizedBox(height: 20),
-              //     CapacityIndicator(
-              //       value: sliderValue,
-              //       onChanged: (v) => setState(() => sliderValue = v),
-              //     ),
-              //     SizedBox(height: 20),
-              //     RatingIndicator(
-              //       value: ratingValue,
-              //       onChanged: (v) => setState(() => ratingValue = v),
-              //     ),
-              //     SizedBox(height: 20),
-              //     RelevanceIndicator(value: 10),
-              //     const SizedBox(height: 20),
-              //     Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              //       child: MacosTextField(
-              //         prefix: Padding(
-              //           padding: const EdgeInsets.symmetric(
-              //             horizontal: 4.0,
-              //             vertical: 2.0,
-              //           ),
-              //           child: Icon(CupertinoIcons.search),
-              //         ),
-              //         placeholder: 'Type some text here',
-
-              //         /// If both suffix and clear button mode is provided,
-              //         /// suffix will override the clear button.
-              //         // suffix: Text('SUFFIX'),
-              //         clearButtonMode: OverlayVisibilityMode.always,
-              //         maxLines: null,
-              //       ),
-              //     ),
-              //     const SizedBox(height: 20),
-              //     Label(
-              //       icon: Icon(
-              //         CupertinoIcons.tag,
-              //         color: CupertinoColors.activeBlue,
-              //       ),
-              //       text: SelectableText('A borderless textfield: '),
-              //       child: Expanded(
-              //         child: Padding(
-              //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              //           child: MacosTextField.borderless(
-              //             prefix: Padding(
-              //               padding:
-              //                   const EdgeInsets.symmetric(horizontal: 4.0),
-              //               child: Icon(CupertinoIcons.search),
-              //             ),
-              //             placeholder: 'Type some text here',
-
-              //             /// If both suffix and clear button mode is provided,
-              //             /// suffix will override the clear button.
-              //             suffix: Text('SUFFIX'),
-              //             // clearButtonMode: OverlayVisibilityMode.always,
-              //             maxLines: null,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             );
           },
         ),

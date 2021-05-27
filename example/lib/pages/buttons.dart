@@ -42,6 +42,18 @@ class _ButtonsPageState extends State<ButtonsPage> {
             borderRadius: BorderRadius.circular(7),
             onPressed: () {},
           ),
+          const SizedBox(height: 20),
+          PushButton(
+            buttonSize: ButtonSize.large,
+            child: Text('large PushButton'),
+            onPressed: () {},
+          ),
+          const SizedBox(height: 20),
+          PushButton(
+            buttonSize: ButtonSize.small,
+            child: Text('small PushButton'),
+            onPressed: () {},
+          ),
         ],
       ),
     );
