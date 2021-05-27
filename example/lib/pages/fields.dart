@@ -30,7 +30,7 @@ class _FieldsPageState extends State<FieldsPage> {
               /// suffix will override the clear button.
               // suffix: Text('SUFFIX'),
               clearButtonMode: OverlayVisibilityMode.always,
-              maxLines: null,
+              maxLines: 2,
             ),
           ),
           const SizedBox(height: 20),
