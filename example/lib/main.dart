@@ -73,7 +73,13 @@ class _DemoState extends State<Demo> {
                   onTap: () {
                     setState(() => pageIndex = 0);
                   },
-                  child: Text('Buttons'),
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.square_on_circle),
+                      const SizedBox(width: 8.0),
+                      Text('Buttons'),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -90,7 +96,13 @@ class _DemoState extends State<Demo> {
                   onTap: () {
                     setState(() => pageIndex = 1);
                   },
-                  child: Text('Indicators'),
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.arrow_2_circlepath),
+                      const SizedBox(width: 8.0),
+                      Text('Indicators'),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -107,7 +119,13 @@ class _DemoState extends State<Demo> {
                   onTap: () {
                     setState(() => pageIndex = 2);
                   },
-                  child: Text('Fields'),
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.textbox),
+                      const SizedBox(width: 8.0),
+                      Text('Fields'),
+                    ],
+                  ),
                 ),
               ),
             ),
