@@ -14,23 +14,23 @@ class SidebarItem extends StatefulWidget {
     this.semanticsLabel,
   }) : super(key: key);
 
-  /// The widget to lay out first. 
-  /// 
+  /// The widget to lay out first.
+  ///
   /// Typically an [Icon] widget.
   final Widget? leading;
 
   /// Indicates what content this widget represents.
-  /// 
+  ///
   /// Typically a [Text] widget.
   final Widget label;
 
   /// A function to perform when the widget is clicked or tapped.
-  /// 
+  ///
   /// Typically a [Navigator] call
   final VoidCallback? onClick;
 
   /// The color to paint this widget as when focused.
-  /// 
+  ///
   /// Defaults to [CupertinoColors.systemBlue].
   final Color focusColor;
 
