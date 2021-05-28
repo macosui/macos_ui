@@ -68,81 +68,27 @@ class _DemoState extends State<Demo> {
       ),
       sidebar: Sidebar(
         minWidth: 200,
-        builder: (context, _) => ListView(
-          physics: ClampingScrollPhysics(),
-          padding: const EdgeInsets.all(16.0),
-          children: [
-            SidebarItem(
-              focusColor: pageIndex == 0
-                  ? CupertinoColors.systemBlue
-                  : Color(0x00000000),
-              leading: Icon(
-                CupertinoIcons.square_on_circle,
-                size: 20,
-                color: pageIndex == 0
-                    ? MacosColors.white
-                    : CupertinoColors.systemBlue,
+        builder: (context, controller) {
+          return SidebarItems(
+            currentIndex: pageIndex,
+            onChanged: (i) => setState(() => pageIndex = i),
+            scrollController: controller,
+            items: [
+              SidebarItem(
+                leading: Icon(CupertinoIcons.square_on_circle),
+                label: Text('Buttons'),
               ),
-              label: Text(
-                'Buttons',
-                style: TextStyle(
-                  color: pageIndex == 0
-                      ? textLuminance(CupertinoColors.systemBlue)
-                      : textLuminance(MacosTheme.of(context).canvasColor),
-                ),
+              SidebarItem(
+                leading: Icon(CupertinoIcons.arrow_2_circlepath),
+                label: Text('Indicators'),
               ),
-              onClick: () {
-                setState(() => pageIndex = 0);
-              },
-            ),
-            SidebarItem(
-              focusColor: pageIndex == 1
-                  ? CupertinoColors.systemBlue
-                  : Color(0x00000000),
-              leading: Icon(
-                CupertinoIcons.arrow_2_circlepath,
-                size: 20,
-                color: pageIndex == 1
-                    ? MacosColors.white
-                    : CupertinoColors.systemBlue,
+              SidebarItem(
+                leading: Icon(CupertinoIcons.textbox),
+                label: Text('Fields'),
               ),
-              label: Text(
-                'Indicators',
-                style: TextStyle(
-                  color: pageIndex == 1
-                      ? textLuminance(CupertinoColors.systemBlue)
-                      : textLuminance(MacosTheme.of(context).canvasColor),
-                ),
-              ),
-              onClick: () {
-                setState(() => pageIndex = 1);
-              },
-            ),
-            SidebarItem(
-              focusColor: pageIndex == 2
-                  ? CupertinoColors.systemBlue
-                  : Color(0x00000000),
-              leading: Icon(
-                CupertinoIcons.textbox,
-                size: 20,
-                color: pageIndex == 2
-                    ? MacosColors.white
-                    : CupertinoColors.systemBlue,
-              ),
-              label: Text(
-                'Fields',
-                style: TextStyle(
-                  color: pageIndex == 2
-                      ? textLuminance(CupertinoColors.systemBlue)
-                      : textLuminance(MacosTheme.of(context).canvasColor),
-                ),
-              ),
-              onClick: () {
-                setState(() => pageIndex = 2);
-              },
-            ),
-          ],
-        ),
+            ],
+          );
+        }
       ),
       children: <Widget>[
         ContentArea(
