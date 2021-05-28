@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
 
@@ -13,6 +14,11 @@ class SidebarItem with Diagnosticable {
     this.unselectedColor = const Color(0x00000000),
     this.shape = const RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
+    ),
+    this.selectedHoverColor,
+    this.unselectedHoverColor = const CupertinoDynamicColor.withBrightness(
+      color: Color(0x1A000000),
+      darkColor: Color(0x42FFFFFF),
     ),
     this.semanticLabel,
   });
@@ -29,13 +35,23 @@ class SidebarItem with Diagnosticable {
 
   /// The color to paint this widget as when selected.
   ///
-  /// Defaults to [CupertinoColors.systemBlue].
-  final Color selectedColor;
+  /// If null, [MacosThemeData.primaryColor] is used.
+  final Color? selectedColor;
 
   /// The color to paint this widget as when unselected.
   ///
   /// Defaults to transparent.
   final Color unselectedColor;
+
+  /// The color to paint this widget as when hovering and selected.
+  ///
+  /// If null, [MacosThemeData.primaryColor] with some opacity applied is used.
+  final Color? selectedHoverColor;
+
+  /// The color to paint this widget as when hovering and unselected.
+  ///
+  /// If null, black with 0.52 of opacity is used
+  final Color unselectedHoverColor;
 
   /// The [shape] property specifies the outline (border) of the
   /// decoration. The shape must not be null. It's used alonside
@@ -107,7 +123,7 @@ class SidebarItems extends StatelessWidget {
 }
 
 /// A macOS style navigation-list item intended for use in a [Sidebar]
-class _SidebarItem extends StatelessWidget {
+class _SidebarItem extends StatefulWidget {
   /// Builds a [_SidebarItem].
   const _SidebarItem({
     Key? key,
@@ -129,7 +145,15 @@ class _SidebarItem extends StatelessWidget {
   /// Typically a [Navigator] call
   final VoidCallback? onClick;
 
-  bool get hasLeading => item.leading != null;
+  @override
+  __SidebarItemState createState() => __SidebarItemState();
+}
+
+class __SidebarItemState extends State<_SidebarItem> {
+  bool get hasLeading => widget.item.leading != null;
+
+  bool _hovering = false;
+  bool _focused = false;
 
   @override
   Widget build(BuildContext context) {
@@ -139,19 +163,40 @@ class _SidebarItem extends StatelessWidget {
           : MacosColors.white;
     }
 
+    assert(debugCheckHasMacosTheme(context));
+
+    final theme = MacosTheme.of(context);
+
+    final selectedColor = MacosDynamicColor.resolve(
+      _hovering || _focused
+          ? widget.item.selectedHoverColor ??
+              theme.primaryColor.withOpacity(0.54)
+          : widget.item.selectedColor ?? theme.primaryColor,
+      context,
+    );
+    final unselectedColor = MacosDynamicColor.resolve(
+      _hovering || _focused
+          ? widget.item.unselectedHoverColor
+          : widget.item.unselectedColor,
+      context,
+    );
+
     return Semantics(
-      label: item.semanticLabel,
+      label: widget.item.semanticLabel,
       button: true,
+      focusable: true,
       child: GestureDetector(
-        onTap: onClick,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
+        onTap: widget.onClick,
+        child: FocusableActionDetector(
+          mouseCursor: SystemMouseCursors.click,
+          onShowHoverHighlight: (v) => setState(() => _hovering = v),
+          onShowFocusHighlight: (v) => setState(() => _focused = v),
           child: Container(
             width: 134.0,
             height: 38.0,
             decoration: ShapeDecoration(
-              color: selected ? item.selectedColor : item.unselectedColor,
-              shape: item.shape,
+              color: widget.selected ? selectedColor : unselectedColor,
+              shape: widget.item.shape,
             ),
             child: Row(children: [
               const SizedBox(width: 8.0),
@@ -161,16 +206,18 @@ class _SidebarItem extends StatelessWidget {
                   child: IconTheme.merge(
                     data: IconThemeData(
                       size: 20,
-                      color: selected
+                      color: widget.selected
                           ? MacosColors.white
                           : CupertinoColors.systemBlue,
                     ),
-                    child: item.leading!,
+                    child: widget.item.leading!,
                   ),
                 ),
               DefaultTextStyle(
-                style: TextStyle(color: textLuminance(item.selectedColor)),
-                child: item.label,
+                style: theme.typography.title3.copyWith(
+                  color: widget.selected ? textLuminance(selectedColor) : null,
+                ),
+                child: widget.item.label,
               ),
             ]),
           ),
