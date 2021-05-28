@@ -54,10 +54,10 @@ class _SidebarItemState extends State<SidebarItem> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      label: widget.semanticsLabel,
+      button: true,
       child: GestureDetector(
-        onTap: () {
-          widget.onClick!();
-        },
+        onTap: widget.onClick,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Container(

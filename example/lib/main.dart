@@ -47,10 +47,6 @@ class _DemoState extends State<Demo> {
 
   int pageIndex = 0;
 
-  final buttonsFocus = FocusNode();
-  final indicatorsFocus = FocusNode();
-  final fieldsFocus = FocusNode();
-
   final List<Widget> pages = [
     ButtonsPage(),
     IndicatorsPage(),
@@ -72,81 +68,79 @@ class _DemoState extends State<Demo> {
       ),
       sidebar: Sidebar(
         minWidth: 200,
-        builder: (context, _) => FocusScope(
-          child: ListView(
-            padding: const EdgeInsets.all(16.0),
-            children: [
-              SidebarItem(
-                focusColor: pageIndex == 0
-                    ? CupertinoColors.systemBlue
-                    : Color(0x00000000),
-                leading: Icon(
-                  CupertinoIcons.square_on_circle,
-                  size: 20,
+        builder: (context, _) => ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
+            SidebarItem(
+              focusColor: pageIndex == 0
+                  ? CupertinoColors.systemBlue
+                  : Color(0x00000000),
+              leading: Icon(
+                CupertinoIcons.square_on_circle,
+                size: 20,
+                color: pageIndex == 0
+                    ? MacosColors.white
+                    : CupertinoColors.systemBlue,
+              ),
+              label: Text(
+                'Buttons',
+                style: TextStyle(
                   color: pageIndex == 0
-                      ? MacosColors.white
-                      : CupertinoColors.systemBlue,
+                      ? textLuminance(CupertinoColors.systemBlue)
+                      : textLuminance(MacosTheme.of(context).canvasColor),
                 ),
-                label: Text(
-                  'Buttons',
-                  style: TextStyle(
-                    color: pageIndex == 0
-                        ? textLuminance(CupertinoColors.systemBlue)
-                        : textLuminance(MacosTheme.of(context).canvasColor),
-                  ),
-                ),
-                onClick: () {
-                  setState(() => pageIndex = 0);
-                },
               ),
-              SidebarItem(
-                focusColor: pageIndex == 1
-                    ? CupertinoColors.systemBlue
-                    : Color(0x00000000),
-                leading: Icon(
-                  CupertinoIcons.arrow_2_circlepath,
-                  size: 20,
+              onClick: () {
+                setState(() => pageIndex = 0);
+              },
+            ),
+            SidebarItem(
+              focusColor: pageIndex == 1
+                  ? CupertinoColors.systemBlue
+                  : Color(0x00000000),
+              leading: Icon(
+                CupertinoIcons.arrow_2_circlepath,
+                size: 20,
+                color: pageIndex == 1
+                    ? MacosColors.white
+                    : CupertinoColors.systemBlue,
+              ),
+              label: Text(
+                'Indicators',
+                style: TextStyle(
                   color: pageIndex == 1
-                      ? MacosColors.white
-                      : CupertinoColors.systemBlue,
+                      ? textLuminance(CupertinoColors.systemBlue)
+                      : textLuminance(MacosTheme.of(context).canvasColor),
                 ),
-                label: Text(
-                  'Indicators',
-                  style: TextStyle(
-                    color: pageIndex == 1
-                        ? textLuminance(CupertinoColors.systemBlue)
-                        : textLuminance(MacosTheme.of(context).canvasColor),
-                  ),
-                ),
-                onClick: () {
-                  setState(() => pageIndex = 1);
-                },
               ),
-              SidebarItem(
-                focusColor: pageIndex == 2
-                    ? CupertinoColors.systemBlue
-                    : Color(0x00000000),
-                leading: Icon(
-                  CupertinoIcons.textbox,
-                  size: 20,
+              onClick: () {
+                setState(() => pageIndex = 1);
+              },
+            ),
+            SidebarItem(
+              focusColor: pageIndex == 2
+                  ? CupertinoColors.systemBlue
+                  : Color(0x00000000),
+              leading: Icon(
+                CupertinoIcons.textbox,
+                size: 20,
+                color: pageIndex == 2
+                    ? MacosColors.white
+                    : CupertinoColors.systemBlue,
+              ),
+              label: Text(
+                'Fields',
+                style: TextStyle(
                   color: pageIndex == 2
-                      ? MacosColors.white
-                      : CupertinoColors.systemBlue,
+                      ? textLuminance(CupertinoColors.systemBlue)
+                      : textLuminance(MacosTheme.of(context).canvasColor),
                 ),
-                label: Text(
-                  'Fields',
-                  style: TextStyle(
-                    color: pageIndex == 2
-                        ? textLuminance(CupertinoColors.systemBlue)
-                        : textLuminance(MacosTheme.of(context).canvasColor),
-                  ),
-                ),
-                onClick: () {
-                  setState(() => pageIndex = 2);
-                },
               ),
-            ],
-          ),
+              onClick: () {
+                setState(() => pageIndex = 2);
+              },
+            ),
+          ],
         ),
       ),
       children: <Widget>[
