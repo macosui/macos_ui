@@ -57,6 +57,12 @@ class _DemoState extends State<Demo> {
     FieldsPage(),
   ];
 
+  Color textLuminance(Color backgroundColor) {
+    return backgroundColor.computeLuminance() > 0.5
+        ? Colors.black
+        : Colors.white;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
@@ -77,8 +83,18 @@ class _DemoState extends State<Demo> {
                 leading: Icon(
                   CupertinoIcons.square_on_circle,
                   size: 20,
+                  color: pageIndex == 0
+                      ? MacosColors.white
+                      : CupertinoColors.systemBlue,
                 ),
-                label: Text('Buttons'),
+                label: Text(
+                  'Buttons',
+                  style: TextStyle(
+                    color: pageIndex == 0
+                        ? textLuminance(CupertinoColors.systemBlue)
+                        : textLuminance(MacosTheme.of(context).canvasColor),
+                  ),
+                ),
                 onClick: () {
                   setState(() => pageIndex = 0);
                 },
@@ -90,8 +106,18 @@ class _DemoState extends State<Demo> {
                 leading: Icon(
                   CupertinoIcons.arrow_2_circlepath,
                   size: 20,
+                  color: pageIndex == 1
+                      ? MacosColors.white
+                      : CupertinoColors.systemBlue,
                 ),
-                label: Text('Indicators'),
+                label: Text(
+                  'Indicators',
+                  style: TextStyle(
+                    color: pageIndex == 1
+                        ? textLuminance(CupertinoColors.systemBlue)
+                        : textLuminance(MacosTheme.of(context).canvasColor),
+                  ),
+                ),
                 onClick: () {
                   setState(() => pageIndex = 1);
                 },
@@ -103,8 +129,18 @@ class _DemoState extends State<Demo> {
                 leading: Icon(
                   CupertinoIcons.textbox,
                   size: 20,
+                  color: pageIndex == 2
+                      ? MacosColors.white
+                      : CupertinoColors.systemBlue,
                 ),
-                label: Text('Fields'),
+                label: Text(
+                  'Fields',
+                  style: TextStyle(
+                    color: pageIndex == 2
+                        ? textLuminance(CupertinoColors.systemBlue)
+                        : textLuminance(MacosTheme.of(context).canvasColor),
+                  ),
+                ),
                 onClick: () {
                   setState(() => pageIndex = 2);
                 },
