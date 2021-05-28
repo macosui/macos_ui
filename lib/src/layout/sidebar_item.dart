@@ -181,6 +181,8 @@ class __SidebarItemState extends State<_SidebarItem> {
       context,
     );
 
+    final double spacing = 10.0 + theme.visualDensity.horizontal;
+
     return Semantics(
       label: widget.item.semanticLabel,
       button: true,
@@ -192,17 +194,20 @@ class __SidebarItemState extends State<_SidebarItem> {
           onShowHoverHighlight: (v) => setState(() => _hovering = v),
           onShowFocusHighlight: (v) => setState(() => _focused = v),
           child: Container(
-            width: 134.0,
-            height: 38.0,
+            width: 134.0 + theme.visualDensity.horizontal,
+            height: 38.0 + theme.visualDensity.vertical,
             decoration: ShapeDecoration(
               color: widget.selected ? selectedColor : unselectedColor,
               shape: widget.item.shape,
             ),
+            padding: EdgeInsets.symmetric(
+              vertical: spacing,
+              horizontal: spacing - 1,
+            ),
             child: Row(children: [
-              const SizedBox(width: 8.0),
               if (hasLeading)
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: EdgeInsets.only(right: spacing),
                   child: IconTheme.merge(
                     data: IconThemeData(
                       size: 20,
