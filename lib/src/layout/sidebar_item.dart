@@ -5,12 +5,17 @@ import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
 
 /// A macOS style navigation-list item intended for use in a [Sidebar]
+///
+/// See also:
+///
+///  * [Sidebar], a side bar used alongside [MacosScaffold]
+///  * [SidebarItems], the widget that displays [SidebarItem]s vertically
 class SidebarItem with Diagnosticable {
   /// Creates a sidebar item.
   const SidebarItem({
     this.leading,
     required this.label,
-    this.selectedColor = CupertinoColors.systemBlue,
+    this.selectedColor,
     this.unselectedColor = const Color(0x00000000),
     this.shape = const RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
@@ -20,6 +25,7 @@ class SidebarItem with Diagnosticable {
       color: Color(0x1A000000),
       darkColor: Color(0x42FFFFFF),
     ),
+    this.focusNode,
     this.semanticLabel,
   });
 
@@ -58,6 +64,9 @@ class SidebarItem with Diagnosticable {
   /// [selectedColor].
   final ShapeBorder shape;
 
+  /// The focus node used by this item.
+  final FocusNode? focusNode;
+
   /// The semantic label used by screen readers.
   final String? semanticLabel;
 
@@ -68,6 +77,7 @@ class SidebarItem with Diagnosticable {
     properties.add(ColorProperty('unselectedColor', unselectedColor));
     properties.add(StringProperty('semanticLabel', semanticLabel));
     properties.add(DiagnosticsProperty<ShapeBorder>('shape', shape));
+    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode));
   }
 }
 
@@ -106,10 +116,12 @@ class SidebarItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return SizedBox.shrink();
+    assert(debugCheckHasMacosTheme(context));
+    final theme = MacosTheme.of(context);
     return ListView(
       controller: scrollController,
-      physics: ClampingScrollPhysics(),
-      padding: const EdgeInsets.all(16.0),
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
       children: List.generate(items.length, (index) {
         final item = items[index];
         return _SidebarItem(
@@ -150,10 +162,28 @@ class _SidebarItem extends StatefulWidget {
 }
 
 class __SidebarItemState extends State<_SidebarItem> {
+  late Map<Type, Action<Intent>> _actionMap;
+
+  @override
+  void initState() {
+    super.initState();
+    void _handleActionTap() async {
+      widget.onClick?.call();
+    }
+
+    _actionMap = <Type, Action<Intent>>{
+      ActivateIntent: CallbackAction<ActivateIntent>(
+        onInvoke: (ActivateIntent intent) => _handleActionTap(),
+      ),
+      ButtonActivateIntent: CallbackAction<ButtonActivateIntent>(
+        onInvoke: (ButtonActivateIntent intent) => _handleActionTap(),
+      ),
+    };
+  }
+
   bool get hasLeading => widget.item.leading != null;
 
   bool _hovering = false;
-  bool _focused = false;
 
   @override
   Widget build(BuildContext context) {
@@ -164,18 +194,17 @@ class __SidebarItemState extends State<_SidebarItem> {
     }
 
     assert(debugCheckHasMacosTheme(context));
-
     final theme = MacosTheme.of(context);
 
     final selectedColor = MacosDynamicColor.resolve(
-      _hovering || _focused
+      _hovering
           ? widget.item.selectedHoverColor ??
               theme.primaryColor.withOpacity(0.54)
           : widget.item.selectedColor ?? theme.primaryColor,
       context,
     );
     final unselectedColor = MacosDynamicColor.resolve(
-      _hovering || _focused
+      _hovering
           ? widget.item.unselectedHoverColor
           : widget.item.unselectedColor,
       context,
@@ -187,12 +216,18 @@ class __SidebarItemState extends State<_SidebarItem> {
       label: widget.item.semanticLabel,
       button: true,
       focusable: true,
+      focused: widget.item.focusNode?.hasFocus,
+      enabled: widget.onClick != null,
+      selected: widget.selected,
       child: GestureDetector(
         onTap: widget.onClick,
         child: FocusableActionDetector(
+          focusNode: widget.item.focusNode,
+          descendantsAreFocusable: false,
+          enabled: widget.onClick != null,
           mouseCursor: SystemMouseCursors.click,
           onShowHoverHighlight: (v) => setState(() => _hovering = v),
-          onShowFocusHighlight: (v) => setState(() => _focused = v),
+          actions: _actionMap,
           child: Container(
             width: 134.0 + theme.visualDensity.horizontal,
             height: 38.0 + theme.visualDensity.vertical,
@@ -201,8 +236,8 @@ class __SidebarItemState extends State<_SidebarItem> {
               shape: widget.item.shape,
             ),
             padding: EdgeInsets.symmetric(
-              vertical: spacing,
-              horizontal: spacing - 1,
+              vertical: 7 + theme.visualDensity.horizontal,
+              horizontal: spacing,
             ),
             child: Row(children: [
               if (hasLeading)
