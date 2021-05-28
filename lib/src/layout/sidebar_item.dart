@@ -1,27 +1,49 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/src/library.dart';
 
+///
 class SidebarItem extends StatefulWidget {
+  ///
   const SidebarItem({
     Key? key,
     required this.leading,
     required this.label,
     required this.onClick,
     this.focusColor = CupertinoColors.systemBlue,
-    this.focusNode,
-    this.autofocus,
+    required this.focusNode,
+    this.autofocus = false,
+    this.semanticsLabel,
   }) : super(key: key);
 
+  ///
   final Widget? leading;
+
+  ///
   final Widget label;
+
+  ///
   final VoidCallback? onClick;
+
+  ///
   final Color focusColor;
 
   /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? focusNode;
+  final FocusNode focusNode;
 
   /// {@macro flutter.widgets.Focus.autofocus}
-  final bool? autofocus;
+  final bool autofocus;
+
+  /// The semantic label used by screen readers.
+  final String? semanticsLabel;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ColorProperty('focusColor', focusColor));
+    properties.add(DiagnosticsProperty('autoFocus', autofocus));
+    properties.add(StringProperty('semanticLabel', semanticsLabel));
+  }
 
   @override
   _SidebarItemState createState() => _SidebarItemState();
@@ -56,7 +78,6 @@ class _SidebarItemState extends State<SidebarItem> {
   }
 
   void _handleFocusHighlight(bool value) {
-    print(value);
     setState(() => _focused = value);
   }
 
@@ -66,13 +87,15 @@ class _SidebarItemState extends State<SidebarItem> {
       child: GestureDetector(
         onTap: () {
           widget.onClick!();
+          widget.focusNode.requestFocus();
         },
         child: FocusableActionDetector(
           actions: _actionMap,
           onShowFocusHighlight: _handleFocusHighlight,
           onFocusChange: (value) {
-            print(value);
+            _toggleState();
           },
+          autofocus: widget.autofocus,
           descendantsAreFocusable: false,
           focusNode: widget.focusNode,
           child: MouseRegion(

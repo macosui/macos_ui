@@ -82,7 +82,7 @@ class _DemoState extends State<Demo> {
               },
             ),
             SidebarItem(
-              focusNode: fieldsFocus,
+              focusNode: indicatorsFocus,
               leading: Icon(
                 CupertinoIcons.arrow_2_circlepath,
                 size: 20,
