@@ -66,44 +66,51 @@ class _DemoState extends State<Demo> {
       ),
       sidebar: Sidebar(
         minWidth: 200,
-        builder: (context, _) => ListView(
-          padding: const EdgeInsets.all(16.0),
-          children: [
-            SidebarItem(
-              focusNode: buttonsFocus,
-              autofocus: true,
-              leading: Icon(
-                CupertinoIcons.square_on_circle,
-                size: 20,
+        builder: (context, _) => FocusScope(
+          child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              SidebarItem(
+                focusColor: pageIndex == 0
+                    ? CupertinoColors.systemBlue
+                    : Color(0x00000000),
+                leading: Icon(
+                  CupertinoIcons.square_on_circle,
+                  size: 20,
+                ),
+                label: Text('Buttons'),
+                onClick: () {
+                  setState(() => pageIndex = 0);
+                },
               ),
-              label: Text('Buttons'),
-              onClick: () {
-                setState(() => pageIndex = 0);
-              },
-            ),
-            SidebarItem(
-              focusNode: indicatorsFocus,
-              leading: Icon(
-                CupertinoIcons.arrow_2_circlepath,
-                size: 20,
+              SidebarItem(
+                focusColor: pageIndex == 1
+                    ? CupertinoColors.systemBlue
+                    : Color(0x00000000),
+                leading: Icon(
+                  CupertinoIcons.arrow_2_circlepath,
+                  size: 20,
+                ),
+                label: Text('Indicators'),
+                onClick: () {
+                  setState(() => pageIndex = 1);
+                },
               ),
-              label: Text('Indicators'),
-              onClick: () {
-                setState(() => pageIndex = 1);
-              },
-            ),
-            SidebarItem(
-              focusNode: fieldsFocus,
-              leading: Icon(
-                CupertinoIcons.textbox,
-                size: 20,
+              SidebarItem(
+                focusColor: pageIndex == 2
+                    ? CupertinoColors.systemBlue
+                    : Color(0x00000000),
+                leading: Icon(
+                  CupertinoIcons.textbox,
+                  size: 20,
+                ),
+                label: Text('Fields'),
+                onClick: () {
+                  setState(() => pageIndex = 2);
+                },
               ),
-              label: Text('Fields'),
-              onClick: () {
-                setState(() => pageIndex = 2);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       children: <Widget>[
