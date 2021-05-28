@@ -29,6 +29,7 @@ export 'src/layout/content_area.dart';
 export 'src/layout/resizable_pane.dart';
 export 'src/layout/scaffold.dart';
 export 'src/layout/sidebar.dart';
+export 'src/layout/sidebar_item.dart';
 export 'src/layout/title_bar.dart';
 export 'src/macos_app.dart';
 export 'src/theme/macos_colors.dart';

@@ -47,6 +47,10 @@ class _DemoState extends State<Demo> {
 
   int pageIndex = 0;
 
+  final buttonsFocus = FocusNode();
+  final indicatorsFocus = FocusNode();
+  final fieldsFocus = FocusNode();
+
   final List<Widget> pages = [
     ButtonsPage(),
     IndicatorsPage(),
@@ -63,75 +67,41 @@ class _DemoState extends State<Demo> {
       sidebar: Sidebar(
         minWidth: 200,
         builder: (context, _) => ListView(
+          padding: const EdgeInsets.all(16.0),
           children: [
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() => pageIndex = 0);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.square_on_circle),
-                      const SizedBox(width: 8.0),
-                      Text('Buttons'),
-                    ],
-                  ),
-                ),
+            SidebarItem(
+              focusNode: buttonsFocus,
+              autofocus: true,
+              leading: Icon(
+                CupertinoIcons.square_on_circle,
+                size: 20,
               ),
+              label: Text('Buttons'),
+              onClick: () {
+                setState(() => pageIndex = 0);
+              },
             ),
-            Divider(
-              height: 0,
-              color: MacosTheme.of(context).dividerColor,
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() => pageIndex = 1);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.arrow_2_circlepath),
-                      const SizedBox(width: 8.0),
-                      Text('Indicators'),
-                    ],
-                  ),
-                ),
+            SidebarItem(
+              focusNode: fieldsFocus,
+              leading: Icon(
+                CupertinoIcons.arrow_2_circlepath,
+                size: 20,
               ),
+              label: Text('Indicators'),
+              onClick: () {
+                setState(() => pageIndex = 1);
+              },
             ),
-            Divider(
-              height: 0,
-              color: MacosTheme.of(context).dividerColor,
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() => pageIndex = 2);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.textbox),
-                      const SizedBox(width: 8.0),
-                      Text('Fields'),
-                    ],
-                  ),
-                ),
+            SidebarItem(
+              focusNode: fieldsFocus,
+              leading: Icon(
+                CupertinoIcons.textbox,
+                size: 20,
               ),
-            ),
-            Divider(
-              height: 0,
-              color: MacosTheme.of(context).dividerColor,
+              label: Text('Fields'),
+              onClick: () {
+                setState(() => pageIndex = 2);
+              },
             ),
           ],
         ),
