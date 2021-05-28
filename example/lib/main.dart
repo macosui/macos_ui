@@ -69,6 +69,7 @@ class _DemoState extends State<Demo> {
       sidebar: Sidebar(
         minWidth: 200,
         builder: (context, _) => ListView(
+          physics: ClampingScrollPhysics(),
           padding: const EdgeInsets.all(16.0),
           children: [
             SidebarItem(
