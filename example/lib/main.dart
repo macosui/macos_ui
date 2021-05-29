@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          theme: MacosThemeData.light(),
+          theme: MacosThemeData.light().copyWith(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
           darkTheme: MacosThemeData.dark().copyWith(
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
@@ -51,6 +53,10 @@ class _DemoState extends State<Demo> {
     ButtonsPage(),
     IndicatorsPage(),
     FieldsPage(),
+    Text('Disclosure item 1'),
+    Text('Disclosure item 2'),
+    Text('Disclosure item 3'),
+    Text('Item after disclosure'),
   ];
 
   Color textLuminance(Color backgroundColor) {
@@ -86,9 +92,26 @@ class _DemoState extends State<Demo> {
                 leading: Icon(CupertinoIcons.textbox),
                 label: Text('Fields'),
               ),
+              SidebarItem(
+                label: Text('Disclosure'),
+                disclosureItems: [
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.infinite),
+                    label: Text('Item 1'),
+                  ),
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.heart),
+                    label: Text('Item 2'),
+                  ),
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.infinite),
+                    label: Text('Item 3'),
+                  ),
+                ],
+              ),
             ],
           );
-        }
+        },
       ),
       children: <Widget>[
         ContentArea(
