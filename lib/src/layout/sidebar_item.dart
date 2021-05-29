@@ -6,6 +6,14 @@ import 'package:macos_ui/src/theme/macos_colors.dart';
 
 const Color _transparent = const Color(0x00000000);
 const Duration _kExpand = Duration(milliseconds: 200);
+const ShapeBorder _defaultShape = const RoundedRectangleBorder(
+  borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
+);
+const CupertinoDynamicColor _defaultDisclosureColor =
+    const CupertinoDynamicColor.withBrightness(
+  color: Color(0x1A000000),
+  darkColor: Color(0x42FFFFFF),
+);
 
 Color _textLuminance(Color backgroundColor) {
   return backgroundColor.computeLuminance() < 0.5
@@ -25,20 +33,15 @@ class SidebarItem with Diagnosticable {
     this.leading,
     required this.label,
     this.selectedColor,
-    this.unselectedColor = _transparent,
-    this.disclosureColor = const CupertinoDynamicColor.withBrightness(
-      color: Color(0x1A000000),
-      darkColor: Color(0x42FFFFFF),
-    ),
-    this.shape = const RoundedRectangleBorder(
-      borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
-    ),
+    this.unselectedColor,
+    this.disclosureColor,
+    this.shape,
     this.focusNode,
     this.semanticLabel,
     this.disclosureItems,
   });
 
-  /// The widget to lay out first.
+  /// The widget before [label].
   ///
   /// Typically an [Icon]
   final Widget? leading;
@@ -56,9 +59,9 @@ class SidebarItem with Diagnosticable {
   /// The color to paint this widget as when unselected.
   ///
   /// Defaults to transparent.
-  final Color unselectedColor;
+  final Color? unselectedColor;
 
-  /// The color to paint this widget as when hovering and selected.
+  /// The color to paint this item if [disclosureItem] is not null.
   ///
   /// If null, [MacosThemeData.primaryColor] with some opacity applied is used.
   final Color? disclosureColor;
@@ -66,7 +69,7 @@ class SidebarItem with Diagnosticable {
   /// The [shape] property specifies the outline (border) of the
   /// decoration. The shape must not be null. It's used alonside
   /// [selectedColor].
-  final ShapeBorder shape;
+  final ShapeBorder? shape;
 
   /// The focus node used by this item.
   final FocusNode? focusNode;
@@ -108,6 +111,10 @@ class SidebarItems extends StatelessWidget {
     required this.onChanged,
     required this.items,
     this.scrollController,
+    this.selectedColor,
+    this.unselectedColor,
+    this.disclosureColor,
+    this.shape,
   })  : assert(currentIndex >= 0),
         super(key: key);
 
@@ -125,6 +132,24 @@ class SidebarItems extends StatelessWidget {
   /// The scroll controller used by this sidebar. If null, a local scroll
   /// controller is created.
   final ScrollController? scrollController;
+
+  /// The color to paint the item iwhen it's selected.
+  ///
+  /// If null, [MacosThemeData.primaryColor] is used.
+  final Color? selectedColor;
+
+  /// The color to paint the item when it's unselected.
+  ///
+  /// Defaults to transparent.
+  final Color? unselectedColor;
+
+  /// The color to paint the disclosure item.
+  final Color? disclosureColor;
+
+  /// The [shape] property specifies the outline (border) of the
+  /// decoration. The shape must not be null. It's used alonside
+  /// [selectedColor].
+  final ShapeBorder? shape;
 
   List<SidebarItem> get _allItems {
     List<SidebarItem> result = [];
@@ -146,29 +171,63 @@ class SidebarItems extends StatelessWidget {
     final theme = MacosTheme.of(context);
     return IconTheme.merge(
       data: const IconThemeData(size: 20),
-      child: ListView(
-        controller: scrollController,
-        physics: const ClampingScrollPhysics(),
-        padding: EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
-        children: List.generate(items.length, (index) {
-          final item = items[index];
-          if (item.disclosureItems != null) {
-            return _DisclosureSidebarItem(
+      child: _SidebarItemsConfiguration(
+        selectedColor: selectedColor ?? theme.primaryColor,
+        unselectedColor: unselectedColor ?? _transparent,
+        disclosureColor: disclosureColor ?? _defaultDisclosureColor,
+        shape: shape ?? _defaultShape,
+        child: ListView(
+          controller: scrollController,
+          physics: const ClampingScrollPhysics(),
+          padding: EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
+          children: List.generate(items.length, (index) {
+            final item = items[index];
+            if (item.disclosureItems != null) {
+              return _DisclosureSidebarItem(
+                item: item,
+                selectedItem: _allItems[currentIndex],
+                onChanged: (item) {
+                  onChanged(_allItems.indexOf(item));
+                },
+              );
+            }
+            return _SidebarItem(
               item: item,
-              selectedItem: _allItems[currentIndex],
-              onChanged: (item) {
-                onChanged(_allItems.indexOf(item));
-              },
+              selected: _allItems[currentIndex] == item,
+              onClick: () => onChanged(_allItems.indexOf(item)),
             );
-          }
-          return _SidebarItem(
-            item: item,
-            selected: _allItems[currentIndex] == item,
-            onClick: () => onChanged(_allItems.indexOf(item)),
-          );
-        }),
+          }),
+        ),
       ),
     );
+  }
+}
+
+class _SidebarItemsConfiguration extends InheritedWidget {
+  const _SidebarItemsConfiguration({
+    Key? key,
+    required this.child,
+    this.selectedColor = _transparent,
+    this.unselectedColor = _transparent,
+    this.disclosureColor = _defaultDisclosureColor,
+    this.shape = _defaultShape,
+  }) : super(key: key, child: child);
+
+  final Widget child;
+
+  final Color selectedColor;
+  final Color unselectedColor;
+  final Color disclosureColor;
+  final ShapeBorder shape;
+
+  static _SidebarItemsConfiguration of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<_SidebarItemsConfiguration>()!;
+  }
+
+  @override
+  bool updateShouldNotify(_SidebarItemsConfiguration oldWidget) {
+    return true;
   }
 }
 
@@ -216,11 +275,13 @@ class _SidebarItem extends StatelessWidget {
     final theme = MacosTheme.of(context);
 
     final selectedColor = MacosDynamicColor.resolve(
-      item.selectedColor ?? theme.primaryColor,
+      item.selectedColor ??
+          _SidebarItemsConfiguration.of(context).selectedColor,
       context,
     );
     final unselectedColor = MacosDynamicColor.resolve(
-      item.unselectedColor,
+      item.unselectedColor ??
+          _SidebarItemsConfiguration.of(context).unselectedColor,
       context,
     );
 
@@ -246,7 +307,7 @@ class _SidebarItem extends StatelessWidget {
             height: 38.0 + theme.visualDensity.vertical,
             decoration: ShapeDecoration(
               color: selected ? selectedColor : unselectedColor,
-              shape: item.shape,
+              shape: item.shape ?? _SidebarItemsConfiguration.of(context).shape,
             ),
             padding: EdgeInsets.symmetric(
               vertical: 7 + theme.visualDensity.horizontal,
@@ -347,7 +408,8 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
   Widget _buildChildren(BuildContext context, Widget? child) {
     final theme = MacosTheme.of(context);
     final color = MacosDynamicColor.resolve(
-      widget.item.disclosureColor ?? _transparent,
+      widget.item.disclosureColor ??
+          _SidebarItemsConfiguration.of(context).disclosureColor,
       context,
     );
 
