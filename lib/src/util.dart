@@ -29,7 +29,7 @@ bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
 }
 
 Color textLuminance(Color backgroundColor) {
-  return backgroundColor.computeLuminance() > 0.5
+  return backgroundColor.computeLuminance() >= 0.5
       ? CupertinoColors.black
       : CupertinoColors.white;
 }

@@ -4,7 +4,6 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
 
-const Color _transparent = const Color(0x00000000);
 const Duration _kExpand = Duration(milliseconds: 200);
 const ShapeBorder _defaultShape = const RoundedRectangleBorder(
   borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
@@ -14,12 +13,6 @@ const CupertinoDynamicColor _defaultDisclosureColor =
   color: Color(0x1A000000),
   darkColor: Color(0x42FFFFFF),
 );
-
-Color _textLuminance(Color backgroundColor) {
-  return backgroundColor.computeLuminance() < 0.5
-      ? MacosColors.white
-      : MacosColors.black;
-}
 
 /// A macOS style navigation-list item intended for use in a [Sidebar]
 ///
@@ -173,7 +166,7 @@ class SidebarItems extends StatelessWidget {
       data: const IconThemeData(size: 20),
       child: _SidebarItemsConfiguration(
         selectedColor: selectedColor ?? theme.primaryColor,
-        unselectedColor: unselectedColor ?? _transparent,
+        unselectedColor: unselectedColor ?? MacosColors.transparent,
         disclosureColor: disclosureColor ?? _defaultDisclosureColor,
         shape: shape ?? _defaultShape,
         child: ListView(
@@ -207,8 +200,8 @@ class _SidebarItemsConfiguration extends InheritedWidget {
   const _SidebarItemsConfiguration({
     Key? key,
     required this.child,
-    this.selectedColor = _transparent,
-    this.unselectedColor = _transparent,
+    this.selectedColor = MacosColors.transparent,
+    this.unselectedColor = MacosColors.transparent,
     this.disclosureColor = _defaultDisclosureColor,
     this.shape = _defaultShape,
   }) : super(key: key, child: child);
@@ -328,7 +321,7 @@ class _SidebarItem extends StatelessWidget {
                 ),
               DefaultTextStyle(
                 style: theme.typography.title3.copyWith(
-                  color: selected ? _textLuminance(selectedColor) : null,
+                  color: selected ? textLuminance(selectedColor) : null,
                 ),
                 child: item.label,
               ),
@@ -437,7 +430,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
                         ? MacosColors.black
                         : MacosColors.white,
                   ),
-                )
+                ),
               ]),
               unselectedColor: color,
               focusNode: widget.item.focusNode,
