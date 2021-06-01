@@ -106,7 +106,8 @@ class MacosColors {
   static const selectedTextBackgroundColor = MacosColor(0xff3f638b);
 
   /// A background for selected text in a non-key window or view.
-  static const unemphasizedSelectedTextBackgroundColor = MacosColor(0xff464646);
+  static const unemphasizedSelectedTextBackgroundColor = MacosColor(0xffDCDCDC);
+  static const unemphasizedSelectedTextBackgroundColorDark = MacosColor(0xff464646);
 
   /// Selected text in a non-key window or view.
   static const unemphasizedSelectedTextColor = MacosColors.white;
@@ -129,6 +130,8 @@ class MacosColors {
   static const alternatingContentBackgroundColor = MacosColor(0xff2e2c31);
 
   /// The color of a find indicator.
+  ///
+  /// Has no dark variant.
   static const findHighlightColor = MacosColor(0xffffff00);
 
   /// The surface of a control.
@@ -145,7 +148,8 @@ class MacosColors {
       Color.fromRGBO(255, 255, 255, 0.25);
 
   /// The surface of a selected control.
-  static const selectedControlColor = MacosColor(0xffddddde);
+  static const selectedControlColor = Color.fromRGBO(179, 215, 255, 1);
+  static const selectedControlColorDark = Color.fromRGBO(63, 99, 139, 1);
 
   /// The text of a selected control.
   static const selectedControlTextColor = MacosColor(0xffddddde);
@@ -153,10 +157,13 @@ class MacosColors {
 
   /// The ring that appears around the currently focused control when using
   /// the keyboard for interface navigation.
-  static const keyboardFocusIndicatorColor = MacosColor(0xff294a69);
+  static const keyboardFocusIndicatorColor = Color.fromRGBO(0, 103, 244, 0.25);
+  static const keyboardFocusIndicatorColorDark = Color.fromRGBO(26, 169, 255, 0.3);
 
   /// The accent color selected by the user in system preferences.
-  static const controlAccentColor = MacosColor(0xff007aff);
+  ///
+  /// No dark variant.
+  static const controlAccentColor = Color.fromRGBO(0, 122, 255, 1);
 
   static const appleBlue = MacosColor(0xff0433ff);
   static const appleBrown = MacosColor(0xffaa7942);
