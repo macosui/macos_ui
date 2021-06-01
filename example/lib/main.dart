@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart' show Colors;
+import 'package:example/pages/buttons.dart';
+import 'package:example/pages/fields.dart';
+import 'package:example/pages/indicators.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -19,7 +22,9 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          theme: MacosThemeData.light(),
+          theme: MacosThemeData.light().copyWith(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
           darkTheme: MacosThemeData.dark().copyWith(
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
@@ -42,17 +47,71 @@ class _DemoState extends State<Demo> {
   double sliderValue = 0;
   bool value = false;
 
+  int pageIndex = 0;
+
+  final List<Widget> pages = [
+    ButtonsPage(),
+    IndicatorsPage(),
+    FieldsPage(),
+    Text('Disclosure item 1'),
+    Text('Disclosure item 2'),
+    Text('Disclosure item 3'),
+    Text('Item after disclosure'),
+  ];
+
+  Color textLuminance(Color backgroundColor) {
+    return backgroundColor.computeLuminance() > 0.5
+        ? Colors.black
+        : Colors.white;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
       titleBar: TitleBar(
-        child: Text('Titlebar'),
+        size: TitleBarSize.small,
+        child: Text('macos_ui Widget Gallery'),
       ),
       sidebar: Sidebar(
         minWidth: 200,
-        builder: (context, _) => Center(
-          child: Text('Sidebar'),
-        ),
+        builder: (context, controller) {
+          return SidebarItems(
+            currentIndex: pageIndex,
+            onChanged: (i) => setState(() => pageIndex = i),
+            scrollController: controller,
+            items: [
+              SidebarItem(
+                leading: Icon(CupertinoIcons.square_on_circle),
+                label: Text('Buttons'),
+              ),
+              SidebarItem(
+                leading: Icon(CupertinoIcons.arrow_2_circlepath),
+                label: Text('Indicators'),
+              ),
+              SidebarItem(
+                leading: Icon(CupertinoIcons.textbox),
+                label: Text('Fields'),
+              ),
+              SidebarItem(
+                label: Text('Disclosure'),
+                disclosureItems: [
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.infinite),
+                    label: Text('Item 1'),
+                  ),
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.heart),
+                    label: Text('Item 2'),
+                  ),
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.infinite),
+                    label: Text('Item 3'),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
       ),
       children: <Widget>[
         ContentArea(
@@ -60,117 +119,22 @@ class _DemoState extends State<Demo> {
             return SingleChildScrollView(
               controller: scrollController,
               padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MacosBackButton(
-                        onPressed: () => print('click'),
-                        fillColor: Colors.transparent,
-                      ),
-                      const SizedBox(width: 16.0),
-                      MacosBackButton(
-                        onPressed: () => print('click'),
-                        //fillColor: Colors.transparent,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  MacosIconButton(
-                    icon: Icon(
-                      CupertinoIcons.star_fill,
-                      color: Colors.white,
-                    ),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(7),
-                    onPressed: () {},
-                  ),
-                  const SizedBox(height: 20),
-                  PushButton(
-                    buttonSize: ButtonSize.small,
-                    child: Text('Button'),
-                    onPressed: () => ScaffoldScope.of(context).toggleSidebar(),
-                  ),
-                  SizedBox(height: 20),
-                  CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
-                    discrete: true,
-                  ),
-                  SizedBox(height: 20),
-                  CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
-                  ),
-                  SizedBox(height: 20),
-                  RatingIndicator(
-                    value: ratingValue,
-                    onChanged: (v) => setState(() => ratingValue = v),
-                  ),
-                  SizedBox(height: 20),
-                  RelevanceIndicator(value: 10),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: MacosTextField(
-                      prefix: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4.0,
-                          vertical: 2.0,
-                        ),
-                        child: Icon(CupertinoIcons.search),
-                      ),
-                      placeholder: 'Type some text here',
-
-                      /// If both suffix and clear button mode is provided,
-                      /// suffix will override the clear button.
-                      // suffix: Text('SUFFIX'),
-                      clearButtonMode: OverlayVisibilityMode.always,
-                      maxLines: null,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Label(
-                    icon: Icon(
-                      CupertinoIcons.tag,
-                      color: CupertinoColors.activeBlue,
-                    ),
-                    text: SelectableText('A borderless textfield: '),
-                    child: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: MacosTextField.borderless(
-                          prefix: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Icon(CupertinoIcons.search),
-                          ),
-                          placeholder: 'Type some text here',
-
-                          /// If both suffix and clear button mode is provided,
-                          /// suffix will override the clear button.
-                          suffix: Text('SUFFIX'),
-                          // clearButtonMode: OverlayVisibilityMode.always,
-                          maxLines: null,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              child: IndexedStack(
+                index: pageIndex,
+                children: pages,
               ),
             );
           },
         ),
-        ResizablePane(
-          minWidth: 180,
-          startWidth: 200,
-          scaffoldBreakpoint: 500,
-          resizableSide: ResizableSide.left,
-          builder: (_, __) {
-            return Center(child: Text('Resizable Pane'));
-          },
-        ),
+        // ResizablePane(
+        //   minWidth: 180,
+        //   startWidth: 200,
+        //   scaffoldBreakpoint: 500,
+        //   resizableSide: ResizableSide.left,
+        //   builder: (_, __) {
+        //     return Center(child: Text('Resizable Pane'));
+        //   },
+        // ),
       ],
     );
   }

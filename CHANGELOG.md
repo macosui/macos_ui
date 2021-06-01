@@ -1,3 +1,7 @@
+## [0.4.0]
+* Adds the `SidebarItem` widget
+* Fixes an alignment issue with `MacosTextField`
+
 ## [0.3.0]
 * Add `MacosPrefix` to widgets/classes with names that overlap with the material/cupertino libraries:
   * `TextField` -> `MacosTextField`

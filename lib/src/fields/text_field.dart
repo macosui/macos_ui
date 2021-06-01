@@ -1070,7 +1070,9 @@ class _MacosTextFieldState extends State<MacosTextField>
     if (widget.textAlignVertical != null) {
       return widget.textAlignVertical!;
     }
-    return _hasDecoration ? TextAlignVertical.center : TextAlignVertical.top;
+    return widget.maxLines == null || widget.maxLines! > 1
+        ? TextAlignVertical.center
+        : TextAlignVertical.top;
   }
 
   Widget _addTextDependentAttachments(
@@ -1111,7 +1113,9 @@ class _MacosTextFieldState extends State<MacosTextField>
             Expanded(
               child: Stack(
                 fit: StackFit.passthrough,
-                alignment: Alignment.center,
+                alignment: widget.maxLines == null || widget.maxLines! > 1
+                    ? Alignment.topCenter
+                    : Alignment.center,
                 children: <Widget>[
                   if (widget.placeholder != null && text.text.isEmpty)
                     SizedBox(
@@ -1364,12 +1368,13 @@ class _MacosTextFieldState extends State<MacosTextField>
             enableInteractiveSelection: widget.enableInteractiveSelection,
             autofillHints: widget.autofillHints,
             restorationId: 'editable',
+            mouseCursor: SystemMouseCursors.text,
           ),
         ),
       ),
     );
 
-    Widget child = Semantics(
+    return Semantics(
       enabled: enabled,
       onTap: !enabled || widget.readOnly
           ? null
@@ -1407,11 +1412,6 @@ class _MacosTextFieldState extends State<MacosTextField>
           ),
         ),
       ),
-    );
-
-    return MouseRegion(
-      cursor: SystemMouseCursors.text,
-      child: child,
     );
   }
 }
