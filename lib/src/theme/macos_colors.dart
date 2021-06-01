@@ -14,6 +14,7 @@ class MacosColor extends Color {
 
 /// A collection of color values lifted from the macOS system color picker.
 class MacosColors {
+  static const Color transparent = MacosColor(0x00000000);
   static const black = MacosColor(0xff000000);
   static const white = MacosColor(0xffffffff);
   static const labelColor = MacosColors.white;

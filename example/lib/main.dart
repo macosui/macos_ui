@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          theme: MacosThemeData.light(),
+          theme: MacosThemeData.light().copyWith(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
           darkTheme: MacosThemeData.dark().copyWith(
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
@@ -51,7 +53,17 @@ class _DemoState extends State<Demo> {
     ButtonsPage(),
     IndicatorsPage(),
     FieldsPage(),
+    Text('Disclosure item 1'),
+    Text('Disclosure item 2'),
+    Text('Disclosure item 3'),
+    Text('Item after disclosure'),
   ];
+
+  Color textLuminance(Color backgroundColor) {
+    return backgroundColor.computeLuminance() > 0.5
+        ? Colors.black
+        : Colors.white;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,79 +74,44 @@ class _DemoState extends State<Demo> {
       ),
       sidebar: Sidebar(
         minWidth: 200,
-        builder: (context, _) => ListView(
-          children: [
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() => pageIndex = 0);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.square_on_circle),
-                      const SizedBox(width: 8.0),
-                      Text('Buttons'),
-                    ],
-                  ),
-                ),
+        builder: (context, controller) {
+          return SidebarItems(
+            currentIndex: pageIndex,
+            onChanged: (i) => setState(() => pageIndex = i),
+            scrollController: controller,
+            items: [
+              SidebarItem(
+                leading: Icon(CupertinoIcons.square_on_circle),
+                label: Text('Buttons'),
               ),
-            ),
-            Divider(
-              height: 0,
-              color: MacosTheme.of(context).dividerColor,
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() => pageIndex = 1);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.arrow_2_circlepath),
-                      const SizedBox(width: 8.0),
-                      Text('Indicators'),
-                    ],
-                  ),
-                ),
+              SidebarItem(
+                leading: Icon(CupertinoIcons.arrow_2_circlepath),
+                label: Text('Indicators'),
               ),
-            ),
-            Divider(
-              height: 0,
-              color: MacosTheme.of(context).dividerColor,
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() => pageIndex = 2);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.textbox),
-                      const SizedBox(width: 8.0),
-                      Text('Fields'),
-                    ],
-                  ),
-                ),
+              SidebarItem(
+                leading: Icon(CupertinoIcons.textbox),
+                label: Text('Fields'),
               ),
-            ),
-            Divider(
-              height: 0,
-              color: MacosTheme.of(context).dividerColor,
-            ),
-          ],
-        ),
+              SidebarItem(
+                label: Text('Disclosure'),
+                disclosureItems: [
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.infinite),
+                    label: Text('Item 1'),
+                  ),
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.heart),
+                    label: Text('Item 2'),
+                  ),
+                  SidebarItem(
+                    leading: Icon(CupertinoIcons.infinite),
+                    label: Text('Item 3'),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
       ),
       children: <Widget>[
         ContentArea(
