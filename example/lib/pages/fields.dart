@@ -34,29 +34,20 @@ class _FieldsPageState extends State<FieldsPage> {
             ),
           ),
           const SizedBox(height: 20),
-          Label(
-            icon: Icon(
-              CupertinoIcons.tag,
-              color: CupertinoColors.activeBlue,
-            ),
-            text: SelectableText('A borderless textfield: '),
-            child: Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: MacosTextField.borderless(
-                  prefix: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: Icon(CupertinoIcons.search),
-                  ),
-                  placeholder: 'Type some text here',
-
-                  /// If both suffix and clear button mode is provided,
-                  /// suffix will override the clear button.
-                  suffix: Text('SUFFIX'),
-                  // clearButtonMode: OverlayVisibilityMode.always,
-                  maxLines: null,
-                ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: MacosTextField.borderless(
+              prefix: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Icon(CupertinoIcons.search),
               ),
+              placeholder: 'Type some text here',
+
+              /// If both suffix and clear button mode is provided,
+              /// suffix will override the clear button.
+              suffix: Text('SUFFIX'),
+              // clearButtonMode: OverlayVisibilityMode.always,
+              maxLines: 1,
             ),
           ),
         ],
