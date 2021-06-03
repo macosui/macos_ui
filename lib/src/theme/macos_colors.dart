@@ -93,8 +93,8 @@ class MacosColors {
   );
 
   static const systemIndigoColor = CupertinoDynamicColor.withBrightness(
-      color: MacosColor(0xff5856D6),
-      darkColor: MacosColor(0xff5E5CE6),
+    color: MacosColor(0xff5856D6),
+    darkColor: MacosColor(0xff5E5CE6),
   );
 
   static const systemGrayColor = CupertinoDynamicColor.withBrightness(
@@ -103,11 +103,14 @@ class MacosColors {
   );
 
   /// A link to other content.
-  static const linkColor = MacosColor(0xff0068DA);
-  static const linkColorDark = Color.fromRGBO(65, 156, 255, 1);
+  static const linkColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xff0068DA),
+    darkColor: Color.fromRGBO(65, 156, 255, 1),
+  );
 
   /// A placeholder string in a control or text view.
   static const placeholderTextColor = MacosColor(0xff737473);
+
   static const windowFrameColor = MacosColor(0xffddddde);
 
   /// The text of a selected menu.
@@ -138,9 +141,11 @@ class MacosColors {
   static const selectedTextBackgroundColor = MacosColor(0xff3f638b);
 
   /// A background for selected text in a non-key window or view.
-  static const unemphasizedSelectedTextBackgroundColor = MacosColor(0xffDCDCDC);
-  static const unemphasizedSelectedTextBackgroundColorDark =
-      MacosColor(0xff464646);
+  static const unemphasizedSelectedTextBackgroundColor =
+      CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xffDCDCDC),
+    darkColor: MacosColor(0xff464646),
+  );
 
   /// Selected text in a non-key window or view.
   static const unemphasizedSelectedTextColor = MacosColors.white;
@@ -152,14 +157,17 @@ class MacosColors {
   static const underPageBackgroundColor = MacosColor(0xff282828);
 
   /// The background of a large interface element, such as a browser or table.
-  static const controlBackgroundColor = MacosColor(0xffFFFFFF);
-  static const controlBackgroundColorDark = MacosColor(0xff1E1E1E);
+  static const controlBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xffFFFFFF),
+    darkColor: MacosColor(0xff1E1E1E),
+  );
 
   static const selectedControlBackgroundColor = MacosColor(0xff0058d0);
 
   /// The selected content in a non-key window or view.
   static const unemphasizedSelectedContentBackgroundColor =
       MacosColor(0xff464646);
+
   static const alternatingContentBackgroundColor = MacosColor(0xff2e2c31);
 
   /// The color of a find indicator.
@@ -168,31 +176,42 @@ class MacosColors {
   static const findHighlightColor = MacosColor(0xffffff00);
 
   /// The surface of a control.
-  static const controlColor = MacosColor(0xffFFFFFF);
-  static const controlColorDark = Color.fromRGBO(255, 255, 255, 0.25);
+  static const controlColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xffFFFFFF),
+    darkColor: Color.fromRGBO(255, 255, 255, 0.25),
+  );
 
   /// The text of a control that isn’t disabled.
-  static const controlTextColor = Color.fromRGBO(0, 0, 0, 0.85);
-  static const controlTextColorDark = MacosColor(0xffddddde);
+  static const controlTextColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(0, 0, 0, 0.85),
+    darkColor: MacosColor(0xffddddde),
+  );
 
   /// The text of a control that’s disabled.
-  static const disabledControlTextColor = Color.fromRGBO(0, 0, 0, 0.25);
-  static const disabledControlTextColorDark =
-      Color.fromRGBO(255, 255, 255, 0.25);
+  static const disabledControlTextColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(0, 0, 0, 0.25),
+    darkColor: Color.fromRGBO(255, 255, 255, 0.25),
+  );
 
   /// The surface of a selected control.
-  static const selectedControlColor = Color.fromRGBO(179, 215, 255, 1);
-  static const selectedControlColorDark = Color.fromRGBO(63, 99, 139, 1);
+  static const selectedControlColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(179, 215, 255, 1),
+    darkColor: Color.fromRGBO(63, 99, 139, 1),
+  );
 
   /// The text of a selected control.
-  static const selectedControlTextColor = MacosColor(0xffddddde);
-  static const disabledControlColor = MacosColor(0xff5a585c);
+  static const selectedControlTextColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xffddddde),
+    darkColor: MacosColor(0xff5a585c),
+  );
 
   /// The ring that appears around the currently focused control when using
   /// the keyboard for interface navigation.
-  static const keyboardFocusIndicatorColor = Color.fromRGBO(0, 103, 244, 0.25);
-  static const keyboardFocusIndicatorColorDark =
-      Color.fromRGBO(26, 169, 255, 0.3);
+  static const keyboardFocusIndicatorColor =
+      CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(0, 103, 244, 0.25),
+    darkColor: Color.fromRGBO(26, 169, 255, 0.3),
+  );
 
   /// The accent color selected by the user in system preferences.
   ///
