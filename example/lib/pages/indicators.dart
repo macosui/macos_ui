@@ -1,5 +1,5 @@
 import 'package:macos_ui/macos_ui.dart';
-import 'package:flutter/widgets.dart';
+import 'package:macos_ui/src/library.dart';
 
 class IndicatorsPage extends StatefulWidget {
   @override
@@ -38,8 +38,10 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
             amount: 50,
           ),
           SizedBox(height: 20),
-          ProgressCircle(
-            value: 50,
+          Label(
+            icon: Icon(CupertinoIcons.tag),
+            text: SelectableText('A determinate progress circle: '),
+            child: ProgressCircle(value: 50),
           ),
         ],
       ),
