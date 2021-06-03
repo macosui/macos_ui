@@ -1,4 +1,5 @@
 import 'package:example/pages/buttons.dart';
+import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _DemoState extends State<Demo> {
     ButtonsPage(),
     IndicatorsPage(),
     FieldsPage(),
-    Text('Disclosure item 1'),
+    ColorsPage(),
     Text('Disclosure item 2'),
     Text('Disclosure item 3'),
     Text('Item after disclosure'),
@@ -97,7 +98,7 @@ class _DemoState extends State<Demo> {
                 disclosureItems: [
                   SidebarItem(
                     leading: Icon(CupertinoIcons.infinite),
-                    label: Text('Item 1'),
+                    label: Text('Colors'),
                   ),
                   SidebarItem(
                     leading: Icon(CupertinoIcons.heart),
@@ -120,6 +121,7 @@ class _DemoState extends State<Demo> {
               controller: scrollController,
               padding: EdgeInsets.all(20),
               child: IndexedStack(
+                alignment: Alignment.topCenter,
                 index: pageIndex,
                 children: pages,
               ),

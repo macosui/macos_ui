@@ -1,3 +1,6 @@
+## [0.4.1]
+* Update `MacosColors`
+
 ## [0.4.0]
 * Adds the `SidebarItem` widget
 * Fixes an alignment issue with `MacosTextField`
