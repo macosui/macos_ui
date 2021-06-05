@@ -15,7 +15,7 @@ class _DialogsPageState extends State<DialogsPage> {
       children: [
         PushButton(
           buttonSize: ButtonSize.large,
-          child: Text('Show Alert Dialog'),
+          child: Text('Show Alert Dialog 1'),
           onPressed: () => showDialog(
             context: context,
             builder: (_) => MacosAlertDialog(
@@ -23,15 +23,86 @@ class _DialogsPageState extends State<DialogsPage> {
                 size: 56,
               ),
               title: Text(
-                'Title',
+                'Alert Dialog with Primary Action',
                 style: MacosTheme.of(context).typography.headline,
               ),
               message: Text(
-                'This is a message to be shown in an alert dialog',
+                'This is an alert dialog with a primary action and no secondary action',
                 textAlign: TextAlign.center,
                 style: MacosTheme.of(context).typography.headline,
               ),
               //horizontalActions: false,
+              primaryButton: PushButton(
+                buttonSize: ButtonSize.large,
+                child: Text('Primary'),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        PushButton(
+          buttonSize: ButtonSize.large,
+          child: Text('Show Alert Dialog 2'),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (_) => MacosAlertDialog(
+              appIcon: FlutterLogo(
+                size: 56,
+              ),
+              title: Text(
+                'Alert Dialog with Secondary Action',
+                style: MacosTheme.of(context).typography.headline,
+              ),
+              message: Text(
+                'This is an alert dialog with primary action and secondary action laid out horizontally',
+                textAlign: TextAlign.center,
+                style: MacosTheme.of(context).typography.headline,
+              ),
+              //horizontalActions: false,
+              primaryButton: PushButton(
+                buttonSize: ButtonSize.large,
+                child: Text('Primary'),
+                onPressed: () {},
+              ),
+              secondaryButton: PushButton(
+                buttonSize: ButtonSize.large,
+                color: MacosTheme.brightnessOf(context).isDark
+                    ? MacosColors.controlColor.darkColor
+                    : MacosColors.controlColor,
+                child: Text(
+                  'Secondary',
+                  style: TextStyle(
+                    color: MacosTheme.brightnessOf(context).isDark
+                        ? MacosColors.controlTextColor.darkColor
+                        : MacosColors.controlTextColor,
+                  ),
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        PushButton(
+          buttonSize: ButtonSize.large,
+          child: Text('Show Alert Dialog 2'),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (_) => MacosAlertDialog(
+              appIcon: FlutterLogo(
+                size: 56,
+              ),
+              title: Text(
+                'Alert Dialog with Secondary Action',
+                style: MacosTheme.of(context).typography.headline,
+              ),
+              message: Text(
+                'This is an alert dialog with primary action and secondary action laid out vertically',
+                textAlign: TextAlign.center,
+                style: MacosTheme.of(context).typography.headline,
+              ),
+              horizontalActions: false,
               primaryButton: PushButton(
                 buttonSize: ButtonSize.large,
                 child: Text('Primary'),
