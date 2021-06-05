@@ -1,5 +1,6 @@
 import 'package:example/pages/buttons.dart';
 import 'package:example/pages/colors_page.dart';
+import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _DemoState extends State<Demo> {
     ColorsPage(),
     Text('Disclosure item 2'),
     Text('Disclosure item 3'),
-    Text('Item after disclosure'),
+    DialogsPage(),
   ];
 
   Color textLuminance(Color backgroundColor) {
@@ -109,6 +110,10 @@ class _DemoState extends State<Demo> {
                     label: Text('Item 3'),
                   ),
                 ],
+              ),
+              SidebarItem(
+                leading: Icon(CupertinoIcons.rectangle),
+                label: Text('Dialogs'),
               ),
             ],
           );

@@ -17,6 +17,7 @@ export 'src/buttons/icon_button.dart';
 export 'src/buttons/push_button.dart';
 export 'src/buttons/radio_button.dart';
 export 'src/buttons/switch.dart';
+export 'src/dialogs/macos_alert_dialog.dart';
 export 'src/fields/text_field.dart';
 export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
