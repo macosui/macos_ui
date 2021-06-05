@@ -13,31 +13,46 @@ class _DialogsPageState extends State<DialogsPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MacosAlertDialog(
-          appIcon: Container(
-            /*height: 56,
-            width: 56,*/
-            color: Colors.red,
-          ),
-          title: Text(
-            'Title',
-            style: MacosTheme.of(context).typography.headline,
-          ),
-          message: Text(
-            'This is a message to be shown in an alert dialog',
-            textAlign: TextAlign.center,
-          ),
-          horizontalActions: false,
-          primaryButton: PushButton(
-            buttonSize: ButtonSize.large,
-            child: Text('Primary'),
-            onPressed: () {},
-          ),
-          secondaryButton: PushButton(
-            buttonSize: ButtonSize.large,
-            color: MacosColors.controlColor,
-            child: Text('Secondary'),
-            onPressed: () {},
+        PushButton(
+          buttonSize: ButtonSize.large,
+          child: Text('Show Alert Dialog'),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (_) => MacosAlertDialog(
+              appIcon: FlutterLogo(
+                size: 56,
+              ),
+              title: Text(
+                'Title',
+                style: MacosTheme.of(context).typography.headline,
+              ),
+              message: Text(
+                'This is a message to be shown in an alert dialog',
+                textAlign: TextAlign.center,
+                style: MacosTheme.of(context).typography.headline,
+              ),
+              //horizontalActions: false,
+              primaryButton: PushButton(
+                buttonSize: ButtonSize.large,
+                child: Text('Primary'),
+                onPressed: () {},
+              ),
+              secondaryButton: PushButton(
+                buttonSize: ButtonSize.large,
+                color: MacosTheme.brightnessOf(context).isDark
+                    ? MacosColors.controlColor.darkColor
+                    : MacosColors.controlColor,
+                child: Text(
+                  'Secondary',
+                  style: TextStyle(
+                    color: MacosTheme.brightnessOf(context).isDark
+                        ? MacosColors.controlTextColor.darkColor
+                        : MacosColors.controlTextColor,
+                  ),
+                ),
+                onPressed: () {},
+              ),
+            ),
           ),
         ),
       ],

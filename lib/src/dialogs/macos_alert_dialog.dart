@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 /// A macOS-style AlertDialog.
 ///
@@ -40,14 +41,17 @@ class MacosAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: 300,
-        maxWidth: 260,
+    return Dialog(
+      backgroundColor: MacosTheme.brightnessOf(context).isDark
+          ? MacosColors.controlBackgroundColor.darkColor
+          : MacosColors.controlBackgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7.0),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.red),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: 300,
+          maxWidth: 260,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
