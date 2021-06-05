@@ -15,8 +15,8 @@ class _DialogsPageState extends State<DialogsPage> {
       children: [
         MacosAlertDialog(
           appIcon: Container(
-            height: 50,
-            width: 50,
+            /*height: 56,
+            width: 56,*/
             color: Colors.red,
           ),
           title: Text(

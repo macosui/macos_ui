@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// A macOS-style AlertDialog.
+///
+/// A [MacosAlertDialog] must display an [appIcon], [title], [message],
+/// and [primaryButton].
 class MacosAlertDialog extends StatelessWidget {
   const MacosAlertDialog({
     Key? key,
@@ -11,19 +15,33 @@ class MacosAlertDialog extends StatelessWidget {
     this.horizontalActions = true,
   }) : super(key: key);
 
+  /// This should be your application's icon.
+  ///
+  /// The size of this widget should be 56x56.
   final Widget appIcon;
   final Widget title;
   final Widget message;
+
+  /// The primary action a user can take.
+  ///
+  /// Typically a [PushButton].
   final Widget primaryButton;
+
+  /// The secondary action a user can take.
+  ///
+  /// Typically a [PushButton].
   final Widget? secondaryButton;
+
+  /// Determines whether to lay out [primaryButton] and [secondaryButton]
+  /// horizontally or vertically.
+  ///
+  /// Defaults to `true`.
   final bool? horizontalActions;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        /*minWidth: 260,
-        minHeight: 238,*/
         maxHeight: 300,
         maxWidth: 260,
       ),
@@ -35,7 +53,13 @@ class MacosAlertDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 28),
-            appIcon,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 56,
+                maxWidth: 56,
+              ),
+              child: appIcon,
+            ),
             const SizedBox(height: 28),
             title,
             const SizedBox(height: 16),
