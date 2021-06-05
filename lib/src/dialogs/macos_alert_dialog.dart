@@ -63,7 +63,10 @@ class MacosAlertDialog extends StatelessWidget {
             const SizedBox(height: 28),
             title,
             const SizedBox(height: 16),
-            message,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: message,
+            ),
             const SizedBox(height: 12),
             if (secondaryButton == null) ...[
               Row(
