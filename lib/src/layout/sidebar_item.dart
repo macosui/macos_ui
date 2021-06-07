@@ -8,11 +8,6 @@ const Duration _kExpand = Duration(milliseconds: 200);
 const ShapeBorder _defaultShape = const RoundedRectangleBorder(
   borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
 );
-const CupertinoDynamicColor _defaultDisclosureColor =
-    const CupertinoDynamicColor.withBrightness(
-  color: Color(0x1A000000),
-  darkColor: Color(0x42FFFFFF),
-);
 
 /// A macOS style navigation-list item intended for use in a [Sidebar]
 ///
@@ -27,7 +22,6 @@ class SidebarItem with Diagnosticable {
     required this.label,
     this.selectedColor,
     this.unselectedColor,
-    this.disclosureColor,
     this.shape,
     this.focusNode,
     this.semanticLabel,
@@ -53,11 +47,6 @@ class SidebarItem with Diagnosticable {
   ///
   /// Defaults to transparent.
   final Color? unselectedColor;
-
-  /// The color to paint this item if [disclosureItem] is not null.
-  ///
-  /// If null, [MacosThemeData.primaryColor] with some opacity applied is used.
-  final Color? disclosureColor;
 
   /// The [shape] property specifies the outline (border) of the
   /// decoration. The shape must not be null. It's used alonside
@@ -106,7 +95,6 @@ class SidebarItems extends StatelessWidget {
     this.scrollController,
     this.selectedColor,
     this.unselectedColor,
-    this.disclosureColor,
     this.shape,
   })  : assert(currentIndex >= 0),
         super(key: key);
@@ -136,9 +124,6 @@ class SidebarItems extends StatelessWidget {
   /// Defaults to transparent.
   final Color? unselectedColor;
 
-  /// The color to paint the disclosure item.
-  final Color? disclosureColor;
-
   /// The [shape] property specifies the outline (border) of the
   /// decoration. The shape must not be null. It's used alonside
   /// [selectedColor].
@@ -167,7 +152,6 @@ class SidebarItems extends StatelessWidget {
       child: _SidebarItemsConfiguration(
         selectedColor: selectedColor ?? theme.primaryColor,
         unselectedColor: unselectedColor ?? MacosColors.transparent,
-        disclosureColor: disclosureColor ?? _defaultDisclosureColor,
         shape: shape ?? _defaultShape,
         child: ListView(
           controller: scrollController,
@@ -202,7 +186,6 @@ class _SidebarItemsConfiguration extends InheritedWidget {
     required this.child,
     this.selectedColor = MacosColors.transparent,
     this.unselectedColor = MacosColors.transparent,
-    this.disclosureColor = _defaultDisclosureColor,
     this.shape = _defaultShape,
   }) : super(key: key, child: child);
 
@@ -210,7 +193,6 @@ class _SidebarItemsConfiguration extends InheritedWidget {
 
   final Color selectedColor;
   final Color unselectedColor;
-  final Color disclosureColor;
   final ShapeBorder shape;
 
   static _SidebarItemsConfiguration of(BuildContext context) {
@@ -400,11 +382,6 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
 
   Widget _buildChildren(BuildContext context, Widget? child) {
     final theme = MacosTheme.of(context);
-    final color = MacosDynamicColor.resolve(
-      widget.item.disclosureColor ??
-          _SidebarItemsConfiguration.of(context).disclosureColor,
-      context,
-    );
 
     final double spacing = 10.0 + theme.visualDensity.horizontal;
     return Column(
@@ -432,7 +409,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
                   ),
                 ),
               ]),
-              unselectedColor: color,
+              unselectedColor: MacosColors.transparent,
               focusNode: widget.item.focusNode,
               semanticLabel: widget.item.semanticLabel,
               shape: widget.item.shape,
