@@ -79,8 +79,10 @@ class _DemoState extends State<Demo> {
         bottom: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(CupertinoIcons.profile_circled),
+              const SizedBox(width: 8.0),
               Text('Tim Apple'),
             ],
           ),
