@@ -169,7 +169,6 @@ class MacosScrollbar extends StatelessWidget {
 ///
 ///  * [MacosThemeData], which describes the overall theme information for the
 ///    application.
-@immutable
 class ScrollbarThemeData with Diagnosticable {
   /// Creates a theme that can be used for [MacosThemeData.scrollbarTheme].
   const ScrollbarThemeData({

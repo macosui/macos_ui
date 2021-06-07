@@ -14,7 +14,6 @@ const _kDefaultFontFamily = 'SanFranciscoPro';
 ///  * [MacosTheme], for aspects of a macos application that can be globally
 ///    adjusted, such as the primary color.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/>
-@immutable
 class MacosTypography with Diagnosticable {
   /// Creates a typography that uses the given values.
   ///

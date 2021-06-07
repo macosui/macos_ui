@@ -11,7 +11,10 @@ class ContentArea extends StatelessWidget {
   ///
   /// The width of this
   /// widget is automatically calculated in [ScaffoldScope].
-  const ContentArea({Key? key, @required this.builder}) : super(key: key);
+  const ContentArea({
+    Key? key,
+    required this.builder,
+  }) : super(key: key);
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
