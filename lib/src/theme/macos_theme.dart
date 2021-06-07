@@ -172,7 +172,6 @@ class _InheritedMacosTheme extends InheritedWidget {
 /// See also:
 ///
 ///  * [MacosTheme], in which this [MacosThemeData] is inserted.
-@immutable
 class MacosThemeData with Diagnosticable {
   /// Creates a [MacosThemeData] that's used to configure [MacosTheme].
   ///
