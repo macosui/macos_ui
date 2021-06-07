@@ -177,7 +177,7 @@ class MacosColors {
 
   /// The surface of a control.
   static const controlColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffFFFFFF),
+    color: Color.fromRGBO(0, 0, 0, 0.1),
     darkColor: Color.fromRGBO(255, 255, 255, 0.25),
   );
 

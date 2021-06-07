@@ -16,6 +16,8 @@ Flutter widgets and themes implementing the current macOS design language.
   - [RadioButton](#radiobutton)
   - [PushButton](#pushbutton)
   - [MacosSwitch](#macosswitch)
+- [Dialogs](#dialogs)
+  - [MacosAlertDialog](#MacosAlertDialog)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
 - [Labels](#labels)
@@ -161,6 +163,40 @@ MacosSwitch(
   },
 ),
 ```
+
+# Dialogs
+
+## MacosAlertDialog
+
+Usage:
+```dart
+showDialog(
+  context: context,
+  builder: (_) => MacosAlertDialog(
+    appIcon: FlutterLogo(
+      size: 56,
+    ),
+    title: Text(
+      'Alert Dialog with Primary Action',
+      style: MacosTheme.of(context).typography.headline,
+    ),
+    message: Text(
+      'This is an alert dialog with a primary action and no secondary action',
+      textAlign: TextAlign.center,
+      style: MacosTheme.of(context).typography.headline,
+    ),
+    primaryButton: PushButton(
+      buttonSize: ButtonSize.large,
+      child: Text('Primary'),
+      onPressed: () {},
+    ),
+  ),
+);
+```
+
+![](https://imgur.com/G3dcjew.png)
+![](https://imgur.com/YHtgv59.png)
+![](https://imgur.com/xuBR5qK.png)
 
 # Fields
 
