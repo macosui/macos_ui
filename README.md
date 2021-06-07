@@ -17,6 +17,7 @@ Flutter widgets and themes implementing the current macOS design language.
   - [PushButton](#pushbutton)
   - [MacosSwitch](#macosswitch)
 - [Dialogs](#dialogs)
+  - [MacosAlertDialog](#MacosAlertDialog)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
 - [Labels](#labels)
@@ -165,7 +166,7 @@ MacosSwitch(
 
 # Dialogs
 
-## AlertDialog
+## MacosAlertDialog
 
 Usage:
 ```dart
