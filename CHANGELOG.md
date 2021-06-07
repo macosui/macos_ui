@@ -1,6 +1,9 @@
 ## [0.5.0]
 * Adds `MacosAlertDialog`
 
+## [0.4.2]
+* Add `bottom` Item to `Sidebar`
+
 ## [0.4.1]
 * Update `MacosColors`
 * Fix `Label` alignment

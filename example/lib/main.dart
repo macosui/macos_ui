@@ -76,6 +76,15 @@ class _DemoState extends State<Demo> {
       ),
       sidebar: Sidebar(
         minWidth: 200,
+        bottom: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Icon(CupertinoIcons.profile_circled),
+              Text('Tim Apple'),
+            ],
+          ),
+        ),
         builder: (context, controller) {
           return SidebarItems(
             currentIndex: pageIndex,
