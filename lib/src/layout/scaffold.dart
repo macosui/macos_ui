@@ -180,6 +180,8 @@ class _MacosScaffoldState extends State<MacosScaffold> {
                           ),
                         ),
                       ),
+                      if(widget.sidebar?.bottom != null)
+                        widget.sidebar!.bottom!,
                     ],
                   ),
                 ),

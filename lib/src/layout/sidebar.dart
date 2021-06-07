@@ -16,6 +16,7 @@ class Sidebar {
     this.startWidth,
     this.padding = EdgeInsets.zero,
     this.scaffoldBreakpoint = 556.0,
+    this.bottom,
   });
 
   /// The builder that creates a child to display in this widget, which will
@@ -73,4 +74,7 @@ class Sidebar {
 
   /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
   final double scaffoldBreakpoint;
+
+  /// Widget that should be displayed at the Bottom of the Sidebar
+  final Widget? bottom;
 }
