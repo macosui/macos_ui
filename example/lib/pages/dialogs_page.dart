@@ -24,12 +24,9 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               title: Text(
                 'Alert Dialog with Primary Action',
-                style: MacosTheme.of(context).typography.headline,
               ),
               message: Text(
                 'This is an alert dialog with a primary action and no secondary action',
-                textAlign: TextAlign.center,
-                style: MacosTheme.of(context).typography.headline,
               ),
               //horizontalActions: false,
               primaryButton: PushButton(
@@ -52,12 +49,10 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               title: Text(
                 'Alert Dialog with Secondary Action',
-                style: MacosTheme.of(context).typography.headline,
               ),
               message: Text(
                 'This is an alert dialog with primary action and secondary action laid out horizontally',
                 textAlign: TextAlign.center,
-                style: MacosTheme.of(context).typography.headline,
               ),
               //horizontalActions: false,
               primaryButton: PushButton(
@@ -95,12 +90,10 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               title: Text(
                 'Alert Dialog with Secondary Action',
-                style: MacosTheme.of(context).typography.headline,
               ),
               message: Text(
                 'This is an alert dialog with primary action and secondary action laid out vertically',
                 textAlign: TextAlign.center,
-                style: MacosTheme.of(context).typography.headline,
               ),
               horizontalActions: false,
               primaryButton: PushButton(

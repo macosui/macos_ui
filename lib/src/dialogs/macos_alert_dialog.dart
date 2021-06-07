@@ -6,6 +6,7 @@ import 'package:macos_ui/macos_ui.dart';
 /// A [MacosAlertDialog] must display an [appIcon], [title], [message],
 /// and [primaryButton].
 class MacosAlertDialog extends StatelessWidget {
+  /// Builds a macOS-style Alert Dialog
   const MacosAlertDialog({
     Key? key,
     required this.appIcon,
@@ -20,7 +21,15 @@ class MacosAlertDialog extends StatelessWidget {
   ///
   /// The size of this widget should be 56x56.
   final Widget appIcon;
+
+  /// The title for the dialog.
+  ///
+  /// Typically a Text widget.
   final Widget title;
+
+  /// The content to display in the dialog.
+  ///
+  /// Typically a Text widget.
   final Widget message;
 
   /// The primary action a user can take.
@@ -65,11 +74,18 @@ class MacosAlertDialog extends StatelessWidget {
               child: appIcon,
             ),
             const SizedBox(height: 28),
-            title,
+            DefaultTextStyle(
+              style: MacosTheme.of(context).typography.headline,
+              child: title,
+            ),
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: message,
+              child: DefaultTextStyle(
+                textAlign: TextAlign.center,
+                style: MacosTheme.of(context).typography.headline,
+                child: message,
+              ),
             ),
             const SizedBox(height: 12),
             if (secondaryButton == null) ...[
