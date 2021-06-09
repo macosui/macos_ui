@@ -15,6 +15,7 @@ class MacosAlertDialog extends StatelessWidget {
     required this.primaryButton,
     this.secondaryButton,
     this.horizontalActions = true,
+    this.suppress,
   }) : super(key: key);
 
   /// This should be your application's icon.
@@ -47,6 +48,44 @@ class MacosAlertDialog extends StatelessWidget {
   ///
   /// Defaults to `true`.
   final bool? horizontalActions;
+
+  /// A widget to allow users to suppress alerts of this type.
+  ///
+  /// The logic for this should be user-implemented. Here is a sample of a
+  /// widget that can be passed in for this parameter:
+  /// ```dart
+  /// class DoNotNotifyRow extends StatefulWidget {
+  ///   const DoNotNotifyRow({Key? key}) : super(key: key);
+  ///
+  ///   @override
+  ///   _DoNotNotifyRowState createState() => _DoNotNotifyRowState();
+  /// }
+  ///
+  /// class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
+  ///   bool suppress = false;
+  ///
+  ///   @override
+  ///   Widget build(BuildContext context) {
+  ///     return Row(
+  ///       mainAxisAlignment: MainAxisAlignment.center,
+  ///       children: [
+  ///         MacosCheckbox(
+  ///           value: suppress,
+  ///           onChanged: (value) {
+  ///             setState(() => suppress = value);
+  ///           },
+  ///         ),
+  ///         const SizedBox(width: 8),
+  ///         Text('Don\'t ask again'),
+  ///       ],
+  ///     );
+  ///   }
+  /// }
+  /// ```
+  ///
+  /// Notable, the above widget is a `StatefulWidget`. Your widget must be
+  /// stateful or your checkbox will not update as you expect.
+  final Widget? suppress;
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +181,13 @@ class MacosAlertDialog extends StatelessWidget {
                   ),
                 ),
               ],
+            ],
+            const SizedBox(height: 16),
+            if (suppress != null) ...[
+              DefaultTextStyle(
+                style: MacosTheme.of(context).typography.headline,
+                child: suppress!,
+              ),
             ],
             const SizedBox(height: 16),
           ],
