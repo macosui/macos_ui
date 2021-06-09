@@ -133,7 +133,8 @@ class _DialogsPageState extends State<DialogsPage> {
                 'Alert Dialog with Secondary Action',
               ),
               message: Text(
-                'This is an alert dialog with primary action and secondary action laid out vertically',
+                'This is an alert dialog with primary action and secondary '
+                'action laid out vertically. It also contains a "suppress" option.',
                 textAlign: TextAlign.center,
               ),
               horizontalActions: false,
