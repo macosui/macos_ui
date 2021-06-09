@@ -1,3 +1,6 @@
+## [0.5.1]
+* Adds `suppress` widget parameter to `MacosAlertDialog`
+
 ## [0.5.0]
 * Adds `MacosAlertDialog`
 
