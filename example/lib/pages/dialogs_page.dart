@@ -145,15 +145,17 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
-                color: MacosTheme.brightnessOf(context).isDark
-                    ? MacosColors.controlColor.darkColor
-                    : MacosColors.controlColor,
+                color: MacosDynamicColor.resolve(
+                  MacosColors.controlColor,
+                  context,
+                ),
                 child: Text(
                   'Secondary',
                   style: TextStyle(
-                    color: MacosTheme.brightnessOf(context).isDark
-                        ? MacosColors.controlTextColor.darkColor
-                        : MacosColors.controlTextColor,
+                    color: MacosDynamicColor.resolve(
+                      MacosColors.controlColor,
+                      context,
+                    ),
                   ),
                 ),
                 onPressed: () {},
