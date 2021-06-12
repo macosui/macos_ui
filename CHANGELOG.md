@@ -1,3 +1,6 @@
+## [0.5.2]
+* Fixes maximum height issue with `MacosAlertDialog`
+
 ## [0.5.1]
 * Adds `suppress` widget parameter to `MacosAlertDialog`
 

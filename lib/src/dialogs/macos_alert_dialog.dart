@@ -97,10 +97,7 @@ class MacosAlertDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(7.0),
       ),
       child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: 300,
-          maxWidth: 260,
-        ),
+        constraints: BoxConstraints(maxWidth: 260),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
