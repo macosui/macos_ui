@@ -29,7 +29,7 @@ class PushButton extends StatefulWidget {
     required this.child,
     required this.buttonSize,
     this.padding,
-    this.color,
+    this.backgroundColor,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
@@ -61,7 +61,7 @@ class PushButton extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
 
   /// The color of the button's background.
-  final Color? color;
+  final MacosStateProperty<Color?>? backgroundColor;
 
   /// The color of the button's background when the button is disabled.
   ///
@@ -110,7 +110,7 @@ class PushButton extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty<ButtonSize>('buttonSize', buttonSize));
-    properties.add(ColorProperty('color', color));
+    properties.add(DiagnosticsProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
@@ -201,66 +201,78 @@ class _PushButtonState extends State<PushButton>
     });
   }
 
+  PushButtonThemeData get _defaultThemeData {
+    final MacosThemeData macosTheme = MacosTheme.of(context);
+    return PushButtonThemeData(
+      backgroundColor: MacosStateProperty.resolveWith((states) {
+        if (states.isDisabled)
+          return macosTheme.brightness.isDark
+              ? Color.fromRGBO(255, 255, 255, 0.1)
+              : Color.fromRGBO(244, 245, 245, 1.0);
+        return macosTheme.primaryColor;
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
-    final MacosThemeData theme = MacosTheme.of(context);
-    final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.pushButtonTheme.color,
-      context,
-    );
 
-    final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.pushButtonTheme.disabledColor,
-      context,
-    );
+    return MacosStatePropertyProvider(
+      enabled: enabled,
+      builder: (context, states) {
+        final MacosThemeData theme = MacosTheme.of(context);
+        final Color backgroundColor = MacosDynamicColor.resolve(
+          (widget.backgroundColor ??
+                  theme.pushButtonTheme.backgroundColor ??
+                  _defaultThemeData.backgroundColor!)
+              .resolve(states)!,
+          context,
+        );
 
-    final EdgeInsetsGeometry? buttonPadding = widget.padding == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonPadding
-            : _kLargeButtonPadding
-        : widget.padding;
+        final EdgeInsetsGeometry? buttonPadding = widget.padding == null
+            ? widget.buttonSize == ButtonSize.small
+                ? _kSmallButtonPadding
+                : _kLargeButtonPadding
+            : widget.padding;
 
-    final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonRadius
-            : _kLargeButtonRadius
-        : widget.borderRadius;
+        final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
+            ? widget.buttonSize == ButtonSize.small
+                ? _kSmallButtonRadius
+                : _kLargeButtonRadius
+            : widget.borderRadius;
 
-    final Color foregroundColor = widget.enabled
-        ? textLuminance(backgroundColor)
-        : theme.brightness.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.25)
-            : Color.fromRGBO(0, 0, 0, 0.25);
+        final Color foregroundColor = widget.enabled
+            ? textLuminance(backgroundColor)
+            : theme.brightness.isDark
+                ? Color.fromRGBO(255, 255, 255, 0.25)
+                : Color.fromRGBO(0, 0, 0, 0.25);
 
-    final TextStyle textStyle =
-        theme.typography.headline.copyWith(color: foregroundColor);
-
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTapDown: enabled ? _handleTapDown : null,
-        onTapUp: enabled ? _handleTapUp : null,
-        onTapCancel: enabled ? _handleTapCancel : null,
-        onTap: widget.onPressed,
-        child: Semantics(
-          button: true,
-          label: widget.semanticLabel,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: 49,
-              minHeight: 20,
-            ),
-            child: FadeTransition(
-              opacity: _opacityAnimation,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: borderRadius,
-                  color: !enabled ? disabledColor : backgroundColor,
-                ),
-                child: Padding(
+        final TextStyle textStyle =
+            theme.typography.headline.copyWith(color: foregroundColor);
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown: enabled ? _handleTapDown : null,
+            onTapUp: enabled ? _handleTapUp : null,
+            onTapCancel: enabled ? _handleTapCancel : null,
+            onTap: widget.onPressed,
+            child: Semantics(
+              button: true,
+              label: widget.semanticLabel,
+              child: FadeTransition(
+                opacity: _opacityAnimation,
+                child: Container(
+                  constraints: BoxConstraints(
+                    minWidth: 49,
+                    minHeight: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: borderRadius,
+                    color: backgroundColor,
+                  ),
                   padding: buttonPadding!,
                   child: Align(
                     alignment: widget.alignment,
@@ -276,8 +288,8 @@ class _PushButtonState extends State<PushButton>
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -336,26 +348,17 @@ class PushButtonTheme extends InheritedTheme {
 ///    style for [PushButton]s below the overall [MacosTheme].
 class PushButtonThemeData with Diagnosticable {
   /// Creates a [PushButtonThemeData].
-  ///
-  /// The [style] may be null.
-  const PushButtonThemeData({
-    required this.color,
-    required this.disabledColor,
-  });
+  const PushButtonThemeData({this.backgroundColor});
 
   /// The default background color for [PushButton]
-  final Color color;
-
-  /// The default disabled color for [PushButton]
-  final Color disabledColor;
+  final MacosStateProperty<Color?>? backgroundColor;
 
   PushButtonThemeData copyWith(PushButtonThemeData? themeData) {
     if (themeData == null) {
       return this;
     }
     return PushButtonThemeData(
-      color: themeData.color,
-      disabledColor: themeData.disabledColor,
+      backgroundColor: themeData.backgroundColor ?? backgroundColor,
     );
   }
 
@@ -368,15 +371,14 @@ class PushButtonThemeData with Diagnosticable {
     double t,
   ) {
     return PushButtonThemeData(
-      color: Color.lerp(a.color, b.color, t)!,
-      disabledColor: Color.lerp(a.color, b.color, t)!,
+      backgroundColor: MacosStateProperty.lerp(
+          a.backgroundColor, b.backgroundColor, t, Color.lerp),
     );
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
-    properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(DiagnosticsProperty('backgroundColor', backgroundColor));
   }
 }

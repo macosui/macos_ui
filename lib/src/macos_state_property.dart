@@ -1,3 +1,5 @@
+import 'package:macos_ui/src/library.dart';
+
 enum MacosState { disabled, hovered, pressed, focused, none }
 
 /// Signature for the function that returns a value of type `T` based on a given
@@ -65,4 +67,55 @@ extension MacosStateExtension on Set<MacosState> {
   bool get isPressed => contains(MacosState.pressed);
   bool get isHovered => contains(MacosState.hovered);
   bool get isNone => isEmpty;
+}
+
+typedef MacosStatePropertyProviderBuilder = Widget Function(
+    BuildContext, Set<MacosState> states);
+
+class MacosStatePropertyProvider extends StatefulWidget {
+  const MacosStatePropertyProvider({
+    Key? key,
+    required this.builder,
+    this.enabled = false,
+  }) : super(key: key);
+
+  final MacosStatePropertyProviderBuilder builder;
+
+  final bool enabled;
+
+  @override
+  _MacosStatePropertyProviderState createState() =>
+      _MacosStatePropertyProviderState();
+}
+
+class _MacosStatePropertyProviderState
+    extends State<MacosStatePropertyProvider> {
+  Set<MacosState> get _states => <MacosState>{
+        if (!widget.enabled) MacosState.disabled,
+        if (_pressing) MacosState.pressed,
+        if (_hovering) MacosState.hovered,
+        if (_shouldShowFocus) MacosState.focused,
+      };
+
+  bool _hovering = false;
+  bool _pressing = false;
+  bool _shouldShowFocus = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FocusableActionDetector(
+      onShowFocusHighlight: (v) {
+        if (mounted) setState(() => _shouldShowFocus = v);
+      },
+      onShowHoverHighlight: (v) {
+        if (mounted) setState(() => _hovering = v);
+      },
+      child: GestureDetector(
+        onTapDown: (_) => setState(() => _pressing = true),
+        onTapUp: (_) => setState(() => _pressing = false),
+        onTapCancel: () => setState(() => _pressing = false),
+        child: widget.builder(context, _states),
+      ),
+    );
+  }
 }

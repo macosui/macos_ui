@@ -23,3 +23,4 @@ export 'package:flutter/material.dart'
         kElevationToShadow;
 export 'package:flutter/widgets.dart';
 export 'util.dart';
+export 'macos_state_property.dart';

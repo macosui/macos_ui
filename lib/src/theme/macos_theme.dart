@@ -209,12 +209,7 @@ class MacosThemeData with Diagnosticable {
           ? CupertinoColors.black
           : CupertinoColors.white,
     );
-    pushButtonTheme ??= PushButtonThemeData(
-      color: primaryColor,
-      disabledColor: isDark
-          ? Color.fromRGBO(255, 255, 255, 0.1)
-          : Color.fromRGBO(244, 245, 245, 1.0),
-    );
+    pushButtonTheme ??= PushButtonThemeData();
     dividerColor ??= isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000);
     helpButtonTheme ??= HelpButtonThemeData(
       color: isDark
