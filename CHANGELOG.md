@@ -1,3 +1,7 @@
+## [0.6.0]
+* Improved `MacosAlertDialog` design
+* Added `showMacosAlertDialog` to display a `MacosAlertDialog` with standard macOS animations and behaviour.
+  
 ## [0.5.2]
 * Fixes maximum height issue with `MacosAlertDialog`
 
