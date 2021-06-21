@@ -16,7 +16,7 @@ class _DialogsPageState extends State<DialogsPage> {
         PushButton(
           buttonSize: ButtonSize.large,
           child: Text('Show Alert Dialog 1'),
-          onPressed: () => showDialog(
+          onPressed: () => showMacosAlertDialog(
             context: context,
             builder: (_) => MacosAlertDialog(
               appIcon: FlutterLogo(
@@ -41,7 +41,7 @@ class _DialogsPageState extends State<DialogsPage> {
         PushButton(
           buttonSize: ButtonSize.large,
           child: Text('Show Alert Dialog 2'),
-          onPressed: () => showDialog(
+          onPressed: () => showMacosAlertDialog(
             context: context,
             builder: (_) => MacosAlertDialog(
               appIcon: FlutterLogo(
@@ -82,7 +82,7 @@ class _DialogsPageState extends State<DialogsPage> {
         PushButton(
           buttonSize: ButtonSize.large,
           child: Text('Show Alert Dialog 3'),
-          onPressed: () => showDialog(
+          onPressed: () => showMacosAlertDialog(
             context: context,
             builder: (_) => MacosAlertDialog(
               appIcon: FlutterLogo(
@@ -123,7 +123,7 @@ class _DialogsPageState extends State<DialogsPage> {
         PushButton(
           buttonSize: ButtonSize.large,
           child: Text('Show Alert Dialog 4'),
-          onPressed: () => showDialog(
+          onPressed: () => showMacosAlertDialog(
             context: context,
             builder: (_) => MacosAlertDialog(
               appIcon: FlutterLogo(
