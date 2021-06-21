@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
@@ -227,13 +228,13 @@ class MacosAlertDialog extends StatelessWidget {
   }
 }
 
+/// Displays a macos alert dialog above the current contents of the app.
 Future<T?> showMacosAlertDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  bool barrierDismissible = true,
+  bool barrierDismissible = false,
   Color? barrierColor,
   String? barrierLabel,
-  bool useSafeArea = true,
   bool useRootNavigator = true,
   RouteSettings? routeSettings,
 }) {
@@ -241,14 +242,113 @@ Future<T?> showMacosAlertDialog<T>({
           ? MacosColors.controlBackgroundColor.darkColor
           : MacosColors.controlBackgroundColor)
       .withOpacity(0.6);
-  return showDialog<T>(
-    context: context,
-    builder: builder,
-    barrierDismissible: barrierDismissible,
-    barrierColor: barrierColor,
-    barrierLabel: barrierLabel,
-    useSafeArea: useSafeArea,
-    useRootNavigator: useRootNavigator,
-    routeSettings: routeSettings,
+  return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
+    _MacosAlertDialogRoute<T>(
+      settings: routeSettings,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return builder(context);
+      },
+      barrierDismissible: barrierDismissible,
+      barrierColor: barrierColor,
+      barrierLabel: barrierLabel ??
+          MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    ),
   );
+}
+
+class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
+  _MacosAlertDialogRoute({
+    required RoutePageBuilder pageBuilder,
+    bool barrierDismissible = false,
+    Color? barrierColor = const Color(0x80000000),
+    String? barrierLabel,
+    RouteSettings? settings,
+  })  : _pageBuilder = pageBuilder,
+        _barrierDismissible = barrierDismissible,
+        _barrierLabel = barrierLabel,
+        _barrierColor = barrierColor,
+        super(settings: settings);
+
+  final RoutePageBuilder _pageBuilder;
+
+  @override
+  bool get barrierDismissible => _barrierDismissible;
+  final bool _barrierDismissible;
+
+  @override
+  String? get barrierLabel => _barrierLabel;
+  final String? _barrierLabel;
+
+  @override
+  Color? get barrierColor => _barrierColor;
+  final Color? _barrierColor;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 450);
+
+  @override
+  Duration get reverseTransitionDuration => const Duration(milliseconds: 120);
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return Semantics(
+      scopesRoute: true,
+      explicitChildNodes: true,
+      child: _pageBuilder(context, animation, secondaryAnimation),
+    );
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    if (animation.status == AnimationStatus.reverse) {
+      return FadeTransition(
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutSine,
+        ),
+        child: child,
+      );
+    }
+    return ScaleTransition(
+      scale: CurvedAnimation(
+        parent: animation,
+        curve: _SubtleBounceCurve(),
+      ),
+      child: FadeTransition(
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: Curves.fastLinearToSlowEaseIn,
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+
+class _SubtleBounceCurve extends Curve {
+  _SubtleBounceCurve();
+
+  @override
+  double transform(double t) {
+    final simulation = SpringSimulation(
+      SpringDescription(
+        damping: 14,
+        mass: 1.4,
+        stiffness: 180,
+      ),
+      0.0,
+      1.0,
+      0.1,
+    );
+    return simulation.x(t) + t * (1 - simulation.x(1.0));
+  }
 }
