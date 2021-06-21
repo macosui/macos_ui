@@ -32,7 +32,7 @@ class _DialogsPageState extends State<DialogsPage> {
               primaryButton: PushButton(
                 buttonSize: ButtonSize.large,
                 child: Text('Primary'),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
             ),
           ),
@@ -58,7 +58,7 @@ class _DialogsPageState extends State<DialogsPage> {
               primaryButton: PushButton(
                 buttonSize: ButtonSize.large,
                 child: Text('Primary'),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
@@ -73,7 +73,7 @@ class _DialogsPageState extends State<DialogsPage> {
                         : MacosColors.controlTextColor,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
             ),
           ),
@@ -99,7 +99,7 @@ class _DialogsPageState extends State<DialogsPage> {
               primaryButton: PushButton(
                 buttonSize: ButtonSize.large,
                 child: Text('Primary'),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
@@ -114,7 +114,7 @@ class _DialogsPageState extends State<DialogsPage> {
                         : MacosColors.controlTextColor,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
             ),
           ),
@@ -141,7 +141,7 @@ class _DialogsPageState extends State<DialogsPage> {
               primaryButton: PushButton(
                 buttonSize: ButtonSize.large,
                 child: Text('Primary'),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
@@ -158,7 +158,7 @@ class _DialogsPageState extends State<DialogsPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: Navigator.of(context).pop,
               ),
               suppress: DoNotNotifyRow(),
             ),
