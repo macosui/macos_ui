@@ -137,6 +137,7 @@ class MacosAlertDialog extends StatelessWidget {
         borderRadius: _kDialogBorderRadius,
       ),
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
@@ -169,70 +170,59 @@ class MacosAlertDialog extends StatelessWidget {
               const SizedBox(height: 28),
               DefaultTextStyle(
                 style: MacosTheme.of(context).typography.headline,
+                textAlign: TextAlign.center,
                 child: title,
               ),
               const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DefaultTextStyle(
-                  textAlign: TextAlign.center,
-                  style: MacosTheme.of(context).typography.headline,
-                  child: message,
-                ),
+              DefaultTextStyle(
+                textAlign: TextAlign.center,
+                style: MacosTheme.of(context).typography.headline,
+                child: message,
               ),
               const SizedBox(height: 18),
               if (secondaryButton == null) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
+                Row(
+                  children: [
+                    Expanded(
+                      child: primaryButton,
+                    ),
+                  ],
+                ),
+              ] else ...[
+                if (horizontalActions!) ...[
+                  Row(
                     children: [
+                      if (secondaryButton != null) ...[
+                        Expanded(
+                          child: secondaryButton!,
+                        ),
+                        const SizedBox(width: 8.0),
+                      ],
                       Expanded(
                         child: primaryButton,
                       ),
                     ],
                   ),
-                ),
-              ] else ...[
-                if (horizontalActions!) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      children: [
-                        if (secondaryButton != null) ...[
-                          Expanded(
-                            child: secondaryButton!,
-                          ),
-                          const SizedBox(width: 8.0),
-                        ],
-                        Expanded(
-                          child: primaryButton,
-                        ),
-                      ],
-                    ),
-                  ),
                 ] else ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(child: primaryButton),
+                        ],
+                      ),
+                      const SizedBox(height: 8.0),
+                      if (secondaryButton != null) ...[
                         Row(
                           children: [
-                            Expanded(child: primaryButton),
+                            Expanded(
+                              child: secondaryButton!,
+                            ),
                           ],
                         ),
-                        const SizedBox(height: 8.0),
-                        if (secondaryButton != null) ...[
-                          Row(
-                            children: [
-                              Expanded(
-                                child: secondaryButton!,
-                              ),
-                            ],
-                          ),
-                        ],
                       ],
-                    ),
+                    ],
                   ),
                 ],
               ],
