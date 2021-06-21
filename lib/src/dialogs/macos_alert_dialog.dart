@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
+
+const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
 
 /// A macOS-style AlertDialog.
 ///
@@ -89,64 +92,76 @@ class MacosAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MacosTheme.brightnessOf(context);
+
+    final outerBorderColor = brightness.resolve(
+      Colors.black.withOpacity(0.23),
+      Colors.black.withOpacity(0.76),
+    );
+
+    final innerBorderColor = brightness.resolve(
+      Colors.white.withOpacity(0.45),
+      Colors.white.withOpacity(0.15),
+    );
+
     return Dialog(
-      backgroundColor: MacosTheme.brightnessOf(context).isDark
-          ? MacosColors.controlBackgroundColor.darkColor
-          : MacosColors.controlBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
+      backgroundColor: brightness.resolve(
+        CupertinoColors.systemGrey6.color,
+        MacosColors.controlBackgroundColor.darkColor,
       ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 260),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 28),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: 56,
-                maxWidth: 56,
+      shape: RoundedRectangleBorder(
+        borderRadius: _kDialogBorderRadius,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: innerBorderColor,
+          ),
+          borderRadius: _kDialogBorderRadius,
+        ),
+        foregroundDecoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: outerBorderColor,
+          ),
+          borderRadius: _kDialogBorderRadius,
+        ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: 260,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 28),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: 56,
+                  maxWidth: 56,
+                ),
+                child: appIcon,
               ),
-              child: appIcon,
-            ),
-            const SizedBox(height: 28),
-            DefaultTextStyle(
-              style: MacosTheme.of(context).typography.headline,
-              child: title,
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: DefaultTextStyle(
-                textAlign: TextAlign.center,
+              const SizedBox(height: 28),
+              DefaultTextStyle(
                 style: MacosTheme.of(context).typography.headline,
-                child: message,
+                child: title,
               ),
-            ),
-            const SizedBox(height: 12),
-            if (secondaryButton == null) ...[
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: primaryButton,
-                    ),
-                  ],
+                child: DefaultTextStyle(
+                  textAlign: TextAlign.center,
+                  style: MacosTheme.of(context).typography.headline,
+                  child: message,
                 ),
               ),
-            ] else ...[
-              if (horizontalActions!) ...[
+              const SizedBox(height: 18),
+              if (secondaryButton == null) ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
-                      if (secondaryButton != null) ...[
-                        Expanded(
-                          child: secondaryButton!,
-                        ),
-                        const SizedBox(width: 8.0),
-                      ],
                       Expanded(
                         child: primaryButton,
                       ),
@@ -154,39 +169,58 @@ class MacosAlertDialog extends StatelessWidget {
                   ),
                 ),
               ] else ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(child: primaryButton),
+                if (horizontalActions!) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      children: [
+                        if (secondaryButton != null) ...[
+                          Expanded(
+                            child: secondaryButton!,
+                          ),
+                          const SizedBox(width: 8.0),
                         ],
-                      ),
-                      const SizedBox(height: 8.0),
-                      if (secondaryButton != null) ...[
-                        Row(
-                          children: [
-                            Expanded(
-                              child: secondaryButton!,
-                            ),
-                          ],
+                        Expanded(
+                          child: primaryButton,
                         ),
                       ],
-                    ],
+                    ),
                   ),
-                ),
+                ] else ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: primaryButton),
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        if (secondaryButton != null) ...[
+                          Row(
+                            children: [
+                              Expanded(
+                                child: secondaryButton!,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
               ],
+              const SizedBox(height: 16),
+              if (suppress != null)
+                DefaultTextStyle(
+                  style: MacosTheme.of(context).typography.headline,
+                  child: suppress!,
+                ),
+              const SizedBox(height: 16),
             ],
-            const SizedBox(height: 16),
-            if (suppress != null)
-              DefaultTextStyle(
-                style: MacosTheme.of(context).typography.headline,
-                child: suppress!,
-              ),
-            const SizedBox(height: 16),
-          ],
+          ),
         ),
       ),
     );
