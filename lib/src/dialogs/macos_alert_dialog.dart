@@ -9,6 +9,29 @@ const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
 ///
 /// A [MacosAlertDialog] must display an [appIcon], [title], [message],
 /// and [primaryButton].
+///
+/// To display a [MacosAlertDialog] call [showMacosAlertDialog].
+/// ```dart
+/// showMacosAlertDialog(
+///    context: context,
+///    builder: (_) => MacosAlertDialog(
+///     appIcon: FlutterLogo(
+///       size: 56,
+///     ),
+///     title: Text(
+///       'Alert Dialog with Primary Action',
+///     ),
+///     message: Text(
+///       'This is an alert dialog with a primary action and no secondary action',
+///     ),
+///     primaryButton: PushButton(
+///       buttonSize: ButtonSize.large,
+///       child: Text('Primary'),
+///       onPressed: Navigator.of(context).pop,
+///     ),
+///   ),
+/// ),
+/// ```
 class MacosAlertDialog extends StatelessWidget {
   /// Builds a macOS-style Alert Dialog
   const MacosAlertDialog({
@@ -74,10 +97,10 @@ class MacosAlertDialog extends StatelessWidget {
   ///       mainAxisAlignment: MainAxisAlignment.center,
   ///       children: [
   ///         MacosCheckbox(
-  ///           value: suppress,
-  ///           onChanged: (value) {
-  ///             setState(() => suppress = value);
-  ///           },
+  //// value: suppress,
+  //// onChanged: (value) {
+  ////   setState(() => suppress = value);
+  //// },
   ///         ),
   ///         const SizedBox(width: 8),
   ///         Text('Don\'t ask again'),
