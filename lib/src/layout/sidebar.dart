@@ -16,6 +16,7 @@ class Sidebar {
     this.startWidth,
     this.padding = EdgeInsets.zero,
     this.scaffoldBreakpoint = 556.0,
+    this.top,
     this.bottom,
   });
 
@@ -74,6 +75,9 @@ class Sidebar {
 
   /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
   final double scaffoldBreakpoint;
+
+  /// Widget that should be displayed at the Top of the Sidebar
+  final Widget? top;
 
   /// Widget that should be displayed at the Bottom of the Sidebar
   final Widget? bottom;
