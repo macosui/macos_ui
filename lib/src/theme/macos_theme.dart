@@ -393,4 +393,9 @@ class MacosThemeData with Diagnosticable {
 extension BrightnessX on Brightness {
   /// Check if the brightness is dark or not.
   bool get isDark => this == Brightness.dark;
+
+  T resolve<T>(T light, T dark) {
+    if (isDark) return dark;
+    return light;
+  }
 }
