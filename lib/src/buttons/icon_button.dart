@@ -183,6 +183,7 @@ class _MacosIconButtonState extends State<MacosIconButton>
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
 
@@ -202,7 +203,7 @@ class _MacosIconButtonState extends State<MacosIconButton>
     }
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: theme.mouseCursor,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,

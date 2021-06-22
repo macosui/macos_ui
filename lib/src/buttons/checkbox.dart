@@ -84,52 +84,55 @@ class MacosCheckbox extends StatelessWidget {
     assert(debugCheckHasMacosTheme(context));
     final MacosThemeData theme = MacosTheme.of(context);
     bool isLight = !theme.brightness.isDark;
-    return GestureDetector(
-      onTap: () {
-        if (value == null || value == false) {
-          onChanged?.call(true);
-        } else {
-          onChanged?.call(false);
-        }
-      },
-      child: Semantics(
-        // value == true because [value] can be null
-        checked: value == true,
-        label: semanticLabel,
-        child: Container(
-          height: size,
-          width: size,
-          alignment: Alignment.center,
-          decoration: isDisabled || value == null || value == true
-              ? BoxDecoration(
-                  color: MacosDynamicColor.resolve(
-                    isDisabled
-                        ? disabledColor
-                        : activeColor ?? theme.primaryColor,
-                    context,
-                  ),
-                  borderRadius: BorderRadius.circular(4.0),
-                )
-              : BoxDecoration(
-                  color: isLight ? null : CupertinoColors.tertiaryLabel,
-                  border: Border.all(
-                    style: isLight ? BorderStyle.solid : BorderStyle.none,
-                    width: 0.5,
+    return MouseRegion(
+      cursor: theme.mouseCursor,
+      child: GestureDetector(
+        onTap: () {
+          if (value == null || value == false) {
+            onChanged?.call(true);
+          } else {
+            onChanged?.call(false);
+          }
+        },
+        child: Semantics(
+          // value == true because [value] can be null
+          checked: value == true,
+          label: semanticLabel,
+          child: Container(
+            height: size,
+            width: size,
+            alignment: Alignment.center,
+            decoration: isDisabled || value == null || value == true
+                ? BoxDecoration(
                     color: MacosDynamicColor.resolve(
-                      offBorderColor,
+                      isDisabled
+                          ? disabledColor
+                          : activeColor ?? theme.primaryColor,
                       context,
                     ),
+                    borderRadius: BorderRadius.circular(4.0),
+                  )
+                : BoxDecoration(
+                    color: isLight ? null : CupertinoColors.tertiaryLabel,
+                    border: Border.all(
+                      style: isLight ? BorderStyle.solid : BorderStyle.none,
+                      width: 0.5,
+                      color: MacosDynamicColor.resolve(
+                        offBorderColor,
+                        context,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(4.0),
                   ),
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-          child: Icon(
-            isDisabled || value == false
-                ? null
-                : isMixed
-                    ? CupertinoIcons.minus
-                    : CupertinoIcons.check_mark,
-            color: CupertinoColors.white,
-            size: (size - 3).clamp(0, size),
+            child: Icon(
+              isDisabled || value == false
+                  ? null
+                  : isMixed
+                      ? CupertinoIcons.minus
+                      : CupertinoIcons.check_mark,
+              color: CupertinoColors.white,
+              size: (size - 3).clamp(0, size),
+            ),
           ),
         ),
       ),

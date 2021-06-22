@@ -238,7 +238,7 @@ class _PushButtonState extends State<PushButton>
         theme.typography.headline.copyWith(color: foregroundColor);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: theme.mouseCursor,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,

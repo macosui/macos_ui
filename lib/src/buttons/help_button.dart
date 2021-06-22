@@ -153,6 +153,7 @@ class _HelpButtonState extends State<HelpButton>
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
@@ -172,7 +173,7 @@ class _HelpButtonState extends State<HelpButton>
             : Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: theme.mouseCursor,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,

@@ -119,8 +119,10 @@ class _MacosBackButtonState extends State<MacosBackButton>
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final MacosThemeData theme = MacosTheme.of(context);
     final bool enabled = widget.enabled;
-    final brightness = MacosTheme.of(context).brightness;
+    final Brightness brightness = theme.brightness;
     final iconColor = brightness == Brightness.dark
         ? CupertinoColors.white
         : CupertinoColors.black;
@@ -134,7 +136,7 @@ class _MacosBackButtonState extends State<MacosBackButton>
     }
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: theme.mouseCursor,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
