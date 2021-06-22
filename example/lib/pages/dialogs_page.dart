@@ -62,9 +62,11 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
-                color: MacosTheme.brightnessOf(context).isDark
-                    ? MacosColors.controlColor.darkColor
-                    : MacosColors.controlColor,
+                backgroundColor:
+                    MacosStateProperty.all(MacosDynamicColor.resolve(
+                  MacosColors.controlColor,
+                  context,
+                )),
                 child: Text(
                   'Secondary',
                   style: TextStyle(
@@ -103,9 +105,11 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
-                color: MacosTheme.brightnessOf(context).isDark
-                    ? MacosColors.controlColor.darkColor
-                    : MacosColors.controlColor,
+                backgroundColor:
+                    MacosStateProperty.all(MacosDynamicColor.resolve(
+                  MacosColors.controlColor,
+                  context,
+                )),
                 child: Text(
                   'Secondary',
                   style: TextStyle(
@@ -145,10 +149,11 @@ class _DialogsPageState extends State<DialogsPage> {
               ),
               secondaryButton: PushButton(
                 buttonSize: ButtonSize.large,
-                color: MacosDynamicColor.resolve(
+                backgroundColor:
+                    MacosStateProperty.all(MacosDynamicColor.resolve(
                   MacosColors.controlColor,
                   context,
-                ),
+                )),
                 child: Text(
                   'Secondary',
                   style: TextStyle(
