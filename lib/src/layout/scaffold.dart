@@ -166,7 +166,6 @@ class _MacosScaffoldState extends State<MacosScaffold> {
                   color: sidebarBackgroundColor,
                   child: Column(
                     children: [
-                      SizedBox(height: titleBarHeight - 1),
                       if (_sidebarScrollController.hasClients &&
                           _sidebarScrollController.offset > 0.0)
                         Divider(thickness: 1, height: 1, color: dividerColor),
