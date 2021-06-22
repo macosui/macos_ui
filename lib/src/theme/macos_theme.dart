@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -195,6 +196,7 @@ class MacosThemeData with Diagnosticable {
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
     ScrollbarThemeData? scrollbarTheme,
+    MouseCursor? mouseCursor,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -232,6 +234,16 @@ class MacosThemeData with Diagnosticable {
 
     visualDensity ??= VisualDensity.adaptivePlatformDensity;
 
+    mouseCursor ??= () {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.macOS:
+        case TargetPlatform.iOS:
+          return MouseCursor.defer;
+        default:
+          return SystemMouseCursors.click;
+      }
+    }();
+
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -243,6 +255,7 @@ class MacosThemeData with Diagnosticable {
       tooltipTheme: tooltipTheme,
       visualDensity: visualDensity,
       scrollbarTheme: scrollbarTheme,
+      mouseCursor: mouseCursor,
     );
   }
 
@@ -263,6 +276,7 @@ class MacosThemeData with Diagnosticable {
     required this.tooltipTheme,
     required this.visualDensity,
     required this.scrollbarTheme,
+    required this.mouseCursor,
   });
 
   /// A default light theme.
@@ -321,10 +335,19 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [MacosScrollbar]s below the overall [MacosTheme]
   final ScrollbarThemeData scrollbarTheme;
 
+  /// The mouse cursor used on the macos inputs.
+  ///
+  /// {@template macos_ui.theme.mouseCursor}
+  /// When the current platform is macOS or iOS, [MouseCursor.defer] is used.
+  /// On the other platforms, [SystemMouseCursors.click] is used.
+  /// {@endTemplate}
+  final MouseCursor mouseCursor;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
       brightness: t < 0.5 ? a.brightness : b.brightness,
+      mouseCursor: t < 0.5 ? a.mouseCursor : b.mouseCursor,
       dividerColor: Color.lerp(a.dividerColor, b.dividerColor, t)!,
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       canvasColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
@@ -352,6 +375,7 @@ class MacosThemeData with Diagnosticable {
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
     ScrollbarThemeData? scrollbarTheme,
+    MouseCursor? mouseCursor,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -364,6 +388,7 @@ class MacosThemeData with Diagnosticable {
       tooltipTheme: this.tooltipTheme.copyWith(tooltipTheme),
       visualDensity: visualDensity ?? this.visualDensity,
       scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
+      mouseCursor: mouseCursor ?? this.mouseCursor,
     );
   }
 
@@ -376,6 +401,8 @@ class MacosThemeData with Diagnosticable {
     properties.add(ColorProperty('dividerColor', dividerColor));
     properties
         .add(DiagnosticsProperty<MacosTypography>('typography', typography));
+    properties
+        .add(DiagnosticsProperty<MouseCursor>('mouseCursor', mouseCursor));
     properties.add(DiagnosticsProperty<PushButtonThemeData>(
       'pushButtonTheme',
       pushButtonTheme,
