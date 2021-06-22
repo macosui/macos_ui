@@ -300,7 +300,10 @@ class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
   final Color? _barrierColor;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 450);
+  Curve get barrierCurve => Curves.linear;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 4050);
 
   @override
   Duration get reverseTransitionDuration => const Duration(milliseconds: 120);
