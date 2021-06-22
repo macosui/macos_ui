@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
 
@@ -97,10 +98,10 @@ class MacosAlertDialog extends StatelessWidget {
   ///       mainAxisAlignment: MainAxisAlignment.center,
   ///       children: [
   ///         MacosCheckbox(
-  //// value: suppress,
-  //// onChanged: (value) {
-  ////   setState(() => suppress = value);
-  //// },
+  ///  value: suppress,
+  ///  onChanged: (value) {
+  ///    setState(() => suppress = value);
+  ///  },
   ///         ),
   ///         const SizedBox(width: 8),
   ///         Text('Don\'t ask again'),
@@ -116,6 +117,7 @@ class MacosAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
     final brightness = MacosTheme.brightnessOf(context);
 
     final outerBorderColor = brightness.resolve(
@@ -251,10 +253,11 @@ Future<T?> showMacosAlertDialog<T>({
   bool useRootNavigator = true,
   RouteSettings? routeSettings,
 }) {
-  barrierColor ??= (MacosTheme.brightnessOf(context).isDark
-          ? MacosColors.controlBackgroundColor.darkColor
-          : MacosColors.controlBackgroundColor)
-      .withOpacity(0.6);
+  barrierColor ??= MacosDynamicColor.resolve(
+    MacosColors.controlBackgroundColor,
+    context,
+  ).withOpacity(0.6);
+
   return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
     _MacosAlertDialogRoute<T>(
       settings: routeSettings,
