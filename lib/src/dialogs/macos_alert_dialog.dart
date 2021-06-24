@@ -35,31 +35,47 @@ const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
 /// ```
 class MacosAlertDialog extends StatelessWidget {
   /// Builds a macOS-style Alert Dialog
-  const MacosAlertDialog({
+  MacosAlertDialog({
     Key? key,
-    required this.appIcon,
+    Widget? appIcon,
+    TextAlign? titleAlign,
+    TextAlign? messageAlign,
     required this.title,
     required this.message,
     required this.primaryButton,
     this.secondaryButton,
     this.horizontalActions = true,
     this.suppress,
-  }) : super(key: key);
+  }) : 
+    _appIcon = appIcon, 
+    _titleAlign = titleAlign ?? TextAlign.center,
+    _messageAlign = titleAlign ?? TextAlign.center,
+    super(key: key);
 
   /// This should be your application's icon.
   ///
   /// The size of this widget should be 56x56.
-  final Widget appIcon;
+  Widget? _appIcon;
 
   /// The title for the dialog.
   ///
   /// Typically a Text widget.
   final Widget title;
 
+  /// How to align title
+  /// 
+  /// Defaults to center
+  TextAlign _titleAlign;
+
   /// The content to display in the dialog.
   ///
   /// Typically a Text widget.
   final Widget message;
+
+  /// How to align message
+  /// 
+  /// Defaults to center
+  TextAlign _messageAlign;
 
   /// The primary action a user can take.
   ///
@@ -160,24 +176,27 @@ class MacosAlertDialog extends StatelessWidget {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 28),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: 56,
-                  maxWidth: 56,
+              if(_appIcon != null) ...[
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: 56,
+                      maxWidth: 56,
+                    ),
+                    child: _appIcon!,
                 ),
-                child: appIcon,
-              ),
-              const SizedBox(height: 28),
+                const SizedBox(height: 28),
+              ],
               DefaultTextStyle(
                 style: MacosTheme.of(context).typography.headline,
-                textAlign: TextAlign.center,
+                textAlign: _titleAlign,
                 child: title,
               ),
               const SizedBox(height: 16),
               DefaultTextStyle(
-                textAlign: TextAlign.center,
+                textAlign: _messageAlign,
                 style: MacosTheme.of(context).typography.headline,
                 child: message,
               ),
