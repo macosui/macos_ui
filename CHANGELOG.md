@@ -1,3 +1,9 @@
+## [0.6.1]
+* Removes blank area above sidebar contents, this can be set by developer using padding or container in builder
+* Adds optional top attribute, like the bottom attribute, to Sidebar.
+* Makes text alignment avaialble for title and message in MacosAlertDialog
+* Makes icon optional for MacosAlertDialog
+
 ## [0.6.0]
 * Improved `MacosAlertDialog` design
 * Added `showMacosAlertDialog` to display a `MacosAlertDialog` with standard macOS animations and behaviour.
