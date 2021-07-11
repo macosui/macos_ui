@@ -1,3 +1,6 @@
+## [0.6.1]
+* Fix `builder` property in `MacosApp` never being used ([#148](https://github.com/GroovinChip/macos_ui/issues/148))
+
 ## [0.6.0]
 * Improved `MacosAlertDialog` design
 * Added `showMacosAlertDialog` to display a `MacosAlertDialog` with standard macOS animations and behaviour.
