@@ -347,7 +347,7 @@ class _MacosAppState extends State<MacosApp> {
                     initialEntries: [
                       OverlayEntry(
                         builder: (context) => widget.builder!(context, child),
-                      )
+                      ),
                     ],
                   );
                 },
