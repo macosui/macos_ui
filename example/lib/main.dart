@@ -24,15 +24,14 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          theme: MacosThemeData.light().copyWith(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: MacosThemeData.dark().copyWith(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+          theme: MacosThemeData.light(),
+          darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
-          home: Demo(),
+          builder: (context, child) {
+            return Demo();
+          },
+          //home: Demo(),
         );
       },
     );
