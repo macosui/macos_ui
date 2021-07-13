@@ -46,11 +46,10 @@ class MacosAlertDialog extends StatelessWidget {
     this.secondaryButton,
     this.horizontalActions = true,
     this.suppress,
-  }) : 
-    _appIcon = appIcon, 
-    _titleAlign = titleAlign ?? TextAlign.center,
-    _messageAlign = titleAlign ?? TextAlign.center,
-    super(key: key);
+  })  : _appIcon = appIcon,
+        _titleAlign = titleAlign ?? TextAlign.center,
+        _messageAlign = titleAlign ?? TextAlign.center,
+        super(key: key);
 
   /// This should be your application's icon.
   ///
@@ -63,7 +62,7 @@ class MacosAlertDialog extends StatelessWidget {
   final Widget title;
 
   /// How to align title
-  /// 
+  ///
   /// Defaults to center
   TextAlign _titleAlign;
 
@@ -73,7 +72,7 @@ class MacosAlertDialog extends StatelessWidget {
   final Widget message;
 
   /// How to align message
-  /// 
+  ///
   /// Defaults to center
   TextAlign _messageAlign;
 
@@ -179,13 +178,13 @@ class MacosAlertDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 28),
-              if(_appIcon != null) ...[
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: 56,
-                      maxWidth: 56,
-                    ),
-                    child: _appIcon!,
+              if (_appIcon != null) ...[
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: 56,
+                    maxWidth: 56,
+                  ),
+                  child: _appIcon!,
                 ),
                 const SizedBox(height: 28),
               ],
