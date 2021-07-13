@@ -336,7 +336,23 @@ class _MacosAppState extends State<MacosApp> {
       data: theme,
       child: DefaultTextStyle(
         style: TextStyle(color: theme.typography.body.color),
-        child: child!,
+        child: widget.builder != null
+            // See the MaterialApp source code for the explanation for
+            // wrapping a builder in a builder
+            ? Builder(
+                builder: (context) {
+                  // An Overlay is used here because MacosTooltip needs an
+                  // Overlay as an ancestor in the widget tree.
+                  return Overlay(
+                    initialEntries: [
+                      OverlayEntry(
+                        builder: (context) => widget.builder!(context, child),
+                      ),
+                    ],
+                  );
+                },
+              )
+            : child ?? const SizedBox.shrink(),
       ),
     );
   }

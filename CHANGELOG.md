@@ -3,6 +3,7 @@
 * Adds optional top attribute, like the bottom attribute, to Sidebar.
 * Makes text alignment avaialble for title and message in MacosAlertDialog
 * Makes icon optional for MacosAlertDialog
+* Fix `builder` property in `MacosApp` never being used ([#148](https://github.com/GroovinChip/macos_ui/issues/148))
 
 ## [0.6.0]
 * Improved `MacosAlertDialog` design
