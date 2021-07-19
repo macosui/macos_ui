@@ -1,7 +1,7 @@
 ## [0.6.1]
 * Removes blank area above sidebar contents, this can be set by developer using padding or container in builder
 * Adds optional top attribute, like the bottom attribute, to Sidebar.
-* Makes text alignment avaialble for title and message in MacosAlertDialog
+* Makes text alignment available for title and message in MacosAlertDialog
 * Makes icon optional for MacosAlertDialog
 * Fix `builder` property in `MacosApp` never being used ([#148](https://github.com/GroovinChip/macos_ui/issues/148))
 
