@@ -222,20 +222,6 @@ class _MacosIconButtonState extends State<MacosIconButton>
                   borderRadius:
                       widget.borderRadius != null ? widget.borderRadius : null,
                   color: !enabled ? disabledColor : backgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(-0.1, -0.1),
-                    ),
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(0.1, 0.1),
-                    ),
-                    BoxShadow(
-                      color: CupertinoColors.tertiarySystemFill,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(8),

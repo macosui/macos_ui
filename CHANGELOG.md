@@ -1,3 +1,6 @@
+## [0.6.2]
+* Chore: Remove box shadows from `MacosIconButton`
+
 ## [0.6.1]
 * Fix `builder` property in `MacosApp` never being used ([#148](https://github.com/GroovinChip/macos_ui/issues/148))
 
