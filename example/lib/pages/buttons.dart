@@ -33,14 +33,37 @@ class _ButtonsPageState extends State<ButtonsPage> {
           const SizedBox(height: 20),
           Text('MacosIconButton'),
           const SizedBox(height: 8),
-          MacosIconButton(
-            icon: Icon(
-              CupertinoIcons.star_fill,
-              color: Colors.white,
-            ),
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(7),
-            onPressed: () {},
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MacosIconButton(
+                icon: Icon(
+                  CupertinoIcons.star_fill,
+                  color: Colors.white,
+                ),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(7),
+                onPressed: () {},
+              ),
+              const SizedBox(width: 8),
+              MacosIconButton(
+                icon: Icon(
+                  CupertinoIcons.star_fill,
+                  color: Colors.white,
+                ),
+                shape: BoxShape.circle,
+                onPressed: () {},
+              ),
+              const SizedBox(width: 8),
+              MacosIconButton(
+                icon: Icon(
+                  CupertinoIcons.star_fill,
+                  color: Colors.white,
+                ),
+                backgroundColor: Colors.transparent,
+                onPressed: () {},
+              ),
+            ],
           ),
           const SizedBox(height: 20),
           PushButton(
