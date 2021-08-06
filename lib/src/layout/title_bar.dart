@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
-import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
 /// Defines the height of a regular-sized [TitleBar]
