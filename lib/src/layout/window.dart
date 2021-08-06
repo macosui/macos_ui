@@ -42,10 +42,10 @@ class MacosWindow extends StatefulWidget {
   final Sidebar? sidebar;
 
   @override
-  MacosWindowState createState() => MacosWindowState();
+  _MacosWindowState createState() => _MacosWindowState();
 }
 
-class MacosWindowState extends State<MacosWindow> {
+class _MacosWindowState extends State<MacosWindow> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final _sidebarScrollController = ScrollController();
   double _sidebarWidth = 0.0;
