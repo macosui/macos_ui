@@ -10,11 +10,11 @@ class ContentArea extends StatelessWidget {
   /// The [builder] can be null to show an empty widget.
   ///
   /// The width of this
-  /// widget is automatically calculated in [ScaffoldScope].
-  const ContentArea({
-    Key? key,
+  /// widget is automatically calculated in [MacosScaffoldScope].
+  ContentArea({
     required this.builder,
-  }) : super(key: key);
+    this.minWidth = 300,
+  }) : super(key: Key('macos_scaffold_content_area'));
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -23,12 +23,17 @@ class ContentArea extends StatelessWidget {
   /// widget used in this method to work with the internal [MacosScrollbar].
   final ScrollableWidgetBuilder? builder;
 
+  /// Specifies the minimum width that this [ContentArea] can have.
+  final double minWidth;
+
   static final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: ScaffoldScope.of(context).contentAreaWidth,
+    return ConstrainedBox(
+      constraints: BoxConstraints.expand().copyWith(
+        minWidth: minWidth,
+      ),
       child: SafeArea(
         left: false,
         right: false,
