@@ -69,13 +69,62 @@ class _ButtonsPageState extends State<ButtonsPage> {
           PushButton(
             buttonSize: ButtonSize.large,
             child: Text('large PushButton'),
-            onPressed: () {},
+            onPressed: () {
+              MacosWindowScope.of(context).toggleSidebar();
+            },
           ),
           const SizedBox(height: 20),
           PushButton(
             buttonSize: ButtonSize.small,
             child: Text('small PushButton'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) {
+                    return MacosScaffold(
+                      titleBar: TitleBar(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            'New page',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      children: [
+                        ContentArea(
+                          builder: (context, scrollController) {
+                            return Center(
+                              child: PushButton(
+                                buttonSize: ButtonSize.large,
+                                child: Text('Go Back'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                        ResizablePane(
+                          minWidth: 180,
+                          startWidth: 200,
+                          scaffoldBreakpoint: 700,
+                          resizableSide: ResizableSide.left,
+                          builder: (_, __) {
+                            return Center(child: Text('Resizable Pane'));
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

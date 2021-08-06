@@ -3,6 +3,7 @@ import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -28,10 +29,7 @@ class MyApp extends StatelessWidget {
           darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
-          builder: (context, child) {
-            return Demo();
-          },
-          //home: Demo(),
+          home: Demo(),
         );
       },
     );
@@ -68,11 +66,7 @@ class _DemoState extends State<Demo> {
 
   @override
   Widget build(BuildContext context) {
-    return MacosScaffold(
-      titleBar: TitleBar(
-        size: TitleBarSize.small,
-        child: Text('macos_ui Widget Gallery'),
-      ),
+    return MacosWindow(
       sidebar: Sidebar(
         minWidth: 200,
         bottom: Padding(
@@ -129,30 +123,44 @@ class _DemoState extends State<Demo> {
           );
         },
       ),
-      children: <Widget>[
-        ContentArea(
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              padding: EdgeInsets.all(20),
-              child: IndexedStack(
-                alignment: Alignment.topCenter,
-                index: pageIndex,
-                children: pages,
-              ),
-            );
-          },
+      child: MacosScaffold(
+        titleBar: TitleBar(
+          child: Text('macos_ui Widget Gallery'),
         ),
-        // ResizablePane(
-        //   minWidth: 180,
-        //   startWidth: 200,
-        //   scaffoldBreakpoint: 500,
-        //   resizableSide: ResizableSide.left,
-        //   builder: (_, __) {
-        //     return Center(child: Text('Resizable Pane'));
-        //   },
-        // ),
-      ],
+        children: [
+          ResizablePane(
+            minWidth: 180,
+            startWidth: 200,
+            scaffoldBreakpoint: 700,
+            resizableSide: ResizableSide.right,
+            builder: (_, __) {
+              return Center(child: Text('Resizable Pane'));
+            },
+          ),
+          ContentArea(
+            builder: (context, scrollController) {
+              return SingleChildScrollView(
+                controller: scrollController,
+                padding: EdgeInsets.all(20),
+                child: IndexedStack(
+                  alignment: Alignment.topCenter,
+                  index: pageIndex,
+                  children: pages,
+                ),
+              );
+            },
+          ),
+          ResizablePane(
+            minWidth: 180,
+            startWidth: 200,
+            scaffoldBreakpoint: 800,
+            resizableSide: ResizableSide.left,
+            builder: (_, __) {
+              return Center(child: Text('Resizable Pane'));
+            },
+          ),
+        ],
+      ),
     );
   }
 }
