@@ -17,6 +17,7 @@ class Sidebar {
     this.padding = EdgeInsets.zero,
     this.scaffoldBreakpoint = 556.0,
     this.bottom,
+    this.topOffset = 51.0,
   });
 
   /// The builder that creates a child to display in this widget, which will
@@ -77,4 +78,9 @@ class Sidebar {
 
   /// Widget that should be displayed at the Bottom of the Sidebar
   final Widget? bottom;
+
+  /// Specifies the top offset of the sidebar.
+  ///
+  /// Defaults to `51.0` which levels it up with the default height of the [TitleBar]
+  final double topOffset;
 }
