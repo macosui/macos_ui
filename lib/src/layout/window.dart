@@ -133,7 +133,8 @@ class _MacosWindowState extends State<MacosWindow> {
                   color: sidebarBackgroundColor,
                   child: Column(
                     children: [
-                      SizedBox(height: 51),
+                      if ((widget.sidebar?.topOffset ?? 0) > 0)
+                        SizedBox(height: widget.sidebar?.topOffset),
                       if (_sidebarScrollController.hasClients &&
                           _sidebarScrollController.offset > 0.0)
                         Divider(thickness: 1, height: 1, color: dividerColor),
