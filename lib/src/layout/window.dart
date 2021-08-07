@@ -50,6 +50,7 @@ class _MacosWindowState extends State<MacosWindow> {
   final _sidebarScrollController = ScrollController();
   double _sidebarWidth = 0.0;
   bool _showSidebar = true;
+  int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
 
   void _recalculateLayout() {
@@ -111,6 +112,9 @@ class _MacosWindowState extends State<MacosWindow> {
           CupertinoColors.tertiarySystemBackground.darkColor;
     }
 
+    final curve = Curves.linearToEaseOut;
+    final duration = Duration(milliseconds: _sidebarSlideDuration);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -123,8 +127,10 @@ class _MacosWindowState extends State<MacosWindow> {
         final layout = Stack(
           children: [
             // Sidebar
-            if (widget.sidebar != null && canShowSidebar)
-              Positioned(
+            if (widget.sidebar != null)
+              AnimatedPositioned(
+                curve: curve,
+                duration: duration,
                 height: height,
                 width: _sidebarWidth,
                 child: AnimatedContainer(
@@ -156,14 +162,19 @@ class _MacosWindowState extends State<MacosWindow> {
               ),
 
             // Background color
-            Positioned.fill(
+            AnimatedPositioned(
+              curve: curve,
+              duration: duration,
               left: visibleSidebarWidth,
+              height: height,
+              width: width,
               child: ColoredBox(color: backgroundColor),
             ),
 
             // Content Area
-            Positioned(
-              top: 0,
+            AnimatedPositioned(
+              curve: curve,
+              duration: duration,
               left: visibleSidebarWidth,
               width: width - visibleSidebarWidth,
               height: height,
@@ -182,9 +193,11 @@ class _MacosWindowState extends State<MacosWindow> {
             ),
 
             // Sidebar resizer
-            if ((widget.sidebar?.isResizable ?? false) && canShowSidebar)
-              Positioned(
-                left: _sidebarWidth - 4,
+            if (widget.sidebar?.isResizable ?? false)
+              AnimatedPositioned(
+                curve: curve,
+                duration: duration,
+                left: visibleSidebarWidth - 4,
                 width: 7,
                 height: height,
                 child: GestureDetector(
@@ -226,8 +239,11 @@ class _MacosWindowState extends State<MacosWindow> {
           child: layout,
           constraints: constraints,
           isSidebarShown: canShowSidebar,
-          sidebarToggler: () {
+          sidebarToggler: () async {
+            setState(() => _sidebarSlideDuration = 300);
             setState(() => _showSidebar = !_showSidebar);
+            await Future.delayed(Duration(milliseconds: _sidebarSlideDuration));
+            setState(() => _sidebarSlideDuration = 0);
           },
         );
       },
