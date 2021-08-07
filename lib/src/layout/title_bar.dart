@@ -119,10 +119,12 @@ class TitleBar extends StatelessWidget {
       );
     }
 
+    final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
+
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         padding: EdgeInsets.only(
-          left: defaultTargetPlatform == TargetPlatform.macOS ? 70 : 0,
+          left: !kIsWeb && isMacOS ? 70 : 0,
         ),
       ),
       child: ClipRect(
