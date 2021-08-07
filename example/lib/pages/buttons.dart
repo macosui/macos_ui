@@ -15,7 +15,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
         title: Text('macOS UI Widget Gallery'),
         actions: [
           MacosIconButton(
-            backgroundColor: Colors.grey.shade100,
+            backgroundColor: MacosColors.transparent,
             icon: Icon(
               CupertinoIcons.sidebar_left,
               color: MacosColors.systemGrayColor,
@@ -24,7 +24,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
               MacosWindowScope.of(context).toggleSidebar();
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 10),
         ],
       ),
       children: [
@@ -113,6 +113,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         builder: (_) {
                           return MacosScaffold(
                             titleBar: TitleBar(
+                              centerTitle: false,
                               title: Text('New page'),
                             ),
                             children: [
