@@ -9,6 +9,7 @@ Flutter widgets and themes implementing the current macOS design language.
   - [Contributing](#contributing)
   - [Resources](#resources)
 - [Layout](#layout)
+  - [MacosWindow](#macoswindow)
   - [MacosScaffold](#macosscaffold)
 - [Buttons](#buttons)
   - [MacosCheckbox](#macoscheckbox)
@@ -43,20 +44,32 @@ macOS welcomes contributions. Please see CONTRIBUTING.md for more information.
 
 # Layout
 
+## MacosWindow
+
+`MacosWindow` is the basic frame for the macOS layout.
+
+It has a `Sidebar` on the left and the rest of the window is typically filled out
+with a `MacosScaffold`. A scope for the `MacosWindow` is provided by `MacosWindowScope`.
+The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`.
+
+<img src="https://imgur.com/dqk7N13.png" width="75%">
+
+
 ## MacosScaffold
 
-`MacosScaffold` provides a basic structure for laying out widgets in a way you would expect on macOS.
-You must specify a `body` as the main content area, and you can optionally provide a `sidebar`
-that will show to the left of `body`. The `sidebar` can be resized by grabbing the split and
-dragging left or right. See the documentation for all customization options.
+The `MacosScaffold` is what you would call a "page". It comes with an internal navigator which means that routes that are pushed under the scaffold will be displayed in the scaffold area (this excludes the sidebar).
+Unless the route is pushed to the root navigator.
 
-<img src="https://imgur.com/RXhTJj4.jpg" width="75%"/>
+The scaffold has a `TitleBar` property and the `children` property which accepts a `ContentArea` widget and multiple `ResizablePane` widgets.
 
-<img src="https://imgur.com/GzKJsbn.png" width="75%"/>
+See the documentation for customizations.
 
-<img src="https://imgur.com/owpkOPC.png" width="75%"/>
+<img src="https://imgur.com/dCpEEta.png" width="75%"/>
 
-<img src="https://imgur.com/f9ZFiLv.png" width="75%"/>
+<img src="https://imgur.com/fnMLrVD.png" width="75%"/>
+
+<img src="https://imgur.com/eoW4GGT.png" width="75%"/>
+
 
 # Buttons
 
