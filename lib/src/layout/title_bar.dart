@@ -1,6 +1,6 @@
-import 'dart:io' show Platform;
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/src/buttons/back_button.dart';
 import 'package:macos_ui/src/layout/window.dart';
@@ -84,11 +84,10 @@ class TitleBar extends StatelessWidget {
     Widget? _leading = leading;
     if (_leading == null && automaticallyImplyLeading) {
       if (route?.canPop ?? false) {
-        _leading = Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 8,
-            vertical: (height - 22) / 2,
-          ),
+        _leading = Container(
+          width: 20,
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
             fillColor: Color(0x00000),
             onPressed: () => Navigator.pop(context),
@@ -104,7 +103,9 @@ class TitleBar extends StatelessWidget {
         style: MacosTheme.of(context).typography.headline.copyWith(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF4D4D4D),
+              color: theme.brightness.isDark
+                  ? Color(0xFFEAEAEA)
+                  : Color(0xFF4D4D4D),
             ),
       );
     }
@@ -120,7 +121,9 @@ class TitleBar extends StatelessWidget {
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        padding: EdgeInsets.only(left: Platform.isMacOS ? 70 : 0),
+        padding: EdgeInsets.only(
+          left: defaultTargetPlatform == TargetPlatform.macOS ? 70 : 0,
+        ),
       ),
       child: ClipRect(
         child: BackdropFilter(
