@@ -1,6 +1,8 @@
+import 'dart:io' show Platform;
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'package:macos_ui/src/buttons/back_button.dart';
 import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
@@ -14,9 +16,13 @@ class TitleBar extends StatelessWidget {
   const TitleBar({
     this.height = kTitleBarHeight,
     this.alignment = Alignment.center,
-    this.child,
+    this.title,
     this.padding = const EdgeInsets.all(8),
     this.decoration,
+    this.leading,
+    this.automaticallyImplyLeading = true,
+    this.actions,
+    this.centerTitle = true,
   });
 
   /// Specifies the height of this [TitleBar]
@@ -24,7 +30,7 @@ class TitleBar extends StatelessWidget {
   /// Defaults to [kTitleBarHeight] which is 52.0
   final double height;
 
-  /// Align the [child] within the [TitleBar].
+  /// Align the [title] within the [TitleBar].
   ///
   /// Defaults to [Alignment.center].
   ///
@@ -39,42 +45,91 @@ class TitleBar extends StatelessWidget {
   ///    relative to text direction.
   final Alignment alignment;
 
-  /// The [child] contained by the container.
-  final Widget? child;
+  /// The [title] contained by the container.
+  final Widget? title;
 
-  /// The decoration to paint behind the [child].
+  /// The decoration to paint behind the [title].
   final BoxDecoration? decoration;
 
-  /// Empty space to inscribe inside the title bar. The [child], if any, is
+  /// Empty space to inscribe inside the title bar. The [title], if any, is
   /// placed inside this padding.
   ///
   /// Defaults to `EdgeInsets.all(8)`
   final EdgeInsets padding;
 
+  /// A widget to display before the toolbar's [title].
+  ///
+  /// Typically the [leading] widget is an [Icon] or an [IconButton].
+  final Widget? leading;
+
+  /// Controls whether we should try to imply the leading widget if null.
+  ///
+  /// If true and [leading] is null, automatically try to deduce what the leading
+  /// widget should be. If false and [leading] is null, leading space is given to [title].
+  /// If leading widget is not null, this parameter has no effect.
+  final bool automaticallyImplyLeading;
+
+  /// A list of Widgets to display in a row after the [title] widget.
+  final List<Widget>? actions;
+
+  /// Whether the title should be centered.
+  final bool centerTitle;
+
   @override
   Widget build(BuildContext context) {
     final MacosThemeData theme = MacosTheme.of(context);
     Color dividerColor = theme.dividerColor;
+    final route = ModalRoute.of(context);
+
+    Widget? _leading = leading;
+    if (_leading == null && automaticallyImplyLeading) {
+      if (route?.canPop ?? false) {
+        _leading = Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 8,
+            vertical: (height - 22) / 2,
+          ),
+          child: MacosBackButton(
+            fillColor: Color(0x00000),
+            onPressed: () => Navigator.pop(context),
+          ),
+        );
+      }
+    }
+
+    Widget? _title = title;
+    if (_title != null) {
+      _title = DefaultTextStyle(
+        child: _title,
+        style: MacosTheme.of(context).typography.headline.copyWith(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF4D4D4D),
+            ),
+      );
+    }
+
+    Widget? _actions;
+    if (actions != null && actions!.isNotEmpty) {
+      _actions = Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: actions!,
+      );
+    }
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        padding: EdgeInsets.only(left: 60),
+        padding: EdgeInsets.only(left: Platform.isMacOS ? 70 : 0),
       ),
       child: ClipRect(
         child: BackdropFilter(
-          filter: decoration?.color?.alpha == 255
-              ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
+          filter: decoration?.color?.opacity == 1
+              ? ImageFilter.blur()
               : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Container(
             alignment: alignment,
             padding: padding,
-            child: SafeArea(
-              top: false,
-              right: false,
-              bottom: false,
-              left: !MacosWindowScope.of(context).isSidebarShown,
-              child: child ?? SizedBox.shrink(),
-            ),
             decoration: BoxDecoration(
               color: theme.canvasColor,
               border: Border(bottom: BorderSide(color: dividerColor)),
@@ -85,6 +140,19 @@ class TitleBar extends StatelessWidget {
               borderRadius: decoration?.borderRadius,
               boxShadow: decoration?.boxShadow,
               gradient: decoration?.gradient,
+            ),
+            child: NavigationToolbar(
+              middle: _title,
+              centerMiddle: centerTitle,
+              trailing: _actions,
+              middleSpacing: 8,
+              leading: SafeArea(
+                top: false,
+                right: false,
+                bottom: false,
+                left: !MacosWindowScope.of(context).isSidebarShown,
+                child: _leading ?? SizedBox.shrink(),
+              ),
             ),
           ),
         ),
