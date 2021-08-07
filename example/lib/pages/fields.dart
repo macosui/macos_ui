@@ -11,47 +11,66 @@ class FieldsPage extends StatefulWidget {
 class _FieldsPageState extends State<FieldsPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: MacosTextField(
-              prefix: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4.0,
-                  vertical: 2.0,
-                ),
-                child: Icon(CupertinoIcons.search),
-              ),
-              placeholder: 'Type some text here',
-
-              /// If both suffix and clear button mode is provided,
-              /// suffix will override the clear button.
-              // suffix: Text('SUFFIX'),
-              clearButtonMode: OverlayVisibilityMode.always,
-              maxLines: 2,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: MacosTextField.borderless(
-              prefix: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(CupertinoIcons.search),
-              ),
-              placeholder: 'Type some text here',
-
-              /// If both suffix and clear button mode is provided,
-              /// suffix will override the clear button.
-              suffix: Text('SUFFIX'),
-              // clearButtonMode: OverlayVisibilityMode.always,
-              maxLines: 1,
-            ),
-          ),
-        ],
+    return MacosScaffold(
+      titleBar: TitleBar(
+        title: Text('macOS UI Fields'),
       ),
+      children: [
+        ContentArea(builder: (context, scrollController) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: MacosTextField(
+                    prefix: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4.0,
+                        vertical: 2.0,
+                      ),
+                      child: Icon(CupertinoIcons.search),
+                    ),
+                    placeholder: 'Type some text here',
+
+                    /// If both suffix and clear button mode is provided,
+                    /// suffix will override the clear button.
+                    // suffix: Text('SUFFIX'),
+                    clearButtonMode: OverlayVisibilityMode.always,
+                    maxLines: 2,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: MacosTextField.borderless(
+                    prefix: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Icon(CupertinoIcons.search),
+                    ),
+                    placeholder: 'Type some text here',
+
+                    /// If both suffix and clear button mode is provided,
+                    /// suffix will override the clear button.
+                    suffix: Text('SUFFIX'),
+                    // clearButtonMode: OverlayVisibilityMode.always,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+        ResizablePane(
+          minWidth: 180,
+          startWidth: 200,
+          scaffoldBreakpoint: 800,
+          resizableSide: ResizableSide.left,
+          builder: (_, __) {
+            return Center(child: Text('Resizable Pane'));
+          },
+        ),
+      ],
     );
   }
 }

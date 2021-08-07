@@ -53,8 +53,8 @@ class _DemoState extends State<Demo> {
     IndicatorsPage(),
     FieldsPage(),
     ColorsPage(),
-    Text('Disclosure item 2'),
-    Text('Disclosure item 3'),
+    Center(child: Text('Disclosure item 2')),
+    Center(child: Text('Disclosure item 3')),
     DialogsPage(),
   ];
 
@@ -67,6 +67,7 @@ class _DemoState extends State<Demo> {
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
+      child: pages[pageIndex],
       sidebar: Sidebar(
         minWidth: 200,
         bottom: Padding(
@@ -122,44 +123,6 @@ class _DemoState extends State<Demo> {
             ],
           );
         },
-      ),
-      child: MacosScaffold(
-        titleBar: TitleBar(
-          child: Text('macos_ui Widget Gallery'),
-        ),
-        children: [
-          ResizablePane(
-            minWidth: 180,
-            startWidth: 200,
-            scaffoldBreakpoint: 700,
-            resizableSide: ResizableSide.right,
-            builder: (_, __) {
-              return Center(child: Text('Resizable Pane'));
-            },
-          ),
-          ContentArea(
-            builder: (context, scrollController) {
-              return SingleChildScrollView(
-                controller: scrollController,
-                padding: EdgeInsets.all(20),
-                child: IndexedStack(
-                  alignment: Alignment.topCenter,
-                  index: pageIndex,
-                  children: pages,
-                ),
-              );
-            },
-          ),
-          ResizablePane(
-            minWidth: 180,
-            startWidth: 200,
-            scaffoldBreakpoint: 800,
-            resizableSide: ResizableSide.left,
-            builder: (_, __) {
-              return Center(child: Text('Resizable Pane'));
-            },
-          ),
-        ],
       ),
     );
   }
