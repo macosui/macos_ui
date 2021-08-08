@@ -70,6 +70,42 @@ See the documentation for customizations.
 
 <img src="https://imgur.com/eoW4GGT.png" width="75%"/>
 
+## Modern window look
+
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` file should look like this.
+
+```swift
+import Cocoa
+import FlutterMacOS
+
+class MainFlutterWindow: NSWindow {
+  override func awakeFromNib() {
+    let flutterViewController = FlutterViewController.init()
+    let windowFrame = self.frame
+    self.contentViewController = flutterViewController
+    self.setFrame(windowFrame, display: true)
+
+    if #available(macOS 10.13, *) {
+      let customToolbar = NSToolbar()
+      customToolbar.showsBaselineSeparator = false
+      self.toolbar = customToolbar
+    }
+    self.titleVisibility = .hidden
+    self.titlebarAppearsTransparent = true
+    if #available(macOS 11.0, *) {
+      self.toolbarStyle = .unified
+    }
+
+    self.isMovableByWindowBackground = true
+    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
+
+    RegisterGeneratedPlugins(registry: flutterViewController)
+
+    super.awakeFromNib()
+  }
+}
+
+```
 
 # Buttons
 
