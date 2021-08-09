@@ -52,7 +52,7 @@ It has a `Sidebar` on the left and the rest of the window is typically filled ou
 with a `MacosScaffold`. A scope for the `MacosWindow` is provided by `MacosWindowScope`.
 The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`.
 
-<img src="https://imgur.com/dqk7N13.png" width="75%">
+<img src="https://imgur.com/LtdfKvv.png" width="75%">
 
 
 ## MacosScaffold
@@ -63,11 +63,11 @@ The scaffold has a `TitleBar` property and the `children` property which accepts
 
 See the documentation for customizations.
 
-<img src="https://imgur.com/dCpEEta.png" width="75%"/>
+<img src="https://imgur.com/waUgeWY.png" width="75%"/>
 
-<img src="https://imgur.com/fnMLrVD.png" width="75%"/>
+<img src="https://imgur.com/DihgZmC.png" width="75%"/>
 
-<img src="https://imgur.com/eoW4GGT.png" width="75%"/>
+<img src="https://imgur.com/mabmh61.png" width="75%"/>
 
 ## Modern window look
 
