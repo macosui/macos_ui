@@ -3,21 +3,20 @@ import 'dart:math' as math show max, min;
 import 'package:flutter/rendering.dart' show SystemMouseCursors;
 import 'package:flutter/services.dart' show SystemMouseCursor;
 import 'package:macos_ui/src/indicators/scrollbar.dart';
-import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
-/// Default value for [SideBar] top padding
-const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 50);
+/// Default value for [ResizablePane] top padding
+const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
 
-/// Indicates the draggable side of the sidebar for resizing
+/// Indicates the draggable side of the [ResizablePane] for resizing
 enum ResizableSide { left, right }
 
 class ResizablePane extends StatefulWidget {
   /// Creates a widget that can be resized horizontally.
   ///
   /// The [builder], [minWidth] and [resizableSide] can not be null.
-  /// The [maxWidth] and the [scaffoldBreakpoint] default to `500.00`.
+  /// The [maxWidth] and the [windowBreakpoint] default to `500.00`.
   /// [isResizable] defaults to `true`.
   ///
   /// The [startWidth] is the initial width.
@@ -29,7 +28,7 @@ class ResizablePane extends StatefulWidget {
     required this.minWidth,
     this.isResizable = true,
     required this.resizableSide,
-    this.scaffoldBreakpoint,
+    this.windowBreakpoint,
     double? startWidth,
   })  : assert(
           maxWidth >= minWidth,
@@ -70,11 +69,11 @@ class ResizablePane extends StatefulWidget {
   /// less than the [minWidth].
   final double? startWidth;
 
-  /// Indicates the draggable side of the sidebar for resizing
+  /// Indicates the draggable side of the [ResizablePane] for resizing
   final ResizableSide resizableSide;
 
-  /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
-  final double? scaffoldBreakpoint;
+  /// Specifies the width of the window at which this [ResizablePane] will be hidden.
+  final double? windowBreakpoint;
 
   @override
   _ResizablePaneState createState() => _ResizablePaneState();
@@ -86,14 +85,6 @@ class _ResizablePaneState extends State<ResizablePane> {
   late double _width;
 
   Color get _dividerColor => MacosTheme.of(context).dividerColor;
-
-  MacosWindowScope get _scaffoldScope => MacosWindowScope.of(context);
-
-  BoxConstraints get _constraints => _scaffoldScope.constraints;
-
-  double? get _maxWidth => _constraints.maxWidth;
-
-  double? get _maxHeight => _constraints.maxHeight;
 
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
@@ -125,7 +116,7 @@ class _ResizablePaneState extends State<ResizablePane> {
           _width = math.max(
             widget.minWidth,
             math.min(
-              math.min(widget.maxWidth, _maxWidth!),
+              widget.maxWidth,
               _resizeOnRight
                   ? _width + details.delta.dx
                   : _width - details.delta.dx,
@@ -163,26 +154,24 @@ class _ResizablePaneState extends State<ResizablePane> {
   @override
   void didUpdateWidget(covariant ResizablePane oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.scaffoldBreakpoint != widget.scaffoldBreakpoint ||
+    if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
         oldWidget.minWidth != widget.minWidth ||
         oldWidget.maxWidth != widget.maxWidth ||
         oldWidget.resizableSide != widget.resizableSide)
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
-        setState(() {
-          if (widget.minWidth > _width || widget.minWidth < _width) {
-            _width = widget.minWidth;
-          }
-          if (widget.maxWidth < _width) {
-            _width = widget.maxWidth;
-          }
-        });
+      setState(() {
+        if (widget.minWidth > _width) _width = widget.minWidth;
+        if (widget.maxWidth < _width) _width = widget.maxWidth;
       });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.scaffoldBreakpoint != null &&
-        _maxWidth! <= widget.scaffoldBreakpoint!) {
+    final media = MediaQuery.of(context);
+    final _maxHeight = media.size.height;
+    final _maxWidth = media.size.width;
+
+    if (widget.windowBreakpoint != null &&
+        _maxWidth <= widget.windowBreakpoint!) {
       return SizedBox.shrink();
     }
 
@@ -193,8 +182,6 @@ class _ResizablePaneState extends State<ResizablePane> {
       constraints: BoxConstraints(
         maxWidth: widget.maxWidth,
         minWidth: widget.minWidth,
-        minHeight: _maxHeight!,
-        maxHeight: _maxHeight!,
       ).normalize(),
       child: Stack(
         children: [
