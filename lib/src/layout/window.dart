@@ -178,7 +178,9 @@ class _MacosWindowState extends State<MacosWindow> {
               left: visibleSidebarWidth,
               width: width - visibleSidebarWidth,
               height: height,
-              child: widget.child ?? SizedBox.shrink(),
+              child: ClipRect(
+                child: widget.child ?? SizedBox.shrink(),
+              ),
             ),
 
             // Sidebar resizer
