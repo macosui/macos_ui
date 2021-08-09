@@ -77,6 +77,7 @@ class TitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scope = MacosWindowScope.maybeOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
     Color dividerColor = theme.dividerColor;
     final route = ModalRoute.of(context);
@@ -90,7 +91,7 @@ class TitleBar extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
             fillColor: Color(0x00000),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.maybePop(context),
           ),
         );
       }
@@ -155,7 +156,7 @@ class TitleBar extends StatelessWidget {
                 top: false,
                 right: false,
                 bottom: false,
-                left: !MacosWindowScope.of(context).isSidebarShown,
+                left: !(scope?.isSidebarShown ?? false),
                 child: _leading ?? SizedBox.shrink(),
               ),
             ),
