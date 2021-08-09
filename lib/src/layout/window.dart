@@ -46,37 +46,20 @@ class MacosWindow extends StatefulWidget {
 }
 
 class _MacosWindowState extends State<MacosWindow> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
   final _sidebarScrollController = ScrollController();
   double _sidebarWidth = 0.0;
   bool _showSidebar = true;
   int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
 
-  void _recalculateLayout() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      setState(() {
-        if (widget.sidebar == null)
-          _sidebarWidth = 0.0;
-        else {
-          if (widget.sidebar!.minWidth > _sidebarWidth ||
-              widget.sidebar!.minWidth < _sidebarWidth)
-            _sidebarWidth = widget.sidebar!.minWidth;
-          if (widget.sidebar!.maxWidth! < _sidebarWidth)
-            _sidebarWidth = widget.sidebar!.maxWidth!;
-        }
-      });
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     _sidebarWidth = (widget.sidebar?.startWidth ?? widget.sidebar?.minWidth) ??
         _sidebarWidth;
-    if (widget.sidebar?.builder != null)
+    if (widget.sidebar?.builder != null) {
       _sidebarScrollController.addListener(() => setState(() {}));
-    _recalculateLayout();
+    }
   }
 
   @override
@@ -88,7 +71,19 @@ class _MacosWindowState extends State<MacosWindow> {
   @override
   void didUpdateWidget(covariant MacosWindow old) {
     super.didUpdateWidget(old);
-    _recalculateLayout();
+    setState(() {
+      if (widget.sidebar == null) {
+        _sidebarWidth = 0.0;
+      } else if (widget.sidebar!.minWidth != old.sidebar!.minWidth ||
+          widget.sidebar!.maxWidth != old.sidebar!.maxWidth) {
+        if (widget.sidebar!.minWidth > _sidebarWidth) {
+          _sidebarWidth = widget.sidebar!.minWidth;
+        }
+        if (widget.sidebar!.maxWidth! < _sidebarWidth) {
+          _sidebarWidth = widget.sidebar!.maxWidth!;
+        }
+      }
+    });
   }
 
   @override
@@ -119,8 +114,7 @@ class _MacosWindowState extends State<MacosWindow> {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
-        final isAtBreakpoint =
-            width <= (widget.sidebar?.scaffoldBreakpoint ?? 0);
+        final isAtBreakpoint = width <= (widget.sidebar?.windowBreakpoint ?? 0);
         final canShowSidebar = _showSidebar && !isAtBreakpoint;
         final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
 
@@ -137,6 +131,12 @@ class _MacosWindowState extends State<MacosWindow> {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                   color: sidebarBackgroundColor,
+                  constraints: BoxConstraints(
+                    minWidth: widget.sidebar!.minWidth,
+                    maxWidth: widget.sidebar!.maxWidth!,
+                    minHeight: height,
+                    maxHeight: height,
+                  ).normalize(),
                   child: Column(
                     children: [
                       if ((widget.sidebar?.topOffset ?? 0) > 0)
@@ -178,18 +178,7 @@ class _MacosWindowState extends State<MacosWindow> {
               left: visibleSidebarWidth,
               width: width - visibleSidebarWidth,
               height: height,
-              child: ClipRect(
-                child: CupertinoTabView(
-                  navigatorKey: _navigatorKey,
-                  onGenerateRoute: (_) {
-                    return CupertinoPageRoute(
-                      builder: (_) => Builder(
-                        builder: (_) => widget.child ?? SizedBox.shrink(),
-                      ),
-                    );
-                  },
-                ),
-              ),
+              child: widget.child ?? SizedBox.shrink(),
             ),
 
             // Sidebar resizer
@@ -293,7 +282,7 @@ class MacosWindowScope extends InheritedWidget {
   static MacosWindowScope of(BuildContext context) {
     final MacosWindowScope? result =
         context.dependOnInheritedWidgetOfExactType<MacosWindowScope>();
-    assert(result != null, 'No ScaffoldScope found in context');
+    assert(result != null, 'No MacosWindowScope found in context');
     return result!;
   }
 
