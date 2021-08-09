@@ -62,11 +62,11 @@ class _MacosScaffoldState extends State<MacosScaffold> {
     assert(debugCheckHasMacosTheme(context));
     assert(
       widget.children.every((e) => e is ContentArea || e is ResizablePane),
-      'Scaffold children must either be ResizablePane or ContentArea',
+      'MacosScaffold children must either be ResizablePane or ContentArea',
     );
     assert(
       widget.children.whereType<ContentArea>().length <= 1,
-      'Scaffold cannot have more than one ContentArea widget',
+      'MacosScaffold cannot have more than one ContentArea widget',
     );
 
     final MacosThemeData theme = MacosTheme.of(context);
