@@ -49,7 +49,9 @@ class _DemoState extends State<Demo> {
   int pageIndex = 0;
 
   final List<Widget> pages = [
-    ButtonsPage(),
+    CupertinoTabView(
+      builder: (_) => ButtonsPage(),
+    ),
     IndicatorsPage(),
     FieldsPage(),
     ColorsPage(),
@@ -67,7 +69,10 @@ class _DemoState extends State<Demo> {
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
-      child: pages[pageIndex],
+      child: IndexedStack(
+        index: pageIndex,
+        children: pages,
+      ),
       sidebar: Sidebar(
         minWidth: 200,
         bottom: Padding(

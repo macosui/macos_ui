@@ -64,7 +64,7 @@ class _FieldsPageState extends State<FieldsPage> {
         ResizablePane(
           minWidth: 180,
           startWidth: 200,
-          scaffoldBreakpoint: 800,
+          windowBreakpoint: 800,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
             return Center(child: Text('Resizable Pane'));

@@ -31,7 +31,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
         ResizablePane(
           minWidth: 180,
           startWidth: 200,
-          scaffoldBreakpoint: 700,
+          windowBreakpoint: 700,
           resizableSide: ResizableSide.right,
           builder: (_, __) {
             return Center(child: Text('Resizable Pane'));
@@ -124,7 +124,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       buttonSize: ButtonSize.large,
                                       child: Text('Go Back'),
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        Navigator.maybePop(context);
                                       },
                                     ),
                                   );
@@ -133,7 +133,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               ResizablePane(
                                 minWidth: 180,
                                 startWidth: 200,
-                                scaffoldBreakpoint: 700,
+                                windowBreakpoint: 700,
                                 resizableSide: ResizableSide.left,
                                 builder: (_, __) {
                                   return Center(child: Text('Resizable Pane'));
@@ -153,7 +153,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
         ResizablePane(
           minWidth: 180,
           startWidth: 200,
-          scaffoldBreakpoint: 800,
+          windowBreakpoint: 800,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
             return Center(child: Text('Resizable Pane'));
