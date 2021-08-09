@@ -57,10 +57,9 @@ The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`.
 
 ## MacosScaffold
 
-The `MacosScaffold` is what you would call a "page". It comes with an internal navigator which means that routes that are pushed under the scaffold will be displayed in the scaffold area (this excludes the sidebar).
-Unless the route is pushed to the root navigator.
+The `MacosScaffold` is what you would call a "page".
 
-The scaffold has a `TitleBar` property and the `children` property which accepts a `ContentArea` widget and multiple `ResizablePane` widgets.
+The scaffold has a `TitleBar` property and the `children` property which accepts a `ContentArea` widget and multiple `ResizablePane` widgets. To catch navigation or routes below the scaffold, consider wrapping the `MacosScaffold` in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html). By doing so, navigation inside the `MacosScaffold` will be displayed inside the `MacosScaffold` area instead of covering the entire window. To push a route outside a `MacosScaffold` wrapped in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html), use the root navigator `Navigator.of(context, rootNavigator: true)`
 
 See the documentation for customizations.
 
