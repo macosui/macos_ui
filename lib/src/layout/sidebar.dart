@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+/// A macOS-style side bar at left side of the [MacosScaffold].
 class Sidebar {
-  /// Creates a macOS-style side bar at left side of the [MacosScaffold].
+  /// Creates a [Sidebar].
   ///
   /// The [builder] and [minWidth] properties are required.
   /// The sidebar builds with a scrollbar internally.
@@ -15,14 +16,15 @@ class Sidebar {
     this.maxWidth = 400.0,
     this.startWidth,
     this.padding = EdgeInsets.zero,
-    this.scaffoldBreakpoint = 556.0,
+    this.windowBreakpoint = 556.0,
     this.bottom,
+    this.topOffset = 51.0,
   });
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
   ///
-  /// Pass the [scrollController] obtained from this method, to a scrollable
+  /// Pass the [scrollController] obtained from this method to a scrollable
   /// widget used in this method to work with the internal [MacosScrollbar].
   final ScrollableWidgetBuilder builder;
 
@@ -72,9 +74,14 @@ class Sidebar {
   /// Defaults to `EdgeInsets.zero`.
   final EdgeInsets padding;
 
-  /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
-  final double scaffoldBreakpoint;
+  /// Specifies the width of the window at which this [Sidebar] will be hidden.
+  final double windowBreakpoint;
 
   /// Widget that should be displayed at the Bottom of the Sidebar
   final Widget? bottom;
+
+  /// Specifies the top offset of the sidebar.
+  ///
+  /// Defaults to `51.0` which levels it up with the default height of the [TitleBar]
+  final double topOffset;
 }

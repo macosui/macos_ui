@@ -2,22 +2,21 @@ import 'dart:math' as math show max, min;
 
 import 'package:flutter/rendering.dart' show SystemMouseCursors;
 import 'package:flutter/services.dart' show SystemMouseCursor;
-import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/resizable_pane_notifier.dart';
-import 'package:macos_ui/src/layout/scaffold.dart';
+import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/src/theme/macos_theme.dart';
 
-/// Default value for [SideBar] top padding
-const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 50);
+/// Default value for [ResizablePane] top padding
+const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
 
-/// Indicates the draggable side of the sidebar for resizing
+/// Indicates the draggable side of the [ResizablePane] for resizing
 enum ResizableSide { left, right }
 
 class ResizablePane extends StatefulWidget {
   /// Creates a widget that can be resized horizontally.
   ///
   /// The [builder], [minWidth] and [resizableSide] can not be null.
-  /// The [maxWidth] and the [scaffoldBreakpoint] default to `500.00`.
+  /// The [maxWidth] and the [windowBreakpoint] default to `500.00`.
   /// [isResizable] defaults to `true`.
   ///
   /// The [startWidth] is the initial width.
@@ -29,7 +28,7 @@ class ResizablePane extends StatefulWidget {
     required this.minWidth,
     this.isResizable = true,
     required this.resizableSide,
-    this.scaffoldBreakpoint,
+    this.windowBreakpoint,
     double? startWidth,
   })  : assert(
           maxWidth >= minWidth,
@@ -70,37 +69,22 @@ class ResizablePane extends StatefulWidget {
   /// less than the [minWidth].
   final double? startWidth;
 
-  /// Indicates the draggable side of the sidebar for resizing
+  /// Indicates the draggable side of the [ResizablePane] for resizing
   final ResizableSide resizableSide;
 
-  /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
-  final double? scaffoldBreakpoint;
-
-  static UniqueKey _uniqueKey = UniqueKey();
+  /// Specifies the width of the window at which this [ResizablePane] will be hidden.
+  final double? windowBreakpoint;
 
   @override
-  _ResizablePaneState createState() => _ResizablePaneState(_uniqueKey);
+  _ResizablePaneState createState() => _ResizablePaneState();
 }
 
 class _ResizablePaneState extends State<ResizablePane> {
-  final UniqueKey _key;
-  _ResizablePaneState(this._key);
   SystemMouseCursor _cursor = SystemMouseCursors.resizeColumn;
-
   final _scrollController = ScrollController();
   late double _width;
 
   Color get _dividerColor => MacosTheme.of(context).dividerColor;
-
-  ScaffoldScope get _scaffoldScope => ScaffoldScope.of(context);
-
-  ResizablePaneNotifier get _notifier => _scaffoldScope.valueNotifier;
-
-  BoxConstraints get _constraints => _scaffoldScope.constraints;
-
-  double? get _maxWidth => _constraints.maxWidth;
-
-  double? get _maxHeight => _constraints.maxHeight;
 
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
@@ -132,25 +116,23 @@ class _ResizablePaneState extends State<ResizablePane> {
           _width = math.max(
             widget.minWidth,
             math.min(
-              math.min(widget.maxWidth, _maxWidth!),
+              widget.maxWidth,
               _resizeOnRight
                   ? _width + details.delta.dx
                   : _width - details.delta.dx,
             ),
           );
-          if (_width >= widget.minWidth && _width < widget.maxWidth) {
-            _notifier.update(_key, _width);
-          }
-          if (_width == widget.minWidth)
+          if (_width == widget.minWidth) {
             _cursor = _resizeOnRight
                 ? SystemMouseCursors.resizeRight
                 : SystemMouseCursors.resizeLeft;
-          else if (_width == widget.maxWidth)
+          } else if (_width == widget.maxWidth) {
             _cursor = _resizeOnRight
                 ? SystemMouseCursors.resizeLeft
                 : SystemMouseCursors.resizeRight;
-          else
+          } else {
             _cursor = SystemMouseCursors.resizeColumn;
+          }
         });
       },
     );
@@ -172,64 +154,60 @@ class _ResizablePaneState extends State<ResizablePane> {
   @override
   void didUpdateWidget(covariant ResizablePane oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.scaffoldBreakpoint != widget.scaffoldBreakpoint ||
+    if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
         oldWidget.minWidth != widget.minWidth ||
-        oldWidget.maxWidth != widget.maxWidth)
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
-        _notifier.remove(_key, notify: false);
-        setState(() {
-          if (widget.minWidth > _width || widget.minWidth < _width)
-            _width = widget.minWidth;
-          if (widget.maxWidth < _width) _width = widget.maxWidth;
-        });
-        _notifier.update(_key, _width);
+        oldWidget.maxWidth != widget.maxWidth ||
+        oldWidget.resizableSide != widget.resizableSide)
+      setState(() {
+        if (widget.minWidth > _width) _width = widget.minWidth;
+        if (widget.maxWidth < _width) _width = widget.maxWidth;
       });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.scaffoldBreakpoint != null) {
-      if (_maxWidth! <= widget.scaffoldBreakpoint!) {
-        _notifier.remove(_key, notify: false);
-        return SizedBox.shrink();
-      } else {
-        _notifier.update(_key, _width, notify: false);
-      }
-    } else if (!_notifier.value.containsKey(_key)) {
-      _notifier.update(_key, _width, notify: false);
+    final media = MediaQuery.of(context);
+    final _maxHeight = media.size.height;
+    final _maxWidth = media.size.width;
+
+    if (widget.windowBreakpoint != null &&
+        _maxWidth <= widget.windowBreakpoint!) {
+      return SizedBox.shrink();
     }
 
-    return SizedBox(
+    return Container(
       width: _width,
       height: _maxHeight,
-      child: DecoratedBox(
-        decoration: _decoration,
-        child: Stack(
-          children: [
-            SafeArea(
-              left: false,
-              right: false,
-              child: MacosScrollbar(
-                controller: _scrollController,
-                child: widget.builder(context, _scrollController),
-              ),
+      decoration: _decoration,
+      constraints: BoxConstraints(
+        maxWidth: widget.maxWidth,
+        minWidth: widget.minWidth,
+      ).normalize(),
+      child: Stack(
+        children: [
+          SafeArea(
+            left: false,
+            right: false,
+            child: MacosScrollbar(
+              controller: _scrollController,
+              child: widget.builder(context, _scrollController),
             ),
-            if (widget.isResizable && !_resizeOnRight)
-              Positioned(
-                left: 0,
-                width: 5,
-                height: _maxHeight,
-                child: _resizeArea,
-              ),
-            if (widget.isResizable && _resizeOnRight)
-              Positioned(
-                right: 0,
-                width: 5,
-                height: _maxHeight,
-                child: _resizeArea,
-              ),
-          ],
-        ),
+          ),
+          if (widget.isResizable && !_resizeOnRight)
+            Positioned(
+              left: 0,
+              width: 5,
+              height: _maxHeight,
+              child: _resizeArea,
+            ),
+          if (widget.isResizable && _resizeOnRight)
+            Positioned(
+              right: 0,
+              width: 5,
+              height: _maxHeight,
+              child: _resizeArea,
+            ),
+        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -28,10 +29,7 @@ class MyApp extends StatelessWidget {
           darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
-          builder: (context, child) {
-            return Demo();
-          },
-          //home: Demo(),
+          home: Demo(),
         );
       },
     );
@@ -51,12 +49,14 @@ class _DemoState extends State<Demo> {
   int pageIndex = 0;
 
   final List<Widget> pages = [
-    ButtonsPage(),
+    CupertinoTabView(
+      builder: (_) => ButtonsPage(),
+    ),
     IndicatorsPage(),
     FieldsPage(),
     ColorsPage(),
-    Text('Disclosure item 2'),
-    Text('Disclosure item 3'),
+    Center(child: Text('Disclosure item 2')),
+    Center(child: Text('Disclosure item 3')),
     DialogsPage(),
   ];
 
@@ -68,10 +68,10 @@ class _DemoState extends State<Demo> {
 
   @override
   Widget build(BuildContext context) {
-    return MacosScaffold(
-      titleBar: TitleBar(
-        size: TitleBarSize.small,
-        child: Text('macos_ui Widget Gallery'),
+    return MacosWindow(
+      child: IndexedStack(
+        index: pageIndex,
+        children: pages,
       ),
       sidebar: Sidebar(
         minWidth: 200,
@@ -129,30 +129,6 @@ class _DemoState extends State<Demo> {
           );
         },
       ),
-      children: <Widget>[
-        ContentArea(
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              padding: EdgeInsets.all(20),
-              child: IndexedStack(
-                alignment: Alignment.topCenter,
-                index: pageIndex,
-                children: pages,
-              ),
-            );
-          },
-        ),
-        // ResizablePane(
-        //   minWidth: 180,
-        //   startWidth: 200,
-        //   scaffoldBreakpoint: 500,
-        //   resizableSide: ResizableSide.left,
-        //   builder: (_, __) {
-        //     return Center(child: Text('Resizable Pane'));
-        //   },
-        // ),
-      ],
     );
   }
 }

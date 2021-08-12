@@ -1,3 +1,7 @@
+## [0.7.0]
+* Adds: `MacosWindow`
+* Improved `MacosScaffold`
+
 ## [0.6.2]
 * Chore: Remove box shadows from `MacosIconButton`
 

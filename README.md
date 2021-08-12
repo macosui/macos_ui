@@ -9,6 +9,7 @@ Flutter widgets and themes implementing the current macOS design language.
   - [Contributing](#contributing)
   - [Resources](#resources)
 - [Layout](#layout)
+  - [MacosWindow](#macoswindow)
   - [MacosScaffold](#macosscaffold)
 - [Buttons](#buttons)
   - [MacosCheckbox](#macoscheckbox)
@@ -43,20 +44,67 @@ macOS welcomes contributions. Please see CONTRIBUTING.md for more information.
 
 # Layout
 
+## MacosWindow
+
+`MacosWindow` is the basic frame for the macOS layout.
+
+It has a `Sidebar` on the left and the rest of the window is typically filled out
+with a `MacosScaffold`. A scope for the `MacosWindow` is provided by `MacosWindowScope`.
+The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`.
+
+<img src="https://imgur.com/LtdfKvv.png" width="75%">
+
+
 ## MacosScaffold
 
-`MacosScaffold` provides a basic structure for laying out widgets in a way you would expect on macOS.
-You must specify a `body` as the main content area, and you can optionally provide a `sidebar`
-that will show to the left of `body`. The `sidebar` can be resized by grabbing the split and
-dragging left or right. See the documentation for all customization options.
+The `MacosScaffold` is what you would call a "page".
 
-<img src="https://imgur.com/RXhTJj4.jpg" width="75%"/>
+The scaffold has a `TitleBar` property and the `children` property which accepts a `ContentArea` widget and multiple `ResizablePane` widgets. To catch navigation or routes below the scaffold, consider wrapping the `MacosScaffold` in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html). By doing so, navigation inside the `MacosScaffold` will be displayed inside the `MacosScaffold` area instead of covering the entire window. To push a route outside a `MacosScaffold` wrapped in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html), use the root navigator `Navigator.of(context, rootNavigator: true)`
 
-<img src="https://imgur.com/GzKJsbn.png" width="75%"/>
+See the documentation for customizations.
 
-<img src="https://imgur.com/owpkOPC.png" width="75%"/>
+<img src="https://imgur.com/waUgeWY.png" width="75%"/>
 
-<img src="https://imgur.com/f9ZFiLv.png" width="75%"/>
+<img src="https://imgur.com/DihgZmC.png" width="75%"/>
+
+<img src="https://imgur.com/mabmh61.png" width="75%"/>
+
+## Modern window look
+
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` file should look like this.
+
+```swift
+import Cocoa
+import FlutterMacOS
+
+class MainFlutterWindow: NSWindow {
+  override func awakeFromNib() {
+    let flutterViewController = FlutterViewController.init()
+    let windowFrame = self.frame
+    self.contentViewController = flutterViewController
+    self.setFrame(windowFrame, display: true)
+
+    if #available(macOS 10.13, *) {
+      let customToolbar = NSToolbar()
+      customToolbar.showsBaselineSeparator = false
+      self.toolbar = customToolbar
+    }
+    self.titleVisibility = .hidden
+    self.titlebarAppearsTransparent = true
+    if #available(macOS 11.0, *) {
+      self.toolbarStyle = .unified
+    }
+
+    self.isMovableByWindowBackground = true
+    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
+
+    RegisterGeneratedPlugins(registry: flutterViewController)
+
+    super.awakeFromNib()
+  }
+}
+
+```
 
 # Buttons
 
