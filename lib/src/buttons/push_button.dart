@@ -336,8 +336,6 @@ class PushButtonTheme extends InheritedTheme {
 ///    style for [PushButton]s below the overall [MacosTheme].
 class PushButtonThemeData with Diagnosticable {
   /// Creates a [PushButtonThemeData].
-  ///
-  /// The [style] may be null.
   const PushButtonThemeData({
     required this.color,
     required this.disabledColor,
@@ -359,7 +357,7 @@ class PushButtonThemeData with Diagnosticable {
     );
   }
 
-  /// Linearly interpolate between two tooltip themes.
+  /// Linearly interpolate between two [PushButtonThemeData].
   ///
   /// All the properties must be non-null.
   static PushButtonThemeData lerp(
