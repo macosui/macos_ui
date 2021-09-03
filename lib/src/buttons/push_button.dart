@@ -266,7 +266,6 @@ class _PushButtonState extends State<PushButton>
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
-                    // TODO(groovin): show proper text color in light theme
                     child: DefaultTextStyle(
                       style: textStyle,
                       child: widget.child,
