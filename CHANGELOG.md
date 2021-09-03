@@ -1,3 +1,7 @@
+## [0.7.0+1]
+* Fix docs for `PushButtonThemeData`
+* Update `dart_code_metrics` dependency
+
 ## [0.7.0]
 * Adds: `MacosWindow`
 * Improved `MacosScaffold`
