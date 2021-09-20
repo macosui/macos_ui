@@ -38,3 +38,4 @@ export 'src/theme/macos_colors.dart';
 export 'src/theme/macos_dynamic_color.dart';
 export 'src/theme/macos_theme.dart';
 export 'src/theme/typography.dart';
+export 'src/context_menu/context_menu.dart';

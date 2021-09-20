@@ -1,3 +1,6 @@
+## [0.7.0+3]
+* Added `ContextMenuArea`, `showContextMenu`, `ContextMenuItem` and `ContextMenuDivider`
+
 ## [0.7.0+2]
 * Add note in docs that a `Builder` is required for manual sidebar toggling to work.
 
