@@ -50,7 +50,8 @@ macOS welcomes contributions. Please see CONTRIBUTING.md for more information.
 
 It has a `Sidebar` on the left and the rest of the window is typically filled out
 with a `MacosScaffold`. A scope for the `MacosWindow` is provided by `MacosWindowScope`.
-The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`.
+The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`. Please note that you must
+wrap your `MacosScaffold` in a `Builder` widget in order for this to work properly.
 
 <img src="https://imgur.com/LtdfKvv.png" width="75%">
 

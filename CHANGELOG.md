@@ -1,3 +1,6 @@
+## [0.7.0+2]
+* Add note in docs that a `Builder` is required for manual sidebar toggling to work.
+
 ## [0.7.0+1]
 * Fix docs for `PushButtonThemeData`
 * Update `dart_code_metrics` dependency
