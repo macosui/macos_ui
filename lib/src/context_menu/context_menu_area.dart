@@ -31,6 +31,8 @@ const double _kMenuScreenPadding = 8.0;
 /// The witdth of one context menu container.
 const double kContextMenuWidth = 180.0;
 
+const _kDialogBorderRadius = BorderRadius.all(Radius.circular(5.0));
+
 /// The ContextMenuArea defines an area in which a
 /// context menu can be invoked.
 /// The items of the context menu are defined in the [ContextMenuArea.itemBuilder]
@@ -199,6 +201,16 @@ class _Menu<T> extends StatelessWidget {
   /// The items which will be displayed in the context menu
   final List<ContextMenuEntry<T>> items;
 
+  Widget _optionalBlur({required Widget child, required Brightness brightness}) {
+    return brightness.resolve<Widget>(
+      child, 
+      BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+        child: child,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
@@ -216,38 +228,49 @@ class _Menu<T> extends StatelessWidget {
 
     final backgroundColor = brightness.resolve(
       CupertinoColors.systemGrey6.color,
-      MacosColors.controlBackgroundColor.darkColor,
+      MacosColors.controlBackgroundColor.darkColor.withOpacity(0.85),
     );
     
-    return Container(
-      padding: const EdgeInsets.all(5.0),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              offset: Offset.zero,
-              blurRadius: 3.0),
-        ],
+    return ClipRect(
+      child: _optionalBlur(
+        brightness: brightness,
+        child: Container(
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                offset: Offset.zero,
+                blurRadius: 3.0),
+          ],
         border: Border.all(
+          width: 2,
+          color: innerBorderColor,
+        ),
+        borderRadius: _kDialogBorderRadius,
+      ),
+      foregroundDecoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
           color: outerBorderColor,
-          style: BorderStyle.solid,
-          width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: _kDialogBorderRadius,
       ),
-      width: kContextMenuWidth,
-      child: DefaultTextStyle(
-        textAlign: TextAlign.start,
-        style: MacosTheme.of(context).typography.body,
-        child: IntrinsicWidth(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: items,
+        width: kContextMenuWidth,
+        child: DefaultTextStyle(
+          textAlign: TextAlign.start,
+          style: MacosTheme.of(context).typography.body,
+          child: IntrinsicWidth(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: items,
+          ),
         ),
-      ),
+        ),
+      )
       ),
     );
   }

@@ -8,7 +8,7 @@ import 'package:macos_ui/src/library.dart';
 
 import 'context_menu_entry.dart';
 
-const _kHoverBackgroundColor = const Color(0xFF6B9FF8);
+const _kHoverBackgroundColor = CupertinoColors.activeBlue;
 
 class ContextMenuItem<T> extends ContextMenuEntry<T> {
   const ContextMenuItem({required this.label, this.value, this.onTap, Key? key})

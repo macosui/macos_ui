@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -41,12 +42,20 @@ class _ContextMenuPageState extends State<ContextMenuPage> {
                       ContextMenuItem<String>(label: 'two', value: 'two'),
                       ContextMenuItem<String>(label: 'null', value: null),
                       ContextMenuItem<String>(label: 'four', value: 'four'),
+                      ContextMenuItem<String>(label: 'five', value: 'five'),
+                      ContextMenuItem<String>(label: 'six', value: 'six'),
+                      ContextMenuItem<String>(label: 'seven', value: 'seven'),
+                      ContextMenuItem<String>(label: 'eight', value: 'eight'),
+                      ContextMenuItem<String>(label: 'nine', value: 'nine'),
+                      ContextMenuItem<String>(label: 'ten', value: 'ten'),
                     ];
                   },
                   child: Container(
                     width: constraints.maxWidth,
                     height: 500.0,
-                    color: Colors.red,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.red,)
+                    ),
                     child: Stack(
                       children: [
                         Align(
@@ -83,6 +92,9 @@ class __InnerContextMenuState extends State<_InnerContextMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MacosTheme.brightnessOf(context);
+
+
     return ContextMenuArea<int>(
       itemSelected: (value) {
         setState(() {
@@ -98,10 +110,10 @@ class __InnerContextMenuState extends State<_InnerContextMenu> {
         ];
       },
       child: Container(
-        width: 250,
-        height: 250,
-        color: Colors.green,
-        child: Text('Selected Number ${_selectedNumber}'),
+        width: 50,
+        height: 50,
+        color: CupertinoColors.activeBlue,
+        child: Text('Selected Number ${_selectedNumber}', style: MacosTheme.of(context).typography.body),
       ),
     );
   }
