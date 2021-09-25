@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 import 'context_menu_divider.dart';
 import 'context_menu_entry.dart';
@@ -199,10 +201,28 @@ class _Menu<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final brightness = MacosTheme.brightnessOf(context);
+
+    final outerBorderColor = brightness.resolve(
+      Colors.black.withOpacity(0.23),
+      Colors.black.withOpacity(0.76),
+    );
+
+    final innerBorderColor = brightness.resolve(
+      Colors.white.withOpacity(0.45),
+      Colors.white.withOpacity(0.15),
+    );
+
+    final backgroundColor = brightness.resolve(
+      CupertinoColors.systemGrey6.color,
+      MacosColors.controlBackgroundColor.darkColor,
+    );
+    
     return Container(
       padding: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: const Color(0xFFEAE7EA),
+        color: backgroundColor,
         boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.3),
@@ -210,20 +230,24 @@ class _Menu<T> extends StatelessWidget {
               blurRadius: 3.0),
         ],
         border: Border.all(
-          color: Colors.grey,
+          color: outerBorderColor,
           style: BorderStyle.solid,
           width: 1.0,
         ),
         borderRadius: BorderRadius.circular(5.0),
       ),
       width: kContextMenuWidth,
-      child: IntrinsicWidth(
+      child: DefaultTextStyle(
+        textAlign: TextAlign.start,
+        style: MacosTheme.of(context).typography.body,
+        child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: items,
         ),
+      ),
       ),
     );
   }
