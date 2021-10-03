@@ -1,9 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
+import '../mocks.dart';
 
 void main() {
+  late MockOnPressedFunction mockOnPressedFunction;
+
+  setUp(() {
+    mockOnPressedFunction = MockOnPressedFunction();
+  });
+
   group('HelpButton tests', () {
-    testWidgets('HelpButton tap test', (tester) async {
+    testWidgets('HelpButton onPressed works', (tester) async {
       await tester.pumpWidget(
         MacosApp(
           theme: MacosThemeData.dark().copyWith(
@@ -15,7 +22,7 @@ void main() {
                 ContentArea(
                   builder: (context, scrollController) {
                     return HelpButton(
-                      onPressed: () {},
+                      onPressed: mockOnPressedFunction.handler,
                     );
                   },
                 ),
@@ -28,6 +35,8 @@ void main() {
       final helpButton = find.byType(HelpButton);
       await tester.tap(helpButton);
       await tester.pumpAndSettle();
+
+      expect(mockOnPressedFunction.called, 1);
     });
   });
 }
