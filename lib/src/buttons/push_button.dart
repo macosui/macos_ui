@@ -371,6 +371,17 @@ class PushButtonThemeData with Diagnosticable {
   }
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PushButtonThemeData &&
+          runtimeType == other.runtimeType &&
+          color == other.color &&
+          disabledColor == other.disabledColor;
+
+  @override
+  int get hashCode => color.hashCode ^ disabledColor.hashCode;
+
+  @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('color', color));
