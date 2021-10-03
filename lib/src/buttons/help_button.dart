@@ -321,7 +321,6 @@ class HelpButtonThemeData with Diagnosticable {
     );
   }
 
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
