@@ -14,6 +14,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   dart_code_metrics: ^4.3.3
+  mocktail: ^0.1.4
 
 flutter:
   fonts:
