@@ -75,33 +75,6 @@ void main() {
       expect(theme.color, Color(0xfff4f5f5));
       expect(theme.disabledColor, Color(0xfff4f5f5));
     });
-
-    testWidgets('Default values in widget tree', (tester) async {
-      await tester.pumpWidget(
-        MacosApp(
-          theme: MacosThemeData.dark().copyWith(
-            helpButtonTheme: const HelpButtonThemeData(),
-          ),
-          home: MacosWindow(
-            child: MacosScaffold(
-              children: [
-                ContentArea(
-                  builder: (context, scrollController) {
-                    return HelpButton(
-                      onPressed: () {},
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      final helpButton = find.byType(HelpButton);
-      await tester.tap(helpButton);
-      await tester.pumpAndSettle();
-    });
   });
 }
 
