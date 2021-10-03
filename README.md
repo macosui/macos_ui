@@ -2,6 +2,8 @@
 
 Flutter widgets and themes implementing the current macOS design language.
 
+[![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
+
 ## Content
 
 - [macos_ui](#macos_ui)
