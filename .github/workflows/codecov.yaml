@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: codecov/codecov-action@v2
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: ./coverage/lcov.info
       - uses: subosito/flutter-action@v1
         with:
           channel: stable
