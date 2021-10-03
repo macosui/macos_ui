@@ -322,12 +322,13 @@ class HelpButtonThemeData with Diagnosticable {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is HelpButtonThemeData &&
-          runtimeType == other.runtimeType &&
-          color == other.color &&
-          disabledColor == other.disabledColor;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is HelpButtonThemeData &&
+            runtimeType == other.runtimeType &&
+            color?.value == other.color?.value &&
+            disabledColor?.value == other.disabledColor?.value;
+  }
 
   @override
   int get hashCode => color.hashCode ^ disabledColor.hashCode;
