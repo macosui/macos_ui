@@ -317,7 +317,7 @@ class HelpButtonThemeData with Diagnosticable {
   ) {
     return HelpButtonThemeData(
       color: Color.lerp(a.color, b.color, t),
-      disabledColor: Color.lerp(a.color, b.color, t),
+      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
     );
   }
 
