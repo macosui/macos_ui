@@ -207,12 +207,12 @@ class _PushButtonState extends State<PushButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.pushButtonTheme.color,
+      widget.color ?? theme.pushButtonTheme.color!,
       context,
     );
 
     final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.pushButtonTheme.disabledColor,
+      widget.disabledColor ?? theme.pushButtonTheme.disabledColor!,
       context,
     );
 
@@ -336,15 +336,15 @@ class PushButtonTheme extends InheritedTheme {
 class PushButtonThemeData with Diagnosticable {
   /// Creates a [PushButtonThemeData].
   const PushButtonThemeData({
-    required this.color,
-    required this.disabledColor,
+    this.color,
+    this.disabledColor,
   });
 
   /// The default background color for [PushButton]
-  final Color color;
+  final Color? color;
 
   /// The default disabled color for [PushButton]
-  final Color disabledColor;
+  final Color? disabledColor;
 
   PushButtonThemeData copyWith({
     Color? color,
@@ -365,8 +365,8 @@ class PushButtonThemeData with Diagnosticable {
     double t,
   ) {
     return PushButtonThemeData(
-      color: Color.lerp(a.color, b.color, t)!,
-      disabledColor: Color.lerp(a.color, b.color, t)!,
+      color: Color.lerp(a.color, b.color, t),
+      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
     );
   }
 
