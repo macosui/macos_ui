@@ -156,12 +156,12 @@ class _HelpButtonState extends State<HelpButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.helpButtonTheme.color,
+      widget.color ?? theme.helpButtonTheme.color!,
       context,
     );
 
     final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
+      widget.disabledColor ?? theme.helpButtonTheme.disabledColor!,
       context,
     );
 
@@ -286,23 +286,24 @@ class HelpButtonThemeData with Diagnosticable {
   ///
   /// The [style] may be null.
   const HelpButtonThemeData({
-    required this.color,
-    required this.disabledColor,
+    this.color,
+    this.disabledColor,
   });
 
   /// The default background color for [HelpButton]
-  final Color color;
+  final Color? color;
 
   /// The default disabled color for [HelpButton]
-  final Color disabledColor;
+  final Color? disabledColor;
 
-  HelpButtonThemeData copyWith(HelpButtonThemeData? themeData) {
-    if (themeData == null) {
-      return this;
-    }
+  /// Copies one [HelpButtonThemeData] to another.
+  HelpButtonThemeData copyWith({
+    Color? color,
+    Color? disabledColor,
+  }) {
     return HelpButtonThemeData(
-      color: themeData.color,
-      disabledColor: themeData.disabledColor,
+      color: color ?? this.color,
+      disabledColor: disabledColor ?? this.disabledColor,
     );
   }
 
@@ -315,10 +316,22 @@ class HelpButtonThemeData with Diagnosticable {
     double t,
   ) {
     return HelpButtonThemeData(
-      color: Color.lerp(a.color, b.color, t)!,
-      disabledColor: Color.lerp(a.color, b.color, t)!,
+      color: Color.lerp(a.color, b.color, t),
+      disabledColor: Color.lerp(a.color, b.color, t),
     );
   }
+
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is HelpButtonThemeData &&
+          runtimeType == other.runtimeType &&
+          color == other.color &&
+          disabledColor == other.disabledColor;
+
+  @override
+  int get hashCode => color.hashCode ^ disabledColor.hashCode;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

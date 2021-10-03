@@ -360,7 +360,7 @@ class MacosThemeData with Diagnosticable {
       dividerColor: dividerColor ?? this.dividerColor,
       typography: typography ?? this.typography,
       pushButtonTheme: this.pushButtonTheme.copyWith(pushButtonTheme),
-      helpButtonTheme: this.helpButtonTheme.copyWith(helpButtonTheme),
+      helpButtonTheme: this.helpButtonTheme.copyWith(),
       tooltipTheme: this.tooltipTheme.copyWith(tooltipTheme),
       visualDensity: visualDensity ?? this.visualDensity,
       scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
