@@ -346,13 +346,13 @@ class PushButtonThemeData with Diagnosticable {
   /// The default disabled color for [PushButton]
   final Color disabledColor;
 
-  PushButtonThemeData copyWith(PushButtonThemeData? themeData) {
-    if (themeData == null) {
-      return this;
-    }
+  PushButtonThemeData copyWith({
+    Color? color,
+    Color? disabledColor,
+  }) {
     return PushButtonThemeData(
-      color: themeData.color,
-      disabledColor: themeData.disabledColor,
+      color: color ?? this.color,
+      disabledColor: disabledColor ?? this.disabledColor,
     );
   }
 
