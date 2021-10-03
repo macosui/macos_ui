@@ -124,10 +124,10 @@ class PushButton extends StatefulWidget {
   }
 
   @override
-  _PushButtonState createState() => _PushButtonState();
+  PushButtonState createState() => PushButtonState();
 }
 
-class _PushButtonState extends State<PushButton>
+class PushButtonState extends State<PushButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -167,37 +167,38 @@ class _PushButtonState extends State<PushButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
