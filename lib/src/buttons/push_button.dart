@@ -375,8 +375,8 @@ class PushButtonThemeData with Diagnosticable {
       identical(this, other) ||
       other is PushButtonThemeData &&
           runtimeType == other.runtimeType &&
-          color == other.color &&
-          disabledColor == other.disabledColor;
+          color?.value == other.color?.value &&
+          disabledColor?.value == other.disabledColor?.value;
 
   @override
   int get hashCode => color.hashCode ^ disabledColor.hashCode;
