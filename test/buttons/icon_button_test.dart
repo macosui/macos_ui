@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -68,5 +69,28 @@ void main() {
     await gesture.cancel();
 
     expect(iconButtonKey.currentState?.buttonHeldDown, false);
+  });
+
+  testWidgets('debugFillProperties', (tester) async {
+    final builder = DiagnosticPropertiesBuilder();
+    const MacosIconButton(
+      icon: Icon(CupertinoIcons.add),
+    ).debugFillProperties(builder);
+
+    final description = builder.properties
+        .where((node) => !node.isFiltered(DiagnosticLevel.info))
+        .map((node) => node.toString())
+        .toList();
+
+    expect(
+      description,
+      [
+        'backgroundColor: null',
+        'disabledColor: null',
+        'pressedOpacity: 0.4',
+        'alignment: Alignment.center',
+        'semanticLabel: null',
+      ],
+    );
   });
 }
