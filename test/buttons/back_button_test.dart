@@ -47,6 +47,7 @@ void main() {
           child: MacosScaffold(
             titleBar: TitleBar(
               leading: MacosBackButton(
+                fillColor: MacosColors.appleBlue,
                 key: backButtonKey,
                 onPressed: () {},
               ),
