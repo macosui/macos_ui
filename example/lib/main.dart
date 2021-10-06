@@ -5,9 +5,7 @@ import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:provider/provider.dart';
 
 import 'theme.dart';

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:macos_ui/src/library.dart';
 
 /// An immutable 32 bit color value in ARGB format.

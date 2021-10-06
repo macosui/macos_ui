@@ -1,6 +1,5 @@
 import 'dart:math' as math show max, min;
 
-import 'package:flutter/rendering.dart' show SystemMouseCursors;
 import 'package:flutter/services.dart' show SystemMouseCursor;
 import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/library.dart';

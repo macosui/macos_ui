@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/theme/macos_colors.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 const ShapeBorder _defaultShape = const RoundedRectangleBorder(

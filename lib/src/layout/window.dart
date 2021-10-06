@@ -1,9 +1,5 @@
 import 'dart:math' as math;
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
