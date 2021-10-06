@@ -75,3 +75,6 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 /example/detective_connect.txt
+
+coverage_report
+coverage
