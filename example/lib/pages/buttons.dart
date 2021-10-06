@@ -8,6 +8,8 @@ class ButtonsPage extends StatefulWidget {
 }
 
 class _ButtonsPageState extends State<ButtonsPage> {
+  ThemeMode _selectedThemeMode = ThemeMode.system;
+
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
@@ -145,6 +147,57 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       ),
                     );
                   },
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('System Theme'),
+                    const SizedBox(width: 8),
+                    MacosRadioButton<ThemeMode>(
+                      groupValue: _selectedThemeMode,
+                      value: ThemeMode.system,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedThemeMode = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Light Theme'),
+                    const SizedBox(width: 24),
+                    MacosRadioButton<ThemeMode>(
+                      groupValue: _selectedThemeMode,
+                      value: ThemeMode.light,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedThemeMode = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Dark Theme'),
+                    const SizedBox(width: 26),
+                    MacosRadioButton<ThemeMode>(
+                      groupValue: _selectedThemeMode,
+                      value: ThemeMode.dark,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedThemeMode = value!;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
