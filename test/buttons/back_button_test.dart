@@ -39,13 +39,17 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('handleTapDown', (tester) async {
+  testWidgets('handleTapDown, handleTapUp, handleTapCancel', (tester) async {
+    final backButtonKey = GlobalKey<MacosBackButtonState>();
     await tester.pumpWidget(
       MacosApp(
         home: MacosWindow(
           child: MacosScaffold(
             titleBar: TitleBar(
-              leading: MacosBackButton(),
+              leading: MacosBackButton(
+                key: backButtonKey,
+                onPressed: () {},
+              ),
             ),
           ),
         ),
@@ -56,7 +60,13 @@ void main() {
     expect(backButton, findsOneWidget);
 
     final gesture = await tester.press(backButton);
-    await gesture.down(Offset.zero);
+    expect(backButtonKey.currentState!.buttonHeldDown, true);
+    await gesture.up();
+    expect(backButtonKey.currentState!.buttonHeldDown, false);
+
+    final gesture2 = await tester.press(backButton);
+    expect(backButtonKey.currentState!.buttonHeldDown, true);
+    await gesture2.cancel();
   });
 
   testWidgets('debugFillProperties', (tester) async {
