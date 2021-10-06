@@ -1,3 +1,6 @@
+## [0.7.1]
+* Add generics support to `MacosRadioButton` - Thank you [Sacha Arbonel](https://github.com/sachaarbonel)!
+
 ## [0.7.0+2]
 * Add note in docs that a `Builder` is required for manual sidebar toggling to work.
 
