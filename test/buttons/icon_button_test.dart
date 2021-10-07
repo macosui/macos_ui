@@ -7,11 +7,9 @@ import '../mocks.dart';
 
 void main() {
   late MockOnPressedFunction mockOnPressedFunction;
-  late MockOnTapCancelFunction mockOnTapCancelFunction;
 
   setUp(() {
     mockOnPressedFunction = MockOnPressedFunction();
-    mockOnTapCancelFunction = MockOnTapCancelFunction();
   });
 
   testWidgets('MacosIconButton onPressed works', (tester) async {
