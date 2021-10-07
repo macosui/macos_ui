@@ -361,7 +361,7 @@ class MacosThemeData with Diagnosticable {
       typography: typography ?? this.typography,
       pushButtonTheme: this.pushButtonTheme.copyWith(),
       helpButtonTheme: this.helpButtonTheme.copyWith(),
-      tooltipTheme: this.tooltipTheme.copyWith(tooltipTheme),
+      tooltipTheme: this.tooltipTheme.copyWith(),
       visualDensity: visualDensity ?? this.visualDensity,
       scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
     );

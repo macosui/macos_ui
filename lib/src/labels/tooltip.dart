@@ -313,7 +313,7 @@ class _MacosTooltipState extends State<MacosTooltip>
     assert(debugCheckHasMacosTheme(context));
     assert(Overlay.of(context, debugRequiredFor: widget) != null);
     final MacosThemeData theme = MacosTheme.of(context);
-    final tooltipTheme = theme.tooltipTheme.copyWith(this.widget.style);
+    final tooltipTheme = theme.tooltipTheme.copyWith();
     final TextStyle? defaultTextStyle;
     final BoxDecoration defaultDecoration;
     if (theme.brightness == Brightness.dark) {
@@ -422,18 +422,27 @@ class TooltipThemeData with Diagnosticable {
   }
 
   /// Copy this tooltip with [style]
-  TooltipThemeData copyWith(TooltipThemeData? style) {
-    if (style == null) return this;
+  TooltipThemeData copyWith({
+    BoxDecoration? decoration,
+    double? height,
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
+    bool? preferBelow,
+    Duration? showDuration,
+    TextStyle? testStyle,
+    double? verticalOffset,
+    Duration? waitDuration,
+  }) {
     return TooltipThemeData(
-      decoration: style.decoration ?? decoration,
-      height: style.height ?? height,
-      margin: style.margin ?? margin,
-      padding: style.padding ?? padding,
-      preferBelow: style.preferBelow ?? preferBelow,
-      showDuration: style.showDuration ?? showDuration,
-      textStyle: style.textStyle ?? textStyle,
-      verticalOffset: style.verticalOffset ?? verticalOffset,
-      waitDuration: style.waitDuration ?? waitDuration,
+      decoration: decoration ?? this.decoration,
+      height: height ?? this.height,
+      margin: margin ?? this.margin,
+      padding: padding ??this.padding,
+      preferBelow: preferBelow ?? this.preferBelow,
+      showDuration: showDuration ?? this.showDuration,
+      textStyle: textStyle ?? this.textStyle,
+      verticalOffset: verticalOffset ?? this.verticalOffset,
+      waitDuration: waitDuration ?? this.waitDuration,
     );
   }
 
@@ -518,6 +527,33 @@ class TooltipThemeData with Diagnosticable {
       waitDuration: t < 0.5 ? a.waitDuration : b.waitDuration,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TooltipThemeData &&
+          runtimeType == other.runtimeType &&
+          height == other.height &&
+          verticalOffset == other.verticalOffset &&
+          padding == other.padding &&
+          margin == other.margin &&
+          preferBelow == other.preferBelow &&
+          decoration == other.decoration &&
+          waitDuration == other.waitDuration &&
+          showDuration == other.showDuration &&
+          textStyle == other.textStyle;
+
+  @override
+  int get hashCode =>
+      height.hashCode ^
+      verticalOffset.hashCode ^
+      padding.hashCode ^
+      margin.hashCode ^
+      preferBelow.hashCode ^
+      decoration.hashCode ^
+      waitDuration.hashCode ^
+      showDuration.hashCode ^
+      textStyle.hashCode;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
