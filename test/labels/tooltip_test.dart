@@ -75,6 +75,8 @@ void main() {
         _findTooltipContainer(tooltipText),
       );
       final tipInGlobal = tip.localToGlobal(tip.size.topCenter(Offset.zero));
+      expect(tipInGlobal.dx, 300.0);
+      expect(tipInGlobal.dy, 24.0);
     },
   );
 }
