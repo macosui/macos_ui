@@ -65,7 +65,7 @@ class MacosRadioButton<T> extends StatelessWidget {
   /// Whether the button is disabled or not
   bool get isDisabled => onChanged == null;
 
-  bool get _selected => value == groupValue;
+  bool get selected => value == groupValue;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -94,7 +94,7 @@ class MacosRadioButton<T> extends StatelessWidget {
     return GestureDetector(
       onTap: () => onChanged!(value),
       child: Semantics(
-        checked: _selected,
+        checked: selected,
         label: semanticLabel,
         child: Container(
           height: size,
@@ -102,9 +102,9 @@ class MacosRadioButton<T> extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               style: isDisabled ? BorderStyle.none : BorderStyle.solid,
-              width: _selected ? size / 4.0 : 1,
+              width: selected ? size / 4.0 : 1,
               color: MacosDynamicColor.resolve(
-                _selected ? onColor ?? theme.primaryColor : offColor,
+                selected ? onColor ?? theme.primaryColor : offColor,
                 context,
               ),
             ),
@@ -119,7 +119,7 @@ class MacosRadioButton<T> extends StatelessWidget {
                 innerColor ??
                     (isDisabled
                         ? CupertinoColors.quaternarySystemFill
-                        : _selected || isLight
+                        : selected || isLight
                             ? CupertinoColors.white
                             : CupertinoColors.tertiarySystemFill),
                 context,
