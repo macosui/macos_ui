@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+// https://github.com/flutter/flutter/blob/master/packages/flutter/test/material/tooltip_test.dart
+
 void _ensureTooltipVisible(GlobalKey key) {
   // This function uses "as dynamic"to defeat the static analysis. In general
   // you want to avoid using this style in your code, as it will cause the
