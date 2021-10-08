@@ -41,9 +41,9 @@ void main() {
       description,
       [
         'value: 50.0',
-        'height: 4.5',
-        'trackColor: null',
-        'backgroundColor: null',
+        'radius: 10.0',
+        'innerColor: null',
+        'borderColor: null',
         'semanticLabel: null',
       ],
     );
