@@ -71,8 +71,8 @@ void main() {
       );
 
       final theme = HelpButtonTheme.of(capturedContext);
-      expect(theme.color, Color(0xfff4f5f5));
-      expect(theme.disabledColor, Color(0xfff4f5f5));
+      expect(theme.color, const Color(0xfff4f5f5));
+      expect(theme.disabledColor, const Color(0xfff4f5f5));
     });
   });
 }

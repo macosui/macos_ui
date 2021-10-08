@@ -130,8 +130,9 @@ class MacosBackButtonState extends State<MacosBackButton>
     if (widget.fillColor != null) {
       _fillColor = widget.fillColor;
     } else {
-      _fillColor =
-          brightness == Brightness.dark ? Color(0xff323232) : Color(0xffF4F5F5);
+      _fillColor = brightness == Brightness.dark
+          ? const Color(0xff323232)
+          : const Color(0xffF4F5F5);
     }
 
     return MouseRegion(
@@ -151,7 +152,7 @@ class MacosBackButtonState extends State<MacosBackButton>
         child: Semantics(
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 20, // eyeballed
               minHeight: 20, // eyeballed
             ),
@@ -163,9 +164,9 @@ class MacosBackButtonState extends State<MacosBackButton>
                   return DecoratedBox(
                     decoration: BoxDecoration(
                       color: buttonHeldDown && brightness == Brightness.dark
-                          ? Color(0xff3C383C)
+                          ? const Color(0xff3C383C)
                           : buttonHeldDown && brightness == Brightness.light
-                              ? Color(0xffE5E5E5)
+                              ? const Color(0xffE5E5E5)
                               : _fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -198,8 +197,9 @@ class MacosIconButtonState extends State<MacosIconButton>
         context,
       );
     } else {
-      disabledColor =
-          theme.brightness.isDark ? Color(0xff353535) : Color(0xffE5E5E5);
+      disabledColor = theme.brightness.isDark
+          ? const Color(0xff353535)
+          : const Color(0xffE5E5E5);
     }
 
     return MouseRegion(
@@ -225,7 +225,7 @@ class MacosIconButtonState extends State<MacosIconButton>
                   color: !enabled ? disabledColor : backgroundColor,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,

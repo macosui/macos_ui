@@ -74,8 +74,8 @@ void main() {
       );
 
       final theme = PushButtonTheme.of(capturedContext);
-      expect(theme.color, Color(0xff007aff));
-      expect(theme.disabledColor, Color(0xfff4f5f5));
+      expect(theme.color, const Color(0xff007aff));
+      expect(theme.disabledColor, const Color(0xfff4f5f5));
     });
   });
 }

@@ -48,7 +48,7 @@ class Label extends StatelessWidget {
       children: [
         if (icon != null)
           Padding(
-            padding: EdgeInsets.only(right: 6),
+            padding: const EdgeInsets.only(right: 6),
             child: IconTheme(
               data: IconThemeData(
                 size: theme.typography.body.fontSize ?? 24,

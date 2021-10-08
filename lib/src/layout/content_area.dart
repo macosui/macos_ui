@@ -14,7 +14,7 @@ class ContentArea extends StatelessWidget {
   ContentArea({
     required this.builder,
     this.minWidth = 300,
-  }) : super(key: Key('macos_scaffold_content_area'));
+  }) : super(key: const Key('macos_scaffold_content_area'));
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -31,7 +31,7 @@ class ContentArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand().copyWith(
+      constraints: const BoxConstraints.expand().copyWith(
         minWidth: minWidth,
       ),
       child: SafeArea(

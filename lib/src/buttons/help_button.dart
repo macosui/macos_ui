@@ -169,8 +169,8 @@ class HelpButtonState extends State<HelpButton>
     final Color? foregroundColor = widget.enabled
         ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.25)
-            : Color.fromRGBO(0, 0, 0, 0.25);
+            ? const Color.fromRGBO(255, 255, 255, 0.25)
+            : const Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -184,7 +184,7 @@ class HelpButtonState extends State<HelpButton>
           label: widget.semanticLabel,
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 20,
               minHeight: 20,
             ),
@@ -195,22 +195,22 @@ class HelpButtonState extends State<HelpButton>
                   shape: BoxShape.circle,
                   color: !enabled ? disabledColor : backgroundColor,
                   boxShadow: [
-                    BoxShadow(
+                    const BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(-0.1, -0.1),
                     ),
-                    BoxShadow(
+                    const BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(0.1, 0.1),
                     ),
-                    BoxShadow(
+                    const BoxShadow(
                       color: CupertinoColors.tertiarySystemFill,
-                      offset: Offset(0, 0),
+                      offset: const Offset(0, 0),
                     ),
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,

@@ -108,7 +108,7 @@ class _ResizablePaneState extends State<ResizablePane> {
       behavior: HitTestBehavior.opaque,
       child: MouseRegion(
         cursor: _cursor,
-        child: SizedBox(width: 5),
+        child: const SizedBox(width: 5),
       ),
       onHorizontalDragUpdate: (details) {
         setState(() {
@@ -171,7 +171,7 @@ class _ResizablePaneState extends State<ResizablePane> {
 
     if (widget.windowBreakpoint != null &&
         _maxWidth <= widget.windowBreakpoint!) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return Container(

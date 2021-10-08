@@ -21,7 +21,7 @@ void main() {
               ContentArea(
                 builder: (context, scrollController) {
                   return MacosIconButton(
-                    icon: Icon(CupertinoIcons.add),
+                    icon: const Icon(CupertinoIcons.add),
                     onPressed: mockOnPressedFunction.handler,
                   );
                 },
@@ -51,7 +51,7 @@ void main() {
                 builder: (context, scrollController) {
                   return MacosIconButton(
                     key: iconButtonKey,
-                    icon: Icon(CupertinoIcons.add),
+                    icon: const Icon(CupertinoIcons.add),
                     onPressed: mockOnPressedFunction.handler,
                   );
                 },

@@ -124,7 +124,7 @@ class MacosRadioButton<T> extends StatelessWidget {
                             : CupertinoColors.tertiarySystemFill),
                 context,
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.05),
                   offset: Offset(-0.05, -0.05),

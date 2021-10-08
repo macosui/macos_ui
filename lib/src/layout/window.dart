@@ -175,7 +175,7 @@ class _MacosWindowState extends State<MacosWindow> {
               width: width - visibleSidebarWidth,
               height: height,
               child: ClipRect(
-                child: widget.child ?? SizedBox.shrink(),
+                child: widget.child ?? const SizedBox.shrink(),
               ),
             ),
 

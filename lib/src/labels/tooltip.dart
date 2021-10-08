@@ -114,9 +114,9 @@ class _MacosTooltipState extends State<MacosTooltip>
       case TargetPlatform.macOS:
       case TargetPlatform.linux:
       case TargetPlatform.windows:
-        return Duration(seconds: 10);
+        return const Duration(seconds: 10);
       default:
-        return Duration(milliseconds: 1500);
+        return const Duration(milliseconds: 1500);
     }
   }
 

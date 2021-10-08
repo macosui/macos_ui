@@ -5,7 +5,7 @@ import 'package:macos_ui/macos_ui.dart';
 void main() {
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
-    RelevanceIndicator(
+    const RelevanceIndicator(
       value: 50,
       amount: 100,
     ).debugFillProperties(builder);

@@ -232,8 +232,8 @@ class PushButtonState extends State<PushButton>
     final Color foregroundColor = widget.enabled
         ? textLuminance(backgroundColor)
         : theme.brightness.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.25)
-            : Color.fromRGBO(0, 0, 0, 0.25);
+            ? const Color.fromRGBO(255, 255, 255, 0.25)
+            : const Color.fromRGBO(0, 0, 0, 0.25);
 
     final TextStyle textStyle =
         theme.typography.headline.copyWith(color: foregroundColor);
@@ -250,7 +250,7 @@ class PushButtonState extends State<PushButton>
           button: true,
           label: widget.semanticLabel,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 49,
               minHeight: 20,
             ),
