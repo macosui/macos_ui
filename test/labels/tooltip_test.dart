@@ -69,7 +69,8 @@ void main() {
       );
 
       _ensureTooltipVisible(key);
-      await tester.pump(const Duration(seconds: 2)); // faded in, show timer started (and at 0.0)
+      await tester.pump(const Duration(
+          seconds: 2)); // faded in, show timer started (and at 0.0)
 
       final RenderBox tip = tester.renderObject(
         _findTooltipContainer(tooltipText),

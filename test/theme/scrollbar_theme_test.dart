@@ -71,4 +71,3 @@ final _scrollbarThemeDataDark = ScrollbarThemeData(
   trackBorderColor: Colors.grey.shade300,
   trackColor: Colors.grey.shade300,
 );
-

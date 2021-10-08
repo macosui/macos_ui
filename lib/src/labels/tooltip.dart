@@ -437,7 +437,7 @@ class TooltipThemeData with Diagnosticable {
       decoration: decoration ?? this.decoration,
       height: height ?? this.height,
       margin: margin ?? this.margin,
-      padding: padding ??this.padding,
+      padding: padding ?? this.padding,
       preferBelow: preferBelow ?? this.preferBelow,
       showDuration: showDuration ?? this.showDuration,
       textStyle: textStyle ?? this.textStyle,
