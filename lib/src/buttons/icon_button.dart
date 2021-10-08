@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -104,10 +103,10 @@ class MacosIconButton extends StatefulWidget {
   }
 
   @override
-  _MacosIconButtonState createState() => _MacosIconButtonState();
+  MacosIconButtonState createState() => MacosIconButtonState();
 }
 
-class _MacosIconButtonState extends State<MacosIconButton>
+class MacosIconButtonState extends State<MacosIconButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -147,37 +146,38 @@ class _MacosIconButtonState extends State<MacosIconButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
@@ -197,8 +197,9 @@ class _MacosIconButtonState extends State<MacosIconButton>
         context,
       );
     } else {
-      disabledColor =
-          theme.brightness.isDark ? Color(0xff353535) : Color(0xffE5E5E5);
+      disabledColor = theme.brightness.isDark
+          ? const Color(0xff353535)
+          : const Color(0xffE5E5E5);
     }
 
     return MouseRegion(
@@ -224,7 +225,7 @@ class _MacosIconButtonState extends State<MacosIconButton>
                   color: !enabled ? disabledColor : backgroundColor,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,

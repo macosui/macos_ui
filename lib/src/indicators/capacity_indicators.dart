@@ -102,7 +102,8 @@ class CapacityIndicator extends StatelessWidget {
       label: semanticLabel,
       value: value.toStringAsFixed(2),
       child: Container(
-        constraints: BoxConstraints(minWidth: _kCapacityIndicatorMinWidth),
+        constraints:
+            const BoxConstraints(minWidth: _kCapacityIndicatorMinWidth),
         child: LayoutBuilder(builder: (context, consts) {
           double width = consts.maxWidth;
           if (width.isInfinite) width = 100;

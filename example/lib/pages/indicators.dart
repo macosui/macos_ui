@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 class IndicatorsPage extends StatefulWidget {
+  const IndicatorsPage({Key? key}) : super(key: key);
+
   @override
   _IndicatorsPageState createState() => _IndicatorsPageState();
 }
@@ -14,13 +15,13 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: TitleBar(
+      titleBar: const TitleBar(
         title: Text('macOS UI Indicators'),
       ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             controller: scrollController,
             child: Column(
               children: [
@@ -29,25 +30,25 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                   onChanged: (v) => setState(() => sliderValue = v),
                   discrete: true,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CapacityIndicator(
                   value: sliderValue,
                   onChanged: (v) => setState(() => sliderValue = v),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 RatingIndicator(
                   value: ratingValue,
                   onChanged: (v) => setState(() => ratingValue = v),
                 ),
-                SizedBox(height: 20),
-                ProgressCircle(),
-                SizedBox(height: 20),
-                RelevanceIndicator(
+                const SizedBox(height: 20),
+                const ProgressCircle(),
+                const SizedBox(height: 20),
+                const RelevanceIndicator(
                   value: 25,
                   amount: 50,
                 ),
-                SizedBox(height: 20),
-                Label(
+                const SizedBox(height: 20),
+                const Label(
                   icon: Icon(CupertinoIcons.tag),
                   text: SelectableText('A determinate progress circle: '),
                   child: ProgressCircle(value: 50),

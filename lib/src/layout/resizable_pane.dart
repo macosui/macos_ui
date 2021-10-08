@@ -1,6 +1,5 @@
 import 'dart:math' as math show max, min;
 
-import 'package:flutter/rendering.dart' show SystemMouseCursors;
 import 'package:flutter/services.dart' show SystemMouseCursor;
 import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/library.dart';
@@ -109,7 +108,7 @@ class _ResizablePaneState extends State<ResizablePane> {
       behavior: HitTestBehavior.opaque,
       child: MouseRegion(
         cursor: _cursor,
-        child: SizedBox(width: 5),
+        child: const SizedBox(width: 5),
       ),
       onHorizontalDragUpdate: (details) {
         setState(() {
@@ -172,7 +171,7 @@ class _ResizablePaneState extends State<ResizablePane> {
 
     if (widget.windowBreakpoint != null &&
         _maxWidth <= widget.windowBreakpoint!) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return Container(

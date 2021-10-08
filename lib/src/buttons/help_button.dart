@@ -74,10 +74,10 @@ class HelpButton extends StatefulWidget {
   }
 
   @override
-  _HelpButtonState createState() => _HelpButtonState();
+  HelpButtonState createState() => HelpButtonState();
 }
 
-class _HelpButtonState extends State<HelpButton>
+class HelpButtonState extends State<HelpButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -117,37 +117,38 @@ class _HelpButtonState extends State<HelpButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
@@ -156,20 +157,20 @@ class _HelpButtonState extends State<HelpButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.helpButtonTheme.color,
+      widget.color ?? theme.helpButtonTheme.color!,
       context,
     );
 
     final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
+      widget.disabledColor ?? theme.helpButtonTheme.disabledColor!,
       context,
     );
 
     final Color? foregroundColor = widget.enabled
         ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.25)
-            : Color.fromRGBO(0, 0, 0, 0.25);
+            ? const Color.fromRGBO(255, 255, 255, 0.25)
+            : const Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -183,7 +184,7 @@ class _HelpButtonState extends State<HelpButton>
           label: widget.semanticLabel,
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 20,
               minHeight: 20,
             ),
@@ -194,22 +195,22 @@ class _HelpButtonState extends State<HelpButton>
                   shape: BoxShape.circle,
                   color: !enabled ? disabledColor : backgroundColor,
                   boxShadow: [
-                    BoxShadow(
+                    const BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(-0.1, -0.1),
                     ),
-                    BoxShadow(
+                    const BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(0.1, 0.1),
                     ),
-                    BoxShadow(
+                    const BoxShadow(
                       color: CupertinoColors.tertiarySystemFill,
-                      offset: Offset(0, 0),
+                      offset: const Offset(0, 0),
                     ),
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,
@@ -286,23 +287,24 @@ class HelpButtonThemeData with Diagnosticable {
   ///
   /// The [style] may be null.
   const HelpButtonThemeData({
-    required this.color,
-    required this.disabledColor,
+    this.color,
+    this.disabledColor,
   });
 
   /// The default background color for [HelpButton]
-  final Color color;
+  final Color? color;
 
   /// The default disabled color for [HelpButton]
-  final Color disabledColor;
+  final Color? disabledColor;
 
-  HelpButtonThemeData copyWith(HelpButtonThemeData? themeData) {
-    if (themeData == null) {
-      return this;
-    }
+  /// Copies one [HelpButtonThemeData] to another.
+  HelpButtonThemeData copyWith({
+    Color? color,
+    Color? disabledColor,
+  }) {
     return HelpButtonThemeData(
-      color: themeData.color,
-      disabledColor: themeData.disabledColor,
+      color: color ?? this.color,
+      disabledColor: disabledColor ?? this.disabledColor,
     );
   }
 
@@ -315,10 +317,22 @@ class HelpButtonThemeData with Diagnosticable {
     double t,
   ) {
     return HelpButtonThemeData(
-      color: Color.lerp(a.color, b.color, t)!,
-      disabledColor: Color.lerp(a.color, b.color, t)!,
+      color: Color.lerp(a.color, b.color, t),
+      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is HelpButtonThemeData &&
+            runtimeType == other.runtimeType &&
+            color?.value == other.color?.value &&
+            disabledColor?.value == other.disabledColor?.value;
+  }
+
+  @override
+  int get hashCode => color.hashCode ^ disabledColor.hashCode;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

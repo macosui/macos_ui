@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:flutter/widgets.dart';
 
 class FieldsPage extends StatefulWidget {
+  const FieldsPage({Key? key}) : super(key: key);
+
   @override
   _FieldsPageState createState() => _FieldsPageState();
 }
@@ -12,20 +12,20 @@ class _FieldsPageState extends State<FieldsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: TitleBar(
+      titleBar: const TitleBar(
         title: Text('macOS UI Fields'),
       ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: MacosTextField(
                     prefix: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 4.0,
                         vertical: 2.0,
                       ),
@@ -41,11 +41,11 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: MacosTextField.borderless(
                     prefix: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      padding: EdgeInsets.symmetric(horizontal: 4.0),
                       child: Icon(CupertinoIcons.search),
                     ),
                     placeholder: 'Type some text here',
@@ -67,7 +67,9 @@ class _FieldsPageState extends State<FieldsPage> {
           windowBreakpoint: 800,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
-            return Center(child: Text('Resizable Pane'));
+            return const Center(
+              child: Text('Resizable Pane'),
+            );
           },
         ),
       ],

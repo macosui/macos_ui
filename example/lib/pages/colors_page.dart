@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class ColorsPage extends StatefulWidget {
-  ColorsPage({Key? key}) : super(key: key);
+  const ColorsPage({Key? key}) : super(key: key);
 
   @override
   _ColorsPageState createState() => _ColorsPageState();
@@ -12,23 +12,23 @@ class _ColorsPageState extends State<ColorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: TitleBar(
+      titleBar: const TitleBar(
         title: Text('macOS UI Colors'),
       ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
             controller: scrollController,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: [
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Red',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemRedColor,
                       ),
                     ),
@@ -38,7 +38,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemRedColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Green',
                       child: ColorBox(
                         color: MacosColors.systemGreenColor,
@@ -50,9 +50,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemGreenColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Blue',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemBlueColor,
                       ),
                     ),
@@ -62,9 +62,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemBlueColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Orange',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemOrangeColor,
                       ),
                     ),
@@ -74,9 +74,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemOrangeColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Yellow',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemYellowColor,
                       ),
                     ),
@@ -86,7 +86,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemYellowColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Brown',
                       child: ColorBox(
                         color: MacosColors.systemBrownColor,
@@ -98,9 +98,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemBrownColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Pink',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemPinkColor,
                       ),
                     ),
@@ -110,9 +110,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemPinkColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Purple',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemPurpleColor,
                       ),
                     ),
@@ -122,7 +122,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemPurpleColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Teal',
                       child: ColorBox(
                         color: MacosColors.systemTealColor,
@@ -134,9 +134,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemTealColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Indigo',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemIndigoColor,
                       ),
                     ),
@@ -146,9 +146,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemIndigoColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'System Gray',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.systemGrayColor,
                       ),
                     ),
@@ -158,7 +158,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.systemGrayColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Link',
                       child: ColorBox(
                         color: MacosColors.linkColor,
@@ -170,9 +170,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.linkColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Unemphasized Background',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color:
                             MacosColors.unemphasizedSelectedTextBackgroundColor,
                       ),
@@ -184,9 +184,9 @@ class _ColorsPageState extends State<ColorsPage> {
                             .unemphasizedSelectedTextBackgroundColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Control Background',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.controlBackgroundColor,
                       ),
                     ),
@@ -196,7 +196,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.controlBackgroundColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Control',
                       child: ColorBox(
                         color: MacosColors.controlColor,
@@ -208,9 +208,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.controlColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Control Text',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.controlTextColor,
                       ),
                     ),
@@ -220,9 +220,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.controlTextColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Control Text Disabled',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.disabledControlTextColor,
                       ),
                     ),
@@ -232,9 +232,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.disabledControlTextColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Selected Control',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.selectedControlColor,
                       ),
                     ),
@@ -244,9 +244,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.selectedControlColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Selected Control Text',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.selectedControlTextColor,
                       ),
                     ),
@@ -256,7 +256,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.selectedControlTextColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Keyboard Focus Indicator',
                       child: ColorBox(
                         color: MacosColors.keyboardFocusIndicatorColor,
@@ -269,9 +269,9 @@ class _ColorsPageState extends State<ColorsPage> {
                             MacosColors.keyboardFocusIndicatorColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Label',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.labelColor,
                       ),
                     ),
@@ -281,9 +281,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.labelColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Secondary Label',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.secondaryLabelColor,
                       ),
                     ),
@@ -293,9 +293,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.secondaryLabelColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Tertiary Label',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.tertiaryLabelColor,
                       ),
                     ),
@@ -305,9 +305,9 @@ class _ColorsPageState extends State<ColorsPage> {
                         color: MacosColors.tertiaryLabelColor.darkColor,
                       ),
                     ),
-                    MacosTooltip(
+                    const MacosTooltip(
                       message: 'Quaternary Label',
-                      child: ColorBox(
+                      child: const ColorBox(
                         color: MacosColors.quaternaryLabelColor,
                       ),
                     ),
@@ -340,7 +340,7 @@ class ColorBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: color,
-      child: SizedBox(
+      child: const SizedBox(
         height: 50,
         width: 50,
       ),

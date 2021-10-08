@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class ButtonsPage extends StatefulWidget {
+  const ButtonsPage({Key? key}) : super(key: key);
+
   @override
   _ButtonsPageState createState() => _ButtonsPageState();
 }
@@ -14,11 +16,11 @@ class _ButtonsPageState extends State<ButtonsPage> {
   Widget build(BuildContext context) {
     return MacosScaffold(
       titleBar: TitleBar(
-        title: Text('macOS UI Widget Gallery'),
+        title: const Text('macOS UI Widget Gallery'),
         actions: [
           MacosIconButton(
             backgroundColor: MacosColors.transparent,
-            icon: Icon(
+            icon: const Icon(
               CupertinoIcons.sidebar_left,
               color: MacosColors.systemGrayColor,
             ),
@@ -26,7 +28,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
               MacosWindowScope.of(context).toggleSidebar();
             },
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
       ),
       children: [
@@ -36,16 +38,18 @@ class _ButtonsPageState extends State<ButtonsPage> {
           windowBreakpoint: 700,
           resizableSide: ResizableSide.right,
           builder: (_, __) {
-            return Center(child: Text('Resizable Pane'));
+            return const Center(
+              child: Text('Resizable Pane'),
+            );
           },
         ),
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
             controller: scrollController,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Text('MacosBackButton'),
+                const Text('MacosBackButton'),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -62,13 +66,13 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Text('MacosIconButton'),
+                const Text('MacosIconButton'),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MacosIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         CupertinoIcons.star_fill,
                         color: Colors.white,
                       ),
@@ -78,7 +82,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                     const SizedBox(width: 8),
                     MacosIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         CupertinoIcons.star_fill,
                         color: Colors.white,
                       ),
@@ -87,7 +91,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                     const SizedBox(width: 8),
                     MacosIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         CupertinoIcons.star_fill,
                         color: Colors.white,
                       ),
@@ -99,7 +103,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 const SizedBox(height: 20),
                 PushButton(
                   buttonSize: ButtonSize.large,
-                  child: Text('large PushButton'),
+                  child: const Text('large PushButton'),
                   onPressed: () {
                     MacosWindowScope.of(context).toggleSidebar();
                   },
@@ -107,14 +111,14 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 const SizedBox(height: 20),
                 PushButton(
                   buttonSize: ButtonSize.small,
-                  child: Text('small PushButton'),
+                  child: const Text('small PushButton'),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) {
                           return MacosScaffold(
-                            titleBar: TitleBar(
+                            titleBar: const TitleBar(
                               centerTitle: false,
                               title: Text('New page'),
                             ),
@@ -124,7 +128,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                   return Center(
                                     child: PushButton(
                                       buttonSize: ButtonSize.large,
-                                      child: Text('Go Back'),
+                                      child: const Text('Go Back'),
                                       onPressed: () {
                                         Navigator.maybePop(context);
                                       },
@@ -138,7 +142,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                 windowBreakpoint: 700,
                                 resizableSide: ResizableSide.left,
                                 builder: (_, __) {
-                                  return Center(child: Text('Resizable Pane'));
+                                  return const Center(
+                                    child: Text('Resizable Pane'),
+                                  );
                                 },
                               ),
                             ],
@@ -209,7 +215,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
           windowBreakpoint: 800,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
-            return Center(child: Text('Resizable Pane'));
+            return const Center(
+              child: Text('Resizable Pane'),
+            );
           },
         ),
       ],

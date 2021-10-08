@@ -1302,7 +1302,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         }
         return focusedDecoration.border;
       }(),
-      color: focusedDecoration.color ?? Color(0x00000000),
+      color: focusedDecoration.color ?? const Color(0x00000000),
     );
 
     final Color selectionColor =

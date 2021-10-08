@@ -5,18 +5,18 @@ import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:provider/provider.dart';
 
 import 'theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
-          home: Demo(),
+          home: const Demo(),
         );
       },
     );
@@ -37,6 +37,8 @@ class MyApp extends StatelessWidget {
 }
 
 class Demo extends StatefulWidget {
+  const Demo({Key? key}) : super(key: key);
+
   @override
   _DemoState createState() => _DemoState();
 }
@@ -50,14 +52,14 @@ class _DemoState extends State<Demo> {
 
   final List<Widget> pages = [
     CupertinoTabView(
-      builder: (_) => ButtonsPage(),
+      builder: (_) => const ButtonsPage(),
     ),
-    IndicatorsPage(),
-    FieldsPage(),
-    ColorsPage(),
-    Center(child: Text('Disclosure item 2')),
-    Center(child: Text('Disclosure item 3')),
-    DialogsPage(),
+    const IndicatorsPage(),
+    const FieldsPage(),
+    const ColorsPage(),
+    const Center(child: Text('Disclosure item 2')),
+    const Center(child: Text('Disclosure item 3')),
+    const DialogsPage(),
   ];
 
   Color textLuminance(Color backgroundColor) {
@@ -80,9 +82,9 @@ class _DemoState extends State<Demo> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(CupertinoIcons.profile_circled),
+              const Icon(CupertinoIcons.profile_circled),
               const SizedBox(width: 8.0),
-              Text('Tim Apple'),
+              const Text('Tim Apple'),
             ],
           ),
         ),
@@ -92,19 +94,19 @@ class _DemoState extends State<Demo> {
             onChanged: (i) => setState(() => pageIndex = i),
             scrollController: controller,
             items: [
-              SidebarItem(
+              const SidebarItem(
                 leading: Icon(CupertinoIcons.square_on_circle),
                 label: Text('Buttons'),
               ),
-              SidebarItem(
+              const SidebarItem(
                 leading: Icon(CupertinoIcons.arrow_2_circlepath),
                 label: Text('Indicators'),
               ),
-              SidebarItem(
+              const SidebarItem(
                 leading: Icon(CupertinoIcons.textbox),
                 label: Text('Fields'),
               ),
-              SidebarItem(
+              const SidebarItem(
                 label: Text('Disclosure'),
                 disclosureItems: [
                   SidebarItem(
@@ -121,7 +123,7 @@ class _DemoState extends State<Demo> {
                   ),
                 ],
               ),
-              SidebarItem(
+              const SidebarItem(
                 leading: Icon(CupertinoIcons.rectangle),
                 label: Text('Dialogs'),
               ),

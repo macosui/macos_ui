@@ -275,26 +275,40 @@ class ScrollbarThemeData with Diagnosticable {
 
   /// Creates a copy of this object with the given fields replaced with the
   /// new values.
-  ScrollbarThemeData copyWith(ScrollbarThemeData? other) {
-    if (other == null) return this;
+  ScrollbarThemeData copyWith({
+    double? thickness,
+    double? hoveringThickness,
+    bool? showTrackOnHover,
+    bool? isAlwaysShown,
+    bool? interactive,
+    Radius? radius,
+    Color? thumbColor,
+    Color? hoveringThumbColor,
+    Color? draggingThumbColor,
+    Color? trackColor,
+    Color? hoveringTrackBorderColor,
+    double? crossAxisMargin,
+    double? mainAxisMargin,
+    double? minThumbLength,
+  }) {
     return ScrollbarThemeData(
-      thickness: other.thickness ?? this.thickness,
-      hoveringThickness: other.hoveringThickness ?? this.hoveringThickness,
-      showTrackOnHover: other.showTrackOnHover ?? this.showTrackOnHover,
-      isAlwaysShown: other.isAlwaysShown ?? this.isAlwaysShown,
-      interactive: other.interactive ?? this.interactive,
-      radius: other.radius ?? this.radius,
-      thumbColor: other.thumbColor ?? this.thumbColor,
-      hoveringThumbColor: other.hoveringThumbColor ?? this.hoveringThumbColor,
-      draggingThumbColor: other.draggingThumbColor ?? this.draggingThumbColor,
-      trackColor: other.trackColor ?? this.trackColor,
-      hoveringTrackColor: other.hoveringTrackColor ?? this.hoveringTrackColor,
-      trackBorderColor: other.trackBorderColor ?? this.trackBorderColor,
+      thickness: thickness ?? this.thickness,
+      hoveringThickness: hoveringThickness ?? this.hoveringThickness,
+      showTrackOnHover: showTrackOnHover ?? this.showTrackOnHover,
+      isAlwaysShown: isAlwaysShown ?? this.isAlwaysShown,
+      interactive: interactive ?? this.interactive,
+      radius: radius ?? this.radius,
+      thumbColor: thumbColor ?? this.thumbColor,
+      hoveringThumbColor: hoveringThumbColor ?? this.hoveringThumbColor,
+      draggingThumbColor: draggingThumbColor ?? this.draggingThumbColor,
+      trackColor: trackColor ?? this.trackColor,
+      hoveringTrackColor: hoveringTrackColor ?? this.hoveringTrackColor,
+      trackBorderColor: trackBorderColor ?? this.trackBorderColor,
       hoveringTrackBorderColor:
-          other.hoveringTrackBorderColor ?? this.hoveringTrackBorderColor,
-      crossAxisMargin: other.crossAxisMargin ?? this.crossAxisMargin,
-      mainAxisMargin: other.mainAxisMargin ?? this.mainAxisMargin,
-      minThumbLength: other.minThumbLength ?? this.minThumbLength,
+          hoveringTrackBorderColor ?? this.hoveringTrackBorderColor,
+      crossAxisMargin: crossAxisMargin ?? this.crossAxisMargin,
+      mainAxisMargin: mainAxisMargin ?? this.mainAxisMargin,
+      minThumbLength: minThumbLength ?? this.minThumbLength,
     );
   }
 

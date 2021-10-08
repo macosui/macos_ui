@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -135,7 +134,7 @@ class MacosAlertDialog extends StatelessWidget {
         CupertinoColors.systemGrey6.color,
         MacosColors.controlBackgroundColor.darkColor,
       ),
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: _kDialogBorderRadius,
       ),
       child: Container(
@@ -155,7 +154,7 @@ class MacosAlertDialog extends StatelessWidget {
           borderRadius: _kDialogBorderRadius,
         ),
         child: ConstrainedBox(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 260,
           ),
           child: Column(
@@ -163,7 +162,7 @@ class MacosAlertDialog extends StatelessWidget {
             children: [
               const SizedBox(height: 28),
               ConstrainedBox(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   maxHeight: 56,
                   maxWidth: 56,
                 ),
@@ -359,7 +358,7 @@ class _SubtleBounceCurve extends Curve {
   @override
   double transform(double t) {
     final simulation = SpringSimulation(
-      SpringDescription(
+      const SpringDescription(
         damping: 14,
         mass: 1.4,
         stiffness: 180,

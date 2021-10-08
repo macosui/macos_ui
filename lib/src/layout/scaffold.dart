@@ -1,7 +1,5 @@
 import 'dart:math' as math;
-import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
@@ -122,8 +120,8 @@ class _ScaffoldBody extends MultiChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    final index =
-        children.indexWhere((e) => e.key == Key('macos_scaffold_content_area'));
+    final index = children
+        .indexWhere((e) => e.key == const Key('macos_scaffold_content_area'));
     return _RenderScaffoldBody(contentAreaIndex: index > -1 ? index : null);
   }
 
@@ -132,8 +130,8 @@ class _ScaffoldBody extends MultiChildRenderObjectWidget {
     BuildContext context,
     _RenderScaffoldBody renderObject,
   ) {
-    final index =
-        children.indexWhere((e) => e.key == Key('macos_scaffold_content_area'));
+    final index = children
+        .indexWhere((e) => e.key == const Key('macos_scaffold_content_area'));
     renderObject..contentAreaIndex = index > -1 ? index : null;
   }
 }
@@ -185,7 +183,7 @@ class _RenderScaffoldBody extends RenderBox
       _children.removeAt(contentAreaIndex!);
     }
     _children.forEach((child) {
-      child.layout(BoxConstraints.tightFor(), parentUsesSize: true);
+      child.layout(const BoxConstraints.tightFor(), parentUsesSize: true);
       sum += child.size.width;
     });
 
@@ -202,7 +200,7 @@ class _RenderScaffoldBody extends RenderBox
           parentUsesSize: true,
         );
       } else {
-        child.layout(BoxConstraints.tightFor(), parentUsesSize: true);
+        child.layout(const BoxConstraints.tightFor(), parentUsesSize: true);
       }
       final childSize = child.size;
       final _ParentData childParentData = child.parentData! as _ParentData;

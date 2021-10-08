@@ -14,6 +14,7 @@ class TitleBar extends StatelessWidget {
   ///
   /// The height of the TitleBar can be changed with [height].
   const TitleBar({
+    Key? key,
     this.height = kTitleBarHeight,
     this.alignment = Alignment.center,
     this.title,
@@ -23,7 +24,7 @@ class TitleBar extends StatelessWidget {
     this.automaticallyImplyLeading = true,
     this.actions,
     this.centerTitle = true,
-  });
+  }) : super(key: key);
 
   /// Specifies the height of this [TitleBar]
   ///
@@ -88,9 +89,9 @@ class TitleBar extends StatelessWidget {
         _leading = Container(
           width: 20,
           alignment: Alignment.centerLeft,
-          margin: EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
-            fillColor: Color(0x00000),
+            fillColor: const Color(0x00000),
             onPressed: () => Navigator.maybePop(context),
           ),
         );
@@ -105,8 +106,8 @@ class TitleBar extends StatelessWidget {
               fontSize: 15,
               fontWeight: FontWeight.w600,
               color: theme.brightness.isDark
-                  ? Color(0xFFEAEAEA)
-                  : Color(0xFF4D4D4D),
+                  ? const Color(0xFFEAEAEA)
+                  : const Color(0xFF4D4D4D),
             ),
       );
     }
@@ -157,7 +158,7 @@ class TitleBar extends StatelessWidget {
                 right: false,
                 bottom: false,
                 left: !(scope?.isSidebarShown ?? false),
-                child: _leading ?? SizedBox.shrink(),
+                child: _leading ?? const SizedBox.shrink(),
               ),
             ),
           ),

@@ -252,11 +252,13 @@ class _DeterminateBarPainter extends CustomPainter {
 
     // Draw the active tick line
     canvas.drawRRect(
-      BorderRadius.horizontal(left: Radius.circular(100)).toRRect(Offset.zero &
-          Size(
-            (value / 100).clamp(0.0, 1.0) * size.width,
-            size.height,
-          )),
+      const BorderRadius.horizontal(left: Radius.circular(100)).toRRect(
+        Offset.zero &
+            Size(
+              (value / 100).clamp(0.0, 1.0) * size.width,
+              size.height,
+            ),
+      ),
       Paint()
         ..color = activeColor ?? CupertinoColors.activeBlue
         ..style = PaintingStyle.fill,

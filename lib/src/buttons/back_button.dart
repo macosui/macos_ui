@@ -40,10 +40,10 @@ class MacosBackButton extends StatefulWidget {
   }
 
   @override
-  _MacosBackButtonState createState() => _MacosBackButtonState();
+  MacosBackButtonState createState() => MacosBackButtonState();
 }
 
-class _MacosBackButtonState extends State<MacosBackButton>
+class MacosBackButtonState extends State<MacosBackButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -83,37 +83,38 @@ class _MacosBackButtonState extends State<MacosBackButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
@@ -129,8 +130,9 @@ class _MacosBackButtonState extends State<MacosBackButton>
     if (widget.fillColor != null) {
       _fillColor = widget.fillColor;
     } else {
-      _fillColor =
-          brightness == Brightness.dark ? Color(0xff323232) : Color(0xffF4F5F5);
+      _fillColor = brightness == Brightness.dark
+          ? const Color(0xff323232)
+          : const Color(0xffF4F5F5);
     }
 
     return MouseRegion(
@@ -150,7 +152,7 @@ class _MacosBackButtonState extends State<MacosBackButton>
         child: Semantics(
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 20, // eyeballed
               minHeight: 20, // eyeballed
             ),
@@ -161,10 +163,10 @@ class _MacosBackButtonState extends State<MacosBackButton>
                 builder: (context, widget) {
                   return DecoratedBox(
                     decoration: BoxDecoration(
-                      color: _buttonHeldDown && brightness == Brightness.dark
-                          ? Color(0xff3C383C)
-                          : _buttonHeldDown && brightness == Brightness.light
-                              ? Color(0xffE5E5E5)
+                      color: buttonHeldDown && brightness == Brightness.dark
+                          ? const Color(0xff3C383C)
+                          : buttonHeldDown && brightness == Brightness.light
+                              ? const Color(0xffE5E5E5)
                               : _fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
