@@ -1,3 +1,7 @@
+## [0.7.2]
+* Upgraded various `copyWith` functions
+* Added `==` and `hashCode` to various classes
+
 ## [0.7.1]
 * Add generics support to `MacosRadioButton` - Thank you [Sacha Arbonel](https://github.com/sachaarbonel)!
 
