@@ -1,3 +1,6 @@
+## [0.7.3]
+* Fixed bug where cursor would not change caret location on mouse click
+
 ## [0.7.2]
 * Upgraded various `copyWith` functions
 * Added `==` and `hashCode` to various classes
