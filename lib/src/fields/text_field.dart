@@ -116,7 +116,9 @@ class _TextFieldSelectionGestureDetectorBuilder
         return;
       }
     }
-    super.onSingleTapUp(details);
+    if (delegate.selectionEnabled) {
+      renderEditable.selectPosition(cause: SelectionChangedCause.tap);
+    }
     _state._requestKeyboard();
     if (_state.widget.onTap != null) _state.widget.onTap!();
   }
