@@ -3,9 +3,11 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kSheetBorderRadius = BorderRadius.all(Radius.circular(12.0));
-const EdgeInsets _defaultInsetPadding = EdgeInsets.symmetric(horizontal: 80.0, vertical: 48.0);
+const EdgeInsets _defaultInsetPadding =
+    EdgeInsets.symmetric(horizontal: 80.0, vertical: 48.0);
 
-///
+/// A modal dialog that’s attached to a particular window and prevents further
+/// interaction with the window until the sheet is dismissed.
 class MacosSheet extends StatelessWidget {
   const MacosSheet({
     Key? key,
@@ -15,9 +17,20 @@ class MacosSheet extends StatelessWidget {
     this.insetAnimationCurve = Curves.decelerate,
   }) : super(key: key);
 
+  /// The widget below this widget in the tree.
   final Widget child;
+
+  /// The amount of padding added to [MediaQueryData.viewInsets] on the outside
+  /// of the dialog. This defines the minimum space between the screen's edges
+  /// and the dialog.
   final EdgeInsets? insetPadding;
+
+  /// The duration of the animation to show when the system keyboard intrudes
+  /// into the space that the dialog is placed in.
   final Duration insetAnimationDuration;
+
+  /// The curve to use for the animation shown when the system keyboard intrudes
+  /// into the space that the dialog is placed in.
   final Curve insetAnimationCurve;
 
   @override
@@ -35,7 +48,8 @@ class MacosSheet extends StatelessWidget {
       Colors.white.withOpacity(0.15),
     );
 
-    final EdgeInsets effectivePadding = MediaQuery.of(context).viewInsets + (insetPadding ?? EdgeInsets.zero);
+    final EdgeInsets effectivePadding =
+        MediaQuery.of(context).viewInsets + (insetPadding ?? EdgeInsets.zero);
 
     return AnimatedPadding(
       padding: effectivePadding,
@@ -67,33 +81,6 @@ class MacosSheet extends StatelessWidget {
         ),
       ),
     );
-
-    /*return Dialog(
-      backgroundColor: brightness.resolve(
-        CupertinoColors.systemGrey6.color,
-        MacosColors.controlBackgroundColor.darkColor,
-      ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: _kSheetBorderRadius,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: innerBorderColor,
-          ),
-          borderRadius: _kSheetBorderRadius,
-        ),
-        foregroundDecoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: outerBorderColor,
-          ),
-          borderRadius: _kSheetBorderRadius,
-        ),
-        child: child,
-      ),
-    );*/
   }
 }
 
