@@ -174,6 +174,21 @@ class _DialogsPageState extends State<DialogsPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  PushButton(
+                    buttonSize: ButtonSize.large,
+                    child: const Text('Show sheet'),
+                    onPressed: () {
+                      showMacosSheet(
+                        context: context,
+                        builder: (_) => const MacosSheet(
+                          child: Center(
+                            child: Text('Test'),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

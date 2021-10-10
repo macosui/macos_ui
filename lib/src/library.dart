@@ -21,6 +21,8 @@ export 'package:flutter/material.dart'
         SelectableText,
         VisualDensity,
         Colors,
+        MaterialLocalizations,
+        Dialog,
         kElevationToShadow;
 export 'package:flutter/widgets.dart';
 export 'util.dart';
