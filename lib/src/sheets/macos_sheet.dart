@@ -5,6 +5,7 @@ import 'package:macos_ui/src/library.dart';
 const _kSheetBorderRadius = BorderRadius.all(Radius.circular(12.0));
 const EdgeInsets _defaultInsetPadding = EdgeInsets.symmetric(horizontal: 80.0, vertical: 48.0);
 
+///
 class MacosSheet extends StatelessWidget {
   const MacosSheet({
     Key? key,
@@ -100,7 +101,7 @@ class MacosSheet extends StatelessWidget {
 Future<T?> showMacosSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  bool barrierDismissible = true,
+  bool barrierDismissible = false,
   Color? barrierColor,
   String? barrierLabel,
   bool useRootNavigator = true,

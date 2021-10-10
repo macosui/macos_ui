@@ -181,9 +181,13 @@ class _DialogsPageState extends State<DialogsPage> {
                     onPressed: () {
                       showMacosSheet(
                         context: context,
-                        builder: (_) => const MacosSheet(
+                        builder: (_) => MacosSheet(
                           child: Center(
-                            child: Text('Test'),
+                            child: PushButton(
+                              buttonSize: ButtonSize.small,
+                              child: const Text('Dismiss'),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
                           ),
                         ),
                       );
