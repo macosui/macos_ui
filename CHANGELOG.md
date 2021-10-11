@@ -1,3 +1,6 @@
+## [0.8.1]
+* Fix the outer border of `MacosSheet` not having a border radius
+
 ## [0.8.0]
 * New Widget: `MacoSheet`
 * New Widget: `MacosListTile`

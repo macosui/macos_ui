@@ -61,6 +61,7 @@ class MacosSheet extends StatelessWidget {
             CupertinoColors.systemGrey6.color,
             MacosColors.controlBackgroundColor.darkColor,
           ),
+          borderRadius: _kSheetBorderRadius,
         ),
         child: Container(
           decoration: BoxDecoration(
