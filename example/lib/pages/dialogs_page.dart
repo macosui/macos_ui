@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 class DialogsPage extends StatefulWidget {
   const DialogsPage({Key? key}) : super(key: key);
@@ -239,18 +240,29 @@ class MacosuiSheet extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               'Welcome to macos_ui',
-              style: MacosTheme.of(context)
-                  .typography
-                  .largeTitle.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: MacosTheme.of(context).typography.largeTitle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const MacosListTile(
+                  leading: Icon(CupertinoIcons.lightbulb),
+                  title: Text(
+                    'A robust library of Flutter components for macOS',
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
             PushButton(
               buttonSize: ButtonSize.large,
               child: const Text('Dismiss'),
               onPressed: () => Navigator.of(context).pop(),
             ),
+            const SizedBox(height: 50),
           ],
         ),
       ),
