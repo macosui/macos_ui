@@ -256,9 +256,10 @@ class MacosuiSheet extends StatelessWidget {
                   ),
                   subtitle: Text(
                     'Create native looking macOS applications using Flutter',
-                    style: MacosTheme.of(context).typography.subheadline.copyWith(
-                      color: MacosColors.systemGrayColor,
-                    ),
+                    style:
+                        MacosTheme.of(context).typography.subheadline.copyWith(
+                              color: MacosColors.systemGrayColor,
+                            ),
                   ),
                 ),
               ],
