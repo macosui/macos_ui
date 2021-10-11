@@ -1,7 +1,9 @@
-import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+/// A widget that aims to approximate the [ListTile] widget found in
+/// Flutter's material library.
 class MacosListTile extends StatelessWidget {
+  /// Builds a [MacosListTile].
   const MacosListTile({
     Key? key,
     this.leading,
@@ -9,8 +11,13 @@ class MacosListTile extends StatelessWidget {
     this.subtitle,
   }) : super(key: key);
 
+  /// A widget to display before the [title].
   final Widget? leading;
+
+  /// The primary content of the list tile.
   final Widget title;
+
+  /// Additional content displayed below the [title].
   final Widget? subtitle;
 
   @override
@@ -21,6 +28,7 @@ class MacosListTile extends StatelessWidget {
         if (leading != null) leading!,
         const SizedBox(width: 8),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             title,
             if (subtitle != null) subtitle!,
