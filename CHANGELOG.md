@@ -1,3 +1,7 @@
+## [0.8.0]
+* New Widget: `MacoSheet`
+* New Widget: `MacosListTile`
+
 ## [0.7.3]
 * Fixed bug where cursor would not change caret location on mouse click
 

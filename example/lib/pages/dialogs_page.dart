@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 class DialogsPage extends StatefulWidget {
   const DialogsPage({Key? key}) : super(key: key);
@@ -174,6 +175,17 @@ class _DialogsPageState extends State<DialogsPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  PushButton(
+                    buttonSize: ButtonSize.large,
+                    child: const Text('Show sheet'),
+                    onPressed: () {
+                      showMacosSheet(
+                        context: context,
+                        builder: (_) => const MacosuiSheet(),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -208,6 +220,60 @@ class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
         const SizedBox(width: 8),
         const Text('Don\'t ask again'),
       ],
+    );
+  }
+}
+
+class MacosuiSheet extends StatelessWidget {
+  const MacosuiSheet({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MacosSheet(
+      child: Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            const FlutterLogo(
+              size: 56,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Welcome to macos_ui',
+              style: MacosTheme.of(context).typography.largeTitle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MacosListTile(
+                  leading: const Icon(CupertinoIcons.lightbulb),
+                  title: Text(
+                    'A robust library of Flutter components for macOS',
+                    style: MacosTheme.of(context).typography.headline,
+                  ),
+                  subtitle: Text(
+                    'Create native looking macOS applications using Flutter',
+                    style:
+                        MacosTheme.of(context).typography.subheadline.copyWith(
+                              color: MacosColors.systemGrayColor,
+                            ),
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            PushButton(
+              buttonSize: ButtonSize.large,
+              child: const Text('Dismiss'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            const SizedBox(height: 50),
+          ],
+        ),
+      ),
     );
   }
 }
