@@ -181,15 +181,7 @@ class _DialogsPageState extends State<DialogsPage> {
                     onPressed: () {
                       showMacosSheet(
                         context: context,
-                        builder: (_) => MacosSheet(
-                          child: Center(
-                            child: PushButton(
-                              buttonSize: ButtonSize.small,
-                              child: const Text('Dismiss'),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                          ),
-                        ),
+                        builder: (_) => const MacosuiSheet(),
                       );
                     },
                   ),
@@ -227,6 +219,41 @@ class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
         const SizedBox(width: 8),
         const Text('Don\'t ask again'),
       ],
+    );
+  }
+}
+
+class MacosuiSheet extends StatelessWidget {
+  const MacosuiSheet({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MacosSheet(
+      child: Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            const FlutterLogo(
+              size: 56,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Welcome to macos_ui',
+              style: MacosTheme.of(context)
+                  .typography
+                  .largeTitle.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 24),
+            PushButton(
+              buttonSize: ButtonSize.large,
+              child: const Text('Dismiss'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
