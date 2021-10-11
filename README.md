@@ -15,14 +15,16 @@ Flutter widgets and themes implementing the current macOS design language.
 - [Layout](#layout)
   - [MacosWindow](#macoswindow)
   - [MacosScaffold](#macosscaffold)
+  - [MacosListTile](#MacosListTile)
 - [Buttons](#buttons)
   - [MacosCheckbox](#macoscheckbox)
   - [HelpButton](#helpbutton)
   - [RadioButton](#radiobutton)
   - [PushButton](#pushbutton)
   - [MacosSwitch](#macosswitch)
-- [Dialogs](#dialogs)
+- [Dialogs and Sheets](#dialogs)
   - [MacosAlertDialog](#MacosAlertDialog)
+  - [MacosSheet](#MacosSheet)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
 - [Labels](#labels)
@@ -109,6 +111,30 @@ class MainFlutterWindow: NSWindow {
   }
 }
 
+```
+
+## MacosListTile
+
+A widget that aims to approximate the [ListTile] widget found in
+Flutter's material library.
+
+![MacosListTile](https://imgur.com/pQB99M2.png)
+
+Usage:
+```dart
+MacosListTile(
+  leading: const Icon(CupertinoIcons.lightbulb),
+  title: Text(
+    'A robust library of Flutter components for macOS',
+    style: MacosTheme.of(context).typography.headline,
+  ),
+  subtitle: Text(
+    'Create native looking macOS applications using Flutter',
+    style: MacosTheme.of(context).typography.subheadline.copyWith(
+      color: MacosColors.systemGrayColor,
+    ),
+  ),
+),
 ```
 
 # Buttons
@@ -217,13 +243,13 @@ MacosSwitch(
 ),
 ```
 
-# Dialogs
+# Dialogs and Sheets
 
 ## MacosAlertDialog
 
 Usage:
 ```dart
-showDialog(
+showMacosAlertDialog(
   context: context,
   builder: (_) => MacosAlertDialog(
     appIcon: FlutterLogo(
@@ -250,6 +276,18 @@ showDialog(
 ![](https://imgur.com/G3dcjew.png)
 ![](https://imgur.com/YHtgv59.png)
 ![](https://imgur.com/xuBR5qK.png)
+
+## MacosSheet
+
+Usage:
+```dart
+showMacosSheet(
+  context: context,
+  builder: (_) => const MacosuiSheet(),
+);
+```
+
+![](https://imgur.com/NV0o5Ws.png)
 
 # Fields
 
