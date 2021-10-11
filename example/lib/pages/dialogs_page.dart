@@ -14,7 +14,7 @@ class _DialogsPageState extends State<DialogsPage> {
   Widget build(BuildContext context) {
     return MacosScaffold(
       titleBar: const TitleBar(
-        title: const Text('macOS UI Dialogs'),
+        title: const Text('macOS UI Dialogs & Sheets'),
       ),
       children: [
         ContentArea(builder: (context, scrollController) {

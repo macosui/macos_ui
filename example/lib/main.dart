@@ -125,7 +125,7 @@ class _DemoState extends State<Demo> {
               ),
               const SidebarItem(
                 leading: Icon(CupertinoIcons.rectangle),
-                label: Text('Dialogs and Sheets'),
+                label: Text('Dialogs & Sheets'),
               ),
             ],
           );
