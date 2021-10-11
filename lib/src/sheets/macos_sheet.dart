@@ -4,7 +4,7 @@ import 'package:macos_ui/src/library.dart';
 
 const _kSheetBorderRadius = BorderRadius.all(Radius.circular(12.0));
 const EdgeInsets _defaultInsetPadding =
-    EdgeInsets.symmetric(horizontal: 80.0, vertical: 48.0);
+    EdgeInsets.symmetric(horizontal: 140.0, vertical: 48.0);
 
 /// A modal dialog that’s attached to a particular window and prevents further
 /// interaction with the window until the sheet is dismissed.
