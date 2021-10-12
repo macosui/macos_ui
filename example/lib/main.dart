@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
-          themeMode: ThemeMode.light,
+          themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: const Demo(),
         );
@@ -82,7 +82,7 @@ class _DemoState extends State<Demo> {
           child: MacosListTile(
             leading: Icon(CupertinoIcons.profile_circled),
             title: Text('Tim Apple'),
-            //subtitle: Text('tim@apple.com'),
+            subtitle: Text('tim@apple.com'),
           ),
         ),
         builder: (context, controller) {
