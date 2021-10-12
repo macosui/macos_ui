@@ -248,18 +248,14 @@ class MacosuiSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MacosListTile(
-                  leading: const Icon(CupertinoIcons.lightbulb),
+                const MacosListTile(
+                  leading: Icon(CupertinoIcons.lightbulb),
                   title: Text(
                     'A robust library of Flutter components for macOS',
-                    style: MacosTheme.of(context).typography.headline,
+                    //style: MacosTheme.of(context).typography.headline,
                   ),
                   subtitle: Text(
                     'Create native looking macOS applications using Flutter',
-                    style:
-                        MacosTheme.of(context).typography.subheadline.copyWith(
-                              color: MacosColors.systemGrayColor,
-                            ),
                   ),
                 ),
               ],
