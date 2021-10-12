@@ -260,10 +260,24 @@ class MacosuiSheet extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const MacosListTile(
+                  leading: Icon(CupertinoIcons.bolt),
+                  title: Text(
+                    'Create beautiful macOS applications in minutes',
+                    //style: MacosTheme.of(context).typography.headline,
+                  ),
+                ),
+                const SizedBox(width: 10),
+              ],
+            ),
             const Spacer(),
             PushButton(
               buttonSize: ButtonSize.large,
-              child: const Text('Dismiss'),
+              child: const Text('Get started'),
               onPressed: () => Navigator.of(context).pop(),
             ),
             const SizedBox(height: 50),
