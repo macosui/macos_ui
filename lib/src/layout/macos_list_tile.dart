@@ -62,11 +62,12 @@ class MacosListTile extends StatelessWidget {
                 ),
                 if (subtitle != null)
                   DefaultTextStyle(
-                    style: MacosTheme.of(context).typography.subheadline.copyWith(
-                          color: MacosTheme.brightnessOf(context).isDark
-                              ? MacosColors.systemGrayColor
-                              : const MacosColor(0xff88888C),
-                        ),
+                    style:
+                        MacosTheme.of(context).typography.subheadline.copyWith(
+                              color: MacosTheme.brightnessOf(context).isDark
+                                  ? MacosColors.systemGrayColor
+                                  : const MacosColor(0xff88888C),
+                            ),
                     child: subtitle!,
                   ),
               ],
