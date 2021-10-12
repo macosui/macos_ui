@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           title: 'macos_ui example',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
-          themeMode: appTheme.mode,
+          themeMode: ThemeMode.light,
           debugShowCheckedModeBanner: false,
           home: const Demo(),
         );
@@ -77,15 +77,12 @@ class _DemoState extends State<Demo> {
       ),
       sidebar: Sidebar(
         minWidth: 200,
-        bottom: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(CupertinoIcons.profile_circled),
-              const SizedBox(width: 8.0),
-              const Text('Tim Apple'),
-            ],
+        bottom: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: MacosListTile(
+            leading: Icon(CupertinoIcons.profile_circled),
+            title: Text('Tim Apple'),
+            //subtitle: Text('tim@apple.com'),
           ),
         ),
         builder: (context, controller) {
