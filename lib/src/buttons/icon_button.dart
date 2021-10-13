@@ -245,15 +245,34 @@ class MacosIconButtonState extends State<MacosIconButton>
   }
 }
 
+/// Overrides the default style of its [MacosIconButton] descendants.
+///
+/// See also:
+///
+///  * [MacosIconButtonThemeData], which is used to configure this theme.
 class MacosIconButtonTheme extends InheritedTheme {
+  /// Builds a [MacosIconButtonTheme].
+  ///
+  /// The [data] parameter must not be null.
   const MacosIconButtonTheme({
     Key? key,
     required this.data,
     required Widget child,
   }) : super(key: key, child: child);
 
+  /// The configuration of this theme.
   final MacosIconButtonThemeData data;
 
+  /// The closest instance of this class that encloses the given context.
+  ///
+  /// If there is no enclosing [MacosIconButtonTheme] widget, then
+  /// [MacosThemeData.macosIconButtonTheme] is used.
+  ///
+  /// Typical usage is as follows:
+  ///
+  /// ```dart
+  /// final theme = MacosIconButtonTheme.of(context);
+  /// ```
   static MacosIconButtonThemeData of(BuildContext context) {
     final MacosIconButtonTheme? buttonTheme =
         context.dependOnInheritedWidgetOfExactType<MacosIconButtonTheme>();
@@ -269,7 +288,17 @@ class MacosIconButtonTheme extends InheritedTheme {
       data != oldWidget.data;
 }
 
+/// A style that overrides the default appearance of
+/// [MacosIconButton]s when it's used with [MacosIconButtonTheme] or with the
+/// overall [MacosTheme]'s [MacosThemeData.macosIconButtonTheme].
+///
+/// See also:
+///
+///  * [MacosIconButtonTheme], the theme which is configured with this class.
+///  * [MacosThemeData.macosIconButtonTheme], which can be used to override
+///  the default style for [MacosIconButton]s below the overall [MacosTheme].
 class MacosIconButtonThemeData with Diagnosticable {
+  /// Builds a [MacosIconButtonThemeData].
   const MacosIconButtonThemeData({
     this.backgroundColor,
     this.disabledColor,
@@ -278,12 +307,22 @@ class MacosIconButtonThemeData with Diagnosticable {
     this.boxConstraints,
   });
 
+  /// The default background color for [MacosIconButton].
   final Color? backgroundColor;
+
+  /// The default disabled color for [MacosIconButton].
   final Color? disabledColor;
+
+  /// The default shape for [MacosIconButton].
   final BoxShape? shape;
+
+  /// The default border radius for [MacosIconButton].
   final BorderRadius? borderRadius;
+
+  /// The default box constraints for [MacosIconButton].
   final BoxConstraints? boxConstraints;
 
+  /// Copies this [MacosIconButtonThemeData] into another.
   MacosIconButtonThemeData copyWith({
     Color? backgroundColor,
     Color? disabledColor,
@@ -300,6 +339,9 @@ class MacosIconButtonThemeData with Diagnosticable {
     );
   }
 
+  /// Linearly interpolate between two [MacosIconButtonThemeData].
+  ///
+  /// All the properties must be non-null.
   static MacosIconButtonThemeData lerp(
     MacosIconButtonThemeData a,
     MacosIconButtonThemeData b,
