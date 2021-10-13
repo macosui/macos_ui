@@ -344,7 +344,10 @@ class MacosThemeData with Diagnosticable {
       scrollbarTheme:
           ScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
       macosIconButtonTheme: MacosIconButtonThemeData.lerp(
-          a.macosIconButtonTheme, b.macosIconButtonTheme, t),
+        a.macosIconButtonTheme,
+        b.macosIconButtonTheme,
+        t,
+      ),
     );
   }
 
