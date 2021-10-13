@@ -285,10 +285,7 @@ class MacosThemeData with Diagnosticable {
       MacosThemeData(brightness: Brightness.light);
 
   /// A default dark theme.
-  factory MacosThemeData.dark() => MacosThemeData(
-        brightness: Brightness.dark,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      );
+  factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
 
   /// The default color theme. Same as [ThemeData.light].
   ///
