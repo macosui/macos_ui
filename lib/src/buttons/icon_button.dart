@@ -244,3 +244,103 @@ class MacosIconButtonState extends State<MacosIconButton>
     );
   }
 }
+
+class MacosIconButtonTheme extends InheritedTheme {
+  const MacosIconButtonTheme({
+    Key? key,
+    required this.data,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  final MacosIconButtonThemeData data;
+
+  static MacosIconButtonThemeData of(BuildContext context) {
+    final MacosIconButtonTheme? buttonTheme =
+        context.dependOnInheritedWidgetOfExactType<MacosIconButtonTheme>();
+    return buttonTheme?.data ?? MacosTheme.of(context).macosIconButtonTheme;
+  }
+
+  Widget wrap(BuildContext context, Widget child) {
+    return MacosIconButtonTheme(data: data, child: child);
+  }
+
+  @override
+  bool updateShouldNotify(MacosIconButtonTheme oldWidget) =>
+      data != oldWidget.data;
+}
+
+class MacosIconButtonThemeData with Diagnosticable {
+  const MacosIconButtonThemeData({
+    this.backgroundColor,
+    this.disabledColor,
+    this.shape,
+    this.borderRadius,
+    this.boxConstraints,
+  });
+
+  final Color? backgroundColor;
+  final Color? disabledColor;
+  final BoxShape? shape;
+  final BorderRadius? borderRadius;
+  final BoxConstraints? boxConstraints;
+
+  MacosIconButtonThemeData copyWith({
+    Color? backgroundColor,
+    Color? disabledColor,
+    BoxShape? shape,
+    BorderRadius? borderRadius,
+    BoxConstraints? boxConstraints,
+  }) {
+    return MacosIconButtonThemeData(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      disabledColor: disabledColor ?? this.disabledColor,
+      shape: shape ?? this.shape,
+      borderRadius: borderRadius ?? this.borderRadius,
+      boxConstraints: boxConstraints ?? this.boxConstraints,
+    );
+  }
+
+  static MacosIconButtonThemeData lerp(
+    MacosIconButtonThemeData a,
+    MacosIconButtonThemeData b,
+    double t,
+  ) {
+    return MacosIconButtonThemeData(
+      backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
+      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
+      shape: b.shape,
+      borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t),
+      boxConstraints:
+          BoxConstraints.lerp(a.boxConstraints, b.boxConstraints, t),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MacosIconButtonThemeData &&
+          runtimeType == other.runtimeType &&
+          backgroundColor == other.backgroundColor &&
+          disabledColor == other.disabledColor &&
+          shape == other.shape &&
+          borderRadius == other.borderRadius &&
+          boxConstraints == other.boxConstraints;
+
+  @override
+  int get hashCode =>
+      backgroundColor.hashCode ^
+      disabledColor.hashCode ^
+      shape.hashCode ^
+      borderRadius.hashCode ^
+      boxConstraints.hashCode;
+  
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
+    properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(EnumProperty<BoxShape?>('shape', shape));
+    properties.add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
+    properties.add(DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints));
+  }
+}
