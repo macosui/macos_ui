@@ -1,5 +1,6 @@
 import 'package:example/pages/buttons.dart';
 import 'package:example/pages/colors_page.dart';
+import 'package:example/pages/context_menus.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
@@ -57,7 +58,7 @@ class _DemoState extends State<Demo> {
     const IndicatorsPage(),
     const FieldsPage(),
     const ColorsPage(),
-    const Center(child: Text('Disclosure item 2')),
+    const ContextMenusPage(),
     const Center(child: Text('Disclosure item 3')),
     const DialogsPage(),
   ];
@@ -112,7 +113,7 @@ class _DemoState extends State<Demo> {
                   ),
                   SidebarItem(
                     leading: Icon(CupertinoIcons.heart),
-                    label: Text('Item 2'),
+                    label: Text('Context Menus'),
                   ),
                   SidebarItem(
                     leading: Icon(CupertinoIcons.infinite),
