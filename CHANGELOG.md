@@ -1,3 +1,9 @@
+## [0.9.1]
+* Added top-level theming for `MacosIconButton`
+  * Introduces the `MacosIconButtonTheme` InheritedTheme and the `MacosIconButtonThemeData` theme class
+* Updates `MacosThemeData` and `MacosIconButton` to use the new `MacosIconButtonThemeData`
+* Removes an unnecessary setting of VisualDensity from `MacosThemeData.dark()`
+
 ## [0.9.0]
 * Added [native_context_menu](https://pub.dev/packages/native_context_menu) as a dependency for native context menus!
 

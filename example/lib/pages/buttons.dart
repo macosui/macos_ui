@@ -61,7 +61,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     const SizedBox(width: 16.0),
                     MacosBackButton(
                       onPressed: () => print('click'),
-                      //fillColor: Colors.transparent,
                     ),
                   ],
                 ),
@@ -81,18 +80,18 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       onPressed: () {},
                     ),
                     const SizedBox(width: 8),
-                    MacosIconButton(
-                      icon: const Icon(
-                        CupertinoIcons.star_fill,
+                    const MacosIconButton(
+                      icon: Icon(
+                        CupertinoIcons.plus_app,
                         color: Colors.white,
                       ),
                       shape: BoxShape.circle,
-                      onPressed: () {},
+                      //onPressed: () {},
                     ),
                     const SizedBox(width: 8),
                     MacosIconButton(
                       icon: const Icon(
-                        CupertinoIcons.star_fill,
+                        CupertinoIcons.minus_square,
                         color: Colors.white,
                       ),
                       backgroundColor: Colors.transparent,
