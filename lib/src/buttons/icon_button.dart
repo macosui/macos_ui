@@ -320,8 +320,8 @@ class MacosIconButtonThemeData with Diagnosticable {
       identical(this, other) ||
       other is MacosIconButtonThemeData &&
           runtimeType == other.runtimeType &&
-          backgroundColor == other.backgroundColor &&
-          disabledColor == other.disabledColor &&
+          backgroundColor?.value == other.backgroundColor?.value &&
+          disabledColor?.value == other.disabledColor?.value &&
           shape == other.shape &&
           borderRadius == other.borderRadius &&
           boxConstraints == other.boxConstraints;
@@ -333,14 +333,16 @@ class MacosIconButtonThemeData with Diagnosticable {
       shape.hashCode ^
       borderRadius.hashCode ^
       boxConstraints.hashCode;
-  
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(EnumProperty<BoxShape?>('shape', shape));
-    properties.add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
-    properties.add(DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints));
+    properties
+        .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
+    properties.add(
+        DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints));
   }
 }
