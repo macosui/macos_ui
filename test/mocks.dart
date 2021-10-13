@@ -13,3 +13,11 @@ class MockOnPressedFunction {
     called = 2;
   }
 }
+
+class MockOnLongPressedFunction {
+  int called = 0;
+
+  void handler() {
+    called = 3;
+  }
+}

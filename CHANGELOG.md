@@ -1,3 +1,10 @@
+## [0.8.2]
+* Updates to `MacosListTile`:
+  * Added `leadingWhitespace` property
+  * Added `onClick` callback
+  * Added `onLongPress` callback
+  * Added `mouseCursor` property
+
 ## [0.8.1]
 * Fix the outer border of `MacosSheet` not having a border radius
 
