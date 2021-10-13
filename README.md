@@ -25,6 +25,7 @@ Flutter widgets and themes implementing the current macOS design language.
 - [Dialogs and Sheets](#dialogs)
   - [MacosAlertDialog](#MacosAlertDialog)
   - [MacosSheet](#MacosSheet)
+- [Context Menus](#ContextMenus)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
 - [Labels](#labels)
@@ -288,6 +289,15 @@ showMacosSheet(
 ```
 
 ![](https://imgur.com/NV0o5Ws.png)
+
+# Context Menus
+
+macos_ui uses the [native_context_menu] plugin under the hood for Context Menus. 
+Please consult the readme for that plugin for usage.
+
+![](https://lesnitsky-images.s3.eu-north-1.amazonaws.com/native_context_menu.gif)
+
+(gif courtesy of the `native_context_menu` plugin)
 
 # Fields
 

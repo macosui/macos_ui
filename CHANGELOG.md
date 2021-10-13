@@ -1,3 +1,6 @@
+## [0.9.0]
+* Added [native_context_menu](https://pub.dev/packages/native_context_menu) as a dependency for native context menus!
+
 ## [0.8.2]
 * Updates to `MacosListTile`:
   * Added `leadingWhitespace` property

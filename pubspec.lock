@@ -235,6 +235,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  native_context_menu:
+    dependency: "direct main"
+    description:
+      name: native_context_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2+1"
   node_preamble:
     dependency: transitive
     description:
@@ -431,3 +438,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.13.0 <3.0.0"
+  flutter: ">=1.20.0"
