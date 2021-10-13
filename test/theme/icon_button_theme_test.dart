@@ -81,7 +81,7 @@ void main() {
 
     final theme = MacosIconButtonTheme.of(capturedContext);
     expect(theme.backgroundColor, MacosColors.transparent);
-    expect(theme.disabledColor, MacosColors.systemGrayColor);
+    expect(theme.disabledColor, const Color(0xffE5E5E5));
   });
 }
 
