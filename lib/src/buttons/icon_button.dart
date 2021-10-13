@@ -184,10 +184,10 @@ class MacosIconButtonState extends State<MacosIconButton>
   @override
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
-    final MacosThemeData theme = MacosTheme.of(context);
+    final theme = MacosIconButtonTheme.of(context);
 
     final Color backgroundColor =
-        widget.backgroundColor ?? CupertinoColors.systemBlue;
+        widget.backgroundColor ?? theme.backgroundColor!;
 
     final Color? disabledColor;
 
@@ -197,9 +197,7 @@ class MacosIconButtonState extends State<MacosIconButton>
         context,
       );
     } else {
-      disabledColor = theme.brightness.isDark
-          ? const Color(0xff353535)
-          : const Color(0xffE5E5E5);
+      disabledColor = theme.disabledColor;
     }
 
     return MouseRegion(

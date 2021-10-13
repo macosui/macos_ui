@@ -230,12 +230,13 @@ class MacosThemeData with Diagnosticable {
       textStyle: typography.callout,
     );
     scrollbarTheme ??= const ScrollbarThemeData();
-    macosIconButtonThemeData ??= const MacosIconButtonThemeData(
+    macosIconButtonThemeData ??= MacosIconButtonThemeData(
       backgroundColor: MacosColors.transparent,
-      disabledColor:
-          MacosColors.systemGrayColor, // TODO: correct disabled color
+      disabledColor: isDark
+          ? const Color(0xff353535)
+          : const Color(0xffE5E5E5), // TODO: correct disabled color
       shape: BoxShape.circle,
-      boxConstraints: BoxConstraints(
+      boxConstraints: const BoxConstraints(
         minHeight: 20,
         minWidth: 20,
         maxWidth: 30,
