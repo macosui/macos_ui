@@ -41,11 +41,11 @@ class MacosListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: mouseCursor,
-      child: GestureDetector(
-        onTap: onClick,
-        onLongPress: onLongPress,
+    return GestureDetector(
+      onTap: onClick,
+      onLongPress: onLongPress,
+      child: MouseRegion(
+        cursor: mouseCursor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
