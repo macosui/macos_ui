@@ -55,6 +55,7 @@ void main() {
                 builder: (context, scrollController) {
                   return MacosListTile(
                     title: const Text('List Tile'),
+                    subtitle: const Text('Subtitle'),
                     onClick: mockOnLongPressedFunction.handler,
                   );
                 },
