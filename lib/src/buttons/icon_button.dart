@@ -343,6 +343,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     properties
         .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
     properties.add(
-        DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints));
+      DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints),
+    );
   }
 }
