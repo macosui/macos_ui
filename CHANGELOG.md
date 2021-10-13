@@ -1,3 +1,7 @@
+## [0.9.2]
+* Nearly all `MouseRegion`s have been updated to use `SystemMouseCursors.basic` in order to more closely adhere to Apple norms
+* `mouseCursor` properties have been added to most buttons
+
 ## [0.9.1]
 * Added top-level theming for `MacosIconButton`
   * Introduces the `MacosIconButtonTheme` InheritedTheme and the `MacosIconButtonThemeData` theme class

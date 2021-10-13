@@ -19,6 +19,7 @@ class HelpButton extends StatefulWidget {
     this.pressedOpacity = 0.4,
     this.alignment = Alignment.center,
     this.semanticLabel,
+    this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -58,6 +59,9 @@ class HelpButton extends StatefulWidget {
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
+
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -173,7 +177,7 @@ class HelpButtonState extends State<HelpButton>
             : const Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,

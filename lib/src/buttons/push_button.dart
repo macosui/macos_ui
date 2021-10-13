@@ -36,6 +36,7 @@ class PushButton extends StatefulWidget {
     this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     this.alignment = Alignment.center,
     this.semanticLabel,
+    this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -98,6 +99,9 @@ class PushButton extends StatefulWidget {
   ///
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
+
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
@@ -239,7 +243,7 @@ class PushButtonState extends State<PushButton>
         theme.typography.headline.copyWith(color: foregroundColor);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,

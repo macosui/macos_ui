@@ -11,6 +11,7 @@ class MacosBackButton extends StatefulWidget {
     this.onPressed,
     this.fillColor,
     this.semanticLabel,
+    this.mouseCursor = SystemMouseCursors.basic,
   }) : super(key: key);
 
   /// An override callback to perform instead of the default behavior which is
@@ -22,6 +23,9 @@ class MacosBackButton extends StatefulWidget {
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
+
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -136,7 +140,7 @@ class MacosBackButtonState extends State<MacosBackButton>
     }
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
