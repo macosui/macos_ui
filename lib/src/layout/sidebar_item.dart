@@ -274,7 +274,7 @@ class _SidebarItem extends StatelessWidget {
           focusNode: item.focusNode,
           descendantsAreFocusable: false,
           enabled: onClick != null,
-          mouseCursor: SystemMouseCursors.click,
+          mouseCursor: SystemMouseCursors.basic,
           actions: _actionMap,
           child: Container(
             width: 134.0 + theme.visualDensity.horizontal,

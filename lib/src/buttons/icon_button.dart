@@ -22,6 +22,7 @@ class MacosIconButton extends StatefulWidget {
       maxWidth: 30,
       maxHeight: 30,
     ),
+    this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -87,6 +88,9 @@ class MacosIconButton extends StatefulWidget {
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
+
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -201,7 +205,7 @@ class MacosIconButtonState extends State<MacosIconButton>
     }
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
