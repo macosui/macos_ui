@@ -6,6 +6,10 @@ Flutter widgets and themes implementing the current macOS design language.
 [![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
 [![codecov](https://codecov.io/gh/GroovinChip/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/GroovinChip/macos_ui)
 
+NOTE: This package depends on the excellent [native_context_menu](https://pub.dev/packages/native_context_menu) plugin.
+Since it is a desktop plugin, and therefore does not target Android and iOS, the pub score of this package
+is lower than 130
+
 ## Content
 
 - [macos_ui](#macos_ui)
