@@ -348,7 +348,7 @@ class MacosIconThemeData with Diagnosticable {
   @override
   bool operator ==(Object other) {
     if (other.runtimeType != runtimeType) return false;
-    return other is IconThemeData &&
+    return other is MacosIconThemeData &&
         other.color == color &&
         other.opacity == opacity &&
         other.size == size;
