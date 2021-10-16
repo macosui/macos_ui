@@ -29,7 +29,7 @@ class _FieldsPageState extends State<FieldsPage> {
                         horizontal: 4.0,
                         vertical: 2.0,
                       ),
-                      child: Icon(CupertinoIcons.search),
+                      child: MacosIcon(CupertinoIcons.search),
                     ),
                     placeholder: 'Type some text here',
 
@@ -46,7 +46,7 @@ class _FieldsPageState extends State<FieldsPage> {
                   child: MacosTextField.borderless(
                     prefix: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Icon(CupertinoIcons.search),
+                      child: MacosIcon(CupertinoIcons.search),
                     ),
                     placeholder: 'Type some text here',
 

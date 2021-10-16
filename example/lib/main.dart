@@ -59,7 +59,10 @@ class _DemoState extends State<Demo> {
     const FieldsPage(),
     const ColorsPage(),
     const ContextMenusPage(),
-    const Center(child: Text('Disclosure item 3')),
+    const Center(
+        child: MacosIcon(
+      CupertinoIcons.add,
+    )),
     const DialogsPage(),
   ];
 
@@ -81,7 +84,7 @@ class _DemoState extends State<Demo> {
         bottom: const Padding(
           padding: EdgeInsets.all(16.0),
           child: MacosListTile(
-            leading: Icon(CupertinoIcons.profile_circled),
+            leading: MacosIcon(CupertinoIcons.profile_circled),
             title: Text('Tim Apple'),
             subtitle: Text('tim@apple.com'),
           ),
@@ -93,36 +96,36 @@ class _DemoState extends State<Demo> {
             scrollController: controller,
             items: [
               const SidebarItem(
-                leading: Icon(CupertinoIcons.square_on_circle),
+                leading: MacosIcon(CupertinoIcons.square_on_circle),
                 label: Text('Buttons'),
               ),
               const SidebarItem(
-                leading: Icon(CupertinoIcons.arrow_2_circlepath),
+                leading: MacosIcon(CupertinoIcons.arrow_2_circlepath),
                 label: Text('Indicators'),
               ),
               const SidebarItem(
-                leading: Icon(CupertinoIcons.textbox),
+                leading: MacosIcon(CupertinoIcons.textbox),
                 label: Text('Fields'),
               ),
               const SidebarItem(
                 label: Text('Disclosure'),
                 disclosureItems: [
                   SidebarItem(
-                    leading: Icon(CupertinoIcons.infinite),
+                    leading: MacosIcon(CupertinoIcons.infinite),
                     label: Text('Colors'),
                   ),
                   SidebarItem(
-                    leading: Icon(CupertinoIcons.heart),
+                    leading: MacosIcon(CupertinoIcons.heart),
                     label: Text('Context Menus'),
                   ),
                   SidebarItem(
-                    leading: Icon(CupertinoIcons.infinite),
+                    leading: MacosIcon(CupertinoIcons.infinite),
                     label: Text('Item 3'),
                   ),
                 ],
               ),
               const SidebarItem(
-                leading: Icon(CupertinoIcons.rectangle),
+                leading: MacosIcon(CupertinoIcons.rectangle),
                 label: Text('Dialogs & Sheets'),
               ),
             ],

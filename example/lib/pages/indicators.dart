@@ -49,7 +49,7 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                 ),
                 const SizedBox(height: 20),
                 const Label(
-                  icon: Icon(CupertinoIcons.tag),
+                  icon: MacosIcon(CupertinoIcons.tag),
                   text: SelectableText('A determinate progress circle: '),
                   child: ProgressCircle(value: 50),
                 ),
