@@ -1,3 +1,7 @@
+## [0.10.0]
+* New widget - `MacosIcon`! `MacosIcon` is identical to regular icons, with the exception that it respects a `MacosTheme`. Also includes corresponding theme classes
+* `MacosThemeData` now sets a global, configurable `iconTheme` for `MacosIcon`s 
+
 ## [0.9.3]
 * Update to `PushButton`:
   * Added `isSecondary` property
