@@ -336,7 +336,8 @@ class MacosIconThemeData with Diagnosticable {
   /// Linearly interpolate between two icon theme data objects.
   ///
   /// {@macro dart.ui.shadow.lerp}
-  static MacosIconThemeData lerp(MacosIconThemeData? a, MacosIconThemeData? b, double t) {
+  static MacosIconThemeData lerp(
+      MacosIconThemeData? a, MacosIconThemeData? b, double t) {
     return MacosIconThemeData(
       color: Color.lerp(a?.color, b?.color, t),
       opacity: ui.lerpDouble(a?.opacity, b?.opacity, t),
