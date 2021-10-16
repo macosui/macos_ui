@@ -334,7 +334,9 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [MacosScrollbar]s below the overall [MacosTheme]
   final ScrollbarThemeData scrollbarTheme;
 
+  /// The default style for [MacosIconButton]s below the overall [MacosTheme]
   final MacosIconButtonThemeData macosIconButtonTheme;
+
 
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
