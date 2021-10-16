@@ -35,6 +35,7 @@ void main() {
       PushButtonThemeData(
         color: MacosColors.appleBlue,
         disabledColor: MacosColors.systemGrayColor.color,
+        secondaryColor: MacosColors.controlColor.color,
       ).debugFillProperties(builder);
 
       final description = builder.properties
@@ -47,6 +48,7 @@ void main() {
         [
           'color: Color(0xff0433ff)',
           'disabledColor: Color(0xff8e8e93)',
+          'secondaryColor: Color(0x19000000)',
         ],
       );
     });
@@ -76,6 +78,7 @@ void main() {
       final theme = PushButtonTheme.of(capturedContext);
       expect(theme.color, const Color(0xff007aff));
       expect(theme.disabledColor, const Color(0xfff4f5f5));
+      expect(theme.secondaryColor, const Color(0xffdadadf));
     });
   });
 }
@@ -83,9 +86,11 @@ void main() {
 final _pushButtonTheme = PushButtonThemeData(
   color: MacosColors.appleRed,
   disabledColor: MacosColors.systemGrayColor.color,
+  secondaryColor: MacosColors.controlColor.color,
 );
 
 final _pushButtonThemeDark = PushButtonThemeData(
   color: MacosColors.appleBlue,
   disabledColor: MacosColors.systemGrayColor.darkColor,
+  secondaryColor: MacosColors.controlColor.darkColor,
 );

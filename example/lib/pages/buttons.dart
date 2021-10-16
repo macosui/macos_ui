@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:provider/provider.dart';
+
+import '../theme.dart';
 
 class ButtonsPage extends StatefulWidget {
   const ButtonsPage({Key? key}) : super(key: key);
@@ -10,8 +13,6 @@ class ButtonsPage extends StatefulWidget {
 }
 
 class _ButtonsPageState extends State<ButtonsPage> {
-  ThemeMode _selectedThemeMode = ThemeMode.system;
-
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
@@ -154,18 +155,25 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   },
                 ),
                 const SizedBox(height: 20),
+                PushButton(
+                  buttonSize: ButtonSize.large,
+                  isSecondary: true,
+                  child: const Text('secondary PushButton'),
+                  onPressed: () {
+                    MacosWindowScope.of(context).toggleSidebar();
+                  },
+                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('System Theme'),
                     const SizedBox(width: 8),
                     MacosRadioButton<ThemeMode>(
-                      groupValue: _selectedThemeMode,
+                      groupValue: context.watch<AppTheme>().mode,
                       value: ThemeMode.system,
                       onChanged: (value) {
-                        setState(() {
-                          _selectedThemeMode = value!;
-                        });
+                        context.read<AppTheme>().mode = value!;
                       },
                     ),
                   ],
@@ -177,12 +185,10 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     const Text('Light Theme'),
                     const SizedBox(width: 24),
                     MacosRadioButton<ThemeMode>(
-                      groupValue: _selectedThemeMode,
+                      groupValue: context.watch<AppTheme>().mode,
                       value: ThemeMode.light,
                       onChanged: (value) {
-                        setState(() {
-                          _selectedThemeMode = value!;
-                        });
+                        context.read<AppTheme>().mode = value!;
                       },
                     ),
                   ],
@@ -194,12 +200,10 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     const Text('Dark Theme'),
                     const SizedBox(width: 26),
                     MacosRadioButton<ThemeMode>(
-                      groupValue: _selectedThemeMode,
+                      groupValue: context.watch<AppTheme>().mode,
                       value: ThemeMode.dark,
                       onChanged: (value) {
-                        setState(() {
-                          _selectedThemeMode = value!;
-                        });
+                        context.read<AppTheme>().mode = value!;
                       },
                     ),
                   ],
