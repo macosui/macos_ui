@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/icon/macos_icon.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// Applies a macOS-style theme to descendant macOS widgets.
@@ -196,6 +197,7 @@ class MacosThemeData with Diagnosticable {
     VisualDensity? visualDensity,
     ScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonThemeData,
+    MacosIconThemeData? iconTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -249,6 +251,13 @@ class MacosThemeData with Diagnosticable {
 
     visualDensity ??= VisualDensity.adaptivePlatformDensity;
 
+    iconTheme ??= MacosIconThemeData(
+      color: isDark
+          ? CupertinoColors.activeBlue.darkColor
+          : CupertinoColors.activeBlue.color,
+      size: 20,
+    );
+
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -261,6 +270,7 @@ class MacosThemeData with Diagnosticable {
       visualDensity: visualDensity,
       scrollbarTheme: scrollbarTheme,
       macosIconButtonTheme: macosIconButtonThemeData,
+      iconTheme: iconTheme,
     );
   }
 
@@ -282,6 +292,7 @@ class MacosThemeData with Diagnosticable {
     required this.visualDensity,
     required this.scrollbarTheme,
     required this.macosIconButtonTheme,
+    required this.iconTheme,
   });
 
   /// A default light theme.
@@ -337,7 +348,11 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [MacosScrollbar]s below the overall [MacosTheme]
   final ScrollbarThemeData scrollbarTheme;
 
+  /// The default style for [MacosIconButton]s below the overall [MacosTheme]
   final MacosIconButtonThemeData macosIconButtonTheme;
+
+  /// The default style for [MacosIcon]s below the overall [MacosTheme]
+  final MacosIconThemeData iconTheme;
 
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
@@ -360,6 +375,7 @@ class MacosThemeData with Diagnosticable {
         b.macosIconButtonTheme,
         t,
       ),
+      iconTheme: MacosIconThemeData.lerp(a.iconTheme, b.iconTheme, t),
     );
   }
 
@@ -376,6 +392,7 @@ class MacosThemeData with Diagnosticable {
     VisualDensity? visualDensity,
     ScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonTheme,
+    MacosIconThemeData? iconTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -389,6 +406,7 @@ class MacosThemeData with Diagnosticable {
       visualDensity: visualDensity ?? this.visualDensity,
       scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
       macosIconButtonTheme: macosIconButtonTheme ?? this.macosIconButtonTheme,
+      iconTheme: iconTheme ?? this.iconTheme,
     );
   }
 

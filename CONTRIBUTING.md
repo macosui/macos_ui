@@ -9,6 +9,9 @@ The default branch for this project is `dev`. Your work should take place in a b
 from here. `stable` is reserved for releases to pub.dev. All pull requests should therefore
 target `dev`.
 
+### Commit style
+This repository uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). Please ensure that you use them!
+
 ### Versioning
 
 `macos_ui` uses semantic versioning. However, at this time (Apr 17, 2021), `macos_ui` is still a 

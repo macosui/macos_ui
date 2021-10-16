@@ -21,7 +21,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
         actions: [
           MacosIconButton(
             backgroundColor: MacosColors.transparent,
-            icon: const Icon(
+            icon: const MacosIcon(
               CupertinoIcons.sidebar_left,
               color: MacosColors.systemGrayColor,
             ),
@@ -72,7 +72,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MacosIconButton(
-                      icon: const Icon(
+                      icon: const MacosIcon(
                         CupertinoIcons.star_fill,
                         color: Colors.white,
                       ),
@@ -82,7 +82,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                     const SizedBox(width: 8),
                     const MacosIconButton(
-                      icon: Icon(
+                      icon: MacosIcon(
                         CupertinoIcons.plus_app,
                         color: Colors.white,
                       ),
@@ -91,7 +91,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                     const SizedBox(width: 8),
                     MacosIconButton(
-                      icon: const Icon(
+                      icon: const MacosIcon(
                         CupertinoIcons.minus_square,
                         color: Colors.white,
                       ),

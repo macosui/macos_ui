@@ -220,7 +220,7 @@ class MacosuiSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const MacosListTile(
-                  leading: Icon(CupertinoIcons.lightbulb),
+                  leading: MacosIcon(CupertinoIcons.lightbulb),
                   title: Text(
                     'A robust library of Flutter components for macOS',
                     //style: MacosTheme.of(context).typography.headline,
@@ -236,7 +236,7 @@ class MacosuiSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const MacosListTile(
-                  leading: Icon(CupertinoIcons.bolt),
+                  leading: MacosIcon(CupertinoIcons.bolt),
                   title: Text(
                     'Create beautiful macOS applications in minutes',
                     //style: MacosTheme.of(context).typography.headline,

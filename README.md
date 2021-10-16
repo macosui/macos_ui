@@ -21,6 +21,8 @@ is lower than 130
   - [MacosWindow](#macoswindow)
   - [MacosScaffold](#macosscaffold)
   - [MacosListTile](#MacosListTile)
+- [Icons](#icons)
+  - [MacosIcon](#MacosIcon)
 - [Buttons](#buttons)
   - [MacosCheckbox](#macoscheckbox)
   - [HelpButton](#helpbutton)
@@ -140,6 +142,21 @@ MacosListTile(
       color: MacosColors.systemGrayColor,
     ),
   ),
+),
+```
+
+# Icons
+
+## MacosIcon
+
+A `MacosIcon` is identical to a regular `Icon` in every way with one exception - it respects
+a `MacosTheme`. Use it the same way you would a regular icon:
+
+```dart
+MacosIcon(
+  CupertinoIcons.add,
+  // color: CupertinoColors.activeBlue.color,
+  // size: 20,
 ),
 ```
 
