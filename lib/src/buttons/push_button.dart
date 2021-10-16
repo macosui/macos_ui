@@ -37,6 +37,7 @@ class PushButton extends StatefulWidget {
     this.alignment = Alignment.center,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
+    this.isSecondary,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -106,6 +107,12 @@ class PushButton extends StatefulWidget {
   /// The semantic label used by screen readers.
   final String? semanticLabel;
 
+  /// Whether the button is used as a secondary action button (e.g. Cancel buttons in dialogs)
+  ///
+  /// Sets its background color to [PushButtonThemeData]'s [secondaryColor] attributes (defaults
+  /// are gray colors). Can still be overriden if the [color] attribute is non-null.
+  final bool? isSecondary;
+
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
@@ -125,6 +132,7 @@ class PushButton extends StatefulWidget {
       value: enabled,
       ifFalse: 'disabled',
     ));
+    properties.add(DiagnosticsProperty('isSecondary', isSecondary));
   }
 
   @override
@@ -210,9 +218,13 @@ class PushButtonState extends State<PushButton>
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
+    final bool isSecondary = widget.isSecondary != null && widget.isSecondary!;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.pushButtonTheme.color!,
+      widget.color ??
+          (isSecondary
+              ? theme.pushButtonTheme.secondaryColor!
+              : theme.pushButtonTheme.color!),
       context,
     );
 
@@ -343,6 +355,7 @@ class PushButtonThemeData with Diagnosticable {
   const PushButtonThemeData({
     this.color,
     this.disabledColor,
+    this.secondaryColor,
   });
 
   /// The default background color for [PushButton]
@@ -351,13 +364,18 @@ class PushButtonThemeData with Diagnosticable {
   /// The default disabled color for [PushButton]
   final Color? disabledColor;
 
+  /// The default secondary color (e.g. Cancel/Go back buttons) for [PushButton]
+  final Color? secondaryColor;
+
   PushButtonThemeData copyWith({
     Color? color,
     Color? disabledColor,
+    Color? secondaryColor,
   }) {
     return PushButtonThemeData(
       color: color ?? this.color,
       disabledColor: disabledColor ?? this.disabledColor,
+      secondaryColor: secondaryColor ?? this.secondaryColor,
     );
   }
 
@@ -372,6 +390,7 @@ class PushButtonThemeData with Diagnosticable {
     return PushButtonThemeData(
       color: Color.lerp(a.color, b.color, t),
       disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
+      secondaryColor: Color.lerp(a.secondaryColor, b.secondaryColor, t),
     );
   }
 
@@ -381,7 +400,8 @@ class PushButtonThemeData with Diagnosticable {
       other is PushButtonThemeData &&
           runtimeType == other.runtimeType &&
           color?.value == other.color?.value &&
-          disabledColor?.value == other.disabledColor?.value;
+          disabledColor?.value == other.disabledColor?.value &&
+          secondaryColor?.value == other.secondaryColor?.value;
 
   @override
   int get hashCode => color.hashCode ^ disabledColor.hashCode;
@@ -391,5 +411,6 @@ class PushButtonThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(ColorProperty('secondaryColor', secondaryColor));
   }
 }

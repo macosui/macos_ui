@@ -1,3 +1,7 @@
+## [0.9.3]
+* Update to `PushButton`:
+  * Added `isSecondary` property
+
 ## [0.9.2]
 * Nearly all `MouseRegion`s have been updated to use `SystemMouseCursors.basic` in order to more closely adhere to Apple norms
 * `mouseCursor` properties have been added to most buttons
