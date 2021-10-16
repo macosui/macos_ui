@@ -337,7 +337,10 @@ class MacosIconThemeData with Diagnosticable {
   ///
   /// {@macro dart.ui.shadow.lerp}
   static MacosIconThemeData lerp(
-      MacosIconThemeData? a, MacosIconThemeData? b, double t) {
+    MacosIconThemeData? a,
+    MacosIconThemeData? b,
+    double t,
+  ) {
     return MacosIconThemeData(
       color: Color.lerp(a?.color, b?.color, t),
       opacity: ui.lerpDouble(a?.opacity, b?.opacity, t),
