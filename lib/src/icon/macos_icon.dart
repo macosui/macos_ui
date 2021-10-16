@@ -2,6 +2,7 @@ import 'dart:ui' as ui show lerpDouble;
 
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/src/theme/macos_theme.dart';
 
 /// An Icon widget that respects a macOS icon theme.
 class MacosIcon extends StatelessWidget {
@@ -230,7 +231,7 @@ class MacosIconTheme extends InheritedTheme {
   static MacosIconThemeData _getInheritedIconThemeData(BuildContext context) {
     final MacosIconTheme? iconTheme =
         context.dependOnInheritedWidgetOfExactType<MacosIconTheme>();
-    return iconTheme?.data ?? const MacosIconThemeData.fallback();
+    return iconTheme?.data ?? MacosTheme.of(context).iconTheme;
   }
 
   @override
@@ -335,8 +336,8 @@ class MacosIconThemeData with Diagnosticable {
   /// Linearly interpolate between two icon theme data objects.
   ///
   /// {@macro dart.ui.shadow.lerp}
-  static IconThemeData lerp(IconThemeData? a, IconThemeData? b, double t) {
-    return IconThemeData(
+  static MacosIconThemeData lerp(MacosIconThemeData? a, MacosIconThemeData? b, double t) {
+    return MacosIconThemeData(
       color: Color.lerp(a?.color, b?.color, t),
       opacity: ui.lerpDouble(a?.opacity, b?.opacity, t),
       size: ui.lerpDouble(a?.size, b?.size, t),
