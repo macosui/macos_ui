@@ -73,7 +73,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.10.0"
+    version: "0.10.0+1"
   matcher:
     dependency: transitive
     description:
@@ -94,7 +94,7 @@ packages:
       name: native_context_menu
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2+2"
+    version: "0.2.0+3"
   nested:
     dependency: transitive
     description:
