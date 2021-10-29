@@ -1,3 +1,6 @@
+## [0.10.0+1]
+* Update `native_context_menu` dependency
+
 ## [0.10.0]
 * New widget - `MacosIcon`! `MacosIcon` is identical to regular icons, with the exception that it respects a `MacosTheme`. Also includes corresponding theme classes
 * `MacosThemeData` now sets a global, configurable `iconTheme` for `MacosIcon`s 
