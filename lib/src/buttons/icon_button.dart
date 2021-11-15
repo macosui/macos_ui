@@ -42,7 +42,7 @@ class MacosIconButton extends StatefulWidget {
   /// The color of the button's background when the button is disabled.
   final Color? disabledColor;
 
-  /// The color of the button's background when the button is hovered (mouse is over the button).
+  /// The color of the button's background when the button is hovered (mouse is over the button). Set to Colors.transparent to disable the hover effect.
   final Color? hoverColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
