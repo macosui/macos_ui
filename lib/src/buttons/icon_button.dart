@@ -13,7 +13,7 @@ class MacosIconButton extends StatefulWidget {
     this.hoverColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
-    this.shape = BoxShape.circle,
+    this.shape = BoxShape.rectangle,
     this.borderRadius,
     this.alignment = Alignment.center,
     this.semanticLabel,
@@ -241,8 +241,11 @@ class MacosIconButtonState extends State<MacosIconButton>
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: widget.shape,
-                  borderRadius:
-                      widget.borderRadius != null ? widget.borderRadius : null,
+                  borderRadius: widget.borderRadius != null
+                      ? widget.borderRadius
+                      : widget.shape == BoxShape.rectangle
+                          ? BorderRadius.circular(7.0)
+                          : null,
                   color: !enabled
                       ? disabledColor
                       : _isHovered
