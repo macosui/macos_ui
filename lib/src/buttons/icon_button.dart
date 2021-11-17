@@ -59,12 +59,13 @@ class MacosIconButton extends StatefulWidget {
 
   /// The shape to make the button.
   ///
-  /// Defaults to `BoxShape.circle`.
+  /// Defaults to `BoxShape.rectangle`.
   final BoxShape shape;
 
   /// The border radius for the button.
   ///
-  /// This should only be set if setting [shape] to `BoxShape.rectangle`.
+  /// This should only be set if setting [shape] to `BoxShape.rectangle` and defaults
+  /// to `BorderRadius.circular(7.0)`.
   final BorderRadius? borderRadius;
 
   ///The alignment of the button's icon.
