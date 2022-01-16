@@ -95,7 +95,11 @@ class _MacosWindowState extends State<MacosWindow> {
     late Color sidebarBackgroundColor;
     Color dividerColor = theme.dividerColor;
 
-    if (!theme.brightness.isDark) {
+    // Only show blurry, transparent sidebar when platform brightness and app
+    // brightness are the same, otherwise it looks awful
+    if (MediaQuery.of(context).platformBrightness.isDark == theme.brightness.isDark) {
+      sidebarBackgroundColor = Colors.transparent;
+    } else if (!theme.brightness.isDark) {
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
           CupertinoColors.systemGrey6.color;
     } else {
