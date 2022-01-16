@@ -97,7 +97,8 @@ class _MacosWindowState extends State<MacosWindow> {
 
     // Only show blurry, transparent sidebar when platform brightness and app
     // brightness are the same, otherwise it looks awful
-    if (MediaQuery.of(context).platformBrightness.isDark == theme.brightness.isDark) {
+    if (MediaQuery.of(context).platformBrightness.isDark ==
+        theme.brightness.isDark) {
       sidebarBackgroundColor = Colors.transparent;
     } else if (!theme.brightness.isDark) {
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
