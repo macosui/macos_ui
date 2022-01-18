@@ -13,6 +13,9 @@ class ButtonsPage extends StatefulWidget {
 }
 
 class _ButtonsPageState extends State<ButtonsPage> {
+  String popupValue = 'One';
+  String languagePopupValue = 'English';
+
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
@@ -164,6 +167,38 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   },
                 ),
                 const SizedBox(height: 20),
+                MacosPopupButton<String>(
+                  value: popupValue,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      popupValue = newValue!;
+                    });
+                  },
+                  items: <String>['One', 'Two', 'Three', 'Four']
+                      .map<MacosPopupMenuItem<String>>((String value) {
+                    return MacosPopupMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                MacosPopupButton<String>(
+                  value: languagePopupValue,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      languagePopupValue = newValue!;
+                    });
+                  },
+                  items:
+                      languages.map<MacosPopupMenuItem<String>>((String value) {
+                    return MacosPopupMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -227,3 +262,40 @@ class _ButtonsPageState extends State<ButtonsPage> {
     );
   }
 }
+
+const languages = [
+  "Mandarin Chinese",
+  "Spanish",
+  "English",
+  "Hindi/Urdu",
+  "Arabic",
+  "Bengali",
+  "Portuguese",
+  "Russian",
+  "Japanese",
+  "German",
+  "Thai",
+  "Greek",
+  "Nepali",
+  "Punjabi",
+  "Wu",
+  "French",
+  "Telugu",
+  "Vietnamese",
+  "Marathi",
+  "Korean",
+  "Tamil",
+  "Italian",
+  "Turkish",
+  "Cantonese/Yue",
+  "Urdu",
+  "Javanese",
+  "Egyptian Arabic",
+  "Gujarati",
+  "Iranian Persian",
+  "Indonesian",
+  "Polish",
+  "Ukrainian",
+  "Romanian",
+  "Dutch"
+];
