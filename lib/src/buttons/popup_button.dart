@@ -1,7 +1,9 @@
+import 'dart:ffi';
 import 'dart:math' as math;
 import 'dart:ui' show window;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -1091,6 +1093,24 @@ class MacosPopupButton<T> extends StatefulWidget {
   ///  * [AlignmentDirectional], like [Alignment] for specifying alignments
   ///    relative to text direction.
   final AlignmentGeometry alignment;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IntProperty('elevation', elevation));
+    properties.add(ColorProperty('iconDisabledColor', iconDisabledColor));
+    properties.add(ColorProperty('iconEnabledColor', iconEnabledColor));
+    properties.add(DoubleProperty(
+      'itemHeight',
+      itemHeight,
+      defaultValue: kMinInteractiveDimension,
+    ));
+    properties.add(
+      FlagProperty('hasAutofocus', value: autofocus, ifFalse: 'noAutofocus'),
+    );
+    properties.add(ColorProperty('popupColor', popupColor));
+    properties.add(DoubleProperty('menuMaxHeight', menuMaxHeight));
+  }
 
   @override
   State<MacosPopupButton<T>> createState() => _MacosPopupButtonState<T>();
