@@ -80,12 +80,10 @@ class _MacosPopupMenuItemButton<T> extends StatefulWidget {
   const _MacosPopupMenuItemButton({
     Key? key,
     this.padding,
-    required this.borderRadius,
     required this.route,
     required this.buttonRect,
     required this.constraints,
     required this.itemIndex,
-    required this.enableFeedback,
   }) : super(key: key);
 
   final _MacosPopupRoute<T> route;
@@ -93,8 +91,6 @@ class _MacosPopupMenuItemButton<T> extends StatefulWidget {
   final Rect buttonRect;
   final BoxConstraints constraints;
   final int itemIndex;
-  final bool enableFeedback;
-  final BorderRadius borderRadius;
 
   @override
   _MacosPopupMenuItemButtonState<T> createState() =>
@@ -232,8 +228,6 @@ class _MacosPopupMenu<T> extends StatefulWidget {
     required this.buttonRect,
     required this.constraints,
     this.popupColor,
-    required this.enableFeedback,
-    this.borderRadius,
     required this.hasTopItemsNotShown,
     required this.hasBottomItemsNotShown,
   }) : super(key: key);
@@ -243,8 +237,6 @@ class _MacosPopupMenu<T> extends StatefulWidget {
   final Rect buttonRect;
   final BoxConstraints constraints;
   final Color? popupColor;
-  final bool enableFeedback;
-  final BorderRadius? borderRadius;
   final bool hasTopItemsNotShown;
   final bool hasBottomItemsNotShown;
 
@@ -284,8 +276,6 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
           buttonRect: widget.buttonRect,
           constraints: widget.constraints,
           itemIndex: itemIndex,
-          enableFeedback: widget.enableFeedback,
-          borderRadius: widget.borderRadius ?? BorderRadius.zero,
         ),
     ];
     final brightness = MacosTheme.brightnessOf(context);
@@ -306,7 +296,6 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
           ),
           elevation: route.elevation,
           selectedIndex: route.selectedIndex,
-          borderRadius: widget.borderRadius,
         ),
         child: Semantics(
           scopesRoute: true,
@@ -526,8 +515,6 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
     this.itemHeight,
     this.popupColor,
     this.menuMaxHeight,
-    required this.enableFeedback,
-    this.borderRadius,
   }) : itemHeights = List<double>.filled(
           items.length,
           itemHeight ?? _kMinInteractiveDimension,
@@ -543,8 +530,6 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
   final double? itemHeight;
   final Color? popupColor;
   final double? menuMaxHeight;
-  final bool enableFeedback;
-  final BorderRadius? borderRadius;
 
   final List<double> itemHeights;
   ScrollController? scrollController;
@@ -580,8 +565,6 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
           capturedThemes: capturedThemes,
           style: style,
           popupColor: popupColor,
-          enableFeedback: enableFeedback,
-          borderRadius: borderRadius,
         );
       },
     );
@@ -709,8 +692,6 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
     required this.capturedThemes,
     this.style,
     required this.popupColor,
-    required this.enableFeedback,
-    this.borderRadius,
   }) : super(key: key);
 
   final _MacosPopupRoute<T> route;
@@ -723,8 +704,6 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
   final CapturedThemes capturedThemes;
   final TextStyle? style;
   final Color? popupColor;
-  final bool enableFeedback;
-  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -750,8 +729,6 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
       buttonRect: buttonRect,
       constraints: constraints,
       popupColor: popupColor,
-      enableFeedback: enableFeedback,
-      borderRadius: borderRadius,
       hasBottomItemsNotShown: menuLimits.hasBottomItemsNotShown,
       hasTopItemsNotShown: menuLimits.hasTopItemsNotShown,
     );
@@ -864,7 +841,7 @@ class _MacosPopupMenuItemContainer extends StatelessWidget {
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
 class MacosPopupMenuItem<T> extends _MacosPopupMenuItemContainer {
-  /// Creates an item for a popup menu.
+  /// Creates an item for a macOS-style popup menu.
   ///
   /// The [child] argument is required.
   const MacosPopupMenuItem({
@@ -890,11 +867,14 @@ class MacosPopupMenuItem<T> extends _MacosPopupMenuItemContainer {
   final bool enabled;
 }
 
-/// A material design button for selecting from a list of items.
+/// A macOS-style pop-up button.
 ///
-/// A popup button lets the user select from a number of items. The button
-/// shows the currently selected item as well as an arrow that opens a menu for
-/// selecting another item.
+/// A pop-up button (often referred to as a pop-up menu) is a type of button
+/// that, when clicked, displays a menu containing a list of mutually exclusive
+/// choices.
+/// A pop-up button includes a double-arrow indicator that alludes to the
+/// direction in which the menu will appear (only vertical is currently
+/// supported).
 ///
 /// The type `T` is the type of the [value] that each popup item represents.
 /// All the entries in a given menu must represent values with consistent types.
@@ -905,16 +885,6 @@ class MacosPopupMenuItem<T> extends _MacosPopupMenuItemContainer {
 /// popup's value. It should also call [State.setState] to rebuild the
 /// popup with the new value.
 ///
-/// {@tool dartpad}
-/// This sample shows a `MacosPopupButton` with a large arrow icon,
-/// purple text style, and bold purple underline, whose value is one of "One",
-/// "Two", "Free", or "Four".
-///
-/// ![](https://flutter.github.io/assets-for-api-docs/assets/material/popup_button.png)
-///
-/// ** See code in examples/api/lib/material/popup/popup_button.0.dart **
-/// {@end-tool}
-///
 /// If the [onChanged] callback is null or the list of [items] is null
 /// then the popup button will be disabled, i.e. its arrow will be
 /// displayed in grey and it will not respond to input. A disabled button
@@ -922,23 +892,16 @@ class MacosPopupMenuItem<T> extends _MacosPopupMenuItemContainer {
 /// [disabledHint] is null and [hint] is non-null, the [hint] widget will
 /// instead be displayed.
 ///
-/// Requires one of its ancestors to be a [Material] widget.
-///
 /// See also:
 ///
-///  * [MacosPopupButtonFormField], which integrates with the [Form] widget.
 ///  * [MacosPopupMenuItem], the class used to represent the [items].
-///  * [MacosPopupButtonHideUnderline], which prevents its descendant popup buttons
-///    from displaying their underlines.
-///  * [ElevatedButton], [TextButton], ordinary buttons that trigger a single action.
-///  * <https://material.io/design/components/menus.html#popup-menu>
 class MacosPopupButton<T> extends StatefulWidget {
-  /// Creates a popup button.
+  /// Creates a macOS-style popup button.
   ///
   /// The [items] must have distinct values. If [value] isn't null then it
   /// must be equal to one of the [MacosPopupMenuItem] values. If [items] or
-  /// [onChanged] is null, the button will be disabled, the down arrow
-  /// will be greyed out.
+  /// [onChanged] is null, the button will be disabled, the up-down caret
+  /// icon will be greyed out.
   ///
   /// If [value] is null and the button is enabled, [hint] will be displayed
   /// if it is non-null.
@@ -954,8 +917,8 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// The [autofocus] argument must not be null.
   ///
   /// The [popupColor] argument specifies the background color of the
-  /// popup when it is open. If it is null, the current theme's
-  /// [ThemeData.canvasColor] will be used instead.
+  /// popup when it is open. If it is null, the appropriate macOS canvas color
+  /// will be used.
   MacosPopupButton({
     Key? key,
     required this.items,
@@ -969,18 +932,12 @@ class MacosPopupButton<T> extends StatefulWidget {
     this.style,
     this.iconDisabledColor,
     this.iconEnabledColor,
-    this.isDense = false,
-    this.isExpanded = false,
     this.itemHeight = _kMinInteractiveDimension,
     this.focusNode,
     this.autofocus = false,
     this.popupColor,
     this.menuMaxHeight,
-    this.enableFeedback,
     this.alignment = AlignmentDirectional.centerStart,
-    this.borderRadius,
-    // When adding new arguments, consider adding similar arguments to
-    // MacosPopupButtonFormField.
   })  : assert(
           items == null ||
               items.isEmpty ||
@@ -1056,13 +1013,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// from the list corresponds to the [MacosPopupMenuItem] of the same index
   /// in [items].
   ///
-  /// {@tool dartpad}
-  /// This sample shows a `MacosPopupButton` with a button with [Text] that
-  /// corresponds to but is unique from [MacosPopupMenuItem].
-  ///
-  /// ** See code in examples/api/lib/material/popup/popup_button.selected_item_builder.0.dart **
-  /// {@end-tool}
-  ///
   /// If this callback is null, the [MacosPopupMenuItem] from [items]
   /// that matches [value] will be displayed.
   final MacosPopupButtonBuilder? selectedItemBuilder;
@@ -1081,15 +1031,7 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// To use a separate text style for selected item when it's displayed within
   /// the popup button, consider using [selectedItemBuilder].
   ///
-  /// {@tool dartpad}
-  /// This sample shows a `MacosPopupButton` with a popup button text style
-  /// that is different than its menu items.
-  ///
-  /// ** See code in examples/api/lib/material/popup/popup_button.style.0.dart **
-  /// {@end-tool}
-  ///
-  /// Defaults to the [TextTheme.subtitle1] value of the current
-  /// [ThemeData.textTheme] of the current [Theme].
+  /// Defaults to MacosTheme.of(context).typography.body.
   final TextStyle? style;
 
   /// The color of any [Icon] descendant of [icon] if this button is disabled,
@@ -1107,21 +1049,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// [ThemeData.brightness] is [Brightness.light] and to
   /// [Colors.white70] when it is [Brightness.dark]
   final Color? iconEnabledColor;
-
-  /// Reduce the button's height.
-  ///
-  /// By default this button's height is the same as its menu items' heights.
-  /// If isDense is true, the button's height is reduced by about half. This
-  /// can be useful when the button is embedded in a container that adds
-  /// its own decorations, like [InputDecorator].
-  final bool isDense;
-
-  /// Set the popup's inner contents to horizontally fill its parent.
-  ///
-  /// By default this button's inner width is the minimum size of its contents.
-  /// If [isExpanded] is true, the inner width is expanded to fill its
-  /// surrounding container.
-  final bool isExpanded;
 
   /// If null, then the menu item heights will vary according to each menu item's
   /// intrinsic height.
@@ -1144,8 +1071,8 @@ class MacosPopupButton<T> extends StatefulWidget {
 
   /// The background color of the popup.
   ///
-  /// If it is not provided, the theme's [ThemeData.canvasColor] will be used
-  /// instead.
+  /// If it is not provided, the the appropriate macOS canvas color
+  /// will be used.
   final Color? popupColor;
 
   /// The maximum height of the menu.
@@ -1159,18 +1086,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// and bottom of the menu by at one menu item's height.
   final double? menuMaxHeight;
 
-  /// Whether detected gestures should provide acoustic and/or haptic feedback.
-  ///
-  /// For example, on Android a tap will produce a clicking sound and a
-  /// long-press will produce a short vibration, when feedback is enabled.
-  ///
-  /// By default, platform-specific feedback is enabled.
-  ///
-  /// See also:
-  ///
-  ///  * [Feedback] for providing platform-specific feedback to certain actions.
-  final bool? enableFeedback;
-
   /// Defines how the hint or the selected item is positioned within the button.
   ///
   /// This property must not be null. It defaults to [AlignmentDirectional.centerStart].
@@ -1182,14 +1097,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   ///  * [AlignmentDirectional], like [Alignment] for specifying alignments
   ///    relative to text direction.
   final AlignmentGeometry alignment;
-
-  /// Defines the corner radii of the menu's rounded rectangle shape.
-  ///
-  /// The radii of the first menu item's top left and right corners are
-  /// defined by the corresponding properties of the [borderRadius].
-  /// Similarly, the radii of the last menu item's bottom and right corners
-  /// are defined by the corresponding properties of the [borderRadius].
-  final BorderRadius? borderRadius;
 
   @override
   State<MacosPopupButton<T>> createState() => _MacosPopupButtonState<T>();
@@ -1353,8 +1260,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       itemHeight: widget.itemHeight,
       popupColor: widget.popupColor,
       menuMaxHeight: widget.menuMaxHeight,
-      enableFeedback: widget.enableFeedback ?? true,
-      borderRadius: widget.borderRadius,
     );
 
     navigator
@@ -1448,16 +1353,14 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       innerItemsWidget = IndexedStack(
         index: _selectedIndex ?? hintIndex,
         alignment: widget.alignment,
-        children: widget.isDense
-            ? items
-            : items.map((Widget item) {
-                return widget.itemHeight != null
-                    ? SizedBox(height: widget.itemHeight, child: item)
-                    : Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[item],
-                      );
-              }).toList(),
+        children: items.map((Widget item) {
+          return widget.itemHeight != null
+              ? SizedBox(height: widget.itemHeight, child: item)
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[item],
+                );
+        }).toList(),
       );
     }
     final brightness = MacosTheme.brightnessOf(context);
@@ -1501,15 +1404,12 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (widget.isExpanded)
-              Expanded(child: innerItemsWidget)
-            else
-              innerItemsWidget,
+            innerItemsWidget,
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: SizedBox(
-                height: _kPopupButtonHeight - 4,
-                width: _kPopupButtonHeight - 4,
+                height: _kPopupButtonHeight - 4.0,
+                width: _kPopupButtonHeight - 4.0,
                 child: CustomPaint(
                   painter: _UpDownCaretsPainter(
                     color: MacosColors.white,
