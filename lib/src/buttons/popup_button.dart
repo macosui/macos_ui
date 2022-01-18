@@ -986,16 +986,14 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// this widget is displayed as a placeholder for the popup button's value.
   final Widget? disabledHint;
 
-  /// {@template flutter.material.popupButton.onChanged}
   /// Called when the user selects an item.
   ///
   /// If the [onChanged] callback is null or the list of [MacosPopupButton.items]
-  /// is null then the popup button will be disabled, i.e. its arrow will be
-  /// displayed in grey and it will not respond to input. A disabled button
+  /// is null then the popup button will be disabled, i.e. its up/down caret will
+  /// be displayed in grey and it will not respond to input. A disabled button
   /// will display the [MacosPopupButton.disabledHint] widget if it is non-null.
   /// If [MacosPopupButton.disabledHint] is also null but [MacosPopupButton.hint] is
   /// non-null, [MacosPopupButton.hint] will instead be displayed.
-  /// {@endtemplate}
   final ValueChanged<T?>? onChanged;
 
   /// Called when the popup button is tapped.
@@ -1037,17 +1035,13 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// The color of any [Icon] descendant of [icon] if this button is disabled,
   /// i.e. if [onChanged] is null.
   ///
-  /// Defaults to [MaterialColor.shade400] of [Colors.grey] when the theme's
-  /// [ThemeData.brightness] is [Brightness.light] and to
-  /// [Colors.white10] when it is [Brightness.dark]
+  /// Defaults to [CupertinoColors.quaternaryLabel].
   final Color? iconDisabledColor;
 
   /// The color of any [Icon] descendant of [icon] if this button is enabled,
   /// i.e. if [onChanged] is defined.
   ///
-  /// Defaults to [MaterialColor.shade700] of [Colors.grey] when the theme's
-  /// [ThemeData.brightness] is [Brightness.light] and to
-  /// [Colors.white70] when it is [Brightness.dark]
+  /// Defaults to [MacosTheme.of(context).primaryColor]
   final Color? iconEnabledColor;
 
   /// If null, then the menu item heights will vary according to each menu item's
