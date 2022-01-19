@@ -1,3 +1,6 @@
+## [0.11.0]
+* New Widget: `MacosPopupButton`
+
 ## [0.10.0+1]
 * Update `native_context_menu` dependency
 
