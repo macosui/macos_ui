@@ -1,3 +1,7 @@
+## [0.10.3]
+* Sidebar and ResizeablePane more precicely track cursor location
+* New sidebar option, `dragClosed`, allows the sidebar to be closed by dragging below its `minWidth`
+
 ## [0.10.2]
 * Updates to `MacosIconButton` and `MacosBackButton`:
   * Added a hover effect when mouse moves over the buttons ([#168](https://github.com/GroovinChip/macos_ui/issues/168))

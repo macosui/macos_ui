@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
-import 'package:macos_ui/src/layout/sidebar.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
+import 'package:macos_ui/src/layout/sidebar.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
@@ -45,6 +45,7 @@ class MacosWindow extends StatefulWidget {
 class _MacosWindowState extends State<MacosWindow> {
   final _sidebarScrollController = ScrollController();
   double _sidebarWidth = 0.0;
+  double _sidebarDragStartWidth = 0.0;
   bool _showSidebar = true;
   int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
@@ -201,15 +202,26 @@ class _MacosWindowState extends State<MacosWindow> {
                 height: height,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
+                  onHorizontalDragStart: (_) {
+                    _sidebarDragStartWidth = _sidebarWidth;
+                  },
                   onHorizontalDragUpdate: (details) {
                     setState(() {
+                      final newWidth =
+                          _sidebarDragStartWidth + details.localPosition.dx;
+
+                      if (widget.sidebar!.dragClosed) {
+                        _showSidebar = newWidth >= widget.sidebar!.minWidth;
+                      }
+
                       _sidebarWidth = math.max(
                         widget.sidebar!.minWidth,
                         math.min(
                           math.min(widget.sidebar!.maxWidth!, width),
-                          _sidebarWidth + details.delta.dx,
+                          newWidth,
                         ),
                       );
+
                       if (_sidebarWidth == widget.sidebar!.minWidth)
                         _sidebarCursor = SystemMouseCursors.resizeRight;
                       else if (_sidebarWidth == widget.sidebar!.maxWidth)

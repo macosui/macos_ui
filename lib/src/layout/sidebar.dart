@@ -13,6 +13,7 @@ class Sidebar {
     this.key,
     this.decoration,
     this.isResizable = true,
+    this.dragClosed = true,
     this.maxWidth = 400.0,
     this.startWidth,
     this.padding = EdgeInsets.zero,
@@ -33,6 +34,9 @@ class Sidebar {
 
   /// Specifies whether the [Sidebar] can be resized by dragging or not.
   final bool? isResizable;
+
+  /// If true, the sidebar will be hidden when dragged below [minWidth].
+  final bool dragClosed;
 
   /// A [Key] is an identifier for [Widget]s, [Element]s and [SemanticsNode]s.
   ///
