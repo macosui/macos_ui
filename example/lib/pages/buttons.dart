@@ -167,6 +167,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   },
                 ),
                 const SizedBox(height: 20),
+                const Text('MacosPopupButton'),
+                const SizedBox(height: 8),
                 MacosPopupButton<String>(
                   value: popupValue,
                   onChanged: (String? newValue) {
@@ -183,6 +185,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   }).toList(),
                 ),
                 const SizedBox(height: 20),
+                const Text('MacosPopupButton (large list)'),
+                const SizedBox(height: 8),
                 MacosPopupButton<String>(
                   value: languagePopupValue,
                   onChanged: (String? newValue) {
