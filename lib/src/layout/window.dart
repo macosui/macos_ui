@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
@@ -95,10 +96,18 @@ class _MacosWindowState extends State<MacosWindow> {
     late Color sidebarBackgroundColor;
     Color dividerColor = theme.dividerColor;
 
-    // Only show blurry, transparent sidebar when platform brightness and app
-    // brightness are the same, otherwise it looks awful
-    if (MediaQuery.of(context).platformBrightness.isDark ==
-        theme.brightness.isDark) {
+    final isMac = !kIsWeb && defaultTargetPlatform == TargetPlatform.macOS;
+
+    // Respect the sidebar color override from parent if one is given
+    if (widget.sidebar?.decoration?.color != null) {
+      sidebarBackgroundColor = widget.sidebar!.decoration!.color!;
+    } else if (isMac &&
+        MediaQuery.of(context).platformBrightness.isDark ==
+            theme.brightness.isDark) {
+      // Only show blurry, transparent sidebar when platform brightness and app
+      // brightness are the same, otherwise it looks awful. Also only make the
+      // sidebar transparent on native Mac, or it will just be flat black or
+      // white.
       sidebarBackgroundColor = Colors.transparent;
     } else if (!theme.brightness.isDark) {
       sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
