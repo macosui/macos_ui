@@ -109,12 +109,10 @@ class _MacosWindowState extends State<MacosWindow> {
       // sidebar transparent on native Mac, or it will just be flat black or
       // white.
       sidebarBackgroundColor = Colors.transparent;
-    } else if (!theme.brightness.isDark) {
-      sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
-          CupertinoColors.systemGrey6.color;
     } else {
-      sidebarBackgroundColor = widget.sidebar?.decoration?.color ??
-          CupertinoColors.tertiarySystemBackground.darkColor;
+      sidebarBackgroundColor = theme.brightness.isDark
+          ? CupertinoColors.tertiarySystemBackground.darkColor
+          : CupertinoColors.systemGrey6.color;
     }
 
     final curve = Curves.linearToEaseOut;
