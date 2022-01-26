@@ -206,25 +206,35 @@ class _MacosWindowState extends State<MacosWindow> {
                     _sidebarDragStartWidth = _sidebarWidth;
                   },
                   onHorizontalDragUpdate: (details) {
+                    final sidebar = widget.sidebar!;
                     setState(() {
-                      final newWidth =
+                      var newWidth =
                           _sidebarDragStartWidth + details.localPosition.dx;
 
-                      if (widget.sidebar!.dragClosed) {
-                        _showSidebar = newWidth >= widget.sidebar!.minWidth;
+                      if (sidebar.startWidth != null &&
+                          sidebar.snapToStartBuffer != null &&
+                          (newWidth - sidebar.startWidth!).abs() <=
+                              sidebar.snapToStartBuffer!) {
+                        newWidth = sidebar.startWidth!;
+                      }
+
+                      if (sidebar.dragClosed) {
+                        final closeBelow =
+                            sidebar.minWidth - sidebar.dragClosedBuffer;
+                        _showSidebar = newWidth >= closeBelow;
                       }
 
                       _sidebarWidth = math.max(
-                        widget.sidebar!.minWidth,
+                        sidebar.minWidth,
                         math.min(
-                          math.min(widget.sidebar!.maxWidth!, width),
+                          math.min(sidebar.maxWidth!, width),
                           newWidth,
                         ),
                       );
 
-                      if (_sidebarWidth == widget.sidebar!.minWidth)
+                      if (_sidebarWidth == sidebar.minWidth)
                         _sidebarCursor = SystemMouseCursors.resizeRight;
-                      else if (_sidebarWidth == widget.sidebar!.maxWidth)
+                      else if (_sidebarWidth == sidebar.maxWidth)
                         _sidebarCursor = SystemMouseCursors.resizeLeft;
                       else
                         _sidebarCursor = SystemMouseCursors.resizeColumn;

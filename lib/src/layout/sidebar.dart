@@ -14,13 +14,15 @@ class Sidebar {
     this.decoration,
     this.isResizable = true,
     this.dragClosed = true,
+    double? dragClosedBuffer,
+    this.snapToStartBuffer,
     this.maxWidth = 400.0,
     this.startWidth,
     this.padding = EdgeInsets.zero,
     this.windowBreakpoint = 556.0,
     this.bottom,
     this.topOffset = 51.0,
-  });
+  }) : dragClosedBuffer = dragClosedBuffer ?? minWidth / 2;
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -35,8 +37,19 @@ class Sidebar {
   /// Specifies whether the [Sidebar] can be resized by dragging or not.
   final bool? isResizable;
 
-  /// If true, the sidebar will be hidden when dragged below [minWidth].
+  /// If true, the sidebar will close when dragged below [minWidth]. Use
+  /// [dragClosedBuffer] configure how far below [minWidth] it needs to be
+  /// dragged to trigger this behavior. Defaults to true.
   final bool dragClosed;
+
+  /// If [dragClosed] is true, the sidebar will be hidden when dragged this far
+  /// below [minWidth].  Defaults to half of [minWidth]. Set to 0 to cause the
+  /// sidebar to close at exactly [minWidth].
+  final double dragClosedBuffer;
+
+  /// If this and [startWidth] are both set, the sidebar will snap back to
+  /// [startWidth] when dragged within this many pixels of it.
+  final double? snapToStartBuffer;
 
   /// A [Key] is an identifier for [Widget]s, [Element]s and [SemanticsNode]s.
   ///

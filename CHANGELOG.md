@@ -1,6 +1,7 @@
 ## [0.10.3]
 * Sidebar and ResizeablePane more precicely track cursor location
-* New sidebar option, `dragClosed`, allows the sidebar to be closed by dragging below its `minWidth`
+* Sidebar can now be closed by dragging below its minWidth
+* Sidebar can now be configured to snap into place when dragged near its startWidth
 
 ## [0.10.2]
 * Updates to `MacosIconButton` and `MacosBackButton`:
