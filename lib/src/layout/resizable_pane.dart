@@ -115,7 +115,6 @@ class _ResizablePaneState extends State<ResizablePane> {
         _dragStartWidth = _width;
       },
       onHorizontalDragUpdate: (details) {
-        print('${details.globalPosition.dx}, ${details.localPosition.dx}');
         setState(() {
           final newWidth = _resizeOnRight
               ? _dragStartWidth + details.localPosition.dx
@@ -127,7 +126,6 @@ class _ResizablePaneState extends State<ResizablePane> {
               newWidth,
             ),
           );
-          print(_width);
           if (_width == widget.minWidth) {
             _cursor = _resizeOnRight
                 ? SystemMouseCursors.resizeRight
