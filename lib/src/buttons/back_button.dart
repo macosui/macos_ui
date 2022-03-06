@@ -22,7 +22,7 @@ class MacosBackButton extends StatefulWidget {
   /// The color to fill the space around the icon with.
   final Color? fillColor;
 
-  /// The color of the button's background when the button is hovered (mouse is over the button).
+  /// The color of the button's background when the mouse hovers over the button.
   final Color? hoverColor;
 
   /// The semantic label used by screen readers.
@@ -158,14 +158,10 @@ class MacosBackButtonState extends State<MacosBackButton>
     return MouseRegion(
       cursor: widget.mouseCursor!,
       onEnter: (e) {
-        setState(() {
-          _isHovered = true;
-        });
+        setState(() => _isHovered = true);
       },
       onExit: (e) {
-        setState(() {
-          _isHovered = false;
-        });
+        setState(() => _isHovered = false);
       },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,

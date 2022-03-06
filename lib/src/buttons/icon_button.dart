@@ -42,7 +42,9 @@ class MacosIconButton extends StatefulWidget {
   /// The color of the button's background when the button is disabled.
   final Color? disabledColor;
 
-  /// The color of the button's background when the button is hovered (mouse is over the button). Set to Colors.transparent to disable the hover effect.
+  /// The color of the button's background when the mouse hovers over it.
+  ///
+  /// Set to Colors.transparent to disable the hover effect.
   final Color? hoverColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
@@ -64,8 +66,9 @@ class MacosIconButton extends StatefulWidget {
 
   /// The border radius for the button.
   ///
-  /// This should only be set if setting [shape] to `BoxShape.rectangle` and defaults
-  /// to `BorderRadius.circular(7.0)`.
+  /// This should only be set if setting [shape] to `BoxShape.rectangle`.
+  ///
+  /// Defaults to `BorderRadius.circular(7.0)`.
   final BorderRadius? borderRadius;
 
   ///The alignment of the button's icon.
@@ -217,14 +220,10 @@ class MacosIconButtonState extends State<MacosIconButton>
     return MouseRegion(
       cursor: widget.mouseCursor!,
       onEnter: (e) {
-        setState(() {
-          _isHovered = true;
-        });
+        setState(() => _isHovered = true);
       },
       onExit: (e) {
-        setState(() {
-          _isHovered = false;
-        });
+        setState(() => _isHovered = false);
       },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -340,6 +339,7 @@ class MacosIconButtonThemeData with Diagnosticable {
   /// The default background color for [MacosIconButton].
   final Color? backgroundColor;
 
+  /// The color of the button when the mouse hovers over it.
   final Color? hoverColor;
 
   /// The default disabled color for [MacosIconButton].
