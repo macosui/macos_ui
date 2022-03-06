@@ -1,5 +1,5 @@
 ## [0.10.3]
-* Sidebar and ResizeablePane more precicely track cursor location
+* Sidebar and ResizablePane more precisely track cursor location
 * Sidebar can now be closed by dragging below its minWidth
 * Sidebar can now be configured to snap into place when dragged near its startWidth
 
