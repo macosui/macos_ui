@@ -28,13 +28,13 @@ class ResizablePane extends StatefulWidget {
     this.isResizable = true,
     required this.resizableSide,
     this.windowBreakpoint,
-    double? startWidth,
+    required double startWidth,
   })  : assert(
           maxWidth >= minWidth,
           'minWidth should not be more than maxWidth.',
         ),
         assert(
-          (startWidth! >= minWidth) && (startWidth <= maxWidth),
+          (startWidth >= minWidth) && (startWidth <= maxWidth),
           'startWidth must not be less than minWidth or more than maxWidth',
         ),
         startWidth = startWidth,
