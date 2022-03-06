@@ -60,9 +60,10 @@ class _DemoState extends State<Demo> {
     const ColorsPage(),
     const ContextMenusPage(),
     const Center(
-        child: MacosIcon(
-      CupertinoIcons.add,
-    )),
+      child: MacosIcon(
+        CupertinoIcons.add,
+      ),
+    ),
     const DialogsPage(),
   ];
 
