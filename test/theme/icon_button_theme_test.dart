@@ -50,6 +50,7 @@ void main() {
       [
         'backgroundColor: null',
         'disabledColor: null',
+        'hoverColor: null',
         'shape: null',
         'borderRadius: null',
         'boxConstraints: null',
