@@ -1,3 +1,6 @@
+## [0.10.1]
+* Added support for transparent sidebar
+
 ## [0.10.0+1]
 * Update `native_context_menu` dependency
 
