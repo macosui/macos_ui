@@ -1,8 +1,14 @@
-## [0.10.1]
-* Update to `MacosIconButton` and `MacosBackButton`:
+## [0.10.2]
+* Updates to `MacosIconButton` and `MacosBackButton`:
   * Added a hover effect when mouse moves over the buttons ([#168](https://github.com/GroovinChip/macos_ui/issues/168))
   * Added `hoverColor` property.
   * Default shape is now `BoxShape.rectangle` with border radius, as it seems to be the most used in macOS design.
+
+## [0.10.1]
+* Added support for transparent sidebar. Please note that changes to `MainFlutterWindow.swift` are required for this to work. [(#175)](https://github.com/GroovinChip/macos_ui/pull/175)
+
+## [0.10.0+1]
+* Update `native_context_menu` dependency
 
 ## [0.10.0]
 * New widget - `MacosIcon`! `MacosIcon` is identical to regular icons, with the exception that it respects a `MacosTheme`. Also includes corresponding theme classes
