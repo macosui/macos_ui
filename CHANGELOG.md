@@ -1,5 +1,5 @@
 ## [0.10.1]
-* Added support for transparent sidebar
+* Added support for transparent sidebar. Please note that changes to `MainFlutterWindow.swift` are required for this to work. [(#175)](https://github.com/GroovinChip/macos_ui/pull/175)
 
 ## [0.10.0+1]
 * Update `native_context_menu` dependency
