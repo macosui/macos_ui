@@ -115,12 +115,8 @@ class _ResizablePaneState extends State<ResizablePane> {
       onHorizontalDragStart: (details) {
         _dragStartWidth = _width;
         _dragStartPosition = details.globalPosition.dx;
-        print('dsw: $_dragStartWidth');
-        print('dsp: $_dragStartPosition');
       },
       onHorizontalDragUpdate: (details) {
-        print('new global x: ${details.globalPosition.dx}');
-        print('delta: ${_dragStartPosition - details.globalPosition.dx}');
         setState(() {
           final newWidth = _resizeOnRight
               ? _dragStartWidth -
