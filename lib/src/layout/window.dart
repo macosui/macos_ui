@@ -46,6 +46,7 @@ class _MacosWindowState extends State<MacosWindow> {
   final _sidebarScrollController = ScrollController();
   double _sidebarWidth = 0.0;
   double _sidebarDragStartWidth = 0.0;
+  double _sidebarDragStartPosition = 0.0;
   bool _showSidebar = true;
   int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
@@ -202,14 +203,16 @@ class _MacosWindowState extends State<MacosWindow> {
                 height: height,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onHorizontalDragStart: (_) {
+                  onHorizontalDragStart: (details) {
                     _sidebarDragStartWidth = _sidebarWidth;
+                    _sidebarDragStartPosition = details.globalPosition.dx;
                   },
                   onHorizontalDragUpdate: (details) {
                     final sidebar = widget.sidebar!;
                     setState(() {
-                      var newWidth =
-                          _sidebarDragStartWidth + details.localPosition.dx;
+                      var newWidth = _sidebarDragStartWidth +
+                          details.globalPosition.dx -
+                          _sidebarDragStartPosition;
 
                       if (sidebar.startWidth != null &&
                           sidebar.snapToStartBuffer != null &&
@@ -227,7 +230,7 @@ class _MacosWindowState extends State<MacosWindow> {
                       _sidebarWidth = math.max(
                         sidebar.minWidth,
                         math.min(
-                          math.min(sidebar.maxWidth!, width),
+                          sidebar.maxWidth!,
                           newWidth,
                         ),
                       );
