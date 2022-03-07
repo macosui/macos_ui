@@ -83,6 +83,7 @@ class _ResizablePaneState extends State<ResizablePane> {
   final _scrollController = ScrollController();
   late double _width;
   late double _dragStartWidth;
+  late double _dragStartPosition;
 
   Color get _dividerColor => MacosTheme.of(context).dividerColor;
 
@@ -111,14 +112,21 @@ class _ResizablePaneState extends State<ResizablePane> {
         cursor: _cursor,
         child: const SizedBox(width: 5),
       ),
-      onHorizontalDragStart: (_) {
+      onHorizontalDragStart: (details) {
         _dragStartWidth = _width;
+        _dragStartPosition = details.globalPosition.dx;
+        print('dsw: $_dragStartWidth');
+        print('dsp: $_dragStartPosition');
       },
       onHorizontalDragUpdate: (details) {
+        print('new global x: ${details.globalPosition.dx}');
+        print('delta: ${_dragStartPosition - details.globalPosition.dx}');
         setState(() {
           final newWidth = _resizeOnRight
-              ? _dragStartWidth + details.localPosition.dx
-              : _dragStartWidth - details.localPosition.dx;
+              ? _dragStartWidth -
+                  (_dragStartPosition - details.globalPosition.dx)
+              : _dragStartWidth +
+                  (_dragStartPosition - details.globalPosition.dx);
           _width = math.max(
             widget.minWidth,
             math.min(

@@ -2,12 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-// Since the resize handle is inside a widget with a width of 5, the drag
-// drag will actually end an extra 2.5 units from where you tell it to. Try
-// updating this value if the parent widget width ever changes and breaks
-// these tests.
-const _kResizeOffset = 2.5;
-
 void main() {
   group('ResizablePane', () {
     final resizablePane = ResizablePane(
@@ -55,7 +49,7 @@ void main() {
 
       var resizablePaneRenderObject =
           tester.renderObject<RenderBox>(resizablePaneFinder);
-      expect(resizablePaneRenderObject.size.width, 200 + _kResizeOffset);
+      expect(resizablePaneRenderObject.size.width, 200);
     });
 
     testWidgets('drag wider past maxWidth', (tester) async {
@@ -98,7 +92,7 @@ void main() {
 
       var resizablePaneRenderObject =
           tester.renderObject<RenderBox>(resizablePaneFinder);
-      expect(resizablePaneRenderObject.size.width, 130 + _kResizeOffset);
+      expect(resizablePaneRenderObject.size.width, 130);
     });
 
     testWidgets('drag narrower past minWidth', (tester) async {
