@@ -266,8 +266,8 @@ class MacosThemeData with Diagnosticable {
           ? const Color.fromRGBO(255, 255, 255, 0.247)
           : const Color.fromRGBO(255, 255, 255, 1),
       popupColor: isDark
-          ? const Color.fromRGBO(242, 242, 247, 1)
-          : const Color.fromRGBO(30, 30, 30, 1),
+          ? const Color.fromRGBO(30, 30, 30, 1)
+          : const Color.fromRGBO(242, 242, 247, 1),
     );
 
     return MacosThemeData.raw(
