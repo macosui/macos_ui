@@ -133,6 +133,7 @@ class _MacosWindowState extends State<MacosWindow> {
             // Sidebar
             if (widget.sidebar != null)
               AnimatedPositioned(
+                key: const ValueKey('sidebar'),
                 curve: curve,
                 duration: duration,
                 height: height,
@@ -173,6 +174,7 @@ class _MacosWindowState extends State<MacosWindow> {
 
             // Background color
             AnimatedPositioned(
+              key: const ValueKey('background'),
               curve: curve,
               duration: duration,
               left: visibleSidebarWidth,
@@ -196,6 +198,7 @@ class _MacosWindowState extends State<MacosWindow> {
             // Sidebar resizer
             if (widget.sidebar?.isResizable ?? false)
               AnimatedPositioned(
+                key: const ValueKey('sidebarResizer'),
                 curve: curve,
                 duration: duration,
                 left: visibleSidebarWidth - 4,
