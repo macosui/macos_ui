@@ -38,12 +38,9 @@ void main() {
         );
       };
 
-      final sidebarFinder = find.byKey(
-        const ValueKey('sidebar'),
-        skipOffstage: true,
-      );
-      final resizerFinder = find.byKey(const ValueKey('sidebarResizer'));
-      final backgroundFinder = find.byKey(const ValueKey('background'));
+      final sidebarFinder = find.byType(AnimatedPositioned).first;
+      final resizerFinder = find.byType(AnimatedPositioned).at(3);
+      final backgroundFinder = find.byType(AnimatedPositioned).at(1);
 
       final expectSidebarOpen = (tester, {required double width}) {
         expect(
