@@ -172,9 +172,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 MacosPopupButton<String>(
                   value: popupValue,
                   onChanged: (String? newValue) {
-                    setState(() {
-                      popupValue = newValue!;
-                    });
+                    setState(() => popupValue = newValue!);
                   },
                   items: <String>['One', 'Two', 'Three', 'Four']
                       .map<MacosPopupMenuItem<String>>((String value) {
@@ -190,9 +188,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 MacosPopupButton<String>(
                   value: languagePopupValue,
                   onChanged: (String? newValue) {
-                    setState(() {
-                      languagePopupValue = newValue!;
-                    });
+                    setState(() => languagePopupValue = newValue!);
                   },
                   items:
                       languages.map<MacosPopupMenuItem<String>>((String value) {
