@@ -7,14 +7,20 @@ void main() {
   group('MacosPopupButton theme tests', () {
     test('lerps from light to dark', () {
       final actual = MacosPopupButtonThemeData.lerp(
-          _MacosPopupButtonTheme, _MacosPopupButtonThemeDark, 1);
+        _MacosPopupButtonTheme,
+        _MacosPopupButtonThemeDark,
+        1,
+      );
 
       expect(actual, _MacosPopupButtonThemeDark);
     });
 
     test('lerps from dark to light', () {
       final actual = MacosPopupButtonThemeData.lerp(
-          _MacosPopupButtonThemeDark, _MacosPopupButtonTheme, 1);
+        _MacosPopupButtonThemeDark,
+        _MacosPopupButtonTheme,
+        1,
+      );
 
       expect(actual, _MacosPopupButtonTheme);
     });
