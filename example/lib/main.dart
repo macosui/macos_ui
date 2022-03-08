@@ -26,13 +26,7 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          theme: MacosThemeData.light().copyWith(
-            macosPopupButtonTheme: const MacosPopupButtonThemeData(
-              highlightColor: MacosColors.appleOrange,
-              backgroundColor: MacosColors.appleGreen,
-              popupColor: MacosColors.systemTealColor,
-            ),
-          ),
+          theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
