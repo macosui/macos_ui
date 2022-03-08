@@ -10,6 +10,7 @@ class MacosBackButton extends StatefulWidget {
     Key? key,
     this.onPressed,
     this.fillColor,
+    this.hoverColor,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
   }) : super(key: key);
@@ -20,6 +21,9 @@ class MacosBackButton extends StatefulWidget {
 
   /// The color to fill the space around the icon with.
   final Color? fillColor;
+
+  /// The color of the button's background when the mouse hovers over the button.
+  final Color? hoverColor;
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
@@ -35,6 +39,7 @@ class MacosBackButton extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('fillColor', fillColor));
+    properties.add(ColorProperty('hoverColor', fillColor));
     properties.add(StringProperty('semanticLabel', semanticLabel));
     properties.add(FlagProperty(
       'enabled',
@@ -56,6 +61,8 @@ class MacosBackButtonState extends State<MacosBackButton>
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
+
+  bool _isHovered = false;
 
   @override
   void initState() {
@@ -139,8 +146,23 @@ class MacosBackButtonState extends State<MacosBackButton>
           : const Color(0xffF4F5F5);
     }
 
+    Color? _hoverColor;
+    if (widget.hoverColor != null) {
+      _hoverColor = widget.hoverColor;
+    } else {
+      _hoverColor = brightness == Brightness.dark
+          ? const Color(0xff333336)
+          : const Color(0xffF3F2F2);
+    }
+
     return MouseRegion(
       cursor: widget.mouseCursor!,
+      onEnter: (e) {
+        setState(() => _isHovered = true);
+      },
+      onExit: (e) {
+        setState(() => _isHovered = false);
+      },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
@@ -167,10 +189,12 @@ class MacosBackButtonState extends State<MacosBackButton>
                 builder: (context, widget) {
                   return DecoratedBox(
                     decoration: BoxDecoration(
-                      color: buttonHeldDown && brightness == Brightness.dark
-                          ? const Color(0xff3C383C)
-                          : buttonHeldDown && brightness == Brightness.light
-                              ? const Color(0xffE5E5E5)
+                      color: buttonHeldDown
+                          ? brightness == Brightness.dark
+                              ? const Color(0xff3C383C)
+                              : const Color(0xffE5E5E5)
+                          : _isHovered
+                              ? _hoverColor
                               : _fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
