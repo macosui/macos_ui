@@ -1577,7 +1577,7 @@ class MacosPopupButtonThemeData with Diagnosticable {
     );
   }
 
-  /// Linearly interpolate between two [MacosPopupButtonThemeData].
+  /// Linearly interpolates between two [MacosPopupButtonThemeData].
   ///
   /// All the properties must be non-null.
   static MacosPopupButtonThemeData lerp(
