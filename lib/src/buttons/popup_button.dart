@@ -1556,7 +1556,7 @@ class MacosPopupButtonThemeData with Diagnosticable {
 
   /// The default highlight color for [MacosPopupButton].
   ///
-  /// Sets the color of the caret icons and the color of a [MacosPopupMenuItem]s' background when the mouse hovers over it.
+  /// Sets the color of the caret icons and the color of a [MacosPopupMenuItem]'s background when the mouse hovers over it.
   final Color? highlightColor;
 
   /// The default disabled color for [MacosPopupButton]
