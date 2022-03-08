@@ -39,8 +39,8 @@ class Sidebar {
 
   /// If true, the sidebar will close when dragged below [minWidth]. Use
   /// [dragClosedBuffer] configure how far below [minWidth] it needs to be
-  /// dragged to trigger this behavior. 
-  /// 
+  /// dragged to trigger this behavior.
+  ///
   /// Defaults to `true`.
   final bool dragClosed;
 
