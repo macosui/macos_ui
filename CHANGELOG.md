@@ -1,3 +1,6 @@
+## [0.12.0+1]
+* Reverts bundling the `native_context_menu` plugin per [#179](https://github.com/GroovinChip/macos_ui/issues/179)
+
 ## [0.12.0]
 * New Widget: `MacosPopupButton`
 
