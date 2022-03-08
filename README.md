@@ -7,10 +7,6 @@ Flutter widgets and themes implementing the current macOS design language.
 [![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
 [![codecov](https://codecov.io/gh/GroovinChip/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/GroovinChip/macos_ui)
 
-NOTE: This package depends on the excellent [native_context_menu](https://pub.dev/packages/native_context_menu) plugin.
-Since it is a desktop plugin, and therefore does not target Android and iOS, the pub score of this package
-is lower than 130
-
 ## Content
 
 - [macos_ui](#macos_ui)
@@ -32,7 +28,6 @@ is lower than 130
 - [Dialogs and Sheets](#dialogs)
   - [MacosAlertDialog](#MacosAlertDialog)
   - [MacosSheet](#MacosSheet)
-- [Context Menus](#ContextMenus)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
 - [Labels](#labels)
@@ -236,6 +231,46 @@ MacosRadioButton(
 ),
 ```
 
+## Pop-Up Button
+
+A pop-up button (often referred to as a pop-up menu) is a type of button that, when clicked, displays a menu containing a list of mutually exclusive choices. The menu appears on top of the button. Like other types of menus, a pop-up button’s menu can include separators and symbols like checkmarks. After the menu is revealed, it remains open until the user chooses a menu item, clicks outside of the menu, switches to another app, or quits the app; or until the system displays an alert. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/pop-up-buttons/)
+
+The type `T` of the `MacosPopupButton` is the type of the value that each pop-up menu item represents. All the entries in a given menu must represent values with consistent types. Typically, an `enum` is used. Each `MacosPopupMenuItem` in items must be specialized with that same type argument.
+
+The `onChanged` callback should update a state variable that defines the pop-up menu's value. It should also call `State.setState` to rebuild the pop-up button with the new value.
+
+When there are menu items that cannot be displayed within the available menu constraints, a caret is shown at the top or bottom of the open menu to signal that there are items that are not currently visible. 
+
+The menu can also be navigated with the up/down keys and an item selected with the Return key.
+
+| Dark Theme                                 | Light Theme                                |
+| ------------------------------------------ | ------------------------------------------ |
+| <img src="https://imgur.com/ov0kzJC.jpg"/> | <img src="https://imgur.com/buhYEo1.jpg"/> |
+| <img src="https://imgur.com/BOEH59L.jpg"/> | <img src="https://imgur.com/61S7DSX.jpg"/> |
+| <img src="https://imgur.com/zY0d8RF.jpg"/> | <img src="https://imgur.com/W4CMa5z.jpg"/> |
+
+Here's an example of how to create a basic pop-up button:
+
+```dart
+String popupValue = 'One';
+
+MacosPopupButton<String>(
+  value: popupValue,
+  onChanged: (String? newValue) {
+    setState(() {
+      popupValue = newValue!;
+    });
+  },
+  items: <String>['One', 'Two', 'Three', 'Four']
+      .map<MacosPopupMenuItem<String>>((String value) {
+    return MacosPopupMenuItem<String>(
+      value: value,
+      child: Text(value),
+    );
+  }).toList(),
+),
+```
+
 ## PushButton
 
 A push button appears within a view and initiates an instantaneous app-specific action, such as printing a document or deleting a file. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can complete a task. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/push-buttons/)
@@ -325,15 +360,6 @@ showMacosSheet(
 ```
 
 ![](https://imgur.com/NV0o5Ws.png)
-
-# Context Menus
-
-macos_ui uses the [native_context_menu] plugin under the hood for Context Menus. 
-Please consult the readme for that plugin for usage.
-
-![](https://lesnitsky-images.s3.eu-north-1.amazonaws.com/native_context_menu.gif)
-
-(gif courtesy of the `native_context_menu` plugin)
 
 # Fields
 

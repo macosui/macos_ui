@@ -197,6 +197,7 @@ class MacosThemeData with Diagnosticable {
     ScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonThemeData,
     MacosIconThemeData? iconTheme,
+    MacosPopupButtonThemeData? macosPopupButtonTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -258,6 +259,18 @@ class MacosThemeData with Diagnosticable {
       size: 20,
     );
 
+    macosPopupButtonTheme ??= MacosPopupButtonThemeData(
+      highlightColor: isDark
+          ? CupertinoColors.activeBlue.darkColor
+          : CupertinoColors.activeBlue.color,
+      backgroundColor: isDark
+          ? const Color.fromRGBO(255, 255, 255, 0.247)
+          : const Color.fromRGBO(255, 255, 255, 1),
+      popupColor: isDark
+          ? const Color.fromRGBO(30, 30, 30, 1)
+          : const Color.fromRGBO(242, 242, 247, 1),
+    );
+
     return MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -271,6 +284,7 @@ class MacosThemeData with Diagnosticable {
       scrollbarTheme: scrollbarTheme,
       macosIconButtonTheme: macosIconButtonThemeData,
       iconTheme: iconTheme,
+      macosPopupButtonTheme: macosPopupButtonTheme,
     );
   }
 
@@ -293,6 +307,7 @@ class MacosThemeData with Diagnosticable {
     required this.scrollbarTheme,
     required this.macosIconButtonTheme,
     required this.iconTheme,
+    required this.macosPopupButtonTheme,
   });
 
   /// A default light theme.
@@ -354,6 +369,9 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [MacosIcon]s below the overall [MacosTheme]
   final MacosIconThemeData iconTheme;
 
+  /// The default style for [MacosPopupButton]s below the overall [MacosTheme]
+  final MacosPopupButtonThemeData macosPopupButtonTheme;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
@@ -376,6 +394,11 @@ class MacosThemeData with Diagnosticable {
         t,
       ),
       iconTheme: MacosIconThemeData.lerp(a.iconTheme, b.iconTheme, t),
+      macosPopupButtonTheme: MacosPopupButtonThemeData.lerp(
+        a.macosPopupButtonTheme,
+        b.macosPopupButtonTheme,
+        t,
+      ),
     );
   }
 
@@ -393,6 +416,7 @@ class MacosThemeData with Diagnosticable {
     ScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonTheme,
     MacosIconThemeData? iconTheme,
+    MacosPopupButtonThemeData? macosPopupButtonTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -407,6 +431,8 @@ class MacosThemeData with Diagnosticable {
       scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
       macosIconButtonTheme: macosIconButtonTheme ?? this.macosIconButtonTheme,
       iconTheme: iconTheme ?? this.iconTheme,
+      macosPopupButtonTheme:
+          macosPopupButtonTheme ?? this.macosPopupButtonTheme,
     );
   }
 
@@ -437,6 +463,12 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<MacosIconButtonThemeData>(
         'macosIconButtonTheme',
         macosIconButtonTheme,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<MacosPopupButtonThemeData>(
+        'macosPopupButtonTheme',
+        macosPopupButtonTheme,
       ),
     );
   }

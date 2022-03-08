@@ -1,6 +1,5 @@
 import 'package:example/pages/buttons.dart';
 import 'package:example/pages/colors_page.dart';
-import 'package:example/pages/context_menus.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
@@ -58,7 +57,6 @@ class _DemoState extends State<Demo> {
     const IndicatorsPage(),
     const FieldsPage(),
     const ColorsPage(),
-    const ContextMenusPage(),
     const Center(
       child: MacosIcon(
         CupertinoIcons.add,
@@ -114,10 +112,6 @@ class _DemoState extends State<Demo> {
                   SidebarItem(
                     leading: MacosIcon(CupertinoIcons.infinite),
                     label: Text('Colors'),
-                  ),
-                  SidebarItem(
-                    leading: MacosIcon(CupertinoIcons.heart),
-                    label: Text('Context Menus'),
                   ),
                   SidebarItem(
                     leading: MacosIcon(CupertinoIcons.infinite),
