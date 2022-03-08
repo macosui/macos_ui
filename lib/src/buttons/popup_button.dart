@@ -1538,7 +1538,7 @@ class MacosPopupButtonTheme extends InheritedTheme {
 }
 
 /// A style that overrides the default appearance of
-/// [MacosPopupButton]s when it's used with [MacosPopupButtonTheme] or with the
+/// [MacosPopupButton]s when it is used with [MacosPopupButtonTheme] or with the
 /// overall [MacosTheme]'s [MacosThemeData.MacosPopupButtonTheme].
 ///
 /// See also:
