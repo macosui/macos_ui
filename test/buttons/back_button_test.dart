@@ -83,6 +83,7 @@ void main() {
       description,
       [
         'fillColor: null',
+        'hoverColor: null',
         'semanticLabel: null',
         'disabled',
       ],

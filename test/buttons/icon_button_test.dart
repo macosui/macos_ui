@@ -85,6 +85,7 @@ void main() {
       [
         'backgroundColor: null',
         'disabledColor: null',
+        'hoverColor: null',
         'pressedOpacity: 0.4',
         'alignment: Alignment.center',
         'semanticLabel: null',

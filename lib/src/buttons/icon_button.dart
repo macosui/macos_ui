@@ -10,9 +10,10 @@ class MacosIconButton extends StatefulWidget {
     required this.icon,
     this.backgroundColor,
     this.disabledColor,
+    this.hoverColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
-    this.shape = BoxShape.circle,
+    this.shape = BoxShape.rectangle,
     this.borderRadius,
     this.alignment = Alignment.center,
     this.semanticLabel,
@@ -41,6 +42,11 @@ class MacosIconButton extends StatefulWidget {
   /// The color of the button's background when the button is disabled.
   final Color? disabledColor;
 
+  /// The color of the button's background when the mouse hovers over it.
+  ///
+  /// Set to Colors.transparent to disable the hover effect.
+  final Color? hoverColor;
+
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
   /// If this is set to null, the button will be disabled.
@@ -55,12 +61,14 @@ class MacosIconButton extends StatefulWidget {
 
   /// The shape to make the button.
   ///
-  /// Defaults to `BoxShape.circle`.
+  /// Defaults to `BoxShape.rectangle`.
   final BoxShape shape;
 
   /// The border radius for the button.
   ///
   /// This should only be set if setting [shape] to `BoxShape.rectangle`.
+  ///
+  /// Defaults to `BorderRadius.circular(7.0)`.
   final BorderRadius? borderRadius;
 
   ///The alignment of the button's icon.
@@ -101,6 +109,7 @@ class MacosIconButton extends StatefulWidget {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(ColorProperty('hoverColor', hoverColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
     properties.add(StringProperty('semanticLabel', semanticLabel));
@@ -119,6 +128,8 @@ class MacosIconButtonState extends State<MacosIconButton>
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
+
+  bool _isHovered = false;
 
   @override
   void initState() {
@@ -193,6 +204,8 @@ class MacosIconButtonState extends State<MacosIconButton>
     final Color backgroundColor =
         widget.backgroundColor ?? theme.backgroundColor!;
 
+    final Color hoverColor = widget.hoverColor ?? theme.hoverColor!;
+
     final Color? disabledColor;
 
     if (widget.disabledColor != null) {
@@ -206,6 +219,12 @@ class MacosIconButtonState extends State<MacosIconButton>
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
+      onEnter: (e) {
+        setState(() => _isHovered = true);
+      },
+      onExit: (e) {
+        setState(() => _isHovered = false);
+      },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
@@ -222,9 +241,16 @@ class MacosIconButtonState extends State<MacosIconButton>
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: widget.shape,
-                  borderRadius:
-                      widget.borderRadius != null ? widget.borderRadius : null,
-                  color: !enabled ? disabledColor : backgroundColor,
+                  borderRadius: widget.borderRadius != null
+                      ? widget.borderRadius
+                      : widget.shape == BoxShape.rectangle
+                          ? BorderRadius.circular(7.0)
+                          : null,
+                  color: !enabled
+                      ? disabledColor
+                      : _isHovered
+                          ? hoverColor
+                          : backgroundColor,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
@@ -303,6 +329,7 @@ class MacosIconButtonThemeData with Diagnosticable {
   /// Builds a [MacosIconButtonThemeData].
   const MacosIconButtonThemeData({
     this.backgroundColor,
+    this.hoverColor,
     this.disabledColor,
     this.shape,
     this.borderRadius,
@@ -311,6 +338,9 @@ class MacosIconButtonThemeData with Diagnosticable {
 
   /// The default background color for [MacosIconButton].
   final Color? backgroundColor;
+
+  /// The color of the button when the mouse hovers over it.
+  final Color? hoverColor;
 
   /// The default disabled color for [MacosIconButton].
   final Color? disabledColor;
@@ -328,6 +358,7 @@ class MacosIconButtonThemeData with Diagnosticable {
   MacosIconButtonThemeData copyWith({
     Color? backgroundColor,
     Color? disabledColor,
+    Color? hoverColor,
     BoxShape? shape,
     BorderRadius? borderRadius,
     BoxConstraints? boxConstraints,
@@ -335,6 +366,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     return MacosIconButtonThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       disabledColor: disabledColor ?? this.disabledColor,
+      hoverColor: hoverColor ?? this.hoverColor,
       shape: shape ?? this.shape,
       borderRadius: borderRadius ?? this.borderRadius,
       boxConstraints: boxConstraints ?? this.boxConstraints,
@@ -352,6 +384,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     return MacosIconButtonThemeData(
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
       disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
+      hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
       shape: b.shape,
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t),
       boxConstraints:
@@ -366,6 +399,7 @@ class MacosIconButtonThemeData with Diagnosticable {
           runtimeType == other.runtimeType &&
           backgroundColor?.value == other.backgroundColor?.value &&
           disabledColor?.value == other.disabledColor?.value &&
+          hoverColor?.value == other.hoverColor?.value &&
           shape == other.shape &&
           borderRadius == other.borderRadius &&
           boxConstraints == other.boxConstraints;
@@ -374,6 +408,7 @@ class MacosIconButtonThemeData with Diagnosticable {
   int get hashCode =>
       backgroundColor.hashCode ^
       disabledColor.hashCode ^
+      hoverColor.hashCode ^
       shape.hashCode ^
       borderRadius.hashCode ^
       boxConstraints.hashCode;
@@ -383,6 +418,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(ColorProperty('hoverColor', hoverColor));
     properties.add(EnumProperty<BoxShape?>('shape', shape));
     properties
         .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
