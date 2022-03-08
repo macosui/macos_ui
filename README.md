@@ -7,10 +7,6 @@ Flutter widgets and themes implementing the current macOS design language.
 [![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
 [![codecov](https://codecov.io/gh/GroovinChip/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/GroovinChip/macos_ui)
 
-NOTE: This package depends on the excellent [native_context_menu](https://pub.dev/packages/native_context_menu) plugin.
-Since it is a desktop plugin, and therefore does not target Android and iOS, the pub score of this package
-is lower than 130
-
 ## Content
 
 - [macos_ui](#macos_ui)
@@ -32,7 +28,6 @@ is lower than 130
 - [Dialogs and Sheets](#dialogs)
   - [MacosAlertDialog](#MacosAlertDialog)
   - [MacosSheet](#MacosSheet)
-- [Context Menus](#ContextMenus)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
 - [Labels](#labels)
@@ -325,15 +320,6 @@ showMacosSheet(
 ```
 
 ![](https://imgur.com/NV0o5Ws.png)
-
-# Context Menus
-
-macos_ui uses the [native_context_menu] plugin under the hood for Context Menus. 
-Please consult the readme for that plugin for usage.
-
-![](https://lesnitsky-images.s3.eu-north-1.amazonaws.com/native_context_menu.gif)
-
-(gif courtesy of the `native_context_menu` plugin)
 
 # Fields
 

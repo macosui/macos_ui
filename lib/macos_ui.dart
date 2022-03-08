@@ -10,8 +10,6 @@
 
 library macos_ui;
 
-export 'package:native_context_menu/native_context_menu.dart';
-
 export 'src/buttons/back_button.dart';
 export 'src/buttons/checkbox.dart';
 export 'src/buttons/help_button.dart';
