@@ -1499,7 +1499,7 @@ class _UpDownCaretsPainter extends CustomPainter {
 ///
 ///  * [MacosPopupButtonThemeData], which is used to configure this theme.
 class MacosPopupButtonTheme extends InheritedTheme {
-  /// Create a [MacosPopupButtonTheme].
+  /// Creates a [MacosPopupButtonTheme].
   ///
   /// The [data] parameter must not be null.
   const MacosPopupButtonTheme({
