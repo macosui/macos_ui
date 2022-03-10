@@ -1,8 +1,14 @@
+## [0.12.1]
+* Sidebar and ResizablePane more precisely track cursor location
+* Sidebar can now be closed by dragging below its minWidth
+* Sidebar can now be configured to snap into place when dragged near its startWidth
+
 ## [0.12.0+1]
 * Reverts bundling the `native_context_menu` plugin per [#179](https://github.com/GroovinChip/macos_ui/issues/179)
 
 ## [0.12.0]
 * New Widget: `MacosPopupButton`
+
 
 ## [0.10.2]
 * Updates to `MacosIconButton` and `MacosBackButton`:
