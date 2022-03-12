@@ -1,3 +1,6 @@
+## [0.12.0+2]
+* Fixes `MacosThemeData` to properly apply user-defined `pushButtonTheme`, `helpButtonTheme`, and `tooltipTheme` properties.
+
 ## [0.12.0+1]
 * Reverts bundling the `native_context_menu` plugin per [#179](https://github.com/GroovinChip/macos_ui/issues/179)
 
