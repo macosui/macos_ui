@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 import '../mocks.dart';
 
@@ -19,7 +19,7 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           theme: MacosThemeData.dark().copyWith(
-            pushButtonTheme: const PushButtonThemeData(),
+            pushButtonTheme: darkPushButtonThemeData,
           ),
           home: MacosWindow(
             child: MacosScaffold(
@@ -52,7 +52,7 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           theme: MacosThemeData.dark().copyWith(
-            pushButtonTheme: const PushButtonThemeData(),
+            pushButtonTheme: darkPushButtonThemeData,
           ),
           home: MacosWindow(
             child: MacosScaffold(
@@ -109,3 +109,8 @@ void main() {
     });
   });
 }
+
+final darkPushButtonThemeData = PushButtonThemeData(
+  color: CupertinoColors.activeBlue.darkColor,
+  disabledColor: const Color.fromRGBO(56, 56, 56, 1.0),
+);
