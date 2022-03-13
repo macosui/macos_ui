@@ -255,8 +255,8 @@ class MacosIconTheme extends InheritedTheme {
 /// widget subtree.
 ///
 /// To obtain the current icon theme, use [MacosIconTheme.of]. To convert an icon
-/// theme to a version with all the fields filled in, use [new
-/// MacosIconThemeData.fallback].
+/// theme to a version with all the fields filled in, use
+/// [MacosIconThemeData.fallback].
 class MacosIconThemeData with Diagnosticable {
   /// Creates an icon theme data.
   ///

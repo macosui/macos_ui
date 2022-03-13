@@ -28,13 +28,13 @@ class ResizablePane extends StatefulWidget {
     this.isResizable = true,
     required this.resizableSide,
     this.windowBreakpoint,
-    double? startWidth,
+    required double startWidth,
   })  : assert(
           maxWidth >= minWidth,
           'minWidth should not be more than maxWidth.',
         ),
         assert(
-          (startWidth! >= minWidth) && (startWidth <= maxWidth),
+          (startWidth >= minWidth) && (startWidth <= maxWidth),
           'startWidth must not be less than minWidth or more than maxWidth',
         ),
         startWidth = startWidth,
@@ -82,6 +82,8 @@ class _ResizablePaneState extends State<ResizablePane> {
   SystemMouseCursor _cursor = SystemMouseCursors.resizeColumn;
   final _scrollController = ScrollController();
   late double _width;
+  late double _dragStartWidth;
+  late double _dragStartPosition;
 
   Color get _dividerColor => MacosTheme.of(context).dividerColor;
 
@@ -110,15 +112,22 @@ class _ResizablePaneState extends State<ResizablePane> {
         cursor: _cursor,
         child: const SizedBox(width: 5),
       ),
+      onHorizontalDragStart: (details) {
+        _dragStartWidth = _width;
+        _dragStartPosition = details.globalPosition.dx;
+      },
       onHorizontalDragUpdate: (details) {
         setState(() {
+          final newWidth = _resizeOnRight
+              ? _dragStartWidth -
+                  (_dragStartPosition - details.globalPosition.dx)
+              : _dragStartWidth +
+                  (_dragStartPosition - details.globalPosition.dx);
           _width = math.max(
             widget.minWidth,
             math.min(
               widget.maxWidth,
-              _resizeOnRight
-                  ? _width + details.delta.dx
-                  : _width - details.delta.dx,
+              newWidth,
             ),
           );
           if (_width == widget.minWidth) {
