@@ -18,7 +18,7 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           theme: MacosThemeData.dark().copyWith(
-            helpButtonTheme: const HelpButtonThemeData(),
+            helpButtonTheme: darkHelpButtonThemeData,
           ),
           home: MacosWindow(
             child: MacosScaffold(
@@ -49,7 +49,7 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           theme: MacosThemeData.dark().copyWith(
-            helpButtonTheme: const HelpButtonThemeData(),
+            helpButtonTheme: darkHelpButtonThemeData,
           ),
           home: MacosWindow(
             child: MacosScaffold(
@@ -97,3 +97,8 @@ void main() {
     });
   });
 }
+
+const darkHelpButtonThemeData = HelpButtonThemeData(
+  color: Color.fromRGBO(255, 255, 255, 0.1),
+  disabledColor: Color.fromRGBO(255, 255, 255, 0.1),
+);
