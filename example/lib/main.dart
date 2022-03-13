@@ -4,7 +4,6 @@ import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -67,8 +66,8 @@ class _DemoState extends State<Demo> {
 
   Color textLuminance(Color backgroundColor) {
     return backgroundColor.computeLuminance() > 0.5
-        ? Colors.black
-        : Colors.white;
+        ? MacosColors.black
+        : MacosColors.white;
   }
 
   @override

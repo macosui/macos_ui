@@ -1,3 +1,6 @@
+## [0.12.2]
+* Fixes `MacosThemeData` to properly apply user-defined `pushButtonTheme`, `helpButtonTheme`, and `tooltipTheme` properties.
+
 ## [0.12.1]
 * Sidebar and ResizablePane more precisely track cursor location
 * Sidebar can now be closed by dragging below its minWidth
