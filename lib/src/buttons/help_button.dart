@@ -344,4 +344,12 @@ class HelpButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
   }
+
+  HelpButtonThemeData merge(HelpButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: other.color,
+      disabledColor: other.disabledColor,
+    );
+  }
 }

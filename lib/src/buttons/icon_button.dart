@@ -426,4 +426,16 @@ class MacosIconButtonThemeData with Diagnosticable {
       DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints),
     );
   }
+
+  MacosIconButtonThemeData merge(MacosIconButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      backgroundColor: other.backgroundColor,
+      disabledColor: other.disabledColor,
+      hoverColor: other.hoverColor,
+      shape: other.shape,
+      borderRadius: other.borderRadius,
+      boxConstraints: other.boxConstraints,
+    );
+  }
 }
