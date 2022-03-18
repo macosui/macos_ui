@@ -1,3 +1,6 @@
+## [0.12.3]
+* Added `padding` property to `MacosIconButton` and `MacosIconButtonTheme`.
+
 ## [0.12.2]
 * Fixes `MacosThemeData` to properly apply user-defined `pushButtonTheme`, `helpButtonTheme`, and `tooltipTheme` properties.
 
