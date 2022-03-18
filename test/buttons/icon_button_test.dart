@@ -88,6 +88,7 @@ void main() {
         'hoverColor: null',
         'pressedOpacity: 0.4',
         'alignment: Alignment.center',
+        'padding: null',
         'semanticLabel: null',
       ],
     );

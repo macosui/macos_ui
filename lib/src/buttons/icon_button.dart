@@ -118,7 +118,7 @@ class MacosIconButton extends StatefulWidget {
     properties.add(ColorProperty('hoverColor', hoverColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
-    properties.add(DiagnosticsProperty('padding', padding));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('semanticLabel', semanticLabel));
   }
 
