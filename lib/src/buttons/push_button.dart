@@ -413,4 +413,13 @@ class PushButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(ColorProperty('secondaryColor', secondaryColor));
   }
+
+  PushButtonThemeData merge(PushButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: other.color,
+      disabledColor: other.disabledColor,
+      secondaryColor: other.secondaryColor,
+    );
+  }
 }

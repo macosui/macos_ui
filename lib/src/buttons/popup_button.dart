@@ -1611,4 +1611,13 @@ class MacosPopupButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('popupColor', popupColor));
   }
+
+  MacosPopupButtonThemeData merge(MacosPopupButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      highlightColor: other.highlightColor,
+      backgroundColor: other.backgroundColor,
+      popupColor: other.popupColor,
+    );
+  }
 }

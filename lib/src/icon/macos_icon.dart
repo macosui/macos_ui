@@ -177,7 +177,7 @@ class MacosIconTheme extends InheritedTheme {
   /// The [data] and [child] arguments must not be null.
   static Widget merge({
     Key? key,
-    required IconThemeData data,
+    required MacosIconThemeData data,
     required Widget child,
   }) {
     return Builder(
@@ -293,7 +293,7 @@ class MacosIconThemeData with Diagnosticable {
   /// Returns a new icon theme that matches this icon theme but with some values
   /// replaced by the non-null parameters of the given icon theme. If the given
   /// icon theme is null, simply returns this icon theme.
-  MacosIconThemeData merge(IconThemeData? other) {
+  MacosIconThemeData merge(MacosIconThemeData? other) {
     if (other == null) return this;
     return copyWith(
       color: other.color,

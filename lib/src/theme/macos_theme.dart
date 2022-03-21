@@ -271,7 +271,7 @@ class MacosThemeData with Diagnosticable {
           : const Color.fromRGBO(242, 242, 247, 1),
     );
 
-    return MacosThemeData.raw(
+    final defaultData = MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
       canvasColor: canvasColor,
@@ -286,6 +286,24 @@ class MacosThemeData with Diagnosticable {
       iconTheme: iconTheme,
       macosPopupButtonTheme: macosPopupButtonTheme,
     );
+
+    final customizedData = defaultData.copyWith(
+      brightness: _brightness,
+      primaryColor: primaryColor,
+      canvasColor: canvasColor,
+      typography: typography,
+      pushButtonTheme: pushButtonTheme,
+      dividerColor: dividerColor,
+      helpButtonTheme: helpButtonTheme,
+      tooltipTheme: tooltipTheme,
+      visualDensity: visualDensity,
+      scrollbarTheme: scrollbarTheme,
+      macosIconButtonTheme: macosIconButtonThemeData,
+      iconTheme: iconTheme,
+      macosPopupButtonTheme: macosPopupButtonTheme,
+    );
+
+    return defaultData.merge(customizedData);
   }
 
   /// Create a [MacosThemeData] given a set of exact values. All the values must
@@ -423,16 +441,38 @@ class MacosThemeData with Diagnosticable {
       primaryColor: primaryColor ?? this.primaryColor,
       canvasColor: canvasColor ?? this.canvasColor,
       dividerColor: dividerColor ?? this.dividerColor,
-      typography: typography ?? this.typography,
-      pushButtonTheme: pushButtonTheme ?? this.pushButtonTheme,
-      helpButtonTheme: helpButtonTheme ?? this.helpButtonTheme,
-      tooltipTheme: tooltipTheme ?? this.tooltipTheme,
+      typography: this.typography.merge(typography),
+      pushButtonTheme: this.pushButtonTheme.merge(pushButtonTheme),
+      helpButtonTheme: this.helpButtonTheme.merge(helpButtonTheme),
+      tooltipTheme: this.tooltipTheme.merge(tooltipTheme),
       visualDensity: visualDensity ?? this.visualDensity,
-      scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
-      macosIconButtonTheme: macosIconButtonTheme ?? this.macosIconButtonTheme,
-      iconTheme: iconTheme ?? this.iconTheme,
+      scrollbarTheme: this.scrollbarTheme.merge(scrollbarTheme),
+      macosIconButtonTheme:
+          this.macosIconButtonTheme.merge(macosIconButtonTheme),
+      iconTheme: this.iconTheme.merge(iconTheme),
       macosPopupButtonTheme:
-          macosPopupButtonTheme ?? this.macosPopupButtonTheme,
+          this.macosPopupButtonTheme.merge(macosPopupButtonTheme),
+    );
+  }
+
+  MacosThemeData merge(MacosThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      brightness: other.brightness,
+      primaryColor: other.primaryColor,
+      canvasColor: other.canvasColor,
+      dividerColor: other.dividerColor,
+      typography: typography.merge(other.typography),
+      pushButtonTheme: pushButtonTheme.merge(other.pushButtonTheme),
+      helpButtonTheme: helpButtonTheme.merge(other.helpButtonTheme),
+      tooltipTheme: tooltipTheme.merge(other.tooltipTheme),
+      visualDensity: other.visualDensity,
+      scrollbarTheme: scrollbarTheme.merge(other.scrollbarTheme),
+      macosIconButtonTheme:
+          macosIconButtonTheme.merge(other.macosIconButtonTheme),
+      iconTheme: iconTheme.merge(other.iconTheme),
+      macosPopupButtonTheme:
+          macosPopupButtonTheme.merge(other.macosPopupButtonTheme),
     );
   }
 

@@ -423,13 +423,13 @@ class TooltipThemeData with Diagnosticable {
 
   /// Copy this tooltip with [style]
   TooltipThemeData copyWith({
-    BoxDecoration? decoration,
+    Decoration? decoration,
     double? height,
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     bool? preferBelow,
     Duration? showDuration,
-    TextStyle? testStyle,
+    TextStyle? textStyle,
     double? verticalOffset,
     Duration? waitDuration,
   }) {
@@ -575,6 +575,21 @@ class TooltipThemeData with Diagnosticable {
     properties.add(DiagnosticsProperty<Duration>('waitDuration', waitDuration));
     properties.add(DiagnosticsProperty<Duration>('showDuration', showDuration));
     properties.add(DiagnosticsProperty<TextStyle>('textStyle', textStyle));
+  }
+
+  TooltipThemeData merge(TooltipThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      decoration: other.decoration,
+      height: other.height,
+      margin: other.margin,
+      padding: other.padding,
+      preferBelow: other.preferBelow,
+      showDuration: other.showDuration,
+      textStyle: other.textStyle,
+      verticalOffset: other.verticalOffset,
+      waitDuration: other.waitDuration,
+    );
   }
 }
 
