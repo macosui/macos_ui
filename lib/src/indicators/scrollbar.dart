@@ -286,6 +286,8 @@ class ScrollbarThemeData with Diagnosticable {
     Color? hoveringThumbColor,
     Color? draggingThumbColor,
     Color? trackColor,
+    Color? hoveringTrackColor,
+    Color? trackBorderColor,
     Color? hoveringTrackBorderColor,
     double? crossAxisMargin,
     double? mainAxisMargin,
@@ -465,6 +467,28 @@ class ScrollbarThemeData with Diagnosticable {
       minThumbLength,
       defaultValue: null,
     ));
+  }
+
+  ScrollbarThemeData merge(ScrollbarThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      thickness: other.thickness,
+      hoveringThickness: other.hoveringThickness,
+      showTrackOnHover: other.showTrackOnHover,
+      isAlwaysShown: other.isAlwaysShown,
+      interactive: other.interactive,
+      radius: other.radius,
+      thumbColor: other.thumbColor,
+      hoveringThumbColor: other.hoveringThumbColor,
+      draggingThumbColor: other.draggingThumbColor,
+      trackColor: other.trackColor,
+      hoveringTrackColor: other.hoveringTrackColor,
+      trackBorderColor: other.trackBorderColor,
+      hoveringTrackBorderColor: other.hoveringTrackBorderColor,
+      crossAxisMargin: other.crossAxisMargin,
+      mainAxisMargin: other.mainAxisMargin,
+      minThumbLength: other.minThumbLength,
+    );
   }
 }
 
