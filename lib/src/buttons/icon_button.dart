@@ -375,6 +375,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     BoxShape? shape,
     BorderRadius? borderRadius,
     BoxConstraints? boxConstraints,
+    EdgeInsetsGeometry? padding,
   }) {
     return MacosIconButtonThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -456,6 +457,7 @@ class MacosIconButtonThemeData with Diagnosticable {
       shape: other.shape,
       borderRadius: other.borderRadius,
       boxConstraints: other.boxConstraints,
+      padding: other.padding,
     );
   }
 }
