@@ -23,6 +23,7 @@ class MacosIconButton extends StatefulWidget {
       maxWidth: 30,
       maxHeight: 30,
     ),
+    this.padding,
     this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
@@ -94,6 +95,11 @@ class MacosIconButton extends StatefulWidget {
   ///```
   final BoxConstraints boxConstraints;
 
+  /// The internal padding for the button's [icon].
+  ///
+  /// Defaults to `EdgeInsets.all(8)`.
+  final EdgeInsetsGeometry? padding;
+
   /// The semantic label used by screen readers.
   final String? semanticLabel;
 
@@ -112,6 +118,7 @@ class MacosIconButton extends StatefulWidget {
     properties.add(ColorProperty('hoverColor', hoverColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('semanticLabel', semanticLabel));
   }
 
@@ -217,6 +224,8 @@ class MacosIconButtonState extends State<MacosIconButton>
       disabledColor = theme.disabledColor;
     }
 
+    final padding = widget.padding ?? theme.padding ?? const EdgeInsets.all(8);
+
     return MouseRegion(
       cursor: widget.mouseCursor!,
       onEnter: (e) {
@@ -253,7 +262,7 @@ class MacosIconButtonState extends State<MacosIconButton>
                           : backgroundColor,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: padding,
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,
@@ -334,6 +343,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     this.shape,
     this.borderRadius,
     this.boxConstraints,
+    this.padding,
   });
 
   /// The default background color for [MacosIconButton].
@@ -354,6 +364,9 @@ class MacosIconButtonThemeData with Diagnosticable {
   /// The default box constraints for [MacosIconButton].
   final BoxConstraints? boxConstraints;
 
+  /// The default padding for [MacosIconButton].
+  final EdgeInsetsGeometry? padding;
+
   /// Copies this [MacosIconButtonThemeData] into another.
   MacosIconButtonThemeData copyWith({
     Color? backgroundColor,
@@ -362,6 +375,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     BoxShape? shape,
     BorderRadius? borderRadius,
     BoxConstraints? boxConstraints,
+    EdgeInsetsGeometry? padding,
   }) {
     return MacosIconButtonThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -370,6 +384,7 @@ class MacosIconButtonThemeData with Diagnosticable {
       shape: shape ?? this.shape,
       borderRadius: borderRadius ?? this.borderRadius,
       boxConstraints: boxConstraints ?? this.boxConstraints,
+      padding: padding ?? this.padding,
     );
   }
 
@@ -389,6 +404,7 @@ class MacosIconButtonThemeData with Diagnosticable {
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t),
       boxConstraints:
           BoxConstraints.lerp(a.boxConstraints, b.boxConstraints, t),
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t),
     );
   }
 
@@ -402,7 +418,8 @@ class MacosIconButtonThemeData with Diagnosticable {
           hoverColor?.value == other.hoverColor?.value &&
           shape == other.shape &&
           borderRadius == other.borderRadius &&
-          boxConstraints == other.boxConstraints;
+          boxConstraints == other.boxConstraints &&
+          padding == other.padding;
 
   @override
   int get hashCode =>
@@ -411,7 +428,8 @@ class MacosIconButtonThemeData with Diagnosticable {
       hoverColor.hashCode ^
       shape.hashCode ^
       borderRadius.hashCode ^
-      boxConstraints.hashCode;
+      boxConstraints.hashCode ^
+      padding.hashCode;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -425,6 +443,9 @@ class MacosIconButtonThemeData with Diagnosticable {
     properties.add(
       DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints),
     );
+    properties.add(
+      DiagnosticsProperty<EdgeInsetsGeometry?>('padding', padding),
+    );
   }
 
   MacosIconButtonThemeData merge(MacosIconButtonThemeData? other) {
@@ -436,6 +457,7 @@ class MacosIconButtonThemeData with Diagnosticable {
       shape: other.shape,
       borderRadius: other.borderRadius,
       boxConstraints: other.boxConstraints,
+      padding: other.padding,
     );
   }
 }

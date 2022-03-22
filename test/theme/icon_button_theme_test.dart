@@ -53,6 +53,7 @@ void main() {
         'shape: null',
         'borderRadius: null',
         'boxConstraints: null',
+        'padding: null',
       ],
     );
   });

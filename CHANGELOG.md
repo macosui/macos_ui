@@ -1,3 +1,6 @@
+## [0.12.2+2]
+* Added `padding` property to `MacosIconButton` and `MacosIconButtonTheme`.
+
 ## [0.12.2+1]
 * Adds missing `merge` methods to `MacosThemeData` and widget `ThemeData` classes, making it possible to use them properly with any number of user-provided custom properties.
 
