@@ -25,13 +25,6 @@ const BorderRadius _kBorderRadius = BorderRadius.all(_kSideRadius);
 const double _kPulldownButtonHeight = 20.0;
 const double _kPulldownMenuCaretsOffset = 2.0;
 
-/// A builder to customize pulldown buttons.
-///
-/// Used by [MacosPulldownButton.selectedItemBuilder].
-typedef MacosPulldownButtonBuilder = List<Widget> Function(
-  BuildContext context,
-);
-
 class _MacosPulldownMenuPainter extends CustomPainter {
   _MacosPulldownMenuPainter({
     this.color,
@@ -134,22 +127,19 @@ class _MacosPulldownMenuItemButtonState<T>
   }
 
   void _handleOnTap() {
-    final MacosPulldownMenuItem<T> pulldownMenuItem =
+    final MacosPulldownMenuItem pulldownMenuItem =
         widget.route.items[widget.itemIndex].item!;
 
     pulldownMenuItem.onTap?.call();
 
-    Navigator.pop(
-      context,
-      _MacosPulldownRouteResult<T>(pulldownMenuItem.value),
-    );
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
-    final MacosPulldownMenuItem<T> pulldownMenuItem =
+    final MacosPulldownMenuItem pulldownMenuItem =
         widget.route.items[widget.itemIndex].item!;
     Widget child = Container(
       padding: widget.padding,
@@ -184,36 +174,17 @@ class _MacosPulldownMenuItemButtonState<T>
                     : theme.macosPulldownButtonTheme.pulldownColor,
                 borderRadius: _kBorderRadius,
               ),
-              child: Row(
-                children: [
-                  (widget.itemIndex == widget.route.selectedIndex)
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 2.0),
-                          child: MacosIcon(
-                            CupertinoIcons.checkmark_alt,
-                            size: 16.0,
-                            color: _isHovered
-                                ? MacosColors.white
-                                : brightness.resolve(
-                                    MacosColors.black,
-                                    MacosColors.white,
-                                  ),
-                          ),
-                        )
-                      : const SizedBox(width: 18.0),
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 13.0,
-                      color: _isHovered
-                          ? MacosColors.white
-                          : brightness.resolve(
-                              MacosColors.black,
-                              MacosColors.white,
-                            ),
-                    ),
-                    child: child,
-                  ),
-                ],
+              child: DefaultTextStyle(
+                style: TextStyle(
+                  fontSize: 13.0,
+                  color: _isHovered
+                      ? MacosColors.white
+                      : brightness.resolve(
+                          MacosColors.black,
+                          MacosColors.white,
+                        ),
+                ),
+                child: child,
               ),
             ),
           ),
@@ -423,6 +394,7 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
     // The width of a menu should be at most the view width. This ensures that
     // the menu does not extend past the left and right edges of the screen.
     final double width = math.min(constraints.maxWidth, buttonRect.width);
+    print(width);
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
@@ -768,7 +740,7 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
   }) : super(key: key, child: item);
 
   final ValueChanged<Size> onLayout;
-  final MacosPulldownMenuItem<T>? item;
+  final MacosPulldownMenuItem? item;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -796,23 +768,35 @@ class _RenderMenuItem extends RenderProxyBox {
   }
 }
 
-// The container widget for a menu item created by a [MacosPulldownButton]. It
-// provides the default configuration for [MacosPulldownMenuItem]s, as well as a
-// [MacosPulldownButton]'s hint and disabledHint widgets.
-class _MacosPulldownMenuItemContainer extends StatelessWidget {
-  /// Creates an item for a pulldown menu.
-  ///
-  /// The [child] argument is required.
-  const _MacosPulldownMenuItemContainer({
+/// An item in a menu created by a [MacosPulldownButton].
+///
+/// The type `T` is the type of the value the entry represents. All the entries
+/// in a given menu must represent values with consistent types.
+class MacosPulldownMenuItem extends StatelessWidget {
+  /// Creates an item for a macOS-style pulldown menu.
+  const MacosPulldownMenuItem({
     Key? key,
+    required this.title,
+    this.onTap,
+    this.leading,
+    this.enabled = true,
     this.alignment = AlignmentDirectional.centerStart,
-    required this.child,
   }) : super(key: key);
 
   /// The widget below this widget in the tree.
   ///
   /// Typically a [Text] widget.
-  final Widget child;
+  final Widget title;
+
+  /// Called when the pulldown menu item is tapped.
+  final VoidCallback? onTap;
+
+  final Widget? leading;
+
+  /// Whether or not a user can select this menu item.
+  ///
+  /// Defaults to `true`.
+  final bool enabled;
 
   /// Defines how the item is positioned within the container.
   ///
@@ -831,40 +815,15 @@ class _MacosPulldownMenuItemContainer extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(minHeight: _kMenuItemHeight),
       alignment: alignment,
-      child: child,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          leading != null ? leading! : const SizedBox.shrink(),
+          title,
+        ],
+      ),
     );
   }
-}
-
-/// An item in a menu created by a [MacosPulldownButton].
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
-class MacosPulldownMenuItem<T> extends _MacosPulldownMenuItemContainer {
-  /// Creates an item for a macOS-style pulldown menu.
-  ///
-  /// The [child] argument is required.
-  const MacosPulldownMenuItem({
-    Key? key,
-    this.onTap,
-    this.value,
-    this.enabled = true,
-    AlignmentGeometry alignment = AlignmentDirectional.centerStart,
-    required Widget child,
-  }) : super(key: key, alignment: alignment, child: child);
-
-  /// Called when the pulldown menu item is tapped.
-  final VoidCallback? onTap;
-
-  /// The value to return if the user selects this menu item.
-  ///
-  /// Eventually returned in a call to [MacosPulldownButton.onChanged].
-  final T? value;
-
-  /// Whether or not a user can select this menu item.
-  ///
-  /// Defaults to `true`.
-  final bool enabled;
 }
 
 /// A macOS-style pop-up button.
@@ -922,8 +881,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   MacosPulldownButton({
     Key? key,
     required this.items,
-    this.selectedItemBuilder,
-    this.value,
     this.hint,
     this.disabledHint,
     required this.onChanged,
@@ -938,20 +895,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
     this.pulldownColor,
     this.menuMaxHeight,
     this.alignment = AlignmentDirectional.centerStart,
-  })  : assert(
-          items == null ||
-              items.isEmpty ||
-              value == null ||
-              items.where((MacosPulldownMenuItem<T> item) {
-                    return item.value == value;
-                  }).length ==
-                  1,
-          "There should be exactly one item with [MacosPulldownButton]'s value: "
-          '$value. \n'
-          'Either zero or 2 or more [MacosPulldownMenuItem]s were detected '
-          'with the same value',
-        ),
-        assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
+  })  : assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
         super(key: key);
 
   /// The list of items the user can select.
@@ -959,17 +903,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// If the [onChanged] callback is null or the list of items is null
   /// then the pulldown button will be disabled, i.e. its arrow will be
   /// displayed in grey and it will not respond to input.
-  final List<MacosPulldownMenuItem<T>>? items;
-
-  /// The value of the currently selected [MacosPulldownMenuItem].
-  ///
-  /// If [value] is null and the button is enabled, [hint] will be displayed
-  /// if it is non-null.
-  ///
-  /// If [value] is null and the button is disabled, [disabledHint] will be displayed
-  /// if it is non-null. If [disabledHint] is null, then [hint] will be displayed
-  /// if it is non-null.
-  final T? value;
+  final List<MacosPulldownMenuItem>? items;
 
   /// A placeholder widget that is displayed by the pulldown button.
   ///
@@ -1003,17 +937,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   ///
   /// The callback will not be invoked if the pulldown button is disabled.
   final VoidCallback? onTap;
-
-  /// A builder to customize the pulldown buttons corresponding to the
-  /// [MacosPulldownMenuItem]s in [items].
-  ///
-  /// When a [MacosPulldownMenuItem] is selected, the widget that will be displayed
-  /// from the list corresponds to the [MacosPulldownMenuItem] of the same index
-  /// in [items].
-  ///
-  /// If this callback is null, the [MacosPulldownMenuItem] from [items]
-  /// that matches [value] will be displayed.
-  final MacosPulldownButtonBuilder? selectedItemBuilder;
 
   /// The z-coordinate at which to place the menu when open.
   ///
@@ -1133,7 +1056,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   @override
   void initState() {
     super.initState();
-    _updateSelectedIndex();
     if (widget.focusNode == null) {
       _internalNode ??= _createFocusNode();
     }
@@ -1195,32 +1117,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       }
       _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
       focusNode!.addListener(_handleFocusChanged);
-    }
-    _updateSelectedIndex();
-  }
-
-  void _updateSelectedIndex() {
-    if (widget.items == null ||
-        widget.items!.isEmpty ||
-        (widget.value == null &&
-            widget.items!
-                .where((MacosPulldownMenuItem<T> item) =>
-                    item.enabled && item.value == widget.value)
-                .isEmpty)) {
-      _selectedIndex = null;
-      return;
-    }
-
-    assert(widget.items!
-            .where(
-                (MacosPulldownMenuItem<T> item) => item.value == widget.value)
-            .length ==
-        1);
-    for (int itemIndex = 0; itemIndex < widget.items!.length; itemIndex++) {
-      if (widget.items![itemIndex].value == widget.value) {
-        _selectedIndex = itemIndex;
-        return;
-      }
     }
   }
 
@@ -1336,20 +1232,20 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     }
 
     // The width of the button and the menu are defined by the widest
-    // item and the width of the hint.
+    // item and the width of the title.
     // We should explicitly type the items list to be a list of <Widget>,
     // otherwise, no explicit type adding items maybe trigger a crash/failure
     // when hint and selectedItemBuilder are provided.
-    final List<Widget> items = widget.selectedItemBuilder == null
-        ? (widget.items != null ? List<Widget>.from(widget.items!) : <Widget>[])
-        : List<Widget>.from(widget.selectedItemBuilder!(context));
+    final List<Widget> items =
+        widget.items != null ? List<Widget>.from(widget.items!) : <Widget>[];
 
+    //TODO
     int? hintIndex;
     if (widget.hint != null || (!_enabled && widget.disabledHint != null)) {
       Widget displayedHint =
           _enabled ? widget.hint! : widget.disabledHint ?? widget.hint!;
-      if (widget.selectedItemBuilder == null)
-        displayedHint = _MacosPulldownMenuItemContainer(child: displayedHint);
+      displayedHint = MacosPulldownMenuItem(title: displayedHint);
+      print(widget.hint);
 
       hintIndex = items.length;
       items.add(IgnorePointer(
@@ -1365,7 +1261,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       innerItemsWidget = Container();
     } else {
       innerItemsWidget = IndexedStack(
-        index: _selectedIndex ?? hintIndex,
+        index: _selectedIndex, //TODO // ?? hintIndex,
         alignment: widget.alignment,
         children: items.map((Widget item) {
           return widget.itemHeight != null

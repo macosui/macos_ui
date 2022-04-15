@@ -199,6 +199,35 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   }).toList(),
                 ),
                 const SizedBox(height: 20),
+                const Text('MacosPulldownButton'),
+                const SizedBox(height: 8),
+                MacosPulldownButton(
+                    hint: const Text("PDF"),
+                    onChanged: (String? newValue) {
+                      setState(() => languagePopupValue = newValue!);
+                    },
+                    items: [
+                      MacosPulldownMenuItem(
+                        title: const Text('Open in Preview'),
+                        leading: const Icon(CupertinoIcons.arrow_2_circlepath),
+                        onTap: () => debugPrint("Opening in preview..."),
+                      ),
+                      MacosPulldownMenuItem(
+                        title: const Text('Save as PDF...'),
+                        onTap: () => debugPrint("Saving as PDF..."),
+                      ),
+                      MacosPulldownMenuItem(
+                        title: const Text('Save PDF to iCloud'),
+                        leading: const Icon(CupertinoIcons.cloud),
+                        onTap: () => debugPrint("Saving to iCloud..."),
+                      ),
+                      MacosPulldownMenuItem(
+                        title: const Text('Send PDF via Messages'),
+                        leading: const Icon(CupertinoIcons.share),
+                        onTap: () => debugPrint("Sending via Messages..."),
+                      ),
+                    ]),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
