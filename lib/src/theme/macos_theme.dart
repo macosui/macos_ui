@@ -198,6 +198,7 @@ class MacosThemeData with Diagnosticable {
     MacosIconButtonThemeData? macosIconButtonThemeData,
     MacosIconThemeData? iconTheme,
     MacosPopupButtonThemeData? macosPopupButtonTheme,
+    MacosPulldownButtonThemeData? macosPulldownButtonTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -271,6 +272,18 @@ class MacosThemeData with Diagnosticable {
           : const Color.fromRGBO(242, 242, 247, 1),
     );
 
+    macosPulldownButtonTheme ??= MacosPulldownButtonThemeData(
+      highlightColor: isDark
+          ? CupertinoColors.activeBlue.darkColor
+          : CupertinoColors.activeBlue.color,
+      backgroundColor: isDark
+          ? const Color.fromRGBO(255, 255, 255, 0.247)
+          : const Color.fromRGBO(255, 255, 255, 1),
+      pulldownColor: isDark
+          ? const Color.fromRGBO(30, 30, 30, 1)
+          : const Color.fromRGBO(242, 242, 247, 1),
+    );
+
     final defaultData = MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -285,6 +298,7 @@ class MacosThemeData with Diagnosticable {
       macosIconButtonTheme: macosIconButtonThemeData,
       iconTheme: iconTheme,
       macosPopupButtonTheme: macosPopupButtonTheme,
+      macosPulldownButtonTheme: macosPulldownButtonTheme,
     );
 
     final customizedData = defaultData.copyWith(
@@ -301,6 +315,7 @@ class MacosThemeData with Diagnosticable {
       macosIconButtonTheme: macosIconButtonThemeData,
       iconTheme: iconTheme,
       macosPopupButtonTheme: macosPopupButtonTheme,
+      macosPulldownButtonTheme: macosPulldownButtonTheme,
     );
 
     return defaultData.merge(customizedData);
@@ -326,6 +341,7 @@ class MacosThemeData with Diagnosticable {
     required this.macosIconButtonTheme,
     required this.iconTheme,
     required this.macosPopupButtonTheme,
+    required this.macosPulldownButtonTheme,
   });
 
   /// A default light theme.
@@ -390,6 +406,8 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [MacosPopupButton]s below the overall [MacosTheme]
   final MacosPopupButtonThemeData macosPopupButtonTheme;
 
+  final MacosPulldownButtonThemeData macosPulldownButtonTheme;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
@@ -417,6 +435,11 @@ class MacosThemeData with Diagnosticable {
         b.macosPopupButtonTheme,
         t,
       ),
+      macosPulldownButtonTheme: MacosPulldownButtonThemeData.lerp(
+        a.macosPulldownButtonTheme,
+        b.macosPulldownButtonTheme,
+        t,
+      ),
     );
   }
 
@@ -435,6 +458,7 @@ class MacosThemeData with Diagnosticable {
     MacosIconButtonThemeData? macosIconButtonTheme,
     MacosIconThemeData? iconTheme,
     MacosPopupButtonThemeData? macosPopupButtonTheme,
+    MacosPulldownButtonThemeData? macosPulldownButtonTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -452,6 +476,8 @@ class MacosThemeData with Diagnosticable {
       iconTheme: this.iconTheme.merge(iconTheme),
       macosPopupButtonTheme:
           this.macosPopupButtonTheme.merge(macosPopupButtonTheme),
+      macosPulldownButtonTheme:
+          this.macosPulldownButtonTheme.merge(macosPulldownButtonTheme),
     );
   }
 
@@ -473,6 +499,8 @@ class MacosThemeData with Diagnosticable {
       iconTheme: iconTheme.merge(other.iconTheme),
       macosPopupButtonTheme:
           macosPopupButtonTheme.merge(other.macosPopupButtonTheme),
+      macosPulldownButtonTheme:
+          macosPulldownButtonTheme.merge(other.macosPulldownButtonTheme),
     );
   }
 
@@ -509,6 +537,12 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<MacosPopupButtonThemeData>(
         'macosPopupButtonTheme',
         macosPopupButtonTheme,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<MacosPulldownButtonThemeData>(
+        'macosPulldownButtonTheme',
+        macosPulldownButtonTheme,
       ),
     );
   }
