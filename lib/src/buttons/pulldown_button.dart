@@ -12,7 +12,6 @@ import 'package:macos_ui/src/library.dart';
 //TODO: List commands that can be selected to do an action
 //TODO: Command labels should use title-case
 //TODO: Optional title property (string or icon) that is always shown inside the button
-//TODO: If title==null, behave like a pop-up button
 //TODO: Separators or symbols?
 
 const Duration _kMacosPulldownMenuDuration = Duration(milliseconds: 300);
@@ -1217,7 +1216,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
                 height: _kPulldownButtonHeight - 4.0,
                 width: _kPulldownButtonHeight - 4.0,
                 child: CustomPaint(
-                  painter: _UpDownCaretsPainter(
+                  painter: _DownCaretPainter(
                     color: MacosColors.white,
                     backgroundColor: _iconColor ?? MacosColors.appleBlue,
                   ),
@@ -1251,8 +1250,8 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   }
 }
 
-class _UpDownCaretsPainter extends CustomPainter {
-  const _UpDownCaretsPainter({
+class _DownCaretPainter extends CustomPainter {
+  const _DownCaretPainter({
     required this.color,
     required this.backgroundColor,
   });
@@ -1263,8 +1262,8 @@ class _UpDownCaretsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final radius = 4.0;
-    final vPadding = size.height / 8 + 1.25;
-    final hPadding = 2 * size.height / 8 + 1.25;
+    final vPadding = size.height / 4;
+    final hPadding = size.height / 3;
 
     /// Draw background
     canvas.drawRRect(
@@ -1273,27 +1272,22 @@ class _UpDownCaretsPainter extends CustomPainter {
     );
 
     /// Draw carets
-    final p1 = Offset(hPadding, size.height / 2 - 2.0);
-    final p2 = Offset(size.width / 2, vPadding);
-    final p3 = Offset(size.width - hPadding, size.height / 2 - 2.0);
-    final p4 = Offset(hPadding, size.height / 2 + 2.0);
-    final p5 = Offset(size.width / 2, size.height - vPadding);
-    final p6 = Offset(size.width - hPadding, size.height / 2 + 2.0);
+    final p1 = Offset(hPadding, size.height / 2 - 1.0);
+    final p2 = Offset(size.width / 2, size.height / 2 + 2.0);
+    final p3 = Offset(size.width - hPadding, size.height / 2 - 1.0);
     final paint = Paint()
       ..color = color
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 1.6;
+      ..strokeWidth = 1.75;
     canvas.drawLine(p1, p2, paint);
     canvas.drawLine(p2, p3, paint);
-    canvas.drawLine(p4, p5, paint);
-    canvas.drawLine(p5, p6, paint);
   }
 
   @override
-  bool shouldRepaint(_UpDownCaretsPainter oldDelegate) => false;
+  bool shouldRepaint(_DownCaretPainter oldDelegate) => false;
 
   @override
-  bool shouldRebuildSemantics(_UpDownCaretsPainter oldDelegate) => false;
+  bool shouldRebuildSemantics(_DownCaretPainter oldDelegate) => false;
 }
 
 /// Overrides the default style of its [MacosPulldownButton] descendants.
