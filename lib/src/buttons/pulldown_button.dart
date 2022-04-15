@@ -111,11 +111,6 @@ class _MacosPulldownMenuItemButtonState<T>
         widget.constraints.maxHeight,
         widget.itemIndex,
       );
-      widget.route.scrollController!.animateTo(
-        menuLimits.scrollOffset,
-        curve: Curves.easeInOut,
-        duration: const Duration(milliseconds: 100),
-      );
       setState(() {
         _isHovered = true;
       });
@@ -439,42 +434,22 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   }
 }
 
-// We box the return value so that the return value can be null. Otherwise,
-// canceling the route (which returns null) would get confused with actually
-// returning a real null value.
-@immutable
-class _MacosPulldownRouteResult<T> {
-  const _MacosPulldownRouteResult(this.result);
-
-  final T? result;
-
-  @override
-  bool operator ==(Object other) {
-    return other is _MacosPulldownRouteResult<T> && other.result == result;
-  }
-
-  @override
-  int get hashCode => result.hashCode;
-}
-
 class _MenuLimits {
   const _MenuLimits(
     this.top,
     this.bottom,
     this.height,
-    this.scrollOffset,
     this.hasTopItemsNotShown,
     this.hasBottomItemsNotShown,
   );
   final double top;
   final double bottom;
   final double height;
-  final double scrollOffset;
   final bool hasTopItemsNotShown;
   final bool hasBottomItemsNotShown;
 }
 
-class _MacosPulldownRoute<T> extends PopupRoute<_MacosPulldownRouteResult<T>> {
+class _MacosPulldownRoute<T> extends PopupRoute {
   _MacosPulldownRoute({
     required this.items,
     required this.padding,
@@ -644,7 +619,6 @@ class _MacosPulldownRoute<T> extends PopupRoute<_MacosPulldownRouteResult<T>> {
       menuTop,
       menuBottom,
       menuHeight,
-      scrollOffset,
       hasTopItemsNotShown,
       hasBottomItemsNotShown,
     );
@@ -690,8 +664,7 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
     final _MenuLimits menuLimits =
         route.getMenuLimits(buttonRect, constraints.maxHeight, selectedIndex);
     if (route.scrollController == null) {
-      route.scrollController =
-          ScrollController(initialScrollOffset: menuLimits.scrollOffset);
+      route.scrollController = ScrollController();
     }
 
     final TextDirection? textDirection = Directionality.maybeOf(context);
@@ -883,7 +856,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
     required this.items,
     this.hint,
     this.disabledHint,
-    required this.onChanged,
     this.onTap,
     this.elevation = 8,
     this.style,
@@ -919,16 +891,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// If [value] is null, the pulldown is disabled ([items] or [onChanged] is null),
   /// this widget is displayed as a placeholder for the pulldown button's value.
   final Widget? disabledHint;
-
-  /// Called when the user selects an item.
-  ///
-  /// If the [onChanged] callback is null or the list of [MacosPulldownButton.items]
-  /// is null then the pulldown button will be disabled, i.e. its up/down caret will
-  /// be displayed in grey and it will not respond to input. A disabled button
-  /// will display the [MacosPulldownButton.disabledHint] widget if it is non-null.
-  /// If [MacosPulldownButton.disabledHint] is also null but [MacosPulldownButton.hint] is
-  /// non-null, [MacosPulldownButton.hint] will instead be displayed.
-  final ValueChanged<T?>? onChanged;
 
   /// Called when the pulldown button is tapped.
   ///
@@ -1171,12 +1133,9 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       menuMaxHeight: widget.menuMaxHeight,
     );
 
-    navigator
-        .push(_pulldownRoute!)
-        .then<void>((_MacosPulldownRouteResult<T>? newValue) {
+    navigator.push(_pulldownRoute!).then<void>((_) {
       _removeMacosPulldownRoute();
-      if (!mounted || newValue == null) return;
-      widget.onChanged?.call(newValue.result);
+      if (!mounted) return;
     });
 
     widget.onTap?.call();
@@ -1195,10 +1154,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     }
   }
 
-  bool get _enabled =>
-      widget.items != null &&
-      widget.items!.isNotEmpty &&
-      widget.onChanged != null;
+  bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
 
   Orientation _getOrientation(BuildContext context) {
     Orientation? result = MediaQuery.maybeOf(context)?.orientation;
