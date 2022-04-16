@@ -1,3 +1,6 @@
+## [0.12.2+3]
+* Fix `padding` on `MacosAlertDialog` when `supress` is null [#188](https://github.com/GroovinChip/macos_ui/issues/188)
+
 ## [0.12.2+2]
 * Added `padding` property to `MacosIconButton` and `MacosIconButtonTheme`.
 
