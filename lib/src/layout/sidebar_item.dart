@@ -303,8 +303,8 @@ class _SidebarItem extends StatelessWidget {
               if (hasLeading)
                 Padding(
                   padding: EdgeInsets.only(right: spacing),
-                  child: IconTheme.merge(
-                    data: IconThemeData(
+                  child: MacosIconTheme.merge(
+                    data: MacosIconThemeData(
                       color: selected
                           ? MacosColors.white
                           : CupertinoColors.systemBlue,
