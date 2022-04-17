@@ -1,3 +1,6 @@
+## [0.12.3]
+* Remove `MacosScrollbar` from `ContentArea` widget (fixes [#170](https://github.com/GroovinChip/macos_ui/issues/170))
+
 ## [0.12.2+2]
 * Added `padding` property to `MacosIconButton` and `MacosIconButtonTheme`.
 

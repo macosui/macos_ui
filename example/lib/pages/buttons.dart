@@ -47,206 +47,207 @@ class _ButtonsPageState extends State<ButtonsPage> {
             );
           },
         ),
-        ContentArea(builder: (context, scrollController) {
-          return SingleChildScrollView(
-            controller: scrollController,
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Text('MacosBackButton'),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MacosBackButton(
-                      onPressed: () => debugPrint('click'),
-                      fillColor: Colors.transparent,
-                    ),
-                    const SizedBox(width: 16.0),
-                    MacosBackButton(
-                      onPressed: () => debugPrint('click'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text('MacosIconButton'),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MacosIconButton(
-                      icon: const MacosIcon(
-                        CupertinoIcons.star_fill,
-                        color: Colors.white,
+        ContentArea(
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Text('MacosBackButton'),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MacosBackButton(
+                        onPressed: () => debugPrint('click'),
+                        fillColor: Colors.transparent,
                       ),
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(7),
-                      onPressed: () {},
-                    ),
-                    const SizedBox(width: 8),
-                    const MacosIconButton(
-                      icon: MacosIcon(
-                        CupertinoIcons.plus_app,
-                        color: Colors.white,
+                      const SizedBox(width: 16.0),
+                      MacosBackButton(
+                        onPressed: () => debugPrint('click'),
                       ),
-                      shape: BoxShape.circle,
-                      //onPressed: () {},
-                    ),
-                    const SizedBox(width: 8),
-                    MacosIconButton(
-                      icon: const MacosIcon(
-                        CupertinoIcons.minus_square,
-                        color: Colors.white,
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosIconButton'),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MacosIconButton(
+                        icon: const MacosIcon(
+                          CupertinoIcons.star_fill,
+                          color: Colors.white,
+                        ),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(7),
+                        onPressed: () {},
                       ),
-                      backgroundColor: Colors.transparent,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.large,
-                  child: const Text('large PushButton'),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
-                  },
-                ),
-                const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.small,
-                  child: const Text('small PushButton'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return MacosScaffold(
-                            titleBar: const TitleBar(
-                              centerTitle: false,
-                              title: Text('New page'),
-                            ),
-                            children: [
-                              ContentArea(
-                                builder: (context, scrollController) {
-                                  return Center(
-                                    child: PushButton(
-                                      buttonSize: ButtonSize.large,
-                                      child: const Text('Go Back'),
-                                      onPressed: () {
-                                        Navigator.maybePop(context);
-                                      },
-                                    ),
-                                  );
-                                },
+                      const SizedBox(width: 8),
+                      const MacosIconButton(
+                        icon: MacosIcon(
+                          CupertinoIcons.plus_app,
+                          color: Colors.white,
+                        ),
+                        shape: BoxShape.circle,
+                        //onPressed: () {},
+                      ),
+                      const SizedBox(width: 8),
+                      MacosIconButton(
+                        icon: const MacosIcon(
+                          CupertinoIcons.minus_square,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  PushButton(
+                    buttonSize: ButtonSize.large,
+                    child: const Text('large PushButton'),
+                    onPressed: () {
+                      MacosWindowScope.of(context).toggleSidebar();
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  PushButton(
+                    buttonSize: ButtonSize.small,
+                    child: const Text('small PushButton'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return MacosScaffold(
+                              titleBar: const TitleBar(
+                                centerTitle: false,
+                                title: Text('New page'),
                               ),
-                              ResizablePane(
-                                minWidth: 180,
-                                startWidth: 200,
-                                windowBreakpoint: 700,
-                                resizableSide: ResizableSide.left,
-                                builder: (_, __) {
-                                  return const Center(
-                                    child: Text('Resizable Pane'),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
+                              children: [
+                                ContentArea(
+                                  builder: (context, scrollController) {
+                                    return Center(
+                                      child: PushButton(
+                                        buttonSize: ButtonSize.large,
+                                        child: const Text('Go Back'),
+                                        onPressed: () {
+                                          Navigator.maybePop(context);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                ResizablePane(
+                                  minWidth: 180,
+                                  startWidth: 200,
+                                  windowBreakpoint: 700,
+                                  resizableSide: ResizableSide.left,
+                                  builder: (_, __) {
+                                    return const Center(
+                                      child: Text('Resizable Pane'),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  PushButton(
+                    buttonSize: ButtonSize.large,
+                    isSecondary: true,
+                    child: const Text('secondary PushButton'),
+                    onPressed: () {
+                      MacosWindowScope.of(context).toggleSidebar();
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosPopupButton'),
+                  const SizedBox(height: 8),
+                  MacosPopupButton<String>(
+                    value: popupValue,
+                    onChanged: (String? newValue) {
+                      setState(() => popupValue = newValue!);
+                    },
+                    items: <String>['One', 'Two', 'Three', 'Four']
+                        .map<MacosPopupMenuItem<String>>((String value) {
+                      return MacosPopupMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosPopupButton (large list)'),
+                  const SizedBox(height: 8),
+                  MacosPopupButton<String>(
+                    value: languagePopupValue,
+                    onChanged: (String? newValue) {
+                      setState(() => languagePopupValue = newValue!);
+                    },
+                    items: languages
+                        .map<MacosPopupMenuItem<String>>((String value) {
+                      return MacosPopupMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('System Theme'),
+                      const SizedBox(width: 8),
+                      MacosRadioButton<ThemeMode>(
+                        groupValue: context.watch<AppTheme>().mode,
+                        value: ThemeMode.system,
+                        onChanged: (value) {
+                          context.read<AppTheme>().mode = value!;
                         },
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.large,
-                  isSecondary: true,
-                  child: const Text('secondary PushButton'),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
-                  },
-                ),
-                const SizedBox(height: 20),
-                const Text('MacosPopupButton'),
-                const SizedBox(height: 8),
-                MacosPopupButton<String>(
-                  value: popupValue,
-                  onChanged: (String? newValue) {
-                    setState(() => popupValue = newValue!);
-                  },
-                  items: <String>['One', 'Two', 'Three', 'Four']
-                      .map<MacosPopupMenuItem<String>>((String value) {
-                    return MacosPopupMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                const Text('MacosPopupButton (large list)'),
-                const SizedBox(height: 8),
-                MacosPopupButton<String>(
-                  value: languagePopupValue,
-                  onChanged: (String? newValue) {
-                    setState(() => languagePopupValue = newValue!);
-                  },
-                  items:
-                      languages.map<MacosPopupMenuItem<String>>((String value) {
-                    return MacosPopupMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('System Theme'),
-                    const SizedBox(width: 8),
-                    MacosRadioButton<ThemeMode>(
-                      groupValue: context.watch<AppTheme>().mode,
-                      value: ThemeMode.system,
-                      onChanged: (value) {
-                        context.read<AppTheme>().mode = value!;
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Light Theme'),
-                    const SizedBox(width: 24),
-                    MacosRadioButton<ThemeMode>(
-                      groupValue: context.watch<AppTheme>().mode,
-                      value: ThemeMode.light,
-                      onChanged: (value) {
-                        context.read<AppTheme>().mode = value!;
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Dark Theme'),
-                    const SizedBox(width: 26),
-                    MacosRadioButton<ThemeMode>(
-                      groupValue: context.watch<AppTheme>().mode,
-                      value: ThemeMode.dark,
-                      onChanged: (value) {
-                        context.read<AppTheme>().mode = value!;
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        }),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Light Theme'),
+                      const SizedBox(width: 24),
+                      MacosRadioButton<ThemeMode>(
+                        groupValue: context.watch<AppTheme>().mode,
+                        value: ThemeMode.light,
+                        onChanged: (value) {
+                          context.read<AppTheme>().mode = value!;
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Dark Theme'),
+                      const SizedBox(width: 26),
+                      MacosRadioButton<ThemeMode>(
+                        groupValue: context.watch<AppTheme>().mode,
+                        value: ThemeMode.dark,
+                        onChanged: (value) {
+                          context.read<AppTheme>().mode = value!;
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
         ResizablePane(
           minWidth: 180,
           startWidth: 200,
