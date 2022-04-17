@@ -328,13 +328,9 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     this.itemHeight,
     this.pulldownColor,
     this.menuMaxHeight,
-  })  : itemHeights = List<double>.filled(
+  }) : itemHeights = List<double>.filled(
           items.length,
           itemHeight ?? _kMinInteractiveDimension,
-        ),
-        itemWidths = List<double>.filled(
-          items.length,
-          _kMinInteractiveDimension,
         );
 
   final List<_MenuItem> items;
@@ -348,8 +344,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   final double? menuMaxHeight;
 
   final List<double> itemHeights;
-  final List<double> itemWidths;
-  ScrollController? scrollController;
 
   @override
   Duration get transitionDuration => _kMenuDuration;
@@ -468,18 +462,6 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasDirectionality(context));
 
-    // Computing the initialScrollOffset now, before the items have been laid
-    // out. This only works if the item heights are effectively fixed, i.e. either
-    // MacosPulldownButton.itemHeight is specified or MacosPulldownButton.itemHeight is null
-    // and all of the items' intrinsic heights are less than _kMinInteractiveDimension.
-    // Otherwise the initialScrollOffset is just a rough approximation based on
-    // treating the items as if their heights were all equal to _kMinInteractiveDimension.
-    final _MenuLimits menuLimits =
-        route.getMenuLimits(buttonRect, constraints.maxHeight);
-    if (route.scrollController == null) {
-      route.scrollController = ScrollController();
-    }
-
     final TextDirection? textDirection = Directionality.maybeOf(context);
     final Widget menu = _MacosPulldownMenu<T>(
       route: route,
@@ -579,7 +561,6 @@ class MacosPulldownMenuItem extends StatelessWidget {
     Key? key,
     required this.title,
     this.onTap,
-    this.leading,
     this.enabled = true,
     this.alignment = AlignmentDirectional.centerStart,
   }) : super(key: key);
@@ -591,8 +572,6 @@ class MacosPulldownMenuItem extends StatelessWidget {
 
   /// Called when the pulldown menu item is tapped.
   final VoidCallback? onTap;
-
-  final Widget? leading;
 
   /// Whether or not a user can select this menu item.
   ///
@@ -616,13 +595,7 @@ class MacosPulldownMenuItem extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(minHeight: _kMenuItemHeight),
       alignment: alignment,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          leading != null ? leading! : const SizedBox.shrink(),
-          title,
-        ],
-      ),
+      child: title,
     );
   }
 }
@@ -935,7 +908,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
             if (_pulldownRoute == null) return;
 
             _pulldownRoute!.itemHeights[index] = size.height;
-            _pulldownRoute!.itemWidths[index] = size.width;
           },
         ),
     ];
@@ -1002,8 +974,8 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
     final borderColor = brightness.resolve(
-      Color(0xffc3c4c9),
-      Color(0xff222222),
+      const Color(0xffc3c4c9),
+      const Color(0xff222222),
     );
 
     Widget result = DefaultTextStyle(
