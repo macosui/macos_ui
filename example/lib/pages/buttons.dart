@@ -217,6 +217,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       onTap: () => debugPrint("Opening in preview..."),
                     ),
                     MacosPulldownMenuItem(
+                      enabled: false,
                       title: const Text('Save as PDF...'),
                       onTap: () => debugPrint("Saving as PDF..."),
                     ),

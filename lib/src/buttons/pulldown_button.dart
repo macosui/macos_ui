@@ -128,6 +128,15 @@ class _MacosPulldownMenuItemButtonState<T>
           ),
         ),
       );
+    } else {
+      final textColor = MacosTheme.of(context).brightness.resolve(
+            MacosColors.disabledControlTextColor,
+            MacosColors.disabledControlTextColor.darkColor,
+          );
+      child = DefaultTextStyle(
+        style: theme.typography.body.copyWith(color: textColor),
+        child: child,
+      );
     }
     return child;
   }
@@ -524,30 +533,14 @@ class _MenuItem extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderMenuItem extends RenderShiftedBox {
+class _RenderMenuItem extends RenderProxyBox {
   _RenderMenuItem(this.onLayout, [RenderBox? child]) : super(child);
 
   ValueChanged<Size> onLayout;
 
   @override
-  Size computeDryLayout(BoxConstraints constraints) {
-    if (child == null) {
-      return Size.zero;
-    }
-    return child!.getDryLayout(constraints);
-  }
-
-  @override
   void performLayout() {
-    if (child == null) {
-      size = Size.zero;
-    } else {
-      child!.layout(constraints, parentUsesSize: true);
-      size = constraints.constrain(child!.size);
-      final BoxParentData childParentData = child!.parentData! as BoxParentData;
-      childParentData.offset = Offset.zero;
-    }
-
+    super.performLayout();
     onLayout(size);
   }
 }
