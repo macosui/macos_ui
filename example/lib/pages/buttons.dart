@@ -206,7 +206,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   items: [
                     MacosPulldownMenuItem(
                       title: const Text('Open in Preview'),
-                      leading: const Icon(CupertinoIcons.arrow_2_circlepath),
+                      // leading: const Icon(CupertinoIcons.arrow_2_circlepath,
+                      //     size: 12),
                       onTap: () => debugPrint("Opening in preview..."),
                     ),
                     MacosPulldownMenuItem(
@@ -215,12 +216,12 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                     MacosPulldownMenuItem(
                       title: const Text('Save PDF to iCloud'),
-                      leading: const Icon(CupertinoIcons.cloud),
+                      // leading: const Icon(CupertinoIcons.cloud),
                       onTap: () => debugPrint("Saving to iCloud..."),
                     ),
                     MacosPulldownMenuItem(
                       title: const Text('Send PDF via Messages'),
-                      leading: const Icon(CupertinoIcons.share),
+                      // leading: const Icon(CupertinoIcons.share),
                       onTap: () => debugPrint("Sending via Messages..."),
                     ),
                   ],

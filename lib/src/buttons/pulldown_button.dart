@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui' show window;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +13,16 @@ import 'package:macos_ui/src/library.dart';
 //TODO: Optional title property (string or icon) that is always shown inside the button
 //TODO: If title==null, behave like a pop-up button
 //TODO: Separators or symbols?
+//TODO: MacosPopupButton remove Orientation-related code in build functions
+//TODO: MacosPopupButton borderRadius: 5.0
+//TODO: Handle disabled state (disabledHint)
 
 const Duration _kMacosPulldownMenuDuration = Duration(milliseconds: 300);
 const Offset _kPulldownRouteOffset = Offset(-10.0, 5.0);
 const double _kMenuItemHeight = 20.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
-const Radius _kSideRadius = Radius.circular(7.0);
+const Radius _kSideRadius = Radius.circular(5.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(_kSideRadius);
 const double _kPulldownButtonHeight = 20.0;
 const double _kPulldownMenuCaretsOffset = 2.0;
@@ -30,7 +32,6 @@ class _MacosPulldownMenuPainter extends CustomPainter {
     this.color,
     this.borderColor,
     this.elevation,
-    this.selectedIndex,
     this.borderRadius,
   }) : _painter = BoxDecoration(
           color: color,
@@ -51,7 +52,6 @@ class _MacosPulldownMenuPainter extends CustomPainter {
   final Color? color;
   final Color? borderColor;
   final int? elevation;
-  final int? selectedIndex;
   final BorderRadius? borderRadius;
   final BoxPainter _painter;
 
@@ -73,7 +73,6 @@ class _MacosPulldownMenuPainter extends CustomPainter {
   bool shouldRepaint(_MacosPulldownMenuPainter oldPainter) {
     return oldPainter.color != color ||
         oldPainter.elevation != elevation ||
-        oldPainter.selectedIndex != selectedIndex ||
         oldPainter.borderRadius != borderRadius;
   }
 }
@@ -106,11 +105,6 @@ class _MacosPulldownMenuItemButtonState<T>
 
   void _handleFocusChange(bool focused) {
     if (focused) {
-      final _MenuLimits menuLimits = widget.route.getMenuLimits(
-        widget.buttonRect,
-        widget.constraints.maxHeight,
-        widget.itemIndex,
-      );
       setState(() {
         _isHovered = true;
       });
@@ -161,7 +155,6 @@ class _MacosPulldownMenuItemButtonState<T>
               return KeyEventResult.ignored;
             },
             onFocusChange: _handleFocusChange,
-            autofocus: widget.itemIndex == widget.route.selectedIndex,
             child: Container(
               decoration: BoxDecoration(
                 color: _isHovered
@@ -267,7 +260,6 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
             Colors.white.withOpacity(0.15),
           ),
           elevation: route.elevation,
-          selectedIndex: route.selectedIndex,
         ),
         child: Semantics(
           scopesRoute: true,
@@ -289,13 +281,18 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    ListView.builder(
-                      itemCount: children.length,
-                      itemBuilder: (context, index) {
-                        return children[index];
-                      },
-                      padding: const EdgeInsets.all(4.0),
-                      shrinkWrap: true,
+                    IntrinsicWidth(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 4.0,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: children,
+                        ),
+                      ),
                     ),
                     _showTopCaret
                         ? Positioned(
@@ -381,26 +378,21 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
     // The maximum height of a simple menu should be one or more rows less than
     // the view height. This ensures a tappable area outside of the simple menu
     // with which to dismiss the menu.
-    double maxHeight =
-        math.max(0.0, constraints.maxHeight - 2 * _kMenuItemHeight);
+    double maxHeight = constraints.maxHeight;
     if (route.menuMaxHeight != null && route.menuMaxHeight! <= maxHeight) {
       maxHeight = route.menuMaxHeight!;
     }
-    // The width of a menu should be at most the view width. This ensures that
-    // the menu does not extend past the left and right edges of the screen.
-    final double width = math.min(constraints.maxWidth, buttonRect.width);
-    print(width);
+
     return BoxConstraints(
-      minWidth: width,
-      maxWidth: width,
+      minWidth: kMinInteractiveDimension,
+      maxWidth: constraints.maxWidth,
       maxHeight: maxHeight,
     );
   }
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    final _MenuLimits menuLimits =
-        route.getMenuLimits(buttonRect, size.height, route.selectedIndex);
+    final _MenuLimits menuLimits = route.getMenuLimits(buttonRect, size.height);
 
     assert(() {
       final Rect container = Offset.zero & size;
@@ -415,16 +407,17 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
     }());
     assert(textDirection != null);
     final double left;
+    // TODO: standardize
     switch (textDirection!) {
       case TextDirection.rtl:
         left = buttonRect.right.clamp(0.0, size.width) - childSize.width;
         break;
       case TextDirection.ltr:
-        left = buttonRect.left.clamp(0.0, size.width - childSize.width);
+        left = buttonRect.left + 14;
         break;
     }
 
-    return Offset(left, menuLimits.top);
+    return Offset(left, menuLimits.top - 4.0);
   }
 
   @override
@@ -454,7 +447,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     required this.items,
     required this.padding,
     required this.buttonRect,
-    required this.selectedIndex,
     this.elevation = 8,
     required this.capturedThemes,
     required this.style,
@@ -462,15 +454,18 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     this.itemHeight,
     this.pulldownColor,
     this.menuMaxHeight,
-  }) : itemHeights = List<double>.filled(
+  })  : itemHeights = List<double>.filled(
           items.length,
           itemHeight ?? _kMinInteractiveDimension,
+        ),
+        itemWidths = List<double>.filled(
+          items.length,
+          _kMinInteractiveDimension,
         );
 
-  final List<_MenuItem<T>> items;
+  final List<_MenuItem> items;
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
-  final int selectedIndex;
   final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle style;
@@ -479,6 +474,7 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   final double? menuMaxHeight;
 
   final List<double> itemHeights;
+  final List<double> itemWidths;
   ScrollController? scrollController;
 
   @override
@@ -507,7 +503,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
           items: items,
           padding: padding,
           buttonRect: buttonRect,
-          selectedIndex: selectedIndex,
           elevation: elevation,
           capturedThemes: capturedThemes,
           style: style,
@@ -523,17 +518,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     }
   }
 
-  double getItemOffset(int index) {
-    double offset = 8.0;
-    if (items.isNotEmpty && index > 0) {
-      assert(items.length == itemHeights.length);
-      offset += itemHeights
-          .sublist(0, index)
-          .reduce((double total, double height) => total + height);
-    }
-    return offset;
-  }
-
   // Returns the vertical extent of the menu and the initial scrollOffset
   // for the ListView that contains the menu items. The vertical center of the
   // selected item is aligned with the button's vertical center, as far as
@@ -541,7 +525,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   _MenuLimits getMenuLimits(
     Rect buttonRect,
     double availableHeight,
-    int index,
   ) {
     double computedMaxHeight = availableHeight - 2.0 * _kMenuItemHeight;
     if (menuMaxHeight != null) {
@@ -549,7 +532,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     }
     final double buttonTop = buttonRect.top;
     final double buttonBottom = math.min(buttonRect.bottom, availableHeight);
-    final double selectedItemOffset = getItemOffset(index);
 
     // If the button is placed on the bottom or top of the screen, its top or
     // bottom may be less than [_kMenuItemHeight] from the edge of the screen.
@@ -559,8 +541,7 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     final double bottomLimit =
         math.max(availableHeight - _kMenuItemHeight, buttonBottom);
 
-    double menuTop = (buttonTop - selectedItemOffset) -
-        (itemHeights[selectedIndex] - buttonRect.height) / 2.0;
+    double menuTop = buttonTop + _kMenuItemHeight;
     double preferredMenuHeight = 8.0;
     if (items.isNotEmpty)
       preferredMenuHeight +=
@@ -586,33 +567,16 @@ class _MacosPulldownRoute<T> extends PopupRoute {
       menuTop = menuBottom - menuHeight;
     }
 
-    if (menuBottom - itemHeights[selectedIndex] / 2.0 <
-        buttonBottom - buttonRect.height / 2.0) {
-      menuBottom = buttonBottom -
-          buttonRect.height / 2.0 +
-          itemHeights[selectedIndex] / 2.0;
-      menuTop = menuBottom - menuHeight;
-    }
+    // if (menuBottom - itemHeights[selectedIndex] / 2.0 <
+    //     buttonBottom - buttonRect.height / 2.0) {
+    //   menuBottom = buttonBottom -
+    //       buttonRect.height / 2.0 +
+    //       itemHeights[selectedIndex] / 2.0;
+    //   menuTop = menuBottom - menuHeight;
+    // }
 
-    double scrollOffset = 0;
-    // If all of the menu items will not fit within availableHeight then
-    // compute the scroll offset that will line the selected menu item up
-    // with the select item. This is only done when the menu is first
-    // shown - subsequently we leave the scroll offset where the user left
-    // it. This scroll offset is only accurate for fixed height menu items
-    // (the default).
-    if (preferredMenuHeight > computedMaxHeight) {
-      // The offset should be zero if the selected item is in view at the beginning
-      // of the menu. Otherwise, the scroll offset should center the item if possible.
-      scrollOffset = math.max(0.0, selectedItemOffset - (buttonTop - menuTop));
-      // If the selected item's scroll offset is greater than the maximum scroll offset,
-      // set it instead to the maximum allowed scroll offset.
-      scrollOffset = math.min(scrollOffset, preferredMenuHeight - menuHeight);
-    }
-    bool hasTopItemsNotShown = preferredMenuHeight > computedMaxHeight &&
-        scrollOffset > buttonRect.height / 2.0;
-    bool hasBottomItemsNotShown = preferredMenuHeight > computedMaxHeight &&
-        scrollOffset < buttonRect.height / 2.0;
+    bool hasTopItemsNotShown = preferredMenuHeight > computedMaxHeight;
+    bool hasBottomItemsNotShown = preferredMenuHeight > computedMaxHeight;
 
     assert((menuBottom - menuTop - menuHeight).abs() < precisionErrorTolerance);
     return _MenuLimits(
@@ -633,7 +597,6 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
     this.items,
     required this.padding,
     required this.buttonRect,
-    required this.selectedIndex,
     this.elevation = 8,
     required this.capturedThemes,
     this.style,
@@ -642,10 +605,9 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
 
   final _MacosPulldownRoute<T> route;
   final BoxConstraints constraints;
-  final List<_MenuItem<T>>? items;
+  final List<_MenuItem>? items;
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
-  final int selectedIndex;
   final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle? style;
@@ -662,7 +624,7 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
     // Otherwise the initialScrollOffset is just a rough approximation based on
     // treating the items as if their heights were all equal to _kMinInteractiveDimension.
     final _MenuLimits menuLimits =
-        route.getMenuLimits(buttonRect, constraints.maxHeight, selectedIndex);
+        route.getMenuLimits(buttonRect, constraints.maxHeight);
     if (route.scrollController == null) {
       route.scrollController = ScrollController();
     }
@@ -705,14 +667,15 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
 // item so that _MacosPulldownRoutePage can align the vertical center of the
 // selected item lines up with the vertical center of the pulldown button,
 // as closely as possible.
-class _MenuItem<T> extends SingleChildRenderObjectWidget {
+class _MenuItem extends SingleChildRenderObjectWidget {
   const _MenuItem({
     Key? key,
     required this.onLayout,
-    required this.item,
+    this.item,
   }) : super(key: key, child: item);
 
   final ValueChanged<Size> onLayout;
+
   final MacosPulldownMenuItem? item;
 
   @override
@@ -729,14 +692,30 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderMenuItem extends RenderProxyBox {
+class _RenderMenuItem extends RenderShiftedBox {
   _RenderMenuItem(this.onLayout, [RenderBox? child]) : super(child);
 
   ValueChanged<Size> onLayout;
 
   @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    if (child == null) {
+      return Size.zero;
+    }
+    return child!.getDryLayout(constraints);
+  }
+
+  @override
   void performLayout() {
-    super.performLayout();
+    if (child == null) {
+      size = Size.zero;
+    } else {
+      child!.layout(constraints, parentUsesSize: true);
+      size = constraints.constrain(child!.size);
+      final BoxParentData childParentData = child!.parentData! as BoxParentData;
+      childParentData.offset = Offset.zero;
+    }
+
     onLayout(size);
   }
 }
@@ -854,7 +833,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
   MacosPulldownButton({
     Key? key,
     required this.items,
-    this.hint,
+    required this.hint,
     this.disabledHint,
     this.onTap,
     this.elevation = 8,
@@ -884,7 +863,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
   ///
   /// If [value] is null and the pulldown is disabled and [disabledHint] is null,
   /// this widget is used as the placeholder.
-  final Widget? hint;
+  final Widget hint;
 
   /// A preferred placeholder widget that is displayed when the pulldown is disabled.
   ///
@@ -1001,9 +980,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
 
 class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     with WidgetsBindingObserver {
-  int? _selectedIndex;
   _MacosPulldownRoute<T>? _pulldownRoute;
-  Orientation? _lastOrientation;
   FocusNode? _internalNode;
   FocusNode? get focusNode => widget.focusNode ?? _internalNode;
   bool _hasPrimaryFocus = false;
@@ -1049,7 +1026,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   void _removeMacosPulldownRoute() {
     _pulldownRoute?._dismiss();
     _pulldownRoute = null;
-    _lastOrientation = null;
   }
 
   void _handleFocusChanged() {
@@ -1090,9 +1066,9 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     final EdgeInsetsGeometry menuMargin =
         const EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
 
-    final List<_MenuItem<T>> menuItems = <_MenuItem<T>>[
+    final List<_MenuItem> menuItems = <_MenuItem>[
       for (int index = 0; index < widget.items!.length; index += 1)
-        _MenuItem<T>(
+        _MenuItem(
           item: widget.items![index],
           onLayout: (Size size) {
             // If [_pulldownRoute] is null and onLayout is called, this means
@@ -1106,6 +1082,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
             if (_pulldownRoute == null) return;
 
             _pulldownRoute!.itemHeights[index] = size.height;
+            _pulldownRoute!.itemWidths[index] = size.width;
           },
         ),
     ];
@@ -1122,7 +1099,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       items: menuItems,
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
-      selectedIndex: _selectedIndex ?? 0,
       elevation: widget.elevation,
       capturedThemes:
           InheritedTheme.capture(from: context, to: navigator.context),
@@ -1156,19 +1132,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
 
   bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
 
-  Orientation _getOrientation(BuildContext context) {
-    Orientation? result = MediaQuery.maybeOf(context)?.orientation;
-    if (result == null) {
-      // If there's no MediaQuery, then use the window aspect to determine
-      // orientation.
-      final Size size = window.physicalSize;
-      result = size.width > size.height
-          ? Orientation.landscape
-          : Orientation.portrait;
-    }
-    return result;
-  }
-
   bool get _showHighlight {
     switch (_focusHighlightMode) {
       case FocusHighlightMode.touch:
@@ -1180,55 +1143,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final Orientation newOrientation = _getOrientation(context);
-    _lastOrientation ??= newOrientation;
-    if (newOrientation != _lastOrientation) {
-      _removeMacosPulldownRoute();
-      _lastOrientation = newOrientation;
-    }
-
-    // The width of the button and the menu are defined by the widest
-    // item and the width of the title.
-    // We should explicitly type the items list to be a list of <Widget>,
-    // otherwise, no explicit type adding items maybe trigger a crash/failure
-    // when hint and selectedItemBuilder are provided.
-    final List<Widget> items =
-        widget.items != null ? List<Widget>.from(widget.items!) : <Widget>[];
-
-    //TODO
-    int? hintIndex;
-    if (widget.hint != null || (!_enabled && widget.disabledHint != null)) {
-      Widget displayedHint =
-          _enabled ? widget.hint! : widget.disabledHint ?? widget.hint!;
-      displayedHint = MacosPulldownMenuItem(title: displayedHint);
-      print(widget.hint);
-
-      hintIndex = items.length;
-      items.add(IgnorePointer(
-        ignoringSemantics: false,
-        child: displayedHint,
-      ));
-    }
-
-    // If value is null (then _selectedIndex is null) then we
-    // display the hint or nothing at all.
-    final Widget innerItemsWidget;
-    if (items.isEmpty) {
-      innerItemsWidget = Container();
-    } else {
-      innerItemsWidget = IndexedStack(
-        index: _selectedIndex, //TODO // ?? hintIndex,
-        alignment: widget.alignment,
-        children: items.map((Widget item) {
-          return widget.itemHeight != null
-              ? SizedBox(height: widget.itemHeight, child: item)
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[item],
-                );
-        }).toList(),
-      );
-    }
     final brightness = MacosTheme.brightnessOf(context);
     final borderColor = brightness.resolve(
       Colors.black.withOpacity(0.12),
@@ -1269,7 +1183,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            innerItemsWidget,
+            widget.hint,
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: SizedBox(
