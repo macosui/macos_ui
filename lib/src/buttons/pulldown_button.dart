@@ -9,13 +9,14 @@ import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-//TODO: Separators or symbols?
+//TODO: Separators?
+//TODO: Image as hint
 //TODO: MacosPopupButton remove Orientation-related code in build functions
 //TODO: MacosPopupButton kBorderRadius: 5.0
 //TODO: MacosPopupButton refactor menupainter borders and shadow
 //TODO: MacosPopupButton change button shadow colors and border width
 //TODO: MacosPopupButton refactor constants
-//TODO: Handle disabled state (disabledHint)
+//TODO: MacosPopupButton refactor disabled colors
 //TODO: placement behavior and screen over draw (https://github.com/flutter/flutter/issues/30701)
 
 const Duration _kMenuDuration = Duration(milliseconds: 300);
@@ -955,7 +956,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       );
     } else {
       if (widget.iconDisabledColor != null) return widget.iconDisabledColor!;
-      return CupertinoColors.quaternaryLabel;
+      return MacosColors.transparent;
     }
   }
 
@@ -977,11 +978,26 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       const Color(0xffc3c4c9),
       const Color(0xff222222),
     );
+    final textColor = _enabled
+        ? MacosColors.white
+        : brightness.resolve(
+            MacosColors.disabledControlTextColor,
+            MacosColors.disabledControlTextColor.darkColor,
+          );
+    final backgroundColor = _isMenuOpen
+        ? MacosTheme.of(context)
+            .macosPulldownButtonTheme
+            .backgroundColor!
+            .withOpacity(0.4)
+        : _enabled
+            ? MacosTheme.of(context).macosPulldownButtonTheme.backgroundColor
+            : brightness.resolve(
+                const Color(0xfff1f2f3),
+                const Color(0xff3f4046),
+              );
 
     Widget result = DefaultTextStyle(
-      style: _enabled
-          ? _textStyle!
-          : _textStyle!.copyWith(color: MacosColors.disabledControlTextColor),
+      style: _enabled ? _textStyle! : _textStyle!.copyWith(color: textColor),
       child: Container(
         decoration: _showHighlight
             ? const BoxDecoration(
@@ -998,14 +1014,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
                   ),
                 ],
                 border: Border.all(width: 0.5, color: borderColor),
-                color: _isMenuOpen
-                    ? MacosTheme.of(context)
-                        .macosPulldownButtonTheme
-                        .backgroundColor!
-                        .withOpacity(0.4)
-                    : MacosTheme.of(context)
-                        .macosPulldownButtonTheme
-                        .backgroundColor,
+                color: backgroundColor,
                 borderRadius: _kBorderRadius,
               ),
         padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
@@ -1014,7 +1023,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            widget.hint,
+            _enabled ? widget.hint : widget.disabledHint ?? widget.hint,
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: SizedBox(
@@ -1022,7 +1031,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
                 width: _kPulldownButtonHeight - 4.0,
                 child: CustomPaint(
                   painter: _DownCaretPainter(
-                    color: MacosColors.white,
+                    color: textColor,
                     backgroundColor: _iconColor ?? MacosColors.appleBlue,
                   ),
                 ),
@@ -1078,13 +1087,14 @@ class _DownCaretPainter extends CustomPainter {
     /// Draw carets
     final p1 = Offset(hPadding, size.height / 2 - 1.0);
     final p2 = Offset(size.width / 2, size.height / 2 + 2.0);
-    final p3 = Offset(size.width - hPadding, size.height / 2 - 1.0);
+    final p3 = Offset(size.width / 2 + 1.0, size.height / 2 + 1.0);
+    final p4 = Offset(size.width - hPadding, size.height / 2 - 1.0);
     final paint = Paint()
       ..color = color
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 1.75;
     canvas.drawLine(p1, p2, paint);
-    canvas.drawLine(p2, p3, paint);
+    canvas.drawLine(p3, p4, paint);
   }
 
   @override
