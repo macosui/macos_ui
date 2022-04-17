@@ -8,20 +8,17 @@ import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-//TODO: Always show below the button
-//TODO: List commands that can be selected to do an action
-//TODO: Command labels should use title-case
-//TODO: Optional title property (string or icon) that is always shown inside the button
-//TODO: If title==null, behave like a pop-up button
 //TODO: Separators or symbols?
 //TODO: MacosPopupButton remove Orientation-related code in build functions
 //TODO: MacosPopupButton kBorderRadius: 5.0
 //TODO: MacosPopupButton refactor menupainter borders and shadow
 //TODO: Handle disabled state (disabledHint)
-//TODO: Move menu a bit to the right
+//TODO: dark theme borders
+//TODO: on click make button grey
+//TODO: placement behavior and screen over draw
 
 const Duration _kMacosPulldownMenuDuration = Duration(milliseconds: 300);
-const Offset _kPulldownRouteOffset = Offset(-8.0, 3.5);
+const Offset _kPulldownRouteOffset = Offset(-8.0, 4.5);
 const double _kMenuItemHeight = 20.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
@@ -210,14 +207,22 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
           color: pulldownColor,
           boxShadow: [
             BoxShadow(
-              color: CupertinoColors.systemGrey.withOpacity(0.25),
+              color: brightness
+                  .resolve(
+                    CupertinoColors.systemGrey.color,
+                    CupertinoColors.black,
+                  )
+                  .withOpacity(0.25),
               offset: const Offset(0, 4),
               spreadRadius: 4.0,
               blurRadius: 8.0,
             ),
           ],
           border: Border.all(
-            color: CupertinoColors.systemGrey3,
+            color: brightness.resolve(
+              CupertinoColors.systemGrey3.color,
+              CupertinoColors.systemGrey3.darkColor,
+            ),
           ),
           borderRadius: _kBorderRadius,
         ),
@@ -247,10 +252,7 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                              vertical: 4.0,
-                            ),
+                            padding: const EdgeInsets.all(5.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -952,6 +954,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   bool _hasPrimaryFocus = false;
   late Map<Type, Action<Intent>> _actionMap;
   late FocusHighlightMode _focusHighlightMode;
+  bool _isMenuOpen = false;
 
   // Only used if needed to create _internalNode.
   FocusNode _createFocusNode() {
@@ -990,6 +993,9 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   }
 
   void _removeMacosPulldownRoute() {
+    setState(() {
+      _isMenuOpen = false;
+    });
     _pulldownRoute?._dismiss();
     _pulldownRoute = null;
   }
@@ -1052,6 +1058,10 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
           },
         ),
     ];
+
+    setState(() {
+      _isMenuOpen = true;
+    });
 
     final NavigatorState navigator = Navigator.of(context);
     assert(_pulldownRoute == null);
@@ -1134,9 +1144,14 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
                     spreadRadius: 0,
                   ),
                 ],
-                color: MacosTheme.of(context)
-                    .macosPulldownButtonTheme
-                    .backgroundColor,
+                color: _isMenuOpen
+                    ? MacosTheme.of(context)
+                        .macosPulldownButtonTheme
+                        .backgroundColor!
+                        .withOpacity(0.4)
+                    : MacosTheme.of(context)
+                        .macosPulldownButtonTheme
+                        .backgroundColor,
                 border: Border.all(
                   width: 1,
                   color: borderColor,
