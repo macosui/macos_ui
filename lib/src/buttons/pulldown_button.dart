@@ -12,6 +12,7 @@ import 'package:macos_ui/src/library.dart';
 //TODO: MacosPopupButton remove Orientation-related code in build functions
 //TODO: MacosPopupButton kBorderRadius: 5.0
 //TODO: MacosPopupButton refactor menupainter borders and shadow
+//TODO: MacosPopupButton change button shadow colors and border width
 //TODO: Handle disabled state (disabledHint)
 //TODO: dark theme borders
 //TODO: on click make button grey
@@ -1121,8 +1122,8 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
     final borderColor = brightness.resolve(
-      Colors.black.withOpacity(0.12),
-      Colors.black.withOpacity(0.10),
+      Color(0xffc3c4c9),
+      Color(0xff222222),
     );
 
     Widget result = DefaultTextStyle(
@@ -1139,11 +1140,12 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
                 boxShadow: [
                   BoxShadow(
                     color: borderColor,
-                    offset: const Offset(0, 1),
-                    blurRadius: 0,
+                    offset: const Offset(0, .5),
+                    blurRadius: 0.2,
                     spreadRadius: 0,
                   ),
                 ],
+                border: Border.all(width: 0.5, color: borderColor),
                 color: _isMenuOpen
                     ? MacosTheme.of(context)
                         .macosPulldownButtonTheme
@@ -1152,10 +1154,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
                     : MacosTheme.of(context)
                         .macosPulldownButtonTheme
                         .backgroundColor,
-                border: Border.all(
-                  width: 1,
-                  color: borderColor,
-                ),
                 borderRadius: _kBorderRadius,
               ),
         padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
