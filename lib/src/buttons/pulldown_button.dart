@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,13 @@ import 'package:macos_ui/src/library.dart';
 //TODO: If title==null, behave like a pop-up button
 //TODO: Separators or symbols?
 //TODO: MacosPopupButton remove Orientation-related code in build functions
-//TODO: MacosPopupButton borderRadius: 5.0
+//TODO: MacosPopupButton kBorderRadius: 5.0
+//TODO: MacosPopupButton refactor menupainter borders and shadow
 //TODO: Handle disabled state (disabledHint)
+//TODO: Move menu a bit to the right
 
 const Duration _kMacosPulldownMenuDuration = Duration(milliseconds: 300);
-const Offset _kPulldownRouteOffset = Offset(-10.0, 5.0);
+const Offset _kPulldownRouteOffset = Offset(-8.0, 3.5);
 const double _kMenuItemHeight = 20.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
@@ -26,56 +29,6 @@ const Radius _kSideRadius = Radius.circular(5.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(_kSideRadius);
 const double _kPulldownButtonHeight = 20.0;
 const double _kPulldownMenuCaretsOffset = 2.0;
-
-class _MacosPulldownMenuPainter extends CustomPainter {
-  _MacosPulldownMenuPainter({
-    this.color,
-    this.borderColor,
-    this.elevation,
-    this.borderRadius,
-  }) : _painter = BoxDecoration(
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.20),
-              offset: const Offset(0, 2),
-              spreadRadius: 2.0,
-              blurRadius: 6.0,
-            ),
-          ],
-          border: Border.all(
-            color: borderColor!,
-          ),
-          borderRadius: borderRadius ?? _kBorderRadius,
-        ).createBoxPainter();
-
-  final Color? color;
-  final Color? borderColor;
-  final int? elevation;
-  final BorderRadius? borderRadius;
-  final BoxPainter _painter;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Add 2.0 pixels when painting to take into account when the up/down carets
-    // are shown.
-    final Rect rect = Rect.fromLTRB(
-      0.0,
-      -_kPulldownMenuCaretsOffset,
-      size.width,
-      size.height + _kPulldownMenuCaretsOffset,
-    );
-
-    _painter.paint(canvas, rect.topLeft, ImageConfiguration(size: rect.size));
-  }
-
-  @override
-  bool shouldRepaint(_MacosPulldownMenuPainter oldPainter) {
-    return oldPainter.color != color ||
-        oldPainter.elevation != elevation ||
-        oldPainter.borderRadius != borderRadius;
-  }
-}
 
 // The widget that is the button wrapping the menu items.
 class _MacosPulldownMenuItemButton<T> extends StatefulWidget {
@@ -159,7 +112,7 @@ class _MacosPulldownMenuItemButtonState<T>
               decoration: BoxDecoration(
                 color: _isHovered
                     ? theme.macosPulldownButtonTheme.highlightColor
-                    : theme.macosPulldownButtonTheme.pulldownColor,
+                    : Colors.transparent,
                 borderRadius: _kBorderRadius,
               ),
               child: DefaultTextStyle(
@@ -252,14 +205,21 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
 
     return FadeTransition(
       opacity: _fadeOpacity,
-      child: CustomPaint(
-        painter: _MacosPulldownMenuPainter(
+      child: Container(
+        decoration: BoxDecoration(
           color: pulldownColor,
-          borderColor: brightness.resolve(
-            CupertinoColors.systemGrey3.color,
-            Colors.white.withOpacity(0.15),
+          boxShadow: [
+            BoxShadow(
+              color: CupertinoColors.systemGrey.withOpacity(0.25),
+              offset: const Offset(0, 4),
+              spreadRadius: 4.0,
+              blurRadius: 8.0,
+            ),
+          ],
+          border: Border.all(
+            color: CupertinoColors.systemGrey3,
           ),
-          elevation: route.elevation,
+          borderRadius: _kBorderRadius,
         ),
         child: Semantics(
           scopesRoute: true,
@@ -282,15 +242,21 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
                   alignment: Alignment.center,
                   children: [
                     IntrinsicWidth(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 4.0,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: children,
+                      child: ClipRRect(
+                        borderRadius: _kBorderRadius,
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                              vertical: 4.0,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: children,
+                            ),
+                          ),
                         ),
                       ),
                     ),
