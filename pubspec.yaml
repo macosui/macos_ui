@@ -17,7 +17,3 @@ dev_dependencies:
   mocktail: ^0.3.0
 
 flutter:
-  fonts:
-    - family: SanFranciscoPro
-      fonts:
-        - asset: fonts/SFProTTF/SFProText-Regular.ttf
