@@ -1,4 +1,5 @@
 import 'package:macos_ui/macos_ui.dart';
+// ignore: implementation_imports
 import 'package:macos_ui/src/library.dart';
 
 class IndicatorsPage extends StatefulWidget {

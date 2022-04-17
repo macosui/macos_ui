@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -95,6 +94,7 @@ class SidebarItems extends StatelessWidget {
     this.selectedColor,
     this.unselectedColor,
     this.shape,
+    this.cursor = SystemMouseCursors.basic,
   })  : assert(currentIndex >= 0),
         super(key: key);
 
@@ -113,7 +113,7 @@ class SidebarItems extends StatelessWidget {
   /// controller is created.
   final ScrollController? scrollController;
 
-  /// The color to paint the item iwhen it's selected.
+  /// The color to paint the item when it's selected.
   ///
   /// If null, [MacosThemeData.primaryColor] is used.
   final Color? selectedColor;
@@ -124,9 +124,14 @@ class SidebarItems extends StatelessWidget {
   final Color? unselectedColor;
 
   /// The [shape] property specifies the outline (border) of the
-  /// decoration. The shape must not be null. It's used alonside
+  /// decoration. The shape must not be null. It's used alongside
   /// [selectedColor].
   final ShapeBorder? shape;
+
+  /// Specifies the kind of cursor to use for all sidebar items.
+  ///
+  /// Defaults to [SystemMouseCursors.basic].
+  final MouseCursor? cursor;
 
   List<SidebarItem> get _allItems {
     List<SidebarItem> result = [];
@@ -159,18 +164,24 @@ class SidebarItems extends StatelessWidget {
           children: List.generate(items.length, (index) {
             final item = items[index];
             if (item.disclosureItems != null) {
-              return _DisclosureSidebarItem(
-                item: item,
-                selectedItem: _allItems[currentIndex],
-                onChanged: (item) {
-                  onChanged(_allItems.indexOf(item));
-                },
+              return MouseRegion(
+                cursor: cursor!,
+                child: _DisclosureSidebarItem(
+                  item: item,
+                  selectedItem: _allItems[currentIndex],
+                  onChanged: (item) {
+                    onChanged(_allItems.indexOf(item));
+                  },
+                ),
               );
             }
-            return _SidebarItem(
-              item: item,
-              selected: _allItems[currentIndex] == item,
-              onClick: () => onChanged(_allItems.indexOf(item)),
+            return MouseRegion(
+              cursor: cursor!,
+              child: _SidebarItem(
+                item: item,
+                selected: _allItems[currentIndex] == item,
+                onClick: () => onChanged(_allItems.indexOf(item)),
+              ),
             );
           }),
         ),
@@ -274,7 +285,7 @@ class _SidebarItem extends StatelessWidget {
           focusNode: item.focusNode,
           descendantsAreFocusable: false,
           enabled: onClick != null,
-          mouseCursor: SystemMouseCursors.basic,
+          //mouseCursor: SystemMouseCursors.basic,
           actions: _actionMap,
           child: Container(
             width: 134.0 + theme.visualDensity.horizontal,
@@ -291,8 +302,8 @@ class _SidebarItem extends StatelessWidget {
               if (hasLeading)
                 Padding(
                   padding: EdgeInsets.only(right: spacing),
-                  child: IconTheme.merge(
-                    data: IconThemeData(
+                  child: MacosIconTheme.merge(
+                    data: MacosIconThemeData(
                       color: selected
                           ? MacosColors.white
                           : CupertinoColors.systemBlue,
