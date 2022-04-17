@@ -1,3 +1,6 @@
+## [0.12.3+1]
+* Fix `padding` on `MacosAlertDialog` when `supress` is null [#188](https://github.com/GroovinChip/macos_ui/issues/188)
+
 ## [0.12.3]
 * Remove `MacosScrollbar` from `ContentArea` widget (fixes [#170](https://github.com/GroovinChip/macos_ui/issues/170))
 * Remove useless bundled fonts (fixes [#187](https://github.com/GroovinChip/macos_ui/issues/187))
