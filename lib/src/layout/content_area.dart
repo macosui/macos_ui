@@ -37,10 +37,7 @@ class ContentArea extends StatelessWidget {
       child: SafeArea(
         left: false,
         right: false,
-        child: MacosScrollbar(
-          controller: _scrollController,
-          child: builder!(context, _scrollController),
-        ),
+        child: builder!(context, _scrollController),
       ),
     );
   }
