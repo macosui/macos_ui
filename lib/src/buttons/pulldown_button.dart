@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'dart:ui';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,20 +14,17 @@ import 'package:macos_ui/src/library.dart';
 //TODO: MacosPopupButton kBorderRadius: 5.0
 //TODO: MacosPopupButton refactor menupainter borders and shadow
 //TODO: MacosPopupButton change button shadow colors and border width
+//TODO: MacosPopupButton refactor constants
 //TODO: Handle disabled state (disabledHint)
-//TODO: dark theme borders
-//TODO: on click make button grey
-//TODO: placement behavior and screen over draw
+//TODO: placement behavior and screen over draw (https://github.com/flutter/flutter/issues/30701)
 
-const Duration _kMacosPulldownMenuDuration = Duration(milliseconds: 300);
-const Offset _kPulldownRouteOffset = Offset(-8.0, 4.5);
+const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
-const Radius _kSideRadius = Radius.circular(5.0);
-const BorderRadius _kBorderRadius = BorderRadius.all(_kSideRadius);
+const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kPulldownButtonHeight = 20.0;
-const double _kPulldownMenuCaretsOffset = 2.0;
+const double _kMenuLeftOffset = 8.0;
 
 // The widget that is the button wrapping the menu items.
 class _MacosPulldownMenuItemButton<T> extends StatefulWidget {
@@ -142,8 +140,6 @@ class _MacosPulldownMenu<T> extends StatefulWidget {
     required this.buttonRect,
     required this.constraints,
     this.pulldownColor,
-    required this.hasTopItemsNotShown,
-    required this.hasBottomItemsNotShown,
   }) : super(key: key);
 
   final _MacosPulldownRoute<T> route;
@@ -151,8 +147,6 @@ class _MacosPulldownMenu<T> extends StatefulWidget {
   final Rect buttonRect;
   final BoxConstraints constraints;
   final Color? pulldownColor;
-  final bool hasTopItemsNotShown;
-  final bool hasBottomItemsNotShown;
 
   @override
   _MacosPulldownMenuState<T> createState() => _MacosPulldownMenuState<T>();
@@ -160,8 +154,6 @@ class _MacosPulldownMenu<T> extends StatefulWidget {
 
 class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
   late CurvedAnimation _fadeOpacity;
-  late bool _showBottomCaret;
-  late bool _showTopCaret;
 
   @override
   void initState() {
@@ -175,8 +167,6 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
       curve: const Interval(0.0, 0.25),
       reverseCurve: const Interval(0.75, 1.0),
     );
-    _showBottomCaret = widget.hasBottomItemsNotShown;
-    _showTopCaret = widget.hasTopItemsNotShown;
   }
 
   @override
@@ -198,8 +188,6 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
           MacosTheme.of(context).macosPulldownButtonTheme.pulldownColor,
       context,
     );
-    final caretColor =
-        brightness.resolve(CupertinoColors.white, CupertinoColors.black);
 
     return FadeTransition(
       opacity: _fadeOpacity,
@@ -231,97 +219,19 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
           scopesRoute: true,
           namesRoute: true,
           explicitChildNodes: true,
-          child: ScrollConfiguration(
-            // MacosPulldown menus show an up or down caret arrow when items
-            // are not visible within the available height.
-            // No scrollbars are shown.
-            behavior: ScrollConfiguration.of(context).copyWith(
-              scrollbars: false,
-              overscroll: false,
-              physics: const ClampingScrollPhysics(),
-              platform: TargetPlatform.macOS,
-            ),
-            child: PrimaryScrollController(
-              controller: widget.route.scrollController!,
-              child: NotificationListener(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    IntrinsicWidth(
-                      child: ClipRRect(
-                        borderRadius: _kBorderRadius,
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: children,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    _showTopCaret
-                        ? Positioned(
-                            top: 0,
-                            child: Container(
-                              width: widget.buttonRect.width -
-                                  _kPulldownMenuCaretsOffset,
-                              height: widget.buttonRect.height,
-                              decoration: BoxDecoration(
-                                color: pulldownColor,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: _kSideRadius,
-                                  topRight: _kSideRadius,
-                                ),
-                              ),
-                              child: Icon(
-                                CupertinoIcons.chevron_up,
-                                color: caretColor,
-                                size: 14.0,
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                    _showBottomCaret
-                        ? Positioned(
-                            bottom: 0,
-                            child: Container(
-                              width: widget.buttonRect.width -
-                                  _kPulldownMenuCaretsOffset,
-                              height: widget.buttonRect.height,
-                              decoration: BoxDecoration(
-                                color: pulldownColor,
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: _kSideRadius,
-                                  bottomRight: _kSideRadius,
-                                ),
-                              ),
-                              child: Icon(
-                                CupertinoIcons.chevron_down,
-                                color: caretColor,
-                                size: 14.0,
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  ],
+          child: IntrinsicWidth(
+            child: ClipRRect(
+              borderRadius: _kBorderRadius,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: children,
+                  ),
                 ),
-                onNotification: (t) {
-                  if (t is ScrollUpdateNotification) {
-                    setState(() {
-                      _showTopCaret =
-                          widget.route.scrollController!.position.extentBefore >
-                              widget.buttonRect.height;
-                      _showBottomCaret =
-                          widget.route.scrollController!.position.extentAfter >
-                              widget.buttonRect.height;
-                    });
-                  }
-                  return true;
-                },
               ),
             ),
           ),
@@ -376,17 +286,16 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
     }());
     assert(textDirection != null);
     final double left;
-    // TODO: standardize
     switch (textDirection!) {
       case TextDirection.rtl:
         left = buttonRect.right.clamp(0.0, size.width) - childSize.width;
         break;
       case TextDirection.ltr:
-        left = buttonRect.left + 14;
+        left = buttonRect.left;
         break;
     }
 
-    return Offset(left, menuLimits.top - 4.0);
+    return Offset(left + _kMenuLeftOffset, menuLimits.top);
   }
 
   @override
@@ -401,14 +310,10 @@ class _MenuLimits {
     this.top,
     this.bottom,
     this.height,
-    this.hasTopItemsNotShown,
-    this.hasBottomItemsNotShown,
   );
   final double top;
   final double bottom;
   final double height;
-  final bool hasTopItemsNotShown;
-  final bool hasBottomItemsNotShown;
 }
 
 class _MacosPulldownRoute<T> extends PopupRoute {
@@ -447,7 +352,7 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   ScrollController? scrollController;
 
   @override
-  Duration get transitionDuration => _kMacosPulldownMenuDuration;
+  Duration get transitionDuration => _kMenuDuration;
 
   @override
   bool get barrierDismissible => true;
@@ -487,10 +392,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     }
   }
 
-  // Returns the vertical extent of the menu and the initial scrollOffset
-  // for the ListView that contains the menu items. The vertical center of the
-  // selected item is aligned with the button's vertical center, as far as
-  // that's possible given availableHeight.
   _MenuLimits getMenuLimits(
     Rect buttonRect,
     double availableHeight,
@@ -499,6 +400,7 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     if (menuMaxHeight != null) {
       computedMaxHeight = math.min(computedMaxHeight, menuMaxHeight!);
     }
+
     final double buttonTop = buttonRect.top;
     final double buttonBottom = math.min(buttonRect.bottom, availableHeight);
 
@@ -506,7 +408,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     // bottom may be less than [_kMenuItemHeight] from the edge of the screen.
     // In this case, we want to change the menu limits to align with the top
     // or bottom edge of the button.
-    final double topLimit = math.min(_kMenuItemHeight, buttonTop);
     final double bottomLimit =
         math.max(availableHeight - _kMenuItemHeight, buttonBottom);
 
@@ -521,39 +422,20 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     final double menuHeight = math.min(computedMaxHeight, preferredMenuHeight);
     double menuBottom = menuTop + menuHeight;
 
-    // If the computed top or bottom of the menu are outside of the range
-    // specified, we need to bring them into range. If the item height is larger
-    // than the button height and the button is at the very bottom or top of the
-    // screen, the menu will be aligned with the bottom or top of the button
-    // respectively.
-    if (menuTop < topLimit) {
-      menuTop = math.min(buttonTop, topLimit);
-      menuBottom = menuTop + menuHeight;
-    }
-
     if (menuBottom > bottomLimit) {
-      menuBottom = math.max(buttonBottom, bottomLimit);
-      menuTop = menuBottom - menuHeight;
+      // Move the menu above the button and add some margin.
+      menuBottom = buttonTop - 5.0;
+      menuTop = buttonTop - menuHeight - 5.0;
+    } else {
+      menuBottom += 1.0;
+      menuTop += 1.0;
     }
-
-    // if (menuBottom - itemHeights[selectedIndex] / 2.0 <
-    //     buttonBottom - buttonRect.height / 2.0) {
-    //   menuBottom = buttonBottom -
-    //       buttonRect.height / 2.0 +
-    //       itemHeights[selectedIndex] / 2.0;
-    //   menuTop = menuBottom - menuHeight;
-    // }
-
-    bool hasTopItemsNotShown = preferredMenuHeight > computedMaxHeight;
-    bool hasBottomItemsNotShown = preferredMenuHeight > computedMaxHeight;
 
     assert((menuBottom - menuTop - menuHeight).abs() < precisionErrorTolerance);
     return _MenuLimits(
       menuTop,
       menuBottom,
       menuHeight,
-      hasTopItemsNotShown,
-      hasBottomItemsNotShown,
     );
   }
 }
@@ -605,8 +487,6 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
       buttonRect: buttonRect,
       constraints: constraints,
       pulldownColor: pulldownColor,
-      hasBottomItemsNotShown: menuLimits.hasBottomItemsNotShown,
-      hasTopItemsNotShown: menuLimits.hasTopItemsNotShown,
     );
 
     return MediaQuery.removePadding(
@@ -1068,7 +948,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     assert(_pulldownRoute == null);
     final RenderBox itemBox = context.findRenderObject()! as RenderBox;
     final Rect itemRect = itemBox.localToGlobal(
-          _kPulldownRouteOffset,
+          Offset.zero,
           ancestor: navigator.context.findRenderObject(),
         ) &
         itemBox.size;
