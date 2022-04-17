@@ -21,8 +21,9 @@ import 'package:macos_ui/src/library.dart';
 
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
+const double _kMenuDividerHeight = 10.0;
 const double _kMinInteractiveDimension = 24.0;
-const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
+const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 5.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kPulldownButtonHeight = 20.0;
 const double _kMenuLeftOffset = 8.0;
@@ -66,79 +67,83 @@ class _MacosPulldownMenuItemButtonState<T>
   }
 
   void _handleOnTap() {
-    final MacosPulldownMenuItem pulldownMenuItem =
+    final MacosPulldownMenuEntry menuEntity =
         widget.route.items[widget.itemIndex].item!;
-
-    pulldownMenuItem.onTap?.call();
-
-    Navigator.pop(context);
+    if (menuEntity is MacosPulldownMenuItem) {
+      menuEntity.onTap?.call();
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
-    final MacosPulldownMenuItem pulldownMenuItem =
+    final MacosPulldownMenuEntry menuEntity =
         widget.route.items[widget.itemIndex].item!;
-    Widget child = Container(
-      padding: widget.padding,
-      height: widget.route.itemHeight,
-      child: widget.route.items[widget.itemIndex],
-    );
-    if (pulldownMenuItem.enabled) {
-      child = MouseRegion(
-        cursor: SystemMouseCursors.basic,
-        onEnter: (_) {
-          setState(() => _isHovered = true);
-        },
-        onExit: (_) {
-          setState(() => _isHovered = false);
-        },
-        child: GestureDetector(
-          onTap: _handleOnTap,
-          child: Focus(
-            onKey: (FocusNode node, RawKeyEvent event) {
-              if (event.logicalKey == LogicalKeyboardKey.enter) {
-                _handleOnTap();
-                return KeyEventResult.handled;
-              }
-              return KeyEventResult.ignored;
-            },
-            onFocusChange: _handleFocusChange,
-            child: Container(
-              decoration: BoxDecoration(
-                color: _isHovered
-                    ? theme.macosPulldownButtonTheme.highlightColor
-                    : Colors.transparent,
-                borderRadius: _kBorderRadius,
-              ),
-              child: DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 13.0,
+    if (menuEntity is MacosPulldownMenuItem) {
+      Widget child = Container(
+        padding: widget.padding,
+        height: widget.route.itemHeight,
+        child: widget.route.items[widget.itemIndex],
+      );
+      if (menuEntity.enabled) {
+        child = MouseRegion(
+          cursor: SystemMouseCursors.basic,
+          onEnter: (_) {
+            setState(() => _isHovered = true);
+          },
+          onExit: (_) {
+            setState(() => _isHovered = false);
+          },
+          child: GestureDetector(
+            onTap: _handleOnTap,
+            child: Focus(
+              onKey: (FocusNode node, RawKeyEvent event) {
+                if (event.logicalKey == LogicalKeyboardKey.enter) {
+                  _handleOnTap();
+                  return KeyEventResult.handled;
+                }
+                return KeyEventResult.ignored;
+              },
+              onFocusChange: _handleFocusChange,
+              child: Container(
+                decoration: BoxDecoration(
                   color: _isHovered
-                      ? MacosColors.white
-                      : brightness.resolve(
-                          MacosColors.black,
-                          MacosColors.white,
-                        ),
+                      ? theme.macosPulldownButtonTheme.highlightColor
+                      : Colors.transparent,
+                  borderRadius: _kBorderRadius,
                 ),
-                child: child,
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 13.0,
+                    color: _isHovered
+                        ? MacosColors.white
+                        : brightness.resolve(
+                            MacosColors.black,
+                            MacosColors.white,
+                          ),
+                  ),
+                  child: child,
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
+      } else {
+        final textColor = MacosTheme.of(context).brightness.resolve(
+              MacosColors.disabledControlTextColor,
+              MacosColors.disabledControlTextColor.darkColor,
+            );
+        child = DefaultTextStyle(
+          style: theme.typography.body.copyWith(color: textColor),
+          child: child,
+        );
+      }
+      return child;
     } else {
-      final textColor = MacosTheme.of(context).brightness.resolve(
-            MacosColors.disabledControlTextColor,
-            MacosColors.disabledControlTextColor.darkColor,
-          );
-      child = DefaultTextStyle(
-        style: theme.typography.body.copyWith(color: textColor),
-        child: child,
-      );
+      return menuEntity;
     }
-    return child;
   }
 }
 
@@ -517,7 +522,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
 
   final ValueChanged<Size> onLayout;
 
-  final MacosPulldownMenuItem? item;
+  final MacosPulldownMenuEntry? item;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -545,11 +550,44 @@ class _RenderMenuItem extends RenderProxyBox {
   }
 }
 
+abstract class MacosPulldownMenuEntry extends Widget {
+  const MacosPulldownMenuEntry({Key? key}) : super(key: key);
+
+  double get itemHeight;
+}
+
+class MacosPulldownMenuDivider extends StatelessWidget
+    implements MacosPulldownMenuEntry {
+  const MacosPulldownMenuDivider({Key? key}) : super(key: key);
+
+  @override
+  double get itemHeight => _kMenuDividerHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: _kMenuDividerHeight,
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          color: MacosTheme.of(context).brightness.resolve(
+                MacosColors.disabledControlTextColor,
+                MacosColors.disabledControlTextColor.darkColor,
+              ),
+          height: 0.5,
+        ),
+      ),
+    );
+  }
+}
+
 /// An item in a menu created by a [MacosPulldownButton].
 ///
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
-class MacosPulldownMenuItem extends StatelessWidget {
+class MacosPulldownMenuItem extends StatelessWidget
+    implements MacosPulldownMenuEntry {
   /// Creates an item for a macOS-style pulldown menu.
   const MacosPulldownMenuItem({
     Key? key,
@@ -558,6 +596,9 @@ class MacosPulldownMenuItem extends StatelessWidget {
     this.enabled = true,
     this.alignment = AlignmentDirectional.centerStart,
   }) : super(key: key);
+
+  @override
+  double get itemHeight => _kMenuItemHeight;
 
   /// The widget below this widget in the tree.
   ///
@@ -670,7 +711,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// If the [onChanged] callback is null or the list of items is null
   /// then the pulldown button will be disabled, i.e. its arrow will be
   /// displayed in grey and it will not respond to input.
-  final List<MacosPulldownMenuItem>? items;
+  final List<MacosPulldownMenuEntry>? items;
 
   /// A placeholder widget that is displayed by the pulldown button.
   ///
