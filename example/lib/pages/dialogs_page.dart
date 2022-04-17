@@ -1,4 +1,5 @@
 import 'package:macos_ui/macos_ui.dart';
+// ignore: implementation_imports
 import 'package:macos_ui/src/library.dart';
 
 class DialogsPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _DialogsPageState extends State<DialogsPage> {
   Widget build(BuildContext context) {
     return MacosScaffold(
       titleBar: const TitleBar(
-        title: const Text('macOS UI Dialogs & Sheets'),
+        title: Text('macOS UI Dialogs & Sheets'),
       ),
       children: [
         ContentArea(builder: (context, scrollController) {
@@ -217,8 +218,8 @@ class MacosuiSheet extends StatelessWidget {
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const MacosListTile(
+              children: const [
+                MacosListTile(
                   leading: MacosIcon(CupertinoIcons.lightbulb),
                   title: Text(
                     'A robust library of Flutter components for macOS',
@@ -233,15 +234,15 @@ class MacosuiSheet extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const MacosListTile(
+              children: const [
+                MacosListTile(
                   leading: MacosIcon(CupertinoIcons.bolt),
                   title: Text(
                     'Create beautiful macOS applications in minutes',
                     //style: MacosTheme.of(context).typography.headline,
                   ),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
               ],
             ),
             const Spacer(),

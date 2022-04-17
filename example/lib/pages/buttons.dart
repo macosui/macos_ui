@@ -59,12 +59,12 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MacosBackButton(
-                      onPressed: () => print('click'),
+                      onPressed: () => debugPrint('click'),
                       fillColor: Colors.transparent,
                     ),
                     const SizedBox(width: 16.0),
                     MacosBackButton(
-                      onPressed: () => print('click'),
+                      onPressed: () => debugPrint('click'),
                     ),
                   ],
                 ),
