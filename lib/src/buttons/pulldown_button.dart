@@ -19,7 +19,6 @@ import 'package:macos_ui/src/library.dart';
 //TODO: placement behavior and screen over draw (https://github.com/flutter/flutter/issues/30701)
 //TODO: documentation
 //TODO: tests
-//TODO: debugFillProperties
 
 enum PulldownButtonState {
   enabled,
@@ -32,7 +31,7 @@ const double _kMenuItemHeight = 20.0;
 const double _kMenuDividerHeight = 10.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 5.0);
-const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(6.0));
+const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kMenuLeftOffset = 8.0;
 
 // The widget that is the button wrapping the menu items.
@@ -62,15 +61,13 @@ class _MacosPulldownMenuItemButtonState<T>
   bool _isHovered = false;
 
   void _handleFocusChange(bool focused) {
-    if (focused) {
-      setState(() {
+    setState(() {
+      if (focused) {
         _isHovered = true;
-      });
-    } else {
-      setState(() {
+      } else {
         _isHovered = false;
-      });
-    }
+      }
+    });
   }
 
   void _handleOnTap() {
@@ -203,16 +200,12 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
         ),
     ];
     final brightness = MacosTheme.brightnessOf(context);
-    final pulldownColor = MacosDynamicColor.maybeResolve(
-      MacosTheme.of(context).macosPulldownButtonTheme.pulldownColor,
-      context,
-    );
 
     return FadeTransition(
       opacity: _fadeOpacity,
       child: Container(
         decoration: BoxDecoration(
-          color: pulldownColor,
+          color: MacosTheme.of(context).macosPulldownButtonTheme.pulldownColor,
           boxShadow: [
             BoxShadow(
               color: brightness
@@ -678,8 +671,8 @@ class MacosPulldownButton<T> extends StatefulWidget {
   MacosPulldownButton({
     Key? key,
     required this.items,
-    this.hint,
-    this.disabledHint,
+    this.label,
+    this.disabledLabel,
     this.icon,
     this.onTap,
     this.style,
@@ -689,8 +682,8 @@ class MacosPulldownButton<T> extends StatefulWidget {
     this.alignment = AlignmentDirectional.centerStart,
   })  : assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
         assert(
-            (hint != null || icon != null) && !(hint != null && icon != null),
-            "There should be either a hint or an icon argument provided, and not both at at the same time."),
+            (label != null || icon != null) && !(label != null && icon != null),
+            "There should be either a label or an icon argument provided, and not both at at the same time."),
         super(key: key);
 
   /// The list of items the user can select.
@@ -707,13 +700,13 @@ class MacosPulldownButton<T> extends StatefulWidget {
   ///
   /// If [value] is null and the pulldown is disabled and [disabledHint] is null,
   /// this widget is used as the placeholder.
-  final String? hint;
+  final String? label;
 
   /// A preferred placeholder widget that is displayed when the pulldown is disabled.
   ///
   /// If [value] is null, the pulldown is disabled ([items] or [onChanged] is null),
   /// this widget is displayed as a placeholder for the pulldown button's value.
-  final String? disabledHint;
+  final String? disabledLabel;
 
   final IconData? icon;
 
@@ -918,7 +911,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
 
   bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
 
-  bool get _hasIcon => widget.icon != null && widget.hint == null;
+  bool get _hasIcon => widget.icon != null && widget.label == null;
 
   bool get _showHighlight {
     switch (_focusHighlightMode) {
@@ -931,73 +924,63 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final buttonHeight = (widget.icon == null) ? 20.0 : 28.0;
+    final buttonHeight = _hasIcon ? 28.0 : 20.0;
+    final borderRadius = _hasIcon
+        ? const BorderRadius.all(Radius.circular(7.0))
+        : _kBorderRadius;
     final buttonStyles =
         getButtonStyles(_pullDownButtonState, _enabled, _hasIcon, context);
 
-    Widget result = MouseRegion(
-      cursor: SystemMouseCursors.basic,
-      onEnter: (_) {
-        setState(() => _pullDownButtonState = PulldownButtonState.hovered);
-      },
-      onExit: (_) {
-        setState(() {
-          if (_pullDownButtonState == PulldownButtonState.hovered) {
-            _pullDownButtonState = PulldownButtonState.enabled;
-          }
-        });
-      },
-      child: Container(
-        decoration: _showHighlight
-            ? const BoxDecoration(
-                color: MacosColors.findHighlightColor,
-                borderRadius: _kBorderRadius,
-              )
-            : BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: buttonStyles.borderColor,
-                    offset: const Offset(0, .5),
-                    blurRadius: 0.2,
-                    spreadRadius: 0,
-                  ),
-                ],
-                border: Border.all(width: 0.5, color: buttonStyles.borderColor),
-                color: buttonStyles.bgColor,
-                borderRadius: _kBorderRadius,
-              ),
-        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
-        height: buttonHeight,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            _hasIcon
-                ? MacosIcon(widget.icon!, color: buttonStyles.textColor)
-                : _enabled
-                    ? Text(
-                        widget.hint!,
-                        style: TextStyle(color: buttonStyles.textColor),
-                      )
-                    : Text(
-                        widget.disabledHint ?? widget.hint!,
-                        style: TextStyle(color: buttonStyles.textColor),
-                      ),
-            Padding(
-              padding: EdgeInsets.only(left: (widget.icon == null) ? 8.0 : 2.0),
-              child: SizedBox(
-                height: 16.0,
-                width: 16.0,
-                child: CustomPaint(
-                  painter: _DownCaretPainter(
-                    color: buttonStyles.caretColor,
-                    backgroundColor: buttonStyles.caretBgColor,
-                  ),
+    Widget result = Container(
+      decoration: _showHighlight
+          ? BoxDecoration(
+              color: MacosColors.findHighlightColor,
+              borderRadius: borderRadius,
+            )
+          : BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: buttonStyles.borderColor,
+                  offset: const Offset(0, .5),
+                  blurRadius: 0.2,
+                  spreadRadius: 0,
+                ),
+              ],
+              border: Border.all(width: 0.5, color: buttonStyles.borderColor),
+              color: buttonStyles.bgColor,
+              borderRadius: borderRadius,
+            ),
+      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
+      height: buttonHeight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          _hasIcon
+              ? MacosIcon(widget.icon!, color: buttonStyles.textColor)
+              : _enabled
+                  ? Text(
+                      widget.label!,
+                      style: TextStyle(color: buttonStyles.textColor),
+                    )
+                  : Text(
+                      widget.disabledLabel ?? widget.label!,
+                      style: TextStyle(color: buttonStyles.textColor),
+                    ),
+          Padding(
+            padding: EdgeInsets.only(left: _hasIcon ? 2.0 : 8.0),
+            child: SizedBox(
+              height: 16.0,
+              width: 16.0,
+              child: CustomPaint(
+                painter: _DownCaretPainter(
+                  color: buttonStyles.caretColor,
+                  backgroundColor: buttonStyles.caretBgColor,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
 
@@ -1011,6 +994,16 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
           autofocus: widget.autofocus,
           child: MouseRegion(
             cursor: SystemMouseCursors.basic,
+            onEnter: (_) => setState(
+              () => _pullDownButtonState = PulldownButtonState.hovered,
+            ),
+            onExit: (_) {
+              setState(() {
+                if (_pullDownButtonState == PulldownButtonState.hovered) {
+                  _pullDownButtonState = PulldownButtonState.enabled;
+                }
+              });
+            },
             child: GestureDetector(
               onTap: _enabled ? _handleTap : null,
               behavior: HitTestBehavior.opaque,
@@ -1031,7 +1024,6 @@ _ButtonStyles getButtonStyles(
 ) {
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
-  theme.typography.body;
   Color textColor = theme.typography.body.color!;
   Color bgColor = theme.macosPulldownButtonTheme.backgroundColor!;
   Color borderColor = brightness.resolve(
@@ -1043,14 +1035,12 @@ _ButtonStyles getButtonStyles(
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     if (hasIcon) {
-      // disabled with icon
       textColor = caretColor = brightness.resolve(
         const Color.fromRGBO(0, 0, 0, 0.3),
         const Color.fromRGBO(255, 255, 255, 0.3),
       );
       bgColor = borderColor = MacosColors.transparent;
     } else {
-      // disabled with text
       textColor = caretColor = brightness.resolve(
         MacosColors.disabledControlTextColor.color,
         MacosColors.disabledControlTextColor.darkColor,
