@@ -1,31 +1,34 @@
+import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:ui';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-//TODO: Separators?
 //TODO: Image as hint
 //TODO: MacosPopupButton remove Orientation-related code in build functions
 //TODO: MacosPopupButton kBorderRadius: 5.0
 //TODO: MacosPopupButton refactor menupainter borders and shadow
 //TODO: MacosPopupButton change button shadow colors and border width
 //TODO: MacosPopupButton refactor constants
+//TODO: MacosPopupButton remove elevation property
 //TODO: MacosPopupButton refactor disabled colors
 //TODO: placement behavior and screen over draw (https://github.com/flutter/flutter/issues/30701)
+//TODO: documentation
+//TODO: tests
+//TODO: debugFillProperties
 
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
 const double _kMenuDividerHeight = 10.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 5.0);
-const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
-const double _kPulldownButtonHeight = 20.0;
+const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
 const double _kMenuLeftOffset = 8.0;
 
 // The widget that is the button wrapping the menu items.
@@ -238,7 +241,10 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
             child: ClipRRect(
               borderRadius: _kBorderRadius,
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                filter: ImageFilter.blur(
+                  sigmaX: 20.0,
+                  sigmaY: 20.0,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Column(
@@ -269,18 +275,10 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    // The maximum height of a simple menu should be one or more rows less than
-    // the view height. This ensures a tappable area outside of the simple menu
-    // with which to dismiss the menu.
-    double maxHeight = constraints.maxHeight;
-    if (route.menuMaxHeight != null && route.menuMaxHeight! <= maxHeight) {
-      maxHeight = route.menuMaxHeight!;
-    }
-
     return BoxConstraints(
       minWidth: kMinInteractiveDimension,
       maxWidth: constraints.maxWidth,
-      maxHeight: maxHeight,
+      maxHeight: constraints.maxHeight,
     );
   }
 
@@ -342,7 +340,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     this.barrierLabel,
     this.itemHeight,
     this.pulldownColor,
-    this.menuMaxHeight,
   }) : itemHeights = List<double>.filled(
           items.length,
           itemHeight ?? _kMinInteractiveDimension,
@@ -356,7 +353,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   final TextStyle style;
   final double? itemHeight;
   final Color? pulldownColor;
-  final double? menuMaxHeight;
 
   final List<double> itemHeights;
 
@@ -406,9 +402,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     double availableHeight,
   ) {
     double computedMaxHeight = availableHeight - 2.0 * _kMenuItemHeight;
-    if (menuMaxHeight != null) {
-      computedMaxHeight = math.min(computedMaxHeight, menuMaxHeight!);
-    }
 
     final double buttonTop = buttonRect.top;
     final double buttonBottom = math.min(buttonRect.bottom, availableHeight);
@@ -420,7 +413,7 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     final double bottomLimit =
         math.max(availableHeight - _kMenuItemHeight, buttonBottom);
 
-    double menuTop = buttonTop + _kMenuItemHeight;
+    double menuTop = buttonTop + buttonRect.height;
     double preferredMenuHeight = 8.0;
     if (items.isNotEmpty)
       preferredMenuHeight +=
@@ -690,10 +683,10 @@ class MacosPulldownButton<T> extends StatefulWidget {
   MacosPulldownButton({
     Key? key,
     required this.items,
-    required this.hint,
+    this.hint,
     this.disabledHint,
+    this.icon,
     this.onTap,
-    this.elevation = 8,
     this.style,
     this.iconDisabledColor,
     this.iconEnabledColor,
@@ -701,9 +694,11 @@ class MacosPulldownButton<T> extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.pulldownColor,
-    this.menuMaxHeight,
     this.alignment = AlignmentDirectional.centerStart,
   })  : assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
+        assert(
+            (hint != null || icon != null) && !(hint != null && icon != null),
+            "There should be either a hint or an icon argument provided, and not both at at the same time."),
         super(key: key);
 
   /// The list of items the user can select.
@@ -720,13 +715,15 @@ class MacosPulldownButton<T> extends StatefulWidget {
   ///
   /// If [value] is null and the pulldown is disabled and [disabledHint] is null,
   /// this widget is used as the placeholder.
-  final Widget hint;
+  final String? hint;
 
   /// A preferred placeholder widget that is displayed when the pulldown is disabled.
   ///
   /// If [value] is null, the pulldown is disabled ([items] or [onChanged] is null),
   /// this widget is displayed as a placeholder for the pulldown button's value.
-  final Widget? disabledHint;
+  final String? disabledHint;
+
+  final IconData? icon;
 
   /// Called when the pulldown button is tapped.
   ///
@@ -736,19 +733,8 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// The callback will not be invoked if the pulldown button is disabled.
   final VoidCallback? onTap;
 
-  /// The z-coordinate at which to place the menu when open.
-  ///
-  /// The following elevations have defined shadows: 1, 2, 3, 4, 6, 8, 9, 12,
-  /// 16, and 24. See [kElevationToShadow].
-  ///
-  /// Defaults to 8, the appropriate elevation for pulldown buttons.
-  final int elevation;
-
   /// The text style to use for text in the pulldown button and the pulldown
   /// menu that appears when you tap the button.
-  ///
-  /// To use a separate text style for selected item when it's displayed within
-  /// the pulldown button, consider using [selectedItemBuilder].
   ///
   /// Defaults to MacosTheme.of(context).typography.body.
   final TextStyle? style;
@@ -770,12 +756,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   ///
   /// The default value is [_kMinInteractiveDimension], which is also the minimum
   /// height for menu items.
-  ///
-  /// If this value is null and there isn't enough vertical room for the menu,
-  /// then the menu's initial scroll offset may not align the selected item with
-  /// the pulldown button. That's because, in this case, the initial scroll
-  /// offset is computed as if all of the menu item heights were
-  /// [_kMinInteractiveDimension].
   final double? itemHeight;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -789,17 +769,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// If it is not provided, the the appropriate macOS canvas color
   /// will be used.
   final Color? pulldownColor;
-
-  /// The maximum height of the menu.
-  ///
-  /// The maximum height of the menu must be at least one row shorter than
-  /// the height of the app's view. This ensures that a tappable area
-  /// outside of the simple menu is present so the user can dismiss the menu.
-  ///
-  /// If this property is set above the maximum allowable height threshold
-  /// mentioned above, then the menu defaults to being padded at the top
-  /// and bottom of the menu by at one menu item's height.
-  final double? menuMaxHeight;
 
   /// Defines how the hint or the selected item is positioned within the button.
   ///
@@ -816,7 +785,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IntProperty('elevation', elevation));
     properties.add(ColorProperty('iconDisabledColor', iconDisabledColor));
     properties.add(ColorProperty('iconEnabledColor', iconEnabledColor));
     properties.add(DoubleProperty(
@@ -828,7 +796,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
       FlagProperty('hasAutofocus', value: autofocus, ifFalse: 'noAutofocus'),
     );
     properties.add(ColorProperty('pulldownColor', pulldownColor));
-    properties.add(DoubleProperty('menuMaxHeight', menuMaxHeight));
   }
 
   @override
@@ -963,14 +930,12 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       items: menuItems,
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
-      elevation: widget.elevation,
       capturedThemes:
           InheritedTheme.capture(from: context, to: navigator.context),
       style: _textStyle!,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       itemHeight: widget.itemHeight,
       pulldownColor: widget.pulldownColor,
-      menuMaxHeight: widget.menuMaxHeight,
     );
 
     navigator.push(_pulldownRoute!).then<void>((_) {
@@ -979,6 +944,29 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     });
 
     widget.onTap?.call();
+  }
+
+  bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
+
+  Color get _textColor {
+    if (widget.icon == null) {
+      return _enabled
+          ? MacosTheme.of(context).typography.body.color!
+          : MacosTheme.of(context).brightness.resolve(
+                MacosColors.disabledControlTextColor,
+                MacosColors.disabledControlTextColor.darkColor,
+              );
+    } else {
+      return _enabled
+          ? MacosTheme.of(context).brightness.resolve(
+                Color.fromRGBO(0, 0, 0, 0.85),
+                Color.fromRGBO(255, 255, 255, 0.85),
+              )
+          : MacosTheme.of(context).brightness.resolve(
+                MacosColors.disabledControlTextColor,
+                MacosColors.disabledControlTextColor.darkColor,
+              );
+    }
   }
 
   Color? get _iconColor {
@@ -994,7 +982,63 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     }
   }
 
-  bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
+  Color? get _caretBgColor {
+    if (widget.icon == null && _enabled) {
+      return MacosTheme.of(context).macosPulldownButtonTheme.highlightColor;
+    } else {
+      return MacosColors.transparent;
+    }
+  }
+
+  Color get _caretColor {
+    if (widget.icon == null) {
+      return _enabled
+          ? MacosColors.white
+          : MacosTheme.of(context).brightness.resolve(
+                MacosColors.disabledControlTextColor,
+                MacosColors.disabledControlTextColor.darkColor,
+              );
+    } else {
+      return _textColor;
+    }
+  }
+
+  Color? get _backgroundColor {
+    if (widget.icon == null) {
+      return _isMenuOpen
+          ? MacosTheme.of(context)
+              .macosPulldownButtonTheme
+              .backgroundColor!
+              .withOpacity(0.4)
+          : _enabled
+              ? MacosTheme.of(context).macosPulldownButtonTheme.backgroundColor
+              : MacosTheme.of(context).brightness.resolve(
+                    const Color(0xfff1f2f3),
+                    const Color(0xff3f4046),
+                  );
+    } else {
+      return _enabled
+          ? MacosTheme.of(context).brightness.resolve(
+                const Color(0xffe5e5e5),
+                const Color(0xff353535),
+              )
+          : MacosTheme.of(context).brightness.resolve(
+                const Color(0xfff1f2f3),
+                const Color(0xff3f4046),
+              );
+    }
+  }
+
+  Color get _borderColor {
+    if (widget.icon == null) {
+      return MacosTheme.of(context).brightness.resolve(
+            const Color(0xffc3c4c9),
+            const Color(0xff222222),
+          );
+    } else {
+      return MacosColors.transparent;
+    }
+  }
 
   bool get _showHighlight {
     switch (_focusHighlightMode) {
@@ -1005,74 +1049,60 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     }
   }
 
+  Widget get _hintWidget {
+    if (widget.icon == null) {
+      return _enabled
+          ? Text(widget.hint!)
+          : Text(widget.disabledHint ?? widget.hint!);
+    } else {
+      return MacosIcon(widget.icon!, color: _textColor);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final brightness = MacosTheme.brightnessOf(context);
-    final borderColor = brightness.resolve(
-      const Color(0xffc3c4c9),
-      const Color(0xff222222),
-    );
-    final textColor = _enabled
-        ? MacosColors.white
-        : brightness.resolve(
-            MacosColors.disabledControlTextColor,
-            MacosColors.disabledControlTextColor.darkColor,
-          );
-    final backgroundColor = _isMenuOpen
-        ? MacosTheme.of(context)
-            .macosPulldownButtonTheme
-            .backgroundColor!
-            .withOpacity(0.4)
-        : _enabled
-            ? MacosTheme.of(context).macosPulldownButtonTheme.backgroundColor
-            : brightness.resolve(
-                const Color(0xfff1f2f3),
-                const Color(0xff3f4046),
-              );
+    final buttonHeight = (widget.icon == null) ? 20.0 : 28.0;
 
-    Widget result = DefaultTextStyle(
-      style: _enabled ? _textStyle! : _textStyle!.copyWith(color: textColor),
-      child: Container(
-        decoration: _showHighlight
-            ? const BoxDecoration(
-                color: MacosColors.findHighlightColor,
-                borderRadius: _kBorderRadius,
-              )
-            : BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: borderColor,
-                    offset: const Offset(0, .5),
-                    blurRadius: 0.2,
-                    spreadRadius: 0,
-                  ),
-                ],
-                border: Border.all(width: 0.5, color: borderColor),
-                color: backgroundColor,
-                borderRadius: _kBorderRadius,
-              ),
-        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
-        height: _kPulldownButtonHeight,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            _enabled ? widget.hint : widget.disabledHint ?? widget.hint,
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: SizedBox(
-                height: _kPulldownButtonHeight - 4.0,
-                width: _kPulldownButtonHeight - 4.0,
-                child: CustomPaint(
-                  painter: _DownCaretPainter(
-                    color: textColor,
-                    backgroundColor: _iconColor ?? MacosColors.appleBlue,
-                  ),
+    Widget result = Container(
+      decoration: _showHighlight
+          ? const BoxDecoration(
+              color: MacosColors.findHighlightColor,
+              borderRadius: _kBorderRadius,
+            )
+          : BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: _borderColor,
+                  offset: const Offset(0, .5),
+                  blurRadius: 0.2,
+                  spreadRadius: 0,
+                ),
+              ],
+              border: Border.all(width: 0.5, color: _borderColor),
+              color: _backgroundColor,
+              borderRadius: _kBorderRadius,
+            ),
+      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
+      height: buttonHeight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          _hintWidget,
+          Padding(
+            padding: EdgeInsets.only(left: (widget.icon == null) ? 8.0 : 2.0),
+            child: SizedBox(
+              height: 16.0,
+              width: 16.0,
+              child: CustomPaint(
+                painter: _DownCaretPainter(
+                  color: _caretColor,
+                  backgroundColor: _caretBgColor ?? MacosColors.appleBlue,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
 
