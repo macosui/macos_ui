@@ -16,8 +16,8 @@ import 'package:macos_ui/src/library.dart';
 //TODO: MacosPopupButton refactor constants
 //TODO: MacosPopupButton remove elevation property
 //TODO: MacosPopupButton refactor disabled colors
+//TODO: MacosPopupButton backgroundColor documentation in ThemeData
 //TODO: placement behavior and screen over draw (https://github.com/flutter/flutter/issues/30701)
-//TODO: documentation
 //TODO: tests
 
 enum PulldownButtonState {
@@ -30,12 +30,12 @@ const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
 const double _kMenuDividerHeight = 10.0;
 const double _kMinInteractiveDimension = 24.0;
-const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 5.0);
+const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 6.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kMenuLeftOffset = 8.0;
 
 // The widget that is the button wrapping the menu items.
-class _MacosPulldownMenuItemButton<T> extends StatefulWidget {
+class _MacosPulldownMenuItemButton extends StatefulWidget {
   const _MacosPulldownMenuItemButton({
     Key? key,
     this.padding,
@@ -45,19 +45,19 @@ class _MacosPulldownMenuItemButton<T> extends StatefulWidget {
     required this.itemIndex,
   }) : super(key: key);
 
-  final _MacosPulldownRoute<T> route;
+  final _MacosPulldownRoute route;
   final EdgeInsets? padding;
   final Rect buttonRect;
   final BoxConstraints constraints;
   final int itemIndex;
 
   @override
-  _MacosPulldownMenuItemButtonState<T> createState() =>
-      _MacosPulldownMenuItemButtonState<T>();
+  _MacosPulldownMenuItemButtonState createState() =>
+      _MacosPulldownMenuItemButtonState();
 }
 
-class _MacosPulldownMenuItemButtonState<T>
-    extends State<_MacosPulldownMenuItemButton<T>> {
+class _MacosPulldownMenuItemButtonState
+    extends State<_MacosPulldownMenuItemButton> {
   bool _isHovered = false;
 
   void _handleFocusChange(bool focused) {
@@ -81,8 +81,8 @@ class _MacosPulldownMenuItemButtonState<T>
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MacosTheme.brightnessOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
+    final brightness = MacosTheme.brightnessOf(context);
     final MacosPulldownMenuEntry menuEntity =
         widget.route.items[widget.itemIndex].item!;
     if (menuEntity is MacosPulldownMenuItem) {
@@ -135,10 +135,10 @@ class _MacosPulldownMenuItemButtonState<T>
           ),
         );
       } else {
-        final textColor = MacosTheme.of(context).brightness.resolve(
-              MacosColors.disabledControlTextColor,
-              MacosColors.disabledControlTextColor.darkColor,
-            );
+        final textColor = brightness.resolve(
+          MacosColors.disabledControlTextColor,
+          MacosColors.disabledControlTextColor.darkColor,
+        );
         child = DefaultTextStyle(
           style: theme.typography.body.copyWith(color: textColor),
           child: child,
@@ -151,7 +151,7 @@ class _MacosPulldownMenuItemButtonState<T>
   }
 }
 
-class _MacosPulldownMenu<T> extends StatefulWidget {
+class _MacosPulldownMenu extends StatefulWidget {
   const _MacosPulldownMenu({
     Key? key,
     this.padding,
@@ -160,16 +160,16 @@ class _MacosPulldownMenu<T> extends StatefulWidget {
     required this.constraints,
   }) : super(key: key);
 
-  final _MacosPulldownRoute<T> route;
+  final _MacosPulldownRoute route;
   final EdgeInsets? padding;
   final Rect buttonRect;
   final BoxConstraints constraints;
 
   @override
-  _MacosPulldownMenuState<T> createState() => _MacosPulldownMenuState<T>();
+  _MacosPulldownMenuState createState() => _MacosPulldownMenuState();
 }
 
-class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
+class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
   late CurvedAnimation _fadeOpacity;
 
   @override
@@ -188,10 +188,10 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final _MacosPulldownRoute<T> route = widget.route;
+    final _MacosPulldownRoute route = widget.route;
     final List<Widget> children = <Widget>[
       for (int itemIndex = 0; itemIndex < route.items.length; ++itemIndex)
-        _MacosPulldownMenuItemButton<T>(
+        _MacosPulldownMenuItemButton(
           route: widget.route,
           padding: widget.padding,
           buttonRect: widget.buttonRect,
@@ -232,6 +232,7 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
           namesRoute: true,
           explicitChildNodes: true,
           child: IntrinsicWidth(
+            // "Frosted glass" effect for the menu's background.
             child: ClipRRect(
               borderRadius: _kBorderRadius,
               child: BackdropFilter(
@@ -240,7 +241,7 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
                   sigmaY: 20.0,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -256,7 +257,7 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
   }
 }
 
-class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
+class _MacosPulldownMenuRouteLayout extends SingleChildLayoutDelegate {
   _MacosPulldownMenuRouteLayout({
     required this.buttonRect,
     required this.route,
@@ -264,7 +265,7 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   });
 
   final Rect buttonRect;
-  final _MacosPulldownRoute<T> route;
+  final _MacosPulldownRoute route;
   final TextDirection? textDirection;
 
   @override
@@ -301,12 +302,12 @@ class _MacosPulldownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
         left = buttonRect.left;
         break;
     }
-
+    // Move the menu a bit to the right, below the PulldownButton.
     return Offset(left + _kMenuLeftOffset, menuLimits.top);
   }
 
   @override
-  bool shouldRelayout(_MacosPulldownMenuRouteLayout<T> oldDelegate) {
+  bool shouldRelayout(_MacosPulldownMenuRouteLayout oldDelegate) {
     return buttonRect != oldDelegate.buttonRect ||
         textDirection != oldDelegate.textDirection;
   }
@@ -323,12 +324,11 @@ class _MenuLimits {
   final double height;
 }
 
-class _MacosPulldownRoute<T> extends PopupRoute {
+class _MacosPulldownRoute extends PopupRoute {
   _MacosPulldownRoute({
     required this.items,
     required this.padding,
     required this.buttonRect,
-    this.elevation = 8,
     required this.capturedThemes,
     required this.style,
     this.barrierLabel,
@@ -341,7 +341,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   final List<_MenuItem> items;
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
-  final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle style;
   final double? itemHeight;
@@ -368,13 +367,12 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   ) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        return _MacosPulldownRoutePage<T>(
+        return _MacosPulldownRoutePage(
           route: this,
           constraints: constraints,
           items: items,
           padding: padding,
           buttonRect: buttonRect,
-          elevation: elevation,
           capturedThemes: capturedThemes,
           style: style,
         );
@@ -433,7 +431,7 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   }
 }
 
-class _MacosPulldownRoutePage<T> extends StatelessWidget {
+class _MacosPulldownRoutePage extends StatelessWidget {
   const _MacosPulldownRoutePage({
     Key? key,
     required this.route,
@@ -441,17 +439,15 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
     this.items,
     required this.padding,
     required this.buttonRect,
-    this.elevation = 8,
     required this.capturedThemes,
     this.style,
   }) : super(key: key);
 
-  final _MacosPulldownRoute<T> route;
+  final _MacosPulldownRoute route;
   final BoxConstraints constraints;
   final List<_MenuItem>? items;
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
-  final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle? style;
 
@@ -460,7 +456,7 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
     assert(debugCheckHasDirectionality(context));
 
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    final Widget menu = _MacosPulldownMenu<T>(
+    final Widget menu = _MacosPulldownMenu(
       route: route,
       padding: padding.resolve(textDirection),
       buttonRect: buttonRect,
@@ -476,7 +472,7 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return CustomSingleChildLayout(
-            delegate: _MacosPulldownMenuRouteLayout<T>(
+            delegate: _MacosPulldownMenuRouteLayout(
               buttonRect: buttonRect,
               route: route,
               textDirection: textDirection,
@@ -490,10 +486,7 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
 }
 
 // This widget enables _MacosPulldownRoute to look up the sizes of
-// each menu item. These sizes are used to compute the offset of the selected
-// item so that _MacosPulldownRoutePage can align the vertical center of the
-// selected item lines up with the vertical center of the pulldown button,
-// as closely as possible.
+// each menu item.
 class _MenuItem extends SingleChildRenderObjectWidget {
   const _MenuItem({
     Key? key,
@@ -531,14 +524,18 @@ class _RenderMenuItem extends RenderProxyBox {
   }
 }
 
+/// An entry in a menu created by a [MacosPulldownButton]. It can be either a
+/// [MacosPulldownMenuItem] or a [MacosPulldownMenuDivider].
 abstract class MacosPulldownMenuEntry extends Widget {
   const MacosPulldownMenuEntry({Key? key}) : super(key: key);
 
   double get itemHeight;
 }
 
+/// A divider (horizontal line) in a menu created by a [MacosPulldownButton].
 class MacosPulldownMenuDivider extends StatelessWidget
     implements MacosPulldownMenuEntry {
+  /// Creates a divider for a macOS-style pulldown menu.
   const MacosPulldownMenuDivider({Key? key}) : super(key: key);
 
   @override
@@ -548,7 +545,7 @@ class MacosPulldownMenuDivider extends StatelessWidget
   Widget build(BuildContext context) {
     return Container(
       height: _kMenuDividerHeight,
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: _kMenuItemPadding,
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
@@ -563,10 +560,8 @@ class MacosPulldownMenuDivider extends StatelessWidget
   }
 }
 
-/// An item in a menu created by a [MacosPulldownButton].
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
+/// An item in a menu created by a [MacosPulldownButton], typically a [Text]
+/// widget.
 class MacosPulldownMenuItem extends StatelessWidget
     implements MacosPulldownMenuEntry {
   /// Creates an item for a macOS-style pulldown menu.
@@ -581,7 +576,7 @@ class MacosPulldownMenuItem extends StatelessWidget
   @override
   double get itemHeight => _kMenuItemHeight;
 
-  /// The widget below this widget in the tree.
+  /// The widget to use as a menu item.
   ///
   /// Typically a [Text] widget.
   final Widget title;
@@ -597,13 +592,6 @@ class MacosPulldownMenuItem extends StatelessWidget
   /// Defines how the item is positioned within the container.
   ///
   /// This property must not be null. It defaults to [AlignmentDirectional.centerStart].
-  ///
-  /// See also:
-  ///
-  ///  * [Alignment], a class with convenient constants typically used to
-  ///    specify an [AlignmentGeometry].
-  ///  * [AlignmentDirectional], like [Alignment] for specifying alignments
-  ///    relative to text direction.
   final AlignmentGeometry alignment;
 
   @override
@@ -616,58 +604,37 @@ class MacosPulldownMenuItem extends StatelessWidget
   }
 }
 
-/// A macOS-style pop-up button.
+/// A macOS-style pull-down button.
 ///
-/// A pop-up button (often referred to as a pop-up menu) is a type of button
-/// that, when clicked, displays a menu containing a list of mutually exclusive
-/// choices.
-/// A pop-up button includes a double-arrow indicator that alludes to the
-/// direction in which the menu will appear (only vertical is currently
-/// supported).
+/// A pull-down button (often referred to as a pull-down menu) is a type of
+/// pop-up button that, when clicked, displays a menu containing a list of
+/// choices. The menu appears below the button.
 ///
-/// The type `T` is the type of the [value] that each pulldown item represents.
-/// All the entries in a given menu must represent values with consistent types.
-/// Typically, an enum is used. Each [MacosPulldownMenuItem] in [items] must be
-/// specialized with that same type argument.
+/// Use a pull-down button to present a list of commands.
 ///
-/// The [onChanged] callback should update a state variable that defines the
-/// pulldown's value. It should also call [State.setState] to rebuild the
-/// pulldown with the new value.
-///
-/// If the [onChanged] callback is null or the list of [items] is null
-/// then the pulldown button will be disabled, i.e. its arrow will be
-/// displayed in grey and it will not respond to input. A disabled button
-/// will display the [disabledHint] widget if it is non-null. However, if
-/// [disabledHint] is null and [hint] is non-null, the [hint] widget will
-/// instead be displayed.
+/// A pull-down button can either show a [label] or an [icon] to describe the
+/// contents of the button's menu. If you use an icon, make sure it clearly
+/// communicates the button’s purpose.
 ///
 /// See also:
 ///
-///  * [MacosPulldownMenuItem], the class used to represent the [items].
-class MacosPulldownButton<T> extends StatefulWidget {
-  /// Creates a macOS-style pulldown button.
+///  * [MacosPulldownMenuItem], the class used to represent the menu options.
+///  * [MacosPulldownMenuDivider], the class used to represent a horizontal
+///    divider for the menu.
+class MacosPulldownButton extends StatefulWidget {
+  /// Creates a macOS-style pull-down button.
   ///
-  /// The [items] must have distinct values. If [value] isn't null then it
-  /// must be equal to one of the [MacosPulldownMenuItem] values. If [items] or
-  /// [onChanged] is null, the button will be disabled, the up-down caret
+  /// If [items] is null, the button will be disabled, the down caret
   /// icon will be greyed out.
   ///
-  /// If [value] is null and the button is enabled, [hint] will be displayed
-  /// if it is non-null.
+  /// A [label] or an [icon] must be provided, to be displayed as the pull-down
+  /// button's title, but not both at the same time.
   ///
-  /// If [value] is null and the button is disabled, [disabledHint] will be displayed
-  /// if it is non-null. If [disabledHint] is null, then [hint] will be displayed
-  /// if it is non-null.
-  ///
-  /// The [elevation] and [iconSize] arguments must not be null (they both have
-  /// defaults, so do not need to be specified). The boolean [isDense] and
-  /// [isExpanded] arguments must not be null.
+  /// If the button is disabled and [icon] is null, [disabledLabel] will be
+  /// displayed if it is non-null. If [disabledLabel] is null, then [label]
+  /// will be displayed if it is non-null.
   ///
   /// The [autofocus] argument must not be null.
-  ///
-  /// The [pulldownColor] argument specifies the background color of the
-  /// pulldown when it is open. If it is null, the appropriate macOS canvas color
-  /// will be used.
   MacosPulldownButton({
     Key? key,
     required this.items,
@@ -686,39 +653,42 @@ class MacosPulldownButton<T> extends StatefulWidget {
             "There should be either a label or an icon argument provided, and not both at at the same time."),
         super(key: key);
 
-  /// The list of items the user can select.
+  /// The list of menu entries for the pull-down menu.
   ///
-  /// If the [onChanged] callback is null or the list of items is null
-  /// then the pulldown button will be disabled, i.e. its arrow will be
-  /// displayed in grey and it will not respond to input.
+  /// Can be either [MacosPulldownMenuItem]s or [MacosPulldownMenuDivider]s.
+  ///
+  /// If the list of items is null, then the pull-down button will be disabled,
+  /// i.e. it will be displayed in grey and not respond to input.
   final List<MacosPulldownMenuEntry>? items;
 
-  /// A placeholder widget that is displayed by the pulldown button.
+  /// The text to display as title for the pull-down button.
   ///
-  /// If [value] is null and the pulldown is enabled ([items] and [onChanged] are non-null),
-  /// this widget is displayed as a placeholder for the pulldown button's value.
+  /// If this is provided, [icon] should be null.
   ///
-  /// If [value] is null and the pulldown is disabled and [disabledHint] is null,
-  /// this widget is used as the placeholder.
+  /// If the pull-down is disabled and [disabledLabel] is null, then this
+  /// is displayed instead.
   final String? label;
 
-  /// A preferred placeholder widget that is displayed when the pulldown is disabled.
+  /// The text that is displayed when the pull-down is disabled.
   ///
-  /// If [value] is null, the pulldown is disabled ([items] or [onChanged] is null),
-  /// this widget is displayed as a placeholder for the pulldown button's value.
+  /// If the pulldown is disabled ([items] is null), this is displayed as a
+  /// title for the pull-down button.
   final String? disabledLabel;
 
+  /// An icon to use as title for the pull-down button. Makes the pull-down
+  /// button behave and render as an icon-button with a caret.
+  ///
+  /// If this is provided, [label] should be null.
+  ///
+  /// It is recommended to use icons from the CupertinoIcons library for this.
   final IconData? icon;
 
-  /// Called when the pulldown button is tapped.
+  /// Called when the pull-down button is tapped.
   ///
-  /// This is distinct from [onChanged], which is called when the user
-  /// selects an item from the pulldown.
-  ///
-  /// The callback will not be invoked if the pulldown button is disabled.
+  /// The callback will not be invoked if the pull-down button is disabled.
   final VoidCallback? onTap;
 
-  /// The text style to use for text in the pulldown button and the pulldown
+  /// The text style to use for text in the pull-down button and the pull-down
   /// menu that appears when you tap the button.
   ///
   /// Defaults to MacosTheme.of(context).typography.body.
@@ -737,7 +707,7 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
-  /// Defines how the hint or the selected item is positioned within the button.
+  /// Defines how the label is positioned within the button.
   ///
   /// This property must not be null. It defaults to [AlignmentDirectional.centerStart].
   ///
@@ -763,12 +733,12 @@ class MacosPulldownButton<T> extends StatefulWidget {
   }
 
   @override
-  State<MacosPulldownButton<T>> createState() => _MacosPulldownButtonState<T>();
+  State<MacosPulldownButton> createState() => _MacosPulldownButtonState();
 }
 
-class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
+class _MacosPulldownButtonState extends State<MacosPulldownButton>
     with WidgetsBindingObserver {
-  _MacosPulldownRoute<T>? _pulldownRoute;
+  _MacosPulldownRoute? _pulldownRoute;
   FocusNode? _internalNode;
   FocusNode? get focusNode => widget.focusNode ?? _internalNode;
   bool _hasPrimaryFocus = false;
@@ -838,7 +808,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   }
 
   @override
-  void didUpdateWidget(MacosPulldownButton<T> oldWidget) {
+  void didUpdateWidget(MacosPulldownButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       oldWidget.focusNode?.removeListener(_handleFocusChanged);
@@ -890,7 +860,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
           ancestor: navigator.context.findRenderObject(),
         ) &
         itemBox.size;
-    _pulldownRoute = _MacosPulldownRoute<T>(
+    _pulldownRoute = _MacosPulldownRoute(
       items: menuItems,
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
@@ -1016,6 +986,14 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   }
 }
 
+// Pull-down buttons styling can be differentiated according to:
+//
+// pullDownButtonState: a button can be either enabled, hovered, or pressed.
+// enabled: if a button is disabled (greyed out) or not.
+// hasIcon: if it has a label or an icon as its title.
+//
+// We use this utility function to get the appropriate styling, according to the
+// macOS Design Guidelines and the current MacosPulldownButtonTheme.
 _ButtonStyles getButtonStyles(
   PulldownButtonState pullDownButtonState,
   bool enabled,
@@ -1234,13 +1212,13 @@ class MacosPulldownButtonThemeData with Diagnosticable {
 
   /// The default highlight color for [MacosPulldownButton].
   ///
-  /// Sets the color of the caret icons and the color of a [MacosPulldownMenuItem]'s background when the mouse hovers over it.
+  /// Sets the color of the caret icon and the color of a [MacosPulldownMenuItem]'s background when the mouse hovers over it.
   final Color? highlightColor;
 
-  /// The default disabled color for [MacosPulldownButton]
+  /// The default background color for [MacosPulldownButton]
   final Color? backgroundColor;
 
-  /// The default pulldown menu color for [MacosPulldownButton]
+  /// The default pull-down menu color for [MacosPulldownButton]
   final Color? pulldownColor;
 
   MacosPulldownButtonThemeData copyWith({
