@@ -1045,8 +1045,8 @@ _ButtonStyles getButtonStyles(
     if (hasIcon) {
       // disabled with icon
       textColor = caretColor = brightness.resolve(
-        const Color.fromRGBO(0, 0, 0, 0.2),
-        const Color.fromRGBO(255, 255, 255, 0.2),
+        const Color.fromRGBO(0, 0, 0, 0.3),
+        const Color.fromRGBO(255, 255, 255, 0.3),
       );
       bgColor = borderColor = MacosColors.transparent;
     } else {
@@ -1070,15 +1070,15 @@ _ButtonStyles getButtonStyles(
       switch (pullDownButtonState) {
         case PulldownButtonState.enabled:
           textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.5),
-            const Color.fromRGBO(255, 255, 255, 0.55),
+            const Color.fromRGBO(0, 0, 0, 0.7),
+            const Color.fromRGBO(255, 255, 255, 0.7),
           );
           bgColor = MacosColors.transparent;
           break;
         case PulldownButtonState.hovered:
           textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.5),
-            const Color.fromRGBO(255, 255, 255, 0.55),
+            const Color.fromRGBO(0, 0, 0, 0.7),
+            const Color.fromRGBO(255, 255, 255, 0.7),
           );
           bgColor = brightness.resolve(
             const Color(0xfff4f5f5),
@@ -1139,48 +1139,6 @@ class _ButtonStyles {
   Color borderColor;
   Color caretColor;
   Color caretBgColor;
-
-  _ButtonStyles copyWith({
-    Color? textColor,
-    Color? bgColor,
-    Color? borderColor,
-    Color? caretColor,
-    Color? caretBgColor,
-  }) {
-    return _ButtonStyles(
-      textColor: textColor ?? this.textColor,
-      bgColor: bgColor ?? this.bgColor,
-      borderColor: borderColor ?? this.borderColor,
-      caretColor: caretColor ?? this.caretColor,
-      caretBgColor: caretBgColor ?? this.caretBgColor,
-    );
-  }
-
-  @override
-  String toString() {
-    return '_ButtonStyles(textColor: $textColor, bgColor: $bgColor, borderColor: $borderColor, caretColor: $caretColor, caretBgColor: $caretBgColor)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is _ButtonStyles &&
-        other.textColor == textColor &&
-        other.bgColor == bgColor &&
-        other.borderColor == borderColor &&
-        other.caretColor == caretColor &&
-        other.caretBgColor == caretBgColor;
-  }
-
-  @override
-  int get hashCode {
-    return textColor.hashCode ^
-        bgColor.hashCode ^
-        borderColor.hashCode ^
-        caretColor.hashCode ^
-        caretBgColor.hashCode;
-  }
 }
 
 class _DownCaretPainter extends CustomPainter {
