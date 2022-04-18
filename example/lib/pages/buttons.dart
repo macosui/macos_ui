@@ -255,6 +255,11 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       disabledHint: "Disabled",
                       items: [],
                     ),
+                    const SizedBox(width: 20),
+                    MacosPulldownButton(
+                      icon: CupertinoIcons.square_grid_3x2,
+                      items: [],
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:ui';
 
@@ -10,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-//TODO: Image as hint
 //TODO: MacosPopupButton remove Orientation-related code in build functions
 //TODO: MacosPopupButton kBorderRadius: 5.0
 //TODO: MacosPopupButton refactor menupainter borders and shadow
@@ -23,12 +21,18 @@ import 'package:macos_ui/src/library.dart';
 //TODO: tests
 //TODO: debugFillProperties
 
+enum PulldownButtonState {
+  enabled,
+  hovered,
+  pressed,
+}
+
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
 const double _kMenuDividerHeight = 10.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 5.0);
-const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
+const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(6.0));
 const double _kMenuLeftOffset = 8.0;
 
 // The widget that is the button wrapping the menu items.
@@ -157,14 +161,12 @@ class _MacosPulldownMenu<T> extends StatefulWidget {
     required this.route,
     required this.buttonRect,
     required this.constraints,
-    this.pulldownColor,
   }) : super(key: key);
 
   final _MacosPulldownRoute<T> route;
   final EdgeInsets? padding;
   final Rect buttonRect;
   final BoxConstraints constraints;
-  final Color? pulldownColor;
 
   @override
   _MacosPulldownMenuState<T> createState() => _MacosPulldownMenuState<T>();
@@ -202,8 +204,7 @@ class _MacosPulldownMenuState<T> extends State<_MacosPulldownMenu<T>> {
     ];
     final brightness = MacosTheme.brightnessOf(context);
     final pulldownColor = MacosDynamicColor.maybeResolve(
-      widget.pulldownColor ??
-          MacosTheme.of(context).macosPulldownButtonTheme.pulldownColor,
+      MacosTheme.of(context).macosPulldownButtonTheme.pulldownColor,
       context,
     );
 
@@ -339,7 +340,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
     required this.style,
     this.barrierLabel,
     this.itemHeight,
-    this.pulldownColor,
   }) : itemHeights = List<double>.filled(
           items.length,
           itemHeight ?? _kMinInteractiveDimension,
@@ -352,7 +352,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
   final CapturedThemes capturedThemes;
   final TextStyle style;
   final double? itemHeight;
-  final Color? pulldownColor;
 
   final List<double> itemHeights;
 
@@ -385,7 +384,6 @@ class _MacosPulldownRoute<T> extends PopupRoute {
           elevation: elevation,
           capturedThemes: capturedThemes,
           style: style,
-          pulldownColor: pulldownColor,
         );
       },
     );
@@ -453,7 +451,6 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
     this.elevation = 8,
     required this.capturedThemes,
     this.style,
-    required this.pulldownColor,
   }) : super(key: key);
 
   final _MacosPulldownRoute<T> route;
@@ -464,7 +461,6 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
   final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle? style;
-  final Color? pulldownColor;
 
   @override
   Widget build(BuildContext context) {
@@ -476,7 +472,6 @@ class _MacosPulldownRoutePage<T> extends StatelessWidget {
       padding: padding.resolve(textDirection),
       buttonRect: buttonRect,
       constraints: constraints,
-      pulldownColor: pulldownColor,
     );
 
     return MediaQuery.removePadding(
@@ -688,12 +683,9 @@ class MacosPulldownButton<T> extends StatefulWidget {
     this.icon,
     this.onTap,
     this.style,
-    this.iconDisabledColor,
-    this.iconEnabledColor,
     this.itemHeight = _kMinInteractiveDimension,
     this.focusNode,
     this.autofocus = false,
-    this.pulldownColor,
     this.alignment = AlignmentDirectional.centerStart,
   })  : assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
         assert(
@@ -739,18 +731,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   /// Defaults to MacosTheme.of(context).typography.body.
   final TextStyle? style;
 
-  /// The color of any [Icon] descendant of [icon] if this button is disabled,
-  /// i.e. if [onChanged] is null.
-  ///
-  /// Defaults to [CupertinoColors.quaternaryLabel].
-  final Color? iconDisabledColor;
-
-  /// The color of any [Icon] descendant of [icon] if this button is enabled,
-  /// i.e. if [onChanged] is defined.
-  ///
-  /// Defaults to [MacosTheme.of(context).primaryColor]
-  final Color? iconEnabledColor;
-
   /// If null, then the menu item heights will vary according to each menu item's
   /// intrinsic height.
   ///
@@ -763,12 +743,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
 
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
-
-  /// The background color of the pulldown.
-  ///
-  /// If it is not provided, the the appropriate macOS canvas color
-  /// will be used.
-  final Color? pulldownColor;
 
   /// Defines how the hint or the selected item is positioned within the button.
   ///
@@ -785,8 +759,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('iconDisabledColor', iconDisabledColor));
-    properties.add(ColorProperty('iconEnabledColor', iconEnabledColor));
     properties.add(DoubleProperty(
       'itemHeight',
       itemHeight,
@@ -795,7 +767,6 @@ class MacosPulldownButton<T> extends StatefulWidget {
     properties.add(
       FlagProperty('hasAutofocus', value: autofocus, ifFalse: 'noAutofocus'),
     );
-    properties.add(ColorProperty('pulldownColor', pulldownColor));
   }
 
   @override
@@ -810,7 +781,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
   bool _hasPrimaryFocus = false;
   late Map<Type, Action<Intent>> _actionMap;
   late FocusHighlightMode _focusHighlightMode;
-  bool _isMenuOpen = false;
+  PulldownButtonState _pullDownButtonState = PulldownButtonState.enabled;
 
   // Only used if needed to create _internalNode.
   FocusNode _createFocusNode() {
@@ -850,7 +821,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
 
   void _removeMacosPulldownRoute() {
     setState(() {
-      _isMenuOpen = false;
+      _pullDownButtonState = PulldownButtonState.enabled;
     });
     _pulldownRoute?._dismiss();
     _pulldownRoute = null;
@@ -915,7 +886,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     ];
 
     setState(() {
-      _isMenuOpen = true;
+      _pullDownButtonState = PulldownButtonState.pressed;
     });
 
     final NavigatorState navigator = Navigator.of(context);
@@ -935,7 +906,6 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
       style: _textStyle!,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       itemHeight: widget.itemHeight,
-      pulldownColor: widget.pulldownColor,
     );
 
     navigator.push(_pulldownRoute!).then<void>((_) {
@@ -948,97 +918,7 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
 
   bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
 
-  Color get _textColor {
-    if (widget.icon == null) {
-      return _enabled
-          ? MacosTheme.of(context).typography.body.color!
-          : MacosTheme.of(context).brightness.resolve(
-                MacosColors.disabledControlTextColor,
-                MacosColors.disabledControlTextColor.darkColor,
-              );
-    } else {
-      return _enabled
-          ? MacosTheme.of(context).brightness.resolve(
-                Color.fromRGBO(0, 0, 0, 0.85),
-                Color.fromRGBO(255, 255, 255, 0.85),
-              )
-          : MacosTheme.of(context).brightness.resolve(
-                MacosColors.disabledControlTextColor,
-                MacosColors.disabledControlTextColor.darkColor,
-              );
-    }
-  }
-
-  Color? get _iconColor {
-    if (_enabled) {
-      return MacosDynamicColor.maybeResolve(
-        widget.iconEnabledColor ??
-            MacosTheme.of(context).macosPulldownButtonTheme.highlightColor,
-        context,
-      );
-    } else {
-      if (widget.iconDisabledColor != null) return widget.iconDisabledColor!;
-      return MacosColors.transparent;
-    }
-  }
-
-  Color? get _caretBgColor {
-    if (widget.icon == null && _enabled) {
-      return MacosTheme.of(context).macosPulldownButtonTheme.highlightColor;
-    } else {
-      return MacosColors.transparent;
-    }
-  }
-
-  Color get _caretColor {
-    if (widget.icon == null) {
-      return _enabled
-          ? MacosColors.white
-          : MacosTheme.of(context).brightness.resolve(
-                MacosColors.disabledControlTextColor,
-                MacosColors.disabledControlTextColor.darkColor,
-              );
-    } else {
-      return _textColor;
-    }
-  }
-
-  Color? get _backgroundColor {
-    if (widget.icon == null) {
-      return _isMenuOpen
-          ? MacosTheme.of(context)
-              .macosPulldownButtonTheme
-              .backgroundColor!
-              .withOpacity(0.4)
-          : _enabled
-              ? MacosTheme.of(context).macosPulldownButtonTheme.backgroundColor
-              : MacosTheme.of(context).brightness.resolve(
-                    const Color(0xfff1f2f3),
-                    const Color(0xff3f4046),
-                  );
-    } else {
-      return _enabled
-          ? MacosTheme.of(context).brightness.resolve(
-                const Color(0xffe5e5e5),
-                const Color(0xff353535),
-              )
-          : MacosTheme.of(context).brightness.resolve(
-                const Color(0xfff1f2f3),
-                const Color(0xff3f4046),
-              );
-    }
-  }
-
-  Color get _borderColor {
-    if (widget.icon == null) {
-      return MacosTheme.of(context).brightness.resolve(
-            const Color(0xffc3c4c9),
-            const Color(0xff222222),
-          );
-    } else {
-      return MacosColors.transparent;
-    }
-  }
+  bool get _hasIcon => widget.icon != null && widget.hint == null;
 
   bool get _showHighlight {
     switch (_focusHighlightMode) {
@@ -1049,60 +929,75 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
     }
   }
 
-  Widget get _hintWidget {
-    if (widget.icon == null) {
-      return _enabled
-          ? Text(widget.hint!)
-          : Text(widget.disabledHint ?? widget.hint!);
-    } else {
-      return MacosIcon(widget.icon!, color: _textColor);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final buttonHeight = (widget.icon == null) ? 20.0 : 28.0;
+    final buttonStyles =
+        getButtonStyles(_pullDownButtonState, _enabled, _hasIcon, context);
 
-    Widget result = Container(
-      decoration: _showHighlight
-          ? const BoxDecoration(
-              color: MacosColors.findHighlightColor,
-              borderRadius: _kBorderRadius,
-            )
-          : BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: _borderColor,
-                  offset: const Offset(0, .5),
-                  blurRadius: 0.2,
-                  spreadRadius: 0,
-                ),
-              ],
-              border: Border.all(width: 0.5, color: _borderColor),
-              color: _backgroundColor,
-              borderRadius: _kBorderRadius,
-            ),
-      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
-      height: buttonHeight,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          _hintWidget,
-          Padding(
-            padding: EdgeInsets.only(left: (widget.icon == null) ? 8.0 : 2.0),
-            child: SizedBox(
-              height: 16.0,
-              width: 16.0,
-              child: CustomPaint(
-                painter: _DownCaretPainter(
-                  color: _caretColor,
-                  backgroundColor: _caretBgColor ?? MacosColors.appleBlue,
+    Widget result = MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      onEnter: (_) {
+        setState(() => _pullDownButtonState = PulldownButtonState.hovered);
+      },
+      onExit: (_) {
+        setState(() {
+          if (_pullDownButtonState == PulldownButtonState.hovered) {
+            _pullDownButtonState = PulldownButtonState.enabled;
+          }
+        });
+      },
+      child: Container(
+        decoration: _showHighlight
+            ? const BoxDecoration(
+                color: MacosColors.findHighlightColor,
+                borderRadius: _kBorderRadius,
+              )
+            : BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: buttonStyles.borderColor,
+                    offset: const Offset(0, .5),
+                    blurRadius: 0.2,
+                    spreadRadius: 0,
+                  ),
+                ],
+                border: Border.all(width: 0.5, color: buttonStyles.borderColor),
+                color: buttonStyles.bgColor,
+                borderRadius: _kBorderRadius,
+              ),
+        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
+        height: buttonHeight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            _hasIcon
+                ? MacosIcon(widget.icon!, color: buttonStyles.textColor)
+                : _enabled
+                    ? Text(
+                        widget.hint!,
+                        style: TextStyle(color: buttonStyles.textColor),
+                      )
+                    : Text(
+                        widget.disabledHint ?? widget.hint!,
+                        style: TextStyle(color: buttonStyles.textColor),
+                      ),
+            Padding(
+              padding: EdgeInsets.only(left: (widget.icon == null) ? 8.0 : 2.0),
+              child: SizedBox(
+                height: 16.0,
+                width: 16.0,
+                child: CustomPaint(
+                  painter: _DownCaretPainter(
+                    color: buttonStyles.caretColor,
+                    backgroundColor: buttonStyles.caretBgColor,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 
@@ -1125,6 +1020,166 @@ class _MacosPulldownButtonState<T> extends State<MacosPulldownButton<T>>
         ),
       ),
     );
+  }
+}
+
+_ButtonStyles getButtonStyles(
+  PulldownButtonState pullDownButtonState,
+  bool enabled,
+  bool hasIcon,
+  BuildContext context,
+) {
+  final theme = MacosTheme.of(context);
+  final brightness = theme.brightness;
+  theme.typography.body;
+  Color textColor = theme.typography.body.color!;
+  Color bgColor = theme.macosPulldownButtonTheme.backgroundColor!;
+  Color borderColor = brightness.resolve(
+    const Color(0xffc3c4c9),
+    const Color(0xff222222),
+  );
+  Color caretColor = MacosColors.white;
+  Color caretBgColor = theme.macosPulldownButtonTheme.highlightColor!;
+  if (!enabled) {
+    caretBgColor = MacosColors.transparent;
+    if (hasIcon) {
+      // disabled with icon
+      textColor = caretColor = brightness.resolve(
+        const Color.fromRGBO(0, 0, 0, 0.2),
+        const Color.fromRGBO(255, 255, 255, 0.2),
+      );
+      bgColor = borderColor = MacosColors.transparent;
+    } else {
+      // disabled with text
+      textColor = caretColor = brightness.resolve(
+        MacosColors.disabledControlTextColor.color,
+        MacosColors.disabledControlTextColor.darkColor,
+      );
+      bgColor = brightness.resolve(
+        const Color(0xfff2f3f5),
+        const Color(0xff3f4046),
+      );
+      borderColor = brightness.resolve(
+        const Color(0xff979797),
+        const Color(0xff222222),
+      );
+    }
+  } else {
+    if (hasIcon) {
+      borderColor = caretBgColor = MacosColors.transparent;
+      switch (pullDownButtonState) {
+        case PulldownButtonState.enabled:
+          textColor = caretColor = brightness.resolve(
+            const Color.fromRGBO(0, 0, 0, 0.5),
+            const Color.fromRGBO(255, 255, 255, 0.55),
+          );
+          bgColor = MacosColors.transparent;
+          break;
+        case PulldownButtonState.hovered:
+          textColor = caretColor = brightness.resolve(
+            const Color.fromRGBO(0, 0, 0, 0.5),
+            const Color.fromRGBO(255, 255, 255, 0.55),
+          );
+          bgColor = brightness.resolve(
+            const Color(0xfff4f5f5),
+            const Color(0xff323232),
+          );
+          break;
+        case PulldownButtonState.pressed:
+          textColor = caretColor = brightness.resolve(
+            const Color.fromRGBO(0, 0, 0, 0.85),
+            const Color.fromRGBO(255, 255, 255, 0.85),
+          );
+          bgColor = brightness.resolve(
+            const Color.fromRGBO(0, 0, 0, 0.1),
+            const Color.fromRGBO(255, 255, 255, 0.1),
+          );
+          break;
+      }
+    } else {
+      switch (pullDownButtonState) {
+        case PulldownButtonState.enabled:
+          borderColor = brightness.resolve(
+            const Color(0xffc3c4c9),
+            const Color(0xff222222),
+          );
+          caretBgColor = theme.macosPulldownButtonTheme.highlightColor!;
+          break;
+        case PulldownButtonState.hovered:
+          break;
+        case PulldownButtonState.pressed:
+          bgColor =
+              theme.macosPulldownButtonTheme.backgroundColor!.withOpacity(0.4);
+          caretBgColor =
+              theme.macosPulldownButtonTheme.highlightColor!.withOpacity(0.9);
+          break;
+      }
+    }
+  }
+  return _ButtonStyles(
+    textColor: textColor,
+    bgColor: bgColor,
+    borderColor: borderColor,
+    caretColor: caretColor,
+    caretBgColor: caretBgColor,
+  );
+}
+
+class _ButtonStyles {
+  _ButtonStyles({
+    required this.textColor,
+    required this.bgColor,
+    required this.borderColor,
+    required this.caretColor,
+    required this.caretBgColor,
+  });
+
+  Color textColor;
+  Color bgColor;
+  Color borderColor;
+  Color caretColor;
+  Color caretBgColor;
+
+  _ButtonStyles copyWith({
+    Color? textColor,
+    Color? bgColor,
+    Color? borderColor,
+    Color? caretColor,
+    Color? caretBgColor,
+  }) {
+    return _ButtonStyles(
+      textColor: textColor ?? this.textColor,
+      bgColor: bgColor ?? this.bgColor,
+      borderColor: borderColor ?? this.borderColor,
+      caretColor: caretColor ?? this.caretColor,
+      caretBgColor: caretBgColor ?? this.caretBgColor,
+    );
+  }
+
+  @override
+  String toString() {
+    return '_ButtonStyles(textColor: $textColor, bgColor: $bgColor, borderColor: $borderColor, caretColor: $caretColor, caretBgColor: $caretBgColor)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is _ButtonStyles &&
+        other.textColor == textColor &&
+        other.bgColor == bgColor &&
+        other.borderColor == borderColor &&
+        other.caretColor == caretColor &&
+        other.caretBgColor == caretBgColor;
+  }
+
+  @override
+  int get hashCode {
+    return textColor.hashCode ^
+        bgColor.hashCode ^
+        borderColor.hashCode ^
+        caretColor.hashCode ^
+        caretBgColor.hashCode;
   }
 }
 
