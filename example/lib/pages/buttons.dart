@@ -173,7 +173,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MacosPulldownButton(
-                      label: "PDF",
+                      title: "PDF",
                       items: [
                         MacosPulldownMenuItem(
                           title: const Text('Open in Preview'),
@@ -212,8 +212,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                     const SizedBox(width: 20),
                     MacosPulldownButton(
-                      label: "PDF",
-                      disabledLabel: "Disabled",
+                      title: "PDF",
+                      disabledTitle: "Disabled",
                       items: [],
                     ),
                   ],

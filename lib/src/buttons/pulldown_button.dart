@@ -9,17 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-//TODO: MacosPopupButton remove Orientation-related code in build functions
-//TODO: MacosPopupButton kBorderRadius: 5.0
-//TODO: MacosPopupButton refactor menupainter borders and shadow
-//TODO: MacosPopupButton change button shadow colors and border width
-//TODO: MacosPopupButton refactor constants
-//TODO: MacosPopupButton remove elevation property
-//TODO: MacosPopupButton refactor disabled colors
-//TODO: MacosPopupButton backgroundColor documentation in ThemeData
-//TODO: placement behavior and screen over draw (https://github.com/flutter/flutter/issues/30701)
-//TODO: tests
-
 enum PulldownButtonState {
   enabled,
   hovered,
@@ -29,7 +18,6 @@ enum PulldownButtonState {
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
 const double _kMenuDividerHeight = 10.0;
-const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 6.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kMenuLeftOffset = 8.0;
@@ -335,7 +323,7 @@ class _MacosPulldownRoute extends PopupRoute {
     this.itemHeight,
   }) : itemHeights = List<double>.filled(
           items.length,
-          itemHeight ?? _kMinInteractiveDimension,
+          itemHeight ?? _kMenuItemHeight,
         );
 
   final List<_MenuItem> items;
@@ -612,7 +600,7 @@ class MacosPulldownMenuItem extends StatelessWidget
 ///
 /// Use a pull-down button to present a list of commands.
 ///
-/// A pull-down button can either show a [label] or an [icon] to describe the
+/// A pull-down button can either show a [title] or an [icon] to describe the
 /// contents of the button's menu. If you use an icon, make sure it clearly
 /// communicates the button’s purpose.
 ///
@@ -627,30 +615,30 @@ class MacosPulldownButton extends StatefulWidget {
   /// If [items] is null, the button will be disabled, the down caret
   /// icon will be greyed out.
   ///
-  /// A [label] or an [icon] must be provided, to be displayed as the pull-down
-  /// button's title, but not both at the same time.
+  /// A [title] or an [icon] must be provided, to be displayed as the
+  /// pull-down button's title, but not both at the same time.
   ///
-  /// If the button is disabled and [icon] is null, [disabledLabel] will be
-  /// displayed if it is non-null. If [disabledLabel] is null, then [label]
+  /// If the button is disabled and [icon] is null, [disabledTitle] will be
+  /// displayed if it is non-null. If [disabledTitle] is null, then [title]
   /// will be displayed if it is non-null.
   ///
   /// The [autofocus] argument must not be null.
-  MacosPulldownButton({
+  const MacosPulldownButton({
     Key? key,
     required this.items,
-    this.label,
-    this.disabledLabel,
+    this.title,
+    this.disabledTitle,
     this.icon,
     this.onTap,
     this.style,
-    this.itemHeight = _kMinInteractiveDimension,
+    this.itemHeight = _kMenuItemHeight,
     this.focusNode,
     this.autofocus = false,
     this.alignment = AlignmentDirectional.centerStart,
-  })  : assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
+  })  : assert(itemHeight == null || itemHeight >= _kMenuItemHeight),
         assert(
-            (label != null || icon != null) && !(label != null && icon != null),
-            "There should be either a label or an icon argument provided, and not both at at the same time."),
+            (title != null || icon != null) && !(title != null && icon != null),
+            "There should be either a title or an icon argument provided, and not both at at the same time."),
         super(key: key);
 
   /// The list of menu entries for the pull-down menu.
@@ -665,20 +653,20 @@ class MacosPulldownButton extends StatefulWidget {
   ///
   /// If this is provided, [icon] should be null.
   ///
-  /// If the pull-down is disabled and [disabledLabel] is null, then this
+  /// If the pull-down is disabled and [disabledTitle] is null, then this
   /// is displayed instead.
-  final String? label;
+  final String? title;
 
   /// The text that is displayed when the pull-down is disabled.
   ///
   /// If the pulldown is disabled ([items] is null), this is displayed as a
   /// title for the pull-down button.
-  final String? disabledLabel;
+  final String? disabledTitle;
 
   /// An icon to use as title for the pull-down button. Makes the pull-down
   /// button behave and render as an icon-button with a caret.
   ///
-  /// If this is provided, [label] should be null.
+  /// If this is provided, [title] should be null.
   ///
   /// It is recommended to use icons from the CupertinoIcons library for this.
   final IconData? icon;
@@ -694,10 +682,10 @@ class MacosPulldownButton extends StatefulWidget {
   /// Defaults to MacosTheme.of(context).typography.body.
   final TextStyle? style;
 
-  /// If null, then the menu item heights will vary according to each menu item's
-  /// intrinsic height.
+  /// If null, then the menu item heights will vary according to each menu
+  /// item's intrinsic height.
   ///
-  /// The default value is [_kMinInteractiveDimension], which is also the minimum
+  /// The default value is [_kMenuItemHeight], which is also the minimum
   /// height for menu items.
   final double? itemHeight;
 
@@ -707,7 +695,7 @@ class MacosPulldownButton extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
-  /// Defines how the label is positioned within the button.
+  /// Defines how the title is positioned within the button.
   ///
   /// This property must not be null. It defaults to [AlignmentDirectional.centerStart].
   ///
@@ -725,11 +713,11 @@ class MacosPulldownButton extends StatefulWidget {
     properties.add(DoubleProperty(
       'itemHeight',
       itemHeight,
-      defaultValue: kMinInteractiveDimension,
     ));
     properties.add(
       FlagProperty('hasAutofocus', value: autofocus, ifFalse: 'noAutofocus'),
     );
+    properties.add(DiagnosticsProperty('alignment', alignment));
   }
 
   @override
@@ -783,9 +771,6 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   }
 
   void _removeMacosPulldownRoute() {
-    setState(() {
-      _pullDownButtonState = PulldownButtonState.enabled;
-    });
     _pulldownRoute?._dismiss();
     _pulldownRoute = null;
   }
@@ -872,6 +857,9 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     );
 
     navigator.push(_pulldownRoute!).then<void>((_) {
+      setState(() {
+        _pullDownButtonState = PulldownButtonState.enabled;
+      });
       _removeMacosPulldownRoute();
       if (!mounted) return;
     });
@@ -881,7 +869,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 
   bool get _enabled => widget.items != null && widget.items!.isNotEmpty;
 
-  bool get _hasIcon => widget.icon != null && widget.label == null;
+  bool get _hasIcon => widget.icon != null && widget.title == null;
 
   bool get _showHighlight {
     switch (_focusHighlightMode) {
@@ -930,11 +918,11 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
               ? MacosIcon(widget.icon!, color: buttonStyles.textColor)
               : _enabled
                   ? Text(
-                      widget.label!,
+                      widget.title!,
                       style: TextStyle(color: buttonStyles.textColor),
                     )
                   : Text(
-                      widget.disabledLabel ?? widget.label!,
+                      widget.disabledTitle ?? widget.title!,
                       style: TextStyle(color: buttonStyles.textColor),
                     ),
           Padding(
@@ -990,7 +978,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 //
 // pullDownButtonState: a button can be either enabled, hovered, or pressed.
 // enabled: if a button is disabled (greyed out) or not.
-// hasIcon: if it has a label or an icon as its title.
+// hasIcon: if it has a string or an icon as its title.
 //
 // We use this utility function to get the appropriate styling, according to the
 // macOS Design Guidelines and the current MacosPulldownButtonTheme.
