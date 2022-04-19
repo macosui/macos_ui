@@ -20,8 +20,8 @@ class _FieldsPageState extends State<FieldsPage> {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
-              children: [
-                const Padding(
+              children: const [
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: MacosTextField(
                     prefix: Padding(
@@ -40,8 +40,8 @@ class _FieldsPageState extends State<FieldsPage> {
                     maxLines: 2,
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Padding(
+                SizedBox(height: 20),
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: MacosTextField.borderless(
                     prefix: Padding(

@@ -49,7 +49,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
         ),
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
-            controller: scrollController,
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
@@ -59,12 +58,12 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MacosBackButton(
-                      onPressed: () => print('click'),
+                      onPressed: () => debugPrint('click'),
                       fillColor: Colors.transparent,
                     ),
                     const SizedBox(width: 16.0),
                     MacosBackButton(
-                      onPressed: () => print('click'),
+                      onPressed: () => debugPrint('click'),
                     ),
                   ],
                 ),
@@ -165,6 +164,38 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   onPressed: () {
                     MacosWindowScope.of(context).toggleSidebar();
                   },
+                ),
+                const SizedBox(height: 20),
+                const Text('MacosPopupButton'),
+                const SizedBox(height: 8),
+                MacosPopupButton<String>(
+                  value: popupValue,
+                  onChanged: (String? newValue) {
+                    setState(() => popupValue = newValue!);
+                  },
+                  items: <String>['One', 'Two', 'Three', 'Four']
+                      .map<MacosPopupMenuItem<String>>((String value) {
+                    return MacosPopupMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                const Text('MacosPopupButton (large list)'),
+                const SizedBox(height: 8),
+                MacosPopupButton<String>(
+                  value: languagePopupValue,
+                  onChanged: (String? newValue) {
+                    setState(() => languagePopupValue = newValue!);
+                  },
+                  items:
+                      languages.map<MacosPopupMenuItem<String>>((String value) {
+                    return MacosPopupMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 const SizedBox(height: 20),
                 const Text('MacosPulldownButton'),

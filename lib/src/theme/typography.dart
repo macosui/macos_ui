@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-const _kDefaultFontFamily = 'SanFranciscoPro';
+const _kDefaultFontFamily = '.AppleSystemUIFont';
 
 /// macOS typography.
 ///
