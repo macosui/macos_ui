@@ -235,7 +235,7 @@ MacosRadioButton(
 
 ## PulldownButton
 
-A pull-down button (often referred to as a pull-down menu) is a type of pop-up button that, when clicked, displays a menu containing a list of choices. The menu appears below the button. Once the menu is displayed onscreen, it remains open until the user chooses a menu item, clicks outside of the menu, switches to another app, or quits the app; or until the system displays an alert.
+A pull-down button (often referred to as a pull-down menu) is a type of pop-up button that, when clicked, displays a menu containing a list of choices. The menu appears below the button. Once the menu is displayed onscreen, it remains open until the user chooses a menu item, clicks outside of the menu, switches to another app, or quits the app; or until the system displays an alert. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/pull-down-buttons/)
 
 Use a pull-down button to present a list of commands. A pull-down button can either show a `title` or an `icon` to describe the contents of the button's menu. If you use an icon, make sure it clearly communicates the button’s purpose.
 
