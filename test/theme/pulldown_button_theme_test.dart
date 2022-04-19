@@ -1,0 +1,113 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:macos_ui/macos_ui.dart';
+
+void main() {
+  group('MacosPulldownButton theme tests', () {
+    test('lerps from light to dark', () {
+      final actual = MacosPulldownButtonThemeData.lerp(
+        _MacosPulldownButtonTheme,
+        _MacosPulldownButtonThemeDark,
+        1,
+      );
+
+      expect(actual, _MacosPulldownButtonThemeDark);
+    });
+
+    test('lerps from dark to light', () {
+      final actual = MacosPulldownButtonThemeData.lerp(
+        _MacosPulldownButtonThemeDark,
+        _MacosPulldownButtonTheme,
+        1,
+      );
+
+      expect(actual, _MacosPulldownButtonTheme);
+    });
+
+    test('copyWith, hashCode, ==', () {
+      expect(
+        const MacosPulldownButtonThemeData(),
+        const MacosPulldownButtonThemeData().copyWith(),
+      );
+      expect(
+        const MacosPulldownButtonThemeData().hashCode,
+        const MacosPulldownButtonThemeData().copyWith().hashCode,
+      );
+    });
+
+    testWidgets('debugFillProperties', (tester) async {
+      final builder = DiagnosticPropertiesBuilder();
+      MacosPulldownButtonThemeData(
+        highlightColor: MacosColors.systemGrayColor.color,
+        backgroundColor: MacosColors.appleBlue,
+        pulldownColor: MacosColors.controlColor.color,
+      ).debugFillProperties(builder);
+
+      final description = builder.properties
+          .where((node) => !node.isFiltered(DiagnosticLevel.info))
+          .map((node) => node.toString())
+          .toList();
+
+      expect(
+        description,
+        [
+          'highlightColor: Color(0xff8e8e93)',
+          'backgroundColor: Color(0xff0433ff)',
+          'pulldownColor: Color(0x19000000)',
+        ],
+      );
+    });
+
+    testWidgets('Default values in widget tree', (tester) async {
+      late BuildContext capturedContext;
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, scrollController) {
+                    capturedContext = context;
+                    return const Center(
+                      child: MacosPulldownButton(
+                        title: "test",
+                        items: [
+                          MacosPulldownMenuItem(
+                            title: Text('one'),
+                            onTap: null,
+                          ),
+                          MacosPulldownMenuItem(
+                            title: Text('two'),
+                            onTap: null,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      final theme = MacosPulldownButtonTheme.of(capturedContext);
+      expect(theme.backgroundColor, const Color(0xffffffff));
+      expect(theme.highlightColor, const Color(0xff007aff));
+      expect(theme.pulldownColor, const Color(0xfff2f2f7));
+    });
+  });
+}
+
+final _MacosPulldownButtonTheme = MacosPulldownButtonThemeData(
+  backgroundColor: MacosColors.appleRed,
+  highlightColor: MacosColors.systemGrayColor.color,
+  pulldownColor: MacosColors.controlColor.color,
+);
+
+final _MacosPulldownButtonThemeDark = MacosPulldownButtonThemeData(
+  backgroundColor: MacosColors.appleBlue,
+  highlightColor: MacosColors.systemGrayColor.darkColor,
+  pulldownColor: MacosColors.controlColor.darkColor,
+);
