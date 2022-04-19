@@ -211,7 +211,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       ],
                     ),
                     const SizedBox(width: 20),
-                    MacosPulldownButton(
+                    const MacosPulldownButton(
                       title: "PDF",
                       disabledTitle: "Disabled",
                       items: [],
@@ -259,7 +259,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       ],
                     ),
                     const SizedBox(width: 20),
-                    MacosPulldownButton(
+                    const MacosPulldownButton(
                       icon: CupertinoIcons.square_grid_3x2,
                       items: [],
                     ),
