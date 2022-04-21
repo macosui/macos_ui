@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -836,9 +835,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
         ),
     ];
 
-    setState(() {
-      _pullDownButtonState = PulldownButtonState.pressed;
-    });
+    setState(() => _pullDownButtonState = PulldownButtonState.pressed);
 
     final NavigatorState navigator = Navigator.of(context);
     assert(_pulldownRoute == null);
@@ -860,9 +857,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     );
 
     navigator.push(_pulldownRoute!).then<void>((_) {
-      setState(() {
-        _pullDownButtonState = PulldownButtonState.enabled;
-      });
+      setState(() => _pullDownButtonState = PulldownButtonState.enabled);
       _removeMacosPulldownRoute();
       if (!mounted) return;
     });
