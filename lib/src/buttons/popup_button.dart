@@ -878,8 +878,6 @@ class MacosPopupButton<T> extends StatefulWidget {
     required this.onChanged,
     this.onTap,
     this.style,
-    this.iconDisabledColor,
-    this.iconEnabledColor,
     this.itemHeight = _kMinInteractiveDimension,
     this.focusNode,
     this.autofocus = false,
@@ -972,18 +970,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// Defaults to MacosTheme.of(context).typography.body.
   final TextStyle? style;
 
-  /// The color of any [Icon] descendant of [icon] if this button is disabled,
-  /// i.e. if [onChanged] is null.
-  ///
-  /// Defaults to [CupertinoColors.quaternaryLabel].
-  final Color? iconDisabledColor;
-
-  /// The color of any [Icon] descendant of [icon] if this button is enabled,
-  /// i.e. if [onChanged] is defined.
-  ///
-  /// Defaults to [MacosTheme.of(context).primaryColor]
-  final Color? iconEnabledColor;
-
   /// If null, then the menu item heights will vary according to each menu item's
   /// intrinsic height.
   ///
@@ -1035,8 +1021,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('iconDisabledColor', iconDisabledColor));
-    properties.add(ColorProperty('iconEnabledColor', iconEnabledColor));
     properties.add(DoubleProperty(
       'itemHeight',
       itemHeight,
@@ -1047,6 +1031,7 @@ class MacosPopupButton<T> extends StatefulWidget {
     );
     properties.add(ColorProperty('popupColor', popupColor));
     properties.add(DoubleProperty('menuMaxHeight', menuMaxHeight));
+    properties.add(DiagnosticsProperty('alignment', alignment));
   }
 
   @override
@@ -1219,19 +1204,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
     });
 
     widget.onTap?.call();
-  }
-
-  Color? get _iconColor {
-    if (_enabled) {
-      return MacosDynamicColor.maybeResolve(
-        widget.iconEnabledColor ??
-            MacosTheme.of(context).macosPopupButtonTheme.highlightColor,
-        context,
-      );
-    } else {
-      if (widget.iconDisabledColor != null) return widget.iconDisabledColor!;
-      return CupertinoColors.quaternaryLabel;
-    }
   }
 
   bool get _enabled =>
