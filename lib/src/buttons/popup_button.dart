@@ -1428,18 +1428,20 @@ class _UpDownCaretsPainter extends CustomPainter {
     /// Draw carets
     final p1 = Offset(hPadding, size.height / 2 - 2.0);
     final p2 = Offset(size.width / 2, vPadding);
-    final p3 = Offset(size.width - hPadding, size.height / 2 - 2.0);
-    final p4 = Offset(hPadding, size.height / 2 + 2.0);
-    final p5 = Offset(size.width / 2, size.height - vPadding);
-    final p6 = Offset(size.width - hPadding, size.height / 2 + 2.0);
+    final p3 = Offset(size.width / 2 + 1.0, vPadding + 1.0);
+    final p4 = Offset(size.width - hPadding, size.height / 2 - 2.0);
+    final p5 = Offset(hPadding, size.height / 2 + 2.0);
+    final p6 = Offset(size.width / 2, size.height - vPadding);
+    final p7 = Offset(size.width / 2 + 1.0, size.height - vPadding - 1.0);
+    final p8 = Offset(size.width - hPadding, size.height / 2 + 2.0);
     final paint = Paint()
       ..color = color
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 1.6;
     canvas.drawLine(p1, p2, paint);
-    canvas.drawLine(p2, p3, paint);
-    canvas.drawLine(p4, p5, paint);
+    canvas.drawLine(p3, p4, paint);
     canvas.drawLine(p5, p6, paint);
+    canvas.drawLine(p7, p8, paint);
   }
 
   @override
