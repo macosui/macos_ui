@@ -1292,16 +1292,15 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
         }).toList(),
       );
     }
-    final brightness = MacosTheme.brightnessOf(context);
-    final borderColor = brightness.resolve(
-      Colors.black.withOpacity(0.12),
-      Colors.black.withOpacity(0.10),
+    final buttonStyles = _getButtonStyles(
+      widget.items != null && widget.items!.isNotEmpty,
+      context,
     );
 
     Widget result = DefaultTextStyle(
-      style: _enabled
-          ? _textStyle!
-          : _textStyle!.copyWith(color: MacosColors.disabledControlTextColor),
+      style: _textStyle!.copyWith(
+        color: buttonStyles.textColor,
+      ),
       child: Container(
         decoration: _showHighlight
             ? const BoxDecoration(
@@ -1311,18 +1310,16 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
             : BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: borderColor,
-                    offset: const Offset(0, 1),
-                    blurRadius: 0,
+                    color: buttonStyles.borderColor,
+                    offset: const Offset(0, .5),
+                    blurRadius: 0.2,
                     spreadRadius: 0,
                   ),
                 ],
-                color: MacosTheme.of(context)
-                    .macosPopupButtonTheme
-                    .backgroundColor,
+                color: buttonStyles.bgColor,
                 border: Border.all(
-                  width: 1,
-                  color: borderColor,
+                  width: 0.5,
+                  color: buttonStyles.borderColor,
                 ),
                 borderRadius: _kBorderRadius,
               ),
@@ -1340,8 +1337,8 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
                 width: _kPopupButtonHeight - 4.0,
                 child: CustomPaint(
                   painter: _UpDownCaretsPainter(
-                    color: MacosColors.white,
-                    backgroundColor: _iconColor ?? MacosColors.appleBlue,
+                    color: buttonStyles.caretColor,
+                    backgroundColor: buttonStyles.caretBgColor,
                   ),
                 ),
               ),
@@ -1371,6 +1368,68 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       ),
     );
   }
+}
+
+// We use this utility function to get the appropriate styling, according to the
+// macOS Design Guidelines and the current MacosPopupButtonTheme.
+_ButtonStyles _getButtonStyles(
+  bool enabled,
+  BuildContext context,
+) {
+  final theme = MacosTheme.of(context);
+  final brightness = theme.brightness;
+  Color textColor = theme.typography.body.color!;
+  Color bgColor = theme.macosPopupButtonTheme.backgroundColor!;
+  Color borderColor = brightness.resolve(
+    const Color(0xffc3c4c9),
+    const Color(0xff222222),
+  );
+  Color caretColor = MacosColors.white;
+  Color caretBgColor = theme.macosPopupButtonTheme.highlightColor!;
+  if (!enabled) {
+    caretBgColor = MacosColors.transparent;
+    textColor = caretColor = brightness.resolve(
+      MacosColors.disabledControlTextColor.color,
+      MacosColors.disabledControlTextColor.darkColor,
+    );
+    bgColor = brightness.resolve(
+      const Color(0xfff2f3f5),
+      const Color(0xff3f4046),
+    );
+    borderColor = brightness.resolve(
+      const Color(0xff979797),
+      const Color(0xff222222),
+    );
+  } else {
+    borderColor = brightness.resolve(
+      const Color(0xffc3c4c9),
+      const Color(0xff222222),
+    );
+    caretBgColor = theme.macosPopupButtonTheme.highlightColor!;
+  }
+  return _ButtonStyles(
+    textColor: textColor,
+    bgColor: bgColor,
+    borderColor: borderColor,
+    caretColor: caretColor,
+    caretBgColor: caretBgColor,
+  );
+}
+
+class _ButtonStyles {
+  _ButtonStyles({
+    required this.textColor,
+    required this.bgColor,
+    required this.borderColor,
+    required this.caretColor,
+    required this.caretBgColor,
+  });
+
+  Color textColor;
+  Color bgColor;
+  Color borderColor;
+  Color caretColor;
+  Color caretBgColor;
 }
 
 class _UpDownCaretsPainter extends CustomPainter {

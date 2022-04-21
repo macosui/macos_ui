@@ -890,7 +890,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
         ? const BorderRadius.all(Radius.circular(7.0))
         : _kBorderRadius;
     final buttonStyles =
-        getButtonStyles(_pullDownButtonState, _enabled, _hasIcon, context);
+        _getButtonStyles(_pullDownButtonState, _enabled, _hasIcon, context);
 
     Widget result = Container(
       decoration: _showHighlight
@@ -985,7 +985,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 //
 // We use this utility function to get the appropriate styling, according to the
 // macOS Design Guidelines and the current MacosPulldownButtonTheme.
-_ButtonStyles getButtonStyles(
+_ButtonStyles _getButtonStyles(
   PulldownButtonState pullDownButtonState,
   bool enabled,
   bool hasIcon,
