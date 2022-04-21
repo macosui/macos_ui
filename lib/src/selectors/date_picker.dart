@@ -107,7 +107,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (_selectedDay != null) ...[
-                    PickerElement(
+                    FieldElement(
                       element: '$_selectedMonth',
                       backgroundColor: _isMonthSelected
                           ? MacosColors.systemBlueColor
@@ -121,7 +121,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       },
                     ),
                     const Text('/'),
-                    PickerElement(
+                    FieldElement(
                       element: '$_selectedDay',
                       backgroundColor: _isDaySelected
                           ? MacosColors.systemBlueColor
@@ -135,7 +135,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       },
                     ),
                     const Text('/'),
-                    PickerElement(
+                    FieldElement(
                       element: '$_selectedYear',
                       backgroundColor: _isYearSelected
                           ? MacosColors.systemBlueColor
@@ -149,7 +149,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       },
                     ),
                   ] else ...[
-                    PickerElement(
+                    FieldElement(
                       element: '$_selectedMonth',
                       backgroundColor: _isMonthSelected
                           ? MacosColors.systemBlueColor
@@ -163,7 +163,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       },
                     ),
                     const Text('/'),
-                    PickerElement(
+                    FieldElement(
                       element: '$_selectedYear',
                       backgroundColor: _isYearSelected
                           ? MacosColors.systemBlueColor
@@ -240,8 +240,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
   }
 }
 
-class PickerElement extends StatelessWidget {
-  const PickerElement({
+class FieldElement extends StatelessWidget {
+  const FieldElement({
     Key? key,
     required this.element,
     required this.backgroundColor,
