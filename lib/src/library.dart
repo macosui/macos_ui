@@ -27,4 +27,4 @@ export 'package:flutter/material.dart'
         DateUtils;
 export 'package:flutter/widgets.dart';
 
-export 'util.dart';
+export 'utils.dart';
