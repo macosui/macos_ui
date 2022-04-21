@@ -193,7 +193,10 @@ class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
       opacity: _fadeOpacity,
       child: Container(
         decoration: BoxDecoration(
-          color: MacosTheme.of(context).macosPulldownButtonTheme.pulldownColor,
+          color: MacosTheme.of(context)
+              .macosPulldownButtonTheme
+              .pulldownColor
+              ?.withOpacity(0.25),
           boxShadow: [
             BoxShadow(
               color: brightness
