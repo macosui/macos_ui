@@ -1294,19 +1294,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       widget.items!.isNotEmpty &&
       widget.onChanged != null;
 
-  Orientation _getOrientation(BuildContext context) {
-    Orientation? result = MediaQuery.maybeOf(context)?.orientation;
-    if (result == null) {
-      // If there's no MediaQuery, then use the window aspect to determine
-      // orientation.
-      final Size size = window.physicalSize;
-      result = size.width > size.height
-          ? Orientation.landscape
-          : Orientation.portrait;
-    }
-    return result;
-  }
-
   bool get _showHighlight {
     switch (_focusHighlightMode) {
       case FocusHighlightMode.touch:
@@ -1318,13 +1305,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final Orientation newOrientation = _getOrientation(context);
-    _lastOrientation ??= newOrientation;
-    if (newOrientation != _lastOrientation) {
-      _removeMacosPopupRoute();
-      _lastOrientation = newOrientation;
-    }
-
     // The width of the button and the menu are defined by the widest
     // item and the width of the hint.
     // We should explicitly type the items list to be a list of <Widget>,
