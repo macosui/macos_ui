@@ -1,4 +1,4 @@
-## [0.12.3+2]
+## [0.12.4]
 * New widget: `MacosPulldownButton`, which can be used as a dropdown for selecting actions with either text or an icon as its title.
 
 ## [0.12.3+1]
