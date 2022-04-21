@@ -267,22 +267,31 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 const SizedBox(height: 20),
                 const Text('MacosPopupButton'),
                 const SizedBox(height: 8),
-                MacosPopupButton<String>(
-                  value: popupValue,
-                  onChanged: (String? newValue) {
-                    setState(() => popupValue = newValue!);
-                  },
-                  items: <String>['One', 'Two', 'Three', 'Four']
-                      .map<MacosPopupMenuItem<String>>((String value) {
-                    return MacosPopupMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MacosPopupButton<String>(
+                      value: popupValue,
+                      onChanged: (String? newValue) {
+                        setState(() => popupValue = newValue!);
+                      },
+                      items: <String>['One', 'Two', 'Three', 'Four']
+                          .map<MacosPopupMenuItem<String>>((String value) {
+                        return MacosPopupMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(width: 20),
+                    MacosPopupButton<String>(
+                      disabledHint: const Text("Disabled"),
+                      onChanged: null,
+                      items: null,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
-                const Text('MacosPopupButton (large list)'),
-                const SizedBox(height: 8),
                 MacosPopupButton<String>(
                   value: languagePopupValue,
                   onChanged: (String? newValue) {
