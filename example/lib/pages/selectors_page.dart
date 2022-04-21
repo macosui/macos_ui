@@ -25,8 +25,9 @@ class _SelectorsPageState extends State<SelectorsPage> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  MacosDateField(
+                  MacosDatePicker(
                     format: format,
+                    onDateChanged: (date) => debugPrint('$date'),
                   ),
                 ],
               ),

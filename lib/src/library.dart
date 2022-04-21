@@ -23,7 +23,8 @@ export 'package:flutter/material.dart'
         Colors,
         MaterialLocalizations,
         Dialog,
-        kElevationToShadow;
+        kElevationToShadow,
+        DateUtils;
 export 'package:flutter/widgets.dart';
 
 export 'util.dart';
