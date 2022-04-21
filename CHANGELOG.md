@@ -1,3 +1,7 @@
+## [0.12.4+1]
+* Improve visual design of `MacosPopupButton` and `MacosPulldownButton`, to better match the styling and translucency effect of Apple design. 
+* Remove unnecessary properties of `MacosPopupButton`
+
 ## [0.12.4]
 * New widget: `MacosPulldownButton`, which can be used as a dropdown for selecting actions with either text or an icon as its title.
 
