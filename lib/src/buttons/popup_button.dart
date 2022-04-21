@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ const Offset _kPopupRouteOffset = Offset(-10.0, 5.0);
 const double _kMenuItemHeight = 20.0;
 const double _kMinInteractiveDimension = 24.0;
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
-const Radius _kSideRadius = Radius.circular(7.0);
+const Radius _kSideRadius = Radius.circular(5.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(_kSideRadius);
 const double _kPopupButtonHeight = 20.0;
 const double _kPopupMenuCaretsOffset = 2.0;
@@ -21,59 +22,6 @@ const double _kPopupMenuCaretsOffset = 2.0;
 ///
 /// Used by [MacosPopupButton.selectedItemBuilder].
 typedef MacosPopupButtonBuilder = List<Widget> Function(BuildContext context);
-
-class _MacosPopupMenuPainter extends CustomPainter {
-  _MacosPopupMenuPainter({
-    this.color,
-    this.borderColor,
-    this.elevation,
-    this.selectedIndex,
-    this.borderRadius,
-  }) : _painter = BoxDecoration(
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.20),
-              offset: const Offset(0, 2),
-              spreadRadius: 2.0,
-              blurRadius: 6.0,
-            ),
-          ],
-          border: Border.all(
-            color: borderColor!,
-          ),
-          borderRadius: borderRadius ?? _kBorderRadius,
-        ).createBoxPainter();
-
-  final Color? color;
-  final Color? borderColor;
-  final int? elevation;
-  final int? selectedIndex;
-  final BorderRadius? borderRadius;
-  final BoxPainter _painter;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Add 2.0 pixels when painting to take into account when the up/down carets
-    // are shown.
-    final Rect rect = Rect.fromLTRB(
-      0.0,
-      -_kPopupMenuCaretsOffset,
-      size.width,
-      size.height + _kPopupMenuCaretsOffset,
-    );
-
-    _painter.paint(canvas, rect.topLeft, ImageConfiguration(size: rect.size));
-  }
-
-  @override
-  bool shouldRepaint(_MacosPopupMenuPainter oldPainter) {
-    return oldPainter.color != color ||
-        oldPainter.elevation != elevation ||
-        oldPainter.selectedIndex != selectedIndex ||
-        oldPainter.borderRadius != borderRadius;
-  }
-}
 
 // The widget that is the button wrapping the menu items.
 class _MacosPopupMenuItemButton<T> extends StatefulWidget {
@@ -171,7 +119,7 @@ class _MacosPopupMenuItemButtonState<T>
               decoration: BoxDecoration(
                 color: _isHovered
                     ? theme.macosPopupButtonTheme.highlightColor
-                    : theme.macosPopupButtonTheme.popupColor,
+                    : Colors.transparent,
                 borderRadius: _kBorderRadius,
               ),
               child: Row(
@@ -279,19 +227,42 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
       context,
     );
     final caretColor =
-        brightness.resolve(CupertinoColors.white, CupertinoColors.black);
+        brightness.resolve(CupertinoColors.black, CupertinoColors.white);
+
+    final itemsList = ListView.builder(
+      itemCount: children.length,
+      itemBuilder: (context, index) {
+        return children[index];
+      },
+      padding: const EdgeInsets.all(4.0),
+      shrinkWrap: true,
+    );
 
     return FadeTransition(
       opacity: _fadeOpacity,
-      child: CustomPaint(
-        painter: _MacosPopupMenuPainter(
-          color: popupColor,
-          borderColor: brightness.resolve(
-            CupertinoColors.systemGrey3.color,
-            Colors.white.withOpacity(0.15),
+      child: Container(
+        decoration: BoxDecoration(
+          color: popupColor?.withOpacity(0.25),
+          boxShadow: [
+            BoxShadow(
+              color: brightness
+                  .resolve(
+                    CupertinoColors.systemGrey.color,
+                    CupertinoColors.black,
+                  )
+                  .withOpacity(0.25),
+              offset: const Offset(0, 4),
+              spreadRadius: 4.0,
+              blurRadius: 8.0,
+            ),
+          ],
+          border: Border.all(
+            color: brightness.resolve(
+              CupertinoColors.systemGrey3.color,
+              CupertinoColors.systemGrey3.darkColor,
+            ),
           ),
-          elevation: route.elevation,
-          selectedIndex: route.selectedIndex,
+          borderRadius: _kBorderRadius,
         ),
         child: Semantics(
           scopesRoute: true,
@@ -310,62 +281,62 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
             child: PrimaryScrollController(
               controller: widget.route.scrollController!,
               child: NotificationListener(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ListView.builder(
-                      itemCount: children.length,
-                      itemBuilder: (context, index) {
-                        return children[index];
-                      },
-                      padding: const EdgeInsets.all(4.0),
-                      shrinkWrap: true,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 50.0,
+                      sigmaY: 50.0,
                     ),
-                    _showTopCaret
-                        ? Positioned(
-                            top: 0,
-                            child: Container(
-                              width: widget.buttonRect.width -
-                                  _kPopupMenuCaretsOffset,
-                              height: widget.buttonRect.height,
-                              decoration: BoxDecoration(
-                                color: popupColor,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: _kSideRadius,
-                                  topRight: _kSideRadius,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _showTopCaret
+                            ? Container(
+                                width: widget.buttonRect.width -
+                                    _kPopupMenuCaretsOffset,
+                                height: widget.buttonRect.height,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: _kSideRadius,
+                                    topRight: _kSideRadius,
+                                  ),
                                 ),
-                              ),
-                              child: Icon(
-                                CupertinoIcons.chevron_up,
-                                color: caretColor,
-                                size: 14.0,
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                    _showBottomCaret
-                        ? Positioned(
-                            bottom: 0,
-                            child: Container(
-                              width: widget.buttonRect.width -
-                                  _kPopupMenuCaretsOffset,
-                              height: widget.buttonRect.height,
-                              decoration: BoxDecoration(
-                                color: popupColor,
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: _kSideRadius,
-                                  bottomRight: _kSideRadius,
+                                child: Icon(
+                                  CupertinoIcons.chevron_up,
+                                  color: caretColor,
+                                  size: 12.0,
                                 ),
-                              ),
-                              child: Icon(
-                                CupertinoIcons.chevron_down,
-                                color: caretColor,
-                                size: 14.0,
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  ],
+                              )
+                            : const SizedBox.shrink(),
+                        // Wrap the items list with an Expanded widget for to
+                        // avoid height overflow when having a lot of items.
+                        _showTopCaret || _showBottomCaret
+                            ? Expanded(
+                                child: itemsList,
+                              )
+                            : itemsList,
+                        _showBottomCaret
+                            ? Container(
+                                width: widget.buttonRect.width -
+                                    _kPopupMenuCaretsOffset,
+                                height: widget.buttonRect.height,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: _kSideRadius,
+                                    bottomRight: _kSideRadius,
+                                  ),
+                                ),
+                                child: Icon(
+                                  CupertinoIcons.chevron_down,
+                                  color: caretColor,
+                                  size: 12.0,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
+                  ),
                 ),
                 onNotification: (t) {
                   if (t is ScrollUpdateNotification) {
