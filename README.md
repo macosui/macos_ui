@@ -23,6 +23,8 @@ Flutter widgets and themes implementing the current macOS design language.
   - [MacosCheckbox](#macoscheckbox)
   - [HelpButton](#helpbutton)
   - [RadioButton](#radiobutton)
+  - [PulldownButton](#pulldownbutton)
+  - [PopupButton](#popupbutton)
   - [PushButton](#pushbutton)
   - [MacosSwitch](#macosswitch)
 - [Dialogs and Sheets](#dialogs)
@@ -231,7 +233,51 @@ MacosRadioButton(
 ),
 ```
 
-## Pop-Up Button
+## PulldownButton
+
+A pull-down button (often referred to as a pull-down menu) is a type of pop-up button that, when clicked, displays a menu containing a list of choices. The menu appears below the button. Once the menu is displayed onscreen, it remains open until the user chooses a menu item, clicks outside of the menu, switches to another app, or quits the app; or until the system displays an alert. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/pull-down-buttons/)
+
+Use a pull-down button to present a list of commands. A pull-down button can either show a `title` or an `icon` to describe the contents of the button's menu. If you use an icon, make sure it clearly communicates the button’s purpose.
+
+If `items` is null, the button will be disabled (greyed out). 
+
+ A `title` or an `icon` must be provided, to be displayed as the  pull-down button's title, but not both at the same time.
+
+The menu can also be navigated with the up/down keys and an action selected with the Return key.
+
+| Dark Theme                                 | Light Theme                                |
+| ------------------------------------------ | ------------------------------------------ |
+| <img src="https://imgur.com/XZlsUxF.jpg"/> | <img src="https://imgur.com/EtrydYd.jpg"/> |
+| <img src="https://imgur.com/KVX8OsR.jpg"/> | <img src="https://imgur.com/mTvBxyL.jpg"/> |
+| <img src="https://imgur.com/k1Wm6fd.jpg"/> | <img src="https://imgur.com/wb08RXI.jpg"/> |
+
+Here's an example of how to create a basic pull-down button:
+
+```dart
+MacosPulldownButton(
+  title: "Actions",
+  // Or provide an icon to use as title:
+  // icon: CupertinoIcons.ellipsis_circle, 
+  items: [
+    MacosPulldownMenuItem(
+      title: const Text('Save'),
+      onTap: () => debugPrint("Saving..."),
+    ),
+    MacosPulldownMenuItem(
+      title: const Text('Save as...'),
+      onTap: () => debugPrint("Opening Save As dialog..."),
+    ),
+    const MacosPulldownMenuDivider(),
+    MacosPulldownMenuItem(
+      enabled: false,
+      title: const Text('Export'),
+      onTap: () => debugPrint("Exporting"),
+    ),
+  ],
+),
+```
+
+## PopupButton
 
 A pop-up button (often referred to as a pop-up menu) is a type of button that, when clicked, displays a menu containing a list of mutually exclusive choices. The menu appears on top of the button. Like other types of menus, a pop-up button’s menu can include separators and symbols like checkmarks. After the menu is revealed, it remains open until the user chooses a menu item, clicks outside of the menu, switches to another app, or quits the app; or until the system displays an alert. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/pop-up-buttons/)
 
