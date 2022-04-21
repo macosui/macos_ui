@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui' show window;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -1109,7 +1108,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
     with WidgetsBindingObserver {
   int? _selectedIndex;
   _MacosPopupRoute<T>? _popupRoute;
-  Orientation? _lastOrientation;
   FocusNode? _internalNode;
   FocusNode? get focusNode => widget.focusNode ?? _internalNode;
   bool _hasPrimaryFocus = false;
@@ -1156,7 +1154,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
   void _removeMacosPopupRoute() {
     _popupRoute?._dismiss();
     _popupRoute = null;
-    _lastOrientation = null;
   }
 
   void _handleFocusChanged() {
