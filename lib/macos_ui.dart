@@ -37,6 +37,7 @@ export 'src/layout/sidebar_item.dart';
 export 'src/layout/title_bar.dart';
 export 'src/layout/window.dart';
 export 'src/macos_app.dart';
+export 'src/selectors/date_field.dart';
 export 'src/sheets/macos_sheet.dart';
 export 'src/theme/macos_colors.dart';
 export 'src/theme/macos_dynamic_color.dart';
