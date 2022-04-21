@@ -60,13 +60,9 @@ class _MacosPopupMenuItemButtonState<T>
         curve: Curves.easeInOut,
         duration: const Duration(milliseconds: 100),
       );
-      setState(() {
-        _isHovered = true;
-      });
+      setState(() => _isHovered = true);
     } else {
-      setState(() {
-        _isHovered = false;
-      });
+      setState(() => _isHovered = false);
     }
   }
 
@@ -1092,9 +1088,7 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
 
   void _handleFocusChanged() {
     if (_hasPrimaryFocus != focusNode!.hasPrimaryFocus) {
-      setState(() {
-        _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
-      });
+      setState(() => _hasPrimaryFocus = focusNode!.hasPrimaryFocus);
     }
   }
 
@@ -1102,9 +1096,7 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
     if (!mounted) {
       return;
     }
-    setState(() {
-      _focusHighlightMode = mode;
-    });
+    setState(() => _focusHighlightMode = mode);
   }
 
   @override

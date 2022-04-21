@@ -779,9 +779,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 
   void _handleFocusChanged() {
     if (_hasPrimaryFocus != focusNode!.hasPrimaryFocus) {
-      setState(() {
-        _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
-      });
+      setState(() => _hasPrimaryFocus = focusNode!.hasPrimaryFocus);
     }
   }
 
@@ -789,9 +787,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     if (!mounted) {
       return;
     }
-    setState(() {
-      _focusHighlightMode = mode;
-    });
+    setState(() => _focusHighlightMode = mode);
   }
 
   @override
