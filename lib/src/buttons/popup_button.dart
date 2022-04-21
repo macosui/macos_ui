@@ -16,7 +16,6 @@ const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 4.0);
 const Radius _kSideRadius = Radius.circular(5.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(_kSideRadius);
 const double _kPopupButtonHeight = 20.0;
-const double _kPopupMenuCaretsOffset = 2.0;
 
 /// A builder to customize popup buttons.
 ///
@@ -293,8 +292,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                       children: [
                         _showTopCaret
                             ? Container(
-                                width: widget.buttonRect.width -
-                                    _kPopupMenuCaretsOffset,
+                                width: widget.buttonRect.width,
                                 height: widget.buttonRect.height,
                                 decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.only(
@@ -318,8 +316,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                             : itemsList,
                         _showBottomCaret
                             ? Container(
-                                width: widget.buttonRect.width -
-                                    _kPopupMenuCaretsOffset,
+                                width: widget.buttonRect.width,
                                 height: widget.buttonRect.height,
                                 decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.only(
@@ -469,7 +466,6 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
     required this.padding,
     required this.buttonRect,
     required this.selectedIndex,
-    this.elevation = 8,
     required this.capturedThemes,
     required this.style,
     this.barrierLabel,
@@ -485,7 +481,6 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
   final int selectedIndex;
-  final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle style;
   final double? itemHeight;
@@ -522,7 +517,6 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
           padding: padding,
           buttonRect: buttonRect,
           selectedIndex: selectedIndex,
-          elevation: elevation,
           capturedThemes: capturedThemes,
           style: style,
           popupColor: popupColor,
@@ -649,7 +643,6 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
     required this.padding,
     required this.buttonRect,
     required this.selectedIndex,
-    this.elevation = 8,
     required this.capturedThemes,
     this.style,
     required this.popupColor,
@@ -661,7 +654,6 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final Rect buttonRect;
   final int selectedIndex;
-  final int elevation;
   final CapturedThemes capturedThemes;
   final TextStyle? style;
   final Color? popupColor;
@@ -871,10 +863,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// if it is non-null. If [disabledHint] is null, then [hint] will be displayed
   /// if it is non-null.
   ///
-  /// The [elevation] and [iconSize] arguments must not be null (they both have
-  /// defaults, so do not need to be specified). The boolean [isDense] and
-  /// [isExpanded] arguments must not be null.
-  ///
   /// The [autofocus] argument must not be null.
   ///
   /// The [popupColor] argument specifies the background color of the
@@ -889,7 +877,6 @@ class MacosPopupButton<T> extends StatefulWidget {
     this.disabledHint,
     required this.onChanged,
     this.onTap,
-    this.elevation = 8,
     this.style,
     this.iconDisabledColor,
     this.iconEnabledColor,
@@ -976,14 +963,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// that matches [value] will be displayed.
   final MacosPopupButtonBuilder? selectedItemBuilder;
 
-  /// The z-coordinate at which to place the menu when open.
-  ///
-  /// The following elevations have defined shadows: 1, 2, 3, 4, 6, 8, 9, 12,
-  /// 16, and 24. See [kElevationToShadow].
-  ///
-  /// Defaults to 8, the appropriate elevation for popup buttons.
-  final int elevation;
-
   /// The text style to use for text in the popup button and the popup
   /// menu that appears when you tap the button.
   ///
@@ -1056,7 +1035,6 @@ class MacosPopupButton<T> extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IntProperty('elevation', elevation));
     properties.add(ColorProperty('iconDisabledColor', iconDisabledColor));
     properties.add(ColorProperty('iconEnabledColor', iconEnabledColor));
     properties.add(DoubleProperty(
@@ -1223,7 +1201,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
       selectedIndex: _selectedIndex ?? 0,
-      elevation: widget.elevation,
       capturedThemes:
           InheritedTheme.capture(from: context, to: navigator.context),
       style: _textStyle!,
