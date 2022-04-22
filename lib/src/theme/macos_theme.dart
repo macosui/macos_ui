@@ -289,10 +289,11 @@ class MacosThemeData with Diagnosticable {
       shadowColor: const Color.fromRGBO(0, 0, 0, 0.1),
       backgroundColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
-          : const Color.fromRGBO(0, 0, 0, 0.1),
+          : const Color.fromRGBO(255, 255, 255, 1.0),
       caretColor: isDark ? MacosColors.white : MacosColors.black,
-      caretControlsBackgroundColor:
-          isDark ? const Color.fromRGBO(255, 255, 255, 0.1) : MacosColors.black,
+      caretControlsBackgroundColor: isDark
+          ? const Color.fromRGBO(255, 255, 255, 0.1)
+          : const Color.fromRGBO(255, 255, 255, 1.0),
       caretControlsSeparatorColor: isDark
           ? const Color.fromRGBO(71, 71, 71, 1)
           : const Color.fromRGBO(0, 0, 0, 0.1),
