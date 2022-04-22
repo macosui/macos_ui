@@ -62,22 +62,22 @@ class MacosIconTheme extends InheritedTheme {
   /// ```
   static MacosIconThemeData of(BuildContext context) {
     final MacosIconThemeData iconThemeData =
-    _getInheritedIconThemeData(context).resolve(context);
+        _getInheritedIconThemeData(context).resolve(context);
     return iconThemeData.isConcrete
         ? iconThemeData
         : iconThemeData.copyWith(
-      size:
-      iconThemeData.size ?? const MacosIconThemeData.fallback().size,
-      color: iconThemeData.color ??
-          const MacosIconThemeData.fallback().color,
-      opacity: iconThemeData.opacity ??
-          const MacosIconThemeData.fallback().opacity,
-    );
+            size:
+                iconThemeData.size ?? const MacosIconThemeData.fallback().size,
+            color: iconThemeData.color ??
+                const MacosIconThemeData.fallback().color,
+            opacity: iconThemeData.opacity ??
+                const MacosIconThemeData.fallback().opacity,
+          );
   }
 
   static MacosIconThemeData _getInheritedIconThemeData(BuildContext context) {
     final MacosIconTheme? iconTheme =
-    context.dependOnInheritedWidgetOfExactType<MacosIconTheme>();
+        context.dependOnInheritedWidgetOfExactType<MacosIconTheme>();
     return iconTheme?.data ?? MacosTheme.of(context).iconTheme;
   }
 
@@ -184,10 +184,10 @@ class MacosIconThemeData with Diagnosticable {
   ///
   /// {@macro dart.ui.shadow.lerp}
   static MacosIconThemeData lerp(
-      MacosIconThemeData? a,
-      MacosIconThemeData? b,
-      double t,
-      ) {
+    MacosIconThemeData? a,
+    MacosIconThemeData? b,
+    double t,
+  ) {
     return MacosIconThemeData(
       color: Color.lerp(a?.color, b?.color, t),
       opacity: ui.lerpDouble(a?.opacity, b?.opacity, t),

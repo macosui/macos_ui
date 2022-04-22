@@ -139,10 +139,10 @@ class TooltipThemeData with Diagnosticable {
   ///
   /// All the properties must be non-null.
   static TooltipThemeData lerp(
-      TooltipThemeData a,
-      TooltipThemeData b,
-      double t,
-      ) {
+    TooltipThemeData a,
+    TooltipThemeData b,
+    double t,
+  ) {
     return TooltipThemeData(
       decoration: Decoration.lerp(a.decoration, b.decoration, t),
       height: t < 0.5 ? a.height : b.height,
@@ -159,17 +159,17 @@ class TooltipThemeData with Diagnosticable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is TooltipThemeData &&
-              runtimeType == other.runtimeType &&
-              height == other.height &&
-              verticalOffset == other.verticalOffset &&
-              padding == other.padding &&
-              margin == other.margin &&
-              preferBelow == other.preferBelow &&
-              decoration == other.decoration &&
-              waitDuration == other.waitDuration &&
-              showDuration == other.showDuration &&
-              textStyle == other.textStyle;
+      other is TooltipThemeData &&
+          runtimeType == other.runtimeType &&
+          height == other.height &&
+          verticalOffset == other.verticalOffset &&
+          padding == other.padding &&
+          margin == other.margin &&
+          preferBelow == other.preferBelow &&
+          decoration == other.decoration &&
+          waitDuration == other.waitDuration &&
+          showDuration == other.showDuration &&
+          textStyle == other.textStyle;
 
   @override
   int get hashCode =>

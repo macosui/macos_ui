@@ -32,7 +32,7 @@ class MacosPopupButtonTheme extends InheritedTheme {
   /// ```
   static MacosPopupButtonThemeData of(BuildContext context) {
     final MacosPopupButtonTheme? buttonTheme =
-    context.dependOnInheritedWidgetOfExactType<MacosPopupButtonTheme>();
+        context.dependOnInheritedWidgetOfExactType<MacosPopupButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).macosPopupButtonTheme;
   }
 
@@ -90,10 +90,10 @@ class MacosPopupButtonThemeData with Diagnosticable {
   ///
   /// All the properties must be non-null.
   static MacosPopupButtonThemeData lerp(
-      MacosPopupButtonThemeData a,
-      MacosPopupButtonThemeData b,
-      double t,
-      ) {
+    MacosPopupButtonThemeData a,
+    MacosPopupButtonThemeData b,
+    double t,
+  ) {
     return MacosPopupButtonThemeData(
       highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
@@ -104,11 +104,11 @@ class MacosPopupButtonThemeData with Diagnosticable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is MacosPopupButtonThemeData &&
-              runtimeType == other.runtimeType &&
-              highlightColor?.value == other.highlightColor?.value &&
-              backgroundColor?.value == other.backgroundColor?.value &&
-              popupColor?.value == other.popupColor?.value;
+      other is MacosPopupButtonThemeData &&
+          runtimeType == other.runtimeType &&
+          highlightColor?.value == other.highlightColor?.value &&
+          backgroundColor?.value == other.backgroundColor?.value &&
+          popupColor?.value == other.popupColor?.value;
 
   @override
   int get hashCode => highlightColor.hashCode ^ backgroundColor.hashCode;

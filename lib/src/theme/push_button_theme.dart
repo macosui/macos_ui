@@ -32,7 +32,7 @@ class PushButtonTheme extends InheritedTheme {
   /// ```
   static PushButtonThemeData of(BuildContext context) {
     final PushButtonTheme? buttonTheme =
-    context.dependOnInheritedWidgetOfExactType<PushButtonTheme>();
+        context.dependOnInheritedWidgetOfExactType<PushButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).pushButtonTheme;
   }
 
@@ -87,10 +87,10 @@ class PushButtonThemeData with Diagnosticable {
   ///
   /// All the properties must be non-null.
   static PushButtonThemeData lerp(
-      PushButtonThemeData a,
-      PushButtonThemeData b,
-      double t,
-      ) {
+    PushButtonThemeData a,
+    PushButtonThemeData b,
+    double t,
+  ) {
     return PushButtonThemeData(
       color: Color.lerp(a.color, b.color, t),
       disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
@@ -101,11 +101,11 @@ class PushButtonThemeData with Diagnosticable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is PushButtonThemeData &&
-              runtimeType == other.runtimeType &&
-              color?.value == other.color?.value &&
-              disabledColor?.value == other.disabledColor?.value &&
-              secondaryColor?.value == other.secondaryColor?.value;
+      other is PushButtonThemeData &&
+          runtimeType == other.runtimeType &&
+          color?.value == other.color?.value &&
+          disabledColor?.value == other.disabledColor?.value &&
+          secondaryColor?.value == other.secondaryColor?.value;
 
   @override
   int get hashCode => color.hashCode ^ disabledColor.hashCode;
