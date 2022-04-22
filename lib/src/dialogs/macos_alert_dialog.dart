@@ -339,7 +339,7 @@ class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
     return ScaleTransition(
       scale: CurvedAnimation(
         parent: animation,
-        curve: _SubtleBounceCurve(),
+        curve: const _SubtleBounceCurve(),
       ),
       child: FadeTransition(
         opacity: CurvedAnimation(
@@ -353,7 +353,7 @@ class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
 }
 
 class _SubtleBounceCurve extends Curve {
-  _SubtleBounceCurve();
+  const _SubtleBounceCurve();
 
   @override
   double transform(double t) {

@@ -3,8 +3,8 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
-const ShapeBorder _defaultShape = const RoundedRectangleBorder(
-  borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
+const ShapeBorder _defaultShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.all(Radius.circular(7.0)),
 );
 
 /// A macOS style navigation-list item intended for use in a [Sidebar]
@@ -135,13 +135,13 @@ class SidebarItems extends StatelessWidget {
 
   List<SidebarItem> get _allItems {
     List<SidebarItem> result = [];
-    items.forEach((element) {
+    for (var element in items) {
       if (element.disclosureItems != null) {
         result.addAll(element.disclosureItems!);
       } else {
         result.add(element);
       }
-    });
+    }
     return result;
   }
 
@@ -193,13 +193,11 @@ class SidebarItems extends StatelessWidget {
 class _SidebarItemsConfiguration extends InheritedWidget {
   const _SidebarItemsConfiguration({
     Key? key,
-    required this.child,
+    required Widget child,
     this.selectedColor = MacosColors.transparent,
     this.unselectedColor = MacosColors.transparent,
     this.shape = _defaultShape,
   }) : super(key: key, child: child);
-
-  final Widget child;
 
   final Color selectedColor;
   final Color unselectedColor;
@@ -349,8 +347,10 @@ class _DisclosureSidebarItem extends StatefulWidget {
 
 class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
     with SingleTickerProviderStateMixin {
-  static Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
-  static Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.25);
+  static final Animatable<double> _easeInTween =
+      CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween =
+      Tween<double>(begin: 0.0, end: 0.25);
 
   late AnimationController _controller;
   late Animation<double> _iconTurns;

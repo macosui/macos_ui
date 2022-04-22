@@ -91,7 +91,7 @@ class TitleBar extends StatelessWidget {
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
-            fillColor: const Color(0x00000),
+            fillColor: const Color(0x0ff00000),
             onPressed: () => Navigator.maybePop(context),
           ),
         );

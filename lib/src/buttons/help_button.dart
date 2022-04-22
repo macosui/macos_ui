@@ -106,8 +106,8 @@ class HelpButtonState extends State<HelpButton>
   }
 
   @override
-  void didUpdateWidget(HelpButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(HelpButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 
@@ -198,18 +198,18 @@ class HelpButtonState extends State<HelpButton>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: !enabled ? disabledColor : backgroundColor,
-                  boxShadow: [
-                    const BoxShadow(
+                  boxShadow: const [
+                    BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(-0.1, -0.1),
                     ),
-                    const BoxShadow(
+                    BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(0.1, 0.1),
                     ),
-                    const BoxShadow(
+                    BoxShadow(
                       color: CupertinoColors.tertiarySystemFill,
-                      offset: const Offset(0, 0),
+                      offset: Offset(0, 0),
                     ),
                   ],
                 ),
@@ -230,126 +230,6 @@ class HelpButtonState extends State<HelpButton>
           ),
         ),
       ),
-    );
-  }
-}
-
-/// Overrides the default style of its [HelpButton] descendants.
-///
-/// See also:
-///
-///  * [HelpButtonThemeData], which is used to configure this theme.
-class HelpButtonTheme extends InheritedTheme {
-  /// Create a [HelpButtonTheme].
-  ///
-  /// The [data] parameter must not be null.
-  const HelpButtonTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  /// The configuration of this theme.
-  final HelpButtonThemeData data;
-
-  /// The closest instance of this class that encloses the given context.
-  ///
-  /// If there is no enclosing [HelpButtonTheme] widget, then
-  /// [MacosThemeData.helpButtonTheme] is used.
-  ///
-  /// Typical usage is as follows:
-  ///
-  /// ```dart
-  /// HelpButtonTheme theme = HelpButtonTheme.of(context);
-  /// ```
-  static HelpButtonThemeData of(BuildContext context) {
-    final HelpButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
-    return buttonTheme?.data ?? MacosTheme.of(context).helpButtonTheme;
-  }
-
-  @override
-  Widget wrap(BuildContext context, Widget child) {
-    return HelpButtonTheme(data: data, child: child);
-  }
-
-  @override
-  bool updateShouldNotify(HelpButtonTheme oldWidget) => data != oldWidget.data;
-}
-
-/// A style that overrides the default appearance of
-/// [HelpButton]s when it's used with [HelpButtonTheme] or with the
-/// overall [MacosTheme]'s [MacosThemeData.helpButtonTheme].
-///
-/// See also:
-///
-///  * [HelpButtonTheme], the theme which is configured with this class.
-///  * [MacosThemeData.helpButtonTheme], which can be used to override the default
-///    style for [HelpButton]s below the overall [MacosTheme].
-class HelpButtonThemeData with Diagnosticable {
-  /// Creates a [HelpButtonThemeData].
-  ///
-  /// The [style] may be null.
-  const HelpButtonThemeData({
-    this.color,
-    this.disabledColor,
-  });
-
-  /// The default background color for [HelpButton]
-  final Color? color;
-
-  /// The default disabled color for [HelpButton]
-  final Color? disabledColor;
-
-  /// Copies one [HelpButtonThemeData] to another.
-  HelpButtonThemeData copyWith({
-    Color? color,
-    Color? disabledColor,
-  }) {
-    return HelpButtonThemeData(
-      color: color ?? this.color,
-      disabledColor: disabledColor ?? this.disabledColor,
-    );
-  }
-
-  /// Linearly interpolate between two tooltip themes.
-  ///
-  /// All the properties must be non-null.
-  static HelpButtonThemeData lerp(
-    HelpButtonThemeData a,
-    HelpButtonThemeData b,
-    double t,
-  ) {
-    return HelpButtonThemeData(
-      color: Color.lerp(a.color, b.color, t),
-      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is HelpButtonThemeData &&
-            runtimeType == other.runtimeType &&
-            color?.value == other.color?.value &&
-            disabledColor?.value == other.disabledColor?.value;
-  }
-
-  @override
-  int get hashCode => color.hashCode ^ disabledColor.hashCode;
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
-    properties.add(ColorProperty('disabledColor', disabledColor));
-  }
-
-  HelpButtonThemeData merge(HelpButtonThemeData? other) {
-    if (other == null) return this;
-    return copyWith(
-      color: other.color,
-      disabledColor: other.disabledColor,
     );
   }
 }

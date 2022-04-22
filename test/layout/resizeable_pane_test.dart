@@ -3,11 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 void main() {
-  final matrix = ResizableSide.values;
+  const matrix = ResizableSide.values;
 
   group('ResizablePane', () {
     for (var side in matrix) {
-      group('${side == ResizableSide.left ? "left" : "right"}', () {
+      group(side == ResizableSide.left ? "left" : "right", () {
         const double maxWidth = 300;
         const double minWidth = 100;
         const double startWidth = 200;

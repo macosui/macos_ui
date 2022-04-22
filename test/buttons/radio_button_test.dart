@@ -13,7 +13,7 @@ Type typeOf<T>() => T;
 
 void main() {
   testWidgets('MacosRadioButton is enabled', (tester) async {
-    final selectedOption = TestOptions.first;
+    const selectedOption = TestOptions.first;
     await tester.pumpWidget(
       MacosApp(
         home: MacosWindow(
@@ -45,7 +45,7 @@ void main() {
   });
 
   testWidgets('Trigger MacosIconButton onChanged', (tester) async {
-    final selectedOption = TestOptions.first;
+    const selectedOption = TestOptions.first;
     int called = 0;
     await tester.pumpWidget(
       MacosApp(
@@ -80,7 +80,7 @@ void main() {
 
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
-    final selectedOption = TestOptions.first;
+    const selectedOption = TestOptions.first;
     MacosRadioButton(
       value: selectedOption,
       groupValue: TestOptions.first,

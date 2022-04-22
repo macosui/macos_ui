@@ -76,9 +76,11 @@ class RatingIndicator extends StatelessWidget {
 
   void _handleUpdate(Offset lp) {
     double value = lp.dx / iconSize;
-    if (value.isNegative)
+    if (value.isNegative) {
       value = 0;
-    else if (value > amount) value = amount.toDouble();
+    } else if (value > amount) {
+      value = amount.toDouble();
+    }
     onChanged?.call(value);
   }
 

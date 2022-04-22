@@ -1,3 +1,9 @@
+## [0.12.4+3]
+* Move theme classes to their own files in the `/theme` directory
+
+## [0.12.4+2]
+* Switch over to `flutter_lints`
+
 ## [0.12.4+1]
 * Improve visual design of `MacosPopupButton` and `MacosPulldownButton`, to better match the styling and translucency effect of Apple design. 
 * Remove unnecessary properties of `MacosPopupButton`

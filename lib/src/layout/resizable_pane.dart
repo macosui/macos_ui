@@ -19,7 +19,7 @@ class ResizablePane extends StatefulWidget {
   /// [isResizable] defaults to `true`.
   ///
   /// The [startWidth] is the initial width.
-  ResizablePane({
+  const ResizablePane({
     Key? key,
     required this.builder,
     this.decoration,
@@ -28,7 +28,7 @@ class ResizablePane extends StatefulWidget {
     this.isResizable = true,
     required this.resizableSide,
     this.windowBreakpoint,
-    required double startWidth,
+    required this.startWidth,
   })  : assert(
           maxWidth >= minWidth,
           'minWidth should not be more than maxWidth.',
@@ -37,7 +37,6 @@ class ResizablePane extends StatefulWidget {
           (startWidth >= minWidth) && (startWidth <= maxWidth),
           'startWidth must not be less than minWidth or more than maxWidth',
         ),
-        startWidth = startWidth,
         super(key: key);
 
   /// The builder that creates a child to display in this widget, which will
@@ -66,7 +65,7 @@ class ResizablePane extends StatefulWidget {
   ///
   /// The [startWidth] should not be more than the [maxWidth] or
   /// less than the [minWidth].
-  final double? startWidth;
+  final double startWidth;
 
   /// Indicates the draggable side of the [ResizablePane] for resizing
   final ResizableSide resizableSide;
@@ -149,7 +148,7 @@ class _ResizablePaneState extends State<ResizablePane> {
   @override
   void initState() {
     super.initState();
-    _width = widget.startWidth ?? widget.minWidth;
+    _width = widget.startWidth;
     _scrollController.addListener(() => setState(() {}));
   }
 
@@ -165,11 +164,12 @@ class _ResizablePaneState extends State<ResizablePane> {
     if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
         oldWidget.minWidth != widget.minWidth ||
         oldWidget.maxWidth != widget.maxWidth ||
-        oldWidget.resizableSide != widget.resizableSide)
+        oldWidget.resizableSide != widget.resizableSide) {
       setState(() {
         if (widget.minWidth > _width) _width = widget.minWidth;
         if (widget.maxWidth < _width) _width = widget.maxWidth;
       });
+    }
   }
 
   @override
