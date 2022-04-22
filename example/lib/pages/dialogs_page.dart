@@ -13,7 +13,7 @@ class _DialogsPageState extends State<DialogsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
+      toolBar: const ToolBar(
         title: Text('macOS UI Dialogs & Sheets'),
       ),
       children: [

@@ -7,7 +7,7 @@ import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
-const kToolbarHeight = 38.0;
+const kToolbarHeight = 52.0;
 
 class ToolBar extends StatelessWidget {
   /// Creates a toolbar in the [MacosScaffold].
@@ -18,12 +18,12 @@ class ToolBar extends StatelessWidget {
     this.height = kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
-    this.padding = const EdgeInsets.all(8),
+    this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 12.0),
     this.decoration,
     this.leading,
     this.automaticallyImplyLeading = true,
     this.actions,
-    this.centerTitle = true,
+    this.centerTitle = false,
   }) : super(key: key);
 
   /// Specifies the height of this [ToolBar]

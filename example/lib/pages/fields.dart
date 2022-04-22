@@ -15,9 +15,6 @@ class _FieldsPageState extends State<FieldsPage> {
       titleBar: const TitleBar(
         title: Text('macOS UI Fields'),
       ),
-      toolBar: const ToolBar(
-        title: Text('macOS UI Fields'),
-      ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(

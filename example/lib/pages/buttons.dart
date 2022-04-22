@@ -19,20 +19,76 @@ class _ButtonsPageState extends State<ButtonsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: TitleBar(
+      titleBar: const TitleBar(
+        title: Text('App title bar'),
+      ),
+      toolBar: ToolBar(
         title: const Text('macOS UI Widget Gallery'),
+        leading: MacosBackButton(
+          onPressed: () => debugPrint('click'),
+          fillColor: Colors.transparent,
+        ),
         actions: [
-          MacosIconButton(
-            backgroundColor: MacosColors.transparent,
+          ToolBarPullDownButton(
+            icon: CupertinoIcons.ellipsis_circle,
+            items: [
+              MacosPulldownMenuItem(
+                title: const Text('New Folder'),
+                onTap: () => debugPrint("Creating new folder..."),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Open'),
+                onTap: () => debugPrint("Opening..."),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Open with...'),
+                onTap: () => debugPrint("Opening with..."),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Import from iPhone...'),
+                onTap: () => debugPrint("Importing..."),
+              ),
+              const MacosPulldownMenuDivider(),
+              MacosPulldownMenuItem(
+                enabled: false,
+                title: const Text('Remove'),
+                onTap: () => debugPrint("Deleting..."),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Move to Bin'),
+                onTap: () => debugPrint("Moving to Bin..."),
+              ),
+              const MacosPulldownMenuDivider(),
+              MacosPulldownMenuItem(
+                title: const Text('Tags...'),
+                onTap: () => debugPrint("Tags..."),
+              ),
+            ],
+          ),
+          ToolBarIconButton(
             icon: const MacosIcon(
               CupertinoIcons.sidebar_left,
-              color: MacosColors.systemGrayColor,
             ),
             onPressed: () {
               MacosWindowScope.of(context).toggleSidebar();
             },
           ),
-          const SizedBox(width: 10),
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.share,
+            ),
+            onPressed: () {
+              MacosWindowScope.of(context).toggleSidebar();
+            },
+          ),
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.trash,
+            ),
+            onPressed: () {
+              MacosWindowScope.of(context).toggleSidebar();
+            },
+          ),
         ],
       ),
       children: [
