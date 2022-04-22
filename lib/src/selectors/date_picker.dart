@@ -333,7 +333,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             ),
           ],
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 16),
         PhysicalModel(
           color: datePickerTheme.shadowColor!,
           child: SizedBox(
