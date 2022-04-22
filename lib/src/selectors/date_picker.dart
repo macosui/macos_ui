@@ -302,7 +302,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 const SizedBox(
                   height: 1.0,
                   child: ColoredBox(
-                    color: const MacosColor(0xFF333333),
+                    color: MacosColor(0xFF333333),
                   ),
                 ),
                 SizedBox(
