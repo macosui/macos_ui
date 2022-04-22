@@ -97,9 +97,9 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     TextStyle? headerStyle,
     MaterialLocalizations localizations,
   ) {
-    final List<Widget> result = <Widget>[];
+    final result = <Widget>[];
     for (int i = localizations.firstDayOfWeekIndex; true; i = (i + 1) % 7) {
-      final String weekday = localizations.narrowWeekdays[i];
+      final weekday = localizations.narrowWeekdays[i];
       result.add(
         ExcludeSemantics(
           child: Center(
@@ -117,16 +117,21 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle dayStyle = MacosTheme.of(context).typography.caption1;
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-    int daysInMonth = DateUtils.getDaysInMonth(_selectedYear, _selectedMonth);
-    final int dayOffset =
+    final datePickerTheme = MacosDatePickerTheme.of(context);
+    const dayStyle = TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 10.0,
+      letterSpacing: 0.12,
+    );
+    final localizations = MaterialLocalizations.of(context);
+    final daysInMonth = DateUtils.getDaysInMonth(_selectedYear, _selectedMonth);
+    final dayOffset =
         DateUtils.firstDayOffset(_selectedYear, _selectedMonth, localizations);
-    final List<Widget> dayHeaders = _dayHeaders(
+    final dayHeaders = _dayHeaders(
       MacosTheme.of(context).typography.caption1.copyWith(
-            color: const MacosColor(0xFFA3A2A3),
-            fontWeight: FontWeight.bold,
+            color: datePickerTheme.monthViewWeekdayHeaderColor,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.12,
           ),
       localizations,
     );
@@ -134,35 +139,23 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     // a leap year.
     int day = -dayOffset;
 
-    final List<Widget> dayItems = [];
+    final dayItems = <Widget>[];
 
     while (day < daysInMonth) {
       day++;
       if (day < 1) {
         dayItems.add(const SizedBox.shrink());
       } else {
-        final DateTime dayToBuild =
-            DateTime(_selectedYear, _selectedMonth, day);
-        final bool isDisabled =
-            dayToBuild.day < 1 && dayToBuild.day > daysInMonth;
-        final bool isSelectedDay = DateUtils.isSameDay(
+        final dayToBuild = DateTime(_selectedYear, _selectedMonth, day);
+        final isDisabled = dayToBuild.day < 1 && dayToBuild.day > daysInMonth;
+        final isSelectedDay = DateUtils.isSameDay(
           DateTime(_selectedYear, _selectedMonth, _selectedDay),
           dayToBuild,
         );
-        final bool isToday = DateUtils.isSameDay(_initialDate, dayToBuild);
+        final isToday = DateUtils.isSameDay(_initialDate, dayToBuild);
 
         BoxDecoration? decoration;
         Widget? dayText;
-
-        if (isSelectedDay) {
-          dayText = Text(
-            localizations.formatDecimal(day),
-            style: dayStyle,
-          );
-          decoration = const BoxDecoration(
-            color: MacosColors.systemGrayColor,
-          );
-        }
 
         if (isToday && isSelectedDay) {
           dayText = Text(
@@ -170,13 +163,24 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             style: dayStyle,
           );
           decoration = BoxDecoration(
-            border: Border.all(color: MacosColors.systemBlueColor, width: 1),
-            color: MacosColors.systemBlueColor,
+            color: datePickerTheme.monthViewCurrentDateColor,
+            borderRadius: BorderRadius.circular(3.0),
           );
         } else if (isToday) {
           dayText = Text(
             localizations.formatDecimal(day),
-            style: dayStyle.apply(color: MacosColors.systemBlueColor),
+            style: dayStyle.apply(
+              color: datePickerTheme.monthViewCurrentDateColor,
+            ),
+          );
+        } else if (isSelectedDay) {
+          dayText = Text(
+            localizations.formatDecimal(day),
+            style: dayStyle,
+          );
+          decoration = BoxDecoration(
+            color: datePickerTheme.monthViewSelectedDateColor,
+            borderRadius: BorderRadius.circular(3.0),
           );
         }
 
@@ -216,10 +220,10 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           mainAxisSize: MainAxisSize.min,
           children: [
             PhysicalModel(
-              color: const MacosColor(0xFF333333),
+              color: datePickerTheme.shadowColor!,
               elevation: 1,
               child: ColoredBox(
-                color: const MacosColor(0xFF333333), //TODO: light theme color,
+                color: datePickerTheme.backgroundColor!,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8.0,
@@ -231,7 +235,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       FieldElement(
                         element: '$_selectedMonth',
                         backgroundColor: _isMonthSelected
-                            ? MacosColors.systemBlueColor
+                            ? datePickerTheme.selectedElementColor!
                             : MacosColors.transparent,
                         onSelected: () {
                           setState(() {
@@ -245,7 +249,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       FieldElement(
                         element: '$_selectedDay',
                         backgroundColor: _isDaySelected
-                            ? MacosColors.systemBlueColor
+                            ? datePickerTheme.selectedElementColor!
                             : MacosColors.transparent,
                         onSelected: () {
                           setState(() {
@@ -259,7 +263,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       FieldElement(
                         element: '$_selectedYear',
                         backgroundColor: _isYearSelected
-                            ? MacosColors.systemBlueColor
+                            ? datePickerTheme.selectedElementColor!
                             : MacosColors.transparent,
                         onSelected: () {
                           setState(() {
@@ -282,27 +286,26 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                   width: 12.0,
                   child: GestureDetector(
                     onTap: _incrementElement,
-                    child: const PhysicalModel(
-                      color: MacosColor(0xFF333333),
+                    child: PhysicalModel(
+                      color: datePickerTheme.shadowColor!,
                       elevation: 1,
-                      borderRadius: BorderRadius.vertical(
+                      borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(5.0),
                       ),
                       child: CustomPaint(
                         painter: UpCaretPainter(
-                          color: MacosColors.white,
-                          backgroundColor: MacosColor(
-                            0xFF333333,
-                          ), //todo: correct light theme color
+                          color: datePickerTheme.caretColor!,
+                          backgroundColor:
+                              datePickerTheme.caretControlsBackgroundColor!,
                         ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 1.0,
                   child: ColoredBox(
-                    color: MacosColor(0xFF333333),
+                    color: datePickerTheme.caretControlsSeparatorColor!,
                   ),
                 ),
                 SizedBox(
@@ -310,18 +313,17 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                   width: 12.0,
                   child: GestureDetector(
                     onTap: _decrementElement,
-                    child: const PhysicalModel(
-                      color: MacosColor(0xFF333333),
+                    child: PhysicalModel(
+                      color: datePickerTheme.shadowColor!,
                       elevation: 1,
-                      borderRadius: BorderRadius.vertical(
+                      borderRadius: const BorderRadius.vertical(
                         bottom: Radius.circular(5.0),
                       ),
                       child: CustomPaint(
                         painter: DownCaretPainter(
-                          color: MacosColors.white,
-                          backgroundColor: MacosColor(
-                            0xFF333333,
-                          ), //todo: correct light theme color
+                          color: datePickerTheme.caretColor!,
+                          backgroundColor:
+                              datePickerTheme.caretControlsBackgroundColor!,
                         ),
                       ),
                     ),
@@ -335,7 +337,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
         SizedBox(
           width: 138.0,
           child: ColoredBox(
-            color: const MacosColor(0xFF333333),
+            color: datePickerTheme.backgroundColor!,
             child: Column(
               children: [
                 Padding(
@@ -347,17 +349,18 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                         '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
                         style: const TextStyle(
                           fontSize: 13.0,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.08,
                         ),
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           MacosIconButton(
-                            icon: const MacosIcon(
+                            icon: MacosIcon(
                               CupertinoIcons.arrowtriangle_left_fill,
                               size: 10.0,
-                              color: MacosColor(0xFFA3A2A3),
+                              color: datePickerTheme.monthViewControlsColor,
                             ),
                             backgroundColor: MacosColors.transparent,
                             borderRadius: BorderRadius.zero,
@@ -372,10 +375,10 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                           ),
                           const SizedBox(width: 6.0),
                           MacosIconButton(
-                            icon: const MacosIcon(
+                            icon: MacosIcon(
                               CupertinoIcons.circle_fill,
                               size: 8.0,
-                              color: MacosColor(0xFFA3A2A3),
+                              color: datePickerTheme.monthViewControlsColor,
                             ),
                             backgroundColor: MacosColors.transparent,
                             borderRadius: BorderRadius.zero,
@@ -390,10 +393,10 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                           ),
                           const SizedBox(width: 6.0),
                           MacosIconButton(
-                            icon: const MacosIcon(
+                            icon: MacosIcon(
                               CupertinoIcons.arrowtriangle_right_fill,
                               size: 10.0,
-                              color: MacosColor(0xFFA3A2A3),
+                              color: datePickerTheme.monthViewControlsColor,
                             ),
                             backgroundColor: MacosColors.transparent,
                             borderRadius: BorderRadius.zero,
@@ -424,8 +427,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                           addRepaintBoundaries: false,
                         ),
                       ),
-                      const Divider(
-                        color: MacosColor(0xFF464646),
+                      Divider(
+                        color: datePickerTheme.monthViewHeaderDividerColor,
                         height: 0,
                       ),
                       GridView.custom(
@@ -494,7 +497,14 @@ class FieldElement extends StatelessWidget {
       onTap: onSelected,
       child: ColoredBox(
         color: backgroundColor,
-        child: Text(element),
+        child: Text(
+          element,
+          style: const TextStyle(
+            fontSize: 13.0,
+            fontWeight: FontWeight.w400,
+            letterSpacing: -0.08,
+          ),
+        ),
       ),
     );
   }

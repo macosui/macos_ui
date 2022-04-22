@@ -113,7 +113,7 @@ class _MacosPopupMenuItemButtonState<T>
             child: Container(
               decoration: BoxDecoration(
                 color: _isHovered
-                    ? theme.macosPopupButtonTheme.highlightColor
+                    ? theme.popupButtonTheme.highlightColor
                     : Colors.transparent,
                 borderRadius: _kBorderRadius,
               ),
@@ -218,7 +218,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
     final brightness = MacosTheme.brightnessOf(context);
     final popupColor = MacosDynamicColor.maybeResolve(
       widget.popupColor ??
-          MacosTheme.of(context).macosPopupButtonTheme.popupColor,
+          MacosTheme.of(context).popupButtonTheme.popupColor,
       context,
     );
     final caretColor =
@@ -1343,13 +1343,13 @@ _ButtonStyles _getButtonStyles(
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
   Color textColor = theme.typography.body.color!;
-  Color bgColor = theme.macosPopupButtonTheme.backgroundColor!;
+  Color bgColor = theme.popupButtonTheme.backgroundColor!;
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
-  Color caretBgColor = theme.macosPopupButtonTheme.highlightColor!;
+  Color caretBgColor = theme.popupButtonTheme.highlightColor!;
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     textColor = caretColor = brightness.resolve(
@@ -1369,7 +1369,7 @@ _ButtonStyles _getButtonStyles(
       const Color(0xffc3c4c9),
       const Color(0xff222222),
     );
-    caretBgColor = theme.macosPopupButtonTheme.highlightColor!;
+    caretBgColor = theme.popupButtonTheme.highlightColor!;
   }
   return _ButtonStyles(
     textColor: textColor,
