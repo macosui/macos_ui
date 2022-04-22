@@ -6,16 +6,16 @@ import 'package:macos_ui/src/buttons/back_button.dart';
 import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
-/// Defines the height of a regular-sized [TitleBar]
-const kTitleBarHeight = 28.0;
+/// Defines the height of a regular-sized [ToolBar]
+const kToolbarHeight = 38.0;
 
-class TitleBar extends StatelessWidget {
-  /// Creates a title bar in the [MacosScaffold].
+class ToolBar extends StatelessWidget {
+  /// Creates a toolbar in the [MacosScaffold].
   ///
-  /// The height of the TitleBar can be changed with [height].
-  const TitleBar({
+  /// The height of the ToolBar can be changed with [height].
+  const ToolBar({
     Key? key,
-    this.height = kTitleBarHeight,
+    this.height = kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
     this.padding = const EdgeInsets.all(8),
@@ -26,16 +26,16 @@ class TitleBar extends StatelessWidget {
     this.centerTitle = true,
   }) : super(key: key);
 
-  /// Specifies the height of this [TitleBar]
+  /// Specifies the height of this [ToolBar]
   ///
-  /// Defaults to [kTitleBarHeight] which is 28.0
+  /// Defaults to [kToolbarHeight] which is 38.0
   final double height;
 
-  /// Align the [title] within the [TitleBar].
+  /// Align the [title] within the [ToolBar].
   ///
   /// Defaults to [Alignment.center].
   ///
-  /// The [TitleBar] will expand to fill its parent and position its
+  /// The [ToolBar] will expand to fill its parent and position its
   /// child within itself according to the given value.
   ///
   /// See also:
@@ -52,7 +52,7 @@ class TitleBar extends StatelessWidget {
   /// The decoration to paint behind the [title].
   final BoxDecoration? decoration;
 
-  /// Empty space to inscribe inside the title bar. The [title], if any, is
+  /// Empty space to inscribe inside the toolbar. The [title], if any, is
   /// placed inside this padding.
   ///
   /// Defaults to `EdgeInsets.all(8)`

@@ -16,9 +16,9 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS UI Indicators'),
-      ),
+      // titleBar: const TitleBar(
+      //   title: Text('macOS UI Indicators'),
+      // ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
