@@ -334,116 +334,119 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           ],
         ),
         const SizedBox(height: 32),
-        SizedBox(
-          width: 138.0,
-          child: ColoredBox(
-            color: datePickerTheme.backgroundColor!,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(2.0, 2.0, 0.0, 4.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
-                        style: const TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: -0.08,
+        PhysicalModel(
+          color: datePickerTheme.shadowColor!,
+          child: SizedBox(
+            width: 138.0,
+            child: ColoredBox(
+              color: datePickerTheme.backgroundColor!,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2.0, 2.0, 0.0, 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
+                          style: const TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: -0.08,
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          MacosIconButton(
-                            icon: MacosIcon(
-                              CupertinoIcons.arrowtriangle_left_fill,
-                              size: 10.0,
-                              color: datePickerTheme.monthViewControlsColor,
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            MacosIconButton(
+                              icon: MacosIcon(
+                                CupertinoIcons.arrowtriangle_left_fill,
+                                size: 10.0,
+                                color: datePickerTheme.monthViewControlsColor,
+                              ),
+                              backgroundColor: MacosColors.transparent,
+                              borderRadius: BorderRadius.zero,
+                              padding: EdgeInsets.zero,
+                              boxConstraints: const BoxConstraints(
+                                maxWidth: 12.0,
+                              ),
+                              onPressed: () {
+                                setState(() => _selectedMonth--);
+                                widget.onDateChanged.call(_formatAsDateTime());
+                              },
                             ),
-                            backgroundColor: MacosColors.transparent,
-                            borderRadius: BorderRadius.zero,
-                            padding: EdgeInsets.zero,
-                            boxConstraints: const BoxConstraints(
-                              maxWidth: 12.0,
+                            const SizedBox(width: 6.0),
+                            MacosIconButton(
+                              icon: MacosIcon(
+                                CupertinoIcons.circle_fill,
+                                size: 8.0,
+                                color: datePickerTheme.monthViewControlsColor,
+                              ),
+                              backgroundColor: MacosColors.transparent,
+                              borderRadius: BorderRadius.zero,
+                              padding: EdgeInsets.zero,
+                              boxConstraints: const BoxConstraints(
+                                maxWidth: 12.0,
+                              ),
+                              onPressed: () {
+                                setState(() => _parseInitialDate());
+                                widget.onDateChanged.call(_formatAsDateTime());
+                              },
                             ),
-                            onPressed: () {
-                              setState(() => _selectedMonth--);
-                              widget.onDateChanged.call(_formatAsDateTime());
-                            },
-                          ),
-                          const SizedBox(width: 6.0),
-                          MacosIconButton(
-                            icon: MacosIcon(
-                              CupertinoIcons.circle_fill,
-                              size: 8.0,
-                              color: datePickerTheme.monthViewControlsColor,
+                            const SizedBox(width: 6.0),
+                            MacosIconButton(
+                              icon: MacosIcon(
+                                CupertinoIcons.arrowtriangle_right_fill,
+                                size: 10.0,
+                                color: datePickerTheme.monthViewControlsColor,
+                              ),
+                              backgroundColor: MacosColors.transparent,
+                              borderRadius: BorderRadius.zero,
+                              padding: EdgeInsets.zero,
+                              boxConstraints: const BoxConstraints(
+                                maxWidth: 12.0,
+                              ),
+                              onPressed: () {
+                                setState(() => _selectedMonth++);
+                                widget.onDateChanged.call(_formatAsDateTime());
+                              },
                             ),
-                            backgroundColor: MacosColors.transparent,
-                            borderRadius: BorderRadius.zero,
-                            padding: EdgeInsets.zero,
-                            boxConstraints: const BoxConstraints(
-                              maxWidth: 12.0,
-                            ),
-                            onPressed: () {
-                              setState(() => _parseInitialDate());
-                              widget.onDateChanged.call(_formatAsDateTime());
-                            },
-                          ),
-                          const SizedBox(width: 6.0),
-                          MacosIconButton(
-                            icon: MacosIcon(
-                              CupertinoIcons.arrowtriangle_right_fill,
-                              size: 10.0,
-                              color: datePickerTheme.monthViewControlsColor,
-                            ),
-                            backgroundColor: MacosColors.transparent,
-                            borderRadius: BorderRadius.zero,
-                            padding: EdgeInsets.zero,
-                            boxConstraints: const BoxConstraints(
-                              maxWidth: 12.0,
-                            ),
-                            onPressed: () {
-                              setState(() => _selectedMonth++);
-                              widget.onDateChanged.call(_formatAsDateTime());
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(6.0, 0.0, 5.0, 0.0),
-                  child: Column(
-                    children: [
-                      GridView.custom(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        gridDelegate: _dayPickerGridDelegate,
-                        childrenDelegate: SliverChildListDelegate(
-                          dayHeaders,
-                          addRepaintBoundaries: false,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(6.0, 0.0, 5.0, 0.0),
+                    child: Column(
+                      children: [
+                        GridView.custom(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          gridDelegate: _dayPickerGridDelegate,
+                          childrenDelegate: SliverChildListDelegate(
+                            dayHeaders,
+                            addRepaintBoundaries: false,
+                          ),
                         ),
-                      ),
-                      Divider(
-                        color: datePickerTheme.monthViewHeaderDividerColor,
-                        height: 0,
-                      ),
-                      GridView.custom(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        gridDelegate: _dayPickerGridDelegate,
-                        childrenDelegate: SliverChildListDelegate(
-                          dayItems,
-                          addRepaintBoundaries: false,
+                        Divider(
+                          color: datePickerTheme.monthViewHeaderDividerColor,
+                          height: 0,
                         ),
-                      ),
-                    ],
+                        GridView.custom(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          gridDelegate: _dayPickerGridDelegate,
+                          childrenDelegate: SliverChildListDelegate(
+                            dayItems,
+                            addRepaintBoundaries: false,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
