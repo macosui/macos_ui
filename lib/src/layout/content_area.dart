@@ -11,7 +11,7 @@ class ContentArea extends StatelessWidget {
   ///
   /// The width of this
   /// widget is automatically calculated in [MacosScaffoldScope].
-  ContentArea({
+  const ContentArea({
     required this.builder,
     this.minWidth = 300,
   }) : super(key: const Key('macos_scaffold_content_area'));

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -17,10 +19,8 @@ const EdgeInsetsGeometry _kLargeButtonPadding = EdgeInsets.symmetric(
   horizontal: 8.0,
 );
 
-const BorderRadius _kSmallButtonRadius =
-    const BorderRadius.all(Radius.circular(5.0));
-const BorderRadius _kLargeButtonRadius =
-    const BorderRadius.all(Radius.circular(7.0));
+const BorderRadius _kSmallButtonRadius = BorderRadius.all(Radius.circular(5.0));
+const BorderRadius _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
 
 /// A macOS-style button.
 class PushButton extends StatefulWidget {
@@ -164,8 +164,8 @@ class PushButtonState extends State<PushButton>
   }
 
   @override
-  void didUpdateWidget(PushButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(PushButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 

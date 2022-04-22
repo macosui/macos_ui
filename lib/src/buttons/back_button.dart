@@ -79,8 +79,8 @@ class MacosBackButtonState extends State<MacosBackButton>
   }
 
   @override
-  void didUpdateWidget(MacosBackButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(MacosBackButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 

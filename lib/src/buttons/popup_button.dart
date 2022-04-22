@@ -566,9 +566,10 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
     double menuTop = (buttonTop - selectedItemOffset) -
         (itemHeights[selectedIndex] - buttonRect.height) / 2.0;
     double preferredMenuHeight = 8.0;
-    if (items.isNotEmpty)
+    if (items.isNotEmpty) {
       preferredMenuHeight +=
           itemHeights.reduce((double total, double height) => total + height);
+    }
 
     // If there are too many elements in the menu, we need to shrink it down
     // so it is at most the computedMaxHeight.
@@ -666,10 +667,8 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
     // treating the items as if their heights were all equal to _kMinInteractiveDimension.
     final _MenuLimits menuLimits =
         route.getMenuLimits(buttonRect, constraints.maxHeight, selectedIndex);
-    if (route.scrollController == null) {
-      route.scrollController =
-          ScrollController(initialScrollOffset: menuLimits.scrollOffset);
-    }
+    route.scrollController ??=
+        ScrollController(initialScrollOffset: menuLimits.scrollOffset);
 
     final TextDirection? textDirection = Directionality.maybeOf(context);
     final Widget menu = _MacosPopupMenu<T>(
@@ -1142,8 +1141,8 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    final EdgeInsetsGeometry menuMargin =
-        const EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
+    const EdgeInsetsGeometry menuMargin =
+        EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
 
     final List<_MenuItem<T>> menuItems = <_MenuItem<T>>[
       for (int index = 0; index < widget.items!.length; index += 1)
@@ -1227,8 +1226,9 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
     if (widget.hint != null || (!_enabled && widget.disabledHint != null)) {
       Widget displayedHint =
           _enabled ? widget.hint! : widget.disabledHint ?? widget.hint!;
-      if (widget.selectedItemBuilder == null)
+      if (widget.selectedItemBuilder == null) {
         displayedHint = _MacosPopupMenuItemContainer(child: displayedHint);
+      }
 
       hintIndex = items.length;
       items.add(IgnorePointer(
@@ -1407,7 +1407,7 @@ class _UpDownCaretsPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final radius = 4.0;
+    const radius = 4.0;
     final vPadding = size.height / 8 + 1.25;
     final hPadding = 2 * size.height / 8 + 1.25;
 

@@ -117,7 +117,7 @@ class _MacosWindowState extends State<MacosWindow> {
           : CupertinoColors.systemGrey6.color;
     }
 
-    final curve = Curves.linearToEaseOut;
+    const curve = Curves.linearToEaseOut;
     final duration = Duration(milliseconds: _sidebarSlideDuration);
 
     return LayoutBuilder(
@@ -235,12 +235,13 @@ class _MacosWindowState extends State<MacosWindow> {
                         ),
                       );
 
-                      if (_sidebarWidth == sidebar.minWidth)
+                      if (_sidebarWidth == sidebar.minWidth) {
                         _sidebarCursor = SystemMouseCursors.resizeRight;
-                      else if (_sidebarWidth == sidebar.maxWidth)
+                      } else if (_sidebarWidth == sidebar.maxWidth) {
                         _sidebarCursor = SystemMouseCursors.resizeLeft;
-                      else
+                      } else {
                         _sidebarCursor = SystemMouseCursors.resizeColumn;
+                      }
                     });
                   },
                   child: MouseRegion(
@@ -340,12 +341,12 @@ class MacosWindowScope extends InheritedWidget {
   /// This does not change the current width of the [Sidebar]. It only
   /// hides or shows it.
   void toggleSidebar() {
-    return _sidebarToggler();
+    _sidebarToggler();
   }
 
   @override
-  bool updateShouldNotify(MacosWindowScope old) {
-    return constraints != old.constraints ||
-        isSidebarShown != old.isSidebarShown;
+  bool updateShouldNotify(MacosWindowScope oldWidget) {
+    return constraints != oldWidget.constraints ||
+        isSidebarShown != oldWidget.isSidebarShown;
   }
 }

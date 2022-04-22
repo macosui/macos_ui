@@ -13,7 +13,7 @@ import 'package:macos_ui/src/library.dart';
 /// Does nothing if asserts are disabled. Always returns true.
 bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
   assert(() {
-    if (MacosTheme.maybeOf(context) == null)
+    if (MacosTheme.maybeOf(context) == null) {
       throw FlutterError.fromParts(<DiagnosticsNode>[
         ErrorSummary('A MacosTheme widget is necessary to draw this layout.'),
         ErrorHint(
@@ -23,6 +23,7 @@ bool debugCheckHasMacosTheme(BuildContext context, [bool check = true]) {
         ),
         ...context.describeMissingAncestor(expectedAncestorType: MacosTheme),
       ]);
+    }
     return true;
   }());
   return true;

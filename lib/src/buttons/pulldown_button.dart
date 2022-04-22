@@ -394,9 +394,10 @@ class _MacosPulldownRoute extends PopupRoute {
 
     double menuTop = buttonTop + buttonRect.height;
     double preferredMenuHeight = 8.0;
-    if (items.isNotEmpty)
+    if (items.isNotEmpty) {
       preferredMenuHeight +=
           itemHeights.reduce((double total, double height) => total + height);
+    }
 
     // If there are too many elements in the menu, we need to shrink it down
     // so it is at most the computedMaxHeight.
@@ -808,8 +809,8 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    final EdgeInsetsGeometry menuMargin =
-        const EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
+    const EdgeInsetsGeometry menuMargin =
+        EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
 
     final List<_MenuItem> menuItems = <_MenuItem>[
       for (int index = 0; index < widget.items!.length; index += 1)
@@ -1102,7 +1103,7 @@ class _DownCaretPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final radius = 4.0;
+    const radius = 4.0;
     final hPadding = size.height / 3;
 
     /// Draw background

@@ -153,8 +153,8 @@ class MacosIconButtonState extends State<MacosIconButton>
   }
 
   @override
-  void didUpdateWidget(MacosIconButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(MacosIconButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 
@@ -250,6 +250,7 @@ class MacosIconButtonState extends State<MacosIconButton>
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: widget.shape,
+                  // ignore: prefer_if_null_operators
                   borderRadius: widget.borderRadius != null
                       ? widget.borderRadius
                       : widget.shape == BoxShape.rectangle
@@ -316,6 +317,7 @@ class MacosIconButtonTheme extends InheritedTheme {
     return buttonTheme?.data ?? MacosTheme.of(context).macosIconButtonTheme;
   }
 
+  @override
   Widget wrap(BuildContext context, Widget child) {
     return MacosIconButtonTheme(data: data, child: child);
   }

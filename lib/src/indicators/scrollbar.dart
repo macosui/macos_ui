@@ -115,25 +115,29 @@ class MacosScrollbar extends StatelessWidget {
         minThumbLength: theme.minThumbLength,
         radius: theme.radius,
         thickness: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringThickness ?? theme.thickness;
+          }
           return theme.thickness;
         }),
         thumbColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringThumbColor ?? theme.thumbColor;
-          else if (states.contains(m.MaterialState.dragged))
+          } else if (states.contains(m.MaterialState.dragged)) {
             return theme.draggingThumbColor ?? theme.thumbColor;
+          }
           return theme.thumbColor;
         }),
         trackBorderColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringTrackBorderColor ?? theme.trackBorderColor;
+          }
           return theme.trackBorderColor;
         }),
         trackColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringTrackColor ?? theme.trackColor;
+          }
           return theme.trackColor;
         }),
       ),

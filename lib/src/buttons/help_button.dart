@@ -106,8 +106,8 @@ class HelpButtonState extends State<HelpButton>
   }
 
   @override
-  void didUpdateWidget(HelpButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(HelpButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 
@@ -198,18 +198,18 @@ class HelpButtonState extends State<HelpButton>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: !enabled ? disabledColor : backgroundColor,
-                  boxShadow: [
-                    const BoxShadow(
+                  boxShadow: const [
+                    BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(-0.1, -0.1),
                     ),
-                    const BoxShadow(
+                    BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(0.1, 0.1),
                     ),
-                    const BoxShadow(
+                    BoxShadow(
                       color: CupertinoColors.tertiarySystemFill,
-                      offset: const Offset(0, 0),
+                      offset: Offset(0, 0),
                     ),
                   ],
                 ),

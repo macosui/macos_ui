@@ -184,7 +184,7 @@ class CapacityIndicatorCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 16,
       child: CustomPaint(
         painter: _CapacityCellPainter(
@@ -213,7 +213,7 @@ class _CapacityCellPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final radius = 2.0;
+    const radius = 2.0;
 
     /// Draw background
     canvas.drawRRect(
@@ -224,8 +224,8 @@ class _CapacityCellPainter extends CustomPainter {
     /// Draw inside
     canvas.drawRRect(
       BorderRadius.horizontal(
-        left: Radius.circular(radius),
-        right: value == 100 ? Radius.circular(radius) : Radius.zero,
+        left: const Radius.circular(radius),
+        right: value == 100 ? const Radius.circular(radius) : Radius.zero,
       ).toRRect(
         Offset.zero & Size(size.width * (value / 100).clamp(0, 1), size.height),
       ),

@@ -132,7 +132,7 @@ class _ScaffoldBody extends MultiChildRenderObjectWidget {
   ) {
     final index = children
         .indexWhere((e) => e.key == const Key('macos_scaffold_content_area'));
-    renderObject..contentAreaIndex = index > -1 ? index : null;
+    renderObject.contentAreaIndex = index > -1 ? index : null;
   }
 }
 
@@ -182,10 +182,10 @@ class _RenderScaffoldBody extends RenderBox
     if (contentAreaIndex != null) {
       _children.removeAt(contentAreaIndex!);
     }
-    _children.forEach((child) {
+    for (var child in _children) {
       child.layout(const BoxConstraints.tightFor(), parentUsesSize: true);
       sum += child.size.width;
-    });
+    }
 
     while (child != null) {
       final isContentArea = childCount == contentAreaIndex;
