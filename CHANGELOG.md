@@ -1,3 +1,6 @@
+## [0.13.0]
+* New widget: `MacosDatePicker`
+
 ## [0.12.4+3]
 * Move theme classes to their own files in the `/theme` directory
 
