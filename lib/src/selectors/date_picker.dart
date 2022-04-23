@@ -39,16 +39,20 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     _parseInitialDate();
   }
 
+  // Splits each part of the formatted initial date by "/" and stores the
+  // results
   void _parseInitialDate() {
-    _selectedYear = int.parse(formattedDate.split('/').last);
-    _selectedMonth = int.parse(formattedDate.split('/').first);
     _selectedDay = int.parse(formattedDate.split('/')[1]);
+    _selectedMonth = int.parse(formattedDate.split('/').first);
+    _selectedYear = int.parse(formattedDate.split('/').last);
   }
 
+  // Formats the currently selected date as a DateTime object
   DateTime _formatAsDateTime() {
     return DateTime(_selectedYear, _selectedMonth, _selectedDay);
   }
 
+  // Increments the currently selected element - day, month, or year
   void _incrementElement() {
     if (_isDaySelected) {
       int daysInMonth = DateUtils.getDaysInMonth(_selectedYear, _selectedMonth);
@@ -71,6 +75,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     widget.onDateChanged.call(_formatAsDateTime());
   }
 
+  // Decrements the currently selected element - day, month, or year
   void _decrementElement() {
     if (_isDaySelected) {
       int daysInMonth = DateUtils.getDaysInMonth(_selectedYear, _selectedMonth);
@@ -93,13 +98,26 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     widget.onDateChanged.call(_formatAsDateTime());
   }
 
+  // Use this to get the weekday abbreviations instead of
+  // localizations.narrowWeekdays() in order to match Apple's spec
+  static const List<String> _narrowWeekdays = <String>[
+    'Su',
+    'Mo',
+    'Tu',
+    'We',
+    'Th',
+    'Fr',
+    'Sa',
+  ];
+
+  // Creates the day headers - Su, Mo, Tu, We, Th, Fr, Sa
   List<Widget> _dayHeaders(
     TextStyle? headerStyle,
     MaterialLocalizations localizations,
   ) {
     final result = <Widget>[];
     for (int i = localizations.firstDayOfWeekIndex; true; i = (i + 1) % 7) {
-      final weekday = localizations.narrowWeekdays[i];
+      final weekday = _narrowWeekdays[i];
       result.add(
         ExcludeSemantics(
           child: Center(
