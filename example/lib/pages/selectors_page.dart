@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class SelectorsPage extends StatefulWidget {
@@ -12,7 +11,6 @@ class SelectorsPage extends StatefulWidget {
 }
 
 class _SelectorsPageState extends State<SelectorsPage> {
-  final format = DateFormat.yMd();
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
