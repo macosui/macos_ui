@@ -26,7 +26,6 @@ class _SelectorsPageState extends State<SelectorsPage> {
               child: Column(
                 children: [
                   MacosDatePicker(
-                    format: format,
                     onDateChanged: (date) => debugPrint('$date'),
                   ),
                 ],

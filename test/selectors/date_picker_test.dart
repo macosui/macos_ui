@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 void main() {
@@ -17,7 +16,6 @@ void main() {
                   builder: (context, scrollController) {
                     return Center(
                       child: MacosDatePicker(
-                        format: DateFormat.yMd(),
                         onDateChanged: (date) {},
                       ),
                     );
@@ -48,7 +46,6 @@ void main() {
                     builder: (context, scrollController) {
                       return Center(
                         child: MacosDatePicker(
-                          format: DateFormat.yMd(),
                           onDateChanged: (date) {},
                         ),
                       );
@@ -98,7 +95,6 @@ void main() {
                     builder: (context, scrollController) {
                       return Center(
                         child: MacosDatePicker(
-                          format: DateFormat.yMd(),
                           onDateChanged: (date) {},
                         ),
                       );
@@ -148,7 +144,6 @@ void main() {
                     builder: (context, scrollController) {
                       return Center(
                         child: MacosDatePicker(
-                          format: DateFormat.yMd(),
                           onDateChanged: (date) {},
                         ),
                       );
@@ -198,7 +193,6 @@ void main() {
                     builder: (context, scrollController) {
                       return Center(
                         child: MacosDatePicker(
-                          format: DateFormat.yMd(),
                           onDateChanged: (date) {
                             selectedDay = date.day;
                           },
@@ -233,7 +227,6 @@ void main() {
                     builder: (context, scrollController) {
                       return Center(
                         child: MacosDatePicker(
-                          format: DateFormat.yMd(),
                           onDateChanged: (date) {
                             selectedMonth = date.month;
                           },

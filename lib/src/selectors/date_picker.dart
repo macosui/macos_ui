@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
-import 'package:intl/intl.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/selectors/painters.dart';
@@ -11,11 +10,9 @@ typedef OnDateChanged = Function(DateTime date);
 class MacosDatePicker extends StatefulWidget {
   const MacosDatePicker({
     Key? key,
-    required this.format,
     required this.onDateChanged,
   }) : super(key: key);
 
-  final DateFormat format;
   final OnDateChanged onDateChanged;
 
   @override
@@ -24,7 +21,6 @@ class MacosDatePicker extends StatefulWidget {
 
 class _MacosDatePickerState extends State<MacosDatePicker> {
   final _initialDate = DateTime.now();
-  late String formattedDate;
   late int _selectedDay;
   late int _selectedMonth;
   late int _selectedYear;
@@ -35,16 +31,15 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
   @override
   void initState() {
     super.initState();
-    formattedDate = widget.format.format(_initialDate);
     _parseInitialDate();
   }
 
   // Splits each part of the formatted initial date by "/" and stores the
   // results
   void _parseInitialDate() {
-    _selectedDay = int.parse(formattedDate.split('/')[1]);
-    _selectedMonth = int.parse(formattedDate.split('/').first);
-    _selectedYear = int.parse(formattedDate.split('/').last);
+    _selectedDay = _initialDate.day;
+    _selectedMonth = _initialDate.month;
+    _selectedYear = _initialDate.year;
   }
 
   // Formats the currently selected date as a DateTime object
