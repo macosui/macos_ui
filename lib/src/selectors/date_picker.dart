@@ -5,23 +5,46 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/selectors/painters.dart';
 
+/// Defines the possibles [MacosDatePicker] styles.
 enum DatePickerStyle {
   textual,
   graphical,
   combined,
 }
 
+/// {template onDateChanged}
+/// The action to perform when a new date is selected.
+/// {endtemplate}
 typedef OnDateChanged = Function(DateTime date);
 
-/// A date picker lets the user choose a date.
+/// {template macosDatePicker}
+/// A [MacosDatePicker] lets the user choose a date.
+///
+/// There are three types of [MacosDatePicker]s:
+/// * `textual`: a text-only date picker where the user must select the day,
+///   month, or year and use the caret-control buttons to change the value.
+///   This is useful when space in your app is constrained.
+/// * `graphical`: a visual date picker where the user can navigate through a
+///   calendar-like interface to select a date.
+/// * `combined`: provides both `textual` and `graphical` interfaces.
+///
+/// The [onDateChanged] callback passes through the user's selected date, and
+/// must be provided.
+/// {endtemplate}
 class MacosDatePicker extends StatefulWidget {
+  /// {macro macosDatePicker}
   const MacosDatePicker({
     Key? key,
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
   }) : super(key: key);
 
+  /// The [DatePickerStyle] to use.
+  ///
+  /// Defaults to [DatePickerStyle.combined].
   final DatePickerStyle style;
+
+  /// {macro onDateChanged}
   final OnDateChanged onDateChanged;
 
   @override
