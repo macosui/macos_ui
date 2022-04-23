@@ -217,8 +217,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
     ];
     final brightness = MacosTheme.brightnessOf(context);
     final popupColor = MacosDynamicColor.maybeResolve(
-      widget.popupColor ??
-          MacosTheme.of(context).popupButtonTheme.popupColor,
+      widget.popupColor ?? MacosTheme.of(context).popupButtonTheme.popupColor,
       context,
     );
     final caretColor =

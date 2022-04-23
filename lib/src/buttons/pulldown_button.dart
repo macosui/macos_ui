@@ -1059,8 +1059,7 @@ _ButtonStyles _getButtonStyles(
         case PulldownButtonState.hovered:
           break;
         case PulldownButtonState.pressed:
-          bgColor =
-              theme.pulldownButtonTheme.backgroundColor!.withOpacity(0.4);
+          bgColor = theme.pulldownButtonTheme.backgroundColor!.withOpacity(0.4);
           caretBgColor =
               theme.pulldownButtonTheme.highlightColor!.withOpacity(0.9);
           break;
