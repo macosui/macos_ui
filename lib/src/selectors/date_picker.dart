@@ -365,12 +365,14 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
-                          style: const TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -0.08,
+                        Expanded(
+                          child: Text(
+                            '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
+                            style: const TextStyle(
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -0.08,
+                            ),
                           ),
                         ),
                         Row(
@@ -389,7 +391,14 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                                 maxWidth: 12.0,
                               ),
                               onPressed: () {
-                                setState(() => _selectedMonth--);
+                                if (_selectedMonth - 1 < 1) {
+                                  setState(() {
+                                    _selectedYear--;
+                                    _selectedMonth = 12;
+                                  });
+                                } else {
+                                  setState(() => _selectedMonth--);
+                                }
                                 widget.onDateChanged.call(_formatAsDateTime());
                               },
                             ),
@@ -425,7 +434,15 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                                 maxWidth: 12.0,
                               ),
                               onPressed: () {
-                                setState(() => _selectedMonth++);
+                                if (_selectedMonth + 1 > 12) {
+                                  setState(() {
+                                    _selectedYear++;
+                                    _selectedMonth = 1;
+                                  });
+                                } else {
+                                  setState(() => _selectedMonth++);
+                                }
+
                                 widget.onDateChanged.call(_formatAsDateTime());
                               },
                             ),
