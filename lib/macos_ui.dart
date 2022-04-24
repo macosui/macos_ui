@@ -35,6 +35,7 @@ export 'src/layout/resizable_pane.dart';
 export 'src/layout/scaffold.dart';
 export 'src/layout/sidebar.dart';
 export 'src/layout/sidebar_item.dart';
+export 'src/layout/tab.dart';
 export 'src/layout/tab_view.dart';
 export 'src/layout/title_bar.dart';
 export 'src/layout/window.dart';

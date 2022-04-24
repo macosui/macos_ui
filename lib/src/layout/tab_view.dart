@@ -8,6 +8,7 @@ const _kContentBackgroundColor = CupertinoDynamicColor.withBrightness(
   darkColor: Color.fromRGBO(36, 38, 40, 1.0),
 );
 
+/// Specifies layout position for [MacosTab] options inside [MacosTabView]
 enum MacosTabPosition { left, right, top, bottom }
 
 class MacosTabView extends StatelessWidget {
@@ -87,7 +88,7 @@ class MacosTabView extends StatelessWidget {
               borderRadius: _kTabViewRadius,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.grey,
                   border: Border.all(color: MacosColors.systemGrayColor),
                 ),
                 child: Row(children: tabs),

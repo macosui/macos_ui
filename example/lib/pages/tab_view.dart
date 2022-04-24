@@ -68,11 +68,9 @@ class _TabViewPageState extends State<TabViewPage> {
                       body: content,
                       tabs: [
                         // TODO: Replace PushButton with ScopedButton
-                        PushButton(
-                          child: const Text('Sound Effects'),
-                          buttonSize: ButtonSize.small,
-                          isSecondary: true,
-                          onPressed: () {
+                        MacosTab(
+                          label: 'Sound Effects',
+                          onTap: () {
                             setState(() {
                               content = const Center(
                                 child: Text('Sound Effects'),
@@ -80,10 +78,9 @@ class _TabViewPageState extends State<TabViewPage> {
                             });
                           },
                         ),
-                        PushButton(
-                          child: const Text('Input'),
-                          buttonSize: ButtonSize.small,
-                          onPressed: () {
+                        MacosTab(
+                          label: 'Input',
+                          onTap: () {
                             setState(() {
                               content = const Center(
                                 child: Text('Input'),
@@ -91,10 +88,9 @@ class _TabViewPageState extends State<TabViewPage> {
                             });
                           },
                         ),
-                        PushButton(
-                          child: const Text('Output'),
-                          buttonSize: ButtonSize.small,
-                          onPressed: () {
+                        MacosTab(
+                          label: 'Output',
+                          onTap: () {
                             setState(() {
                               content = const Center(
                                 child: Text('Output'),
