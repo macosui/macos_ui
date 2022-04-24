@@ -15,10 +15,13 @@ class ToolBarPullDownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MacosPulldownButton(
-      icon: icon,
-      onTap: onTap,
-      items: items,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: MacosPulldownButton(
+        icon: icon,
+        onTap: onTap,
+        items: items,
+      ),
     );
   }
 }

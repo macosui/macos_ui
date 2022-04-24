@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 // ignore: implementation_imports
 import 'package:macos_ui/src/library.dart';
@@ -13,8 +14,31 @@ class _DialogsPageState extends State<DialogsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      toolBar: const ToolBar(
-        title: Text('macOS UI Dialogs & Sheets'),
+      toolBar: ToolBar(
+        title: const Text('macOS UI Dialogs & Sheets'),
+        actions: [
+          ToolBarImageButton(
+            icon: const MacosIcon(
+              CupertinoIcons.play,
+            ),
+            onPressed: () => debugPrint("Play..."),
+            label: "Play",
+          ),
+          ToolBarImageButton(
+            icon: const MacosIcon(
+              CupertinoIcons.table,
+            ),
+            onPressed: () => debugPrint("Table..."),
+            label: "Table",
+          ),
+          ToolBarImageButton(
+            icon: const MacosIcon(
+              CupertinoIcons.chat_bubble_fill,
+            ),
+            onPressed: () => debugPrint("Comment..."),
+            label: "Comment",
+          ),
+        ],
       ),
       children: [
         ContentArea(builder: (context, scrollController) {

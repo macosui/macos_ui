@@ -18,7 +18,7 @@ class ToolBar extends StatelessWidget {
     this.height = kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
-    this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 12.0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4.0),
     this.decoration,
     this.leading,
     this.automaticallyImplyLeading = true,
@@ -114,9 +114,7 @@ class ToolBar extends StatelessWidget {
 
     Widget? _actions;
     if (actions != null && actions!.isNotEmpty) {
-      _actions = Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      _actions = Wrap(
         children: actions!,
       );
     }
