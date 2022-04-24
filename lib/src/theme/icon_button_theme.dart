@@ -23,7 +23,7 @@ class MacosIconButtonTheme extends InheritedTheme {
   /// The closest instance of this class that encloses the given context.
   ///
   /// If there is no enclosing [MacosIconButtonTheme] widget, then
-  /// [MacosThemeData.macosIconButtonTheme] is used.
+  /// [MacosThemeData.iconButtonTheme] is used.
   ///
   /// Typical usage is as follows:
   ///
@@ -33,7 +33,7 @@ class MacosIconButtonTheme extends InheritedTheme {
   static MacosIconButtonThemeData of(BuildContext context) {
     final MacosIconButtonTheme? buttonTheme =
         context.dependOnInheritedWidgetOfExactType<MacosIconButtonTheme>();
-    return buttonTheme?.data ?? MacosTheme.of(context).macosIconButtonTheme;
+    return buttonTheme?.data ?? MacosTheme.of(context).iconButtonTheme;
   }
 
   @override
@@ -48,12 +48,12 @@ class MacosIconButtonTheme extends InheritedTheme {
 
 /// A style that overrides the default appearance of
 /// [MacosIconButton]s when it's used with [MacosIconButtonTheme] or with the
-/// overall [MacosTheme]'s [MacosThemeData.macosIconButtonTheme].
+/// overall [MacosTheme]'s [MacosThemeData.iconButtonTheme].
 ///
 /// See also:
 ///
 ///  * [MacosIconButtonTheme], the theme which is configured with this class.
-///  * [MacosThemeData.macosIconButtonTheme], which can be used to override
+///  * [MacosThemeData.iconButtonTheme], which can be used to override
 ///  the default style for [MacosIconButton]s below the overall [MacosTheme].
 class MacosIconButtonThemeData with Diagnosticable {
   /// Builds a [MacosIconButtonThemeData].
@@ -129,6 +129,19 @@ class MacosIconButtonThemeData with Diagnosticable {
     );
   }
 
+  MacosIconButtonThemeData merge(MacosIconButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      backgroundColor: other.backgroundColor,
+      disabledColor: other.disabledColor,
+      hoverColor: other.hoverColor,
+      shape: other.shape,
+      borderRadius: other.borderRadius,
+      boxConstraints: other.boxConstraints,
+      padding: other.padding,
+    );
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -166,19 +179,6 @@ class MacosIconButtonThemeData with Diagnosticable {
     );
     properties.add(
       DiagnosticsProperty<EdgeInsetsGeometry?>('padding', padding),
-    );
-  }
-
-  MacosIconButtonThemeData merge(MacosIconButtonThemeData? other) {
-    if (other == null) return this;
-    return copyWith(
-      backgroundColor: other.backgroundColor,
-      disabledColor: other.disabledColor,
-      hoverColor: other.hoverColor,
-      shape: other.shape,
-      borderRadius: other.borderRadius,
-      boxConstraints: other.boxConstraints,
-      padding: other.padding,
     );
   }
 }

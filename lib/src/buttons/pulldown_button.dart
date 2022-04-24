@@ -101,7 +101,7 @@ class _MacosPulldownMenuItemButtonState
               child: Container(
                 decoration: BoxDecoration(
                   color: _isHovered
-                      ? theme.macosPulldownButtonTheme.highlightColor
+                      ? theme.pulldownButtonTheme.highlightColor
                       : Colors.transparent,
                   borderRadius: _kBorderRadius,
                 ),
@@ -193,7 +193,7 @@ class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
       child: Container(
         decoration: BoxDecoration(
           color: MacosTheme.of(context)
-              .macosPulldownButtonTheme
+              .pulldownButtonTheme
               .pulldownColor
               ?.withOpacity(0.25),
           boxShadow: [
@@ -986,13 +986,13 @@ _ButtonStyles _getButtonStyles(
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
   Color textColor = theme.typography.body.color!;
-  Color bgColor = theme.macosPulldownButtonTheme.backgroundColor!;
+  Color bgColor = theme.pulldownButtonTheme.backgroundColor!;
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
-  Color caretBgColor = theme.macosPulldownButtonTheme.highlightColor!;
+  Color caretBgColor = theme.pulldownButtonTheme.highlightColor!;
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     if (hasIcon) {
@@ -1054,15 +1054,14 @@ _ButtonStyles _getButtonStyles(
             const Color(0xffc3c4c9),
             const Color(0xff222222),
           );
-          caretBgColor = theme.macosPulldownButtonTheme.highlightColor!;
+          caretBgColor = theme.pulldownButtonTheme.highlightColor!;
           break;
         case PulldownButtonState.hovered:
           break;
         case PulldownButtonState.pressed:
-          bgColor =
-              theme.macosPulldownButtonTheme.backgroundColor!.withOpacity(0.4);
+          bgColor = theme.pulldownButtonTheme.backgroundColor!.withOpacity(0.4);
           caretBgColor =
-              theme.macosPulldownButtonTheme.highlightColor!.withOpacity(0.9);
+              theme.pulldownButtonTheme.highlightColor!.withOpacity(0.9);
           break;
       }
     }

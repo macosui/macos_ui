@@ -42,6 +42,8 @@ Flutter widgets and themes implementing the current macOS design language.
     - [CapacityIndicator](#capacityindicator)
     - [RatingIndicator](#ratingindicator)
     - [RelevanceIndicator](#relevanceindicator)
+- [Selectors](#selectors)
+  - [MacosDatePicker](#macosdatepicker)
 
 ## Contributing
 
@@ -554,3 +556,19 @@ RelevanceIndicator(
   amount: 20,
 )
 ```
+
+# Selectors
+
+## MacosDatePicker
+
+<img src="https://imgur.com/sprmep1.png" width="75%"/>
+
+Lets the user choose a date.
+
+There are three types of `MacosDatePickers`:
+* `textual`: a text-only date picker where the user must select the day,
+  month, or year and use the caret-control buttons to change the value.
+  This is useful when space in your app is constrained.
+* `graphical`: a visual date picker where the user can navigate through a
+  calendar-like interface to select a date.
+* `combined`: provides both `textual` and `graphical` interfaces.
