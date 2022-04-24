@@ -7,22 +7,22 @@ void main() {
   group('MacosPulldownButton theme tests', () {
     test('lerps from light to dark', () {
       final actual = MacosPulldownButtonThemeData.lerp(
-        _MacosPulldownButtonTheme,
-        _MacosPulldownButtonThemeDark,
+        _macosPulldownButtonTheme,
+        _macosPulldownButtonThemeDark,
         1,
       );
 
-      expect(actual, _MacosPulldownButtonThemeDark);
+      expect(actual, _macosPulldownButtonThemeDark);
     });
 
     test('lerps from dark to light', () {
       final actual = MacosPulldownButtonThemeData.lerp(
-        _MacosPulldownButtonThemeDark,
-        _MacosPulldownButtonTheme,
+        _macosPulldownButtonThemeDark,
+        _macosPulldownButtonTheme,
         1,
       );
 
-      expect(actual, _MacosPulldownButtonTheme);
+      expect(actual, _macosPulldownButtonTheme);
     });
 
     test('copyWith, hashCode, ==', () {
@@ -100,13 +100,13 @@ void main() {
   });
 }
 
-final _MacosPulldownButtonTheme = MacosPulldownButtonThemeData(
+final _macosPulldownButtonTheme = MacosPulldownButtonThemeData(
   backgroundColor: MacosColors.appleRed,
   highlightColor: MacosColors.systemGrayColor.color,
   pulldownColor: MacosColors.controlColor.color,
 );
 
-final _MacosPulldownButtonThemeDark = MacosPulldownButtonThemeData(
+final _macosPulldownButtonThemeDark = MacosPulldownButtonThemeData(
   backgroundColor: MacosColors.appleBlue,
   highlightColor: MacosColors.systemGrayColor.darkColor,
   pulldownColor: MacosColors.controlColor.darkColor,

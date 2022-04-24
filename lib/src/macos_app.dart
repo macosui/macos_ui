@@ -312,8 +312,9 @@ class _MacosAppState extends State<MacosApp> {
   }
 
   Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
-    if (widget.localizationsDelegates != null)
+    if (widget.localizationsDelegates != null) {
       yield* widget.localizationsDelegates!;
+    }
     yield DefaultMaterialLocalizations.delegate;
     yield DefaultCupertinoLocalizations.delegate;
     yield DefaultWidgetsLocalizations.delegate;

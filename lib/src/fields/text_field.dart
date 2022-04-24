@@ -986,8 +986,9 @@ class _MacosTextFieldState extends State<MacosTextField>
   bool _shouldShowSelectionHandles(SelectionChangedCause? cause) {
     // When the text field is activated by something that doesn't trigger the
     // selection overlay, we shouldn't show the handles either.
-    if (!_selectionGestureDetectorBuilder.shouldShowSelectionToolbar)
+    if (!_selectionGestureDetectorBuilder.shouldShowSelectionToolbar) {
       return false;
+    }
 
     // On macOS, we don't show handles when the selection is collapsed.
     if (_effectiveController.selection.isCollapsed) return false;
@@ -1152,8 +1153,9 @@ class _MacosTextFieldState extends State<MacosTextField>
                           final bool textChanged =
                               _effectiveController.text.isNotEmpty;
                           _effectiveController.clear();
-                          if (widget.onChanged != null && textChanged)
+                          if (widget.onChanged != null && textChanged) {
                             widget.onChanged!(_effectiveController.text);
+                          }
                         }
                       : null,
                   child: Padding(

@@ -158,6 +158,7 @@ void main() {
           .where((node) => !node.isFiltered(DiagnosticLevel.info))
           .map((node) => node.toString())
           .toList();
+      // ignore: avoid_print
       print(description);
       expect(
         description,

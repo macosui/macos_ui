@@ -85,7 +85,7 @@ void main() {
                               },
                             ),
                             const MacosPulldownMenuItem(
-                              title: const Text('no tap'),
+                              title: Text('no tap'),
                             ),
                           ],
                         ),
@@ -136,7 +136,7 @@ void main() {
             MacosPulldownButton(
               icon: CupertinoIcons.eyedropper,
               title: "test label",
-              items: [],
+              items: const [],
             );
           },
           throwsAssertionError,
@@ -150,7 +150,7 @@ void main() {
         expect(
           () {
             MacosPulldownButton(
-              items: [],
+              items: const [],
             );
           },
           throwsAssertionError,

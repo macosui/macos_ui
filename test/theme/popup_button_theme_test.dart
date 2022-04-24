@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,22 +9,22 @@ void main() {
   group('MacosPopupButton theme tests', () {
     test('lerps from light to dark', () {
       final actual = MacosPopupButtonThemeData.lerp(
-        _MacosPopupButtonTheme,
-        _MacosPopupButtonThemeDark,
+        _macosPopupButtonTheme,
+        _macosPopupButtonThemeDark,
         1,
       );
 
-      expect(actual, _MacosPopupButtonThemeDark);
+      expect(actual, _macosPopupButtonThemeDark);
     });
 
     test('lerps from dark to light', () {
       final actual = MacosPopupButtonThemeData.lerp(
-        _MacosPopupButtonThemeDark,
-        _MacosPopupButtonTheme,
+        _macosPopupButtonThemeDark,
+        _macosPopupButtonTheme,
         1,
       );
 
-      expect(actual, _MacosPopupButtonTheme);
+      expect(actual, _macosPopupButtonTheme);
     });
 
     test('copyWith, hashCode, ==', () {
@@ -99,13 +101,13 @@ void main() {
   });
 }
 
-final _MacosPopupButtonTheme = MacosPopupButtonThemeData(
+final _macosPopupButtonTheme = MacosPopupButtonThemeData(
   backgroundColor: MacosColors.appleRed,
   highlightColor: MacosColors.systemGrayColor.color,
   popupColor: MacosColors.controlColor.color,
 );
 
-final _MacosPopupButtonThemeDark = MacosPopupButtonThemeData(
+final _macosPopupButtonThemeDark = MacosPopupButtonThemeData(
   backgroundColor: MacosColors.appleBlue,
   highlightColor: MacosColors.systemGrayColor.darkColor,
   popupColor: MacosColors.controlColor.darkColor,

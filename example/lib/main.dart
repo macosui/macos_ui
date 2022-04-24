@@ -3,6 +3,7 @@ import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
+import 'package:example/pages/selectors_page.dart';
 import 'package:example/pages/tab_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -63,6 +64,7 @@ class _DemoState extends State<Demo> {
       ),
     ),
     const DialogsPage(),
+    const SelectorsPage(),
     const TabViewPage(),
   ];
 
@@ -123,6 +125,10 @@ class _DemoState extends State<Demo> {
               SidebarItem(
                 leading: MacosIcon(CupertinoIcons.rectangle),
                 label: Text('Dialogs & Sheets'),
+              ),
+              SidebarItem(
+                leading: MacosIcon(CupertinoIcons.calendar),
+                label: Text('Selectors'),
               ),
               SidebarItem(
                 leading: MacosIcon(CupertinoIcons.square_stack_3d_up),

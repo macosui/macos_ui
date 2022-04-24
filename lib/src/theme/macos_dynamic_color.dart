@@ -62,20 +62,19 @@ extension MacosDynamicColor on CupertinoDynamicColor {
 
   CupertinoDynamicColor _resolveFrom(BuildContext context) {
     Brightness brightness = Brightness.light;
-    if (this.isPlatformBrightnessDependent) {
+    if (isPlatformBrightnessDependent) {
       brightness = MacosTheme.maybeBrightnessOf(context) ?? Brightness.light;
     }
     bool isHighContrastEnabled = false;
-    if (this.isHighContrastDependent) {
+    if (isHighContrastDependent) {
       isHighContrastEnabled =
           MediaQuery.maybeOf(context)?.highContrast ?? false;
     }
 
-    final CupertinoUserInterfaceLevelData level =
-        this.isInterfaceElevationDependent
-            ? CupertinoUserInterfaceLevel.maybeOf(context) ??
-                CupertinoUserInterfaceLevelData.base
-            : CupertinoUserInterfaceLevelData.base;
+    final CupertinoUserInterfaceLevelData level = isInterfaceElevationDependent
+        ? CupertinoUserInterfaceLevel.maybeOf(context) ??
+            CupertinoUserInterfaceLevelData.base
+        : CupertinoUserInterfaceLevelData.base;
 
     final Color resolved;
     switch (brightness) {
