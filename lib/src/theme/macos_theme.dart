@@ -300,7 +300,8 @@ class MacosThemeData with Diagnosticable {
       monthViewControlsColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.55)
           : const Color.fromRGBO(0, 0, 0, 0.5),
-      selectedElementColor: const Color(0xFF0158D0),
+      selectedElementColor: const Color(0xFF0063E1),
+      selectedElementTextColor: MacosColors.white,
       monthViewDateColor: isDark ? MacosColors.white : MacosColors.black,
       monthViewHeaderColor: isDark ? MacosColors.white : MacosColors.black,
       monthViewWeekdayHeaderColor: isDark
@@ -309,7 +310,8 @@ class MacosThemeData with Diagnosticable {
       monthViewCurrentDateColor: isDark
           ? const Color.fromRGBO(0, 88, 208, 1)
           : const Color.fromRGBO(0, 99, 255, 1),
-      monthViewSelectedDateColor: const Color(0xFF464646),
+      monthViewSelectedDateColor:
+          isDark ? MacosColor(0xff464646) : MacosColor(0xffDCDCDC),
       monthViewHeaderDividerColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(0, 0, 0, 0.1),

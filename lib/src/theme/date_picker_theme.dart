@@ -50,6 +50,7 @@ class MacosDatePickerThemeData with Diagnosticable {
   MacosDatePickerThemeData({
     this.backgroundColor,
     this.selectedElementColor,
+    this.selectedElementTextColor,
     this.caretColor,
     this.monthViewControlsColor,
     this.caretControlsBackgroundColor,
@@ -66,6 +67,7 @@ class MacosDatePickerThemeData with Diagnosticable {
 
   final Color? backgroundColor;
   final Color? selectedElementColor;
+  final Color? selectedElementTextColor;
   final Color? caretColor;
   final Color? caretControlsBackgroundColor;
   final Color? caretControlsSeparatorColor;
@@ -83,6 +85,7 @@ class MacosDatePickerThemeData with Diagnosticable {
   MacosDatePickerThemeData copyWith({
     Color? backgroundColor,
     Color? selectedElementColor,
+    Color? selectedElementTextColor,
     Color? caretColor,
     Color? caretControlsBackgroundColor,
     Color? caretControlsSeparatorColor,
@@ -99,6 +102,8 @@ class MacosDatePickerThemeData with Diagnosticable {
     return MacosDatePickerThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       selectedElementColor: selectedElementColor ?? this.selectedElementColor,
+      selectedElementTextColor:
+          selectedElementTextColor ?? this.selectedElementTextColor,
       caretColor: caretColor ?? this.caretColor,
       caretControlsBackgroundColor:
           caretControlsBackgroundColor ?? this.caretControlsBackgroundColor,
@@ -134,6 +139,8 @@ class MacosDatePickerThemeData with Diagnosticable {
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
       selectedElementColor:
           Color.lerp(a.selectedElementColor, b.selectedElementColor, t),
+      selectedElementTextColor:
+          Color.lerp(a.selectedElementTextColor, b.selectedElementTextColor, t),
       caretColor: Color.lerp(a.caretColor, b.caretColor, t),
       caretControlsBackgroundColor: Color.lerp(
         a.caretControlsBackgroundColor,
@@ -185,6 +192,7 @@ class MacosDatePickerThemeData with Diagnosticable {
     return copyWith(
       backgroundColor: other.backgroundColor,
       selectedElementColor: other.selectedElementColor,
+      selectedElementTextColor: other.selectedElementTextColor,
       caretColor: other.caretColor,
       caretControlsBackgroundColor: other.caretControlsBackgroundColor,
       caretControlsSeparatorColor: other.caretControlsSeparatorColor,
@@ -207,6 +215,7 @@ class MacosDatePickerThemeData with Diagnosticable {
           runtimeType == other.runtimeType &&
           backgroundColor == other.backgroundColor &&
           selectedElementColor == other.selectedElementColor &&
+          selectedElementTextColor == other.selectedElementTextColor &&
           caretColor == other.caretColor &&
           caretControlsBackgroundColor == other.caretControlsBackgroundColor &&
           caretControlsSeparatorColor == other.caretControlsSeparatorColor &&
@@ -225,6 +234,7 @@ class MacosDatePickerThemeData with Diagnosticable {
   int get hashCode =>
       backgroundColor.hashCode ^
       selectedElementColor.hashCode ^
+      selectedElementTextColor.hashCode ^
       caretColor.hashCode ^
       caretControlsBackgroundColor.hashCode ^
       caretControlsSeparatorColor.hashCode ^
@@ -243,6 +253,9 @@ class MacosDatePickerThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('selectedElementColor', selectedElementColor));
+    properties.add(
+      ColorProperty('selectedElementTextColor', selectedElementTextColor),
+    );
     properties.add(ColorProperty('caretColor', caretColor));
     properties.add(ColorProperty(
       'caretControlsBackgroundColor',

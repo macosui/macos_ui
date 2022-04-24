@@ -178,10 +178,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FieldElement(
+                    isSelected: _isMonthSelected,
                     element: '$_selectedMonth',
-                    backgroundColor: _isMonthSelected
-                        ? datePickerTheme.selectedElementColor!
-                        : MacosColors.transparent,
                     onSelected: () {
                       setState(() {
                         _isMonthSelected = !_isMonthSelected;
@@ -192,10 +190,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                   ),
                   const Text('/'),
                   FieldElement(
+                    isSelected: _isDaySelected,
                     element: '$_selectedDay',
-                    backgroundColor: _isDaySelected
-                        ? datePickerTheme.selectedElementColor!
-                        : MacosColors.transparent,
                     onSelected: () {
                       setState(() {
                         _isDaySelected = !_isDaySelected;
@@ -206,10 +202,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                   ),
                   const Text('/'),
                   FieldElement(
+                    isSelected: _isYearSelected,
                     element: '$_selectedYear',
-                    backgroundColor: _isYearSelected
-                        ? datePickerTheme.selectedElementColor!
-                        : MacosColors.transparent,
                     onSelected: () {
                       setState(() {
                         _isYearSelected = !_isYearSelected;
@@ -567,26 +561,34 @@ class FieldElement extends StatelessWidget {
   const FieldElement({
     Key? key,
     required this.element,
-    required this.backgroundColor,
     required this.onSelected,
+    required this.isSelected,
   }) : super(key: key);
 
   final String element;
-  final Color backgroundColor;
   final VoidCallback onSelected;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
+    final datePickerTheme = MacosDatePickerTheme.of(context);
+    Color backgroundColor = isSelected
+        ? datePickerTheme.selectedElementColor!
+        : MacosColors.transparent;
+    Color textColor = isSelected
+        ? datePickerTheme.selectedElementTextColor!
+        : MacosTheme.of(context).typography.body.color!;
     return GestureDetector(
       onTap: onSelected,
       child: ColoredBox(
         color: backgroundColor,
         child: Text(
           element,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13.0,
             fontWeight: FontWeight.w400,
             letterSpacing: -0.08,
+            color: textColor,
           ),
         ),
       ),
