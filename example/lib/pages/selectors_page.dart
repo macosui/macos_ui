@@ -21,6 +21,7 @@ class _SelectorsPageState extends State<SelectorsPage> {
         ContentArea(
           builder: (context, scrollController) {
             return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   MacosDatePicker(
