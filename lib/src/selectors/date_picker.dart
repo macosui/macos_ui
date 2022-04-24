@@ -491,14 +491,21 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             });
             widget.onDateChanged.call(_formatAsDateTime());
           },
-          child: Container(
-            decoration: decoration,
-            child: Center(
-              child: dayText ??
-                  Text(
-                    localizations.formatDecimal(day),
-                    style: dayStyle,
-                  ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            child: Container(
+              decoration: decoration,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 2.0),
+                  child: dayText ??
+                      Text(
+                        localizations.formatDecimal(day),
+                        style: dayStyle,
+                      ),
+                ),
+              ),
             ),
           ),
         );
