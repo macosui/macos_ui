@@ -37,7 +37,7 @@ class _FieldsPageState extends State<FieldsPage> {
                     /// suffix will override the clear button.
                     // suffix: Text('SUFFIX'),
                     clearButtonMode: OverlayVisibilityMode.always,
-                    maxLines: 2,
+                    maxLines: 1,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -54,6 +54,27 @@ class _FieldsPageState extends State<FieldsPage> {
                     /// suffix will override the clear button.
                     suffix: Text('SUFFIX'),
                     // clearButtonMode: OverlayVisibilityMode.always,
+                    maxLines: 1,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: MacosTextField(
+                    enabled: false,
+                    prefix: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 4.0,
+                        vertical: 2.0,
+                      ),
+                      child: MacosIcon(CupertinoIcons.search),
+                    ),
+                    placeholder: 'Disabled field',
+
+                    /// If both suffix and clear button mode is provided,
+                    /// suffix will override the clear button.
+                    // suffix: Text('SUFFIX'),
+                    clearButtonMode: OverlayVisibilityMode.always,
                     maxLines: 1,
                   ),
                 ),

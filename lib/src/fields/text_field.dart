@@ -50,13 +50,13 @@ const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
 );
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
-  color: Color(0xFFFAFAFA),
-  darkColor: Color(0xFF050505),
+  color: Color.fromRGBO(0, 0, 0, 0.25),
+  darkColor: Color.fromRGBO(255, 255, 2551, 0.25),
 );
 
 const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
-  color: Color(0x33000000),
-  darkColor: Color(0x33FFFFFF),
+  color: Color.fromRGBO(0, 0, 0, 0.5),
+  darkColor: Color.fromRGBO(255, 255, 255, 0.55),
 );
 
 // An eyeballed value that moves the cursor slightly left of where it is
@@ -1108,7 +1108,15 @@ class _MacosTextFieldState extends State<MacosTextField>
                   left: 6.0,
                   right: 6.0,
                 ),
-                child: widget.prefix!,
+                child: MacosIconTheme(
+                  data: MacosIconThemeData(
+                    color: MacosTheme.of(context).brightness.isDark
+                        ? const Color.fromRGBO(255, 255, 255, 0.55)
+                        : const Color.fromRGBO(0, 0, 0, 0.5),
+                    size: 16.0,
+                  ),
+                  child: widget.prefix!,
+                ),
               ),
             // In the middle part, stack the placeholder on top of the main EditableText
             // if needed.
@@ -1167,7 +1175,7 @@ class _MacosTextFieldState extends State<MacosTextField>
                     ),
                     child: Icon(
                       CupertinoIcons.clear_thick_circled,
-                      size: 18.0,
+                      size: 16.0,
                       color: MacosDynamicColor.resolve(
                         _kClearButtonColor,
                         context,
@@ -1246,14 +1254,24 @@ class _MacosTextFieldState extends State<MacosTextField>
 
     final Brightness keyboardAppearance =
         widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
-    final Color cursorColor =
-        MacosDynamicColor.maybeResolve(widget.cursorColor, context) ??
-            themeData.primaryColor;
+    Color? cursorColor;
+    cursorColor = MacosDynamicColor.maybeResolve(widget.cursorColor, context);
+    cursorColor ??=
+        themeData.brightness.isDark ? MacosColors.white : MacosColors.black;
     final Color disabledColor =
         MacosDynamicColor.resolve(_kDisabledBackground, context);
 
-    final Color? decorationColor =
+    Color? decorationColor =
         MacosDynamicColor.maybeResolve(widget.decoration?.color, context);
+    if (decorationColor.runtimeType == ResolvedMacosDynamicColor) {
+      if ((decorationColor as ResolvedMacosDynamicColor).color ==
+              const Color(0xffffffff) ||
+          (decorationColor).darkColor == const Color(0xff000000)) {
+        decorationColor = themeData.brightness.isDark
+            ? const Color.fromRGBO(30, 30, 30, 1)
+            : MacosColors.white;
+      }
+    }
 
     final BoxBorder? border = widget.decoration?.border;
     Border? resolvedBorder = border as Border?;
@@ -1278,11 +1296,16 @@ class _MacosTextFieldState extends State<MacosTextField>
 
     final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
       border: resolvedBorder,
-      color: enabled ? decorationColor : (decorationColor ?? disabledColor),
+      color: enabled ? decorationColor : disabledColor,
     );
 
     final BoxDecoration? focusedDecoration = widget.focusedDecoration?.copyWith(
-      border: Border.all(width: 3.0, color: themeData.primaryColor),
+      border: Border.all(
+        width: 3.0,
+        color: themeData.brightness.isDark
+            ? const Color.fromRGBO(26, 169, 255, 0.3)
+            : const Color.fromRGBO(0, 103, 244, 0.25),
+      ),
     );
 
     final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
