@@ -60,7 +60,7 @@ const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
   color: Color(0xfff6f6f9),
-  darkColor: Color(0xff3f4046),
+  darkColor: Color.fromRGBO(255, 255, 255, 0.01),
 );
 
 const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
@@ -1097,6 +1097,13 @@ class _MacosTextFieldState extends State<MacosTextField>
       return editableText;
     }
 
+    Color iconsColor = MacosTheme.of(context).brightness.isDark
+        ? const Color.fromRGBO(255, 255, 255, 0.55)
+        : const Color.fromRGBO(0, 0, 0, 0.5);
+    if (widget.enabled != null && widget.enabled == false) {
+      iconsColor = iconsColor.withOpacity(0.2);
+    }
+
     // Otherwise, listen to the current state of the text entry.
     return ValueListenableBuilder<TextEditingValue>(
       valueListenable: _effectiveController,
@@ -1119,9 +1126,7 @@ class _MacosTextFieldState extends State<MacosTextField>
                 ),
                 child: MacosIconTheme(
                   data: MacosIconThemeData(
-                    color: MacosTheme.of(context).brightness.isDark
-                        ? const Color.fromRGBO(255, 255, 255, 0.55)
-                        : const Color.fromRGBO(0, 0, 0, 0.5),
+                    color: iconsColor,
                     size: 16.0,
                   ),
                   child: widget.prefix!,
@@ -1185,10 +1190,7 @@ class _MacosTextFieldState extends State<MacosTextField>
                     child: Icon(
                       CupertinoIcons.clear_thick_circled,
                       size: 16.0,
-                      color: MacosDynamicColor.resolve(
-                        _kClearButtonColor,
-                        context,
-                      ),
+                      color: iconsColor,
                     ),
                   ),
                 ),
@@ -1259,7 +1261,10 @@ class _MacosTextFieldState extends State<MacosTextField>
       ),
     );
 
-    final placeholderStyle = textStyle.merge(resolvedPlaceholderStyle);
+    final placeholderStyle = textStyle.merge(enabled
+        ? resolvedPlaceholderStyle
+        : resolvedPlaceholderStyle!
+            .copyWith(color: resolvedPlaceholderStyle.color!.withOpacity(0.2)));
 
     final Brightness keyboardAppearance =
         widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
