@@ -132,13 +132,15 @@ class _ToolBarState extends State<ToolBar> {
     }
 
     Widget? _actions;
+    late List<Widget> _overflowedActions;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
       _actions = Wrap(
         children: widget.actions!,
       );
       _allToolbarActions.add(_actions);
-      var _overflowedActions =
-          overflowedActionsIndexes.map((index) => widget.actions![index]);
+      _overflowedActions = overflowedActionsIndexes
+          .map((index) => widget.actions![index])
+          .toList();
     }
 
     final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
@@ -173,13 +175,9 @@ class _ToolBarState extends State<ToolBar> {
               centerMiddle: widget.centerTitle,
               trailing: OverflowHandler(
                 overflowBreakpoint: _overflowBreakpoint,
-                overflowWidget: ToolBarIconButton(
-                  icon: const MacosIcon(
-                    CupertinoIcons.chevron_down,
-                  ),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
-                  },
+                overflowWidget: ToolbarOverflowButton(
+                  overflowContentBuilder: (context) =>
+                      Text(_overflowedActions.toString()),
                 ),
                 children: widget.actions!,
                 overflowChangedCallback: (hiddenItems) {
