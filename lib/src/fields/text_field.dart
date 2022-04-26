@@ -26,7 +26,7 @@ const BorderSide _kDefaultRoundedBorderSide = BorderSide(
     darkColor: Color(0x33FFFFFF),
   ),
   style: BorderStyle.solid,
-  width: 0.0,
+  width: 0.1,
 );
 
 const Border _kDefaultRoundedBorder = Border(
@@ -42,16 +42,25 @@ const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
     darkColor: CupertinoColors.black,
   ),
   border: _kDefaultRoundedBorder,
-  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+  boxShadow: [
+    BoxShadow(
+      color: CupertinoDynamicColor.withBrightness(
+        color: Color.fromRGBO(0, 0, 0, 0.1),
+        darkColor: Color.fromRGBO(255, 255, 255, 0.1),
+      ),
+      offset: Offset(0, 1),
+    ),
+  ],
+  borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
 
 const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
-  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+  borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
-  color: Color.fromRGBO(0, 0, 0, 0.25),
-  darkColor: Color.fromRGBO(255, 255, 2551, 0.25),
+  color: Color(0xfff6f6f9),
+  darkColor: Color(0xff3f4046),
 );
 
 const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
@@ -232,7 +241,7 @@ class MacosTextField extends StatefulWidget {
     this.focusNode,
     this.decoration = _kDefaultRoundedBorderDecoration,
     this.focusedDecoration = _kDefaultFocusedBorderDecoration,
-    this.padding = const EdgeInsets.all(6.0),
+    this.padding = const EdgeInsets.all(4.0),
     this.placeholder,
     this.placeholderStyle = const TextStyle(
       fontWeight: FontWeight.w400,

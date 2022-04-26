@@ -21,16 +21,18 @@ class _FieldsPageState extends State<FieldsPage> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: const [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                SizedBox(
+                  width: 300.0,
                   child: MacosTextField(
-                    prefix: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 4.0,
-                        vertical: 2.0,
-                      ),
-                      child: MacosIcon(CupertinoIcons.search),
-                    ),
+                    placeholder: 'Type some text here',
+                    maxLines: 1,
+                  ),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: 300.0,
+                  child: MacosTextField(
+                    prefix: MacosIcon(CupertinoIcons.search),
                     placeholder: 'Type some text here',
 
                     /// If both suffix and clear button mode is provided,
@@ -41,13 +43,10 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                SizedBox(
+                  width: 300.0,
                   child: MacosTextField.borderless(
-                    prefix: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0),
-                      child: MacosIcon(CupertinoIcons.search),
-                    ),
+                    prefix: MacosIcon(CupertinoIcons.search),
                     placeholder: 'Type some text here',
 
                     /// If both suffix and clear button mode is provided,
@@ -58,17 +57,11 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                SizedBox(
+                  width: 300.0,
                   child: MacosTextField(
                     enabled: false,
-                    prefix: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 4.0,
-                        vertical: 2.0,
-                      ),
-                      child: MacosIcon(CupertinoIcons.search),
-                    ),
+                    prefix: MacosIcon(CupertinoIcons.search),
                     placeholder: 'Disabled field',
 
                     /// If both suffix and clear button mode is provided,
