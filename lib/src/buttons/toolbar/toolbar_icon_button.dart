@@ -13,24 +13,21 @@ class ToolBarIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: MacosIconButton(
-        icon: MacosIconTheme(
-          data: MacosTheme.of(context)
-              .iconTheme
-              .copyWith(color: MacosColors.systemGrayColor, size: 20.0),
-          child: icon,
-        ),
-        onPressed: onPressed,
-        boxConstraints: const BoxConstraints(
-          minHeight: 20,
-          minWidth: 20,
-          maxWidth: 48,
-          maxHeight: 38,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+    return MacosIconButton(
+      icon: MacosIconTheme(
+        data: MacosTheme.of(context)
+            .iconTheme
+            .copyWith(color: MacosColors.systemGrayColor, size: 20.0),
+        child: icon,
       ),
+      onPressed: onPressed,
+      boxConstraints: const BoxConstraints(
+        minHeight: 26,
+        minWidth: 20,
+        maxWidth: 48,
+        maxHeight: 38,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
     );
   }
 }

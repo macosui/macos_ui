@@ -1,21 +1,22 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-import 'package:macos_ui/src/buttons/back_button.dart';
-import 'package:macos_ui/src/layout/window.dart';
-import 'package:macos_ui/src/theme/macos_theme.dart';
+import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/layout/overflow_handler.dart';
+import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
-const kToolbarHeight = 52.0;
+const _kToolbarHeight = 52.0;
+const _kLeadingWidgetWidth = 20.0;
+const _kTitleWidgetWidth = 200.0;
 
-class ToolBar extends StatelessWidget {
+class ToolBar extends StatefulWidget {
   /// Creates a toolbar in the [MacosScaffold].
   ///
   /// The height of the ToolBar can be changed with [height].
   const ToolBar({
     Key? key,
-    this.height = kToolbarHeight,
+    this.height = _kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4.0),
@@ -28,7 +29,7 @@ class ToolBar extends StatelessWidget {
 
   /// Specifies the height of this [ToolBar]
   ///
-  /// Defaults to [kToolbarHeight] which is 38.0
+  /// Defaults to [_kToolbarHeight] which is 52.0
   final double height;
 
   /// Align the [title] within the [ToolBar].
@@ -77,14 +78,23 @@ class ToolBar extends StatelessWidget {
   final bool centerTitle;
 
   @override
+  State<ToolBar> createState() => _ToolBarState();
+}
+
+class _ToolBarState extends State<ToolBar> {
+  List<int> overflowedActionsIndexes = [];
+
+  @override
   Widget build(BuildContext context) {
     final scope = MacosWindowScope.maybeOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
     Color dividerColor = theme.dividerColor;
     final route = ModalRoute.of(context);
+    List<Widget> _allToolbarActions = [];
+    double _overflowBreakpoint = 0.0;
 
-    Widget? _leading = leading;
-    if (_leading == null && automaticallyImplyLeading) {
+    Widget? _leading = widget.leading;
+    if (_leading == null && widget.automaticallyImplyLeading) {
       if (route?.canPop ?? false) {
         _leading = Container(
           width: 20,
@@ -97,26 +107,38 @@ class ToolBar extends StatelessWidget {
         );
       }
     }
+    if (widget.leading != null) {
+      _allToolbarActions.add(widget.leading!);
+      _overflowBreakpoint += _kLeadingWidgetWidth;
+    }
 
-    Widget? _title = title;
+    Widget? _title = widget.title;
     if (_title != null) {
-      _title = DefaultTextStyle(
-        child: _title,
-        style: MacosTheme.of(context).typography.headline.copyWith(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: theme.brightness.isDark
-                  ? const Color(0xFFEAEAEA)
-                  : const Color(0xFF4D4D4D),
-            ),
+      _title = SizedBox(
+        width: 200.0,
+        child: DefaultTextStyle(
+          child: _title,
+          style: MacosTheme.of(context).typography.headline.copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: theme.brightness.isDark
+                    ? const Color(0xFFEAEAEA)
+                    : const Color(0xFF4D4D4D),
+              ),
+        ),
       );
+      _allToolbarActions.add(_title);
+      _overflowBreakpoint += _kTitleWidgetWidth;
     }
 
     Widget? _actions;
-    if (actions != null && actions!.isNotEmpty) {
+    if (widget.actions != null && widget.actions!.isNotEmpty) {
       _actions = Wrap(
-        children: actions!,
+        children: widget.actions!,
       );
+      _allToolbarActions.add(_actions);
+      var _overflowedActions =
+          overflowedActionsIndexes.map((index) => widget.actions![index]);
     }
 
     final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
@@ -129,27 +151,43 @@ class ToolBar extends StatelessWidget {
       ),
       child: ClipRect(
         child: BackdropFilter(
-          filter: decoration?.color?.opacity == 1
+          filter: widget.decoration?.color?.opacity == 1
               ? ImageFilter.blur()
               : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Container(
-            alignment: alignment,
-            padding: padding,
+            alignment: widget.alignment,
+            padding: widget.padding,
             decoration: BoxDecoration(
               color: theme.canvasColor,
               border: Border(bottom: BorderSide(color: dividerColor)),
             ).copyWith(
-              color: decoration?.color,
-              image: decoration?.image,
-              border: decoration?.border,
-              borderRadius: decoration?.borderRadius,
-              boxShadow: decoration?.boxShadow,
-              gradient: decoration?.gradient,
+              color: widget.decoration?.color,
+              image: widget.decoration?.image,
+              border: widget.decoration?.border,
+              borderRadius: widget.decoration?.borderRadius,
+              boxShadow: widget.decoration?.boxShadow,
+              gradient: widget.decoration?.gradient,
             ),
             child: NavigationToolbar(
               middle: _title,
-              centerMiddle: centerTitle,
-              trailing: _actions,
+              centerMiddle: widget.centerTitle,
+              trailing: OverflowHandler(
+                overflowBreakpoint: _overflowBreakpoint,
+                overflowWidget: ToolBarIconButton(
+                  icon: const MacosIcon(
+                    CupertinoIcons.chevron_down,
+                  ),
+                  onPressed: () {
+                    MacosWindowScope.of(context).toggleSidebar();
+                  },
+                ),
+                children: widget.actions!,
+                overflowChangedCallback: (hiddenItems) {
+                  setState(() {
+                    overflowedActionsIndexes = hiddenItems;
+                  });
+                },
+              ),
               middleSpacing: 8,
               leading: SafeArea(
                 top: false,

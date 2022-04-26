@@ -67,23 +67,37 @@ class _ButtonsPageState extends State<ButtonsPage> {
           ),
           ToolBarIconButton(
             icon: const MacosIcon(
-              CupertinoIcons.sidebar_left,
+              CupertinoIcons.eyedropper,
             ),
-            onPressed: () {
-              MacosWindowScope.of(context).toggleSidebar();
-            },
+            onPressed: () => debugPrint("pressed"),
+          ),
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.list_bullet,
+            ),
+            onPressed: () => debugPrint("pressed"),
+          ),
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.square_grid_3x2,
+            ),
+            onPressed: () => debugPrint("pressed"),
           ),
           ToolBarIconButton(
             icon: const MacosIcon(
               CupertinoIcons.share,
             ),
-            onPressed: () {
-              MacosWindowScope.of(context).toggleSidebar();
-            },
+            onPressed: () => debugPrint("pressed"),
           ),
           ToolBarIconButton(
             icon: const MacosIcon(
               CupertinoIcons.trash,
+            ),
+            onPressed: () => debugPrint("pressed"),
+          ),
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
             ),
             onPressed: () {
               MacosWindowScope.of(context).toggleSidebar();
