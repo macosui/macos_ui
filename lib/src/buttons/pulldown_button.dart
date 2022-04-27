@@ -588,6 +588,7 @@ class MacosPulldownMenuItem extends StatelessWidget
     this.onTap,
     this.enabled = true,
     this.alignment = AlignmentDirectional.centerStart,
+    this.label,
   }) : super(key: key);
 
   @override
@@ -610,6 +611,11 @@ class MacosPulldownMenuItem extends StatelessWidget
   ///
   /// This property must not be null. It defaults to [AlignmentDirectional.centerStart].
   final AlignmentGeometry alignment;
+
+  /// An optional label to describe the action of this menu item.
+  ///
+  /// It must be set when the pulldown menu is used in the toolbar.
+  final String? label;
 
   @override
   Widget build(BuildContext context) {

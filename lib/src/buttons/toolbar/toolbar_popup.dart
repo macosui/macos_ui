@@ -1,5 +1,36 @@
 import 'package:macos_ui/src/library.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:math' as math;
+
+/// Where the flyout will be placed vertically relativelly the child
+enum ToolbarPopupPosition {
+  /// The flyout will be above the child, if there is enough space available
+  above,
+
+  /// The flyout will be below the child, if there is enough space available
+  below,
+
+  /// The flyout will be by the side of the child, if there is enough space
+  /// available
+  side,
+}
+
+/// How the flyout will be placed relatively to the child
+enum ToolbarPopupPlacement {
+  /// The flyout will be placed on the start point of the child.
+  ///
+  /// If the current directionality it's left-to-right, it's left. Otherwise,
+  /// it's right
+  start,
+
+  /// The flyout will be placed on the center of the child.
+  center,
+
+  /// The flyout will be placed on the end point of the child.
+  ///
+  /// If the current directionality it's left-to-right, it's right. Otherwise,
+  /// it's left
+  end,
+}
 
 class ToolbarPopUp<T> extends StatefulWidget {
   const ToolbarPopUp({
@@ -8,12 +39,16 @@ class ToolbarPopUp<T> extends StatefulWidget {
     required this.content,
     this.verticalOffset = 0,
     this.horizontalOffset = 0,
+    this.placement = ToolbarPopupPlacement.center,
+    this.position = ToolbarPopupPosition.above,
   }) : super(key: key);
 
   final Widget child;
   final WidgetBuilder content;
   final double verticalOffset;
   final double horizontalOffset;
+  final ToolbarPopupPlacement placement;
+  final ToolbarPopupPosition position;
 
   @override
   ToolbarPopUpState<T> createState() => ToolbarPopUpState<T>();
@@ -23,6 +58,7 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
   _ToolbarPopUpRoute<T>? _dropdownRoute;
 
   Future<void> openPopup() {
+    print(widget.key);
     assert(_dropdownRoute == null, 'You can NOT open a popup twice');
     final NavigatorState navigator = Navigator.of(context);
     final RenderBox itemBox = context.findRenderObject()! as RenderBox;
@@ -40,15 +76,53 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
     );
 
     assert(debugCheckHasDirectionality(context));
-    final directionality = Directionality.of(context);
 
-    // The target according to the current directionality
-    final Offset directionalityTarget = rightTarget;
+    final directionality = Directionality.of(context);
+// The target according to the current directionality
+    final Offset directionalityTarget = () {
+      switch (widget.placement) {
+        case ToolbarPopupPlacement.start:
+          if (directionality == TextDirection.ltr) {
+            return leftTarget;
+          } else {
+            return rightTarget;
+          }
+        case ToolbarPopupPlacement.end:
+          if (directionality == TextDirection.ltr) {
+            return rightTarget;
+          } else {
+            return leftTarget;
+          }
+        case ToolbarPopupPlacement.center:
+          return centerTarget;
+      }
+    }();
+
+    // The placement according to the current directionality
+    final ToolbarPopupPlacement directionalityPlacement = () {
+      switch (widget.placement) {
+        case ToolbarPopupPlacement.start:
+          if (directionality == TextDirection.rtl) {
+            return ToolbarPopupPlacement.end;
+          }
+          continue next;
+        case ToolbarPopupPlacement.end:
+          if (directionality == TextDirection.rtl) {
+            return ToolbarPopupPlacement.start;
+          }
+          continue next;
+        next:
+        default:
+          return widget.placement;
+      }
+    }();
 
     final Rect itemRect = directionalityTarget & itemBox.size;
     _dropdownRoute = _ToolbarPopUpRoute<T>(
       target: centerTarget,
       placementOffset: directionalityTarget,
+      placement: directionalityPlacement,
+      position: widget.position,
       content: _PopupContentManager(content: widget.content),
       buttonRect: itemRect,
       elevation: 4,
@@ -61,7 +135,7 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
       horizontalOffset: widget.horizontalOffset,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
-
+    print(itemRect);
     return navigator.push(_dropdownRoute!).then((T? newValue) {
       removeToolbarPopUpRoute();
       if (!mounted || newValue == null) return;
@@ -86,22 +160,6 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
     assert(debugCheckHasDirectionality(context));
     return widget.child;
   }
-}
-
-// Backend below
-
-class _ToolbarPopUpScrollBehavior extends ScrollBehavior {
-  const _ToolbarPopUpScrollBehavior();
-
-  @override
-  TargetPlatform getPlatform(BuildContext context) => defaultTargetPlatform;
-
-  @override
-  Widget buildViewportChrome(context, child, axisDirection) => child;
-
-  @override
-  ScrollPhysics getScrollPhysics(BuildContext context) =>
-      const ClampingScrollPhysics();
 }
 
 class _ToolbarPopUpMenu<T> extends StatefulWidget {
@@ -143,10 +201,7 @@ class _ToolbarPopUpMenuState<T> extends State<_ToolbarPopUpMenu<T>> {
         scopesRoute: true,
         namesRoute: true,
         explicitChildNodes: true,
-        child: ScrollConfiguration(
-          behavior: const _ToolbarPopUpScrollBehavior(),
-          child: widget.route.content,
-        ),
+        child: widget.route.content,
       ),
     );
   }
@@ -161,6 +216,8 @@ class _ToolbarPopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
     required this.verticalOffset,
     required this.horizontalOffset,
     required this.placementOffset,
+    required this.placement,
+    required this.position,
   });
 
   final Rect buttonRect;
@@ -170,6 +227,8 @@ class _ToolbarPopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   final double verticalOffset;
   final double horizontalOffset;
   final Offset placementOffset;
+  final ToolbarPopupPlacement placement;
+  final ToolbarPopupPosition position;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
@@ -178,15 +237,34 @@ class _ToolbarPopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    final defaultOffset = positionDependentBox(
-      size: size,
-      childSize: childSize,
-      target: target,
-      verticalOffset: verticalOffset,
-      preferBelow: true,
-      margin: horizontalOffset,
-    );
-    return defaultOffset;
+    final defaultOffset = position == ToolbarPopupPosition.side
+        ? horizontalPositionDependentBox(
+            size: size,
+            childSize: childSize,
+            target: target,
+            verticalOffset: verticalOffset,
+            margin: horizontalOffset,
+            preferLeft: placement == ToolbarPopupPlacement.end,
+          )
+        : positionDependentBox(
+            size: size,
+            childSize: childSize,
+            target: target,
+            verticalOffset: verticalOffset,
+            preferBelow: position == ToolbarPopupPosition.below,
+            margin: horizontalOffset,
+          );
+    if (position == ToolbarPopupPosition.side) {
+      return Offset(defaultOffset.dx, defaultOffset.dy);
+    }
+    switch (placement) {
+      case ToolbarPopupPlacement.start:
+        return Offset(placementOffset.dx, defaultOffset.dy);
+      case ToolbarPopupPlacement.end:
+        return Offset(placementOffset.dx - childSize.width, defaultOffset.dy);
+      case ToolbarPopupPlacement.center:
+        return defaultOffset;
+    }
   }
 
   @override
@@ -203,12 +281,14 @@ class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
     required this.buttonRect,
     required this.target,
     required this.placementOffset,
+    required this.placement,
     this.elevation = 8,
     required this.capturedThemes,
     required this.transitionAnimationDuration,
     this.barrierLabel,
     required this.verticalOffset,
     required this.horizontalOffset,
+    required this.position,
   });
 
   final Widget content;
@@ -222,6 +302,8 @@ class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
 
   final Offset target;
   final Offset placementOffset;
+  final ToolbarPopupPlacement placement;
+  final ToolbarPopupPosition position;
 
   @override
   Duration get transitionDuration => transitionAnimationDuration;
@@ -241,6 +323,7 @@ class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
       final page = _ToolbarPopUpRoutePage<T>(
         target: target,
         placementOffset: placementOffset,
+        placement: placement,
         route: this,
         constraints: constraints,
         content: content,
@@ -249,6 +332,7 @@ class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
         capturedThemes: capturedThemes,
         verticalOffset: verticalOffset,
         horizontalOffset: horizontalOffset,
+        position: position,
       );
       return page;
     });
@@ -274,7 +358,9 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
     required this.horizontalOffset,
     this.style,
     required this.target,
+    required this.placement,
     required this.placementOffset,
+    required this.position,
   }) : super(key: key);
 
   final _ToolbarPopUpRoute<T> route;
@@ -288,6 +374,8 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
   final double horizontalOffset;
   final Offset target;
   final Offset placementOffset;
+  final ToolbarPopupPlacement placement;
+  final ToolbarPopupPosition position;
 
   @override
   Widget build(BuildContext context) {
@@ -311,6 +399,8 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
           return CustomSingleChildLayout(
             delegate: _ToolbarPopUpMenuRouteLayout<T>(
               target: target,
+              placement: placement,
+              position: position,
               placementOffset: placementOffset,
               buttonRect: buttonRect,
               route: route,
@@ -387,4 +477,43 @@ class PopupContentSizeInfo extends InheritedWidget {
   bool updateShouldNotify(PopupContentSizeInfo oldWidget) {
     return oldWidget.size != size;
   }
+}
+
+Offset horizontalPositionDependentBox({
+  required Size size,
+  required Size childSize,
+  required Offset target,
+  required bool preferLeft,
+  double verticalOffset = 0.0,
+  double margin = 10.0,
+}) {
+  // Horizontal DIRECTION
+  final bool fitsLeft =
+      target.dx + verticalOffset + childSize.width <= size.width - margin;
+  final bool fitsRight = target.dx - verticalOffset - childSize.width >= margin;
+  final bool tooltipLeft =
+      preferLeft ? fitsLeft || !fitsRight : !(fitsRight || !fitsLeft);
+  double x;
+  if (tooltipLeft) {
+    x = math.min(target.dx + verticalOffset, size.width - margin);
+  } else {
+    x = math.max(target.dx - verticalOffset - childSize.width, margin);
+  }
+  // Vertical DIRECTION
+  double y;
+  if (size.height - margin * 2.0 < childSize.height) {
+    y = (size.height - childSize.height) / 2.0;
+  } else {
+    final double normalizedTargetY =
+        target.dy.clamp(margin, size.height - margin);
+    final double edge = margin + childSize.height / 2.0;
+    if (normalizedTargetY < edge) {
+      y = margin;
+    } else if (normalizedTargetY > size.height - edge) {
+      y = size.height - margin - childSize.height;
+    } else {
+      y = normalizedTargetY - childSize.height / 2.0;
+    }
+  }
+  return Offset(x, y);
 }

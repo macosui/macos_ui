@@ -1,7 +1,7 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-class ToolbarOverflowButton extends StatefulWidget {
+class ToolbarOverflowButton extends StatelessWidget {
   ToolbarOverflowButton({
     Key? key,
     required this.overflowContentBuilder,
@@ -10,14 +10,9 @@ class ToolbarOverflowButton extends StatefulWidget {
   final WidgetBuilder overflowContentBuilder;
 
   @override
-  State<ToolbarOverflowButton> createState() => _ToolbarOverflowButtonState();
-}
-
-class _ToolbarOverflowButtonState extends State<ToolbarOverflowButton> {
-  final popupKey = GlobalKey<ToolbarPopUpState>();
-  @override
   Widget build(BuildContext context) {
-    final popup = ToolbarPopUp(
+    final popupKey = GlobalKey<ToolbarPopUpState>();
+    return ToolbarPopUp(
       key: popupKey,
       child: ToolBarIconButton(
         label: "More",
@@ -28,10 +23,11 @@ class _ToolbarOverflowButtonState extends State<ToolbarOverflowButton> {
           popupKey.currentState?.openPopup();
         },
       ).build(context, ToolbarItemDisplayMode.inToolbar),
-      content: widget.overflowContentBuilder,
+      content: overflowContentBuilder,
       verticalOffset: 8.0,
       horizontalOffset: 10.0,
+      position: ToolbarPopupPosition.below,
+      placement: ToolbarPopupPlacement.end,
     );
-    return popup;
   }
 }

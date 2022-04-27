@@ -26,42 +26,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
           fillColor: Colors.transparent,
         ),
         actions: [
-          ToolBarPullDownButton(
-            icon: CupertinoIcons.ellipsis_circle,
-            items: [
-              MacosPulldownMenuItem(
-                title: const Text('New Folder'),
-                onTap: () => debugPrint("Creating new folder..."),
-              ),
-              MacosPulldownMenuItem(
-                title: const Text('Open'),
-                onTap: () => debugPrint("Opening..."),
-              ),
-              MacosPulldownMenuItem(
-                title: const Text('Open with...'),
-                onTap: () => debugPrint("Opening with..."),
-              ),
-              MacosPulldownMenuItem(
-                title: const Text('Import from iPhone...'),
-                onTap: () => debugPrint("Importing..."),
-              ),
-              const MacosPulldownMenuDivider(),
-              MacosPulldownMenuItem(
-                enabled: false,
-                title: const Text('Remove'),
-                onTap: () => debugPrint("Deleting..."),
-              ),
-              MacosPulldownMenuItem(
-                title: const Text('Move to Bin'),
-                onTap: () => debugPrint("Moving to Bin..."),
-              ),
-              const MacosPulldownMenuDivider(),
-              MacosPulldownMenuItem(
-                title: const Text('Tags...'),
-                onTap: () => debugPrint("Tags..."),
-              ),
-            ],
-          ),
           ToolBarIconButton(
             label: "Pick Color",
             icon: const MacosIcon(
@@ -71,7 +35,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
           ),
           const ToolBarIconButton(
             label: "Change View",
-            icon: const MacosIcon(
+            icon: MacosIcon(
               CupertinoIcons.list_bullet,
             ),
           ),
@@ -90,6 +54,50 @@ class _ButtonsPageState extends State<ButtonsPage> {
             ),
             onPressed: () => debugPrint("pressed"),
           ),
+          ToolBarPullDownButton(
+            label: "Actions",
+            icon: CupertinoIcons.ellipsis_circle,
+            items: [
+              MacosPulldownMenuItem(
+                label: "New Folder",
+                title: const Text("New Folder"),
+                onTap: () => debugPrint("Creating new folder..."),
+              ),
+              MacosPulldownMenuItem(
+                label: "Open",
+                title: const Text("Open"),
+                onTap: () => debugPrint("Opening..."),
+              ),
+              MacosPulldownMenuItem(
+                label: "Open with...",
+                title: const Text('Open with...'),
+                onTap: () => debugPrint("Opening with..."),
+              ),
+              MacosPulldownMenuItem(
+                label: "Import from iPhone...",
+                title: const Text('Import from iPhone...'),
+                onTap: () => debugPrint("Importing..."),
+              ),
+              const MacosPulldownMenuDivider(),
+              MacosPulldownMenuItem(
+                label: "Remove",
+                enabled: false,
+                title: const Text('Remove'),
+                onTap: () => debugPrint("Deleting..."),
+              ),
+              MacosPulldownMenuItem(
+                label: "Move to Bin",
+                title: const Text('Move to Bin'),
+                onTap: () => debugPrint("Moving to Bin..."),
+              ),
+              const MacosPulldownMenuDivider(),
+              MacosPulldownMenuItem(
+                label: "Tags...",
+                title: const Text('Tags...'),
+                onTap: () => debugPrint("Tags..."),
+              ),
+            ],
+          ),
           ToolBarIconButton(
             label: "Delete",
             icon: const MacosIcon(
@@ -98,26 +106,32 @@ class _ButtonsPageState extends State<ButtonsPage> {
             onPressed: () => debugPrint("pressed"),
           ),
           ToolBarPullDownButton(
+            label: "Group",
             icon: CupertinoIcons.rectangle_grid_3x2,
             items: [
               MacosPulldownMenuItem(
+                label: "None",
                 title: const Text('None'),
                 onTap: () => debugPrint("Remove sorting"),
               ),
               const MacosPulldownMenuDivider(),
               MacosPulldownMenuItem(
+                label: "Name",
                 title: const Text('Name'),
                 onTap: () => debugPrint("Sorting by name"),
               ),
               MacosPulldownMenuItem(
+                label: "Kind",
                 title: const Text('Kind'),
                 onTap: () => debugPrint("Sorting by kind"),
               ),
               MacosPulldownMenuItem(
+                label: "Size",
                 title: const Text('Size'),
                 onTap: () => debugPrint("Sorting by size"),
               ),
               MacosPulldownMenuItem(
+                label: "Date Added",
                 title: const Text('Date Added'),
                 onTap: () => debugPrint("Sorting by date"),
               ),

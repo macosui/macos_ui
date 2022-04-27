@@ -8,10 +8,12 @@ class ToolbarOverflowMenuItem extends StatefulWidget {
     Key? key,
     this.onPressed,
     required this.label,
+    this.subMenuItems,
   }) : super(key: key);
 
   final VoidCallback? onPressed;
   final String label;
+  final List<ToolbarOverflowMenuItem>? subMenuItems;
 
   @override
   State<ToolbarOverflowMenuItem> createState() =>
