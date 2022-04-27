@@ -97,6 +97,32 @@ class _ButtonsPageState extends State<ButtonsPage> {
             ),
             onPressed: () => debugPrint("pressed"),
           ),
+          ToolBarPullDownButton(
+            icon: CupertinoIcons.rectangle_grid_3x2,
+            items: [
+              MacosPulldownMenuItem(
+                title: const Text('None'),
+                onTap: () => debugPrint("Remove sorting"),
+              ),
+              const MacosPulldownMenuDivider(),
+              MacosPulldownMenuItem(
+                title: const Text('Name'),
+                onTap: () => debugPrint("Sorting by name"),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Kind'),
+                onTap: () => debugPrint("Sorting by kind"),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Size'),
+                onTap: () => debugPrint("Sorting by size"),
+              ),
+              MacosPulldownMenuItem(
+                title: const Text('Date Added'),
+                onTap: () => debugPrint("Sorting by date"),
+              ),
+            ],
+          ),
           ToolBarIconButton(
             label: "Toggle Sidebar",
             icon: const MacosIcon(
