@@ -15,13 +15,22 @@ class ToolBarPullDownButton extends ToolbarItem {
 
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
+    final brightness = MacosTheme.of(context).brightness;
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 6.0),
-        child: MacosPulldownButton(
-          icon: icon,
-          onTap: onTap,
-          items: items,
+        child: MacosPulldownButtonTheme(
+          data: MacosPulldownButtonTheme.of(context).copyWith(
+            iconColor: brightness.resolve(
+              const Color.fromRGBO(0, 0, 0, 0.5),
+              const Color.fromRGBO(255, 255, 255, 0.5),
+            ),
+          ),
+          child: MacosPulldownButton(
+            icon: icon,
+            onTap: onTap,
+            items: items,
+          ),
         ),
       );
     } else {

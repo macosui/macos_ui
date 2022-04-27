@@ -282,6 +282,9 @@ class MacosThemeData with Diagnosticable {
       pulldownColor: isDark
           ? const Color.fromRGBO(30, 30, 30, 1)
           : const Color.fromRGBO(242, 242, 247, 1),
+      iconColor: isDark
+          ? const Color.fromRGBO(255, 255, 255, 0.7)
+          : const Color.fromRGBO(0, 0, 0, 0.7),
     );
 
     final defaultData = MacosThemeData.raw(

@@ -101,7 +101,7 @@ class _MacosPulldownMenuItemButtonState
               child: Container(
                 decoration: BoxDecoration(
                   color: _isHovered
-                      ? theme.macosPulldownButtonTheme.highlightColor
+                      ? MacosPulldownButtonTheme.of(context).highlightColor
                       : Colors.transparent,
                   borderRadius: _kBorderRadius,
                 ),
@@ -192,8 +192,7 @@ class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
       opacity: _fadeOpacity,
       child: Container(
         decoration: BoxDecoration(
-          color: MacosTheme.of(context)
-              .macosPulldownButtonTheme
+          color: MacosPulldownButtonTheme.of(context)
               .pulldownColor
               ?.withOpacity(0.25),
           boxShadow: [
@@ -984,14 +983,16 @@ _ButtonStyles _getButtonStyles(
 ) {
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
+  final pulldownTheme = MacosPulldownButtonTheme.of(context);
   Color textColor = theme.typography.body.color!;
-  Color bgColor = theme.macosPulldownButtonTheme.backgroundColor!;
+  Color bgColor = pulldownTheme.backgroundColor!;
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
-  Color caretBgColor = theme.macosPulldownButtonTheme.highlightColor!;
+  Color caretBgColor = pulldownTheme.highlightColor!;
+  Color iconColor = pulldownTheme.iconColor!;
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     if (hasIcon) {
@@ -1019,27 +1020,18 @@ _ButtonStyles _getButtonStyles(
       borderColor = caretBgColor = MacosColors.transparent;
       switch (pullDownButtonState) {
         case PulldownButtonState.enabled:
-          textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.7),
-            const Color.fromRGBO(255, 255, 255, 0.7),
-          );
+          textColor = caretColor = iconColor;
           bgColor = MacosColors.transparent;
           break;
         case PulldownButtonState.hovered:
-          textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.7),
-            const Color.fromRGBO(255, 255, 255, 0.7),
-          );
+          textColor = caretColor = iconColor;
           bgColor = brightness.resolve(
             const Color(0xfff4f5f5),
             const Color(0xff323232),
           );
           break;
         case PulldownButtonState.pressed:
-          textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.85),
-            const Color.fromRGBO(255, 255, 255, 0.85),
-          );
+          textColor = caretColor = iconColor.withOpacity(0.85);
           bgColor = brightness.resolve(
             const Color.fromRGBO(0, 0, 0, 0.1),
             const Color.fromRGBO(255, 255, 255, 0.1),
@@ -1053,15 +1045,13 @@ _ButtonStyles _getButtonStyles(
             const Color(0xffc3c4c9),
             const Color(0xff222222),
           );
-          caretBgColor = theme.macosPulldownButtonTheme.highlightColor!;
+          caretBgColor = pulldownTheme.highlightColor!;
           break;
         case PulldownButtonState.hovered:
           break;
         case PulldownButtonState.pressed:
-          bgColor =
-              theme.macosPulldownButtonTheme.backgroundColor!.withOpacity(0.4);
-          caretBgColor =
-              theme.macosPulldownButtonTheme.highlightColor!.withOpacity(0.9);
+          bgColor = pulldownTheme.backgroundColor!.withOpacity(0.4);
+          caretBgColor = pulldownTheme.highlightColor!.withOpacity(0.9);
           break;
       }
     }
@@ -1190,6 +1180,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
     this.highlightColor,
     this.backgroundColor,
     this.pulldownColor,
+    this.iconColor,
   });
 
   /// The default highlight color for [MacosPulldownButton].
@@ -1197,21 +1188,26 @@ class MacosPulldownButtonThemeData with Diagnosticable {
   /// Sets the color of the caret icon and the color of a [MacosPulldownMenuItem]'s background when the mouse hovers over it.
   final Color? highlightColor;
 
-  /// The default background color for [MacosPulldownButton]
+  /// The default background color for [MacosPulldownButton].
   final Color? backgroundColor;
 
-  /// The default pull-down menu color for [MacosPulldownButton]
+  /// The default pull-down menu color for [MacosPulldownButton].
   final Color? pulldownColor;
+
+  /// The default color for a [MacosPulldownButton]'s icon.
+  final Color? iconColor;
 
   MacosPulldownButtonThemeData copyWith({
     Color? highlightColor,
     Color? backgroundColor,
     Color? pulldownColor,
+    Color? iconColor,
   }) {
     return MacosPulldownButtonThemeData(
       highlightColor: highlightColor ?? this.highlightColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       pulldownColor: pulldownColor ?? this.pulldownColor,
+      iconColor: iconColor ?? this.iconColor,
     );
   }
 
@@ -1227,6 +1223,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
       highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
       pulldownColor: Color.lerp(a.pulldownColor, b.pulldownColor, t),
+      iconColor: Color.lerp(a.iconColor, b.iconColor, t),
     );
   }
 
@@ -1237,7 +1234,8 @@ class MacosPulldownButtonThemeData with Diagnosticable {
           runtimeType == other.runtimeType &&
           highlightColor?.value == other.highlightColor?.value &&
           backgroundColor?.value == other.backgroundColor?.value &&
-          pulldownColor?.value == other.pulldownColor?.value;
+          pulldownColor?.value == other.pulldownColor?.value &&
+          iconColor?.value == other.iconColor?.value;
 
   @override
   int get hashCode => highlightColor.hashCode ^ backgroundColor.hashCode;
@@ -1248,6 +1246,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('highlightColor', highlightColor));
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('pulldownColor', pulldownColor));
+    properties.add(ColorProperty('iconColor', iconColor));
   }
 
   MacosPulldownButtonThemeData merge(MacosPulldownButtonThemeData? other) {
@@ -1256,6 +1255,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
       highlightColor: other.highlightColor,
       backgroundColor: other.backgroundColor,
       pulldownColor: other.pulldownColor,
+      iconColor: other.iconColor,
     );
   }
 }
