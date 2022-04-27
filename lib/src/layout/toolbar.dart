@@ -72,7 +72,7 @@ class ToolBar extends StatefulWidget {
   final bool automaticallyImplyLeading;
 
   /// A list of Widgets to display in a row after the [title] widget.
-  final List<Widget>? actions;
+  final List<ToolbarItem>? actions;
 
   /// Whether the title should be centered.
   final bool centerTitle;
@@ -90,7 +90,6 @@ class _ToolBarState extends State<ToolBar> {
     final MacosThemeData theme = MacosTheme.of(context);
     Color dividerColor = theme.dividerColor;
     final route = ModalRoute.of(context);
-    List<Widget> _allToolbarActions = [];
     double _overflowBreakpoint = 0.0;
 
     Widget? _leading = widget.leading;
@@ -108,7 +107,6 @@ class _ToolBarState extends State<ToolBar> {
       }
     }
     if (widget.leading != null) {
-      _allToolbarActions.add(widget.leading!);
       _overflowBreakpoint += _kLeadingWidgetWidth;
     }
 
@@ -127,17 +125,13 @@ class _ToolBarState extends State<ToolBar> {
               ),
         ),
       );
-      _allToolbarActions.add(_title);
       _overflowBreakpoint += _kTitleWidgetWidth;
     }
 
-    Widget? _actions;
-    late List<Widget> _overflowedActions;
+    late List<ToolbarItem>? _inToolbarActions;
+    late List<ToolbarItem> _overflowedActions;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
-      _actions = Wrap(
-        children: widget.actions!,
-      );
-      _allToolbarActions.add(_actions);
+      _inToolbarActions = widget.actions!;
       _overflowedActions = overflowedActionsIndexes
           .map((index) => widget.actions![index])
           .toList();
@@ -176,10 +170,21 @@ class _ToolBarState extends State<ToolBar> {
               trailing: OverflowHandler(
                 overflowBreakpoint: _overflowBreakpoint,
                 overflowWidget: ToolbarOverflowButton(
-                  overflowContentBuilder: (context) =>
-                      Text(_overflowedActions.toString()),
+                  overflowContentBuilder: (context) => ToolbarOverflowMenu(
+                    children: _overflowedActions
+                        .map((action) => action.build(
+                              context,
+                              ToolbarItemDisplayMode.overflowed,
+                            ))
+                        .toList(),
+                  ),
                 ),
-                children: widget.actions!,
+                children: (_inToolbarActions != null)
+                    ? _inToolbarActions
+                        .map((e) =>
+                            e.build(context, ToolbarItemDisplayMode.inToolbar))
+                        .toList()
+                    : [],
                 overflowChangedCallback: (hiddenItems) {
                   setState(() {
                     overflowedActionsIndexes = hiddenItems;
@@ -200,4 +205,35 @@ class _ToolBarState extends State<ToolBar> {
       ),
     );
   }
+}
+
+enum ToolbarItemDisplayMode {
+  /// The item is displayed in the horizontal area (primary command area)
+  /// of the command bar.
+  ///
+  /// The item should be rendered by wrapping content in a
+  /// [CommandBarItemInPrimary] widget.
+  inToolbar,
+
+  /// The item is displayed within the secondary command area (within a
+  /// Flyout as a drop down of the "more" button).
+  ///
+  /// Normally you would want to render an item in this visual context as a
+  /// [TappableListTile].
+  overflowed,
+}
+
+/// An individual control displayed within a [Toolbar]. Sub-class this
+/// to build a new type of widget that appears inside of a command bar.
+/// It knows how to build an appropriate widget for the given
+/// [ToolbarItemDisplayMode] during build time.
+abstract class ToolbarItem with Diagnosticable {
+  const ToolbarItem({required this.key});
+
+  final Key? key;
+
+  /// Builds the final widget for this display mode for this item.
+  /// Sub-classes implement this to build the widget that is appropriate
+  /// for the given display mode.
+  Widget build(BuildContext context, ToolbarItemDisplayMode displayMode);
 }

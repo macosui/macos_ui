@@ -66,36 +66,42 @@ class _ButtonsPageState extends State<ButtonsPage> {
             ],
           ),
           ToolBarIconButton(
+            label: "Pick Color",
             icon: const MacosIcon(
               CupertinoIcons.eyedropper,
             ),
             onPressed: () => debugPrint("pressed"),
           ),
-          ToolBarIconButton(
+          const ToolBarIconButton(
+            label: "Change View",
             icon: const MacosIcon(
               CupertinoIcons.list_bullet,
             ),
-            onPressed: () => debugPrint("pressed"),
           ),
+          const ToolBarSpacer(),
           ToolBarIconButton(
+            label: "Table",
             icon: const MacosIcon(
               CupertinoIcons.square_grid_3x2,
             ),
             onPressed: () => debugPrint("pressed"),
           ),
           ToolBarIconButton(
+            label: "Share",
             icon: const MacosIcon(
               CupertinoIcons.share,
             ),
             onPressed: () => debugPrint("pressed"),
           ),
           ToolBarIconButton(
+            label: "Delete",
             icon: const MacosIcon(
               CupertinoIcons.trash,
             ),
             onPressed: () => debugPrint("pressed"),
           ),
           ToolBarIconButton(
+            label: "Toggle Sidebar",
             icon: const MacosIcon(
               CupertinoIcons.sidebar_left,
             ),
