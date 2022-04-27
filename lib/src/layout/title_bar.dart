@@ -19,6 +19,7 @@ class TitleBar extends StatelessWidget {
     this.padding = const EdgeInsets.all(8),
     this.decoration,
     this.centerTitle = true,
+    this.dividerColor,
   }) : super(key: key);
 
   /// Specifies the height of this [TitleBar]
@@ -56,22 +57,26 @@ class TitleBar extends StatelessWidget {
   /// Whether the title should be centered.
   final bool centerTitle;
 
+  /// The color of the divider below the title bar.
+  ///
+  /// Defaults to MacosTheme.of(context).dividerColor.
+  final Color? dividerColor;
+
   @override
   Widget build(BuildContext context) {
     final MacosThemeData theme = MacosTheme.of(context);
-    Color dividerColor = theme.dividerColor;
 
     Widget? _title = title;
     if (_title != null) {
       _title = DefaultTextStyle(
         child: _title,
-        style: MacosTheme.of(context).typography.headline.copyWith(
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              color: theme.brightness.isDark
-                  ? const Color(0xFFEAEAEA)
-                  : const Color(0xFF4D4D4D),
-            ),
+        style: theme.typography.headline.copyWith(
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          color: theme.brightness.isDark
+              ? const Color(0xFFEAEAEA)
+              : const Color(0xFF4D4D4D),
+        ),
       );
     }
 
@@ -93,7 +98,9 @@ class TitleBar extends StatelessWidget {
             padding: padding,
             decoration: BoxDecoration(
               color: theme.canvasColor,
-              border: Border(bottom: BorderSide(color: dividerColor)),
+              border: Border(
+                bottom: BorderSide(color: dividerColor ?? theme.dividerColor),
+              ),
             ).copyWith(
               color: decoration?.color,
               image: decoration?.image,

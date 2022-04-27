@@ -25,6 +25,7 @@ class ToolBar extends StatefulWidget {
     this.automaticallyImplyLeading = true,
     this.actions,
     this.centerTitle = false,
+    this.dividerColor,
   }) : super(key: key);
 
   /// Specifies the height of this [ToolBar]
@@ -77,6 +78,11 @@ class ToolBar extends StatefulWidget {
   /// Whether the title should be centered.
   final bool centerTitle;
 
+  /// The color of the divider below the toolbar.
+  ///
+  /// Defaults to MacosTheme.of(context).dividerColor.
+  final Color? dividerColor;
+
   @override
   State<ToolBar> createState() => _ToolBarState();
 }
@@ -88,7 +94,7 @@ class _ToolBarState extends State<ToolBar> {
   Widget build(BuildContext context) {
     final scope = MacosWindowScope.maybeOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
-    Color dividerColor = theme.dividerColor;
+    Color dividerColor = widget.dividerColor ?? theme.dividerColor;
     final route = ModalRoute.of(context);
     double _overflowBreakpoint = 0.0;
 
