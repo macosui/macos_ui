@@ -12,9 +12,6 @@ class _ColorsPageState extends State<ColorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS UI Colors'),
-      ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(

@@ -19,9 +19,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('App title bar'),
-      ),
       toolBar: ToolBar(
         title: const Text('macOS UI Widget Gallery'),
         leading: MacosBackButton(
@@ -196,10 +193,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       MaterialPageRoute(
                         builder: (_) {
                           return MacosScaffold(
-                            titleBar: const TitleBar(
-                              centerTitle: false,
-                              title: Text('New page'),
-                            ),
                             children: [
                               ContentArea(
                                 builder: (context, scrollController) {

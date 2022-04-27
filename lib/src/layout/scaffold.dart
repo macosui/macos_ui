@@ -21,7 +21,6 @@ class MacosScaffold extends StatefulWidget {
   const MacosScaffold({
     Key? key,
     this.children = const <Widget>[],
-    this.titleBar,
     this.toolBar,
     this.backgroundColor,
   }) : super(key: key);
@@ -34,9 +33,6 @@ class MacosScaffold extends StatefulWidget {
   /// The children to display in the rest of the scaffold, excluding the
   /// [Sidebar] and [TitleBar] regions.
   final List<Widget> children;
-
-  /// An app bar to display at the top of the scaffold.
-  final TitleBar? titleBar;
 
   final ToolBar? toolBar;
 
@@ -81,7 +77,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
         final mediaQuery = MediaQuery.of(context);
         final children = widget.children;
         double topPadding = 0;
-        if (widget.titleBar != null) topPadding += widget.titleBar!.height;
+        //if (widget.titleBar != null) topPadding += widget.titleBar!.height;
         if (widget.toolBar != null) topPadding += widget.toolBar!.height;
 
         return Stack(
@@ -104,18 +100,17 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               ),
             ),
 
-            // Title bar
-            if (widget.titleBar != null)
-              Positioned(
-                width: width,
-                height: widget.titleBar!.height,
-                child: widget.titleBar!,
-              ),
+            // // Title bar
+            // if (widget.titleBar != null)
+            //   Positioned(
+            //     width: width,
+            //     height: widget.titleBar!.height,
+            //     child: widget.titleBar!,
+            //   ),
 
             // Toolbar
             if (widget.toolBar != null)
               Positioned(
-                top: (widget.titleBar != null) ? widget.titleBar!.height : null,
                 width: width,
                 height: widget.toolBar!.height,
                 child: widget.toolBar!,

@@ -77,6 +77,9 @@ class _DemoState extends State<Demo> {
         index: pageIndex,
         children: pages,
       ),
+      titleBar: const TitleBar(
+        title: Text('App title bar'),
+      ),
       sidebar: Sidebar(
         minWidth: 200,
         bottom: const Padding(

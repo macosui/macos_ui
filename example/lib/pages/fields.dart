@@ -12,9 +12,6 @@ class _FieldsPageState extends State<FieldsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS UI Fields'),
-      ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
