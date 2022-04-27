@@ -15,12 +15,17 @@ class ToolBarIconButton extends ToolbarItem {
 
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
+    final brightness = MacosTheme.of(context).brightness;
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       return MacosIconButton(
         icon: MacosIconTheme(
-          data: MacosTheme.of(context)
-              .iconTheme
-              .copyWith(color: MacosColors.systemGrayColor, size: 20.0),
+          data: MacosTheme.of(context).iconTheme.copyWith(
+                color: brightness.resolve(
+                  const Color.fromRGBO(0, 0, 0, 0.5),
+                  const Color.fromRGBO(255, 255, 255, 0.5),
+                ),
+                size: 20.0,
+              ),
           child: icon,
         ),
         onPressed: onPressed,

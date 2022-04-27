@@ -15,6 +15,7 @@ class ToolBarImageButton extends ToolbarItem {
 
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
+    final brightness = MacosTheme.of(context).brightness;
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(6.0, 6.0, 6.0, 0.0),
@@ -23,9 +24,13 @@ class ToolBarImageButton extends ToolbarItem {
           children: [
             MacosIconButton(
               icon: MacosIconTheme(
-                data: MacosTheme.of(context)
-                    .iconTheme
-                    .copyWith(color: MacosColors.systemGrayColor, size: 16.0),
+                data: MacosTheme.of(context).iconTheme.copyWith(
+                      color: brightness.resolve(
+                        const Color.fromRGBO(0, 0, 0, 0.5),
+                        const Color.fromRGBO(255, 255, 255, 0.5),
+                      ),
+                      size: 16.0,
+                    ),
                 child: icon,
               ),
               onPressed: onPressed,

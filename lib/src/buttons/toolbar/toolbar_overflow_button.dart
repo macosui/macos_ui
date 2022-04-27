@@ -29,7 +29,7 @@ class _ToolbarOverflowButtonState extends State<ToolbarOverflowButton> {
         },
       ).build(context, ToolbarItemDisplayMode.inToolbar),
       content: widget.overflowContentBuilder,
-      verticalOffset: 14.0,
+      verticalOffset: 8.0,
       horizontalOffset: 10.0,
     );
     return popup;
