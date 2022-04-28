@@ -16,6 +16,8 @@ Flutter widgets and themes implementing the current macOS design language.
 - [Layout](#layout)
   - [MacosWindow](#macoswindow)
   - [MacosScaffold](#macosscaffold)
+  - [Modern Window Look](#modern-window-look)
+  - [ToolBar](#toolbar)
   - [MacosListTile](#MacosListTile)
 - [Icons](#icons)
   - [MacosIcon](#MacosIcon)
@@ -32,6 +34,7 @@ Flutter widgets and themes implementing the current macOS design language.
   - [MacosSheet](#MacosSheet)
 - [Fields](#fields)
   - [MacosTextField](#macostextfield)
+  - [MacosSearchField](#macossearchfield)
 - [Labels](#labels)
   - [MacosTooltip](#macostooltip)
 - [Indicators](#indicators)
@@ -61,7 +64,7 @@ macOS welcomes contributions. Please see CONTRIBUTING.md for more information.
 
 `MacosWindow` is the basic frame for the macOS layout.
 
-It has a `Sidebar` on the left and the rest of the window is typically filled out
+It has a `Sidebar` on the left, an optional `TitleBar` at the top, and the rest of the window is typically filled out
 with a `MacosScaffold`. A scope for the `MacosWindow` is provided by `MacosWindowScope`.
 The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`. Please note that you must
 wrap your `MacosScaffold` in a `Builder` widget in order for this to work properly.
@@ -73,19 +76,19 @@ wrap your `MacosScaffold` in a `Builder` widget in order for this to work proper
 
 The `MacosScaffold` is what you would call a "page".
 
-The scaffold has a `TitleBar` property and the `children` property which accepts a `ContentArea` widget and multiple `ResizablePane` widgets. To catch navigation or routes below the scaffold, consider wrapping the `MacosScaffold` in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html). By doing so, navigation inside the `MacosScaffold` will be displayed inside the `MacosScaffold` area instead of covering the entire window. To push a route outside a `MacosScaffold` wrapped in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html), use the root navigator `Navigator.of(context, rootNavigator: true)`
+The scaffold has a `toolbar` property and the `children` property which accepts a `ContentArea` widget and multiple `ResizablePane` widgets. To catch navigation or routes below the scaffold, consider wrapping the `MacosScaffold` in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html). By doing so, navigation inside the `MacosScaffold` will be displayed inside the `MacosScaffold` area instead of covering the entire window. To push a route outside a `MacosScaffold` wrapped in a [`CupertinoTabView`](https://api.flutter.dev/flutter/cupertino/CupertinoTabView-class.html), use the root navigator `Navigator.of(context, rootNavigator: true)`
 
-See the documentation for customizations.
+See the documentation for customizations and `ToolBar` examples.
 
-<img src="https://imgur.com/waUgeWY.png" width="75%"/>
+<img src="https://imgur.com/KT1fdjI.png" width="75%"/>
 
-<img src="https://imgur.com/DihgZmC.png" width="75%"/>
+<img src="https://imgur.com/4mknLAy.png" width="75%"/>
 
-<img src="https://imgur.com/mabmh61.png" width="75%"/>
+<img src="https://imgur.com/mXR2wwu.png" width="75%"/>
 
 ## Modern window look
 
-A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` file should look like this.
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` file should look like this:
 
 ```swift
 import Cocoa
@@ -106,6 +109,7 @@ class MainFlutterWindow: NSWindow {
     self.titleVisibility = .hidden
     self.titlebarAppearsTransparent = true
     if #available(macOS 11.0, *) {
+       // Use .expanded if the app will have a title bar, else use .unified
       self.toolbarStyle = .unified
     }
 
@@ -134,6 +138,86 @@ class MainFlutterWindow: NSWindow {
 
 ```
 
+Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `.unified`. This must be set beforehand, i.e. it cannot be switched in runtime.
+
+## ToolBar
+
+Creates a toolbar in the `MacosScaffold`. The toolbar appears below the title bar (if present) of the macOS app or integrates with it, by using its `title` property. 
+
+A toolbar provides convenient access to frequently used commands and features (toolbar items). Different routes of your app could have different toolbars. 
+
+Toolbar items include `ToolBarIconButton`, `ToolBarPulldownButton`, and `ToolBarSpacer` widgets, and should be provided via the `items` property. The action of every toolbar item should also be provided as a menu bar command of your app.
+
+Toolbars look best and are easiest to understand when they contain elements of the same type (so either use labels for every toolbar item or not).
+
+You can use the `ToolBarSpacer` widgets to set the grouping of the different toolbar actions.
+
+An example toolbar would be:
+
+```dart
+ToolBar(
+  title: const Text('Untitled Document'),
+  titleWidth: 200.0,
+  leading: MacosBackButton(
+    onPressed: () => debugPrint('click'),
+    fillColor: Colors.transparent,
+  ),
+  actions: [
+    ToolBarIconButton(
+      label: "Add",
+      icon: const MacosIcon(
+        CupertinoIcons.add_circled,
+      ),
+      onPressed: () => debugPrint("Add..."),
+      showLabel: true,
+    ),
+    const ToolBarSpacer(),
+    ToolBarIconButton(
+      label: "Delete",
+      icon: const MacosIcon(
+        CupertinoIcons.trash,
+      ),
+      onPressed: () => debugPrint("Delete"),
+      showLabel: false,
+    ),
+    ToolBarPullDownButton(
+      label: "Actions",
+      icon: CupertinoIcons.ellipsis_circle,
+      items: [
+        MacosPulldownMenuItem(
+          label: "New Folder",
+          title: const Text("New Folder"),
+          onTap: () => debugPrint("Creating new folder..."),
+        ),
+        MacosPulldownMenuItem(
+          label: "Open",
+          title: const Text("Open"),
+          onTap: () => debugPrint("Opening..."),
+        ),
+      ],
+    ),
+  ]
+),
+```
+
+This builds this simple toolbar: 
+<img src="https://imgur.com/BDUdQkj.png"/>
+
+Other toolbar examples:
+
+- Toolbar with icon buttons (no labels):
+<img src="https://imgur.com/PtrjhPx.png"/>
+
+- Toolbar with icon buttons and labels:
+<img src="https://imgur.com/Ouaud12.png"/>
+
+- Toolbar with a pulldown button open:
+<img src="https://imgur.com/QCxoGmM.png"/>
+
+- Toolbar with title bar above (also see [the note above](#modern-window-look)):
+<img src="https://imgur.com/eAgcsKY.png"/>
+
+
 ## MacosListTile
 
 A widget that aims to approximate the [ListTile] widget found in
@@ -157,6 +241,8 @@ MacosListTile(
   ),
 ),
 ```
+
+
 
 # Icons
 
@@ -246,6 +332,8 @@ If `items` is null, the button will be disabled (greyed out).
  A `title` or an `icon` must be provided, to be displayed as the  pull-down button's title, but not both at the same time.
 
 The menu can also be navigated with the up/down keys and an action selected with the Return key.
+
+It can also appear in the toolbar, via the `ToolBarPulldownButton` widget.
 
 | Dark Theme                                 | Light Theme                                |
 | ------------------------------------------ | ------------------------------------------ |
@@ -415,12 +503,28 @@ showMacosSheet(
 
 A text field is a rectangular area in which the user enters or edits one or more lines of text. A text field can contain plain or styled text.
 
-![](https://developer.apple.com/design/human-interface-guidelines/macos/images/TextFields_PlaceHolder.png)
+<img src="https://imgur.com/UzyMlcL.png" width="75%"/>
 
 Here's an example of how to create a basic text field:
 
 ```dart
-MacosTextField(),
+MacosTextField(
+  placeholder: 'Type some text here',
+)
+```
+
+## MacosSearchField
+
+A search field is a style of text field optimized for performing text-based searches in a large collection of values.
+
+<img src="https://imgur.com/qbabwAW.png" width="75%"/>
+
+Here's an example of how to create a search field:
+
+```dart
+MacosSearchField(
+  placeholder: 'Search...',
+)
 ```
 
 # Labels

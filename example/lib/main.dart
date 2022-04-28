@@ -81,6 +81,7 @@ class _DemoState extends State<Demo> {
         index: pageIndex,
         children: pages,
       ),
+      // Optional title bar:
       // titleBar: const TitleBar(
       //   title: Text('macOS App Name'),
       // ),

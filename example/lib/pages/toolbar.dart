@@ -102,7 +102,7 @@ class _ToolbarPageState extends State<ToolbarPage> {
             icon: const MacosIcon(
               CupertinoIcons.square_grid_3x2,
             ),
-            onPressed: () => debugPrint("pressed"),
+            onPressed: () => debugPrint("Table..."),
             showLabel: false,
           ),
           ToolBarIconButton(
