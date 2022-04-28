@@ -112,11 +112,7 @@ class _MacosPopupMenuItemButtonState<T>
             child: Container(
               decoration: BoxDecoration(
                 color: _isHovered
-<<<<<<< HEAD
                     ? MacosPopupButtonTheme.of(context).highlightColor
-=======
-                    ? theme.popupButtonTheme.highlightColor
->>>>>>> origin/dev
                     : Colors.transparent,
                 borderRadius: _kBorderRadius,
               ),
@@ -1346,21 +1342,13 @@ _ButtonStyles _getButtonStyles(
   final brightness = theme.brightness;
   final popupTheme = MacosPopupButtonTheme.of(context);
   Color textColor = theme.typography.body.color!;
-<<<<<<< HEAD
   Color bgColor = popupTheme.backgroundColor!;
-=======
-  Color bgColor = theme.popupButtonTheme.backgroundColor!;
->>>>>>> origin/dev
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
-<<<<<<< HEAD
   Color caretBgColor = popupTheme.highlightColor!;
-=======
-  Color caretBgColor = theme.popupButtonTheme.highlightColor!;
->>>>>>> origin/dev
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     textColor = caretColor = brightness.resolve(
@@ -1380,11 +1368,7 @@ _ButtonStyles _getButtonStyles(
       const Color(0xffc3c4c9),
       const Color(0xff222222),
     );
-<<<<<<< HEAD
     caretBgColor = popupTheme.highlightColor!;
-=======
-    caretBgColor = theme.popupButtonTheme.highlightColor!;
->>>>>>> origin/dev
   }
   return _ButtonStyles(
     textColor: textColor,

@@ -140,7 +140,7 @@ class _ToolBarState extends State<ToolBar> {
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
-            fillColor: const Color(0x00000),
+            fillColor: const Color(0xff000000),
             onPressed: () => Navigator.maybePop(context),
           ),
         );

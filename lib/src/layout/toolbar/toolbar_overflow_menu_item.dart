@@ -13,7 +13,7 @@ class ToolbarOverflowMenuItem extends StatefulWidget {
     this.isSelected,
   }) : super(key: key);
 
-  /// The callback that is called when the menu item is tapped or otherwise 
+  /// The callback that is called when the menu item is tapped or otherwise
   /// activated.
   ///
   /// If this is set to null, the menu item will be disabled (greyed out).
@@ -100,7 +100,7 @@ class _ToolbarOverflowMenuItemState extends State<ToolbarOverflowMenuItem> {
             child: Container(
               decoration: BoxDecoration(
                 color: _isHighlighted
-                    ? theme.macosPulldownButtonTheme.highlightColor
+                    ? theme.pulldownButtonTheme.highlightColor
                     : Colors.transparent,
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
               ),

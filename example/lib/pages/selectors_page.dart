@@ -14,9 +14,6 @@ class _SelectorsPageState extends State<SelectorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS UI Selectors'),
-      ),
       children: [
         ContentArea(
           builder: (context, scrollController) {

@@ -25,7 +25,7 @@ class ToolbarOverflowMenu extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: MacosTheme.of(context)
-            .macosPulldownButtonTheme
+            .pulldownButtonTheme
             .pulldownColor
             ?.withOpacity(0.25),
         boxShadow: [
