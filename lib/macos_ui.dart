@@ -23,7 +23,6 @@ export 'src/buttons/toolbar/toolbar_popup.dart';
 export 'src/buttons/toolbar/toolbar_spacer.dart';
 export 'src/buttons/toolbar/toolbar_icon_button.dart';
 export 'src/buttons/toolbar/toolbar_pulldown_button.dart';
-export 'src/buttons/toolbar/toolbar_image_button.dart';
 export 'src/buttons/toolbar/toolbar_overflow_button.dart';
 export 'src/buttons/toolbar/toolbar_overflow_menu.dart';
 export 'src/buttons/toolbar/toolbar_overflow_menu_item.dart';

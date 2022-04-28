@@ -32,12 +32,14 @@ class _ButtonsPageState extends State<ButtonsPage> {
               CupertinoIcons.eyedropper,
             ),
             onPressed: () => debugPrint("pressed"),
+            showLabel: false,
           ),
           const ToolBarIconButton(
             label: "Change View",
             icon: MacosIcon(
               CupertinoIcons.list_bullet,
             ),
+            showLabel: false,
           ),
           const ToolBarSpacer(),
           ToolBarIconButton(
@@ -46,6 +48,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
               CupertinoIcons.square_grid_3x2,
             ),
             onPressed: () => debugPrint("pressed"),
+            showLabel: false,
           ),
           ToolBarIconButton(
             label: "Share",
@@ -53,6 +56,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
               CupertinoIcons.share,
             ),
             onPressed: () => debugPrint("pressed"),
+            showLabel: false,
           ),
           ToolBarPullDownButton(
             label: "Actions",
@@ -104,6 +108,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
               CupertinoIcons.trash,
             ),
             onPressed: () => debugPrint("pressed"),
+            showLabel: false,
           ),
           ToolBarPullDownButton(
             label: "Group",
@@ -145,6 +150,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
             onPressed: () {
               MacosWindowScope.of(context).toggleSidebar();
             },
+            showLabel: false,
           ),
         ],
       ),

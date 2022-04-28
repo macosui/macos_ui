@@ -26,9 +26,10 @@ enum ToolbarPopupPlacement {
   end,
 }
 
-/// Creates an popup for the toolbar. Used for the menu that encapsulates
-/// the overflowed toolbar actions and its possible submenus.
+/// A popup widget for the toolbar.
 class ToolbarPopup<T> extends StatefulWidget {
+  /// Creates a popup for the toolbar. Used for the menu that encapsulates
+  /// the overflowed toolbar actions and its possible submenus.
   const ToolbarPopup({
     Key? key,
     required this.child,

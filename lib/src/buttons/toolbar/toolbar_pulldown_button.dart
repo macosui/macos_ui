@@ -2,14 +2,15 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// A pulldown button suitable for the toolbar.
-///
-/// It essentially wraps a [MacosPulldownButton] with the appropriate toolbar
-/// styling.
-///
-/// If it overflows the available toolbar width, it becomes a
-/// [ToolbarOverflowMenuItem], that opens a subsequent submenu with the pulldown
-/// items.
 class ToolBarPullDownButton extends ToolbarItem {
+  /// Builds a pulldown button suitable for the toolbar.
+  ///
+  /// It essentially wraps a [MacosPulldownButton] with the appropriate toolbar
+  /// styling.
+  ///
+  /// If it overflows the available toolbar width, it becomes a
+  /// [ToolbarOverflowMenuItem], that opens a subsequent submenu with the
+  /// pulldown items.
   const ToolBarPullDownButton({
     Key? key,
     required this.label,

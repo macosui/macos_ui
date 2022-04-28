@@ -3,9 +3,10 @@ import 'package:macos_ui/src/library.dart';
 
 const kToolbarItemWidth = 44.0;
 
-/// A spacer utility widget for the toolbar. It generates blank space between
-/// the toolbar actions.
+/// A spacer utility widget for the toolbar.
 class ToolBarSpacer extends ToolbarItem {
+  /// Builds a spacer utility widget for the toolbar. It generates blank space
+  /// between the toolbar actions.
   const ToolBarSpacer({
     Key? key,
     this.spacerUnits = 1.0,

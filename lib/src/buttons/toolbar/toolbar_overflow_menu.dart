@@ -5,11 +5,12 @@ import 'package:macos_ui/src/theme/macos_theme.dart';
 
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 
-/// A menu that includes all overflowed toolbar actions and appears below the
-/// [ToolbarOverflowButton].
-///
-/// Has a similar styling to a pulldown menu.
+/// A menu that includes all overflowed toolbar actions.
 class ToolbarOverflowMenu extends StatelessWidget {
+  /// Builds a menu that includes all overflowed toolbar actions and appears
+  /// as a popup below the [ToolbarOverflowButton].
+  ///
+  /// Has a similar styling to a pulldown menu.
   const ToolbarOverflowMenu({
     Key? key,
     required this.children,

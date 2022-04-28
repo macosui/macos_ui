@@ -1,12 +1,13 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// A button to show at the far right side of the toolbar, when the toolbar
-/// actions are overflowing the available horizontal space.
-///
-/// When clicked, it opens a [ToolbarOverflowMenu] holding all overflowed
-/// actions in a simplified menu.
+/// A button to show at the far right side of the toolbar.
 class ToolbarOverflowButton extends StatelessWidget {
+  /// Builds a button to show at the far right side of the toolbar, when the
+  /// toolbar actions are overflowing the available horizontal space.
+  ///
+  /// When clicked, it opens a [ToolbarOverflowMenu] holding all overflowed
+  /// actions in a simplified menu.
   const ToolbarOverflowButton({
     Key? key,
     required this.overflowContentBuilder,
@@ -28,6 +29,7 @@ class ToolbarOverflowButton extends StatelessWidget {
         onPressed: () {
           popupKey.currentState?.openPopup();
         },
+        showLabel: false,
       ).build(context, ToolbarItemDisplayMode.inToolbar),
       content: overflowContentBuilder,
       verticalOffset: 8.0,
