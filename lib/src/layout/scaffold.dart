@@ -5,7 +5,7 @@ import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
-import 'package:macos_ui/src/layout/toolbar.dart';
+import 'package:macos_ui/src/layout/toolbar/toolbar.dart';
 import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
@@ -34,6 +34,7 @@ class MacosScaffold extends StatefulWidget {
   /// [Sidebar] and [TitleBar] regions.
   final List<Widget> children;
 
+  /// The [Toolbar] to use at the top of the layout scaffold.
   final ToolBar? toolBar;
 
   @override
@@ -77,7 +78,6 @@ class _MacosScaffoldState extends State<MacosScaffold> {
         final mediaQuery = MediaQuery.of(context);
         final children = widget.children;
         double topPadding = 0;
-        //if (widget.titleBar != null) topPadding += widget.titleBar!.height;
         if (widget.toolBar != null) topPadding += widget.toolBar!.height;
 
         return Stack(
@@ -99,14 +99,6 @@ class _MacosScaffoldState extends State<MacosScaffold> {
                 ),
               ),
             ),
-
-            // // Title bar
-            // if (widget.titleBar != null)
-            //   Positioned(
-            //     width: width,
-            //     height: widget.titleBar!.height,
-            //     child: widget.titleBar!,
-            //   ),
 
             // Toolbar
             if (widget.toolBar != null)

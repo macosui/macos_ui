@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/overflow_handler.dart';
+import 'package:macos_ui/src/layout/toolbar/overflow_handler.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
