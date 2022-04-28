@@ -11,10 +11,14 @@ class ToolbarOverflowButton extends StatelessWidget {
   const ToolbarOverflowButton({
     Key? key,
     required this.overflowContentBuilder,
+    this.isDense = false,
   }) : super(key: key);
 
   /// A function that builds the content of the overflowed actions menu.
   final WidgetBuilder overflowContentBuilder;
+
+  /// Whether the icon button should be smaller in size (half the toolbar height).
+  final bool isDense;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +26,14 @@ class ToolbarOverflowButton extends StatelessWidget {
     return ToolbarPopup(
       key: popupKey,
       child: ToolBarIconButton(
-        label: "More",
+        label: "",
         icon: const MacosIcon(
           CupertinoIcons.chevron_right_2,
         ),
         onPressed: () {
           popupKey.currentState?.openPopup();
         },
-        showLabel: false,
+        showLabel: isDense,
       ).build(context, ToolbarItemDisplayMode.inToolbar),
       content: overflowContentBuilder,
       verticalOffset: 8.0,

@@ -19,6 +19,57 @@ class _ButtonsPageState extends State<ButtonsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
+      toolBar: ToolBar(
+        title: const Text('My macOS app'),
+        titleWidth: 150.0,
+        leading: MacosBackButton(
+          onPressed: () => debugPrint('click'),
+          fillColor: Colors.transparent,
+        ),
+        actions: [
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.play,
+            ),
+            onPressed: () => debugPrint("Play..."),
+            label: "Play",
+            showLabel: false,
+          ),
+          ToolBarIconButton(
+            icon: const MacosIcon(
+              CupertinoIcons.chat_bubble_fill,
+            ),
+            onPressed: () => debugPrint("Comment..."),
+            label: "Comment",
+            showLabel: false,
+          ),
+          const ToolBarSpacer(),
+          ToolBarIconButton(
+            label: "Delete",
+            icon: const MacosIcon(
+              CupertinoIcons.trash,
+            ),
+            onPressed: () => debugPrint("pressed"),
+            showLabel: false,
+          ),
+          ToolBarIconButton(
+            label: "Share",
+            icon: const MacosIcon(
+              CupertinoIcons.share,
+            ),
+            onPressed: () => debugPrint("pressed"),
+            showLabel: false,
+          ),
+          ToolBarIconButton(
+            label: "Toggle Sidebar",
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
+            ),
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
+          ),
+        ],
+      ),
       children: [
         ResizablePane(
           minWidth: 180,
@@ -84,63 +135,70 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.large,
-                  child: const Text('large PushButton'),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
-                  },
-                ),
-                const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.small,
-                  child: const Text('small PushButton'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return MacosScaffold(
-                            children: [
-                              ContentArea(
-                                builder: (context, scrollController) {
-                                  return Center(
-                                    child: PushButton(
-                                      buttonSize: ButtonSize.large,
-                                      child: const Text('Go Back'),
-                                      onPressed: () {
-                                        Navigator.maybePop(context);
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                              ResizablePane(
-                                minWidth: 180,
-                                startWidth: 200,
-                                windowBreakpoint: 700,
-                                resizableSide: ResizableSide.left,
-                                builder: (_, __) {
-                                  return const Center(
-                                    child: Text('Resizable Pane'),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.large,
-                  isSecondary: true,
-                  child: const Text('secondary PushButton'),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
-                  },
+                const Text("Pushbutton"),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Large'),
+                      onPressed: () {
+                        MacosWindowScope.of(context).toggleSidebar();
+                      },
+                    ),
+                    const SizedBox(width: 20),
+                    PushButton(
+                      buttonSize: ButtonSize.small,
+                      child: const Text('Small'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return MacosScaffold(
+                                children: [
+                                  ContentArea(
+                                    builder: (context, scrollController) {
+                                      return Center(
+                                        child: PushButton(
+                                          buttonSize: ButtonSize.large,
+                                          child: const Text('Go Back'),
+                                          onPressed: () {
+                                            Navigator.maybePop(context);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  ResizablePane(
+                                    minWidth: 180,
+                                    startWidth: 200,
+                                    windowBreakpoint: 700,
+                                    resizableSide: ResizableSide.left,
+                                    builder: (_, __) {
+                                      return const Center(
+                                        child: Text('Resizable Pane'),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 20),
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      isSecondary: true,
+                      child: const Text('Secondary'),
+                      onPressed: () {
+                        MacosWindowScope.of(context).toggleSidebar();
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 const Text('MacosPulldownButton'),

@@ -172,11 +172,21 @@ class _ToolBarState extends State<ToolBar> {
     // and the ones that have overflowed.
     late List<ToolbarItem>? _inToolbarActions;
     late List<ToolbarItem> _overflowedActions;
+    bool doAllItemsShowLabel = true;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
       _inToolbarActions = widget.actions!;
       _overflowedActions = overflowedActionsIndexes
           .map((index) => widget.actions![index])
           .toList();
+      // If all toolbar actions have labels shown below their icons,
+      // reduce the overflow button's size as well.
+      for (ToolbarItem item in widget.actions!) {
+        if (item is ToolBarIconButton) {
+          if (!item.showLabel) {
+            doAllItemsShowLabel = false;
+          }
+        }
+      }
     }
 
     final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
@@ -212,6 +222,7 @@ class _ToolBarState extends State<ToolBar> {
               trailing: OverflowHandler(
                 overflowBreakpoint: _overflowBreakpoint,
                 overflowWidget: ToolbarOverflowButton(
+                  isDense: doAllItemsShowLabel,
                   overflowContentBuilder: (context) => ToolbarOverflowMenu(
                     children: _overflowedActions
                         .map((action) => action.build(

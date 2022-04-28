@@ -23,18 +23,18 @@ class _ToolbarPageState extends State<ToolbarPage> {
         actions: [
           ToolBarIconButton(
             icon: const MacosIcon(
-              CupertinoIcons.play,
+              CupertinoIcons.folder_badge_plus,
             ),
-            onPressed: () => debugPrint("Play..."),
-            label: "Play",
+            onPressed: () => debugPrint("New Folder..."),
+            label: "New Folder",
             showLabel: true,
           ),
           ToolBarIconButton(
             icon: const MacosIcon(
-              CupertinoIcons.chat_bubble_fill,
+              CupertinoIcons.add_circled,
             ),
-            onPressed: () => debugPrint("Comment..."),
-            label: "Comment",
+            onPressed: () => debugPrint("Add..."),
+            label: "Add",
             showLabel: true,
           ),
           const ToolBarSpacer(),
