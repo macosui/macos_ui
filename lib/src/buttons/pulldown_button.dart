@@ -106,7 +106,11 @@ class _MacosPulldownMenuItemButtonState
               child: Container(
                 decoration: BoxDecoration(
                   color: _isHovered
+<<<<<<< HEAD
                       ? MacosPulldownButtonTheme.of(context).highlightColor
+=======
+                      ? theme.pulldownButtonTheme.highlightColor
+>>>>>>> origin/dev
                       : Colors.transparent,
                   borderRadius: _kBorderRadius,
                 ),
@@ -418,9 +422,10 @@ class _MacosPulldownRoute extends PopupRoute {
 
     double menuTop = buttonTop + buttonRect.height;
     double preferredMenuHeight = 8.0;
-    if (items.isNotEmpty)
+    if (items.isNotEmpty) {
       preferredMenuHeight +=
           itemHeights.reduce((double total, double height) => total + height);
+    }
 
     // If there are too many elements in the menu, we need to shrink it down
     // so it is at most the computedMaxHeight.
@@ -848,8 +853,8 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    final EdgeInsetsGeometry menuMargin =
-        const EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
+    const EdgeInsetsGeometry menuMargin =
+        EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
 
     final List<_MenuItem> menuItems = <_MenuItem>[
       for (int index = 0; index < widget.items!.length; index += 1)
@@ -1027,14 +1032,22 @@ _ButtonStyles _getButtonStyles(
   final brightness = theme.brightness;
   final pulldownTheme = MacosPulldownButtonTheme.of(context);
   Color textColor = theme.typography.body.color!;
+<<<<<<< HEAD
   Color bgColor = pulldownTheme.backgroundColor!;
+=======
+  Color bgColor = theme.pulldownButtonTheme.backgroundColor!;
+>>>>>>> origin/dev
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
+<<<<<<< HEAD
   Color caretBgColor = pulldownTheme.highlightColor!;
   Color iconColor = pulldownTheme.iconColor!;
+=======
+  Color caretBgColor = theme.pulldownButtonTheme.highlightColor!;
+>>>>>>> origin/dev
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     if (hasIcon) {
@@ -1087,13 +1100,23 @@ _ButtonStyles _getButtonStyles(
             const Color(0xffc3c4c9),
             const Color(0xff222222),
           );
+<<<<<<< HEAD
           caretBgColor = pulldownTheme.highlightColor!;
+=======
+          caretBgColor = theme.pulldownButtonTheme.highlightColor!;
+>>>>>>> origin/dev
           break;
         case PulldownButtonState.hovered:
           break;
         case PulldownButtonState.pressed:
+<<<<<<< HEAD
           bgColor = pulldownTheme.backgroundColor!.withOpacity(0.4);
           caretBgColor = pulldownTheme.highlightColor!.withOpacity(0.9);
+=======
+          bgColor = theme.pulldownButtonTheme.backgroundColor!.withOpacity(0.4);
+          caretBgColor =
+              theme.pulldownButtonTheme.highlightColor!.withOpacity(0.9);
+>>>>>>> origin/dev
           break;
       }
     }
@@ -1134,7 +1157,7 @@ class _DownCaretPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final radius = 4.0;
+    const radius = 4.0;
     final hPadding = size.height / 3;
 
     /// Draw background
@@ -1162,6 +1185,7 @@ class _DownCaretPainter extends CustomPainter {
   @override
   bool shouldRebuildSemantics(_DownCaretPainter oldDelegate) => false;
 }
+<<<<<<< HEAD
 
 /// Overrides the default style of its [MacosPulldownButton] descendants.
 ///
@@ -1301,3 +1325,5 @@ class MacosPulldownButtonThemeData with Diagnosticable {
     );
   }
 }
+=======
+>>>>>>> origin/dev

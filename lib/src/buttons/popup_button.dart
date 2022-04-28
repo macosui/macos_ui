@@ -112,7 +112,11 @@ class _MacosPopupMenuItemButtonState<T>
             child: Container(
               decoration: BoxDecoration(
                 color: _isHovered
+<<<<<<< HEAD
                     ? MacosPopupButtonTheme.of(context).highlightColor
+=======
+                    ? theme.popupButtonTheme.highlightColor
+>>>>>>> origin/dev
                     : Colors.transparent,
                 borderRadius: _kBorderRadius,
               ),
@@ -564,9 +568,10 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
     double menuTop = (buttonTop - selectedItemOffset) -
         (itemHeights[selectedIndex] - buttonRect.height) / 2.0;
     double preferredMenuHeight = 8.0;
-    if (items.isNotEmpty)
+    if (items.isNotEmpty) {
       preferredMenuHeight +=
           itemHeights.reduce((double total, double height) => total + height);
+    }
 
     // If there are too many elements in the menu, we need to shrink it down
     // so it is at most the computedMaxHeight.
@@ -664,10 +669,8 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
     // treating the items as if their heights were all equal to _kMinInteractiveDimension.
     final _MenuLimits menuLimits =
         route.getMenuLimits(buttonRect, constraints.maxHeight, selectedIndex);
-    if (route.scrollController == null) {
-      route.scrollController =
-          ScrollController(initialScrollOffset: menuLimits.scrollOffset);
-    }
+    route.scrollController ??=
+        ScrollController(initialScrollOffset: menuLimits.scrollOffset);
 
     final TextDirection? textDirection = Directionality.maybeOf(context);
     final Widget menu = _MacosPopupMenu<T>(
@@ -1140,8 +1143,8 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    final EdgeInsetsGeometry menuMargin =
-        const EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
+    const EdgeInsetsGeometry menuMargin =
+        EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
 
     final List<_MenuItem<T>> menuItems = <_MenuItem<T>>[
       for (int index = 0; index < widget.items!.length; index += 1)
@@ -1225,8 +1228,9 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
     if (widget.hint != null || (!_enabled && widget.disabledHint != null)) {
       Widget displayedHint =
           _enabled ? widget.hint! : widget.disabledHint ?? widget.hint!;
-      if (widget.selectedItemBuilder == null)
+      if (widget.selectedItemBuilder == null) {
         displayedHint = _MacosPopupMenuItemContainer(child: displayedHint);
+      }
 
       hintIndex = items.length;
       items.add(IgnorePointer(
@@ -1342,13 +1346,21 @@ _ButtonStyles _getButtonStyles(
   final brightness = theme.brightness;
   final popupTheme = MacosPopupButtonTheme.of(context);
   Color textColor = theme.typography.body.color!;
+<<<<<<< HEAD
   Color bgColor = popupTheme.backgroundColor!;
+=======
+  Color bgColor = theme.popupButtonTheme.backgroundColor!;
+>>>>>>> origin/dev
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
+<<<<<<< HEAD
   Color caretBgColor = popupTheme.highlightColor!;
+=======
+  Color caretBgColor = theme.popupButtonTheme.highlightColor!;
+>>>>>>> origin/dev
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     textColor = caretColor = brightness.resolve(
@@ -1368,7 +1380,11 @@ _ButtonStyles _getButtonStyles(
       const Color(0xffc3c4c9),
       const Color(0xff222222),
     );
+<<<<<<< HEAD
     caretBgColor = popupTheme.highlightColor!;
+=======
+    caretBgColor = theme.popupButtonTheme.highlightColor!;
+>>>>>>> origin/dev
   }
   return _ButtonStyles(
     textColor: textColor,
@@ -1406,7 +1422,7 @@ class _UpDownCaretsPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final radius = 4.0;
+    const radius = 4.0;
     final vPadding = size.height / 8 + 1.25;
     final hPadding = 2 * size.height / 8 + 1.25;
 
@@ -1440,133 +1456,4 @@ class _UpDownCaretsPainter extends CustomPainter {
 
   @override
   bool shouldRebuildSemantics(_UpDownCaretsPainter oldDelegate) => false;
-}
-
-/// Overrides the default style of its [MacosPopupButton] descendants.
-///
-/// See also:
-///
-///  * [MacosPopupButtonThemeData], which is used to configure this theme.
-class MacosPopupButtonTheme extends InheritedTheme {
-  /// Creates a [MacosPopupButtonTheme].
-  ///
-  /// The [data] parameter must not be null.
-  const MacosPopupButtonTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  /// The configuration of this theme.
-  final MacosPopupButtonThemeData data;
-
-  /// The closest instance of this class that encloses the given context.
-  ///
-  /// If there is no enclosing [MacosPopupButtonTheme] widget, then
-  /// [MacosThemeData.MacosPopupButtonTheme] is used.
-  ///
-  /// Typical usage is as follows:
-  ///
-  /// ```dart
-  /// MacosPopupButtonTheme theme = MacosPopupButtonTheme.of(context);
-  /// ```
-  static MacosPopupButtonThemeData of(BuildContext context) {
-    final MacosPopupButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosPopupButtonTheme>();
-    return buttonTheme?.data ?? MacosTheme.of(context).macosPopupButtonTheme;
-  }
-
-  @override
-  Widget wrap(BuildContext context, Widget child) {
-    return MacosPopupButtonTheme(data: data, child: child);
-  }
-
-  @override
-  bool updateShouldNotify(MacosPopupButtonTheme oldWidget) =>
-      data != oldWidget.data;
-}
-
-/// A style that overrides the default appearance of
-/// [MacosPopupButton]s when it is used with [MacosPopupButtonTheme] or with the
-/// overall [MacosTheme]'s [MacosThemeData.MacosPopupButtonTheme].
-///
-/// See also:
-///
-///  * [MacosPopupButtonTheme], the theme which is configured with this class.
-///  * [MacosThemeData.MacosPopupButtonTheme], which can be used to override the default
-///    style for [MacosPopupButton]s below the overall [MacosTheme].
-class MacosPopupButtonThemeData with Diagnosticable {
-  /// Creates a [MacosPopupButtonThemeData].
-  const MacosPopupButtonThemeData({
-    this.highlightColor,
-    this.backgroundColor,
-    this.popupColor,
-  });
-
-  /// The default highlight color for [MacosPopupButton].
-  ///
-  /// Sets the color of the caret icons and the color of a [MacosPopupMenuItem]'s background when the mouse hovers over it.
-  final Color? highlightColor;
-
-  /// The default background color for [MacosPopupButton]
-  final Color? backgroundColor;
-
-  /// The default popup menu color for [MacosPopupButton]
-  final Color? popupColor;
-
-  MacosPopupButtonThemeData copyWith({
-    Color? highlightColor,
-    Color? backgroundColor,
-    Color? popupColor,
-  }) {
-    return MacosPopupButtonThemeData(
-      highlightColor: highlightColor ?? this.highlightColor,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      popupColor: popupColor ?? this.popupColor,
-    );
-  }
-
-  /// Linearly interpolates between two [MacosPopupButtonThemeData].
-  ///
-  /// All the properties must be non-null.
-  static MacosPopupButtonThemeData lerp(
-    MacosPopupButtonThemeData a,
-    MacosPopupButtonThemeData b,
-    double t,
-  ) {
-    return MacosPopupButtonThemeData(
-      highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
-      backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
-      popupColor: Color.lerp(a.popupColor, b.popupColor, t),
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MacosPopupButtonThemeData &&
-          runtimeType == other.runtimeType &&
-          highlightColor?.value == other.highlightColor?.value &&
-          backgroundColor?.value == other.backgroundColor?.value &&
-          popupColor?.value == other.popupColor?.value;
-
-  @override
-  int get hashCode => highlightColor.hashCode ^ backgroundColor.hashCode;
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(ColorProperty('highlightColor', highlightColor));
-    properties.add(ColorProperty('backgroundColor', backgroundColor));
-    properties.add(ColorProperty('popupColor', popupColor));
-  }
-
-  MacosPopupButtonThemeData merge(MacosPopupButtonThemeData? other) {
-    if (other == null) return this;
-    return copyWith(
-      highlightColor: other.highlightColor,
-      backgroundColor: other.backgroundColor,
-      popupColor: other.popupColor,
-    );
-  }
 }
