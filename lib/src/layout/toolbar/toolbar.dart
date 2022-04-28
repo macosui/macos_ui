@@ -231,12 +231,10 @@ class _ToolBarState extends State<ToolBar> {
                         .toList(),
                   ),
                 ),
-                children: (_inToolbarActions != null)
-                    ? _inToolbarActions
-                        .map((e) =>
-                            e.build(context, ToolbarItemDisplayMode.inToolbar))
-                        .toList()
-                    : [],
+                children: _inToolbarActions
+                    .map((e) =>
+                        e.build(context, ToolbarItemDisplayMode.inToolbar))
+                    .toList(),
                 overflowChangedCallback: (hiddenItems) {
                   setState(() {
                     overflowedActionsIndexes = hiddenItems;
