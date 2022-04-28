@@ -36,7 +36,7 @@ const Border _kDefaultRoundedBorder = Border(
   right: _kDefaultRoundedBorderSide,
 );
 
-const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
+const BoxDecoration kDefaultRoundedBorderDecoration = BoxDecoration(
   color: CupertinoDynamicColor.withBrightness(
     color: CupertinoColors.white,
     darkColor: CupertinoColors.black,
@@ -54,7 +54,7 @@ const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
 
-const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
+const BoxDecoration kDefaultFocusedBorderDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
 
@@ -239,8 +239,8 @@ class MacosTextField extends StatefulWidget {
     Key? key,
     this.controller,
     this.focusNode,
-    this.decoration = _kDefaultRoundedBorderDecoration,
-    this.focusedDecoration = _kDefaultFocusedBorderDecoration,
+    this.decoration = kDefaultRoundedBorderDecoration,
+    this.focusedDecoration = kDefaultFocusedBorderDecoration,
     this.padding = const EdgeInsets.all(4.0),
     this.placeholder,
     this.placeholderStyle = const TextStyle(
@@ -754,7 +754,7 @@ class MacosTextField extends StatefulWidget {
     properties.add(DiagnosticsProperty<BoxDecoration>(
       'decoration',
       decoration,
-      defaultValue: _kDefaultRoundedBorderDecoration,
+      defaultValue: kDefaultRoundedBorderDecoration,
     ));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));

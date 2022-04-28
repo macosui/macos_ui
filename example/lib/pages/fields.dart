@@ -29,7 +29,7 @@ class _FieldsPageState extends State<FieldsPage> {
                 SizedBox(
                   width: 300.0,
                   child: MacosTextField(
-                    prefix: MacosIcon(CupertinoIcons.search),
+                    prefix: MacosIcon(CupertinoIcons.money_dollar),
                     placeholder: 'Type some text here',
 
                     /// If both suffix and clear button mode is provided,
@@ -66,6 +66,13 @@ class _FieldsPageState extends State<FieldsPage> {
                     // suffix: Text('SUFFIX'),
                     clearButtonMode: OverlayVisibilityMode.always,
                     maxLines: 1,
+                  ),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: 300.0,
+                  child: MacosSearchField(
+                    placeholder: 'Search...',
                   ),
                 ),
               ],
