@@ -186,6 +186,23 @@ class _MacosWindowState extends State<MacosWindow> {
               child: ColoredBox(color: backgroundColor),
             ),
 
+            // Content Area
+            AnimatedPositioned(
+              curve: curve,
+              duration: duration,
+              left: visibleSidebarWidth,
+              width: width - visibleSidebarWidth,
+              height: height,
+              child: ClipRect(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: widget.titleBar != null ? widget.titleBar!.height : 0,
+                  ),
+                  child: widget.child ?? const SizedBox.shrink(),
+                ),
+              ),
+            ),
+
             // Title bar Area
             AnimatedPositioned(
               curve: curve,
@@ -195,19 +212,6 @@ class _MacosWindowState extends State<MacosWindow> {
               height: widget.titleBar?.height,
               child: ClipRect(
                 child: widget.titleBar ?? const SizedBox.shrink(),
-              ),
-            ),
-
-            // Content Area
-            AnimatedPositioned(
-              curve: curve,
-              duration: duration,
-              left: visibleSidebarWidth,
-              top: widget.titleBar != null ? widget.titleBar!.height : 0,
-              width: width - visibleSidebarWidth,
-              height: height,
-              child: ClipRect(
-                child: widget.child ?? const SizedBox.shrink(),
               ),
             ),
 
