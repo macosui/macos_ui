@@ -14,8 +14,19 @@ const _kLeadingWidgetWidth = 20.0;
 /// Defines the width of the [ToolBar]'s title.
 const _kTitleWidgetWidth = 200.0;
 
+/// A toolbar to use in a [MacosScaffold].
 class ToolBar extends StatefulWidget {
-  /// Creates a toolbar in the [MacosScaffold].
+  /// Creates a toolbar in the [MacosScaffold]. The toolbar appears below the
+  /// title bar (if present) of the macOS app or integrates with it.
+  ///
+  /// A toolbar provides convenient access to frequently used commands and
+  /// features (toolbar items).
+  ///
+  /// Toolbar items include [ToolBarIconButton], [ToolBarPulldownButton], and
+  /// [ToolBarSpacer] widgets, and should be provided via the [items] property.
+  ///
+  /// The action of every toolbar item should also be provided as a menu bar
+  /// command of your app.
   ///
   /// The height of the ToolBar can be changed with [height].
   const ToolBar({

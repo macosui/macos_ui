@@ -7,8 +7,15 @@ import 'package:macos_ui/src/theme/macos_theme.dart';
 /// Defines the height of a regular-sized [TitleBar].
 const kTitleBarHeight = 28.0;
 
+/// A title bar to use for a [MacosWindow].
 class TitleBar extends StatelessWidget {
   /// Creates a title bar in the [MacosWindow].
+  ///
+  /// The title bar resides at the top of a window and includes options for
+  /// closing, minimizing, and zooming (or expanding to full-screen mode)
+  /// the app window.
+  ///
+  /// Most title bars display just the app's name or the filename.
   ///
   /// The height of the TitleBar can be changed with [height].
   const TitleBar({
