@@ -498,7 +498,6 @@ class RenderOverflowHandler extends RenderBox
     }
 
     // Calculate alignment parameters based on the axis extents.
-
     double crossAxisOffset = 0;
 
     final double mainAxisFreeSpace =

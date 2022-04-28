@@ -1,6 +1,13 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+/// A icon button suitable for the toolbar.
+///
+/// It essentially wraps a [MacosIconButton] with the appropriate toolbar
+/// styling.
+///
+/// If it overflows the available toolbar width, it becomes
+/// a [ToolbarOverflowMenuItem].
 class ToolBarIconButton extends ToolbarItem {
   const ToolBarIconButton({
     Key? key,
@@ -9,8 +16,19 @@ class ToolBarIconButton extends ToolbarItem {
     this.onPressed,
   }) : super(key: key);
 
+  /// The label that describes this button's action.
+  ///
+  /// Must be provided, so that it can be shown in the [ToolbarOverflowMenu].
   final String label;
+
+  /// The widget to use as the icon.
+  ///
+  /// Typically an [Icon] widget.
   final Widget icon;
+
+  /// The callback that is called when the button is tapped or otherwise activated.
+  ///
+  /// If this is set to null, the button will be disabled (greyed out).
   final VoidCallback? onPressed;
 
   @override

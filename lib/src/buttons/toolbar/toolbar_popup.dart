@@ -1,39 +1,35 @@
 import 'package:macos_ui/src/library.dart';
 import 'dart:math' as math;
 
-/// Where the flyout will be placed vertically relativelly the child
+/// Where the popup will be placed vertically relative to the child
 enum ToolbarPopupPosition {
-  /// The flyout will be above the child, if there is enough space available
+  /// The popup will be above the child, if there is enough space available
   above,
 
-  /// The flyout will be below the child, if there is enough space available
+  /// The popup will be below the child, if there is enough space available
   below,
 
-  /// The flyout will be by the side of the child, if there is enough space
+  /// The popup will be by the side of the child, if there is enough space
   /// available
   side,
 }
 
-/// How the flyout will be placed relatively to the child
+/// How the popup will be placed relative to the child
 enum ToolbarPopupPlacement {
-  /// The flyout will be placed on the start point of the child.
-  ///
-  /// If the current directionality it's left-to-right, it's left. Otherwise,
-  /// it's right
+  /// The popup will be placed on the start point of the child.
   start,
 
-  /// The flyout will be placed on the center of the child.
+  /// The popup will be placed on the center of the child.
   center,
 
-  /// The flyout will be placed on the end point of the child.
-  ///
-  /// If the current directionality it's left-to-right, it's right. Otherwise,
-  /// it's left
+  /// The popup will be placed on the end point of the child.
   end,
 }
 
-class ToolbarPopUp<T> extends StatefulWidget {
-  const ToolbarPopUp({
+/// Creates an popup for the toolbar. Used for the menu that encapsulates
+/// the overflowed toolbar actions and its possible submenus.
+class ToolbarPopup<T> extends StatefulWidget {
+  const ToolbarPopup({
     Key? key,
     required this.child,
     required this.content,
@@ -51,15 +47,14 @@ class ToolbarPopUp<T> extends StatefulWidget {
   final ToolbarPopupPosition position;
 
   @override
-  ToolbarPopUpState<T> createState() => ToolbarPopUpState<T>();
+  ToolbarPopupState<T> createState() => ToolbarPopupState<T>();
 }
 
-class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
-  _ToolbarPopUpRoute<T>? _dropdownRoute;
+class ToolbarPopupState<T> extends State<ToolbarPopup<T>> {
+  _ToolbarPopupRoute<T>? _dropdownRoute;
 
   Future<void> openPopup() {
-    print(widget.key);
-    assert(_dropdownRoute == null, 'You can NOT open a popup twice');
+    assert(_dropdownRoute == null, 'You can not open a popup twice.');
     final NavigatorState navigator = Navigator.of(context);
     final RenderBox itemBox = context.findRenderObject()! as RenderBox;
     Offset leftTarget = itemBox.localToGlobal(
@@ -78,7 +73,7 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
     assert(debugCheckHasDirectionality(context));
 
     final directionality = Directionality.of(context);
-// The target according to the current directionality
+    // The target according to the current directionality.
     final Offset directionalityTarget = () {
       switch (widget.placement) {
         case ToolbarPopupPlacement.start:
@@ -98,7 +93,7 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
       }
     }();
 
-    // The placement according to the current directionality
+    // The placement according to the current directionality.
     final ToolbarPopupPlacement directionalityPlacement = () {
       switch (widget.placement) {
         case ToolbarPopupPlacement.start:
@@ -118,12 +113,12 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
     }();
 
     final Rect itemRect = directionalityTarget & itemBox.size;
-    _dropdownRoute = _ToolbarPopUpRoute<T>(
-      target: centerTarget,
+    _dropdownRoute = _ToolbarPopupRoute<T>(
+      target: directionalityTarget,
       placementOffset: directionalityTarget,
       placement: directionalityPlacement,
       position: widget.position,
-      content: _PopupContentManager(content: widget.content),
+      content: _ToolbarPopupContentManager(content: widget.content),
       buttonRect: itemRect,
       elevation: 4,
       capturedThemes: InheritedTheme.capture(
@@ -135,23 +130,22 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
       horizontalOffset: widget.horizontalOffset,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
-    print(itemRect);
     return navigator.push(_dropdownRoute!).then((T? newValue) {
-      removeToolbarPopUpRoute();
+      removeToolbarPopupRoute();
       if (!mounted || newValue == null) return;
     });
   }
 
   bool get isOpen => _dropdownRoute != null;
 
-  void removeToolbarPopUpRoute() {
+  void removeToolbarPopupRoute() {
     _dropdownRoute?._dismiss();
     _dropdownRoute = null;
   }
 
   @override
   void dispose() {
-    removeToolbarPopUpRoute();
+    removeToolbarPopupRoute();
     super.dispose();
   }
 
@@ -162,8 +156,8 @@ class ToolbarPopUpState<T> extends State<ToolbarPopUp<T>> {
   }
 }
 
-class _ToolbarPopUpMenu<T> extends StatefulWidget {
-  const _ToolbarPopUpMenu({
+class _ToolbarPopupMenu<T> extends StatefulWidget {
+  const _ToolbarPopupMenu({
     Key? key,
     required this.route,
     required this.buttonRect,
@@ -171,16 +165,16 @@ class _ToolbarPopUpMenu<T> extends StatefulWidget {
     this.dropdownColor,
   }) : super(key: key);
 
-  final _ToolbarPopUpRoute<T> route;
+  final _ToolbarPopupRoute<T> route;
   final Rect buttonRect;
   final BoxConstraints constraints;
   final Color? dropdownColor;
 
   @override
-  _ToolbarPopUpMenuState<T> createState() => _ToolbarPopUpMenuState<T>();
+  _ToolbarPopupMenuState<T> createState() => _ToolbarPopupMenuState<T>();
 }
 
-class _ToolbarPopUpMenuState<T> extends State<_ToolbarPopUpMenu<T>> {
+class _ToolbarPopupMenuState<T> extends State<_ToolbarPopupMenu<T>> {
   late CurvedAnimation _fadeOpacity;
 
   @override
@@ -207,8 +201,8 @@ class _ToolbarPopUpMenuState<T> extends State<_ToolbarPopUpMenu<T>> {
   }
 }
 
-class _ToolbarPopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
-  _ToolbarPopUpMenuRouteLayout({
+class _ToolbarPopupMenuRouteLayout<T> extends SingleChildLayoutDelegate {
+  _ToolbarPopupMenuRouteLayout({
     required this.buttonRect,
     required this.route,
     required this.textDirection,
@@ -221,7 +215,7 @@ class _ToolbarPopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   });
 
   final Rect buttonRect;
-  final _ToolbarPopUpRoute<T> route;
+  final _ToolbarPopupRoute<T> route;
   final TextDirection? textDirection;
   final Offset target;
   final double verticalOffset;
@@ -268,15 +262,15 @@ class _ToolbarPopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(_ToolbarPopUpMenuRouteLayout<T> oldDelegate) {
+  bool shouldRelayout(_ToolbarPopupMenuRouteLayout<T> oldDelegate) {
     return oldDelegate.target == target ||
         oldDelegate.placementOffset == placementOffset ||
         buttonRect != oldDelegate.buttonRect;
   }
 }
 
-class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
-  _ToolbarPopUpRoute({
+class _ToolbarPopupRoute<T> extends PopupRoute<T> {
+  _ToolbarPopupRoute({
     required this.content,
     required this.buttonRect,
     required this.target,
@@ -320,7 +314,7 @@ class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(context, animation, secondaryAnimation) {
     return LayoutBuilder(builder: (context, constraints) {
-      final page = _ToolbarPopUpRoutePage<T>(
+      final page = _ToolbarPopupRoutePage<T>(
         target: target,
         placementOffset: placementOffset,
         placement: placement,
@@ -345,8 +339,8 @@ class _ToolbarPopUpRoute<T> extends PopupRoute<T> {
   }
 }
 
-class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
-  const _ToolbarPopUpRoutePage({
+class _ToolbarPopupRoutePage<T> extends StatelessWidget {
+  const _ToolbarPopupRoutePage({
     Key? key,
     required this.route,
     required this.constraints,
@@ -363,7 +357,7 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
     required this.position,
   }) : super(key: key);
 
-  final _ToolbarPopUpRoute<T> route;
+  final _ToolbarPopupRoute<T> route;
   final BoxConstraints constraints;
   final Widget content;
   final Rect buttonRect;
@@ -382,7 +376,7 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
     assert(debugCheckHasDirectionality(context));
 
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    final Widget menu = _ToolbarPopUpMenu<T>(
+    final Widget menu = _ToolbarPopupMenu<T>(
       route: route,
       buttonRect: buttonRect,
       constraints: constraints,
@@ -397,7 +391,7 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return CustomSingleChildLayout(
-            delegate: _ToolbarPopUpMenuRouteLayout<T>(
+            delegate: _ToolbarPopupMenuRouteLayout<T>(
               target: target,
               placement: placement,
               position: position,
@@ -416,8 +410,8 @@ class _ToolbarPopUpRoutePage<T> extends StatelessWidget {
   }
 }
 
-class _PopupContentManager extends StatefulWidget {
-  const _PopupContentManager({
+class _ToolbarPopupContentManager extends StatefulWidget {
+  const _ToolbarPopupContentManager({
     Key? key,
     required this.content,
   }) : super(key: key);
@@ -425,10 +419,12 @@ class _PopupContentManager extends StatefulWidget {
   final WidgetBuilder content;
 
   @override
-  State<_PopupContentManager> createState() => __PopupContentManagerState();
+  State<_ToolbarPopupContentManager> createState() =>
+      _ToolbarPopupContentManagerState();
 }
 
-class __PopupContentManagerState extends State<_PopupContentManager> {
+class _ToolbarPopupContentManagerState
+    extends State<_ToolbarPopupContentManager> {
   final GlobalKey key = GlobalKey();
 
   Size size = Size.zero;
@@ -448,7 +444,7 @@ class __PopupContentManagerState extends State<_PopupContentManager> {
   Widget build(BuildContext context) {
     return KeyedSubtree(
       key: key,
-      child: PopupContentSizeInfo(
+      child: _ToolbarPopupContentSizeInfo(
         size: size,
         child: widget.content(context),
       ),
@@ -456,8 +452,8 @@ class __PopupContentManagerState extends State<_PopupContentManager> {
   }
 }
 
-class PopupContentSizeInfo extends InheritedWidget {
-  const PopupContentSizeInfo({
+class _ToolbarPopupContentSizeInfo extends InheritedWidget {
+  const _ToolbarPopupContentSizeInfo({
     Key? key,
     required Widget child,
     required this.size,
@@ -465,16 +461,8 @@ class PopupContentSizeInfo extends InheritedWidget {
 
   final Size size;
 
-  static PopupContentSizeInfo of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<PopupContentSizeInfo>()!;
-  }
-
-  static PopupContentSizeInfo? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<PopupContentSizeInfo>();
-  }
-
   @override
-  bool updateShouldNotify(PopupContentSizeInfo oldWidget) {
+  bool updateShouldNotify(_ToolbarPopupContentSizeInfo oldWidget) {
     return oldWidget.size != size;
   }
 }

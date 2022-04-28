@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
-/// Defines the height of a regular-sized [TitleBar]
+/// Defines the height of a regular-sized [TitleBar].
 const kTitleBarHeight = 28.0;
 
 class TitleBar extends StatelessWidget {
-  /// Creates a title bar in the [MacosScaffold].
+  /// Creates a title bar in the [MacosWindow].
   ///
   /// The height of the TitleBar can be changed with [height].
   const TitleBar({
@@ -22,9 +22,9 @@ class TitleBar extends StatelessWidget {
     this.dividerColor,
   }) : super(key: key);
 
-  /// Specifies the height of this [TitleBar]
+  /// Specifies the height of this [TitleBar].
   ///
-  /// Defaults to [kTitleBarHeight] which is 28.0
+  /// Defaults to [kTitleBarHeight] which is 28.0.
   final double height;
 
   /// Align the [title] within the [TitleBar].
@@ -60,6 +60,8 @@ class TitleBar extends StatelessWidget {
   /// The color of the divider below the title bar.
   ///
   /// Defaults to MacosTheme.of(context).dividerColor.
+  ///
+  /// Set it to MacosColors.transparent to remove.
   final Color? dividerColor;
 
   @override

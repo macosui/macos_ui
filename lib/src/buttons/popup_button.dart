@@ -81,7 +81,6 @@ class _MacosPopupMenuItemButtonState<T>
   @override
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
-    final MacosThemeData theme = MacosTheme.of(context);
     final MacosPopupMenuItem<T> popupMenuItem =
         widget.route.items[widget.itemIndex].item!;
     Widget child = Container(

@@ -7,7 +7,11 @@ import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
 const _kToolbarHeight = 52.0;
+
+/// Defines the width of the leading widget in the [ToolBar]
 const _kLeadingWidgetWidth = 20.0;
+
+/// Defines the width of the [ToolBar]'s title.
 const _kTitleWidgetWidth = 200.0;
 
 class ToolBar extends StatefulWidget {
@@ -28,7 +32,7 @@ class ToolBar extends StatefulWidget {
     this.dividerColor,
   }) : super(key: key);
 
-  /// Specifies the height of this [ToolBar]
+  /// Specifies the height of this [ToolBar].
   ///
   /// Defaults to [_kToolbarHeight] which is 52.0
   final double height;
@@ -57,7 +61,7 @@ class ToolBar extends StatefulWidget {
   /// Empty space to inscribe inside the toolbar. The [title], if any, is
   /// placed inside this padding.
   ///
-  /// Defaults to `EdgeInsets.all(8)`
+  /// Defaults to ` EdgeInsets.symmetric(horizontal: 8, vertical: 4.0)`.
   final EdgeInsets padding;
 
   /// A widget to display before the toolbar's [title].
@@ -72,7 +76,16 @@ class ToolBar extends StatefulWidget {
   /// If leading widget is not null, this parameter has no effect.
   final bool automaticallyImplyLeading;
 
-  /// A list of Widgets to display in a row after the [title] widget.
+  /// A list of [ToolbarItem] widgets to display in a row after the [title] widget,
+  /// as the toolbar actions.
+  ///
+  /// Toolbar items include [ToolBarIconButton], [ToolBarPulldownButton], and
+  /// [ToolBarSpacer] widgets.
+  ///
+  /// If the toolbar actions exceed the available toolbar width (e.g. when the
+  /// window is resized), the overflowed actions are displayed via a
+  /// [ToolbarOverflowMenu], that can be opened from the [ToolbarOverflowButton]
+  /// at the right edge of the toolbar.
   final List<ToolbarItem>? actions;
 
   /// Whether the title should be centered.
@@ -81,6 +94,8 @@ class ToolBar extends StatefulWidget {
   /// The color of the divider below the toolbar.
   ///
   /// Defaults to MacosTheme.of(context).dividerColor.
+  ///
+  /// Set it to MacosColors.transparent to remove.
   final Color? dividerColor;
 
   @override
@@ -102,7 +117,7 @@ class _ToolBarState extends State<ToolBar> {
     if (_leading == null && widget.automaticallyImplyLeading) {
       if (route?.canPop ?? false) {
         _leading = Container(
-          width: 20,
+          width: _kLeadingWidgetWidth,
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
@@ -119,7 +134,7 @@ class _ToolBarState extends State<ToolBar> {
     Widget? _title = widget.title;
     if (_title != null) {
       _title = SizedBox(
-        width: 200.0,
+        width: _kTitleWidgetWidth,
         child: DefaultTextStyle(
           child: _title,
           style: MacosTheme.of(context).typography.headline.copyWith(
@@ -134,6 +149,8 @@ class _ToolBarState extends State<ToolBar> {
       _overflowBreakpoint += _kTitleWidgetWidth;
     }
 
+    // Collect the toolbar action widgets that can be shown inside the ToolBar
+    // and the ones that have overflowed.
     late List<ToolbarItem>? _inToolbarActions;
     late List<ToolbarItem> _overflowedActions;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
@@ -214,23 +231,16 @@ class _ToolBarState extends State<ToolBar> {
 }
 
 enum ToolbarItemDisplayMode {
-  /// The item is displayed in the horizontal area (primary command area)
-  /// of the command bar.
-  ///
-  /// The item should be rendered by wrapping content in a
-  /// [CommandBarItemInPrimary] widget.
+  /// The item is displayed in the horizontal area of the toolbar.
   inToolbar,
 
-  /// The item is displayed within the secondary command area (within a
-  /// Flyout as a drop down of the "more" button).
-  ///
-  /// Normally you would want to render an item in this visual context as a
-  /// [TappableListTile].
+  /// The item is displayed in the [ToolbarOverflowMenu] of the toolbar
+  /// (via a drop down of the [ToolbarOverflowButton]).
   overflowed,
 }
 
-/// An individual control displayed within a [Toolbar]. Sub-class this
-/// to build a new type of widget that appears inside of a command bar.
+/// An individual action displayed within a [Toolbar]. Sub-class this
+/// to build a new type of widget that appears inside of a toolbar.
 /// It knows how to build an appropriate widget for the given
 /// [ToolbarItemDisplayMode] during build time.
 abstract class ToolbarItem with Diagnosticable {
@@ -240,6 +250,6 @@ abstract class ToolbarItem with Diagnosticable {
 
   /// Builds the final widget for this display mode for this item.
   /// Sub-classes implement this to build the widget that is appropriate
-  /// for the given display mode.
+  /// for the given display mode (in toolbar or overflowed).
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode);
 }

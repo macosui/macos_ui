@@ -1,19 +1,39 @@
 import 'package:flutter/services.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/theme/macos_colors.dart';
-import 'package:macos_ui/src/theme/macos_theme.dart';
 
+/// A menu-item that belongs in the toolbar overflowed actions menu.
 class ToolbarOverflowMenuItem extends StatefulWidget {
+  /// Builds a menu-item that belongs in the toolbar overflowed actions menu.
   const ToolbarOverflowMenuItem({
     Key? key,
     this.onPressed,
     required this.label,
     this.subMenuItems,
+    this.isSelected,
   }) : super(key: key);
 
+  /// The callback that is called when the menu item is tapped or otherwise 
+  /// activated.
+  ///
+  /// If this is set to null, the menu item will be disabled (greyed out).
   final VoidCallback? onPressed;
+
+  /// The label to show as the menu item's content.
+  ///
+  /// Must be non-null.
   final String label;
+
+  /// An optional list of menu items to show in a submenu. This submenu will
+  /// be opened at the left side, when the mouse hovers over this menu item.
+  ///
+  /// Used when a toolbar pulldown button is included in the toolbar overflowed actions menu.
   final List<ToolbarOverflowMenuItem>? subMenuItems;
+
+  /// If this menu item is currently selected, i.e. its submenu is open.
+  ///
+  /// Used when a toolbar pulldown button is included in the toolbar overflowed actions menu.
+  final bool? isSelected;
 
   @override
   State<ToolbarOverflowMenuItem> createState() =>
@@ -38,10 +58,21 @@ class _ToolbarOverflowMenuItemState extends State<ToolbarOverflowMenuItem> {
     Navigator.pop(context);
   }
 
+  bool get _isHighlighted => _isHovered || widget.isSelected == true;
+
+  Color get _textColor => _isHighlighted
+      ? MacosColors.white
+      : MacosTheme.brightnessOf(context).resolve(
+          MacosColors.black,
+          MacosColors.white,
+        );
+
   @override
   Widget build(BuildContext context) {
     final MacosThemeData theme = MacosTheme.of(context);
-    final brightness = MacosTheme.brightnessOf(context);
+    final hasSubMenu =
+        widget.subMenuItems != null && widget.subMenuItems!.isNotEmpty;
+
     Widget child = Container(
       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
       height: 20.0,
@@ -49,7 +80,6 @@ class _ToolbarOverflowMenuItemState extends State<ToolbarOverflowMenuItem> {
     );
     if (widget.onPressed != null) {
       child = MouseRegion(
-        cursor: SystemMouseCursors.basic,
         onEnter: (_) {
           setState(() => _isHovered = true);
         },
@@ -69,7 +99,7 @@ class _ToolbarOverflowMenuItemState extends State<ToolbarOverflowMenuItem> {
             onFocusChange: _handleFocusChange,
             child: Container(
               decoration: BoxDecoration(
-                color: _isHovered
+                color: _isHighlighted
                     ? theme.macosPulldownButtonTheme.highlightColor
                     : Colors.transparent,
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -77,21 +107,28 @@ class _ToolbarOverflowMenuItemState extends State<ToolbarOverflowMenuItem> {
               child: DefaultTextStyle(
                 style: TextStyle(
                   fontSize: 13.0,
-                  color: _isHovered
-                      ? MacosColors.white
-                      : brightness.resolve(
-                          MacosColors.black,
-                          MacosColors.white,
-                        ),
+                  color: _textColor,
                 ),
-                child: child,
+                child: (hasSubMenu)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          child,
+                          MacosIcon(
+                            CupertinoIcons.chevron_right,
+                            size: 12.0,
+                            color: _textColor,
+                          ),
+                        ],
+                      )
+                    : child,
               ),
             ),
           ),
         ),
       );
     } else {
-      final textColor = brightness.resolve(
+      final textColor = MacosTheme.brightnessOf(context).resolve(
         MacosColors.disabledControlTextColor,
         MacosColors.disabledControlTextColor.darkColor,
       );
