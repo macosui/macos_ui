@@ -138,9 +138,8 @@ class _ToolBarState extends State<ToolBar> {
         _leading = Container(
           width: _kLeadingWidth,
           alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
-            fillColor: const Color(0xff000000),
+            fillColor: MacosColors.transparent,
             onPressed: () => Navigator.maybePop(context),
           ),
         );
@@ -170,7 +169,7 @@ class _ToolBarState extends State<ToolBar> {
 
     // Collect the toolbar action widgets that can be shown inside the ToolBar
     // and the ones that have overflowed.
-    late List<ToolbarItem>? _inToolbarActions;
+    List<ToolbarItem>? _inToolbarActions = [];
     late List<ToolbarItem> _overflowedActions;
     bool doAllItemsShowLabel = true;
     if (widget.actions != null && widget.actions!.isNotEmpty) {

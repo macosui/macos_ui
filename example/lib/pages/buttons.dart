@@ -157,6 +157,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           MaterialPageRoute(
                             builder: (_) {
                               return MacosScaffold(
+                                toolBar: ToolBar(
+                                  title: Text("New page"),
+                                ),
                                 children: [
                                   ContentArea(
                                     builder: (context, scrollController) {
