@@ -3,6 +3,7 @@ import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields.dart';
 import 'package:example/pages/indicators.dart';
+import 'package:example/pages/toolbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +63,7 @@ class _DemoState extends State<Demo> {
       ),
     ),
     const DialogsPage(),
+    const ToolbarPage(),
   ];
 
   Color textLuminance(Color backgroundColor) {
@@ -78,7 +80,7 @@ class _DemoState extends State<Demo> {
         children: pages,
       ),
       titleBar: const TitleBar(
-        title: Text('App title bar'),
+        title: Text('macOS App Name'),
       ),
       sidebar: Sidebar(
         minWidth: 200,
@@ -124,6 +126,10 @@ class _DemoState extends State<Demo> {
               SidebarItem(
                 leading: MacosIcon(CupertinoIcons.rectangle),
                 label: Text('Dialogs & Sheets'),
+              ),
+              SidebarItem(
+                leading: MacosIcon(CupertinoIcons.chevron_right_2),
+                label: Text('Toolbar'),
               ),
             ],
           );

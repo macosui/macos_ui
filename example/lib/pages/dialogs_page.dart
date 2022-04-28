@@ -13,35 +13,6 @@ class _DialogsPageState extends State<DialogsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      toolBar: ToolBar(
-        title: const Text('macOS UI Dialogs & Sheets'),
-        actions: [
-          ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.play,
-            ),
-            onPressed: () => debugPrint("Play..."),
-            label: "Play",
-            showLabel: true,
-          ),
-          ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.table,
-            ),
-            onPressed: () => debugPrint("Table..."),
-            label: "Table",
-            showLabel: true,
-          ),
-          ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.chat_bubble_fill,
-            ),
-            onPressed: () => debugPrint("Comment..."),
-            label: "Comment",
-            showLabel: true,
-          ),
-        ],
-      ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(

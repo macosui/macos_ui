@@ -1,7 +1,7 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-const kToolbarItemWidth = 44.0;
+const kToolbarItemWidth = 32.0;
 
 /// A spacer utility widget for the toolbar.
 class ToolBarSpacer extends ToolbarItem {

@@ -9,10 +9,10 @@ import 'package:macos_ui/src/library.dart';
 const _kToolbarHeight = 52.0;
 
 /// Defines the width of the leading widget in the [ToolBar]
-const _kLeadingWidgetWidth = 20.0;
+const _kLeadingWidth = 20.0;
 
 /// Defines the width of the [ToolBar]'s title.
-const _kTitleWidgetWidth = 200.0;
+const _kTitleWidth = 150.0;
 
 /// A toolbar to use in a [MacosScaffold].
 class ToolBar extends StatefulWidget {
@@ -34,6 +34,7 @@ class ToolBar extends StatefulWidget {
     this.height = _kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
+    this.titleWidth = _kTitleWidth,
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4.0),
     this.decoration,
     this.leading,
@@ -45,7 +46,7 @@ class ToolBar extends StatefulWidget {
 
   /// Specifies the height of this [ToolBar].
   ///
-  /// Defaults to [_kToolbarHeight] which is 52.0
+  /// Defaults to [_kToolbarHeight] which is 52.0.
   final double height;
 
   /// Align the [title] within the [ToolBar].
@@ -63,8 +64,15 @@ class ToolBar extends StatefulWidget {
   ///    relative to text direction.
   final Alignment alignment;
 
-  /// The [title] contained by the container.
+  /// The [title] of the toolbar.
+  ///
+  /// Typically, a [Text] widget.
   final Widget? title;
+
+  /// Specifies the width of the title of the [ToolBar].
+  ///
+  /// Defaults to [_kTitleWidth] which is 150.0.
+  final double titleWidth;
 
   /// The decoration to paint behind the [title].
   final BoxDecoration? decoration;
@@ -128,7 +136,7 @@ class _ToolBarState extends State<ToolBar> {
     if (_leading == null && widget.automaticallyImplyLeading) {
       if (route?.canPop ?? false) {
         _leading = Container(
-          width: _kLeadingWidgetWidth,
+          width: _kLeadingWidth,
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.symmetric(horizontal: 8),
           child: MacosBackButton(
@@ -139,13 +147,13 @@ class _ToolBarState extends State<ToolBar> {
       }
     }
     if (widget.leading != null) {
-      _overflowBreakpoint += _kLeadingWidgetWidth;
+      _overflowBreakpoint += _kLeadingWidth;
     }
 
     Widget? _title = widget.title;
     if (_title != null) {
       _title = SizedBox(
-        width: _kTitleWidgetWidth,
+        width: widget.titleWidth,
         child: DefaultTextStyle(
           child: _title,
           style: MacosTheme.of(context).typography.headline.copyWith(
@@ -157,7 +165,7 @@ class _ToolBarState extends State<ToolBar> {
               ),
         ),
       );
-      _overflowBreakpoint += _kTitleWidgetWidth;
+      _overflowBreakpoint += widget.titleWidth;
     }
 
     // Collect the toolbar action widgets that can be shown inside the ToolBar
