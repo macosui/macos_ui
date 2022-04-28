@@ -60,7 +60,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     MacosIconButton(
                       icon: const MacosIcon(
                         CupertinoIcons.star_fill,
-                        color: Colors.white,
                       ),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(7),
@@ -70,7 +69,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     const MacosIconButton(
                       icon: MacosIcon(
                         CupertinoIcons.plus_app,
-                        color: Colors.white,
                       ),
                       shape: BoxShape.circle,
                       //onPressed: () {},
@@ -79,7 +77,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     MacosIconButton(
                       icon: const MacosIcon(
                         CupertinoIcons.minus_square,
-                        color: Colors.white,
                       ),
                       backgroundColor: Colors.transparent,
                       onPressed: () {},

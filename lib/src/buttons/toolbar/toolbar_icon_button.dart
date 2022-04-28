@@ -49,6 +49,7 @@ class ToolBarIconButton extends ToolbarItem {
     final brightness = MacosTheme.of(context).brightness;
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       final Widget iconButton = MacosIconButton(
+        disabledColor: Colors.transparent,
         icon: MacosIconTheme(
           data: MacosTheme.of(context).iconTheme.copyWith(
                 color: brightness.resolve(
