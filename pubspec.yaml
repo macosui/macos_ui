@@ -18,3 +18,8 @@ dev_dependencies:
   mocktail: ^0.3.0
 
 flutter:
+  plugin:
+    platforms:
+      macos:
+        package: dev.groovinchip.macos_ui
+        pluginClass: MacOSUiPlugin
