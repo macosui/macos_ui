@@ -88,17 +88,52 @@ See the documentation for customizations and `ToolBar` examples.
 
 ## Modern window look
 
-A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` file should look like this:
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look 
+in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` 
+file should look like this:
 
 ```swift
 import Cocoa
 import FlutterMacOS
 
+class BlurryContainerViewController: NSViewController {
+  let flutterViewController = FlutterViewController()
+
+  init() {
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError()
+  }
+
+  override func loadView() {
+    let blurView = NSVisualEffectView()
+    blurView.autoresizingMask = [.width, .height]
+    blurView.blendingMode = .behindWindow
+    blurView.state = .active
+    if #available(macOS 10.14, *) {
+        blurView.material = .sidebar
+    }
+    self.view = blurView
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    self.addChild(flutterViewController)
+
+    flutterViewController.view.frame = self.view.bounds
+    flutterViewController.view.autoresizingMask = [.width, .height]
+    self.view.addSubview(flutterViewController.view)
+  }
+}
+
 class MainFlutterWindow: NSWindow {
   override func awakeFromNib() {
-    let flutterViewController = FlutterViewController.init()
+    let blurryContainerViewController = BlurryContainerViewController()
     let windowFrame = self.frame
-    self.contentViewController = flutterViewController
+    self.contentViewController = blurryContainerViewController
     self.setFrame(windowFrame, display: true)
 
     if #available(macOS 10.13, *) {
@@ -109,7 +144,7 @@ class MainFlutterWindow: NSWindow {
     self.titleVisibility = .hidden
     self.titlebarAppearsTransparent = true
     if #available(macOS 11.0, *) {
-       // Use .expanded if the app will have a title bar, else use .unified
+      // Use .expanded if the app will have a title bar, else use .unified
       self.toolbarStyle = .unified
     }
 
@@ -118,25 +153,21 @@ class MainFlutterWindow: NSWindow {
 
     self.isOpaque = false
     self.backgroundColor = .clear
-    let contentView = contentViewController!.view;
-    let superView = contentView.superview!;
-    let blurView = NSVisualEffectView()
-    blurView.frame = superView.bounds
-    blurView.autoresizingMask = [.width, .height]
-    blurView.blendingMode = NSVisualEffectView.BlendingMode.behindWindow
-    if #available(macOS 10.14, *) {
-      blurView.material = .underWindowBackground
-    }
-    superView.replaceSubview(contentView, with: blurView)
-    blurView.addSubview(contentView)
 
-    RegisterGeneratedPlugins(registry: flutterViewController)
+    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
 
     super.awakeFromNib()
+  }
+
+  func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
+    // Hides the toolbar when in fullscreen mode
+    return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
   }
 }
 
 ```
+
+See [this issue comment](https://github.com/flutter/flutter/issues/59969#issuecomment-916682559) for more details on the new look and explanations for how it works.
 
 Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `.unified`. This must be set beforehand, i.e. it cannot be switched in runtime.
 
