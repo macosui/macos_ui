@@ -63,11 +63,6 @@ const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
   darkColor: Color.fromRGBO(255, 255, 255, 0.01),
 );
 
-const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
-  color: Color.fromRGBO(0, 0, 0, 0.5),
-  darkColor: Color.fromRGBO(255, 255, 255, 0.55),
-);
-
 // An eyeballed value that moves the cursor slightly left of where it is
 // rendered for text on Android so it's positioning more accurately matches the
 // native iOS text cursor positioning.
