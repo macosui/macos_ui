@@ -9,6 +9,7 @@ class TabViewPage extends StatefulWidget {
 }
 
 class _TabViewPageState extends State<TabViewPage> {
+  int activeIndex = 0;
   MacosTabPosition positionSelected = MacosTabPosition.top;
   Widget content = Container();
 
@@ -67,11 +68,12 @@ class _TabViewPageState extends State<TabViewPage> {
                       position: positionSelected,
                       body: content,
                       tabs: [
-                        // TODO: Replace PushButton with ScopedButton
                         MacosTab(
                           label: 'Sound Effects',
+                          active: activeIndex == 0,
                           onTap: () {
                             setState(() {
+                              activeIndex = 0;
                               content = const Center(
                                 child: Text('Sound Effects'),
                               );
@@ -80,8 +82,10 @@ class _TabViewPageState extends State<TabViewPage> {
                         ),
                         MacosTab(
                           label: 'Input',
+                          active: activeIndex == 1,
                           onTap: () {
                             setState(() {
+                              activeIndex = 1;
                               content = const Center(
                                 child: Text('Input'),
                               );
@@ -90,8 +94,10 @@ class _TabViewPageState extends State<TabViewPage> {
                         ),
                         MacosTab(
                           label: 'Output',
+                          active: activeIndex == 2,
                           onTap: () {
                             setState(() {
+                              activeIndex = 2;
                               content = const Center(
                                 child: Text('Output'),
                               );

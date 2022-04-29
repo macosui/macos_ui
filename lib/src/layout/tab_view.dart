@@ -2,11 +2,7 @@ import 'package:macos_ui/macos_ui.dart';
 
 import '../library.dart';
 
-const _kTabViewRadius = BorderRadius.all(Radius.circular(7.0));
-const _kContentBackgroundColor = CupertinoDynamicColor.withBrightness(
-  color: Color.fromRGBO(230, 230, 230, 1.0),
-  darkColor: Color.fromRGBO(36, 38, 40, 1.0),
-);
+const _kTabViewRadius = BorderRadius.all(Radius.elliptical(5, 5));
 
 /// Specifies layout position for [MacosTab] options inside [MacosTabView]
 enum MacosTabPosition { left, right, top, bottom }
@@ -57,8 +53,8 @@ class MacosTabView extends StatelessWidget {
     final brightness = MacosTheme.brightnessOf(context);
 
     final outerBorderColor = brightness.resolve(
-      Colors.black.withOpacity(0.23),
-      Colors.black.withOpacity(0.76),
+      Color.fromRGBO(218, 219, 219, 1.0),
+      Color.fromRGBO(63, 64, 66, 1.0),
     );
 
     return Stack(
@@ -71,7 +67,10 @@ class MacosTabView extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: _kContentBackgroundColor,
+            color: brightness.resolve(
+              Color.fromRGBO(230, 231, 235, 1.0),
+              Color.fromRGBO(36, 37, 38, 1.0),
+            ),
             border: Border.all(color: outerBorderColor, width: 1),
             borderRadius: _kTabViewRadius,
           ),
@@ -88,10 +87,40 @@ class MacosTabView extends StatelessWidget {
               borderRadius: _kTabViewRadius,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey,
-                  border: Border.all(color: MacosColors.systemGrayColor),
+                  color: brightness.resolve(
+                    Color.fromRGBO(226, 227, 231, 1.0),
+                    Color.fromRGBO(41, 42, 43, 1.0),
+                  ),
+                  border: Border.all(
+                    color: brightness.resolve(
+                      Color.fromRGBO(216, 216, 219, 1.0),
+                      Color.fromRGBO(87, 89, 90, 1.0),
+                    ),
+                  ),
                 ),
-                child: Row(children: tabs),
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: tabs.map((t) {
+                      Row row = Row(children: [t]);
+                      bool last = tabs.indexOf(t) == tabs.length - 1;
+                      if (!last) {
+                        row.children.add(
+                          VerticalDivider(
+                            color: brightness.resolve(
+                              Color.fromRGBO(202, 203, 206, 1.0),
+                              Color.fromRGBO(34, 36, 37, 1.0),
+                            ),
+                            width: 0,
+                            indent: 5,
+                            endIndent: 5,
+                          ),
+                        );
+                      }
+
+                      return row;
+                    }).toList(growable: false),
+                  ),
+                ),
               ),
             ),
           ),
