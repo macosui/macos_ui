@@ -1,3 +1,6 @@
+## [0.15.0]
+* New widget: `MacosColorWell`
+
 ## [0.13.1]
 * Minor style fixes for `MacosTextField`
 
