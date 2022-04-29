@@ -64,6 +64,8 @@ class MacosColorWell extends StatefulWidget {
   final OnColorSelected onColorSelected;
 
   /// The default [ColorPickerMode] to open the `NSColorPanel` with.
+  ///
+  /// Defaults to [ColorPickerMode.wheel].
   final ColorPickerMode defaultMode;
 
   @override
