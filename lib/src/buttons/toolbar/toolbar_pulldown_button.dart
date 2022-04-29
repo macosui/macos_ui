@@ -79,7 +79,7 @@ class ToolBarPullDownButton extends ToolbarItem {
               onPressed: () {
                 element.onTap?.call();
                 // Close the initial overflow menu as well.
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
             ),
           );
