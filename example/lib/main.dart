@@ -1,10 +1,10 @@
-import 'package:example/pages/buttons.dart';
+import 'package:example/pages/buttons_page.dart';
 import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
-import 'package:example/pages/fields.dart';
-import 'package:example/pages/indicators.dart';
-import 'package:example/pages/toolbar.dart';
+import 'package:example/pages/fields_page.dart';
+import 'package:example/pages/indicators_page.dart';
 import 'package:example/pages/selectors_page.dart';
+import 'package:example/pages/toolbar_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
