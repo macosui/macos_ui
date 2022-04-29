@@ -131,7 +131,7 @@ class _DemoState extends State<Demo> {
                 label: Text('Dialogs & Sheets'),
               ),
               SidebarItem(
-                leading: MacosIcon(CupertinoIcons.chevron_right_2),
+                leading: MacosIcon(CupertinoIcons.macwindow),
                 label: Text('Toolbar'),
               ),
               SidebarItem(

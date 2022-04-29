@@ -14,12 +14,8 @@ class _ToolbarPageState extends State<ToolbarPage> {
   Widget build(BuildContext context) {
     return MacosScaffold(
       toolBar: ToolBar(
-        title: const Text('Untitled'),
+        title: const Text('Toolbar'),
         titleWidth: 100.0,
-        leading: MacosBackButton(
-          onPressed: () => debugPrint('click'),
-          fillColor: Colors.transparent,
-        ),
         actions: [
           ToolBarIconButton(
             icon: const MacosIcon(

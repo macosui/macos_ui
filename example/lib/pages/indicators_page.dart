@@ -16,9 +16,20 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      // titleBar: const TitleBar(
-      //   title: Text('macOS UI Indicators'),
-      // ),
+      toolBar: ToolBar(
+        title: const Text('Indicators'),
+        titleWidth: 150.0,
+        actions: [
+          ToolBarIconButton(
+            label: 'Toggle Sidebar',
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
+            ),
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
+          ),
+        ],
+      ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(

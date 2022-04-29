@@ -13,6 +13,20 @@ class _DialogsPageState extends State<DialogsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
+      toolBar: ToolBar(
+        title: const Text('Dialogs and Sheets'),
+        titleWidth: 150.0,
+        actions: [
+          ToolBarIconButton(
+            label: 'Toggle Sidebar',
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
+            ),
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
+          ),
+        ],
+      ),
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(

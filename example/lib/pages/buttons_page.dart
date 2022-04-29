@@ -15,53 +15,17 @@ class ButtonsPage extends StatefulWidget {
 class _ButtonsPageState extends State<ButtonsPage> {
   String popupValue = 'One';
   String languagePopupValue = 'English';
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
       toolBar: ToolBar(
-        title: const Text('My macOS app'),
+        title: const Text('Buttons'),
         titleWidth: 150.0,
-        leading: MacosBackButton(
-          onPressed: () => debugPrint('click'),
-          fillColor: Colors.transparent,
-        ),
         actions: [
           ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.play,
-            ),
-            onPressed: () => debugPrint("Play..."),
-            label: "Play",
-            showLabel: false,
-          ),
-          ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.chat_bubble_fill,
-            ),
-            onPressed: () => debugPrint("Comment..."),
-            label: "Comment",
-            showLabel: false,
-          ),
-          const ToolBarSpacer(),
-          ToolBarIconButton(
-            label: "Delete",
-            icon: const MacosIcon(
-              CupertinoIcons.trash,
-            ),
-            onPressed: () => debugPrint("pressed"),
-            showLabel: false,
-          ),
-          ToolBarIconButton(
-            label: "Share",
-            icon: const MacosIcon(
-              CupertinoIcons.share,
-            ),
-            onPressed: () => debugPrint("pressed"),
-            showLabel: false,
-          ),
-          ToolBarIconButton(
-            label: "Toggle Sidebar",
+            label: 'Toggle Sidebar',
             icon: const MacosIcon(
               CupertinoIcons.sidebar_left,
             ),
@@ -135,7 +99,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text("Pushbutton"),
+                const Text('PushButton'),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -202,6 +166,15 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       },
                     ),
                   ],
+                ),
+                const SizedBox(height: 20),
+                const Text('MacosSwitch'),
+                const SizedBox(height: 8),
+                MacosSwitch(
+                  value: switchValue,
+                  onChanged: (value) {
+                    setState(() => switchValue = value);
+                  },
                 ),
                 const SizedBox(height: 20),
                 const Text('MacosPulldownButton'),
