@@ -176,6 +176,7 @@ void main() {
           'itemHeight: 20.0',
           'noAutofocus',
           'alignment: AlignmentDirectional.centerStart',
+          'menuAlignment: PulldownMenuAlignment.left',
         ],
       );
     });
