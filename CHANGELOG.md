@@ -1,3 +1,6 @@
+## [0.13.1]
+* Minor style fixes for `MacosTextField`
+
 ## [0.13.0]
 * New widget: `MacosDatePicker`
 
