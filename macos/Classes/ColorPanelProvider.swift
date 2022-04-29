@@ -5,30 +5,47 @@ class ColorPanelProvider: NSObject, FlutterStreamHandler {
   let colorPanel = NSColorPanel.shared
 
   func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-    print("listening to ColorPanelProvider events")
-//    events(colorPanel.color.asFlutterHexString)
-//    events(FlutterError(code: "ERROR_CODE", message: "Could not send color", details: nil))
-//    events(FlutterEndOfEventStream)
     eventSink = events
     return nil
   }
 
-  func openPanel() {
-    colorPanel.mode = NSColorPanel.Mode.RGB
-    colorPanel.colorSpace = NSColorSpace.sRGB
+  func openPanel(pickerMode: String) {
+    //colorPanel.mode = panelMode.asNSColorPanelMode
+    setPickerMode(panelMode: pickerMode.components(separatedBy: ".").last!)
     colorPanel.setTarget(self)
     colorPanel.setAction(#selector(startStream(colorPanel:)))
     colorPanel.makeKeyAndOrderFront(self)
     colorPanel.isContinuous = true
   }
+  
+  func setPickerMode(panelMode: String) {
+    switch (panelMode) {
+    case "gray":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.gray)
+    case "RBG":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.RGB)
+    case "CMYK":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.CMYK)
+    case "HSB":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.HSB)
+    case "customPalette":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.customPalette)
+    case "colorList":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.colorList)
+    case "wheel":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.wheel)
+    case "crayon":
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.crayon)
+    default:
+      NSColorPanel.setPickerMode(NSColorPanel.Mode.none)
+    }
+  }
 
   @objc private func currentColor() -> String {
-    print("currentColor: \(colorPanel.color.asFlutterHexString)")
     return colorPanel.color.asFlutterHexString
   }
 
   @objc public func startStream(colorPanel: NSColorPanel) {
-    print("starting ColorPanelProvider stream")
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(currentColor),
@@ -39,7 +56,6 @@ class ColorPanelProvider: NSObject, FlutterStreamHandler {
   }
 
   func onCancel(withArguments arguments: Any?) -> FlutterError? {
-    print("cancelling ColorPanelProvider stream")
     eventSink = nil
     return nil
   }

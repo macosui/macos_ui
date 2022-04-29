@@ -29,32 +29,22 @@ public class MacOSUiPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
     case "color_panel":
-      colorPanelProvider.openPanel()
-      //result(eventSink)
+      if let arguments = call.arguments as? Dictionary<String, Any> {
+        let mode = arguments["mode"] as? String
+        colorPanelProvider.openPanel(pickerMode: mode!)
+      }
     default:
       result(FlutterMethodNotImplemented)
     }
   }
   
   public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-    print("listening to MacosUIPluginEvents")
     eventSink = events
-    //colorPanelProvider.startStream()
     return nil
   }
   
   public func onCancel(withArguments arguments: Any?) -> FlutterError? {
     eventSink = nil
     return nil
-  }
-}
-
-extension NSColor {
-  var hexString: String {
-    let red = Int(round(self.redComponent * 0xFF))
-    let green = Int(round(self.greenComponent * 0xFF))
-    let blue = Int(round(self.blueComponent * 0xFF))
-    let hexString = NSString(format: "#%02X%02X%02X", red, green, blue)
-    return hexString as String
   }
 }

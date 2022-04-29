@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -7,6 +9,38 @@ import 'package:macos_ui/src/library.dart';
 const _methodChannel = MethodChannel('dev.groovinchip.macos_ui');
 const _eventChannel = EventChannel('dev.groovinchip.macos_ui/color_panel');
 
+/// Describes the possible modes for an `NSColorPanel`.
+///
+/// Source documentation: https://developer.apple.com/documentation/appkit/nscolorpanel/mode
+enum ColorPickerMode {
+  /// No color panel mode.
+  none,
+
+  /// The grayscale-alpha color mode.
+  gray,
+
+  /// The red-green-blue color mode.
+  RBG,
+
+  /// The cyan-magenta-yellow-black color mode.
+  CMYK,
+
+  /// The hue-saturation-brightness color mode.
+  HSB,
+
+  /// The custom palette color mode.
+  customPalette,
+
+  /// The custom color list mode.
+  colorList,
+
+  /// The color wheel mode.
+  wheel,
+
+  /// The crayon picker mode.
+  crayon,
+}
+
 /// {@template onColorSelected}
 /// The action to perform when a color is selected from the color well.
 /// {@endtemplate}
@@ -15,15 +49,22 @@ typedef OnColorSelected = void Function(Color color);
 /// A control that displays a color value and lets the user change that color
 /// value.
 ///
-/// Use a color well when you want the user to be able to select a color.
+/// When a `MacosColorWell` is clicked, it opens the native macOS color panel,
+/// which is an `NSColorPanel` from the Swift Cocoa library.
+///
+/// Use a [MacosColorWell] when you want the user to be able to select a color.
 class MacosColorWell extends StatefulWidget {
   const MacosColorWell({
     Key? key,
     required this.onColorSelected,
+    this.defaultMode = ColorPickerMode.wheel,
   }) : super(key: key);
 
   /// {@macro onColorSelected}
   final OnColorSelected onColorSelected;
+
+  /// The default [ColorPickerMode] to open the `NSColorPanel` with.
+  final ColorPickerMode defaultMode;
 
   @override
   State<MacosColorWell> createState() => _MacosColorWellState();
@@ -46,7 +87,6 @@ class _MacosColorWellState extends State<MacosColorWell> {
   void initState() {
     super.initState();
     _colorSubscription = onColorChanged.listen((color) {
-      debugPrint('color changed: $color');
       setState(() => _selectedColor = color);
     });
   }
@@ -59,13 +99,16 @@ class _MacosColorWellState extends State<MacosColorWell> {
 
   @override
   Widget build(BuildContext context) {
-    final _outerColor = MacosTheme.of(context).brightness.isDark
+    final _theme = MacosTheme.of(context);
+    final _outerColor = _theme.brightness.isDark
         ? MacosColors.systemGrayColor.withOpacity(0.50)
         : MacosColors.white;
     return GestureDetector(
       onTap: () async {
         try {
-          await _methodChannel.invokeMethod('color_panel');
+          await _methodChannel.invokeMethod('color_panel', {
+            'mode': '${widget.defaultMode}',
+          });
         } catch (e) {
           debugPrint('$e');
         }
@@ -74,7 +117,7 @@ class _MacosColorWellState extends State<MacosColorWell> {
         height: 23.0,
         width: 44.0,
         child: Container(
-          decoration: !MacosTheme.of(context).brightness.isDark
+          decoration: !_theme.brightness.isDark
               ? BoxDecoration(
                   border: Border.all(
                     color: const MacosColor(0xFFAFAEAE),
