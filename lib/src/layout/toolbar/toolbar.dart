@@ -236,9 +236,7 @@ class _ToolBarState extends State<ToolBar> {
                         e.build(context, ToolbarItemDisplayMode.inToolbar))
                     .toList(),
                 overflowChangedCallback: (hiddenItems) {
-                  setState(() {
-                    overflowedActionsIndexes = hiddenItems;
-                  });
+                  setState(() => overflowedActionsIndexes = hiddenItems);
                 },
               ),
               middleSpacing: 8,
