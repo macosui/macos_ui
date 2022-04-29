@@ -255,6 +255,7 @@ class _ToolBarState extends State<ToolBar> {
   }
 }
 
+/// Describes how [ToolbarItem]s can be displayed.
 enum ToolbarItemDisplayMode {
   /// The item is displayed in the horizontal area of the toolbar.
   inToolbar,
