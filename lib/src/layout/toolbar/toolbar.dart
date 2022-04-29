@@ -90,7 +90,7 @@ class ToolBar extends StatefulWidget {
 
   /// Controls whether we should try to imply the leading widget if null.
   ///
-  /// If true and [leading] is null, automatically try to deduce what the leading
+  /// If `true` and [leading] is null, automatically try to deduce what the leading
   /// widget should be. If false and [leading] is null, leading space is given to [title].
   /// If leading widget is not null, this parameter has no effect.
   final bool automaticallyImplyLeading;
