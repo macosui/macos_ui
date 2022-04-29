@@ -25,7 +25,7 @@ class ToolBarPullDownButton extends ToolbarItem {
 
   /// An icon to use as title for the pull-down button.
   ///
-  /// It is recommended to use icons from the CupertinoIcons library for this.
+  /// It is recommended to use icons from the [CupertinoIcons] library for this.
   final IconData icon;
 
   /// The list of menu entries for the pull-down menu.
