@@ -204,9 +204,7 @@ class _MacosWindowState extends State<MacosWindow> {
             ),
 
             // Title bar Area
-            AnimatedPositioned(
-              curve: curve,
-              duration: duration,
+            Positioned(
               left: visibleSidebarWidth,
               width: width - visibleSidebarWidth,
               height: widget.titleBar?.height,
