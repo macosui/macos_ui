@@ -29,7 +29,7 @@ class ToolBarIconButton extends ToolbarItem {
 
   /// The widget to use as the icon.
   ///
-  /// Typically an [Icon] widget.
+  /// Typically a [MacosIcon] widget.
   final Widget icon;
 
   /// The callback that is called when the button is tapped or otherwise activated.
