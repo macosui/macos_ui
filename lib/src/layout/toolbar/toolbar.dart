@@ -49,7 +49,7 @@ class ToolBar extends StatefulWidget {
   /// Defaults to [_kToolbarHeight] which is 52.0.
   final double height;
 
-  /// Align the [title] within the [ToolBar].
+  /// Aligns the [title] within the [ToolBar].
   ///
   /// Defaults to [Alignment.center].
   ///
