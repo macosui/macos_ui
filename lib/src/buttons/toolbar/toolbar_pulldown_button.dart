@@ -20,7 +20,7 @@ class ToolBarPullDownButton extends ToolbarItem {
 
   /// The label that describes this button's action.
   ///
-  /// Must be provided, so that it can be shown in the [ToolbarOverflowMenu].
+  /// Must be provided so that it can be shown in the [ToolbarOverflowMenu].
   final String label;
 
   /// An icon to use as title for the pull-down button.
