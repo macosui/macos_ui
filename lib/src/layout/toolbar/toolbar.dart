@@ -85,7 +85,7 @@ class ToolBar extends StatefulWidget {
 
   /// A widget to display before the toolbar's [title].
   ///
-  /// Typically the [leading] widget is an [Icon] or an [IconButton].
+  /// Typically the [leading] widget is a [MacosIcon] or a [MacosIconButton].
   final Widget? leading;
 
   /// Controls whether we should try to imply the leading widget if null.
