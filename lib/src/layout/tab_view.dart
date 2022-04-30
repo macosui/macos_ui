@@ -53,8 +53,8 @@ class MacosTabView extends StatelessWidget {
     final brightness = MacosTheme.brightnessOf(context);
 
     final outerBorderColor = brightness.resolve(
-      Color.fromRGBO(218, 219, 219, 1.0),
-      Color.fromRGBO(63, 64, 66, 1.0),
+      const Color.fromRGBO(218, 219, 219, 1.0),
+      const Color.fromRGBO(63, 64, 66, 1.0),
     );
 
     return Stack(
@@ -68,8 +68,8 @@ class MacosTabView extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: brightness.resolve(
-              Color.fromRGBO(230, 231, 235, 1.0),
-              Color.fromRGBO(36, 37, 38, 1.0),
+              const Color.fromRGBO(230, 231, 235, 1.0),
+              const Color.fromRGBO(36, 37, 38, 1.0),
             ),
             border: Border.all(color: outerBorderColor, width: 1),
             borderRadius: _kTabViewRadius,
@@ -88,13 +88,13 @@ class MacosTabView extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: brightness.resolve(
-                    Color.fromRGBO(226, 227, 231, 1.0),
-                    Color.fromRGBO(41, 42, 43, 1.0),
+                    const Color.fromRGBO(226, 227, 231, 1.0),
+                    const Color.fromRGBO(41, 42, 43, 1.0),
                   ),
                   border: Border.all(
                     color: brightness.resolve(
-                      Color.fromRGBO(216, 216, 219, 1.0),
-                      Color.fromRGBO(87, 89, 90, 1.0),
+                      const Color.fromRGBO(216, 216, 219, 1.0),
+                      const Color.fromRGBO(87, 89, 90, 1.0),
                     ),
                   ),
                 ),
@@ -107,8 +107,8 @@ class MacosTabView extends StatelessWidget {
                         row.children.add(
                           VerticalDivider(
                             color: brightness.resolve(
-                              Color.fromRGBO(202, 203, 206, 1.0),
-                              Color.fromRGBO(34, 36, 37, 1.0),
+                              const Color.fromRGBO(202, 203, 206, 1.0),
+                              const Color.fromRGBO(34, 36, 37, 1.0),
                             ),
                             width: 0,
                             indent: 5,

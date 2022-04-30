@@ -22,11 +22,11 @@ class MacosTab extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.elliptical(6, 6)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(6, 6)),
           color: active
               ? brightness.resolve(
                   Colors.white,
-                  Color.fromRGBO(95, 96, 97, 1.0),
+                  const Color.fromRGBO(95, 96, 97, 1.0),
                 )
               : Colors.transparent,
         ),
