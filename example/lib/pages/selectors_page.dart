@@ -24,8 +24,16 @@ class _SelectorsPageState extends State<SelectorsPage> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  MacosDatePicker(
-                    onDateChanged: (date) => debugPrint('$date'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      MacosDatePicker(
+                        onDateChanged: (date) => debugPrint('$date'),
+                      ),
+                      MacosTimePicker(
+                        onTimeChanged: (time) => debugPrint('$time'),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   MacosColorWell(
