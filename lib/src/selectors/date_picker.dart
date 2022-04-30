@@ -177,7 +177,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FieldElement(
+                  DatePickerFieldElement(
                     isSelected: _isMonthSelected,
                     element: '$_selectedMonth',
                     onSelected: () {
@@ -189,7 +189,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                     },
                   ),
                   const Text('/'),
-                  FieldElement(
+                  DatePickerFieldElement(
                     isSelected: _isDaySelected,
                     element: '$_selectedDay',
                     onSelected: () {
@@ -201,7 +201,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                     },
                   ),
                   const Text('/'),
-                  FieldElement(
+                  DatePickerFieldElement(
                     isSelected: _isYearSelected,
                     element: '$_selectedYear',
                     onSelected: () {
@@ -223,19 +223,23 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             SizedBox(
               height: 10.0,
               width: 12.0,
-              child: GestureDetector(
-                onTap: _incrementElement,
-                child: PhysicalModel(
-                  color: datePickerTheme.shadowColor!,
-                  elevation: 1,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(5.0),
-                  ),
-                  child: CustomPaint(
-                    painter: UpCaretPainter(
-                      color: datePickerTheme.caretColor!,
-                      backgroundColor:
-                          datePickerTheme.caretControlsBackgroundColor!,
+              child: IgnorePointer(
+                ignoring:
+                    !_isMonthSelected && !_isDaySelected && !_isYearSelected,
+                child: GestureDetector(
+                  onTap: _incrementElement,
+                  child: PhysicalModel(
+                    color: datePickerTheme.shadowColor!,
+                    elevation: 1,
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(5.0),
+                    ),
+                    child: CustomPaint(
+                      painter: UpCaretPainter(
+                        color: datePickerTheme.caretColor!,
+                        backgroundColor:
+                            datePickerTheme.caretControlsBackgroundColor!,
+                      ),
                     ),
                   ),
                 ),
@@ -250,19 +254,23 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             SizedBox(
               height: 10.0,
               width: 12.0,
-              child: GestureDetector(
-                onTap: _decrementElement,
-                child: PhysicalModel(
-                  color: datePickerTheme.shadowColor!,
-                  elevation: 1,
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(5.0),
-                  ),
-                  child: CustomPaint(
-                    painter: DownCaretPainter(
-                      color: datePickerTheme.caretColor!,
-                      backgroundColor:
-                          datePickerTheme.caretControlsBackgroundColor!,
+              child: IgnorePointer(
+                ignoring:
+                    !_isMonthSelected && !_isDaySelected && !_isYearSelected,
+                child: GestureDetector(
+                  onTap: _decrementElement,
+                  child: PhysicalModel(
+                    color: datePickerTheme.shadowColor!,
+                    elevation: 1,
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(5.0),
+                    ),
+                    child: CustomPaint(
+                      painter: DownCaretPainter(
+                        color: datePickerTheme.caretColor!,
+                        backgroundColor:
+                            datePickerTheme.caretControlsBackgroundColor!,
+                      ),
                     ),
                   ),
                 ),
@@ -564,8 +572,8 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
 
 const _DayPickerGridDelegate _dayPickerGridDelegate = _DayPickerGridDelegate();
 
-class FieldElement extends StatelessWidget {
-  const FieldElement({
+class DatePickerFieldElement extends StatelessWidget {
+  const DatePickerFieldElement({
     Key? key,
     required this.element,
     required this.onSelected,
