@@ -5,7 +5,12 @@ import '../library.dart';
 const _kTabViewRadius = BorderRadius.all(Radius.elliptical(5, 5));
 
 /// Specifies layout position for [MacosTab] options inside [MacosTabView]
-enum MacosTabPosition { left, right, top, bottom }
+enum MacosTabPosition { 
+  left, 
+  right, 
+  top, 
+  bottom, 
+}
 
 class MacosTabView extends StatelessWidget {
   const MacosTabView({
