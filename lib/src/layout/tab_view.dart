@@ -43,6 +43,7 @@ enum MacosTabPosition {
 /// Tab labels should use title-style capitalization.
 /// {endTemplate}
 class MacosTabView extends StatelessWidget {
+  /// {macro macosTabView}
   const MacosTabView({
     Key? key,
     required this.tabs,
