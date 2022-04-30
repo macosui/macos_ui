@@ -63,7 +63,7 @@ class MacosTabView extends StatelessWidget {
   /// Defaults to [MacosTabPosition.top].
   final MacosTabPosition position;
 
-  /// Content displayed inside of the tab view
+  /// The content to display inside of the tab view.
   final Widget body;
 
   final double? width;
