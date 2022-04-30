@@ -36,7 +36,7 @@ class MacosTab extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.elliptical(6, 6)),
           color: active
               ? brightness.resolve(
-                  Colors.white,
+                  MacosColors.white,
                   const Color.fromRGBO(95, 96, 97, 1.0),
                 )
               : Colors.transparent,
