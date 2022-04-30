@@ -39,7 +39,7 @@ class MacosTab extends StatelessWidget {
                   MacosColors.white,
                   const Color.fromRGBO(95, 96, 97, 1.0),
                 )
-              : Colors.transparent,
+              : MacosColors.transparent,
         ),
         child: Text(label),
       ),
