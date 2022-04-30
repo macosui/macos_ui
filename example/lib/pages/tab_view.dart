@@ -11,7 +11,7 @@ class TabViewPage extends StatefulWidget {
 class _TabViewPageState extends State<TabViewPage> {
   int activeIndex = 0;
   MacosTabPosition positionSelected = MacosTabPosition.top;
-  Widget content = Container();
+  Widget content = const SizedBox.shrink();
 
   void updatePosition(MacosTabPosition? pos) {
     return setState(() => positionSelected = pos ?? MacosTabPosition.top);
@@ -46,12 +46,12 @@ class _TabViewPageState extends State<TabViewPage> {
           builder: (context, scrollController) {
             return SingleChildScrollView(
               controller: scrollController,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: Column(
                   children: [
                     const Text('Tab View Controls Position'),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 15.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -63,15 +63,13 @@ class _TabViewPageState extends State<TabViewPage> {
                     ),
                     const SizedBox(height: 30),
                     MacosTabView(
-                      width: 500,
-                      height: 400,
                       position: positionSelected,
-                      body: content,
+                      currentIndex: activeIndex,
                       tabs: [
                         MacosTab(
                           label: 'Sound Effects',
                           active: activeIndex == 0,
-                          onTap: () {
+                          onClick: () {
                             setState(() {
                               activeIndex = 0;
                               content = const Center(
@@ -83,7 +81,7 @@ class _TabViewPageState extends State<TabViewPage> {
                         MacosTab(
                           label: 'Input',
                           active: activeIndex == 1,
-                          onTap: () {
+                          onClick: () {
                             setState(() {
                               activeIndex = 1;
                               content = const Center(
@@ -95,7 +93,7 @@ class _TabViewPageState extends State<TabViewPage> {
                         MacosTab(
                           label: 'Output',
                           active: activeIndex == 2,
-                          onTap: () {
+                          onClick: () {
                             setState(() {
                               activeIndex = 2;
                               content = const Center(
@@ -104,7 +102,22 @@ class _TabViewPageState extends State<TabViewPage> {
                             });
                           },
                         ),
+                        MacosTab(
+                          label: 'Item 3',
+                          active: activeIndex == 3,
+                          onClick: () {
+                            setState(() {
+                              activeIndex = 3;
+                              content = const Center(
+                                child: Text('Item 3'),
+                              );
+                            });
+                          },
+                        ),
                       ],
+                      width: 500,
+                      height: 400,
+                      body: content,
                     ),
                   ],
                 ),

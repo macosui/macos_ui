@@ -1,27 +1,29 @@
-import '../../macos_ui.dart';
-import '../library.dart';
+import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
-/// {template macosTab}
+const _kTabBorderRadius = BorderRadius.all(
+  Radius.circular(5.0),
+);
+
+/// {@template macosTab}
 /// An item in a [MacosTabView].
-/// {endtemplate}
+/// {@endtemplate}
 class MacosTab extends StatelessWidget {
-  /// {macro macosTab}
+  /// {@macro macosTab}
   const MacosTab({
     Key? key,
     required this.label,
-    required this.onTap,
+    required this.onClick,
     this.active = false,
   }) : super(key: key);
 
   /// Describes the content of the [MacosTabView] pane it represents.
   final String label;
-  /// The action to perform when this widget is clicked.
-  ///
-  /// It is expected that this action will change the current [MacosTabView] content. 
-  final VoidCallback onTap;
-  /// Whether this widget is the active tab.
-  ///
-  /// Defaults to `false`.
+
+  /// The action to perform when the user selects the tab.
+  final VoidCallback onClick;
+
+  /// Whether this tab is currently selected.
   final bool active;
 
   @override
@@ -29,19 +31,25 @@ class MacosTab extends StatelessWidget {
     final brightness = MacosTheme.brightnessOf(context);
 
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.elliptical(6, 6)),
-          color: active
-              ? brightness.resolve(
-                  MacosColors.white,
-                  const Color.fromRGBO(95, 96, 97, 1.0),
-                )
-              : MacosColors.transparent,
+      onTap: onClick,
+      child: PhysicalModel(
+        color: active ? const Color(0xFF625E66) : MacosColors.transparent,
+        borderRadius: _kTabBorderRadius,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: _kTabBorderRadius,
+            color: active
+                ? brightness.resolve(
+                    MacosColors.white,
+                    const Color(0xFF625E66),
+                  )
+                : MacosColors.transparent,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            child: Text(label),
+          ),
         ),
-        child: Text(label),
       ),
     );
   }
