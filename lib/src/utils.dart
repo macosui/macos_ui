@@ -87,3 +87,9 @@ String intToMonthAbbr(int month) {
       throw Exception('Unsupported value');
   }
 }
+
+class Unsupported {
+  const Unsupported(this.message);
+
+  final String message;
+}
