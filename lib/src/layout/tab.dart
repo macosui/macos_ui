@@ -13,6 +13,7 @@ class MacosTab extends StatelessWidget {
     this.active = false,
   }) : super(key: key);
 
+  /// Describes the content of the [MacosTabView] pane it represents.
   final String label;
   final VoidCallback onTap;
   final bool active;
