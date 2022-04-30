@@ -1,6 +1,9 @@
 import '../../macos_ui.dart';
 import '../library.dart';
 
+/// {template macosTab}
+/// An item in a [MacosTabView].
+/// {endtemplate}
 class MacosTab extends StatelessWidget {
   const MacosTab({
     Key? key,
