@@ -5,6 +5,7 @@ import '../library.dart';
 /// An item in a [MacosTabView].
 /// {endtemplate}
 class MacosTab extends StatelessWidget {
+  /// {macro macosTab}
   const MacosTab({
     Key? key,
     required this.label,
