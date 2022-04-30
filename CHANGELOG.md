@@ -1,3 +1,6 @@
+## [0.16.0]
+* New widget: `MacosTimePicker` (textual style only!)
+
 ## [0.15.0]
 * New widget: `MacosColorWell`
 
