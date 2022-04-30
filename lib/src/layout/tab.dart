@@ -15,6 +15,9 @@ class MacosTab extends StatelessWidget {
 
   /// Describes the content of the [MacosTabView] pane it represents.
   final String label;
+  /// The action to perform when this widget is clicked.
+  ///
+  /// It is expected that this action will change the current [MacosTabView] content. 
   final VoidCallback onTap;
   final bool active;
 
