@@ -1,3 +1,4 @@
+import '../../macos_ui.dart';
 import '../library.dart';
 
 class MacosTab extends StatelessWidget {
@@ -14,13 +15,21 @@ class MacosTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MacosTheme.brightnessOf(context);
+
     return GestureDetector(
       onTap: onTap,
-      onTapDown: (TapDownDetails _) {
-        // TODO: Implement highlighted state when pressed down
-      },
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.elliptical(6, 6)),
+          color: active
+              ? brightness.resolve(
+                  Colors.white,
+                  Color.fromRGBO(95, 96, 97, 1.0),
+                )
+              : Colors.transparent,
+        ),
         child: Text(label),
       ),
     );
