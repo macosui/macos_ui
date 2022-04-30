@@ -19,6 +19,9 @@ class MacosTab extends StatelessWidget {
   ///
   /// It is expected that this action will change the current [MacosTabView] content. 
   final VoidCallback onTap;
+  /// Whether this widget is the active tab.
+  ///
+  /// Defaults to `false`.
   final bool active;
 
   @override
