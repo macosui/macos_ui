@@ -55,7 +55,7 @@ class MacosTabView extends StatelessWidget {
   })  : assert(tabs.length > 0),
         super(key: key);
 
-  /// Specifies the tabs to display at any given edge of the tab view content
+  /// Specifies the tabs to display at any given edge of the tab view content.
   final List<Widget> tabs;
 
   /// Specifies the position of the tab view controls.
