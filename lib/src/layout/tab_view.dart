@@ -12,6 +12,36 @@ enum MacosTabPosition {
   bottom, 
 }
 
+/// {template macosTabView}
+/// Presents multiple mutually exclusive panes of content in the same area. 
+///
+/// Includes a tabbed control (which is similar in appearance to a 
+/// [segmented control](https://developer.apple.com/design/human-interface-guidelines/macos/selectors/segmented-controls/)) 
+/// and a content area.
+///
+/// Each segment of a tabbed control is known as a tab, and clicking a tab displays its corresponding pane 
+/// in the content area. Although the amount of content can vary from pane to pane, switching tabs doesn’t 
+/// change the overall size of the tab view or its parent window. 
+/// 
+/// You can position the tabbed control on any side of the content area—top, bottom, left, or right.
+///
+/// **Use a tab view to present closely related peer areas of content.** The typical appearance of a tab view 
+/// provides a strong visual indication of enclosure. People expect each tab to display content that is in 
+/// some way similar or related to the content in the other tabs.
+///
+/// **Make sure the controls within a pane only affect content in the same pane.** Panes are mutually 
+/// exclusive and should be fully self-contained.
+///
+/// In general, inset a tab view by leaving a margin of window-body area on all sides of a tab view. 
+/// This layout looks clean and leaves room for additional controls that can affect the window itself 
+/// (or other tabs). For example, the lock button in the macOD Date & Time preferences is outside of 
+/// the tab view because it applies to all tabs.
+///
+/// **Provide a label for each tab that describes the contents of its pane.** A good label helps the 
+/// user predict the contents of a pane before clicking its tab. In general, use nouns or very short 
+/// noun phrases for tab labels. A verb or short verb phrase may make sense in some contexts. 
+/// Tab labels should use title-style capitalization.
+/// {endTemplate}
 class MacosTabView extends StatelessWidget {
   const MacosTabView({
     Key? key,
