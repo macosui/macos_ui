@@ -1,6 +1,6 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/selectors/painters.dart';
+import 'package:macos_ui/src/selectors/caret_painters.dart';
 import 'package:macos_ui/src/theme/time_picker_theme.dart';
 
 /// Defines the possibles [MacosTimePicker] styles.
