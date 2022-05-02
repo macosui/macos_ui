@@ -48,7 +48,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
   }
 
   void _paintPinHole(Canvas canvas, Size size) {
-    Paint pinHolePainter = Paint()
+    final pinHolePainter = Paint()
       ..color = MacosColors.black
       ..isAntiAlias = true
       ..style = PaintingStyle.fill;
