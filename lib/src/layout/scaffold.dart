@@ -5,6 +5,7 @@ import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
+import 'package:macos_ui/src/layout/toolbar/toolbar.dart';
 import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
@@ -20,7 +21,7 @@ class MacosScaffold extends StatefulWidget {
   const MacosScaffold({
     Key? key,
     this.children = const <Widget>[],
-    this.titleBar,
+    this.toolBar,
     this.backgroundColor,
   }) : super(key: key);
 
@@ -33,8 +34,8 @@ class MacosScaffold extends StatefulWidget {
   /// [Sidebar] and [TitleBar] regions.
   final List<Widget> children;
 
-  /// An app bar to display at the top of the scaffold.
-  final TitleBar? titleBar;
+  /// The [Toolbar] to use at the top of the layout scaffold.
+  final ToolBar? toolBar;
 
   @override
   _MacosScaffoldState createState() => _MacosScaffoldState();
@@ -76,6 +77,8 @@ class _MacosScaffoldState extends State<MacosScaffold> {
         final height = constraints.maxHeight;
         final mediaQuery = MediaQuery.of(context);
         final children = widget.children;
+        double topPadding = 0;
+        if (widget.toolBar != null) topPadding += widget.toolBar!.height;
 
         return Stack(
           children: [
@@ -92,19 +95,17 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               child: MediaQuery(
                 child: _ScaffoldBody(children: children),
                 data: mediaQuery.copyWith(
-                  padding: widget.titleBar != null
-                      ? EdgeInsets.only(top: widget.titleBar!.height)
-                      : null,
+                  padding: EdgeInsets.only(top: topPadding),
                 ),
               ),
             ),
 
-            // Title bar
-            if (widget.titleBar != null)
+            // Toolbar
+            if (widget.toolBar != null)
               Positioned(
                 width: width,
-                height: widget.titleBar!.height,
-                child: widget.titleBar!,
+                height: widget.toolBar!.height,
+                child: widget.toolBar!,
               ),
           ],
         );
