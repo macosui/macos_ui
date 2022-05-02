@@ -68,7 +68,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
   }
 
   void _paintClockBorder(Canvas canvas, Size size) {
-    Paint clockBorderPainter = Paint()
+    final clockBorderPainter = Paint()
       ..color = outerBorderColor
       ..strokeWidth = 12.0
       ..isAntiAlias = true
