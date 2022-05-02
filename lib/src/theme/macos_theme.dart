@@ -338,7 +338,7 @@ class MacosThemeData with Diagnosticable {
       dayPeriodTextColor: const MacosColor(0xFFAAAAAA),
       hourHandColor: MacosColors.black,
       minuteHandColor: MacosColors.black,
-      secondHandColor: const MacosColor(0xFFFCA7A6),
+      secondHandColor: const MacosColor(0xFFFF3B2F),
       hourTextColor: MacosColors.black,
     );
 

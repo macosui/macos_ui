@@ -1,16 +1,15 @@
+import 'dart:async';
+
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/selectors/caret_painters.dart';
+import 'package:macos_ui/src/selectors/graphical_time_picker_painter.dart';
 import 'package:macos_ui/src/theme/time_picker_theme.dart';
 
 /// Defines the possibles [MacosTimePicker] styles.
 enum TimePickerStyle {
   textual,
-
-  @Unsupported('This style is not supported yet.')
   graphical,
-
-  @Unsupported('This style is not supported yet.')
   combined,
 }
 
@@ -38,13 +37,12 @@ class MacosTimePicker extends StatefulWidget {
   const MacosTimePicker({
     Key? key,
     required this.onTimeChanged,
-    // TODO(Groovin): Default to "combined" once the graphical style is implemented.
-    this.style = TimePickerStyle.textual,
+    this.style = TimePickerStyle.combined,
   }) : super(key: key);
 
   /// The [TimePickerStyle] to use.
   ///
-  /// Defaults to [TimePickerStyle.textual].
+  /// Defaults to [TimePickerStyle.combined].
   final TimePickerStyle style;
 
   /// {@macro onTimeChanged}
@@ -63,11 +61,30 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
   bool _isMinuteSelected = false;
   bool _isPeriodSelected = false;
   late MaterialLocalizations localizations = MaterialLocalizations.of(context);
+  late var time = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+    _selectedHour,
+    _selectedMinute,
+    DateTime.now().second,
+  );
 
   @override
   void initState() {
     super.initState();
     _parseInitialTime();
+    if (widget.style == TimePickerStyle.graphical ||
+        widget.style == TimePickerStyle.combined) {
+      Timer.periodic(const Duration(seconds: 1), update);
+    }
+  }
+
+  void update(Timer timer) {
+    if (mounted) {
+      time = time.add(const Duration(seconds: 1) * timer.tick);
+      setState(() {});
+    }
   }
 
   void _parseInitialTime() {
@@ -294,8 +311,33 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
     );
   }
 
-  Widget _buildGraphicalTimePicker(MacosTimePickerThemeData timePicker) {
-    return const SizedBox.shrink();
+  Widget _buildGraphicalTimePicker(MacosTimePickerThemeData timePickerTheme) {
+    const _clockHeight = 101.0;
+    const _clockWidth = 100.0;
+    return SizedBox(
+      height: _clockHeight,
+      width: _clockWidth,
+      child: CustomPaint(
+        painter: GraphicalTimePickerPainter(
+          clockHeight: _clockHeight,
+          time: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+            _selectedHour,
+            _selectedMinute,
+            DateTime.now().second,
+          ),
+          dayPeriod: _selectedPeriod == DayPeriod.am ? 'AM' : 'PM',
+          backgroundColor: timePickerTheme.clockViewBackgroundColor!,
+          hourHandColor: timePickerTheme.hourHandColor!,
+          minuteHandColor: timePickerTheme.minuteHandColor!,
+          secondHandColor: timePickerTheme.secondHandColor!,
+          dayPeriodTextColor: timePickerTheme.dayPeriodTextColor!,
+          outerBorderColor: timePickerTheme.clockViewBorderColor!,
+        ),
+      ),
+    );
   }
 
   @override
@@ -307,9 +349,15 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
       case TimePickerStyle.textual:
         return _buildTextualTimePicker(timePickerTheme, localizations);
       case TimePickerStyle.graphical:
-        throw UnsupportedError('This style is not supported yet.');
+        return _buildGraphicalTimePicker(timePickerTheme);
       case TimePickerStyle.combined:
-        throw UnsupportedError('This style is not supported yet.');
+        return Column(
+          children: [
+            _buildTextualTimePicker(timePickerTheme, localizations),
+            const SizedBox(height: 16),
+            _buildGraphicalTimePicker(timePickerTheme),
+          ],
+        );
     }
   }
 }
