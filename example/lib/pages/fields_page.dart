@@ -12,8 +12,19 @@ class _FieldsPageState extends State<FieldsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS UI Fields'),
+      toolBar: ToolBar(
+        title: const Text('Fields'),
+        titleWidth: 150.0,
+        actions: [
+          ToolBarIconButton(
+            label: 'Toggle Sidebar',
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
+            ),
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
+          ),
+        ],
       ),
       children: [
         ContentArea(builder: (context, scrollController) {
@@ -32,7 +43,7 @@ class _FieldsPageState extends State<FieldsPage> {
                 SizedBox(
                   width: 300.0,
                   child: MacosTextField(
-                    prefix: MacosIcon(CupertinoIcons.search),
+                    prefix: MacosIcon(CupertinoIcons.money_dollar),
                     placeholder: 'Type some text here',
 
                     /// If both suffix and clear button mode is provided,
@@ -69,6 +80,13 @@ class _FieldsPageState extends State<FieldsPage> {
                     // suffix: Text('SUFFIX'),
                     clearButtonMode: OverlayVisibilityMode.always,
                     maxLines: 1,
+                  ),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: 300.0,
+                  child: MacosSearchField(
+                    placeholder: 'Search...',
                   ),
                 ),
               ],
