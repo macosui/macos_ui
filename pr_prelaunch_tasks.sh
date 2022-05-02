@@ -3,14 +3,22 @@ if [ $? -eq 1 ]; then
   flutter format lib
   git add .
   git commit -m "chore: run flutter format lib"
-  git push origin
+  echo "push changes? [y/n]"
+  read pushResponse
+  if [ $pushResponse = "y" ]; then
+    git push origin
+  fi
 fi
 flutter format test --set-exit-if-changed
 if [ $? -eq 1 ]; then
   flutter format test
   git add .
   git commit -m "chore: run flutter format test"
-  git push origin
+  echo "push changes? [y/n]"
+  read pushResponse
+  if [ $pushResponse = "y" ]; then
+    git push origin
+  fi
 fi
 echo "Run dart fix --dry-run? [y/n]"
 read dryRunResponse
@@ -26,7 +34,11 @@ if [ "$applyResponse" = "y" ]; then
   else
     git add .
     git commit -m "chore: run dart fix --apply"
-    git push origin
+    echo "push changes? [y/n]"
+    read pushResponse
+    if [ $pushResponse = "y" ]; then
+      git push origin
+    fi
   fi
 fi
 echo "Run tests? [y/n]"
