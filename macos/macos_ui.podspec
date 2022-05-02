@@ -4,14 +4,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'macos_ui'
-  s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.version          = '0.1.0'
+  s.summary          = 'Native functionality for the macos_ui Flutter package.'
   s.description      = <<-DESC
 A new flutter plugin project.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/GroovinChip/macos_ui'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'GroovinChip' => 'groovinchip@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files     = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
