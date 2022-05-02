@@ -1,3 +1,6 @@
+## [0.15.0]
+* New widget: `MacosColorWell`
+
 ## [0.14.0]
 * New widget: `ToolBar`, which can be used to create a toolbar at the top of the `MacosScaffold`. Toolbar items include `ToolBarIconButton`, `ToolBarPulldownButton`, and `ToolBarSpacer` widgets.
 * New widget: `MacosSearchField`, which creates a macOS-style search field.

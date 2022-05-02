@@ -38,6 +38,10 @@ class _SelectorsPageState extends State<SelectorsPage> {
                   MacosDatePicker(
                     onDateChanged: (date) => debugPrint('$date'),
                   ),
+                  const SizedBox(height: 20),
+                  MacosColorWell(
+                    onColorSelected: (color) => debugPrint('$color'),
+                  ),
                 ],
               ),
             );
