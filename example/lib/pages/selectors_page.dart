@@ -36,7 +36,8 @@ class _SelectorsPageState extends State<SelectorsPage> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MacosDatePicker(
                         onDateChanged: (date) => debugPrint('$date'),
@@ -46,7 +47,7 @@ class _SelectorsPageState extends State<SelectorsPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   MacosColorWell(
                     onColorSelected: (color) => debugPrint('$color'),
                   ),
