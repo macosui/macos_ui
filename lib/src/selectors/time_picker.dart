@@ -184,6 +184,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
       children: [
         PhysicalModel(
           color: timePickerTheme.shadowColor!,
+          elevation: 1,
           child: ColoredBox(
             color: timePickerTheme.backgroundColor!,
             child: Padding(
