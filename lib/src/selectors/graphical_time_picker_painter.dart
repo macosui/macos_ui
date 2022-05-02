@@ -94,9 +94,21 @@ class GraphicalTimePickerPainter extends CustomPainter {
     );
   }
 
+  void _paintBackgroundColor(Canvas canvas, Size size) {
+    final backgroundPaint = Paint()
+      ..color = backgroundColor
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(
+      size.center(Offset.zero),
+      clockHeight / 2,
+      backgroundPaint,
+    );
+  }
+
   void _paintInnerShadow(Canvas canvas, Size size) {
     Paint innerShadowPainter = Paint()
-      ..strokeWidth = 3.0
+      ..strokeWidth = 2.0
       ..isAntiAlias = true
       ..shader = const LinearGradient(
         begin: Alignment.centerLeft,
@@ -112,24 +124,13 @@ class GraphicalTimePickerPainter extends CustomPainter {
           radius: clockHeight / 2,
         ),
       )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.inner, 1.0)
       ..style = PaintingStyle.stroke;
 
     canvas.drawCircle(
       size.center(Offset.zero),
       size.shortestSide / 2.0,
       innerShadowPainter,
-    );
-  }
-
-  void _paintBackgroundColor(Canvas canvas, Size size) {
-    final backgroundPaint = Paint()
-      ..color = backgroundColor
-      ..style = PaintingStyle.fill;
-
-    canvas.drawCircle(
-      size.center(Offset.zero),
-      clockHeight / 2,
-      backgroundPaint,
     );
   }
 
