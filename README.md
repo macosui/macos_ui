@@ -711,7 +711,7 @@ There are three styles of `MacosDatePickers`:
 
 ## MacosTimePicker
 
-<img src="https://imgur.com/9GW5T27.png" width="25%"/>
+<img src="https://imgur.com/UKMDnSF.png" width="50%"/>
 
 Lets the user choose a time.
 
@@ -722,5 +722,3 @@ There are three styles of `MacosTimePickers`:
 * `graphical`: a visual time picker where the user can move the hands of a
   clock-like interface to select a time.
 * `combined`: provides both `textual` and `graphical` interfaces.
-
-⚠️ PLEASE NOTE: As of version `0.16.0` only the textual style is supported!
