@@ -107,7 +107,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
   }
 
   void _paintInnerShadow(Canvas canvas, Size size) {
-    Paint innerShadowPainter = Paint()
+    final innerShadowPainter = Paint()
       ..strokeWidth = 2.0
       ..isAntiAlias = true
       ..shader = const LinearGradient(
