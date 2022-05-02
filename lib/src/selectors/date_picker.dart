@@ -467,7 +467,9 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
         if (isToday && isSelectedDay) {
           dayText = Text(
             localizations.formatDecimal(day),
-            style: dayStyle,
+            style: dayStyle.apply(
+              color: textLuminance(datePickerTheme.monthViewCurrentDateColor!),
+            ),
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewCurrentDateColor,

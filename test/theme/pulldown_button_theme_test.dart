@@ -42,6 +42,7 @@ void main() {
         highlightColor: MacosColors.systemGrayColor.color,
         backgroundColor: MacosColors.appleBlue,
         pulldownColor: MacosColors.controlColor.color,
+        iconColor: MacosColors.appleGreen,
       ).debugFillProperties(builder);
 
       final description = builder.properties
@@ -55,6 +56,7 @@ void main() {
           'highlightColor: Color(0xff8e8e93)',
           'backgroundColor: Color(0xff0433ff)',
           'pulldownColor: Color(0x19000000)',
+          'iconColor: Color(0xff00f900)',
         ],
       );
     });

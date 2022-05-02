@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class SelectorsPage extends StatefulWidget {
@@ -14,8 +14,19 @@ class _SelectorsPageState extends State<SelectorsPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS UI Selectors'),
+      toolBar: ToolBar(
+        title: const Text('Selectors'),
+        titleWidth: 150.0,
+        actions: [
+          ToolBarIconButton(
+            label: 'Toggle Sidebar',
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
+            ),
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
+          ),
+        ],
       ),
       children: [
         ContentArea(

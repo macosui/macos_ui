@@ -21,6 +21,11 @@ const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 6.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kMenuLeftOffset = 8.0;
 
+enum PulldownMenuAlignment {
+  left,
+  right,
+}
+
 // The widget that is the button wrapping the menu items.
 class _MacosPulldownMenuItemButton extends StatefulWidget {
   const _MacosPulldownMenuItemButton({
@@ -101,7 +106,7 @@ class _MacosPulldownMenuItemButtonState
               child: Container(
                 decoration: BoxDecoration(
                   color: _isHovered
-                      ? theme.pulldownButtonTheme.highlightColor
+                      ? MacosPulldownButtonTheme.of(context).highlightColor
                       : Colors.transparent,
                   borderRadius: _kBorderRadius,
                 ),
@@ -192,8 +197,7 @@ class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
       opacity: _fadeOpacity,
       child: Container(
         decoration: BoxDecoration(
-          color: MacosTheme.of(context)
-              .pulldownButtonTheme
+          color: MacosPulldownButtonTheme.of(context)
               .pulldownColor
               ?.withOpacity(0.25),
           boxShadow: [
@@ -252,11 +256,13 @@ class _MacosPulldownMenuRouteLayout extends SingleChildLayoutDelegate {
     required this.buttonRect,
     required this.route,
     required this.textDirection,
+    required this.menuAlignment,
   });
 
   final Rect buttonRect;
   final _MacosPulldownRoute route;
   final TextDirection? textDirection;
+  final PulldownMenuAlignment menuAlignment;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
@@ -283,17 +289,33 @@ class _MacosPulldownMenuRouteLayout extends SingleChildLayoutDelegate {
       return true;
     }());
     assert(textDirection != null);
-    final double left;
-    switch (textDirection!) {
-      case TextDirection.rtl:
-        left = buttonRect.right.clamp(0.0, size.width) - childSize.width;
+    double left;
+    switch (menuAlignment) {
+      case PulldownMenuAlignment.left:
+        switch (textDirection!) {
+          case TextDirection.rtl:
+            left = buttonRect.right.clamp(0.0, size.width) - childSize.width;
+            break;
+          case TextDirection.ltr:
+            left = buttonRect.left + _kMenuLeftOffset;
+            break;
+        }
         break;
-      case TextDirection.ltr:
-        left = buttonRect.left;
+      case PulldownMenuAlignment.right:
+        switch (textDirection!) {
+          case TextDirection.rtl:
+            left = buttonRect.left + _kMenuLeftOffset;
+            break;
+          case TextDirection.ltr:
+            left = buttonRect.left - childSize.width + buttonRect.width;
+            break;
+        }
         break;
     }
-    // Move the menu a bit to the right, below the PulldownButton.
-    return Offset(left + _kMenuLeftOffset, menuLimits.top);
+    if (left + childSize.width >= size.width) {
+      left = left.clamp(0.0, size.width - childSize.width) - _kMenuLeftOffset;
+    }
+    return Offset(left, menuLimits.top);
   }
 
   @override
@@ -323,6 +345,7 @@ class _MacosPulldownRoute extends PopupRoute {
     required this.style,
     this.barrierLabel,
     this.itemHeight,
+    required this.menuAlignment,
   }) : itemHeights = List<double>.filled(
           items.length,
           itemHeight ?? _kMenuItemHeight,
@@ -334,7 +357,7 @@ class _MacosPulldownRoute extends PopupRoute {
   final CapturedThemes capturedThemes;
   final TextStyle style;
   final double? itemHeight;
-
+  final PulldownMenuAlignment menuAlignment;
   final List<double> itemHeights;
 
   @override
@@ -365,6 +388,7 @@ class _MacosPulldownRoute extends PopupRoute {
           buttonRect: buttonRect,
           capturedThemes: capturedThemes,
           style: style,
+          menuAlignment: menuAlignment,
         );
       },
     );
@@ -432,6 +456,7 @@ class _MacosPulldownRoutePage extends StatelessWidget {
     required this.buttonRect,
     required this.capturedThemes,
     this.style,
+    required this.menuAlignment,
   }) : super(key: key);
 
   final _MacosPulldownRoute route;
@@ -441,6 +466,7 @@ class _MacosPulldownRoutePage extends StatelessWidget {
   final Rect buttonRect;
   final CapturedThemes capturedThemes;
   final TextStyle? style;
+  final PulldownMenuAlignment menuAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -467,6 +493,7 @@ class _MacosPulldownRoutePage extends StatelessWidget {
               buttonRect: buttonRect,
               route: route,
               textDirection: textDirection,
+              menuAlignment: menuAlignment,
             ),
             child: capturedThemes.wrap(menu),
           );
@@ -562,6 +589,7 @@ class MacosPulldownMenuItem extends StatelessWidget
     this.onTap,
     this.enabled = true,
     this.alignment = AlignmentDirectional.centerStart,
+    this.label,
   }) : super(key: key);
 
   @override
@@ -584,6 +612,11 @@ class MacosPulldownMenuItem extends StatelessWidget
   ///
   /// This property must not be null. It defaults to [AlignmentDirectional.centerStart].
   final AlignmentGeometry alignment;
+
+  /// An optional label to describe the action of this menu item.
+  ///
+  /// It must be set when the pulldown menu is used in the toolbar.
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -638,6 +671,7 @@ class MacosPulldownButton extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.alignment = AlignmentDirectional.centerStart,
+    this.menuAlignment = PulldownMenuAlignment.left,
   })  : assert(itemHeight == null || itemHeight >= _kMenuItemHeight),
         assert(
             (title != null || icon != null) && !(title != null && icon != null),
@@ -710,6 +744,11 @@ class MacosPulldownButton extends StatefulWidget {
   ///    relative to text direction.
   final AlignmentGeometry alignment;
 
+  /// Defines the pulldown menu's alignment relevant to the button.
+  ///
+  /// Defaults to [PulldownMenuAlignment.left].
+  final PulldownMenuAlignment menuAlignment;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -721,6 +760,7 @@ class MacosPulldownButton extends StatefulWidget {
       FlagProperty('hasAutofocus', value: autofocus, ifFalse: 'noAutofocus'),
     );
     properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('menuAlignment', menuAlignment));
   }
 
   @override
@@ -851,6 +891,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
       style: _textStyle!,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       itemHeight: widget.itemHeight,
+      menuAlignment: widget.menuAlignment,
     );
 
     navigator.push(_pulldownRoute!).then<void>((_) {
@@ -985,14 +1026,16 @@ _ButtonStyles _getButtonStyles(
 ) {
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
+  final pulldownTheme = MacosPulldownButtonTheme.of(context);
   Color textColor = theme.typography.body.color!;
-  Color bgColor = theme.pulldownButtonTheme.backgroundColor!;
+  Color bgColor = pulldownTheme.backgroundColor!;
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
-  Color caretBgColor = theme.pulldownButtonTheme.highlightColor!;
+  Color caretBgColor = pulldownTheme.highlightColor!;
+  Color iconColor = pulldownTheme.iconColor!;
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     if (hasIcon) {
@@ -1020,27 +1063,18 @@ _ButtonStyles _getButtonStyles(
       borderColor = caretBgColor = MacosColors.transparent;
       switch (pullDownButtonState) {
         case PulldownButtonState.enabled:
-          textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.7),
-            const Color.fromRGBO(255, 255, 255, 0.7),
-          );
+          textColor = caretColor = iconColor;
           bgColor = MacosColors.transparent;
           break;
         case PulldownButtonState.hovered:
-          textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.7),
-            const Color.fromRGBO(255, 255, 255, 0.7),
-          );
+          textColor = caretColor = iconColor;
           bgColor = brightness.resolve(
             const Color(0xfff4f5f5),
             const Color(0xff323232),
           );
           break;
         case PulldownButtonState.pressed:
-          textColor = caretColor = brightness.resolve(
-            const Color.fromRGBO(0, 0, 0, 0.85),
-            const Color.fromRGBO(255, 255, 255, 0.85),
-          );
+          textColor = caretColor = iconColor.withOpacity(0.85);
           bgColor = brightness.resolve(
             const Color.fromRGBO(0, 0, 0, 0.1),
             const Color.fromRGBO(255, 255, 255, 0.1),
@@ -1054,14 +1088,13 @@ _ButtonStyles _getButtonStyles(
             const Color(0xffc3c4c9),
             const Color(0xff222222),
           );
-          caretBgColor = theme.pulldownButtonTheme.highlightColor!;
+          caretBgColor = pulldownTheme.highlightColor!;
           break;
         case PulldownButtonState.hovered:
           break;
         case PulldownButtonState.pressed:
-          bgColor = theme.pulldownButtonTheme.backgroundColor!.withOpacity(0.4);
-          caretBgColor =
-              theme.pulldownButtonTheme.highlightColor!.withOpacity(0.9);
+          bgColor = pulldownTheme.backgroundColor!.withOpacity(0.4);
+          caretBgColor = pulldownTheme.highlightColor!.withOpacity(0.9);
           break;
       }
     }

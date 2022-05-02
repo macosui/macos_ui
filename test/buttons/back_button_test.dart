@@ -23,7 +23,7 @@ void main() {
         ],
         home: const MacosWindow(
           child: MacosScaffold(
-            titleBar: TitleBar(
+            toolBar: ToolBar(
               leading: MacosBackButton(),
             ),
           ),
@@ -45,7 +45,7 @@ void main() {
       MacosApp(
         home: MacosWindow(
           child: MacosScaffold(
-            titleBar: TitleBar(
+            toolBar: ToolBar(
               leading: MacosBackButton(
                 fillColor: MacosColors.appleBlue,
                 key: backButtonKey,

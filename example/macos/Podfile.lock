@@ -1,6 +1,6 @@
 PODS:
   - FlutterMacOS (1.0.0)
-  - macos_ui (0.0.1):
+  - macos_ui (0.1.0):
     - FlutterMacOS
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
-  macos_ui: ce72edf634c65d29df6a400fde70926c21a3e21a
+  macos_ui: 125c911559d646194386d84c017ad6819122e2db
 
 PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
 

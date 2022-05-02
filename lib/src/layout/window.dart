@@ -7,6 +7,7 @@ import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
 import 'package:macos_ui/src/layout/sidebar.dart';
+import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
@@ -23,6 +24,7 @@ class MacosWindow extends StatefulWidget {
   const MacosWindow({
     Key? key,
     this.child,
+    this.titleBar,
     this.sidebar,
     this.backgroundColor,
   }) : super(key: key);
@@ -34,6 +36,9 @@ class MacosWindow extends StatefulWidget {
 
   /// The child of the [MacosWindow]
   final Widget? child;
+
+  /// An app bar to display at the top of the scaffold.
+  final TitleBar? titleBar;
 
   /// A sidebar to display at the left of the scaffold.
   final Sidebar? sidebar;
@@ -189,7 +194,22 @@ class _MacosWindowState extends State<MacosWindow> {
               width: width - visibleSidebarWidth,
               height: height,
               child: ClipRect(
-                child: widget.child ?? const SizedBox.shrink(),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: widget.titleBar != null ? widget.titleBar!.height : 0,
+                  ),
+                  child: widget.child ?? const SizedBox.shrink(),
+                ),
+              ),
+            ),
+
+            // Title bar Area
+            Positioned(
+              left: visibleSidebarWidth,
+              width: width - visibleSidebarWidth,
+              height: widget.titleBar?.height,
+              child: ClipRect(
+                child: widget.titleBar ?? const SizedBox.shrink(),
               ),
             ),
 
