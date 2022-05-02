@@ -11,10 +11,24 @@ target `dev`.
 
 `dev` and `stable` are protected branches.
 
-Pull requests should **always** be merged via GitHub and not via command-line.
-
 ### Commit style
 This repository uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). Please ensure that you use them!
+
+### Pull Requests
+As mentioned above, all pull requests should target `dev`.
+
+#### Pre-launch script
+Before opening your pull request, run the `pr_prelaunch_tasks.sh` script to ensure that your changes meet the 
+following requirements:
+* All code is properly formatted
+* There are no Dart analysis warnings
+* All tests pass
+
+If the format step of the script results in changes, the script will make those change, commit them, and prompt you to push the commit.
+
+If the `dart fix` step results in changes, the script will make those changes, commit them, and prompt you to push the commit.
+
+Pull requests should **always** be merged via GitHub and not via command-line.
 
 ### Versioning
 
