@@ -141,7 +141,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
     double minuteHandLength = r - (p * scaleFactor) - 3.0;
     double secondHandLength = r - (p * scaleFactor) - 2.0;
 
-    Paint handPaint = Paint()
+    final handPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.bevel
