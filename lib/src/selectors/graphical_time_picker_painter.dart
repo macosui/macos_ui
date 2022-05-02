@@ -31,7 +31,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double scaleFactor = size.shortestSide / clockHeight;
+    final double scaleFactor = size.shortestSide / clockHeight;
     _paintClockBorder(canvas, size);
     _paintBackgroundColor(canvas, size);
     _paintInnerShadow(canvas, size);
