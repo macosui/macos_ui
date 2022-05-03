@@ -35,10 +35,19 @@ class _SelectorsPageState extends State<SelectorsPage> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  MacosDatePicker(
-                    onDateChanged: (date) => debugPrint('$date'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MacosDatePicker(
+                        onDateChanged: (date) => debugPrint('$date'),
+                      ),
+                      MacosTimePicker(
+                        onTimeChanged: (time) => debugPrint('$time'),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   MacosColorWell(
                     onColorSelected: (color) => debugPrint('$color'),
                   ),

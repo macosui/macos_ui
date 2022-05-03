@@ -200,6 +200,7 @@ class MacosThemeData with Diagnosticable {
     MacosPopupButtonThemeData? popupButtonTheme,
     MacosPulldownButtonThemeData? pulldownButtonTheme,
     MacosDatePickerThemeData? datePickerTheme,
+    MacosTimePickerThemeData? timePickerTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -320,6 +321,29 @@ class MacosThemeData with Diagnosticable {
           : const Color.fromRGBO(0, 0, 0, 0.1),
     );
 
+    timePickerTheme ??= MacosTimePickerThemeData(
+      shadowColor: const Color.fromRGBO(0, 0, 0, 0.1),
+      backgroundColor: isDark
+          ? const Color.fromRGBO(255, 255, 255, 0.1)
+          : const Color.fromRGBO(255, 255, 255, 1.0),
+      selectedElementColor: const Color(0xFF0063E1),
+      selectedElementTextColor: MacosColors.white,
+      caretColor: isDark ? MacosColors.white : MacosColors.black,
+      caretControlsBackgroundColor: isDark
+          ? const Color.fromRGBO(255, 255, 255, 0.1)
+          : const Color.fromRGBO(255, 255, 255, 1.0),
+      caretControlsSeparatorColor: isDark
+          ? const Color.fromRGBO(71, 71, 71, 1)
+          : const Color.fromRGBO(0, 0, 0, 0.1),
+      clockViewBackgroundColor: MacosColors.white,
+      clockViewBorderColor: const MacosColor(0xFFD1E5ED),
+      dayPeriodTextColor: const MacosColor(0xFFAAAAAA),
+      hourHandColor: MacosColors.black,
+      minuteHandColor: MacosColors.black,
+      secondHandColor: const MacosColor(0xFFFF3B2F),
+      hourTextColor: MacosColors.black,
+    );
+
     final defaultData = MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -336,6 +360,7 @@ class MacosThemeData with Diagnosticable {
       popupButtonTheme: popupButtonTheme,
       pulldownButtonTheme: pulldownButtonTheme,
       datePickerTheme: datePickerTheme,
+      timePickerTheme: timePickerTheme,
     );
 
     final customizedData = defaultData.copyWith(
@@ -381,6 +406,7 @@ class MacosThemeData with Diagnosticable {
     required this.popupButtonTheme,
     required this.pulldownButtonTheme,
     required this.datePickerTheme,
+    required this.timePickerTheme,
   });
 
   /// A default light theme.
@@ -449,6 +475,8 @@ class MacosThemeData with Diagnosticable {
 
   final MacosDatePickerThemeData datePickerTheme;
 
+  final MacosTimePickerThemeData timePickerTheme;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
@@ -486,6 +514,11 @@ class MacosThemeData with Diagnosticable {
         b.datePickerTheme,
         t,
       ),
+      timePickerTheme: MacosTimePickerThemeData.lerp(
+        a.timePickerTheme,
+        b.timePickerTheme,
+        t,
+      ),
     );
   }
 
@@ -506,6 +539,7 @@ class MacosThemeData with Diagnosticable {
     MacosPopupButtonThemeData? popupButtonTheme,
     MacosPulldownButtonThemeData? pulldownButtonTheme,
     MacosDatePickerThemeData? datePickerTheme,
+    MacosTimePickerThemeData? timePickerTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -523,6 +557,7 @@ class MacosThemeData with Diagnosticable {
       popupButtonTheme: this.popupButtonTheme.merge(popupButtonTheme),
       pulldownButtonTheme: this.pulldownButtonTheme.merge(pulldownButtonTheme),
       datePickerTheme: this.datePickerTheme.merge(datePickerTheme),
+      timePickerTheme: this.timePickerTheme.merge(timePickerTheme),
     );
   }
 
@@ -543,6 +578,8 @@ class MacosThemeData with Diagnosticable {
       iconTheme: iconTheme.merge(other.iconTheme),
       popupButtonTheme: popupButtonTheme.merge(other.popupButtonTheme),
       pulldownButtonTheme: pulldownButtonTheme.merge(other.pulldownButtonTheme),
+      datePickerTheme: datePickerTheme.merge(other.datePickerTheme),
+      timePickerTheme: timePickerTheme.merge(other.timePickerTheme),
     );
   }
 
@@ -591,6 +628,12 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<MacosDatePickerThemeData>(
         'datePickerTheme',
         datePickerTheme,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<MacosTimePickerThemeData>(
+        'timePickerTheme',
+        timePickerTheme,
       ),
     );
   }

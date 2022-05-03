@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// Overrides the default style of its [MacosIconButton] descendants.
+/// Overrides the default style of its [MacosDatePicker] descendants.
 ///
 /// See also:
 ///
-///  * [MacosIconButtonThemeData], which is used to configure this theme.
+///  * [MacosDatePickerThemeData], which is used to configure this theme.
 class MacosDatePickerTheme extends InheritedTheme {
-  /// Builds a [MacosIconButtonTheme].
+  /// Builds a [MacosDatePickerTheme].
   ///
   /// The [data] parameter must not be null.
   const MacosDatePickerTheme({
@@ -22,13 +22,13 @@ class MacosDatePickerTheme extends InheritedTheme {
 
   /// The closest instance of this class that encloses the given context.
   ///
-  /// If there is no enclosing [MacosIconButtonTheme] widget, then
-  /// [MacosThemeData.iconButtonTheme] is used.
+  /// If there is no enclosing [MacosDatePickerTheme] widget, then
+  /// [MacosThemeData.datePickerTheme] is used.
   ///
   /// Typical usage is as follows:
   ///
   /// ```dart
-  /// final theme = MacosIconButtonTheme.of(context);
+  /// final theme = MacosDatePickerTheme.of(context);
   /// ```
   static MacosDatePickerThemeData of(BuildContext context) {
     final MacosDatePickerTheme? datePickerTheme =
