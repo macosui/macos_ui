@@ -5,7 +5,6 @@ import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/selectors/caret_painters.dart';
 import 'package:macos_ui/src/selectors/graphical_time_picker_painter.dart';
 import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
-import 'package:macos_ui/src/theme/time_picker_theme.dart';
 
 /// Defines the possibles [MacosTimePicker] styles.
 enum TimePickerStyle {
