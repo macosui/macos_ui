@@ -32,12 +32,13 @@ class KeyboardShortcutRunner extends StatelessWidget {
   /// This child of this widget.
   final Widget child;
 
-  /// The function to execute when the "enter" key is pressed.
+  /// The function to execute when the "up arrow" key is pressed.
   final VoidCallback onUpArrowKeypress;
 
-  /// The function to execute when the "escape" key is pressed.
+  /// The function to execute when the "down arrow" key is pressed.
   final VoidCallback onDownArrowKeypress;
 
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
   @override
