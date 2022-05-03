@@ -1,3 +1,6 @@
+## [1.0.0]
+* First stable release 🎉
+
 ## [0.16.0]
 * New widget: `MacosTimePicker` (textual style only!)
 
