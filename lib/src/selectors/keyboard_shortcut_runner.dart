@@ -26,6 +26,7 @@ class KeyboardShortcutRunner extends StatelessWidget {
     required this.child,
     required this.onUpArrowKeypress,
     required this.onDownArrowKeypress,
+    this.focusNode,
   }) : super(key: key);
 
   /// This child of this widget.
@@ -37,10 +38,12 @@ class KeyboardShortcutRunner extends StatelessWidget {
   /// The function to execute when the "escape" key is pressed.
   final VoidCallback onDownArrowKeypress;
 
+  final FocusNode? focusNode;
+
   @override
   Widget build(BuildContext context) {
     return FocusableActionDetector(
-      //autofocus: true,
+      focusNode: focusNode,
       shortcuts: {
         incrementKeyset: IncrementIntent(),
         decrementKeyset: DecrementIntent(),

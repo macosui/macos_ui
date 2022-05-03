@@ -60,6 +60,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
   bool _isDaySelected = false;
   bool _isMonthSelected = false;
   bool _isYearSelected = false;
+  late final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -165,6 +166,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     return KeyboardShortcutRunner(
       onUpArrowKeypress: _incrementElement,
       onDownArrowKeypress: _decrementElement,
+      focusNode: _focusNode,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -186,6 +188,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       element: '$_selectedMonth',
                       onSelected: () {
                         setState(() {
+                          _focusNode.requestFocus();
                           _isMonthSelected = !_isMonthSelected;
                           _isDaySelected = false;
                           _isYearSelected = false;
@@ -198,6 +201,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       element: '$_selectedDay',
                       onSelected: () {
                         setState(() {
+                          _focusNode.requestFocus();
                           _isDaySelected = !_isDaySelected;
                           _isMonthSelected = false;
                           _isYearSelected = false;
@@ -210,6 +214,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                       element: '$_selectedYear',
                       onSelected: () {
                         setState(() {
+                          _focusNode.requestFocus();
                           _isYearSelected = !_isYearSelected;
                           _isDaySelected = false;
                           _isMonthSelected = false;
