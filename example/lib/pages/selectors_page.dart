@@ -51,10 +51,6 @@ class _SelectorsPageState extends State<SelectorsPage> {
                   MacosColorWell(
                     onColorSelected: (color) => debugPrint('$color'),
                   ),
-                  const SizedBox(height: 20),
-                  MacosColorWell(
-                    onColorSelected: (color) => debugPrint('$color'),
-                  ),
                 ],
               ),
             );

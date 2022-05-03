@@ -4,6 +4,7 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/selectors/caret_painters.dart';
 import 'package:macos_ui/src/selectors/graphical_time_picker_painter.dart';
+import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
 import 'package:macos_ui/src/theme/time_picker_theme.dart';
 
 /// Defines the possibles [MacosTimePicker] styles.
@@ -179,136 +180,140 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
     MacosTimePickerThemeData timePickerTheme,
     MaterialLocalizations localizations,
   ) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        PhysicalModel(
-          color: timePickerTheme.shadowColor!,
-          elevation: 1,
-          child: ColoredBox(
-            color: timePickerTheme.backgroundColor!,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 3.0,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TimePickerFieldElement(
-                    isSelected: _isHourSelected,
-                    element: localizations.formatHour(
-                      TimeOfDay(
-                        hour: _selectedHour,
-                        minute: _selectedMinute,
+    return KeyboardShortcutRunner(
+      onUpArrowKeypress: _incrementElement,
+      onDownArrowKeypress: _decrementElement,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          PhysicalModel(
+            color: timePickerTheme.shadowColor!,
+            elevation: 1,
+            child: ColoredBox(
+              color: timePickerTheme.backgroundColor!,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 3.0,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TimePickerFieldElement(
+                      isSelected: _isHourSelected,
+                      element: localizations.formatHour(
+                        TimeOfDay(
+                          hour: _selectedHour,
+                          minute: _selectedMinute,
+                        ),
                       ),
+                      onSelected: () {
+                        setState(() {
+                          _isHourSelected = !_isHourSelected;
+                          _isMinuteSelected = false;
+                          _isPeriodSelected = false;
+                        });
+                      },
                     ),
-                    onSelected: () {
-                      setState(() {
-                        _isHourSelected = !_isHourSelected;
-                        _isMinuteSelected = false;
-                        _isPeriodSelected = false;
-                      });
-                    },
-                  ),
-                  const Text(':'),
-                  TimePickerFieldElement(
-                    isSelected: _isMinuteSelected,
-                    element: localizations.formatMinute(
-                      TimeOfDay(
-                        hour: _selectedHour,
-                        minute: _selectedMinute,
+                    const Text(':'),
+                    TimePickerFieldElement(
+                      isSelected: _isMinuteSelected,
+                      element: localizations.formatMinute(
+                        TimeOfDay(
+                          hour: _selectedHour,
+                          minute: _selectedMinute,
+                        ),
                       ),
+                      onSelected: () {
+                        setState(() {
+                          _isMinuteSelected = !_isMinuteSelected;
+                          _isHourSelected = false;
+                          _isPeriodSelected = false;
+                        });
+                      },
                     ),
-                    onSelected: () {
-                      setState(() {
-                        _isMinuteSelected = !_isMinuteSelected;
-                        _isHourSelected = false;
-                        _isPeriodSelected = false;
-                      });
-                    },
-                  ),
-                  const Text(' '),
-                  TimePickerFieldElement(
-                    isSelected: _isPeriodSelected,
-                    element: _selectedPeriod == DayPeriod.am ? 'AM' : 'PM',
-                    onSelected: () {
-                      setState(() {
-                        _isPeriodSelected = !_isPeriodSelected;
-                        _isHourSelected = false;
-                        _isMinuteSelected = false;
-                      });
-                    },
-                  ),
-                ],
+                    const Text(' '),
+                    TimePickerFieldElement(
+                      isSelected: _isPeriodSelected,
+                      element: _selectedPeriod == DayPeriod.am ? 'AM' : 'PM',
+                      onSelected: () {
+                        setState(() {
+                          _isPeriodSelected = !_isPeriodSelected;
+                          _isHourSelected = false;
+                          _isMinuteSelected = false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(width: 4.0),
-        Column(
-          children: [
-            SizedBox(
-              height: 10.0,
-              width: 12.0,
-              child: IgnorePointer(
-                ignoring: !_isHourSelected &&
-                    !_isMinuteSelected &&
-                    !_isPeriodSelected,
-                child: GestureDetector(
-                  onTap: _incrementElement,
-                  child: PhysicalModel(
-                    color: timePickerTheme.shadowColor!,
-                    elevation: 1,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(5.0),
-                    ),
-                    child: CustomPaint(
-                      painter: UpCaretPainter(
-                        color: timePickerTheme.caretColor!,
-                        backgroundColor:
-                            timePickerTheme.caretControlsBackgroundColor!,
+          const SizedBox(width: 4.0),
+          Column(
+            children: [
+              SizedBox(
+                height: 10.0,
+                width: 12.0,
+                child: IgnorePointer(
+                  ignoring: !_isHourSelected &&
+                      !_isMinuteSelected &&
+                      !_isPeriodSelected,
+                  child: GestureDetector(
+                    onTap: _incrementElement,
+                    child: PhysicalModel(
+                      color: timePickerTheme.shadowColor!,
+                      elevation: 1,
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(5.0),
+                      ),
+                      child: CustomPaint(
+                        painter: UpCaretPainter(
+                          color: timePickerTheme.caretColor!,
+                          backgroundColor:
+                              timePickerTheme.caretControlsBackgroundColor!,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 1.0,
-              child: ColoredBox(
-                color: timePickerTheme.caretControlsSeparatorColor!,
+              SizedBox(
+                height: 1.0,
+                child: ColoredBox(
+                  color: timePickerTheme.caretControlsSeparatorColor!,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10.0,
-              width: 12.0,
-              child: IgnorePointer(
-                ignoring: !_isHourSelected &&
-                    !_isMinuteSelected &&
-                    !_isPeriodSelected,
-                child: GestureDetector(
-                  onTap: _decrementElement,
-                  child: PhysicalModel(
-                    color: timePickerTheme.shadowColor!,
-                    elevation: 1,
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(5.0),
-                    ),
-                    child: CustomPaint(
-                      painter: DownCaretPainter(
-                        color: timePickerTheme.caretColor!,
-                        backgroundColor:
-                            timePickerTheme.caretControlsBackgroundColor!,
+              SizedBox(
+                height: 10.0,
+                width: 12.0,
+                child: IgnorePointer(
+                  ignoring: !_isHourSelected &&
+                      !_isMinuteSelected &&
+                      !_isPeriodSelected,
+                  child: GestureDetector(
+                    onTap: _decrementElement,
+                    child: PhysicalModel(
+                      color: timePickerTheme.shadowColor!,
+                      elevation: 1,
+                      borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(5.0),
+                      ),
+                      child: CustomPaint(
+                        painter: DownCaretPainter(
+                          color: timePickerTheme.caretColor!,
+                          backgroundColor:
+                              timePickerTheme.caretControlsBackgroundColor!,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
