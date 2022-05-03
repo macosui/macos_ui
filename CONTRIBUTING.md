@@ -32,6 +32,4 @@ Pull requests should **always** be merged via GitHub and not via command-line.
 
 ### Versioning
 
-`macos_ui` uses semantic versioning. However, As of April 29, 2022, `macos_ui` is still
-in beta. As such, we are only incrementing the `minor` and `revision` placements (`0.X.0` and `0.0.X`, respectively). Once `macos_ui`
-reaches version `1.0`, we will start incrementing the major revision placement.  
+`macos_ui` uses semantic versioning. Please ensure your updates follow this method accordingly.  
