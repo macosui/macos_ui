@@ -1,3 +1,145 @@
+## [1.0.0]
+* First stable release 🎉
+
+## [0.16.0]
+* New widget: `MacosTimePicker` (textual style only!)
+
+## [0.15.0]
+* New widget: `MacosColorWell`
+
+## [0.14.0]
+* New widget: `ToolBar`, which can be used to create a toolbar at the top of the `MacosScaffold`. Toolbar items include `ToolBarIconButton`, `ToolBarPulldownButton`, and `ToolBarSpacer` widgets.
+* New widget: `MacosSearchField`, which creates a macOS-style search field.
+* Breaking change: the title bar (`TitleBar`) should now be set via the `titlebar` property of `MacosWindow` (was previously a property of `MacosScaffold`). If you are using a title bar in your app, please note a small change you would need to make in your `macos/Runner/MainFlutterWindow.swift` file, described in the "Modern window look" section of the README file.
+* Fix the graphical version of `MacosDatePicker` having an incorrect current day text color in light theme
+
+## [0.13.1]
+* Minor style fixes for `MacosTextField`
+
+## [0.13.0]
+* New widget: `MacosDatePicker`
+
+## [0.12.4+3]
+* Move theme classes to their own files in the `/theme` directory
+
+## [0.12.4+2]
+* Switch over to `flutter_lints`
+
+## [0.12.4+1]
+* Improve visual design of `MacosPopupButton` and `MacosPulldownButton`, to better match the styling and translucency effect of Apple design. 
+* Remove unnecessary properties of `MacosPopupButton`
+
+## [0.12.4]
+* New widget: `MacosPulldownButton`, which can be used as a dropdown for selecting actions with either text or an icon as its title.
+
+## [0.12.3+1]
+* Fix `padding` on `MacosAlertDialog` when `supress` is null [#188](https://github.com/GroovinChip/macos_ui/issues/188)
+
+## [0.12.3]
+* Remove `MacosScrollbar` from `ContentArea` widget (fixes [#170](https://github.com/GroovinChip/macos_ui/issues/170))
+* Remove useless bundled fonts (fixes [#187](https://github.com/GroovinChip/macos_ui/issues/187))
+* Allow users to customize the mouse cursor for sidebar items (fixes [#181](https://github.com/GroovinChip/macos_ui/issues/181))
+* Fix active sidebar item icon color (fixes [#190](https://github.com/GroovinChip/macos_ui/issues/190))
+
+## [0.12.2+2]
+* Added `padding` property to `MacosIconButton` and `MacosIconButtonTheme`.
+
+## [0.12.2+1]
+* Adds missing `merge` methods to `MacosThemeData` and widget `ThemeData` classes, making it possible to use them properly with any number of user-provided custom properties.
+
+## [0.12.2]
+* Fixes `MacosThemeData` to properly apply user-defined `pushButtonTheme`, `helpButtonTheme`, and `tooltipTheme` properties.
+
+## [0.12.1]
+* Sidebar and ResizablePane more precisely track cursor location
+* Sidebar can now be closed by dragging below its minWidth
+* Sidebar can now be configured to snap into place when dragged near its startWidth
+
+## [0.12.0+1]
+* Reverts bundling the `native_context_menu` plugin per [#179](https://github.com/GroovinChip/macos_ui/issues/179)
+
+## [0.12.0]
+* New Widget: `MacosPopupButton`
+
+
+## [0.10.2]
+* Updates to `MacosIconButton` and `MacosBackButton`:
+  * Added a hover effect when mouse moves over the buttons ([#168](https://github.com/GroovinChip/macos_ui/issues/168))
+  * Added `hoverColor` property.
+  * Default shape is now `BoxShape.rectangle` with border radius, as it seems to be the most used in macOS design.
+
+## [0.10.1]
+* Added support for transparent sidebar. Please note that changes to `MainFlutterWindow.swift` are required for this to work. [(#175)](https://github.com/GroovinChip/macos_ui/pull/175)
+
+## [0.10.0+1]
+* Update `native_context_menu` dependency
+
+## [0.10.0]
+* New widget - `MacosIcon`! `MacosIcon` is identical to regular icons, with the exception that it respects a `MacosTheme`. Also includes corresponding theme classes
+* `MacosThemeData` now sets a global, configurable `iconTheme` for `MacosIcon`s 
+
+## [0.9.3]
+* Update to `PushButton`:
+  * Added `isSecondary` property
+
+## [0.9.2]
+* Nearly all `MouseRegion`s have been updated to use `SystemMouseCursors.basic` in order to more closely adhere to Apple norms
+* `mouseCursor` properties have been added to most buttons
+
+## [0.9.1]
+* Added top-level theming for `MacosIconButton`
+  * Introduces the `MacosIconButtonTheme` InheritedTheme and the `MacosIconButtonThemeData` theme class
+* Updates `MacosThemeData` and `MacosIconButton` to use the new `MacosIconButtonThemeData`
+* Removes an unnecessary setting of VisualDensity from `MacosThemeData.dark()`
+
+## [0.9.0]
+* Added [native_context_menu](https://pub.dev/packages/native_context_menu) as a dependency for native context menus!
+
+## [0.8.2]
+* Updates to `MacosListTile`:
+  * Added `leadingWhitespace` property
+  * Added `onClick` callback
+  * Added `onLongPress` callback
+  * Added `mouseCursor` property
+
+## [0.8.1]
+* Fix the outer border of `MacosSheet` not having a border radius
+
+## [0.8.0]
+* New Widget: `MacoSheet`
+* New Widget: `MacosListTile`
+
+## [0.7.3]
+* Fixed bug where cursor would not change caret location on mouse click
+
+## [0.7.2]
+* Upgraded various `copyWith` functions
+* Added `==` and `hashCode` to various classes
+
+## [0.7.1]
+* Add generics support to `MacosRadioButton` - Thank you [Sacha Arbonel](https://github.com/sachaarbonel)!
+
+## [0.7.0+2]
+* Add note in docs that a `Builder` is required for manual sidebar toggling to work.
+
+## [0.7.0+1]
+* Fix docs for `PushButtonThemeData`
+* Update `dart_code_metrics` dependency
+
+## [0.7.0]
+* Adds: `MacosWindow`
+* Improved `MacosScaffold`
+
+## [0.6.2]
+* Chore: Remove box shadows from `MacosIconButton`
+
+## [0.6.1]
+* Fix `builder` property in `MacosApp` never being used ([#148](https://github.com/GroovinChip/macos_ui/issues/148))
+
+## [0.6.0]
+* Improved `MacosAlertDialog` design
+* Added `showMacosAlertDialog` to display a `MacosAlertDialog` with standard macOS animations and behaviour.
+  
 ## [0.5.2]
 * Fixes maximum height issue with `MacosAlertDialog`
 

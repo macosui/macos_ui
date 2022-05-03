@@ -10,13 +10,14 @@ import 'package:macos_ui/src/library.dart';
 /// or off (an empty circle).
 ///
 /// ![RadioButton example](https://developer.apple.com/design/human-interface-guidelines/macos/images/radioButtons.png)
-class MacosRadioButton extends StatelessWidget {
+class MacosRadioButton<T> extends StatelessWidget {
   /// Creates a radio button.
   ///
   /// [size] must be non-negative
   const MacosRadioButton({
     Key? key,
     required this.value,
+    required this.groupValue,
     required this.onChanged,
     this.size = 16,
     this.onColor,
@@ -27,11 +28,17 @@ class MacosRadioButton extends StatelessWidget {
         super(key: key);
 
   /// Whether the button is checked or not
-  final bool value;
+  final T value;
+
+// The currently selected value for a group of radio buttons.
+  ///
+  /// This radio button is considered selected if its [value] matches the
+  /// [groupValue].
+  final T? groupValue;
 
   /// Called when [value] changes. If null, the button will be
   /// considered disabled.
-  final ValueChanged<bool>? onChanged;
+  final ValueChanged<T?>? onChanged;
 
   /// The size of the button. Defaults to 16px
   final double size;
@@ -58,13 +65,15 @@ class MacosRadioButton extends StatelessWidget {
   /// Whether the button is disabled or not
   bool get isDisabled => onChanged == null;
 
+  bool get selected => value == groupValue;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty(
-      'state',
-      value ? 'checked' : 'unchecked',
-    ));
+    // properties.add(StringProperty(
+    //   'state',
+    //   value ? 'checked' : 'unchecked',
+    // ));
     properties.add(FlagProperty(
       'disabled',
       value: isDisabled,
@@ -83,9 +92,9 @@ class MacosRadioButton extends StatelessWidget {
     final MacosThemeData theme = MacosTheme.of(context);
     final isLight = !theme.brightness.isDark;
     return GestureDetector(
-      onTap: () => onChanged?.call(!value),
+      onTap: () => onChanged!(value),
       child: Semantics(
-        checked: value,
+        checked: selected,
         label: semanticLabel,
         child: Container(
           height: size,
@@ -93,9 +102,9 @@ class MacosRadioButton extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               style: isDisabled ? BorderStyle.none : BorderStyle.solid,
-              width: value ? size / 4.0 : 1,
+              width: selected ? size / 4.0 : 1,
               color: MacosDynamicColor.resolve(
-                value ? onColor ?? theme.primaryColor : offColor,
+                selected ? onColor ?? theme.primaryColor : offColor,
                 context,
               ),
             ),
@@ -110,12 +119,12 @@ class MacosRadioButton extends StatelessWidget {
                 innerColor ??
                     (isDisabled
                         ? CupertinoColors.quaternarySystemFill
-                        : value || isLight
+                        : selected || isLight
                             ? CupertinoColors.white
                             : CupertinoColors.tertiarySystemFill),
                 context,
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.05),
                   offset: Offset(-0.05, -0.05),

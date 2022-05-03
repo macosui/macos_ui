@@ -1,25 +1,44 @@
+import 'dart:ui';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:macos_ui/src/theme/macos_theme.dart';
 
-enum TitleBarSize { large, small }
+/// Defines the height of a regular-sized [TitleBar].
+const kTitleBarHeight = 28.0;
 
-class TitleBar {
-  /// Creates a title bar in the [Scaffold].
+/// A title bar to use for a [MacosWindow].
+class TitleBar extends StatelessWidget {
+  /// Creates a title bar in the [MacosWindow].
   ///
-  /// The [size] value includes the padding.
-  /// All the values of the [TitleBar] can be null.
+  /// The title bar resides at the top of a window and includes options for
+  /// closing, minimizing, and zooming (or expanding to full-screen mode)
+  /// the app window.
+  ///
+  /// Most title bars display just the app's name or the filename.
+  ///
+  /// The height of the TitleBar can be changed with [height].
   const TitleBar({
-    this.alignment,
-    this.child,
+    Key? key,
+    this.height = kTitleBarHeight,
+    this.alignment = Alignment.center,
+    this.title,
     this.padding = const EdgeInsets.all(8),
     this.decoration,
-    this.size = TitleBarSize.large,
-  });
+    this.centerTitle = true,
+    this.dividerColor,
+  }) : super(key: key);
 
-  /// Align the [child] within the [TitleBar].
+  /// Specifies the height of this [TitleBar].
+  ///
+  /// Defaults to [kTitleBarHeight] which is 28.0.
+  final double height;
+
+  /// Align the [title] within the [TitleBar].
   ///
   /// Defaults to [Alignment.center].
   ///
-  /// If non-null, the [TitleBar] will expand to fill its parent and position its
+  /// The [TitleBar] will expand to fill its parent and position its
   /// child within itself according to the given value.
   ///
   /// See also:
@@ -28,20 +47,85 @@ class TitleBar {
   ///    specify an [AlignmentGeometry].
   ///  * [AlignmentDirectional], like [Alignment] for specifying alignments
   ///    relative to text direction.
-  final Alignment? alignment;
+  final Alignment alignment;
 
-  /// The [child] contained by the container.
-  final Widget? child;
+  /// The [title] contained by the container.
+  final Widget? title;
 
-  /// The decoration to paint behind the [child].
+  /// The decoration to paint behind the [title].
   final BoxDecoration? decoration;
 
-  /// Empty space to inscribe inside the title bar. The [child], if any, is
+  /// Empty space to inscribe inside the title bar. The [title], if any, is
   /// placed inside this padding.
   ///
   /// Defaults to `EdgeInsets.all(8)`
   final EdgeInsets padding;
 
-  /// Height of the title bar. This defaults to [TitleBarSize.large]
-  final TitleBarSize? size;
+  /// Whether the title should be centered.
+  final bool centerTitle;
+
+  /// The color of the divider below the title bar.
+  ///
+  /// Defaults to MacosTheme.of(context).dividerColor.
+  ///
+  /// Set it to MacosColors.transparent to remove.
+  final Color? dividerColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final MacosThemeData theme = MacosTheme.of(context);
+
+    Widget? _title = title;
+    if (_title != null) {
+      _title = DefaultTextStyle(
+        child: _title,
+        style: theme.typography.headline.copyWith(
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          color: theme.brightness.isDark
+              ? const Color(0xFFEAEAEA)
+              : const Color(0xFF4D4D4D),
+        ),
+      );
+    }
+
+    final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
+
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        padding: EdgeInsets.only(
+          left: !kIsWeb && isMacOS ? 70 : 0,
+        ),
+      ),
+      child: ClipRect(
+        child: BackdropFilter(
+          filter: decoration?.color?.opacity == 1
+              ? ImageFilter.blur()
+              : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: Container(
+            alignment: alignment,
+            padding: padding,
+            decoration: BoxDecoration(
+              color: theme.canvasColor,
+              border: Border(
+                bottom: BorderSide(color: dividerColor ?? theme.dividerColor),
+              ),
+            ).copyWith(
+              color: decoration?.color,
+              image: decoration?.image,
+              border: decoration?.border,
+              borderRadius: decoration?.borderRadius,
+              boxShadow: decoration?.boxShadow,
+              gradient: decoration?.gradient,
+            ),
+            child: NavigationToolbar(
+              middle: _title,
+              centerMiddle: centerTitle,
+              middleSpacing: 8,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

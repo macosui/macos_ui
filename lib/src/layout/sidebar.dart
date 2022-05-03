@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+/// A macOS-style side bar at left side of the [MacosScaffold].
 class Sidebar {
-  /// Creates a macOS-style side bar at left side of the [MacosScaffold].
+  /// Creates a [Sidebar].
   ///
   /// The [builder] and [minWidth] properties are required.
   /// The sidebar builds with a scrollbar internally.
@@ -12,17 +13,21 @@ class Sidebar {
     this.key,
     this.decoration,
     this.isResizable = true,
+    this.dragClosed = true,
+    double? dragClosedBuffer,
+    this.snapToStartBuffer,
     this.maxWidth = 400.0,
     this.startWidth,
     this.padding = EdgeInsets.zero,
-    this.scaffoldBreakpoint = 556.0,
+    this.windowBreakpoint = 556.0,
     this.bottom,
-  });
+    this.topOffset = 51.0,
+  }) : dragClosedBuffer = dragClosedBuffer ?? minWidth / 2;
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
   ///
-  /// Pass the [scrollController] obtained from this method, to a scrollable
+  /// Pass the [scrollController] obtained from this method to a scrollable
   /// widget used in this method to work with the internal [MacosScrollbar].
   final ScrollableWidgetBuilder builder;
 
@@ -31,6 +36,22 @@ class Sidebar {
 
   /// Specifies whether the [Sidebar] can be resized by dragging or not.
   final bool? isResizable;
+
+  /// If true, the sidebar will close when dragged below [minWidth]. Use
+  /// [dragClosedBuffer] configure how far below [minWidth] it needs to be
+  /// dragged to trigger this behavior.
+  ///
+  /// Defaults to `true`.
+  final bool dragClosed;
+
+  /// If [dragClosed] is true, the sidebar will be hidden when dragged this far
+  /// below [minWidth].  Defaults to half of [minWidth]. Set to 0 to cause the
+  /// sidebar to close at exactly [minWidth].
+  final double dragClosedBuffer;
+
+  /// If this and [startWidth] are both set, the sidebar will snap back to
+  /// [startWidth] when dragged within this many pixels of it.
+  final double? snapToStartBuffer;
 
   /// A [Key] is an identifier for [Widget]s, [Element]s and [SemanticsNode]s.
   ///
@@ -72,9 +93,14 @@ class Sidebar {
   /// Defaults to `EdgeInsets.zero`.
   final EdgeInsets padding;
 
-  /// Specifies the width of the scaffold at which this [ResizablePane] will be hidden.
-  final double scaffoldBreakpoint;
+  /// Specifies the width of the window at which this [Sidebar] will be hidden.
+  final double windowBreakpoint;
 
   /// Widget that should be displayed at the Bottom of the Sidebar
   final Widget? bottom;
+
+  /// Specifies the top offset of the sidebar.
+  ///
+  /// Defaults to `51.0` which levels it up with the default height of the [TitleBar]
+  final double topOffset;
 }

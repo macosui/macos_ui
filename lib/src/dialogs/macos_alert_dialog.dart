@@ -1,10 +1,36 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
+
+const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
 
 /// A macOS-style AlertDialog.
 ///
 /// A [MacosAlertDialog] must display an [appIcon], [title], [message],
 /// and [primaryButton].
+///
+/// To display a [MacosAlertDialog] call [showMacosAlertDialog].
+/// ```dart
+/// showMacosAlertDialog(
+///    context: context,
+///    builder: (_) => MacosAlertDialog(
+///     appIcon: FlutterLogo(
+///       size: 56,
+///     ),
+///     title: Text(
+///       'Alert Dialog with Primary Action',
+///     ),
+///     message: Text(
+///       'This is an alert dialog with a primary action and no secondary action',
+///     ),
+///     primaryButton: PushButton(
+///       buttonSize: ButtonSize.large,
+///       child: Text('Primary'),
+///       onPressed: Navigator.of(context).pop,
+///     ),
+///   ),
+/// ),
+/// ```
 class MacosAlertDialog extends StatelessWidget {
   /// Builds a macOS-style Alert Dialog
   const MacosAlertDialog({
@@ -70,10 +96,10 @@ class MacosAlertDialog extends StatelessWidget {
   ///       mainAxisAlignment: MainAxisAlignment.center,
   ///       children: [
   ///         MacosCheckbox(
-  ///           value: suppress,
-  ///           onChanged: (value) {
-  ///             setState(() => suppress = value);
-  ///           },
+  ///  value: suppress,
+  ///  onChanged: (value) {
+  ///    setState(() => suppress = value);
+  ///  },
   ///         ),
   ///         const SizedBox(width: 8),
   ///         Text('Don\'t ask again'),
@@ -89,57 +115,82 @@ class MacosAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final brightness = MacosTheme.brightnessOf(context);
+
+    final outerBorderColor = brightness.resolve(
+      Colors.black.withOpacity(0.23),
+      Colors.black.withOpacity(0.76),
+    );
+
+    final innerBorderColor = brightness.resolve(
+      Colors.white.withOpacity(0.45),
+      Colors.white.withOpacity(0.15),
+    );
+
     return Dialog(
-      backgroundColor: MacosTheme.brightnessOf(context).isDark
-          ? MacosColors.controlBackgroundColor.darkColor
-          : MacosColors.controlBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
+      backgroundColor: brightness.resolve(
+        CupertinoColors.systemGrey6.color,
+        MacosColors.controlBackgroundColor.darkColor,
       ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 260),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 28),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: 56,
-                maxWidth: 56,
+      shape: const RoundedRectangleBorder(
+        borderRadius: _kDialogBorderRadius,
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: innerBorderColor,
+          ),
+          borderRadius: _kDialogBorderRadius,
+        ),
+        foregroundDecoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: outerBorderColor,
+          ),
+          borderRadius: _kDialogBorderRadius,
+        ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 260,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 28),
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 56,
+                  maxWidth: 56,
+                ),
+                child: appIcon,
               ),
-              child: appIcon,
-            ),
-            const SizedBox(height: 28),
-            DefaultTextStyle(
-              style: MacosTheme.of(context).typography.headline,
-              child: title,
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: DefaultTextStyle(
+              const SizedBox(height: 28),
+              DefaultTextStyle(
+                style: MacosTheme.of(context).typography.headline,
+                textAlign: TextAlign.center,
+                child: title,
+              ),
+              const SizedBox(height: 16),
+              DefaultTextStyle(
                 textAlign: TextAlign.center,
                 style: MacosTheme.of(context).typography.headline,
                 child: message,
               ),
-            ),
-            const SizedBox(height: 12),
-            if (secondaryButton == null) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
+              const SizedBox(height: 18),
+              if (secondaryButton == null) ...[
+                Row(
                   children: [
                     Expanded(
                       child: primaryButton,
                     ),
                   ],
                 ),
-              ),
-            ] else ...[
-              if (horizontalActions!) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
+              ] else ...[
+                if (horizontalActions!) ...[
+                  Row(
                     children: [
                       if (secondaryButton != null) ...[
                         Expanded(
@@ -152,11 +203,8 @@ class MacosAlertDialog extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              ] else ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
+                ] else ...[
+                  Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
@@ -176,19 +224,149 @@ class MacosAlertDialog extends StatelessWidget {
                       ],
                     ],
                   ),
+                ],
+              ],
+              if (suppress != null) ...[
+                const SizedBox(height: 16),
+                DefaultTextStyle(
+                  style: MacosTheme.of(context).typography.headline,
+                  child: suppress!,
                 ),
               ],
+              const SizedBox(height: 16),
             ],
-            const SizedBox(height: 16),
-            if (suppress != null)
-              DefaultTextStyle(
-                style: MacosTheme.of(context).typography.headline,
-                child: suppress!,
-              ),
-            const SizedBox(height: 16),
-          ],
+          ),
         ),
       ),
     );
+  }
+}
+
+/// Displays a macos alert dialog above the current contents of the app.
+Future<T?> showMacosAlertDialog<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+  bool barrierDismissible = false,
+  Color? barrierColor,
+  String? barrierLabel,
+  bool useRootNavigator = true,
+  RouteSettings? routeSettings,
+}) {
+  barrierColor ??= MacosDynamicColor.resolve(
+    MacosColors.controlBackgroundColor,
+    context,
+  ).withOpacity(0.6);
+
+  return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
+    _MacosAlertDialogRoute<T>(
+      settings: routeSettings,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return builder(context);
+      },
+      barrierDismissible: barrierDismissible,
+      barrierColor: barrierColor,
+      barrierLabel: barrierLabel ??
+          MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    ),
+  );
+}
+
+class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
+  _MacosAlertDialogRoute({
+    required RoutePageBuilder pageBuilder,
+    bool barrierDismissible = false,
+    Color? barrierColor = const Color(0x80000000),
+    String? barrierLabel,
+    RouteSettings? settings,
+  })  : _pageBuilder = pageBuilder,
+        _barrierDismissible = barrierDismissible,
+        _barrierLabel = barrierLabel,
+        _barrierColor = barrierColor,
+        super(settings: settings);
+
+  final RoutePageBuilder _pageBuilder;
+
+  @override
+  bool get barrierDismissible => _barrierDismissible;
+  final bool _barrierDismissible;
+
+  @override
+  String? get barrierLabel => _barrierLabel;
+  final String? _barrierLabel;
+
+  @override
+  Color? get barrierColor => _barrierColor;
+  final Color? _barrierColor;
+
+  @override
+  Curve get barrierCurve => Curves.linear;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 450);
+
+  @override
+  Duration get reverseTransitionDuration => const Duration(milliseconds: 120);
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return Semantics(
+      scopesRoute: true,
+      explicitChildNodes: true,
+      child: _pageBuilder(context, animation, secondaryAnimation),
+    );
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    if (animation.status == AnimationStatus.reverse) {
+      return FadeTransition(
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutSine,
+        ),
+        child: child,
+      );
+    }
+    return ScaleTransition(
+      scale: CurvedAnimation(
+        parent: animation,
+        curve: const _SubtleBounceCurve(),
+      ),
+      child: FadeTransition(
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: Curves.fastLinearToSlowEaseIn,
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+
+class _SubtleBounceCurve extends Curve {
+  const _SubtleBounceCurve();
+
+  @override
+  double transform(double t) {
+    final simulation = SpringSimulation(
+      const SpringDescription(
+        damping: 14,
+        mass: 1.4,
+        stiffness: 180,
+      ),
+      0.0,
+      1.0,
+      0.1,
+    );
+    return simulation.x(t) + t * (1 - simulation.x(1.0));
   }
 }

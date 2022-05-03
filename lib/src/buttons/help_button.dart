@@ -19,6 +19,7 @@ class HelpButton extends StatefulWidget {
     this.pressedOpacity = 0.4,
     this.alignment = Alignment.center,
     this.semanticLabel,
+    this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -59,6 +60,9 @@ class HelpButton extends StatefulWidget {
   /// The semantic label used by screen readers.
   final String? semanticLabel;
 
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
+
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
@@ -74,10 +78,10 @@ class HelpButton extends StatefulWidget {
   }
 
   @override
-  _HelpButtonState createState() => _HelpButtonState();
+  HelpButtonState createState() => HelpButtonState();
 }
 
-class _HelpButtonState extends State<HelpButton>
+class HelpButtonState extends State<HelpButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -102,8 +106,8 @@ class _HelpButtonState extends State<HelpButton>
   }
 
   @override
-  void didUpdateWidget(HelpButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(HelpButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 
@@ -117,37 +121,38 @@ class _HelpButtonState extends State<HelpButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
@@ -156,23 +161,23 @@ class _HelpButtonState extends State<HelpButton>
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.helpButtonTheme.color,
+      widget.color ?? theme.helpButtonTheme.color!,
       context,
     );
 
     final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.helpButtonTheme.disabledColor,
+      widget.disabledColor ?? theme.helpButtonTheme.disabledColor!,
       context,
     );
 
     final Color? foregroundColor = widget.enabled
         ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
-            ? Color.fromRGBO(255, 255, 255, 0.25)
-            : Color.fromRGBO(0, 0, 0, 0.25);
+            ? const Color.fromRGBO(255, 255, 255, 0.25)
+            : const Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
@@ -183,7 +188,7 @@ class _HelpButtonState extends State<HelpButton>
           label: widget.semanticLabel,
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 20,
               minHeight: 20,
             ),
@@ -193,7 +198,7 @@ class _HelpButtonState extends State<HelpButton>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: !enabled ? disabledColor : backgroundColor,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.1),
                       offset: Offset(-0.1, -0.1),
@@ -209,7 +214,7 @@ class _HelpButtonState extends State<HelpButton>
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,
@@ -226,104 +231,5 @@ class _HelpButtonState extends State<HelpButton>
         ),
       ),
     );
-  }
-}
-
-/// Overrides the default style of its [HelpButton] descendants.
-///
-/// See also:
-///
-///  * [HelpButtonThemeData], which is used to configure this theme.
-class HelpButtonTheme extends InheritedTheme {
-  /// Create a [HelpButtonTheme].
-  ///
-  /// The [data] parameter must not be null.
-  const HelpButtonTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  /// The configuration of this theme.
-  final HelpButtonThemeData data;
-
-  /// The closest instance of this class that encloses the given context.
-  ///
-  /// If there is no enclosing [HelpButtonTheme] widget, then
-  /// [MacosThemeData.helpButtonTheme] is used.
-  ///
-  /// Typical usage is as follows:
-  ///
-  /// ```dart
-  /// HelpButtonTheme theme = HelpButtonTheme.of(context);
-  /// ```
-  static HelpButtonThemeData of(BuildContext context) {
-    final HelpButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
-    return buttonTheme?.data ?? MacosTheme.of(context).helpButtonTheme;
-  }
-
-  @override
-  Widget wrap(BuildContext context, Widget child) {
-    return HelpButtonTheme(data: data, child: child);
-  }
-
-  @override
-  bool updateShouldNotify(HelpButtonTheme oldWidget) => data != oldWidget.data;
-}
-
-/// A style that overrides the default appearance of
-/// [HelpButton]s when it's used with [HelpButtonTheme] or with the
-/// overall [MacosTheme]'s [MacosThemeData.helpButtonTheme].
-///
-/// See also:
-///
-///  * [HelpButtonTheme], the theme which is configured with this class.
-///  * [MacosThemeData.helpButtonTheme], which can be used to override the default
-///    style for [HelpButton]s below the overall [MacosTheme].
-class HelpButtonThemeData with Diagnosticable {
-  /// Creates a [HelpButtonThemeData].
-  ///
-  /// The [style] may be null.
-  const HelpButtonThemeData({
-    required this.color,
-    required this.disabledColor,
-  });
-
-  /// The default background color for [HelpButton]
-  final Color color;
-
-  /// The default disabled color for [HelpButton]
-  final Color disabledColor;
-
-  HelpButtonThemeData copyWith(HelpButtonThemeData? themeData) {
-    if (themeData == null) {
-      return this;
-    }
-    return HelpButtonThemeData(
-      color: themeData.color,
-      disabledColor: themeData.disabledColor,
-    );
-  }
-
-  /// Linearly interpolate between two tooltip themes.
-  ///
-  /// All the properties must be non-null.
-  static HelpButtonThemeData lerp(
-    HelpButtonThemeData a,
-    HelpButtonThemeData b,
-    double t,
-  ) {
-    return HelpButtonThemeData(
-      color: Color.lerp(a.color, b.color, t)!,
-      disabledColor: Color.lerp(a.color, b.color, t)!,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
-    properties.add(ColorProperty('disabledColor', disabledColor));
   }
 }

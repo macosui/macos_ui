@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -11,9 +10,10 @@ class MacosIconButton extends StatefulWidget {
     required this.icon,
     this.backgroundColor,
     this.disabledColor,
+    this.hoverColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
-    this.shape = BoxShape.circle,
+    this.shape = BoxShape.rectangle,
     this.borderRadius,
     this.alignment = Alignment.center,
     this.semanticLabel,
@@ -23,6 +23,8 @@ class MacosIconButton extends StatefulWidget {
       maxWidth: 30,
       maxHeight: 30,
     ),
+    this.padding,
+    this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
         super(key: key);
@@ -41,6 +43,11 @@ class MacosIconButton extends StatefulWidget {
   /// The color of the button's background when the button is disabled.
   final Color? disabledColor;
 
+  /// The color of the button's background when the mouse hovers over it.
+  ///
+  /// Set to Colors.transparent to disable the hover effect.
+  final Color? hoverColor;
+
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
   /// If this is set to null, the button will be disabled.
@@ -55,12 +62,14 @@ class MacosIconButton extends StatefulWidget {
 
   /// The shape to make the button.
   ///
-  /// Defaults to `BoxShape.circle`.
+  /// Defaults to `BoxShape.rectangle`.
   final BoxShape shape;
 
   /// The border radius for the button.
   ///
   /// This should only be set if setting [shape] to `BoxShape.rectangle`.
+  ///
+  /// Defaults to `BorderRadius.circular(7.0)`.
   final BorderRadius? borderRadius;
 
   ///The alignment of the button's icon.
@@ -86,8 +95,16 @@ class MacosIconButton extends StatefulWidget {
   ///```
   final BoxConstraints boxConstraints;
 
+  /// The internal padding for the button's [icon].
+  ///
+  /// Defaults to `EdgeInsets.all(8)`.
+  final EdgeInsetsGeometry? padding;
+
   /// The semantic label used by screen readers.
   final String? semanticLabel;
+
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -98,16 +115,18 @@ class MacosIconButton extends StatefulWidget {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
+    properties.add(ColorProperty('hoverColor', hoverColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('semanticLabel', semanticLabel));
   }
 
   @override
-  _MacosIconButtonState createState() => _MacosIconButtonState();
+  MacosIconButtonState createState() => MacosIconButtonState();
 }
 
-class _MacosIconButtonState extends State<MacosIconButton>
+class MacosIconButtonState extends State<MacosIconButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -116,6 +135,8 @@ class _MacosIconButtonState extends State<MacosIconButton>
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
+
+  bool _isHovered = false;
 
   @override
   void initState() {
@@ -132,8 +153,8 @@ class _MacosIconButtonState extends State<MacosIconButton>
   }
 
   @override
-  void didUpdateWidget(MacosIconButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(MacosIconButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 
@@ -147,47 +168,50 @@ class _MacosIconButtonState extends State<MacosIconButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
-    final MacosThemeData theme = MacosTheme.of(context);
+    final theme = MacosIconButtonTheme.of(context);
 
     final Color backgroundColor =
-        widget.backgroundColor ?? CupertinoColors.systemBlue;
+        widget.backgroundColor ?? theme.backgroundColor!;
+
+    final Color hoverColor = widget.hoverColor ?? theme.hoverColor!;
 
     final Color? disabledColor;
 
@@ -197,12 +221,19 @@ class _MacosIconButtonState extends State<MacosIconButton>
         context,
       );
     } else {
-      disabledColor =
-          theme.brightness.isDark ? Color(0xff353535) : Color(0xffE5E5E5);
+      disabledColor = theme.disabledColor;
     }
 
+    final padding = widget.padding ?? theme.padding ?? const EdgeInsets.all(8);
+
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
+      onEnter: (e) {
+        setState(() => _isHovered = true);
+      },
+      onExit: (e) {
+        setState(() => _isHovered = false);
+      },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
@@ -219,26 +250,20 @@ class _MacosIconButtonState extends State<MacosIconButton>
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: widget.shape,
-                  borderRadius:
-                      widget.borderRadius != null ? widget.borderRadius : null,
-                  color: !enabled ? disabledColor : backgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(-0.1, -0.1),
-                    ),
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(0.1, 0.1),
-                    ),
-                    BoxShadow(
-                      color: CupertinoColors.tertiarySystemFill,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
+                  // ignore: prefer_if_null_operators
+                  borderRadius: widget.borderRadius != null
+                      ? widget.borderRadius
+                      : widget.shape == BoxShape.rectangle
+                          ? BorderRadius.circular(7.0)
+                          : null,
+                  color: !enabled
+                      ? disabledColor
+                      : _isHovered
+                          ? hoverColor
+                          : backgroundColor,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: padding,
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,

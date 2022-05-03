@@ -1,21 +1,23 @@
-import 'package:example/pages/buttons.dart';
+import 'package:example/pages/buttons_page.dart';
 import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
-import 'package:example/pages/fields.dart';
-import 'package:example/pages/indicators.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:example/pages/fields_page.dart';
+import 'package:example/pages/indicators_page.dart';
+import 'package:example/pages/selectors_page.dart';
+import 'package:example/pages/toolbar_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/library.dart';
 import 'package:provider/provider.dart';
 
 import 'theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -24,15 +26,11 @@ class MyApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui example',
-          theme: MacosThemeData.light().copyWith(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: MacosThemeData.dark().copyWith(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+          theme: MacosThemeData.light(),
+          darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
-          home: Demo(),
+          home: const Demo(),
         );
       },
     );
@@ -40,6 +38,8 @@ class MyApp extends StatelessWidget {
 }
 
 class Demo extends StatefulWidget {
+  const Demo({Key? key}) : super(key: key);
+
   @override
   _DemoState createState() => _DemoState();
 }
@@ -52,39 +52,47 @@ class _DemoState extends State<Demo> {
   int pageIndex = 0;
 
   final List<Widget> pages = [
-    ButtonsPage(),
-    IndicatorsPage(),
-    FieldsPage(),
-    ColorsPage(),
-    Text('Disclosure item 2'),
-    Text('Disclosure item 3'),
-    DialogsPage(),
+    CupertinoTabView(
+      builder: (_) => const ButtonsPage(),
+    ),
+    const IndicatorsPage(),
+    const FieldsPage(),
+    const ColorsPage(),
+    const Center(
+      child: MacosIcon(
+        CupertinoIcons.add,
+      ),
+    ),
+    const DialogsPage(),
+    const ToolbarPage(),
+    const SelectorsPage(),
   ];
 
   Color textLuminance(Color backgroundColor) {
     return backgroundColor.computeLuminance() > 0.5
-        ? Colors.black
-        : Colors.white;
+        ? MacosColors.black
+        : MacosColors.white;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MacosScaffold(
-      titleBar: TitleBar(
-        size: TitleBarSize.small,
-        child: Text('macos_ui Widget Gallery'),
+    return MacosWindow(
+      child: IndexedStack(
+        index: pageIndex,
+        children: pages,
       ),
+      // Optional title bar:
+      // titleBar: const TitleBar(
+      //   title: Text('macOS App Name'),
+      // ),
       sidebar: Sidebar(
         minWidth: 200,
-        bottom: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(CupertinoIcons.profile_circled),
-              const SizedBox(width: 8.0),
-              Text('Tim Apple'),
-            ],
+        bottom: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: MacosListTile(
+            leading: MacosIcon(CupertinoIcons.profile_circled),
+            title: Text('Tim Apple'),
+            subtitle: Text('tim@apple.com'),
           ),
         ),
         builder: (context, controller) {
@@ -92,68 +100,48 @@ class _DemoState extends State<Demo> {
             currentIndex: pageIndex,
             onChanged: (i) => setState(() => pageIndex = i),
             scrollController: controller,
-            items: [
+            items: const [
               SidebarItem(
-                leading: Icon(CupertinoIcons.square_on_circle),
+                leading: MacosIcon(CupertinoIcons.square_on_circle),
                 label: Text('Buttons'),
               ),
               SidebarItem(
-                leading: Icon(CupertinoIcons.arrow_2_circlepath),
+                leading: MacosIcon(CupertinoIcons.arrow_2_circlepath),
                 label: Text('Indicators'),
               ),
               SidebarItem(
-                leading: Icon(CupertinoIcons.textbox),
+                leading: MacosIcon(CupertinoIcons.textbox),
                 label: Text('Fields'),
               ),
               SidebarItem(
                 label: Text('Disclosure'),
                 disclosureItems: [
                   SidebarItem(
-                    leading: Icon(CupertinoIcons.infinite),
+                    leading: MacosIcon(CupertinoIcons.infinite),
                     label: Text('Colors'),
                   ),
                   SidebarItem(
-                    leading: Icon(CupertinoIcons.heart),
-                    label: Text('Item 2'),
-                  ),
-                  SidebarItem(
-                    leading: Icon(CupertinoIcons.infinite),
+                    leading: MacosIcon(CupertinoIcons.infinite),
                     label: Text('Item 3'),
                   ),
                 ],
               ),
               SidebarItem(
-                leading: Icon(CupertinoIcons.rectangle),
-                label: Text('Dialogs'),
+                leading: MacosIcon(CupertinoIcons.rectangle),
+                label: Text('Dialogs & Sheets'),
+              ),
+              SidebarItem(
+                leading: MacosIcon(CupertinoIcons.macwindow),
+                label: Text('Toolbar'),
+              ),
+              SidebarItem(
+                leading: MacosIcon(CupertinoIcons.calendar),
+                label: Text('Selectors'),
               ),
             ],
           );
         },
       ),
-      children: <Widget>[
-        ContentArea(
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              padding: EdgeInsets.all(20),
-              child: IndexedStack(
-                alignment: Alignment.topCenter,
-                index: pageIndex,
-                children: pages,
-              ),
-            );
-          },
-        ),
-        // ResizablePane(
-        //   minWidth: 180,
-        //   startWidth: 200,
-        //   scaffoldBreakpoint: 500,
-        //   resizableSide: ResizableSide.left,
-        //   builder: (_, __) {
-        //     return Center(child: Text('Resizable Pane'));
-        //   },
-        // ),
-      ],
     );
   }
 }

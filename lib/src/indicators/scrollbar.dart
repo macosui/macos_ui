@@ -1,10 +1,6 @@
-import 'dart:ui' show lerpDouble;
-
+import 'package:flutter/material.dart' as m;
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' as m;
 
 /// A Macos Design scrollbar.
 ///
@@ -116,25 +112,29 @@ class MacosScrollbar extends StatelessWidget {
         minThumbLength: theme.minThumbLength,
         radius: theme.radius,
         thickness: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringThickness ?? theme.thickness;
+          }
           return theme.thickness;
         }),
         thumbColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringThumbColor ?? theme.thumbColor;
-          else if (states.contains(m.MaterialState.dragged))
+          } else if (states.contains(m.MaterialState.dragged)) {
             return theme.draggingThumbColor ?? theme.thumbColor;
+          }
           return theme.thumbColor;
         }),
         trackBorderColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringTrackBorderColor ?? theme.trackBorderColor;
+          }
           return theme.trackBorderColor;
         }),
         trackColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered))
+          if (states.contains(m.MaterialState.hovered)) {
             return theme.hoveringTrackColor ?? theme.trackColor;
+          }
           return theme.trackColor;
         }),
       ),
@@ -151,348 +151,4 @@ class MacosScrollbar extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Defines default property values for descendant [MacosScrollbar] widgets.
-///
-/// Descendant widgets obtain the current [ScrollbarThemeData] object with
-/// `ScrollbarTheme.of(context)`. Instances of [ScrollbarThemeData] can be customized
-/// with [ScrollbarThemeData.copyWith].
-///
-/// Typically the [ScrollbarThemeData] of a [ScrollbarTheme] is specified as part of the overall
-/// [MacosTheme] with [MacosThemeData.scrollbarTheme].
-///
-/// All [ScrollbarThemeData] properties are `null` by default. When null, the [MacosScrollbar]
-/// computes its own default values.
-///
-/// See also:
-///
-///  * [MacosThemeData], which describes the overall theme information for the
-///    application.
-class ScrollbarThemeData with Diagnosticable {
-  /// Creates a theme that can be used for [MacosThemeData.scrollbarTheme].
-  const ScrollbarThemeData({
-    this.thickness,
-    this.hoveringThickness,
-    this.showTrackOnHover,
-    this.isAlwaysShown,
-    this.radius,
-    this.thumbColor,
-    this.hoveringThumbColor,
-    this.draggingThumbColor,
-    this.trackColor,
-    this.hoveringTrackColor,
-    this.trackBorderColor,
-    this.hoveringTrackBorderColor,
-    this.crossAxisMargin,
-    this.mainAxisMargin,
-    this.minThumbLength,
-    this.interactive,
-  });
-
-  /// Overrides the default value of [MacosScrollbar.thickness] in all
-  /// descendant [MacosScrollbar] widgets.
-  final double? thickness;
-
-  /// Overrides the default value of [MacosScrollbar.hoverThickness] in all
-  /// descendant [MacosScrollbar] widgtes when hovering is active.
-  final double? hoveringThickness;
-
-  /// Overrides the default value of [MacosScrollbar.showTrackOnHover] in all
-  /// descendant [MacosScrollbar] widgets.
-  final bool? showTrackOnHover;
-
-  /// Overrides the default value of [MacosScrollbar.isAlwaysShown] in all
-  /// descendant [MacosScrollbar] widgets.
-  final bool? isAlwaysShown;
-
-  /// Overrides the default value of [MacosScrollbar.interactive] in all
-  /// descendant [MacosScrollbar] widgets.
-  final bool? interactive;
-
-  /// Overrides the default value of [MacosScrollbar.radius] in all
-  /// descendant widgets.
-  final Radius? radius;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
-  /// [MacosScrollbar] widgets.
-  final Color? thumbColor;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
-  /// [MacosScrollbar] widgets when hovering is active.
-  final Color? hoveringThumbColor;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
-  /// [MacosScrollbar] widgets when dragging is active.
-  final Color? draggingThumbColor;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] track when
-  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets.
-  final Color? trackColor;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] track when
-  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets
-  /// when hovering is active.
-  final Color? hoveringTrackColor;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] track border when
-  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets.
-  final Color? trackBorderColor;
-
-  /// Overrides the default [Color] of the [MacosScrollbar] track border when
-  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets
-  /// when hovering is active.
-  final Color? hoveringTrackBorderColor;
-
-  /// Overrides the default value of the [ScrollbarPainter.crossAxisMargin]
-  /// property in all descendant [MacosScrollbar] widgets.
-  ///
-  /// See also:
-  ///
-  ///  * [ScrollbarPainter.crossAxisMargin], which sets the distance from the
-  ///    scrollbar's side to the nearest edge in logical pixels.
-  final double? crossAxisMargin;
-
-  /// Overrides the default value of the [ScrollbarPainter.mainAxisMargin]
-  /// property in all descendant [MacosScrollbar] widgets.
-  ///
-  /// See also:
-  ///
-  ///  * [ScrollbarPainter.mainAxisMargin], which sets the distance from the
-  ///    scrollbar's start and end to the edge of the viewport in logical pixels.
-  final double? mainAxisMargin;
-
-  /// Overrides the default value of the [ScrollbarPainter.minLength]
-  /// property in all descendant [MacosScrollbar] widgets.
-  ///
-  /// See also:
-  ///
-  ///  * [ScrollbarPainter.minLength], which sets the preferred smallest size
-  ///    the scrollbar can shrink to when the total scrollable extent is large,
-  ///    the current visible viewport is small, and the viewport is not
-  ///    overscrolled.
-  final double? minThumbLength;
-
-  /// Creates a copy of this object with the given fields replaced with the
-  /// new values.
-  ScrollbarThemeData copyWith(ScrollbarThemeData? other) {
-    if (other == null) return this;
-    return ScrollbarThemeData(
-      thickness: other.thickness ?? this.thickness,
-      hoveringThickness: other.hoveringThickness ?? this.hoveringThickness,
-      showTrackOnHover: other.showTrackOnHover ?? this.showTrackOnHover,
-      isAlwaysShown: other.isAlwaysShown ?? this.isAlwaysShown,
-      interactive: other.interactive ?? this.interactive,
-      radius: other.radius ?? this.radius,
-      thumbColor: other.thumbColor ?? this.thumbColor,
-      hoveringThumbColor: other.hoveringThumbColor ?? this.hoveringThumbColor,
-      draggingThumbColor: other.draggingThumbColor ?? this.draggingThumbColor,
-      trackColor: other.trackColor ?? this.trackColor,
-      hoveringTrackColor: other.hoveringTrackColor ?? this.hoveringTrackColor,
-      trackBorderColor: other.trackBorderColor ?? this.trackBorderColor,
-      hoveringTrackBorderColor:
-          other.hoveringTrackBorderColor ?? this.hoveringTrackBorderColor,
-      crossAxisMargin: other.crossAxisMargin ?? this.crossAxisMargin,
-      mainAxisMargin: other.mainAxisMargin ?? this.mainAxisMargin,
-      minThumbLength: other.minThumbLength ?? this.minThumbLength,
-    );
-  }
-
-  /// Linearly interpolate between two Scrollbar themes.
-  ///
-  /// The argument `t` must not be null.
-  ///
-  /// {@macro dart.ui.shadow.lerp}
-  // ignore: code-metrics
-  static ScrollbarThemeData lerp(
-    ScrollbarThemeData? a,
-    ScrollbarThemeData? b,
-    double t,
-  ) {
-    return ScrollbarThemeData(
-      thickness: lerpDouble(a?.thickness, b?.thickness, t),
-      hoveringThickness:
-          lerpDouble(a?.hoveringThickness, b?.hoveringThickness, t),
-      showTrackOnHover: t < 0.5 ? a?.showTrackOnHover : b?.showTrackOnHover,
-      isAlwaysShown: t < 0.5 ? a?.isAlwaysShown : b?.isAlwaysShown,
-      interactive: t < 0.5 ? a?.interactive : b?.interactive,
-      radius: Radius.lerp(a?.radius, b?.radius, t),
-      thumbColor: Color.lerp(a?.thumbColor, b?.thumbColor, t),
-      hoveringThumbColor:
-          Color.lerp(a?.hoveringThumbColor, b?.hoveringThumbColor, t),
-      draggingThumbColor:
-          Color.lerp(a?.draggingThumbColor, b?.draggingThumbColor, t),
-      trackColor: Color.lerp(a?.trackColor, b?.trackColor, t),
-      hoveringTrackColor:
-          Color.lerp(a?.hoveringThumbColor, b?.hoveringThumbColor, t),
-      trackBorderColor: Color.lerp(a?.trackBorderColor, b?.trackBorderColor, t),
-      hoveringTrackBorderColor: Color.lerp(
-        a?.hoveringTrackBorderColor,
-        b?.hoveringTrackBorderColor,
-        t,
-      ),
-      crossAxisMargin: lerpDouble(a?.crossAxisMargin, b?.crossAxisMargin, t),
-      mainAxisMargin: lerpDouble(a?.mainAxisMargin, b?.mainAxisMargin, t),
-      minThumbLength: lerpDouble(a?.minThumbLength, b?.minThumbLength, t),
-    );
-  }
-
-  @override
-  int get hashCode {
-    return hashValues(
-      thickness,
-      hoveringThickness,
-      showTrackOnHover,
-      isAlwaysShown,
-      interactive,
-      radius,
-      thumbColor,
-      hoveringThumbColor,
-      draggingThumbColor,
-      trackColor,
-      hoveringTrackColor,
-      trackBorderColor,
-      hoveringTrackBorderColor,
-      crossAxisMargin,
-      mainAxisMargin,
-      minThumbLength,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
-    return other is ScrollbarThemeData &&
-        other.thickness == thickness &&
-        other.hoveringThickness == hoveringThickness &&
-        other.showTrackOnHover == showTrackOnHover &&
-        other.isAlwaysShown == isAlwaysShown &&
-        other.interactive == interactive &&
-        other.radius == radius &&
-        other.thumbColor == thumbColor &&
-        other.hoveringThumbColor == hoveringThumbColor &&
-        other.draggingThumbColor == draggingThumbColor &&
-        other.trackColor == trackColor &&
-        other.hoveringTrackColor == hoveringTrackColor &&
-        other.trackBorderColor == trackBorderColor &&
-        other.hoveringTrackBorderColor == hoveringTrackBorderColor &&
-        other.crossAxisMargin == crossAxisMargin &&
-        other.mainAxisMargin == mainAxisMargin &&
-        other.minThumbLength == minThumbLength;
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<double?>('thickness', thickness, defaultValue: null),
-    );
-    properties.add(DiagnosticsProperty<double?>(
-      'hoveringThickness',
-      hoveringThickness,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'showTrackOnHover',
-      showTrackOnHover,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'isAlwaysShown',
-      isAlwaysShown,
-      defaultValue: null,
-    ));
-    properties.add(
-      DiagnosticsProperty<bool>('interactive', interactive, defaultValue: null),
-    );
-    properties.add(
-      DiagnosticsProperty<Radius>('radius', radius, defaultValue: null),
-    );
-    properties.add(ColorProperty('thumbColor', thumbColor, defaultValue: null));
-    properties.add(ColorProperty(
-      'hoveringThumbColor',
-      hoveringThumbColor,
-      defaultValue: null,
-    ));
-    properties.add(ColorProperty(
-      'draggingThumbColor',
-      draggingThumbColor,
-      defaultValue: null,
-    ));
-    properties.add(ColorProperty('trackColor', trackColor, defaultValue: null));
-    properties.add(
-      ColorProperty(
-        'hoveringTrackColor',
-        hoveringTrackColor,
-        defaultValue: null,
-      ),
-    );
-    properties.add(
-      ColorProperty('trackBorderColor', trackBorderColor, defaultValue: null),
-    );
-    properties.add(ColorProperty(
-      'hoveringTrackBorderColor',
-      hoveringTrackBorderColor,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<double>(
-      'crossAxisMargin',
-      crossAxisMargin,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<double>(
-      'mainAxisMargin',
-      mainAxisMargin,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<double>(
-      'minThumbLength',
-      minThumbLength,
-      defaultValue: null,
-    ));
-  }
-}
-
-/// Applies a scrollbar theme to descendant [MacosScrollbar] widgets.
-///
-/// Descendant widgets obtain the current theme's [ScrollbarThemeData] using
-/// [ScrollbarTheme.of]. When a widget uses [ScrollbarTheme.of], it is
-/// automatically rebuilt if the theme later changes.
-///
-/// A scrollbar theme can be specified as part of the overall Material theme
-/// using [ThemeData.scrollbarTheme].
-///
-/// See also:
-///
-///  * [ScrollbarThemeData], which describes the configuration of a
-///    scrollbar theme.
-class ScrollbarTheme extends InheritedWidget {
-  /// Constructs a scrollbar theme that configures all descendant [MacosScrollbar]
-  /// widgets.
-  const ScrollbarTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  /// The properties used for all descendant [MacosScrollbar] widgets.
-  final ScrollbarThemeData data;
-
-  /// Returns the configuration [data] from the closest [ScrollbarTheme]
-  /// ancestor. If there is no ancestor, it returns [ThemeData.scrollbarTheme].
-  ///
-  /// Typical usage is as follows:
-  ///
-  /// ```dart
-  /// ScrollbarThemeData theme = ScrollbarTheme.of(context);
-  /// ```
-  static ScrollbarThemeData of(BuildContext context) {
-    final ScrollbarTheme? scrollbarTheme =
-        context.dependOnInheritedWidgetOfExactType<ScrollbarTheme>();
-    return scrollbarTheme?.data ?? MacosTheme.of(context).scrollbarTheme;
-  }
-
-  @override
-  bool updateShouldNotify(ScrollbarTheme oldWidget) => data != oldWidget.data;
 }

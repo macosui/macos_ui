@@ -10,7 +10,9 @@ class MacosBackButton extends StatefulWidget {
     Key? key,
     this.onPressed,
     this.fillColor,
+    this.hoverColor,
     this.semanticLabel,
+    this.mouseCursor = SystemMouseCursors.basic,
   }) : super(key: key);
 
   /// An override callback to perform instead of the default behavior which is
@@ -20,8 +22,14 @@ class MacosBackButton extends StatefulWidget {
   /// The color to fill the space around the icon with.
   final Color? fillColor;
 
+  /// The color of the button's background when the mouse hovers over the button.
+  final Color? hoverColor;
+
   /// The semantic label used by screen readers.
   final String? semanticLabel;
+
+  /// The mouse cursor to use when hovering over this widget.
+  final MouseCursor? mouseCursor;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -31,6 +39,7 @@ class MacosBackButton extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('fillColor', fillColor));
+    properties.add(ColorProperty('hoverColor', fillColor));
     properties.add(StringProperty('semanticLabel', semanticLabel));
     properties.add(FlagProperty(
       'enabled',
@@ -40,10 +49,10 @@ class MacosBackButton extends StatefulWidget {
   }
 
   @override
-  _MacosBackButtonState createState() => _MacosBackButtonState();
+  MacosBackButtonState createState() => MacosBackButtonState();
 }
 
-class _MacosBackButtonState extends State<MacosBackButton>
+class MacosBackButtonState extends State<MacosBackButton>
     with SingleTickerProviderStateMixin {
   // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
@@ -52,6 +61,8 @@ class _MacosBackButtonState extends State<MacosBackButton>
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
+
+  bool _isHovered = false;
 
   @override
   void initState() {
@@ -68,8 +79,8 @@ class _MacosBackButtonState extends State<MacosBackButton>
   }
 
   @override
-  void didUpdateWidget(MacosBackButton old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(MacosBackButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _setTween();
   }
 
@@ -83,37 +94,38 @@ class _MacosBackButtonState extends State<MacosBackButton>
     super.dispose();
   }
 
-  bool _buttonHeldDown = false;
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   void _handleTapDown(TapDownDetails event) {
-    if (!_buttonHeldDown) {
-      _buttonHeldDown = true;
+    if (!buttonHeldDown) {
+      buttonHeldDown = true;
       _animate();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _handleTapCancel() {
-    if (_buttonHeldDown) {
-      _buttonHeldDown = false;
+    if (buttonHeldDown) {
+      buttonHeldDown = false;
       _animate();
     }
   }
 
   void _animate() {
     if (_animationController.isAnimating) return;
-    final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final bool wasHeldDown = buttonHeldDown;
+    final TickerFuture ticker = buttonHeldDown
         ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
         : _animationController.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != _buttonHeldDown) _animate();
+      if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
 
@@ -129,12 +141,28 @@ class _MacosBackButtonState extends State<MacosBackButton>
     if (widget.fillColor != null) {
       _fillColor = widget.fillColor;
     } else {
-      _fillColor =
-          brightness == Brightness.dark ? Color(0xff323232) : Color(0xffF4F5F5);
+      _fillColor = brightness == Brightness.dark
+          ? const Color(0xff323232)
+          : const Color(0xffF4F5F5);
+    }
+
+    Color? _hoverColor;
+    if (widget.hoverColor != null) {
+      _hoverColor = widget.hoverColor;
+    } else {
+      _hoverColor = brightness == Brightness.dark
+          ? const Color(0xff333336)
+          : const Color(0xffF3F2F2);
     }
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.mouseCursor!,
+      onEnter: (e) {
+        setState(() => _isHovered = true);
+      },
+      onExit: (e) {
+        setState(() => _isHovered = false);
+      },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
@@ -150,7 +178,7 @@ class _MacosBackButtonState extends State<MacosBackButton>
         child: Semantics(
           button: true,
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 20, // eyeballed
               minHeight: 20, // eyeballed
             ),
@@ -161,10 +189,12 @@ class _MacosBackButtonState extends State<MacosBackButton>
                 builder: (context, widget) {
                   return DecoratedBox(
                     decoration: BoxDecoration(
-                      color: _buttonHeldDown && brightness == Brightness.dark
-                          ? Color(0xff3C383C)
-                          : _buttonHeldDown && brightness == Brightness.light
-                              ? Color(0xffE5E5E5)
+                      color: buttonHeldDown
+                          ? brightness == Brightness.dark
+                              ? const Color(0xff3C383C)
+                              : const Color(0xffE5E5E5)
+                          : _isHovered
+                              ? _hoverColor
                               : _fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
