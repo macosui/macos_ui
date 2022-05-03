@@ -69,6 +69,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
     _selectedMinute,
     DateTime.now().second,
   );
+  late final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -182,6 +183,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
     return KeyboardShortcutRunner(
       onUpArrowKeypress: _incrementElement,
       onDownArrowKeypress: _decrementElement,
+      focusNode: _focusNode,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -208,6 +210,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                       ),
                       onSelected: () {
                         setState(() {
+                          _focusNode.requestFocus();
                           _isHourSelected = !_isHourSelected;
                           _isMinuteSelected = false;
                           _isPeriodSelected = false;
@@ -225,6 +228,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                       ),
                       onSelected: () {
                         setState(() {
+                          _focusNode.requestFocus();
                           _isMinuteSelected = !_isMinuteSelected;
                           _isHourSelected = false;
                           _isPeriodSelected = false;
@@ -237,6 +241,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                       element: _selectedPeriod == DayPeriod.am ? 'AM' : 'PM',
                       onSelected: () {
                         setState(() {
+                          _focusNode.requestFocus();
                           _isPeriodSelected = !_isPeriodSelected;
                           _isHourSelected = false;
                           _isMinuteSelected = false;
