@@ -1,3 +1,6 @@
+## [1.0.0+1]
+* Minor documentation fix for [MacosColorWell]
+
 ## [1.0.0]
 * First stable release 🎉
 
