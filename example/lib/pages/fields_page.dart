@@ -31,16 +31,16 @@ class _FieldsPageState extends State<FieldsPage> {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
-              children: const [
-                SizedBox(
+              children: [
+                const SizedBox(
                   width: 300.0,
                   child: MacosTextField(
                     placeholder: 'Type some text here',
                     maxLines: 1,
                   ),
                 ),
-                SizedBox(height: 20),
-                SizedBox(
+                const SizedBox(height: 20),
+                const SizedBox(
                   width: 300.0,
                   child: MacosTextField(
                     prefix: MacosIcon(CupertinoIcons.money_dollar),
@@ -53,8 +53,8 @@ class _FieldsPageState extends State<FieldsPage> {
                     maxLines: 1,
                   ),
                 ),
-                SizedBox(height: 20),
-                SizedBox(
+                const SizedBox(height: 20),
+                const SizedBox(
                   width: 300.0,
                   child: MacosTextField.borderless(
                     prefix: MacosIcon(CupertinoIcons.search),
@@ -67,8 +67,8 @@ class _FieldsPageState extends State<FieldsPage> {
                     maxLines: 1,
                   ),
                 ),
-                SizedBox(height: 20),
-                SizedBox(
+                const SizedBox(height: 20),
+                const SizedBox(
                   width: 300.0,
                   child: MacosTextField(
                     enabled: false,
@@ -82,11 +82,21 @@ class _FieldsPageState extends State<FieldsPage> {
                     maxLines: 1,
                   ),
                 ),
-                SizedBox(height: 20),
-                SizedBox(
+                const SizedBox(height: 20),
+                const SizedBox(
                   width: 300.0,
                   child: MacosSearchField(
                     placeholder: 'Search...',
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 300.0,
+                  child: MacosSearchField(
+                    suggestions: ["Barcelona", "London", "Washington"]
+                        .map((e) => SearchFieldListItem(e))
+                        .toList(),
+                    placeholder: 'Search with suggestions...',
                   ),
                 ),
               ],
