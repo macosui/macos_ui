@@ -61,6 +61,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
     this.highlightColor,
     this.backgroundColor,
     this.pulldownColor,
+    this.iconColor,
   });
 
   /// The default highlight color for [MacosPulldownButton].
@@ -68,21 +69,26 @@ class MacosPulldownButtonThemeData with Diagnosticable {
   /// Sets the color of the caret icon and the color of a [MacosPulldownMenuItem]'s background when the mouse hovers over it.
   final Color? highlightColor;
 
-  /// The default background color for [MacosPulldownButton]
+  /// The default background color for [MacosPulldownButton].
   final Color? backgroundColor;
 
-  /// The default pull-down menu color for [MacosPulldownButton]
+  /// The default pull-down menu color for [MacosPulldownButton].
   final Color? pulldownColor;
+
+  /// The default color for a [MacosPulldownButton]'s icon.
+  final Color? iconColor;
 
   MacosPulldownButtonThemeData copyWith({
     Color? highlightColor,
     Color? backgroundColor,
     Color? pulldownColor,
+    Color? iconColor,
   }) {
     return MacosPulldownButtonThemeData(
       highlightColor: highlightColor ?? this.highlightColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       pulldownColor: pulldownColor ?? this.pulldownColor,
+      iconColor: iconColor ?? this.iconColor,
     );
   }
 
@@ -98,6 +104,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
       highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
       pulldownColor: Color.lerp(a.pulldownColor, b.pulldownColor, t),
+      iconColor: Color.lerp(a.iconColor, b.iconColor, t),
     );
   }
 
@@ -108,7 +115,8 @@ class MacosPulldownButtonThemeData with Diagnosticable {
           runtimeType == other.runtimeType &&
           highlightColor?.value == other.highlightColor?.value &&
           backgroundColor?.value == other.backgroundColor?.value &&
-          pulldownColor?.value == other.pulldownColor?.value;
+          pulldownColor?.value == other.pulldownColor?.value &&
+          iconColor?.value == other.iconColor?.value;
 
   @override
   int get hashCode => highlightColor.hashCode ^ backgroundColor.hashCode;
@@ -119,6 +127,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('highlightColor', highlightColor));
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('pulldownColor', pulldownColor));
+    properties.add(ColorProperty('iconColor', iconColor));
   }
 
   MacosPulldownButtonThemeData merge(MacosPulldownButtonThemeData? other) {
@@ -127,6 +136,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
       highlightColor: other.highlightColor,
       backgroundColor: other.backgroundColor,
       pulldownColor: other.pulldownColor,
+      iconColor: other.iconColor,
     );
   }
 }

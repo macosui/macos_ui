@@ -1,10 +1,11 @@
-import 'package:example/pages/buttons.dart';
+import 'package:example/pages/buttons_page.dart';
 import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
-import 'package:example/pages/fields.dart';
-import 'package:example/pages/indicators.dart';
+import 'package:example/pages/fields_page.dart';
+import 'package:example/pages/indicators_page.dart';
 import 'package:example/pages/selectors_page.dart';
-import 'package:example/pages/tab_view.dart';
+import 'package:example/pages/toolbar_page.dart';
+import 'package:example/pages/tab_view_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
@@ -64,6 +65,7 @@ class _DemoState extends State<Demo> {
       ),
     ),
     const DialogsPage(),
+    const ToolbarPage(),
     const SelectorsPage(),
     const TabViewPage(),
   ];
@@ -81,6 +83,10 @@ class _DemoState extends State<Demo> {
         index: pageIndex,
         children: pages,
       ),
+      // Optional title bar:
+      // titleBar: const TitleBar(
+      //   title: Text('macOS App Name'),
+      // ),
       sidebar: Sidebar(
         minWidth: 200,
         bottom: const Padding(
@@ -125,6 +131,10 @@ class _DemoState extends State<Demo> {
               SidebarItem(
                 leading: MacosIcon(CupertinoIcons.rectangle),
                 label: Text('Dialogs & Sheets'),
+              ),
+              SidebarItem(
+                leading: MacosIcon(CupertinoIcons.macwindow),
+                label: Text('Toolbar'),
               ),
               SidebarItem(
                 leading: MacosIcon(CupertinoIcons.calendar),

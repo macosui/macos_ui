@@ -15,24 +15,23 @@ class ButtonsPage extends StatefulWidget {
 class _ButtonsPageState extends State<ButtonsPage> {
   String popupValue = 'One';
   String languagePopupValue = 'English';
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: TitleBar(
-        title: const Text('macOS UI Widget Gallery'),
+      toolBar: ToolBar(
+        title: const Text('Buttons'),
+        titleWidth: 150.0,
         actions: [
-          MacosIconButton(
-            backgroundColor: MacosColors.transparent,
+          ToolBarIconButton(
+            label: 'Toggle Sidebar',
             icon: const MacosIcon(
               CupertinoIcons.sidebar_left,
-              color: MacosColors.systemGrayColor,
             ),
-            onPressed: () {
-              MacosWindowScope.of(context).toggleSidebar();
-            },
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
           ),
-          const SizedBox(width: 10),
         ],
       ),
       children: [
@@ -76,7 +75,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     MacosIconButton(
                       icon: const MacosIcon(
                         CupertinoIcons.star_fill,
-                        color: Colors.white,
                       ),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(7),
@@ -86,7 +84,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     const MacosIconButton(
                       icon: MacosIcon(
                         CupertinoIcons.plus_app,
-                        color: Colors.white,
                       ),
                       shape: BoxShape.circle,
                       //onPressed: () {},
@@ -95,7 +92,6 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     MacosIconButton(
                       icon: const MacosIcon(
                         CupertinoIcons.minus_square,
-                        color: Colors.white,
                       ),
                       backgroundColor: Colors.transparent,
                       onPressed: () {},
@@ -103,66 +99,81 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.large,
-                  child: const Text('large PushButton'),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
-                  },
+                const Text('PushButton'),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Large'),
+                      onPressed: () {
+                        MacosWindowScope.of(context).toggleSidebar();
+                      },
+                    ),
+                    const SizedBox(width: 20),
+                    PushButton(
+                      buttonSize: ButtonSize.small,
+                      child: const Text('Small'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return MacosScaffold(
+                                toolBar: const ToolBar(
+                                  title: Text("New page"),
+                                ),
+                                children: [
+                                  ContentArea(
+                                    builder: (context, scrollController) {
+                                      return Center(
+                                        child: PushButton(
+                                          buttonSize: ButtonSize.large,
+                                          child: const Text('Go Back'),
+                                          onPressed: () {
+                                            Navigator.maybePop(context);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  ResizablePane(
+                                    minWidth: 180,
+                                    startWidth: 200,
+                                    windowBreakpoint: 700,
+                                    resizableSide: ResizableSide.left,
+                                    builder: (_, __) {
+                                      return const Center(
+                                        child: Text('Resizable Pane'),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 20),
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      isSecondary: true,
+                      child: const Text('Secondary'),
+                      onPressed: () {
+                        MacosWindowScope.of(context).toggleSidebar();
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.small,
-                  child: const Text('small PushButton'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return MacosScaffold(
-                            titleBar: const TitleBar(
-                              centerTitle: false,
-                              title: Text('New page'),
-                            ),
-                            children: [
-                              ContentArea(
-                                builder: (context, scrollController) {
-                                  return Center(
-                                    child: PushButton(
-                                      buttonSize: ButtonSize.large,
-                                      child: const Text('Go Back'),
-                                      onPressed: () {
-                                        Navigator.maybePop(context);
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                              ResizablePane(
-                                minWidth: 180,
-                                startWidth: 200,
-                                windowBreakpoint: 700,
-                                resizableSide: ResizableSide.left,
-                                builder: (_, __) {
-                                  return const Center(
-                                    child: Text('Resizable Pane'),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                PushButton(
-                  buttonSize: ButtonSize.large,
-                  isSecondary: true,
-                  child: const Text('secondary PushButton'),
-                  onPressed: () {
-                    MacosWindowScope.of(context).toggleSidebar();
+                const Text('MacosSwitch'),
+                const SizedBox(height: 8),
+                MacosSwitch(
+                  value: switchValue,
+                  onChanged: (value) {
+                    setState(() => switchValue = value);
                   },
                 ),
                 const SizedBox(height: 20),

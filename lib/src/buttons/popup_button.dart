@@ -81,7 +81,6 @@ class _MacosPopupMenuItemButtonState<T>
   @override
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
-    final MacosThemeData theme = MacosTheme.of(context);
     final MacosPopupMenuItem<T> popupMenuItem =
         widget.route.items[widget.itemIndex].item!;
     Widget child = Container(
@@ -113,7 +112,7 @@ class _MacosPopupMenuItemButtonState<T>
             child: Container(
               decoration: BoxDecoration(
                 color: _isHovered
-                    ? theme.popupButtonTheme.highlightColor
+                    ? MacosPopupButtonTheme.of(context).highlightColor
                     : Colors.transparent,
                 borderRadius: _kBorderRadius,
               ),
@@ -217,7 +216,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
     ];
     final brightness = MacosTheme.brightnessOf(context);
     final popupColor = MacosDynamicColor.maybeResolve(
-      widget.popupColor ?? MacosTheme.of(context).popupButtonTheme.popupColor,
+      widget.popupColor ?? MacosPopupButtonTheme.of(context).popupColor,
       context,
     );
     final caretColor =
@@ -1341,14 +1340,15 @@ _ButtonStyles _getButtonStyles(
 ) {
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
+  final popupTheme = MacosPopupButtonTheme.of(context);
   Color textColor = theme.typography.body.color!;
-  Color bgColor = theme.popupButtonTheme.backgroundColor!;
+  Color bgColor = popupTheme.backgroundColor!;
   Color borderColor = brightness.resolve(
     const Color(0xffc3c4c9),
     const Color(0xff222222),
   );
   Color caretColor = MacosColors.white;
-  Color caretBgColor = theme.popupButtonTheme.highlightColor!;
+  Color caretBgColor = popupTheme.highlightColor!;
   if (!enabled) {
     caretBgColor = MacosColors.transparent;
     textColor = caretColor = brightness.resolve(
@@ -1368,7 +1368,7 @@ _ButtonStyles _getButtonStyles(
       const Color(0xffc3c4c9),
       const Color(0xff222222),
     );
-    caretBgColor = theme.popupButtonTheme.highlightColor!;
+    caretBgColor = popupTheme.highlightColor!;
   }
   return _ButtonStyles(
     textColor: textColor,

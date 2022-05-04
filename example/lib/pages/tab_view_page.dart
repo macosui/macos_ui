@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class TabViewPage extends StatefulWidget {
@@ -38,8 +38,19 @@ class _TabViewPageState extends State<TabViewPage> {
   @override
   Widget build(BuildContext context) {
     return MacosScaffold(
-      titleBar: const TitleBar(
-        title: Text('macOS Tab View'),
+      toolBar: ToolBar(
+        title: const Text('Selectors'),
+        titleWidth: 150.0,
+        actions: [
+          ToolBarIconButton(
+            label: 'Toggle Sidebar',
+            icon: const MacosIcon(
+              CupertinoIcons.sidebar_left,
+            ),
+            onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
+            showLabel: false,
+          ),
+        ],
       ),
       children: [
         ContentArea(

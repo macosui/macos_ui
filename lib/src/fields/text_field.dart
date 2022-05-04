@@ -36,7 +36,7 @@ const Border _kDefaultRoundedBorder = Border(
   right: _kDefaultRoundedBorderSide,
 );
 
-const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
+const BoxDecoration kDefaultRoundedBorderDecoration = BoxDecoration(
   color: CupertinoDynamicColor.withBrightness(
     color: CupertinoColors.white,
     darkColor: CupertinoColors.black,
@@ -54,18 +54,13 @@ const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
 
-const BoxDecoration _kDefaultFocusedBorderDecoration = BoxDecoration(
+const BoxDecoration kDefaultFocusedBorderDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
   color: Color(0xfff6f6f9),
   darkColor: Color.fromRGBO(255, 255, 255, 0.01),
-);
-
-const _kClearButtonColor = CupertinoDynamicColor.withBrightness(
-  color: Color.fromRGBO(0, 0, 0, 0.5),
-  darkColor: Color.fromRGBO(255, 255, 255, 0.55),
 );
 
 // An eyeballed value that moves the cursor slightly left of where it is
@@ -239,8 +234,8 @@ class MacosTextField extends StatefulWidget {
     Key? key,
     this.controller,
     this.focusNode,
-    this.decoration = _kDefaultRoundedBorderDecoration,
-    this.focusedDecoration = _kDefaultFocusedBorderDecoration,
+    this.decoration = kDefaultRoundedBorderDecoration,
+    this.focusedDecoration = kDefaultFocusedBorderDecoration,
     this.padding = const EdgeInsets.all(4.0),
     this.placeholder,
     this.placeholderStyle = const TextStyle(
@@ -754,7 +749,7 @@ class MacosTextField extends StatefulWidget {
     properties.add(DiagnosticsProperty<BoxDecoration>(
       'decoration',
       decoration,
-      defaultValue: _kDefaultRoundedBorderDecoration,
+      defaultValue: kDefaultRoundedBorderDecoration,
     ));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));

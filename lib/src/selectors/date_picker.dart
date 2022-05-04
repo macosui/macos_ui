@@ -3,7 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/selectors/painters.dart';
+import 'package:macos_ui/src/selectors/caret_painters.dart';
+import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
 
 /// Defines the possibles [MacosDatePicker] styles.
 enum DatePickerStyle {
@@ -59,6 +60,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
   bool _isDaySelected = false;
   bool _isMonthSelected = false;
   bool _isYearSelected = false;
+  late final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -160,121 +162,137 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     return result;
   }
 
-  Widget buildTextualPicker(MacosDatePickerThemeData datePickerTheme) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        PhysicalModel(
-          color: datePickerTheme.shadowColor!,
-          elevation: 1,
-          child: ColoredBox(
-            color: datePickerTheme.backgroundColor!,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 3.0,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FieldElement(
-                    isSelected: _isMonthSelected,
-                    element: '$_selectedMonth',
-                    onSelected: () {
-                      setState(() {
-                        _isMonthSelected = !_isMonthSelected;
-                        _isDaySelected = false;
-                        _isYearSelected = false;
-                      });
-                    },
-                  ),
-                  const Text('/'),
-                  FieldElement(
-                    isSelected: _isDaySelected,
-                    element: '$_selectedDay',
-                    onSelected: () {
-                      setState(() {
-                        _isDaySelected = !_isDaySelected;
-                        _isMonthSelected = false;
-                        _isYearSelected = false;
-                      });
-                    },
-                  ),
-                  const Text('/'),
-                  FieldElement(
-                    isSelected: _isYearSelected,
-                    element: '$_selectedYear',
-                    onSelected: () {
-                      setState(() {
-                        _isYearSelected = !_isYearSelected;
-                        _isDaySelected = false;
-                        _isMonthSelected = false;
-                      });
-                    },
-                  ),
-                ],
+  Widget _buildTextualPicker(MacosDatePickerThemeData datePickerTheme) {
+    return KeyboardShortcutRunner(
+      onUpArrowKeypress: _incrementElement,
+      onDownArrowKeypress: _decrementElement,
+      focusNode: _focusNode,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          PhysicalModel(
+            color: datePickerTheme.shadowColor!,
+            elevation: 1,
+            child: ColoredBox(
+              color: datePickerTheme.backgroundColor!,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 3.0,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DatePickerFieldElement(
+                      isSelected: _isMonthSelected,
+                      element: '$_selectedMonth',
+                      onSelected: () {
+                        setState(() {
+                          _focusNode.requestFocus();
+                          _isMonthSelected = !_isMonthSelected;
+                          _isDaySelected = false;
+                          _isYearSelected = false;
+                        });
+                      },
+                    ),
+                    const Text('/'),
+                    DatePickerFieldElement(
+                      isSelected: _isDaySelected,
+                      element: '$_selectedDay',
+                      onSelected: () {
+                        setState(() {
+                          _focusNode.requestFocus();
+                          _isDaySelected = !_isDaySelected;
+                          _isMonthSelected = false;
+                          _isYearSelected = false;
+                        });
+                      },
+                    ),
+                    const Text('/'),
+                    DatePickerFieldElement(
+                      isSelected: _isYearSelected,
+                      element: '$_selectedYear',
+                      onSelected: () {
+                        setState(() {
+                          _focusNode.requestFocus();
+                          _isYearSelected = !_isYearSelected;
+                          _isDaySelected = false;
+                          _isMonthSelected = false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(width: 4.0),
-        Column(
-          children: [
-            SizedBox(
-              height: 10.0,
-              width: 12.0,
-              child: GestureDetector(
-                onTap: _incrementElement,
-                child: PhysicalModel(
-                  color: datePickerTheme.shadowColor!,
-                  elevation: 1,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(5.0),
-                  ),
-                  child: CustomPaint(
-                    painter: UpCaretPainter(
-                      color: datePickerTheme.caretColor!,
-                      backgroundColor:
-                          datePickerTheme.caretControlsBackgroundColor!,
+          const SizedBox(width: 4.0),
+          Column(
+            children: [
+              SizedBox(
+                height: 10.0,
+                width: 12.0,
+                child: IgnorePointer(
+                  ignoring:
+                      !_isMonthSelected && !_isDaySelected && !_isYearSelected,
+                  child: GestureDetector(
+                    onTap: _incrementElement,
+                    child: PhysicalModel(
+                      color: datePickerTheme.shadowColor!,
+                      elevation: 1,
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(5.0),
+                      ),
+                      child: CustomPaint(
+                        painter: UpCaretPainter(
+                          color: datePickerTheme.caretColor!,
+                          backgroundColor:
+                              datePickerTheme.caretControlsBackgroundColor!,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 1.0,
-              child: ColoredBox(
-                color: datePickerTheme.caretControlsSeparatorColor!,
+              SizedBox(
+                height: 1.0,
+                child: ColoredBox(
+                  color: datePickerTheme.caretControlsSeparatorColor!,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10.0,
-              width: 12.0,
-              child: GestureDetector(
-                onTap: _decrementElement,
-                child: PhysicalModel(
-                  color: datePickerTheme.shadowColor!,
-                  elevation: 1,
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(5.0),
-                  ),
-                  child: CustomPaint(
-                    painter: DownCaretPainter(
-                      color: datePickerTheme.caretColor!,
-                      backgroundColor:
-                          datePickerTheme.caretControlsBackgroundColor!,
+              SizedBox(
+                height: 10.0,
+                width: 12.0,
+                child: IgnorePointer(
+                  ignoring:
+                      !_isMonthSelected && !_isDaySelected && !_isYearSelected,
+                  child: GestureDetector(
+                    onTap: _decrementElement,
+                    child: PhysicalModel(
+                      color: datePickerTheme.shadowColor!,
+                      elevation: 1,
+                      borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(5.0),
+                      ),
+                      child: CustomPaint(
+                        painter: DownCaretPainter(
+                          color: datePickerTheme.caretColor!,
+                          backgroundColor:
+                              datePickerTheme.caretControlsBackgroundColor!,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget buildGraphicalPicker(
+  Widget _buildGraphicalPicker(
     MacosDatePickerThemeData datePickerTheme,
     List<Widget> dayHeaders,
     List<Widget> dayItems,
@@ -459,7 +477,9 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
         if (isToday && isSelectedDay) {
           dayText = Text(
             localizations.formatDecimal(day),
-            style: dayStyle,
+            style: dayStyle.apply(
+              color: textLuminance(datePickerTheme.monthViewCurrentDateColor!),
+            ),
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewCurrentDateColor,
@@ -522,15 +542,15 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
 
     switch (widget.style) {
       case DatePickerStyle.textual:
-        return buildTextualPicker(datePickerTheme);
+        return _buildTextualPicker(datePickerTheme);
       case DatePickerStyle.graphical:
-        return buildGraphicalPicker(datePickerTheme, dayHeaders, dayItems);
+        return _buildGraphicalPicker(datePickerTheme, dayHeaders, dayItems);
       case DatePickerStyle.combined:
         return Column(
           children: [
-            buildTextualPicker(datePickerTheme),
+            _buildTextualPicker(datePickerTheme),
             const SizedBox(height: 16),
-            buildGraphicalPicker(datePickerTheme, dayHeaders, dayItems),
+            _buildGraphicalPicker(datePickerTheme, dayHeaders, dayItems),
           ],
         );
     }
@@ -564,8 +584,8 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
 
 const _DayPickerGridDelegate _dayPickerGridDelegate = _DayPickerGridDelegate();
 
-class FieldElement extends StatelessWidget {
-  const FieldElement({
+class DatePickerFieldElement extends StatelessWidget {
+  const DatePickerFieldElement({
     Key? key,
     required this.element,
     required this.onSelected,
