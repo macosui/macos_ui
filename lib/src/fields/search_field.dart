@@ -3,15 +3,13 @@ import 'dart:ui';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
 
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
-const double _kMenuItemHeight = 20.0;
-const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 6.0);
+const double _kSuggestionHeight = 20.0;
 
-enum Suggestion {
+enum SuggestionState {
   /// shows suggestions when searchfield is brought into focus
-  expand,
+  expanded,
 
   /// keeps the suggestion overlay hidden until
   /// first letter is entered
@@ -27,267 +25,42 @@ enum SuggestionAction {
   unfocus,
 }
 
-// /// A macOS-style search field.
-// class MacosSearchField extends StatefulWidget {
-//   /// Creates a macOS-style search field.
-//   ///
-//   /// To provide a prefilled text entry, pass in a [TextEditingController] with
-//   /// an initial value to the [controller] parameter.
-//   ///
-//   /// To provide a hint placeholder text that appears when the text entry is
-//   /// empty, pass a [String] to the [placeholder] parameter.
-//   ///
-//   /// The [maxLines] property can be set to null to remove the restriction on
-//   /// the number of lines. In this mode, the intrinsic height of the widget will
-//   /// grow as the number of lines of text grows. By default, it is `1`, meaning
-//   /// this is a single-line text field and will scroll horizontally when
-//   /// overflown. [maxLines] must not be zero.
-//   ///
-//   /// The text cursor is not shown if [showCursor] is false or if [showCursor]
-//   /// is null (the default) and [readOnly] is true.
-//   ///
-//   /// If specified, the [maxLength] property must be greater than zero.
-//   ///
-//   ///
-//   /// The [autocorrect], [autofocus], [expands], [maxLengthEnforcement],[readOnly],
-//   /// [textAlign], and [enableSuggestions] properties must not be null.
-//   ///
-//   /// See also:
-//   ///
-//   ///  * [minLines], which is the minimum number of lines to occupy when the
-//   ///    content spans fewer lines.
-//   ///  * [expands], to allow the widget to size itself to its parent's height.
-//   ///  * [maxLength], which discusses the precise meaning of "number of
-//   ///    characters" and how it may differ from the intuitive meaning.
-//   const MacosSearchField({
-//     Key? key,
-//     this.controller,
-//     this.focusNode,
-//     this.decoration = kDefaultRoundedBorderDecoration,
-//     this.focusedDecoration = kDefaultFocusedBorderDecoration,
-//     this.padding = const EdgeInsets.all(4.0),
-//     this.placeholder,
-//     this.placeholderStyle = const TextStyle(
-//       fontWeight: FontWeight.w400,
-//       color: CupertinoColors.placeholderText,
-//     ),
-//     this.style,
-//     this.textAlign = TextAlign.start,
-//     this.autocorrect = true,
-//     this.autofocus = false,
-//     this.enableSuggestions = true,
-//     this.maxLines = 1,
-//     this.minLines,
-//     this.expands = false,
-//     this.maxLength,
-//     this.maxLengthEnforcement,
-//     this.onChanged,
-//     this.onEditingComplete,
-//     this.onSubmitted,
-//     this.inputFormatters,
-//     this.enabled = true,
-//     this.onTap,
-//   }) : super(key: key);
-
-//   /// Controls the text being edited.
-//   ///
-//   /// If null, this widget will create its own [TextEditingController].
-//   final TextEditingController? controller;
-
-//   /// {@macro flutter.widgets.Focus.focusNode}
-//   final FocusNode? focusNode;
-
-//   /// Controls the [BoxDecoration] of the box behind the text input.
-//   ///
-//   /// Defaults to having a rounded rectangle grey border and can be null to have
-//   /// no box decoration.
-//   final BoxDecoration? decoration;
-
-//   /// Controls the [BoxDecoration] of the box behind the text input when focused.
-//   /// This decoration is drawn above [decoration].
-//   ///
-//   /// Defaults to having a rounded rectangle blue border and can be null to have
-//   /// no box decoration.
-//   final BoxDecoration? focusedDecoration;
-
-//   /// Padding around the text entry area between the [prefix] and [suffix]
-//   /// or the clear button when [clearButtonMode] is not never.
-//   ///
-//   /// Defaults to a padding of 6 pixels on all sides and can be null.
-//   final EdgeInsets padding;
-
-//   /// A lighter colored placeholder hint that appears on the first line of the
-//   /// text field when the text entry is empty.
-//   ///
-//   /// Defaults to having no placeholder text.
-//   ///
-//   /// The text style of the placeholder text matches that of the text field's
-//   /// main text entry except a lighter font weight and a grey font color.
-//   final String? placeholder;
-
-//   /// The style to use for the placeholder text.
-//   ///
-//   /// The [placeholderStyle] is merged with the [style] [TextStyle] when applied
-//   /// to the [placeholder] text. To avoid merging with [style], specify
-//   /// [TextStyle.inherit] as false.
-//   ///
-//   /// Defaults to the [style] property with w300 font weight and grey color.
-//   ///
-//   /// If specifically set to null, placeholder's style will be the same as [style].
-//   final TextStyle? placeholderStyle;
-
-//   /// The style to use for the text being edited.
-//   ///
-//   /// Also serves as a base for the [placeholder] text's style.
-//   ///
-//   /// Defaults to the standard font style from [MacosTheme] if null.
-//   final TextStyle? style;
-
-//   /// {@macro flutter.widgets.editableText.textAlign}
-//   final TextAlign textAlign;
-
-//   /// {@macro flutter.widgets.editableText.autofocus}
-//   final bool autofocus;
-
-//   /// {@macro flutter.widgets.editableText.autocorrect}
-//   final bool autocorrect;
-
-//   /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
-//   final bool enableSuggestions;
-
-//   /// {@macro flutter.widgets.editableText.maxLines}
-//   final int? maxLines;
-
-//   /// {@macro flutter.widgets.editableText.minLines}
-//   final int? minLines;
-
-//   /// {@macro flutter.widgets.editableText.expands}
-//   final bool expands;
-
-//   /// The maximum number of characters (Unicode scalar values) to allow in the
-//   /// text field.
-//   ///
-//   /// After [maxLength] characters have been input, additional input
-//   /// is ignored, unless [maxLengthEnforcement] is set to
-//   /// [MaxLengthEnforcement.none].
-//   ///
-//   /// The TextField enforces the length with a
-//   /// [LengthLimitingTextInputFormatter], which is evaluated after the supplied
-//   /// [inputFormatters], if any.
-//   ///
-//   /// This value must be either null or greater than zero. If set to null
-//   /// (the default), there is no limit to the number of characters allowed.
-//   ///
-//   /// Whitespace characters (e.g. newline, space, tab) are included in the
-//   /// character count.
-//   ///
-//   /// {@macro flutter.services.lengthLimitingTextInputFormatter.maxLength}
-//   final int? maxLength;
-
-//   /// Determines how the [maxLength] limit should be enforced.
-//   ///
-//   /// If [MaxLengthEnforcement.none] is set, additional input beyond [maxLength]
-//   /// will not be enforced by the limit.
-//   ///
-//   /// {@macro flutter.services.textFormatter.effectiveMaxLengthEnforcement}
-//   ///
-//   /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
-//   final MaxLengthEnforcement? maxLengthEnforcement;
-
-//   /// {@macro flutter.widgets.editableText.onChanged}
-//   final ValueChanged<String>? onChanged;
-
-//   /// {@macro flutter.widgets.editableText.onEditingComplete}
-//   final VoidCallback? onEditingComplete;
-
-//   /// {@macro flutter.widgets.editableText.onSubmitted}
-//   ///
-//   /// See also:
-//   ///
-//   ///  * [TextInputAction.next] and [TextInputAction.previous], which
-//   ///    automatically shift the focus to the next/previous focusable item when
-//   ///    the user is done editing.
-//   final ValueChanged<String>? onSubmitted;
-
-//   /// {@macro flutter.widgets.editableText.inputFormatters}
-//   final List<TextInputFormatter>? inputFormatters;
-
-//   /// Disables the text field when false.
-//   ///
-//   /// Text fields in disabled states have a light grey background and don't
-//   /// respond to touch events including the [prefix], [suffix] and the clear
-//   /// button.
-//   final bool? enabled;
-
-//   /// {@macro flutter.material.textfield.onTap}
-//   final GestureTapCallback? onTap;
-
-//   @override
-//   State<MacosSearchField> createState() => _MacosSearchFieldState();
-// }
-
-// class _MacosSearchFieldState extends State<MacosSearchField> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MacosTextField(
-//       prefix: const Padding(
-//         padding: EdgeInsets.symmetric(
-//           horizontal: 4.0,
-//           vertical: 2.0,
-//         ),
-//         child: MacosIcon(CupertinoIcons.search),
-//       ),
-//       clearButtonMode: OverlayVisibilityMode.editing,
-//       controller: widget.controller,
-//       focusNode: widget.focusNode,
-//       decoration: widget.decoration,
-//       focusedDecoration: widget.focusedDecoration,
-//       padding: widget.padding,
-//       placeholder: widget.placeholder,
-//       placeholderStyle: widget.placeholderStyle,
-//       style: widget.style,
-//       textAlign: widget.textAlign,
-//       autocorrect: widget.autocorrect,
-//       autofocus: widget.autofocus,
-//       enableSuggestions: widget.enableSuggestions,
-//       maxLines: widget.maxLines,
-//       minLines: widget.minLines,
-//       expands: widget.expands,
-//       maxLength: widget.maxLength,
-//       maxLengthEnforcement: widget.maxLengthEnforcement,
-//       onChanged: widget.onChanged,
-//       onEditingComplete: widget.onEditingComplete,
-//       onSubmitted: widget.onSubmitted,
-//       inputFormatters: widget.inputFormatters,
-//       enabled: widget.enabled,
-//       onTap: widget.onTap,
-//     );
-//   }
-// }
-
 /// A widget that displays a searchfield and a list of suggestions
 /// when the searchfield is brought into focus
 class MacosSearchField<T> extends StatefulWidget {
   const MacosSearchField({
     Key? key,
     this.suggestions,
-    this.focusNode,
-    this.hint,
-    this.searchStyle,
-    this.controller,
-    this.onSubmit,
-    this.inputType,
-    this.suggestionState = Suggestion.expand,
-    this.itemHeight = _kMenuItemHeight,
-    this.maxSuggestionsInViewPort = 5,
     this.onSuggestionTap,
-    this.emptyWidget = const SizedBox.shrink(),
-    this.textInputAction,
+    this.suggestionState = SuggestionState.hidden,
+    this.maxSuggestionsInViewPort = 5,
+    this.suggestionHeight = _kSuggestionHeight,
     this.suggestionAction,
-    this.placeholder,
+    this.emptyWidget = const SizedBox.shrink(),
+    this.controller,
+    this.focusNode,
+    this.decoration = kDefaultRoundedBorderDecoration,
+    this.focusedDecoration = kDefaultFocusedBorderDecoration,
+    this.padding = const EdgeInsets.all(4.0),
+    this.placeholder = "Search",
+    this.placeholderStyle = const TextStyle(
+      fontWeight: FontWeight.w400,
+      color: CupertinoColors.placeholderText,
+    ),
+    this.style,
+    this.textAlign = TextAlign.start,
+    this.autocorrect = true,
+    this.autofocus = false,
+    this.maxLines,
+    this.minLines,
+    this.expands = false,
+    this.maxLength,
+    this.maxLengthEnforcement,
+    this.onChanged,
+    this.inputFormatters,
+    this.enabled = true,
+    this.onTap,
   }) : super(key: key);
-
-  final FocusNode? focusNode;
 
   /// List of suggestions for the searchfield.
   /// each suggestion should have a unique searchKey
@@ -302,29 +75,7 @@ class MacosSearchField<T> extends StatefulWidget {
   /// Callback when the suggestion is selected.
   final Function(SearchFieldListItem<T>)? onSuggestionTap;
 
-  /// Callback when the Searchfield is submitted
-  ///  it returns the text from the searchfield
-  final Function(String)? onSubmit;
-
-  /// Hint for the [SearchField].
-  final String? hint;
-
-  /// Define a [TextInputAction] that is called when the field is submitted
-  final TextInputAction? textInputAction;
-
-  /// Specifies [TextStyle] for search input.
-  final TextStyle? searchStyle;
-
-  /// defaults to SuggestionState.expand
-  final Suggestion suggestionState;
-
-  /// Specifies the [SuggestionAction] called on suggestion tap.
-  final SuggestionAction? suggestionAction;
-
-  /// Specifies height for each suggestion item in the list.
-  ///
-  /// When not specified, the default value is `35.0`.
-  final double itemHeight;
+  final SuggestionState suggestionState;
 
   /// Specifies the number of suggestions that can be shown in viewport.
   ///
@@ -333,18 +84,133 @@ class MacosSearchField<T> extends StatefulWidget {
   /// will be the length of [suggestions]
   final int maxSuggestionsInViewPort;
 
-  /// Specifies the `TextEditingController` for [SearchField].
-  final TextEditingController? controller;
+  /// Specifies height for each suggestion item in the list.
+  ///
+  /// When not specified, the default value is `20.0`.
+  final double suggestionHeight;
 
-  /// Keyboard Type for SearchField
-  final TextInputType? inputType;
+  /// Specifies the [SuggestionAction] called on suggestion tap.
+  final SuggestionAction? suggestionAction;
 
   /// Widget to show when the search returns
   /// empty results.
   /// defaults to [SizedBox.shrink]
   final Widget emptyWidget;
 
+  /// Specifies the `TextEditingController` for [SearchField].
+  final TextEditingController? controller;
+
+  final FocusNode? focusNode;
+
+  /// Controls the [BoxDecoration] of the box behind the text input.
+  ///
+  /// Defaults to having a rounded rectangle grey border and can be null to have
+  /// no box decoration.
+  final BoxDecoration? decoration;
+
+  /// Controls the [BoxDecoration] of the box behind the text input when focused.
+  /// This decoration is drawn above [decoration].
+  ///
+  /// Defaults to having a rounded rectangle blue border and can be null to have
+  /// no box decoration.
+  final BoxDecoration? focusedDecoration;
+
+  /// Padding around the text entry area between the [prefix] and [suffix]
+  /// or the clear button when [clearButtonMode] is not never.
+  ///
+  /// Defaults to a padding of 6 pixels on all sides and can be null.
+  final EdgeInsets padding;
+
+  /// A lighter colored placeholder hint that appears on the first line of the
+  /// text field when the text entry is empty.
+  ///
+  /// Defaults to having no placeholder text.
+  ///
+  /// The text style of the placeholder text matches that of the text field's
+  /// main text entry except a lighter font weight and a grey font color.
   final String? placeholder;
+
+  /// The style to use for the placeholder text.
+  ///
+  /// The [placeholderStyle] is merged with the [style] [TextStyle] when applied
+  /// to the [placeholder] text. To avoid merging with [style], specify
+  /// [TextStyle.inherit] as false.
+  ///
+  /// Defaults to the [style] property with w300 font weight and grey color.
+  ///
+  /// If specifically set to null, placeholder's style will be the same as [style].
+  final TextStyle? placeholderStyle;
+
+  /// The style to use for the text being edited.
+  ///
+  /// Also serves as a base for the [placeholder] text's style.
+  ///
+  /// Defaults to the standard font style from [MacosTheme] if null.
+  final TextStyle? style;
+
+  /// {@macro flutter.widgets.editableText.textAlign}
+  final TextAlign textAlign;
+
+  /// {@macro flutter.widgets.editableText.autofocus}
+  final bool autofocus;
+
+  /// {@macro flutter.widgets.editableText.autocorrect}
+  final bool autocorrect;
+
+  /// {@macro flutter.widgets.editableText.maxLines}
+  final int? maxLines;
+
+  /// {@macro flutter.widgets.editableText.minLines}
+  final int? minLines;
+
+  /// {@macro flutter.widgets.editableText.expands}
+  final bool expands;
+
+  /// The maximum number of characters (Unicode scalar values) to allow in the
+  /// text field.
+  ///
+  /// After [maxLength] characters have been input, additional input
+  /// is ignored, unless [maxLengthEnforcement] is set to
+  /// [MaxLengthEnforcement.none].
+  ///
+  /// The TextField enforces the length with a
+  /// [LengthLimitingTextInputFormatter], which is evaluated after the supplied
+  /// [inputFormatters], if any.
+  ///
+  /// This value must be either null or greater than zero. If set to null
+  /// (the default), there is no limit to the number of characters allowed.
+  ///
+  /// Whitespace characters (e.g. newline, space, tab) are included in the
+  /// character count.
+  ///
+  /// {@macro flutter.services.lengthLimitingTextInputFormatter.maxLength}
+  final int? maxLength;
+
+  /// Determines how the [maxLength] limit should be enforced.
+  ///
+  /// If [MaxLengthEnforcement.none] is set, additional input beyond [maxLength]
+  /// will not be enforced by the limit.
+  ///
+  /// {@macro flutter.services.textFormatter.effectiveMaxLengthEnforcement}
+  ///
+  /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
+  final MaxLengthEnforcement? maxLengthEnforcement;
+
+  /// {@macro flutter.widgets.editableText.onChanged}
+  final ValueChanged<String>? onChanged;
+
+  /// {@macro flutter.widgets.editableText.inputFormatters}
+  final List<TextInputFormatter>? inputFormatters;
+
+  /// Disables the text field when false.
+  ///
+  /// Text fields in disabled states have a light grey background and don't
+  /// respond to touch events including the [prefix], [suffix] and the clear
+  /// button.
+  final bool? enabled;
+
+  /// {@macro flutter.material.textfield.onTap}
+  final GestureTapCallback? onTap;
 
   @override
   _MacosSearchFieldState<T> createState() => _MacosSearchFieldState();
@@ -377,7 +243,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
         });
       }
       if (isSuggestionExpanded) {
-        if (widget.suggestionState == Suggestion.expand) {
+        if (widget.suggestionState == SuggestionState.expanded) {
           Future.delayed(const Duration(milliseconds: 100), () {
             suggestionStream.sink.add(widget.suggestions);
           });
@@ -416,17 +282,14 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           child: MacosTextField(
             placeholder: widget.placeholder,
             prefix: const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 4.0,
-                vertical: 2.0,
-              ),
+              padding: EdgeInsets.symmetric(),
               child: MacosIcon(CupertinoIcons.search),
             ),
             clearButtonMode: OverlayVisibilityMode.editing,
             onTap: () {
               /// only call if SuggestionState = [Suggestion.expand]
               if (!isSuggestionExpanded &&
-                  widget.suggestionState == Suggestion.expand) {
+                  widget.suggestionState == SuggestionState.expanded) {
                 suggestionStream.sink.add(widget.suggestions);
                 if (mounted) {
                   setState(() {
@@ -434,12 +297,11 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                   });
                 }
               }
+              widget.onTap?.call();
             },
             controller: widget.controller ?? searchController,
             focusNode: _focus,
-            style: widget.searchStyle,
-            textInputAction: widget.textInputAction,
-            keyboardType: widget.inputType,
+            style: widget.style,
             onChanged: (query) {
               final searchResult = <SearchFieldListItem<T>>[];
               if (query.isEmpty) {
@@ -457,6 +319,20 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
               }
               suggestionStream.sink.add(searchResult);
             },
+            decoration: widget.decoration,
+            focusedDecoration: widget.focusedDecoration,
+            padding: widget.padding,
+            placeholderStyle: widget.placeholderStyle,
+            textAlign: widget.textAlign,
+            autocorrect: widget.autocorrect,
+            autofocus: widget.autofocus,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
+            expands: widget.expands,
+            maxLength: widget.maxLength,
+            maxLengthEnforcement: widget.maxLengthEnforcement,
+            inputFormatters: widget.inputFormatters,
+            enabled: widget.enabled,
           ),
         ),
       ],
@@ -495,18 +371,18 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   Offset getYOffset(Offset widgetOffset, int resultCount) {
     final size = MediaQuery.of(context).size;
     final position = widgetOffset.dy;
-    if ((position + height) < (size.height - widget.itemHeight * 2)) {
-      return Offset(0, widget.itemHeight + 10.0);
+    if ((position + height) < (size.height - widget.suggestionHeight * 2)) {
+      return Offset(0, widget.suggestionHeight + 10.0);
     } else {
       if (resultCount > widget.maxSuggestionsInViewPort) {
         isUp = false;
         return Offset(
           0,
-          -(widget.itemHeight * widget.maxSuggestionsInViewPort),
+          -(widget.suggestionHeight * widget.maxSuggestionsInViewPort),
         );
       } else {
         isUp = true;
-        return Offset(0, -(widget.itemHeight * resultCount));
+        return Offset(0, -(widget.suggestionHeight * resultCount));
       }
     }
   }
@@ -526,11 +402,11 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           return widget.emptyWidget;
         } else {
           if (snapshot.data!.length > widget.maxSuggestionsInViewPort) {
-            height = widget.itemHeight * widget.maxSuggestionsInViewPort;
+            height = widget.suggestionHeight * widget.maxSuggestionsInViewPort;
           } else if (snapshot.data!.length == 1) {
-            height = widget.itemHeight;
+            height = widget.suggestionHeight;
           } else {
-            height = snapshot.data!.length * widget.itemHeight;
+            height = snapshot.data!.length * widget.suggestionHeight;
           }
           height += 12;
           final brightness = MacosTheme.brightnessOf(context);
@@ -575,7 +451,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                   padding: const EdgeInsets.all(6.0),
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) => _SearchFieldButton(
-                    itemHeight: widget.itemHeight,
+                    suggestionHeight: widget.suggestionHeight,
                     onPressed: () {
                       searchController!.text = snapshot.data![index]!.searchKey;
                       searchController!.selection = TextSelection.fromPosition(
@@ -648,12 +524,12 @@ class _SearchFieldButton extends StatefulWidget {
     Key? key,
     this.onPressed,
     required this.child,
-    required this.itemHeight,
+    required this.suggestionHeight,
   }) : super(key: key);
 
   final VoidCallback? onPressed;
   final Widget child;
-  final double itemHeight;
+  final double suggestionHeight;
 
   @override
   State<_SearchFieldButton> createState() => _SearchFieldButtonState();
@@ -695,7 +571,7 @@ class _SearchFieldButtonState extends State<_SearchFieldButton> {
           },
           onFocusChange: _handleFocusChange,
           child: Container(
-            height: widget.itemHeight,
+            height: widget.suggestionHeight,
             decoration: BoxDecoration(
               color: _isHovered
                   ? MacosPulldownButtonTheme.of(context).highlightColor
