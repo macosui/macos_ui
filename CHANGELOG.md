@@ -4,6 +4,7 @@
   * Better inner shadow
   * Minor size adjustments
   * API improvements
+* Throw an exception if `MacosColorWell` is clicked on a non-macOS platform
 
 ## [1.0.0+1]
 * Minor documentation fix for [MacosColorWell]
