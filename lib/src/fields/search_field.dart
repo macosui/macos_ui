@@ -396,74 +396,39 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             height = snapshot.data!.length * widget.suggestionHeight;
           }
           height += _kSuggestionsOverlayMargin;
-          final brightness = MacosTheme.brightnessOf(context);
 
-          return Container(
+          return MacosOverlayFilter(
+            borderRadius: _kBorderRadius,
             height: height,
             alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-              color: brightness.isDark
-                  ? const Color.fromRGBO(30, 30, 30, 1)
-                  : const Color.fromRGBO(242, 242, 247, 1),
-              boxShadow: [
-                BoxShadow(
-                  color: brightness
-                      .resolve(
-                        CupertinoColors.systemGrey.color,
-                        CupertinoColors.black,
-                      )
-                      .withOpacity(0.25),
-                  offset: const Offset(0, 4),
-                  spreadRadius: 4.0,
-                  blurRadius: 8.0,
-                ),
-              ],
-              border: Border.all(
-                color: brightness.resolve(
-                  CupertinoColors.systemGrey3.color,
-                  CupertinoColors.systemGrey3.darkColor,
-                ),
-              ),
-              borderRadius: _kBorderRadius,
-            ),
-            child: ClipRRect(
-              borderRadius: _kBorderRadius,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 20.0,
-                  sigmaY: 20.0,
-                ),
-                child: ListView.builder(
-                  reverse: showOverlayAbove,
-                  padding: const EdgeInsets.all(6.0),
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    var selectedItem = snapshot.data![index]!;
-                    return _SearchSuggestionItemButton(
-                      suggestionHeight: widget.suggestionHeight,
-                      onPressed: () {
-                        searchController!.text = selectedItem.searchKey;
-                        searchController!.selection =
-                            TextSelection.fromPosition(
-                          TextPosition(
-                            offset: searchController!.text.length,
-                          ),
-                        );
-                        selectedItem.onSelected?.call();
-                        // hide the suggestions
-                        suggestionStream.sink.add(null);
-                        if (widget.onSuggestionSelected != null) {
-                          widget.onSuggestionSelected!(selectedItem);
-                        }
-                      },
-                      child: selectedItem.child ??
-                          Text(
-                            selectedItem.searchKey,
-                          ),
+            child: ListView.builder(
+              reverse: showOverlayAbove,
+              padding: const EdgeInsets.all(6.0),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                var selectedItem = snapshot.data![index]!;
+                return _SearchSuggestionItemButton(
+                  suggestionHeight: widget.suggestionHeight,
+                  onPressed: () {
+                    searchController!.text = selectedItem.searchKey;
+                    searchController!.selection = TextSelection.fromPosition(
+                      TextPosition(
+                        offset: searchController!.text.length,
+                      ),
                     );
+                    selectedItem.onSelected?.call();
+                    // hide the suggestions
+                    suggestionStream.sink.add(null);
+                    if (widget.onSuggestionSelected != null) {
+                      widget.onSuggestionSelected!(selectedItem);
+                    }
                   },
-                ),
-              ),
+                  child: selectedItem.child ??
+                      Text(
+                        selectedItem.searchKey,
+                      ),
+                );
+              },
             ),
           );
         }

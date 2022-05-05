@@ -58,6 +58,7 @@ export 'src/theme/icon_theme.dart';
 export 'src/theme/macos_colors.dart';
 export 'src/theme/macos_dynamic_color.dart';
 export 'src/theme/macos_theme.dart';
+export 'src/theme/overlay_filter.dart';
 export 'src/theme/popup_button_theme.dart';
 export 'src/theme/pulldown_button_theme.dart';
 export 'src/theme/push_button_theme.dart';
