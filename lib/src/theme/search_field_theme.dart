@@ -33,7 +33,6 @@ class MacosSearchFieldTheme extends InheritedTheme {
   static MacosSearchFieldThemeData of(BuildContext context) {
     final MacosSearchFieldTheme? searchFieldTheme =
         context.dependOnInheritedWidgetOfExactType<MacosSearchFieldTheme>();
-    print(searchFieldTheme);
     return searchFieldTheme?.data ?? MacosTheme.of(context).searchFieldTheme;
   }
 
@@ -95,7 +94,10 @@ class MacosSearchFieldThemeData with Diagnosticable {
     return MacosSearchFieldThemeData(
       highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
       suggestionsBackgroundColor: Color.lerp(
-          a.suggestionsBackgroundColor, b.suggestionsBackgroundColor, t),
+        a.suggestionsBackgroundColor,
+        b.suggestionsBackgroundColor,
+        t,
+      ),
     );
   }
 
@@ -117,7 +119,9 @@ class MacosSearchFieldThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('highlightColor', highlightColor));
     properties.add(ColorProperty(
-        'suggestionsBackgroundColor', suggestionsBackgroundColor));
+      'suggestionsBackgroundColor',
+      suggestionsBackgroundColor,
+    ));
   }
 
   MacosSearchFieldThemeData merge(MacosSearchFieldThemeData? other) {

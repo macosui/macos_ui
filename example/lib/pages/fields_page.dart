@@ -100,22 +100,16 @@ class _FieldsPageState extends State<FieldsPage> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 300.0,
-                  child: MacosSearchFieldTheme(
-                    data: MacosSearchFieldTheme.of(context).copyWith(
-                      highlightColor: MacosColors.appleRed,
-                      suggestionsBackgroundColor: MacosColors.appleYellow,
-                    ),
-                    child: MacosSearchField(
-                      suggestions: actionSuggestions,
-                      suggestionHeight: 40.0,
-                      placeholder: 'Search for an action...',
-                      onSuggestionSelected: (suggestionValue) {
-                        // Retrieve the user-selected search suggestion via its
-                        // searchKey property.
-                        debugPrint(suggestionValue.searchKey);
-                      },
-                      onChanged: (searchQuery) => debugPrint(searchQuery),
-                    ),
+                  child: MacosSearchField(
+                    suggestions: actionSuggestions,
+                    suggestionHeight: 40.0,
+                    placeholder: 'Search for an action...',
+                    onSuggestionSelected: (suggestionValue) {
+                      // Retrieve the user-selected search suggestion via its
+                      // searchKey property.
+                      debugPrint(suggestionValue.searchKey);
+                    },
+                    onChanged: (searchQuery) => debugPrint(searchQuery),
                   ),
                 ),
               ],

@@ -397,7 +397,6 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           }
           height += _kSuggestionsOverlayMargin;
 
-          print(MacosSearchFieldTheme.of(context));
           return MacosOverlayFilter(
             borderRadius: _kBorderRadius,
             height: height,
