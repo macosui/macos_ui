@@ -189,6 +189,8 @@ class MacosSearchField<T> extends StatefulWidget {
   /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
   final MaxLengthEnforcement? maxLengthEnforcement;
 
+  /// Use this to get the current search query of the [MacosSearchField].
+  ///
   /// {@macro flutter.widgets.editableText.onChanged}
   final ValueChanged<String>? onChanged;
 
