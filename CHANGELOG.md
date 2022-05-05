@@ -1,3 +1,10 @@
+## [1.0.1]
+* Improvements to the graphical `MacosTimePicker`
+  * Better color gradient on the border
+  * Better inner shadow
+  * Minor size adjustments
+  * API improvements
+
 ## [1.0.0+1]
 * Minor documentation fix for [MacosColorWell]
 
