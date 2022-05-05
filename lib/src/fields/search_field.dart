@@ -397,10 +397,12 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           }
           height += _kSuggestionsOverlayMargin;
 
+          print(MacosSearchFieldTheme.of(context));
           return MacosOverlayFilter(
             borderRadius: _kBorderRadius,
             height: height,
             alignment: Alignment.centerLeft,
+            color: MacosSearchFieldTheme.of(context).suggestionsBackgroundColor,
             child: ListView.builder(
               reverse: showOverlayAbove,
               padding: const EdgeInsets.all(6.0),
@@ -511,7 +513,7 @@ class _SearchSuggestionItemButtonState
           height: widget.suggestionHeight,
           decoration: BoxDecoration(
             color: _isHovered
-                ? MacosPulldownButtonTheme.of(context).highlightColor
+                ? MacosSearchFieldTheme.of(context).highlightColor
                 : Colors.transparent,
             borderRadius: _kBorderRadius,
           ),

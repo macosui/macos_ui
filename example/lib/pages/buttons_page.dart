@@ -182,43 +182,49 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MacosPulldownButton(
-                      title: "PDF",
-                      items: [
-                        MacosPulldownMenuItem(
-                          title: const Text('Open in Preview'),
-                          onTap: () => debugPrint("Opening in preview..."),
-                        ),
-                        MacosPulldownMenuItem(
-                          title: const Text('Save as PDF...'),
-                          onTap: () => debugPrint("Saving as PDF..."),
-                        ),
-                        MacosPulldownMenuItem(
-                          enabled: false,
-                          title: const Text('Save as Postscript'),
-                          onTap: () => debugPrint("Saving as Postscript..."),
-                        ),
-                        const MacosPulldownMenuDivider(),
-                        MacosPulldownMenuItem(
-                          enabled: false,
-                          title: const Text('Save to iCloud Drive'),
-                          onTap: () => debugPrint("Saving to iCloud..."),
-                        ),
-                        MacosPulldownMenuItem(
-                          enabled: false,
-                          title: const Text('Save to Web Receipts'),
-                          onTap: () => debugPrint("Saving to Web Receipts..."),
-                        ),
-                        MacosPulldownMenuItem(
-                          title: const Text('Send in Mail...'),
-                          onTap: () => debugPrint("Sending via Mail..."),
-                        ),
-                        const MacosPulldownMenuDivider(),
-                        MacosPulldownMenuItem(
-                          title: const Text('Edit Menu...'),
-                          onTap: () => debugPrint("Editing menu..."),
-                        ),
-                      ],
+                    MacosPulldownButtonTheme(
+                      data: MacosPulldownButtonTheme.of(context).copyWith(
+                        highlightColor: MacosColors.appleRed,
+                      ),
+                      child: MacosPulldownButton(
+                        title: "PDF",
+                        items: [
+                          MacosPulldownMenuItem(
+                            title: const Text('Open in Preview'),
+                            onTap: () => debugPrint("Opening in preview..."),
+                          ),
+                          MacosPulldownMenuItem(
+                            title: const Text('Save as PDF...'),
+                            onTap: () => debugPrint("Saving as PDF..."),
+                          ),
+                          MacosPulldownMenuItem(
+                            enabled: false,
+                            title: const Text('Save as Postscript'),
+                            onTap: () => debugPrint("Saving as Postscript..."),
+                          ),
+                          const MacosPulldownMenuDivider(),
+                          MacosPulldownMenuItem(
+                            enabled: false,
+                            title: const Text('Save to iCloud Drive'),
+                            onTap: () => debugPrint("Saving to iCloud..."),
+                          ),
+                          MacosPulldownMenuItem(
+                            enabled: false,
+                            title: const Text('Save to Web Receipts'),
+                            onTap: () =>
+                                debugPrint("Saving to Web Receipts..."),
+                          ),
+                          MacosPulldownMenuItem(
+                            title: const Text('Send in Mail...'),
+                            onTap: () => debugPrint("Sending via Mail..."),
+                          ),
+                          const MacosPulldownMenuDivider(),
+                          MacosPulldownMenuItem(
+                            title: const Text('Edit Menu...'),
+                            onTap: () => debugPrint("Editing menu..."),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(width: 20),
                     const MacosPulldownButton(
