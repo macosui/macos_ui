@@ -114,7 +114,7 @@ class _MacosColorWellState extends State<MacosColorWell> {
           await _methodChannel.invokeMethod('color_panel', {
             'mode': '${widget.defaultMode}',
           });
-        } on MissingPluginException catch (e) {
+        } on MissingPluginException {
           throw MissingPluginException(
             'Cannot open NSColorPanel on platforms other than macOS.',
           );
