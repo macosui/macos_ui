@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:flutter/services.dart';
