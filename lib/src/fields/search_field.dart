@@ -7,15 +7,6 @@ import 'package:flutter/services.dart';
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
 const double _kSuggestionHeight = 20.0;
 
-enum SuggestionState {
-  /// shows suggestions when searchfield is brought into focus
-  expanded,
-
-  /// keeps the suggestion overlay hidden until
-  /// first letter is entered
-  hidden,
-}
-
 // enum to define the Focus of the searchfield when a suggestion is tapped
 enum SuggestionAction {
   /// shift to next focus
@@ -32,7 +23,6 @@ class MacosSearchField<T> extends StatefulWidget {
     Key? key,
     this.suggestions,
     this.onSuggestionTap,
-    this.suggestionState = SuggestionState.hidden,
     this.maxSuggestionsInViewPort = 5,
     this.suggestionHeight = _kSuggestionHeight,
     this.suggestionAction,
@@ -74,8 +64,6 @@ class MacosSearchField<T> extends StatefulWidget {
 
   /// Callback when the suggestion is selected.
   final Function(SearchFieldListItem<T>)? onSuggestionTap;
-
-  final SuggestionState suggestionState;
 
   /// Specifies the number of suggestions that can be shown in viewport.
   ///
@@ -243,11 +231,6 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
         });
       }
       if (isSuggestionExpanded) {
-        if (widget.suggestionState == SuggestionState.expanded) {
-          Future.delayed(const Duration(milliseconds: 100), () {
-            suggestionStream.sink.add(widget.suggestions);
-          });
-        }
         _overlayEntry = _createOverlay();
         Overlay.of(context)!.insert(_overlayEntry);
       } else {
@@ -288,14 +271,12 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             clearButtonMode: OverlayVisibilityMode.editing,
             onTap: () {
               /// only call if SuggestionState = [Suggestion.expand]
-              if (!isSuggestionExpanded &&
-                  widget.suggestionState == SuggestionState.expanded) {
-                suggestionStream.sink.add(widget.suggestions);
-                if (mounted) {
-                  setState(() {
-                    isSuggestionExpanded = true;
-                  });
-                }
+
+              suggestionStream.sink.add(widget.suggestions);
+              if (mounted) {
+                setState(() {
+                  isSuggestionExpanded = true;
+                });
               }
               widget.onTap?.call();
             },
