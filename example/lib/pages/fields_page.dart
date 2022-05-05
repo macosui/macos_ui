@@ -93,9 +93,8 @@ class _FieldsPageState extends State<FieldsPage> {
                 SizedBox(
                   width: 300.0,
                   child: MacosSearchField(
-                    suggestions: ["Barcelona", "London", "Washington"]
-                        .map((e) => SearchFieldListItem(e))
-                        .toList(),
+                    suggestions:
+                        languages.map((e) => SearchSuggestionItem(e)).toList(),
                     placeholder: 'Search with suggestions...',
                     onSuggestionTap: (suggestionValue) {
                       print(suggestionValue.searchKey);
@@ -121,3 +120,40 @@ class _FieldsPageState extends State<FieldsPage> {
     );
   }
 }
+
+const languages = [
+  "Mandarin Chinese",
+  "Spanish",
+  "English",
+  "Hindi/Urdu",
+  "Arabic",
+  "Bengali",
+  "Portuguese",
+  "Russian",
+  "Japanese",
+  "German",
+  "Thai",
+  "Greek",
+  "Nepali",
+  "Punjabi",
+  "Wu",
+  "French",
+  "Telugu",
+  "Vietnamese",
+  "Marathi",
+  "Korean",
+  "Tamil",
+  "Italian",
+  "Turkish",
+  "Cantonese/Yue",
+  "Urdu",
+  "Javanese",
+  "Egyptian Arabic",
+  "Gujarati",
+  "Iranian Persian",
+  "Indonesian",
+  "Polish",
+  "Ukrainian",
+  "Romanian",
+  "Dutch"
+];
