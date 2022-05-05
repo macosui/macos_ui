@@ -26,11 +26,14 @@ class MacosSearchField<T> extends StatefulWidget {
   /// shown instead (set by default to [SizedBox.shrink]).
   ///
   /// Set what happens when selecting a suggestion item via the
-  /// [onSuggestionTap] property.
+  /// [onSuggestionSelected] property.
+  ///
+  /// You can also set a callback action individually for each
+  /// [SearchSuggestionItem] via the [onSelected] property.
   const MacosSearchField({
     Key? key,
     this.suggestions,
-    this.onSuggestionTap,
+    this.onSuggestionSelected,
     this.maxSuggestionsToShow = 5,
     this.suggestionHeight = _kSuggestionHeight,
     this.emptyWidget = const SizedBox.shrink(),
@@ -70,7 +73,7 @@ class MacosSearchField<T> extends StatefulWidget {
   final List<SearchSuggestionItem>? suggestions;
 
   /// Callback when the suggestion is selected.
-  final Function(SearchSuggestionItem)? onSuggestionTap;
+  final Function(SearchSuggestionItem)? onSuggestionSelected;
 
   /// Specifies the number of suggestions that can be shown in viewport.
   ///
@@ -449,8 +452,8 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                         selectedItem.onSelected?.call();
                         // hide the suggestions
                         suggestionStream.sink.add(null);
-                        if (widget.onSuggestionTap != null) {
-                          widget.onSuggestionTap!(selectedItem);
+                        if (widget.onSuggestionSelected != null) {
+                          widget.onSuggestionSelected!(selectedItem);
                         }
                       },
                       child: selectedItem.child ??

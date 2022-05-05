@@ -83,21 +83,14 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(
-                  width: 300.0,
-                  child: MacosSearchField(
-                    placeholder: 'Search...',
-                  ),
-                ),
-                const SizedBox(height: 20),
                 SizedBox(
                   width: 300.0,
                   child: MacosSearchField(
                     suggestions:
                         countries.map((e) => SearchSuggestionItem(e)).toList(),
-                    placeholder: 'Search with suggestions...',
-                    onSuggestionTap: (suggestionValue) {
-                      print(suggestionValue.searchKey);
+                    placeholder: 'Search for a country...',
+                    onSuggestionSelected: (suggestionValue) {
+                      debugPrint(suggestionValue.searchKey);
                     },
                     onChanged: (searchQuery) => debugPrint(searchQuery),
                   ),
@@ -108,9 +101,9 @@ class _FieldsPageState extends State<FieldsPage> {
                   child: MacosSearchField(
                     suggestions: actionSuggestions,
                     suggestionHeight: 40.0,
-                    placeholder: 'Search with suggestions...',
-                    onSuggestionTap: (suggestionValue) {
-                      print(suggestionValue.searchKey);
+                    placeholder: 'Search for an action...',
+                    onSuggestionSelected: (suggestionValue) {
+                      debugPrint(suggestionValue.searchKey);
                     },
                     onChanged: (searchQuery) => debugPrint(searchQuery),
                   ),
@@ -349,7 +342,7 @@ var actionSuggestions = [
     child: Row(
       children: const [
         Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: EdgeInsets.all(4.0),
           child: MacosIcon(CupertinoIcons.hammer),
         ),
         Text("Build project"),
@@ -362,7 +355,7 @@ var actionSuggestions = [
     child: Row(
       children: const [
         Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: EdgeInsets.all(4.0),
           child: MacosIcon(CupertinoIcons.tickets),
         ),
         Text("Debug project"),
@@ -375,7 +368,7 @@ var actionSuggestions = [
     child: Row(
       children: const [
         Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: EdgeInsets.all(4.0),
           child: MacosIcon(CupertinoIcons.folder),
         ),
         Text("Open containing folder"),
