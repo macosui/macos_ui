@@ -342,7 +342,7 @@ var actionSuggestions = [
     child: Row(
       children: const [
         Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.hammer),
         ),
         Text("Build project"),
@@ -355,7 +355,7 @@ var actionSuggestions = [
     child: Row(
       children: const [
         Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.tickets),
         ),
         Text("Debug project"),
@@ -368,7 +368,7 @@ var actionSuggestions = [
     child: Row(
       children: const [
         Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.folder),
         ),
         Text("Open containing folder"),

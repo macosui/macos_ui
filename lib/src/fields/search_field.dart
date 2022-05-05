@@ -17,12 +17,13 @@ class MacosSearchField<T> extends StatefulWidget {
   /// To provide a hint placeholder text that appears when the text entry is
   /// empty, pass a [String] to the [placeholder] parameter.
   ///
-  /// Based on a [MacosTextField] widget, when focused or tapped, it opens
-  /// an overlay showing a [suggestions] list of [SearchSuggestionItem]s
-  /// to choose from.
+  /// Based on a [MacosTextField] widget.
   ///
-  /// If searching yields no suggestions result, the [emptyWidget] is
-  /// shown instead (set by default to [SizedBox.shrink]).
+  /// When focused or tapped, it opens an overlay showing a [suggestions] list
+  /// of [SearchSuggestionItem]s to choose from.
+  ///
+  /// If searching yields no results, the [emptyWidget] is shown instead (set
+  /// by default to [SizedBox.shrink]).
   ///
   /// Set what happens when selecting a suggestion item via the
   /// [onSuggestionSelected] property.
@@ -71,14 +72,12 @@ class MacosSearchField<T> extends StatefulWidget {
   /// ```
   final List<SearchSuggestionItem>? suggestions;
 
-  /// Callback when the suggestion is selected.
+  /// Callback when any suggestion is selected.
   final Function(SearchSuggestionItem)? onSuggestionSelected;
 
-  /// Specifies the number of suggestions that can be shown in viewport.
+  /// Specifies the number of suggestions that will be displayed.
   ///
-  /// When not specified, the default value is `5`.
-  /// if the number of suggestions is less than 5, then [maxSuggestionsToShow]
-  /// will be the length of [suggestions]
+  /// It defaults to 5.
   final int maxSuggestionsToShow;
 
   /// Specifies height for each suggestion item in the list.
@@ -86,14 +85,15 @@ class MacosSearchField<T> extends StatefulWidget {
   /// When not specified, the default value is `20.0`.
   final double suggestionHeight;
 
-  /// Widget to show when the search returns
-  /// empty results.
-  /// defaults to [SizedBox.shrink]
+  /// Widget to show when the search returns no results.
+  ///
+  /// Defaults to [SizedBox.shrink]
   final Widget emptyWidget;
 
-  /// Specifies the `TextEditingController` for [SearchField].
+  /// Specifies the `TextEditingController` for [MacosSearchField].
   final TextEditingController? controller;
 
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
   /// Controls the [BoxDecoration] of the box behind the text input.
@@ -109,8 +109,7 @@ class MacosSearchField<T> extends StatefulWidget {
   /// no box decoration.
   final BoxDecoration? focusedDecoration;
 
-  /// Padding around the text entry area between the [prefix] and [suffix]
-  /// or the clear button when [clearButtonMode] is not never.
+  /// Padding around the text entry area.
   ///
   /// Defaults to a padding of 6 pixels on all sides and can be null.
   final EdgeInsets padding;
@@ -416,7 +415,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                       ),
                     );
                     selectedItem.onSelected?.call();
-                    // hide the suggestions
+                    // Hide the suggestions
                     suggestionStream.sink.add(null);
                     if (widget.onSuggestionSelected != null) {
                       widget.onSuggestionSelected!(selectedItem);
@@ -436,20 +435,26 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   }
 }
 
+/// An item to show in the search results of a search field.
 class SearchSuggestionItem {
+  /// Creates a macOS-styled item to show in the search results of a search
+  /// field.
+  ///
+  /// Can be further customized via its [child] property.
   const SearchSuggestionItem(
     this.searchKey, {
     this.child,
     this.onSelected,
   });
 
-  /// the text based on which the search happens
+  /// The string to search for.
   final String searchKey;
 
-  /// The widget to be shown in the searchField
-  /// if not specified, Text widget with default styling will be used
+  /// The widget to display in the search results overlay. If not specified, a
+  /// [Text] widget with the default styling will appear instead.
   final Widget? child;
 
+  /// The callback to call when this item is selected from the search results.
   final VoidCallback? onSelected;
 
   @override
@@ -464,6 +469,8 @@ class SearchSuggestionItem {
   int get hashCode => searchKey.hashCode;
 }
 
+/// A wrapper around the [SearchSuggestionItem] to provide it with the
+/// appropriate mouse and hover detection.
 class _SearchSuggestionItemButton extends StatefulWidget {
   const _SearchSuggestionItemButton({
     Key? key,
