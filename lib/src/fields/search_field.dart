@@ -68,10 +68,10 @@ class MacosSearchField<T> extends StatefulWidget {
   ///   .map((e) => SearchSuggestionItem(e, child: Text(e)))
   ///   .toList(),
   /// ```
-  final List<SearchSuggestionItem<T>>? suggestions;
+  final List<SearchSuggestionItem>? suggestions;
 
   /// Callback when the suggestion is selected.
-  final Function(SearchSuggestionItem<T>)? onSuggestionTap;
+  final Function(SearchSuggestionItem)? onSuggestionTap;
 
   /// Specifies the number of suggestions that can be shown in viewport.
   ///
@@ -210,8 +210,8 @@ class MacosSearchField<T> extends StatefulWidget {
 }
 
 class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
-  final StreamController<List<SearchSuggestionItem<T>?>?> suggestionStream =
-      StreamController<List<SearchSuggestionItem<T>?>?>.broadcast();
+  final StreamController<List<SearchSuggestionItem?>?> suggestionStream =
+      StreamController<List<SearchSuggestionItem?>?>.broadcast();
   FocusNode? _focus;
   bool isSuggestionExpanded = false;
   TextEditingController? searchController;
@@ -287,7 +287,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             focusNode: _focus,
             style: widget.style,
             onChanged: (query) {
-              final searchResult = <SearchSuggestionItem<T>>[];
+              final searchResult = <SearchSuggestionItem>[];
               if (query.isEmpty) {
                 suggestionStream.sink.add(widget.suggestions);
                 return;
@@ -302,6 +302,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                 }
               }
               suggestionStream.sink.add(searchResult);
+              widget.onChanged?.call(query);
             },
             decoration: widget.decoration,
             focusedDecoration: widget.focusedDecoration,
@@ -372,13 +373,11 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   }
 
   Widget _suggestionsBuilder() {
-    final scrollController = ScrollController();
-
-    return StreamBuilder<List<SearchSuggestionItem<T>?>?>(
+    return StreamBuilder<List<SearchSuggestionItem?>?>(
       stream: suggestionStream.stream,
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<SearchSuggestionItem<T>?>?> snapshot,
+        AsyncSnapshot<List<SearchSuggestionItem?>?> snapshot,
       ) {
         if (widget.suggestions == null ||
             snapshot.data == null ||
@@ -432,38 +431,35 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                   sigmaX: 20.0,
                   sigmaY: 20.0,
                 ),
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                  controller: scrollController,
-                  child: ListView.builder(
-                    controller: scrollController,
-                    reverse: isUp,
-                    padding: const EdgeInsets.all(6.0),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) =>
-                        _SearchSuggestionItemButton(
+                child: ListView.builder(
+                  reverse: isUp,
+                  padding: const EdgeInsets.all(6.0),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    var selectedItem = snapshot.data![index]!;
+                    return _SearchSuggestionItemButton(
                       suggestionHeight: widget.suggestionHeight,
                       onPressed: () {
-                        searchController!.text =
-                            snapshot.data![index]!.searchKey;
+                        searchController!.text = selectedItem.searchKey;
                         searchController!.selection =
                             TextSelection.fromPosition(
                           TextPosition(
                             offset: searchController!.text.length,
                           ),
                         );
+                        selectedItem.onSelected?.call();
                         // hide the suggestions
                         suggestionStream.sink.add(null);
                         if (widget.onSuggestionTap != null) {
-                          widget.onSuggestionTap!(snapshot.data![index]!);
+                          widget.onSuggestionTap!(selectedItem);
                         }
                       },
-                      child: snapshot.data![index]!.child ??
+                      child: selectedItem.child ??
                           Text(
-                            snapshot.data![index]!.searchKey,
+                            selectedItem.searchKey,
                           ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -474,22 +470,21 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   }
 }
 
-class SearchSuggestionItem<T> {
+class SearchSuggestionItem {
   const SearchSuggestionItem(
     this.searchKey, {
     this.child,
-    this.item,
+    this.onSelected,
   });
 
   /// the text based on which the search happens
   final String searchKey;
 
-  /// Custom Object to be associated with each ListItem
-  final T? item;
-
   /// The widget to be shown in the searchField
   /// if not specified, Text widget with default styling will be used
   final Widget? child;
+
+  final VoidCallback? onSelected;
 
   @override
   bool operator ==(Object other) {
