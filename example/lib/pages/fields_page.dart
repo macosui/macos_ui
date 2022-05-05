@@ -90,6 +90,8 @@ class _FieldsPageState extends State<FieldsPage> {
                         countries.map((e) => SearchSuggestionItem(e)).toList(),
                     placeholder: 'Search for a country...',
                     onSuggestionSelected: (suggestionValue) {
+                      // Retrieve the user-selected search suggestion via its
+                      // searchKey property.
                       debugPrint(suggestionValue.searchKey);
                     },
                     onChanged: (searchQuery) => debugPrint(searchQuery),
@@ -103,6 +105,8 @@ class _FieldsPageState extends State<FieldsPage> {
                     suggestionHeight: 40.0,
                     placeholder: 'Search for an action...',
                     onSuggestionSelected: (suggestionValue) {
+                      // Retrieve the user-selected search suggestion via its
+                      // searchKey property.
                       debugPrint(suggestionValue.searchKey);
                     },
                     onChanged: (searchQuery) => debugPrint(searchQuery),
