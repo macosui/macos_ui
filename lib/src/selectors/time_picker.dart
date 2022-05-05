@@ -8,8 +8,13 @@ import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
 
 /// Defines the possibles [MacosTimePicker] styles.
 enum TimePickerStyle {
+  /// A text-only variant of the time picker.
   textual,
+
+  /// A graphical variant of the time picker.
   graphical,
+
+  /// Combines both the [textual] and [graphical] styles.
   combined,
 }
 
@@ -322,8 +327,8 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
   }
 
   Widget _buildGraphicalTimePicker(MacosTimePickerThemeData timePickerTheme) {
-    const _clockHeight = 101.0;
-    const _clockWidth = 100.0;
+    const _clockHeight = 116.0;
+    const _clockWidth = 115.0;
     return SizedBox(
       height: _clockHeight,
       width: _clockWidth,
@@ -339,12 +344,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
             DateTime.now().second,
           ),
           dayPeriod: _selectedPeriod == DayPeriod.am ? 'AM' : 'PM',
-          backgroundColor: timePickerTheme.clockViewBackgroundColor!,
-          hourHandColor: timePickerTheme.hourHandColor!,
-          minuteHandColor: timePickerTheme.minuteHandColor!,
-          secondHandColor: timePickerTheme.secondHandColor!,
-          dayPeriodTextColor: timePickerTheme.dayPeriodTextColor!,
-          outerBorderColor: timePickerTheme.clockViewBorderColor!,
+          theme: timePickerTheme,
         ),
       ),
     );

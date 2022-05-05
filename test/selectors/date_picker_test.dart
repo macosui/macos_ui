@@ -5,7 +5,8 @@ import 'package:macos_ui/macos_ui.dart';
 
 void main() {
   group('MacosDatePicker tests', () {
-    testWidgets('MacosDatePicker renders the expected date', (tester) async {
+    testWidgets('Textual MacosDatePicker renders the expected date',
+        (tester) async {
       final today = DateTime.now();
       await tester.pumpWidget(
         MacosApp(
@@ -17,6 +18,7 @@ void main() {
                     return Center(
                       child: MacosDatePicker(
                         onDateChanged: (date) {},
+                        style: DatePickerStyle.textual,
                       ),
                     );
                   },

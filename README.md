@@ -794,7 +794,7 @@ There are three styles of `MacosDatePickers`:
 
 ## MacosTimePicker
 
-<img src="https://imgur.com/UKMDnSF.png" width="50%"/>
+<img src="https://imgur.com/RtPbRo2.png" width="50%"/>
 
 Lets the user choose a time.
 
