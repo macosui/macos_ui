@@ -8,8 +8,13 @@ import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
 
 /// Defines the possibles [MacosTimePicker] styles.
 enum TimePickerStyle {
+  /// A text-only variant of the time picker.
   textual,
+
+  /// A graphical variant of the time picker.
   graphical,
+
+  /// Combines both the [textual] and [graphical] styles.
   combined,
 }
 
