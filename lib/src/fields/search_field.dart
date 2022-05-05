@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:flutter/services.dart';
@@ -218,7 +217,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   late OverlayEntry _overlayEntry;
   final LayerLink _layerLink = LayerLink();
   double height = 0.0;
-  bool isUp = false;
+  bool showOverlayAbove = false;
 
   @override
   void initState() {
@@ -343,7 +342,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             left: offset.dx,
             width: size.width,
             child: CompositedTransformFollower(
-              offset: _getYOffset(offset, count),
+              offset: _getYOffset(offset, size, count),
               link: _layerLink,
               child: _suggestionsBuilder(),
             ),
@@ -353,20 +352,20 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     );
   }
 
-  Offset _getYOffset(Offset widgetOffset, int resultCount) {
+  Offset _getYOffset(Offset widgetOffset, Size fieldSize, int resultCount) {
     final size = MediaQuery.of(context).size;
     final position = widgetOffset.dy;
     if ((position + height) < (size.height - widget.suggestionHeight * 2)) {
-      return Offset(0, widget.suggestionHeight + 10.0);
+      return Offset(0, fieldSize.height);
     } else {
       if (resultCount > widget.maxSuggestionsToShow) {
-        isUp = false;
+        showOverlayAbove = false;
         return Offset(
           0,
           -(widget.suggestionHeight * widget.maxSuggestionsToShow),
         );
       } else {
-        isUp = true;
+        showOverlayAbove = true;
         return Offset(0, -(widget.suggestionHeight * resultCount));
       }
     }
@@ -432,7 +431,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                   sigmaY: 20.0,
                 ),
                 child: ListView.builder(
-                  reverse: isUp,
+                  reverse: showOverlayAbove,
                   padding: const EdgeInsets.all(6.0),
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
