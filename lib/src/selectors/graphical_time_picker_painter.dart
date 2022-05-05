@@ -7,6 +7,7 @@ import 'package:macos_ui/src/library.dart';
 /// A [CustomPainter] that recreates the native macOS graphical time picker.
 /// {@endtemplate}
 class GraphicalTimePickerPainter extends CustomPainter {
+  /// {@macro graphicalTimePickerPainter}
   GraphicalTimePickerPainter({
     required this.clockHeight,
     required this.time,
@@ -23,6 +24,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
   /// The day period to display (AM/PM).
   final String dayPeriod;
 
+  /// The theme to use.
   final MacosTimePickerThemeData theme;
 
   static const double handPinHoleSize = 3.0;
