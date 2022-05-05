@@ -358,7 +358,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             left: offset.dx,
             width: size.width,
             child: CompositedTransformFollower(
-              offset: getYOffset(offset, count),
+              offset: _getYOffset(offset, count),
               link: _layerLink,
               child: _suggestionsBuilder(),
             ),
@@ -368,7 +368,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     );
   }
 
-  Offset getYOffset(Offset widgetOffset, int resultCount) {
+  Offset _getYOffset(Offset widgetOffset, int resultCount) {
     final size = MediaQuery.of(context).size;
     final position = widgetOffset.dy;
     if ((position + height) < (size.height - widget.suggestionHeight * 2)) {

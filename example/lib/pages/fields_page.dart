@@ -97,6 +97,9 @@ class _FieldsPageState extends State<FieldsPage> {
                         .map((e) => SearchFieldListItem(e))
                         .toList(),
                     placeholder: 'Search with suggestions...',
+                    onSuggestionTap: (suggestionValue) {
+                      print(suggestionValue.searchKey);
+                    },
                   ),
                 ),
               ],
