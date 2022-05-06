@@ -5,33 +5,37 @@ import 'package:macos_ui/macos_ui.dart';
 
 void main() {
   group('MacosDatePicker tests', () {
-    testWidgets('MacosDatePicker renders the expected date', (tester) async {
-      final today = DateTime.now();
-      await tester.pumpWidget(
-        MacosApp(
-          home: MacosWindow(
-            child: MacosScaffold(
-              children: [
-                ContentArea(
-                  builder: (context, scrollController) {
-                    return Center(
-                      child: MacosDatePicker(
-                        onDateChanged: (date) {},
-                      ),
-                    );
-                  },
-                ),
-              ],
+    testWidgets(
+      'Textual MacosDatePicker renders the expected date',
+      (tester) async {
+        final today = DateTime.now();
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context, scrollController) {
+                      return Center(
+                        child: MacosDatePicker(
+                          onDateChanged: (date) {},
+                          style: DatePickerStyle.textual,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      expect(find.text('${today.day}'), findsNWidgets(2));
-      expect(find.text('/'), findsNWidgets(2));
-      expect(find.text('${today.month}'), findsNWidgets(2));
-      expect(find.text('${today.year}'), findsOneWidget);
-    });
+        expect(find.text('/'), findsNWidgets(2));
+        expect(find.text('${today.day}'), findsOneWidget);
+        expect(find.text('${today.month}'), findsOneWidget);
+        expect(find.text('${today.year}'), findsOneWidget);
+      },
+    );
 
     testWidgets(
       'Can select the date field element and change the value',

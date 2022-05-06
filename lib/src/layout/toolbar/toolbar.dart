@@ -23,7 +23,8 @@ class ToolBar extends StatefulWidget {
   /// features (toolbar items).
   ///
   /// Toolbar items include [ToolBarIconButton], [ToolBarPulldownButton], and
-  /// [ToolBarSpacer] widgets, and should be provided via the [items] property.
+  /// [ToolBarSpacer] and [CustomToolbarItem] widgets, and should be provided
+  /// via the [items] property.
   ///
   /// The action of every toolbar item should also be provided as a menu bar
   /// command of your app.
@@ -98,8 +99,8 @@ class ToolBar extends StatefulWidget {
   /// A list of [ToolbarItem] widgets to display in a row after the [title] widget,
   /// as the toolbar actions.
   ///
-  /// Toolbar items include [ToolBarIconButton], [ToolBarPulldownButton], and
-  /// [ToolBarSpacer] widgets.
+  /// Toolbar items include [ToolBarIconButton], [ToolBarPulldownButton],
+  /// [ToolBarSpacer], and [CustomToolbarItem] widgets.
   ///
   /// If the toolbar actions exceed the available toolbar width (e.g. when the
   /// window is resized), the overflowed actions are displayed via a

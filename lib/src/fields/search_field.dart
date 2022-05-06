@@ -1,9 +1,14 @@
+import 'dart:async';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:flutter/services.dart';
 
+const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
+const double _kResultHeight = 20.0;
+const double _kResultsOverlayMargin = 12.0;
+
 /// A macOS-style search field.
-class MacosSearchField extends StatelessWidget {
+class MacosSearchField<T> extends StatefulWidget {
   /// Creates a macOS-style search field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with
@@ -12,36 +17,32 @@ class MacosSearchField extends StatelessWidget {
   /// To provide a hint placeholder text that appears when the text entry is
   /// empty, pass a [String] to the [placeholder] parameter.
   ///
-  /// The [maxLines] property can be set to null to remove the restriction on
-  /// the number of lines. In this mode, the intrinsic height of the widget will
-  /// grow as the number of lines of text grows. By default, it is `1`, meaning
-  /// this is a single-line text field and will scroll horizontally when
-  /// overflown. [maxLines] must not be zero.
+  /// Based on a [MacosTextField] widget.
   ///
-  /// The text cursor is not shown if [showCursor] is false or if [showCursor]
-  /// is null (the default) and [readOnly] is true.
+  /// When focused or tapped, it opens an overlay showing a [results] list
+  /// of [SearchResultItem]s to choose from.
   ///
-  /// If specified, the [maxLength] property must be greater than zero.
+  /// If searching yields no results, the [emptyWidget] is shown instead (set
+  /// by default to [SizedBox.shrink]).
   ///
+  /// Set what happens when selecting a suggestion item via the
+  /// [onResultSelected] property.
   ///
-  /// The [autocorrect], [autofocus], [expands], [maxLengthEnforcement],[readOnly],
-  /// [textAlign], and [enableSuggestions] properties must not be null.
-  ///
-  /// See also:
-  ///
-  ///  * [minLines], which is the minimum number of lines to occupy when the
-  ///    content spans fewer lines.
-  ///  * [expands], to allow the widget to size itself to its parent's height.
-  ///  * [maxLength], which discusses the precise meaning of "number of
-  ///    characters" and how it may differ from the intuitive meaning.
+  /// You can also set a callback action individually for each
+  /// [SearchResultItem] via the [onSelected] property.
   const MacosSearchField({
     Key? key,
+    this.results,
+    this.onResultSelected,
+    this.maxResultsToShow = 5,
+    this.resultHeight = _kResultHeight,
+    this.emptyWidget = const SizedBox.shrink(),
     this.controller,
     this.focusNode,
     this.decoration = kDefaultRoundedBorderDecoration,
     this.focusedDecoration = kDefaultFocusedBorderDecoration,
     this.padding = const EdgeInsets.all(4.0),
-    this.placeholder,
+    this.placeholder = "Search",
     this.placeholderStyle = const TextStyle(
       fontWeight: FontWeight.w400,
       color: CupertinoColors.placeholderText,
@@ -50,23 +51,47 @@ class MacosSearchField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.autocorrect = true,
     this.autofocus = false,
-    this.enableSuggestions = true,
-    this.maxLines = 1,
+    this.maxLines,
     this.minLines,
     this.expands = false,
     this.maxLength,
     this.maxLengthEnforcement,
     this.onChanged,
-    this.onEditingComplete,
-    this.onSubmitted,
     this.inputFormatters,
     this.enabled = true,
     this.onTap,
   }) : super(key: key);
 
-  /// Controls the text being edited.
+  /// List of results for the searchfield.
   ///
-  /// If null, this widget will create its own [TextEditingController].
+  /// Each suggestion should have a unique searchKey.
+  ///
+  /// ```dart
+  /// ['ABC', 'DEF', 'GHI', 'JKL']
+  ///   .map((e) => SearchResultItem(e, child: Text(e)))
+  ///   .toList(),
+  /// ```
+  final List<SearchResultItem>? results;
+
+  /// The action to perform when any suggestion is selected.
+  final Function(SearchResultItem)? onResultSelected;
+
+  /// Specifies the number of results that will be displayed.
+  ///
+  /// Defaults to `5`.
+  final int maxResultsToShow;
+
+  /// Specifies the height of each suggestion item in the list.
+  ///
+  /// When not specified, the default value is `20.0`.
+  final double resultHeight;
+
+  /// Widget to show when the search returns no results.
+  ///
+  /// Defaults to [SizedBox.shrink].
+  final Widget emptyWidget;
+
+  /// Specifies the `TextEditingController` for [MacosSearchField].
   final TextEditingController? controller;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -85,8 +110,7 @@ class MacosSearchField extends StatelessWidget {
   /// no box decoration.
   final BoxDecoration? focusedDecoration;
 
-  /// Padding around the text entry area between the [prefix] and [suffix]
-  /// or the clear button when [clearButtonMode] is not never.
+  /// Padding around the text entry area.
   ///
   /// Defaults to a padding of 6 pixels on all sides and can be null.
   final EdgeInsets padding;
@@ -127,9 +151,6 @@ class MacosSearchField extends StatelessWidget {
   /// {@macro flutter.widgets.editableText.autocorrect}
   final bool autocorrect;
 
-  /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
-  final bool enableSuggestions;
-
   /// {@macro flutter.widgets.editableText.maxLines}
   final int? maxLines;
 
@@ -169,20 +190,10 @@ class MacosSearchField extends StatelessWidget {
   /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
   final MaxLengthEnforcement? maxLengthEnforcement;
 
+  /// Use this to get the current search query of the [MacosSearchField].
+  ///
   /// {@macro flutter.widgets.editableText.onChanged}
   final ValueChanged<String>? onChanged;
-
-  /// {@macro flutter.widgets.editableText.onEditingComplete}
-  final VoidCallback? onEditingComplete;
-
-  /// {@macro flutter.widgets.editableText.onSubmitted}
-  ///
-  /// See also:
-  ///
-  ///  * [TextInputAction.next] and [TextInputAction.previous], which
-  ///    automatically shift the focus to the next/previous focusable item when
-  ///    the user is done editing.
-  final ValueChanged<String>? onSubmitted;
 
   /// {@macro flutter.widgets.editableText.inputFormatters}
   final List<TextInputFormatter>? inputFormatters;
@@ -198,39 +209,334 @@ class MacosSearchField extends StatelessWidget {
   final GestureTapCallback? onTap;
 
   @override
+  _MacosSearchFieldState<T> createState() => _MacosSearchFieldState();
+}
+
+class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
+  final StreamController<List<SearchResultItem?>?> suggestionStream =
+      StreamController<List<SearchResultItem?>?>.broadcast();
+  FocusNode? _focus;
+  bool isResultExpanded = false;
+  TextEditingController? searchController;
+  late OverlayEntry _overlayEntry;
+  final LayerLink _layerLink = LayerLink();
+  double height = 0.0;
+  bool showOverlayAbove = false;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = widget.controller ?? TextEditingController();
+    if (widget.focusNode != null) {
+      _focus = widget.focusNode;
+    } else {
+      _focus = FocusNode();
+    }
+    _focus!.addListener(() {
+      if (mounted) {
+        setState(() {
+          isResultExpanded = _focus!.hasFocus;
+        });
+      }
+      if (isResultExpanded) {
+        _overlayEntry = _createOverlay();
+        Overlay.of(context)!.insert(_overlayEntry);
+      } else {
+        _overlayEntry.remove();
+      }
+    });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      suggestionStream.sink.add(null);
+      suggestionStream.sink.add(widget.results);
+    });
+  }
+
+  @override
+  void dispose() {
+    suggestionStream.close();
+    if (widget.controller == null) {
+      searchController!.dispose();
+    }
+    if (widget.focusNode == null) {
+      _focus!.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MacosTextField(
-      prefix: const Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 4.0,
-          vertical: 2.0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CompositedTransformTarget(
+          link: _layerLink,
+          child: MacosTextField(
+            placeholder: widget.placeholder,
+            prefix: const Padding(
+              padding: EdgeInsets.symmetric(),
+              child: MacosIcon(CupertinoIcons.search),
+            ),
+            clearButtonMode: OverlayVisibilityMode.editing,
+            onTap: () {
+              suggestionStream.sink.add(widget.results);
+              if (mounted) {
+                setState(() {
+                  isResultExpanded = true;
+                });
+              }
+              widget.onTap?.call();
+            },
+            controller: widget.controller ?? searchController,
+            focusNode: _focus,
+            style: widget.style,
+            onChanged: (query) {
+              final searchResult = <SearchResultItem>[];
+              if (query.isEmpty) {
+                suggestionStream.sink.add(widget.results);
+                return;
+              }
+              if (widget.results != null) {
+                for (final suggestion in widget.results!) {
+                  if (suggestion.searchKey
+                      .toLowerCase()
+                      .contains(query.toLowerCase())) {
+                    searchResult.add(suggestion);
+                  }
+                }
+              }
+              suggestionStream.sink.add(searchResult);
+              widget.onChanged?.call(query);
+            },
+            decoration: widget.decoration,
+            focusedDecoration: widget.focusedDecoration,
+            padding: widget.padding,
+            placeholderStyle: widget.placeholderStyle,
+            textAlign: widget.textAlign,
+            autocorrect: widget.autocorrect,
+            autofocus: widget.autofocus,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
+            expands: widget.expands,
+            maxLength: widget.maxLength,
+            maxLengthEnforcement: widget.maxLengthEnforcement,
+            inputFormatters: widget.inputFormatters,
+            enabled: widget.enabled,
+          ),
         ),
-        child: MacosIcon(CupertinoIcons.search),
+      ],
+    );
+  }
+
+  OverlayEntry _createOverlay() {
+    final renderBox = context.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+    final offset = renderBox.localToGlobal(Offset.zero);
+    return OverlayEntry(
+      builder: (context) => StreamBuilder<List<SearchResultItem?>?>(
+        stream: suggestionStream.stream,
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<List<SearchResultItem?>?> snapshot,
+        ) {
+          late var count = widget.maxResultsToShow;
+          if (snapshot.data != null) {
+            count = snapshot.data!.length;
+          }
+          return Positioned(
+            left: offset.dx,
+            width: size.width,
+            child: CompositedTransformFollower(
+              offset: _getYOffset(offset, size, count),
+              link: _layerLink,
+              child: _resultsBuilder(),
+            ),
+          );
+        },
       ),
-      clearButtonMode: OverlayVisibilityMode.editing,
-      controller: controller,
-      focusNode: focusNode,
-      decoration: decoration,
-      focusedDecoration: focusedDecoration,
-      padding: padding,
-      placeholder: placeholder,
-      placeholderStyle: placeholderStyle,
-      style: style,
-      textAlign: textAlign,
-      autocorrect: autocorrect,
-      autofocus: autofocus,
-      enableSuggestions: enableSuggestions,
-      maxLines: maxLines,
-      minLines: minLines,
-      expands: expands,
-      maxLength: maxLength,
-      maxLengthEnforcement: maxLengthEnforcement,
-      onChanged: onChanged,
-      onEditingComplete: onEditingComplete,
-      onSubmitted: onSubmitted,
-      inputFormatters: inputFormatters,
-      enabled: enabled,
-      onTap: onTap,
+    );
+  }
+
+  Offset _getYOffset(Offset widgetOffset, Size fieldSize, int resultCount) {
+    final size = MediaQuery.of(context).size;
+    final position = widgetOffset.dy;
+    if ((position + height) < (size.height - widget.resultHeight * 2)) {
+      return Offset(0, fieldSize.height);
+    } else {
+      if (resultCount > widget.maxResultsToShow) {
+        showOverlayAbove = false;
+        return Offset(
+          0,
+          -(widget.resultHeight * widget.maxResultsToShow),
+        );
+      } else {
+        showOverlayAbove = true;
+        return Offset(0, -(widget.resultHeight * resultCount));
+      }
+    }
+  }
+
+  Widget _resultsBuilder() {
+    return StreamBuilder<List<SearchResultItem?>?>(
+      stream: suggestionStream.stream,
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<List<SearchResultItem?>?> snapshot,
+      ) {
+        if (widget.results == null ||
+            snapshot.data == null ||
+            !isResultExpanded) {
+          return const SizedBox.shrink();
+        } else if (snapshot.data!.isEmpty) {
+          return MacosOverlayFilter(
+            borderRadius: _kBorderRadius,
+            child: widget.emptyWidget,
+          );
+        } else {
+          if (snapshot.data!.length > widget.maxResultsToShow) {
+            height = widget.resultHeight * widget.maxResultsToShow;
+          } else if (snapshot.data!.length == 1) {
+            height = widget.resultHeight;
+          } else {
+            height = snapshot.data!.length * widget.resultHeight;
+          }
+          height += _kResultsOverlayMargin;
+
+          return MacosOverlayFilter(
+            borderRadius: _kBorderRadius,
+            color: MacosSearchFieldTheme.of(context).resultsBackgroundColor,
+            child: SizedBox(
+              height: height,
+              child: ListView.builder(
+                reverse: showOverlayAbove,
+                padding: const EdgeInsets.all(6.0),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  var selectedItem = snapshot.data![index]!;
+                  return _SearchResultItemButton(
+                    resultHeight: widget.resultHeight,
+                    onPressed: () {
+                      searchController!.text = selectedItem.searchKey;
+                      searchController!.selection = TextSelection.fromPosition(
+                        TextPosition(
+                          offset: searchController!.text.length,
+                        ),
+                      );
+                      selectedItem.onSelected?.call();
+                      // Hide the results
+                      suggestionStream.sink.add(null);
+                      if (widget.onResultSelected != null) {
+                        widget.onResultSelected!(selectedItem);
+                      }
+                    },
+                    child: selectedItem.child ??
+                        Text(
+                          selectedItem.searchKey,
+                        ),
+                  );
+                },
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+/// An item to show in the search results of a search field.
+class SearchResultItem {
+  /// Creates a macOS-styled item to show in the search results of a search
+  /// field.
+  ///
+  /// Can be further customized via its [child] property.
+  const SearchResultItem(
+    this.searchKey, {
+    this.child,
+    this.onSelected,
+  });
+
+  /// The string to search for.
+  final String searchKey;
+
+  /// The widget to display in the search results overlay. If not specified, a
+  /// [Text] widget with the default styling will appear instead.
+  final Widget? child;
+
+  /// The callback to call when this item is selected from the search results.
+  final VoidCallback? onSelected;
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is SearchResultItem &&
+            runtimeType == other.runtimeType &&
+            searchKey == other.searchKey;
+  }
+
+  @override
+  int get hashCode => searchKey.hashCode;
+}
+
+/// A wrapper around the [SearchResultItem] to provide it with the
+/// appropriate mouse and hover detection.
+class _SearchResultItemButton extends StatefulWidget {
+  const _SearchResultItemButton({
+    Key? key,
+    this.onPressed,
+    required this.child,
+    required this.resultHeight,
+  }) : super(key: key);
+
+  final VoidCallback? onPressed;
+  final Widget child;
+  final double resultHeight;
+
+  @override
+  State<_SearchResultItemButton> createState() =>
+      _SearchResultItemButtonState();
+}
+
+class _SearchResultItemButtonState extends State<_SearchResultItemButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = MacosTheme.brightnessOf(context);
+    return MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      onEnter: (_) {
+        setState(() => _isHovered = true);
+      },
+      onExit: (_) {
+        setState(() => _isHovered = false);
+      },
+      child: GestureDetector(
+        onTap: widget.onPressed,
+        child: Container(
+          height: widget.resultHeight,
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? MacosSearchFieldTheme.of(context).highlightColor
+                : Colors.transparent,
+            borderRadius: _kBorderRadius,
+          ),
+          child: DefaultTextStyle(
+            style: TextStyle(
+              fontSize: 13.0,
+              color: _isHovered
+                  ? MacosColors.white
+                  : brightness.resolve(
+                      MacosColors.black,
+                      MacosColors.white,
+                    ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: widget.child,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

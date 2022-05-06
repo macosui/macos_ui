@@ -51,11 +51,11 @@ const BoxDecoration kDefaultRoundedBorderDecoration = BoxDecoration(
       offset: Offset(0, 1),
     ),
   ],
-  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  borderRadius: BorderRadius.all(Radius.circular(7.0)),
 );
 
 const BoxDecoration kDefaultFocusedBorderDecoration = BoxDecoration(
-  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  borderRadius: BorderRadius.all(Radius.circular(7.0)),
 );
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(

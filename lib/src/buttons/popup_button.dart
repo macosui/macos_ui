@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -233,115 +232,82 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
 
     return FadeTransition(
       opacity: _fadeOpacity,
-      child: Container(
-        decoration: BoxDecoration(
-          color: popupColor?.withOpacity(0.25),
-          boxShadow: [
-            BoxShadow(
-              color: brightness
-                  .resolve(
-                    CupertinoColors.systemGrey.color,
-                    CupertinoColors.black,
-                  )
-                  .withOpacity(0.25),
-              offset: const Offset(0, 4),
-              spreadRadius: 4.0,
-              blurRadius: 8.0,
-            ),
-          ],
-          border: Border.all(
-            color: brightness.resolve(
-              CupertinoColors.systemGrey3.color,
-              CupertinoColors.systemGrey3.darkColor,
-            ),
+      child: Semantics(
+        scopesRoute: true,
+        namesRoute: true,
+        explicitChildNodes: true,
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            scrollbars: false,
+            overscroll: false,
+            physics: const ClampingScrollPhysics(),
+            platform: TargetPlatform.macOS,
           ),
-          borderRadius: _kBorderRadius,
-        ),
-        child: Semantics(
-          scopesRoute: true,
-          namesRoute: true,
-          explicitChildNodes: true,
-          child: ScrollConfiguration(
-            // MacosPopup menus show an up or down caret arrow when items
-            // are not visible within the available height.
-            // No scrollbars are shown.
-            behavior: ScrollConfiguration.of(context).copyWith(
-              scrollbars: false,
-              overscroll: false,
-              physics: const ClampingScrollPhysics(),
-              platform: TargetPlatform.macOS,
-            ),
-            child: PrimaryScrollController(
-              controller: widget.route.scrollController!,
-              child: NotificationListener(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 50.0,
-                      sigmaY: 50.0,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _showTopCaret
-                            ? Container(
-                                width: widget.buttonRect.width,
-                                height: widget.buttonRect.height,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: _kSideRadius,
-                                    topRight: _kSideRadius,
-                                  ),
-                                ),
-                                child: Icon(
-                                  CupertinoIcons.chevron_up,
-                                  color: caretColor,
-                                  size: 12.0,
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                        // Wrap the items list with an Expanded widget for to
-                        // avoid height overflow when having a lot of items.
-                        _showTopCaret || _showBottomCaret
-                            ? Expanded(
-                                child: itemsList,
-                              )
-                            : itemsList,
-                        _showBottomCaret
-                            ? Container(
-                                width: widget.buttonRect.width,
-                                height: widget.buttonRect.height,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: _kSideRadius,
-                                    bottomRight: _kSideRadius,
-                                  ),
-                                ),
-                                child: Icon(
-                                  CupertinoIcons.chevron_down,
-                                  color: caretColor,
-                                  size: 12.0,
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ],
-                    ),
-                  ),
+          child: PrimaryScrollController(
+            controller: widget.route.scrollController!,
+            child: NotificationListener(
+              onNotification: (t) {
+                if (t is ScrollUpdateNotification) {
+                  setState(() {
+                    _showTopCaret =
+                        widget.route.scrollController!.position.extentBefore >
+                            widget.buttonRect.height;
+                    _showBottomCaret =
+                        widget.route.scrollController!.position.extentAfter >
+                            widget.buttonRect.height;
+                  });
+                }
+                return true;
+              },
+              child: MacosOverlayFilter(
+                color: popupColor?.withOpacity(0.25),
+                borderRadius: _kBorderRadius,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _showTopCaret
+                        ? Container(
+                            width: widget.buttonRect.width,
+                            height: widget.buttonRect.height,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: _kSideRadius,
+                                topRight: _kSideRadius,
+                              ),
+                            ),
+                            child: Icon(
+                              CupertinoIcons.chevron_up,
+                              color: caretColor,
+                              size: 12.0,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    // Wrap the items list with an Expanded widget for to
+                    // avoid height overflow when having a lot of items.
+                    _showTopCaret || _showBottomCaret
+                        ? Expanded(
+                            child: itemsList,
+                          )
+                        : itemsList,
+                    _showBottomCaret
+                        ? Container(
+                            width: widget.buttonRect.width,
+                            height: widget.buttonRect.height,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: _kSideRadius,
+                                bottomRight: _kSideRadius,
+                              ),
+                            ),
+                            child: Icon(
+                              CupertinoIcons.chevron_down,
+                              color: caretColor,
+                              size: 12.0,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ],
                 ),
-                onNotification: (t) {
-                  if (t is ScrollUpdateNotification) {
-                    setState(() {
-                      _showTopCaret =
-                          widget.route.scrollController!.position.extentBefore >
-                              widget.buttonRect.height;
-                      _showBottomCaret =
-                          widget.route.scrollController!.position.extentAfter >
-                              widget.buttonRect.height;
-                    });
-                  }
-                  return true;
-                },
               ),
             ),
           ),
