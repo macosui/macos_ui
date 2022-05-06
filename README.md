@@ -295,6 +295,19 @@ Other toolbar examples:
 - Toolbar with title bar above (also see [the note above](#modern-window-look)):
 <img src="https://imgur.com/eAgcsKY.png"/>
 
+You can also create your own `CustomToolbarItem` to include any type of widget in the toolbar:
+
+```dart
+// Add a grey vertical line as a custom toolbar item:
+CustomToolbarItem(
+  inToolbarBuilder: (context) => Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(color: Colors.grey, width: 1, height: 30),
+  ),
+  inOverflowedBuilder: (context) =>
+      Container(color: Colors.grey, width: 30, height: 1),
+),
+```
 
 ## MacosListTile
 

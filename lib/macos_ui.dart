@@ -40,6 +40,7 @@ export 'src/layout/scaffold.dart';
 export 'src/layout/sidebar.dart';
 export 'src/layout/sidebar_item.dart';
 export 'src/layout/title_bar.dart';
+export 'src/layout/toolbar/custom_toolbar_item.dart';
 export 'src/layout/toolbar/toolbar.dart';
 export 'src/layout/toolbar/toolbar_overflow_menu.dart';
 export 'src/layout/toolbar/toolbar_overflow_menu_item.dart';
