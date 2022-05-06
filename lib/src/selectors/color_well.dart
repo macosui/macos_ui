@@ -46,6 +46,7 @@ enum ColorPickerMode {
 /// {@endtemplate}
 typedef OnColorSelected = void Function(Color color);
 
+/// {@template macosColorWell}
 /// A control that displays a color value and lets the user change that color
 /// value.
 ///
@@ -53,7 +54,9 @@ typedef OnColorSelected = void Function(Color color);
 /// which is an `NSColorPanel` from the Swift Cocoa library.
 ///
 /// Use a [MacosColorWell] when you want the user to be able to select a color.
+/// {@endtemplate}
 class MacosColorWell extends StatefulWidget {
+  /// {@macro macosColorWell}
   const MacosColorWell({
     Key? key,
     required this.onColorSelected,
@@ -111,8 +114,12 @@ class _MacosColorWellState extends State<MacosColorWell> {
           await _methodChannel.invokeMethod('color_panel', {
             'mode': '${widget.defaultMode}',
           });
+        } on MissingPluginException {
+          throw MissingPluginException(
+            'Cannot open NSColorPanel on platforms other than macOS.',
+          );
         } catch (e) {
-          debugPrint('$e');
+          debugPrint('Failed to open color panel: $e');
         }
       },
       child: SizedBox(
