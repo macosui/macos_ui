@@ -88,10 +88,10 @@ class _FieldsPageState extends State<FieldsPage> {
                   child: MacosSearchField(
                     results: countries.map((e) => SearchResultItem(e)).toList(),
                     placeholder: 'Search for a country...',
-                    onResultSelected: (suggestionValue) {
+                    onResultSelected: (resultItem) {
                       // Retrieve the user-selected search suggestion via its
                       // searchKey property.
-                      debugPrint(suggestionValue.searchKey);
+                      debugPrint(resultItem.searchKey);
                     },
                     onChanged: (searchQuery) => debugPrint(searchQuery),
                   ),
@@ -110,10 +110,10 @@ class _FieldsPageState extends State<FieldsPage> {
                       child: Text("No action found!"),
                     )),
                     placeholder: 'Search for an action...',
-                    onResultSelected: (suggestionValue) {
+                    onResultSelected: (resultItem) {
                       // Retrieve the user-selected search suggestion via its
                       // searchKey property.
-                      debugPrint(suggestionValue.searchKey);
+                      debugPrint(resultItem.searchKey);
                     },
                     onChanged: (searchQuery) => debugPrint(searchQuery),
                   ),
