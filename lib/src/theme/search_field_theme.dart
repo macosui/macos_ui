@@ -56,6 +56,7 @@ class MacosSearchFieldTheme extends InheritedTheme {
 ///  * [MacosSearchFieldTheme], the theme which is configured with this class.
 ///  * [MacosThemeData.MacosSearchFieldTheme], which can be used to override the default
 ///    style for [MacosSearchField]s below the overall [MacosTheme].
+/// {@endtemplate}
 class MacosSearchFieldThemeData with Diagnosticable {
   /// Creates a [MacosSearchFieldThemeData].
   const MacosSearchFieldThemeData({
