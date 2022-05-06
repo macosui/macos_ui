@@ -15,7 +15,6 @@ class MacosOverlayFilter extends StatelessWidget {
     required this.child,
     required this.borderRadius,
     this.height,
-    this.alignment,
     this.color,
   }) : super(key: key);
 
@@ -25,8 +24,6 @@ class MacosOverlayFilter extends StatelessWidget {
 
   final double? height;
 
-  final Alignment? alignment;
-
   final Color? color;
 
   @override
@@ -35,7 +32,6 @@ class MacosOverlayFilter extends StatelessWidget {
 
     return Container(
       height: height,
-      alignment: alignment,
       decoration: BoxDecoration(
         color: color ??
             (brightness.isDark

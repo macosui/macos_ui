@@ -100,9 +100,16 @@ class _FieldsPageState extends State<FieldsPage> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 300.0,
+                  // Example of search field with custom SearchSuggestionItems
+                  // and height.
                   child: MacosSearchField(
                     suggestions: actionSuggestions,
                     suggestionHeight: 40.0,
+                    emptyWidget: const Center(
+                        child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("No action found!"),
+                    )),
                     placeholder: 'Search for an action...',
                     onSuggestionSelected: (suggestionValue) {
                       // Retrieve the user-selected search suggestion via its

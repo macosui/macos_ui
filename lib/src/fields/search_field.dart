@@ -386,7 +386,10 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             !isSuggestionExpanded) {
           return const SizedBox.shrink();
         } else if (snapshot.data!.isEmpty) {
-          return widget.emptyWidget;
+          return MacosOverlayFilter(
+            borderRadius: _kBorderRadius,
+            child: widget.emptyWidget,
+          );
         } else {
           if (snapshot.data!.length > widget.maxSuggestionsToShow) {
             height = widget.suggestionHeight * widget.maxSuggestionsToShow;
@@ -400,7 +403,6 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           return MacosOverlayFilter(
             borderRadius: _kBorderRadius,
             height: height,
-            alignment: Alignment.centerLeft,
             color: MacosSearchFieldTheme.of(context).suggestionsBackgroundColor,
             child: ListView.builder(
               reverse: showOverlayAbove,
