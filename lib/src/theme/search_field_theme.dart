@@ -74,6 +74,7 @@ class MacosSearchFieldThemeData with Diagnosticable {
   /// overlay.
   final Color? resultsBackgroundColor;
 
+  /// Copied one [MacosSearchFieldThemeData] to another.
   MacosSearchFieldThemeData copyWith({
     Color? highlightColor,
     Color? resultsBackgroundColor,
