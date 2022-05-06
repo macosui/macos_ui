@@ -201,6 +201,7 @@ class MacosThemeData with Diagnosticable {
     MacosPulldownButtonThemeData? pulldownButtonTheme,
     MacosDatePickerThemeData? datePickerTheme,
     MacosTimePickerThemeData? timePickerTheme,
+    MacosSearchFieldThemeData? searchFieldTheme,
   }) {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
@@ -344,6 +345,15 @@ class MacosThemeData with Diagnosticable {
       hourTextColor: MacosColors.black,
     );
 
+    searchFieldTheme ??= MacosSearchFieldThemeData(
+      highlightColor: isDark
+          ? CupertinoColors.activeBlue.darkColor
+          : CupertinoColors.activeBlue.color,
+      resultsBackgroundColor: isDark
+          ? const Color.fromRGBO(30, 30, 30, 1)
+          : const Color.fromRGBO(242, 242, 247, 1),
+    );
+
     final defaultData = MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
@@ -361,6 +371,7 @@ class MacosThemeData with Diagnosticable {
       pulldownButtonTheme: pulldownButtonTheme,
       datePickerTheme: datePickerTheme,
       timePickerTheme: timePickerTheme,
+      searchFieldTheme: searchFieldTheme,
     );
 
     final customizedData = defaultData.copyWith(
@@ -379,6 +390,7 @@ class MacosThemeData with Diagnosticable {
       popupButtonTheme: popupButtonTheme,
       pulldownButtonTheme: pulldownButtonTheme,
       datePickerTheme: datePickerTheme,
+      searchFieldTheme: searchFieldTheme,
     );
 
     return defaultData.merge(customizedData);
@@ -407,6 +419,7 @@ class MacosThemeData with Diagnosticable {
     required this.pulldownButtonTheme,
     required this.datePickerTheme,
     required this.timePickerTheme,
+    required this.searchFieldTheme,
   });
 
   /// A default light theme.
@@ -477,6 +490,8 @@ class MacosThemeData with Diagnosticable {
 
   final MacosTimePickerThemeData timePickerTheme;
 
+  final MacosSearchFieldThemeData searchFieldTheme;
+
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
@@ -519,6 +534,11 @@ class MacosThemeData with Diagnosticable {
         b.timePickerTheme,
         t,
       ),
+      searchFieldTheme: MacosSearchFieldThemeData.lerp(
+        a.searchFieldTheme,
+        b.searchFieldTheme,
+        t,
+      ),
     );
   }
 
@@ -540,6 +560,7 @@ class MacosThemeData with Diagnosticable {
     MacosPulldownButtonThemeData? pulldownButtonTheme,
     MacosDatePickerThemeData? datePickerTheme,
     MacosTimePickerThemeData? timePickerTheme,
+    MacosSearchFieldThemeData? searchFieldTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -558,6 +579,7 @@ class MacosThemeData with Diagnosticable {
       pulldownButtonTheme: this.pulldownButtonTheme.merge(pulldownButtonTheme),
       datePickerTheme: this.datePickerTheme.merge(datePickerTheme),
       timePickerTheme: this.timePickerTheme.merge(timePickerTheme),
+      searchFieldTheme: this.searchFieldTheme.merge(searchFieldTheme),
     );
   }
 
@@ -580,6 +602,7 @@ class MacosThemeData with Diagnosticable {
       pulldownButtonTheme: pulldownButtonTheme.merge(other.pulldownButtonTheme),
       datePickerTheme: datePickerTheme.merge(other.datePickerTheme),
       timePickerTheme: timePickerTheme.merge(other.timePickerTheme),
+      searchFieldTheme: searchFieldTheme.merge(other.searchFieldTheme),
     );
   }
 
@@ -634,6 +657,12 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<MacosTimePickerThemeData>(
         'timePickerTheme',
         timePickerTheme,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<MacosSearchFieldThemeData>(
+        'searchFieldTheme',
+        searchFieldTheme,
       ),
     );
   }
