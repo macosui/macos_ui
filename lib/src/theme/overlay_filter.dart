@@ -7,8 +7,7 @@ import 'package:macos_ui/src/library.dart';
 /// effect.
 /// {@endtemplate}
 class MacosOverlayFilter extends StatelessWidget {
-  /// Applies a blur filter to its child to create a macOS-style "frosted glass"
-  /// effect.
+  /// {@macro macosOverlayFilter}
   ///
   /// Used mainly for the overlays that appear from various macOS-style widgets,
   /// like the pull-down and pop-up buttons, or the search field.
