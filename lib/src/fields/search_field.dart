@@ -81,7 +81,7 @@ class MacosSearchField<T> extends StatefulWidget {
   /// Defaults to `5`.
   final int maxResultsToShow;
 
-  /// Specifies height for each suggestion item in the list.
+  /// Specifies the height of each suggestion item in the list.
   ///
   /// When not specified, the default value is `20.0`.
   final double resultHeight;
