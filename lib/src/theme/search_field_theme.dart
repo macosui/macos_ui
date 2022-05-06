@@ -46,6 +46,7 @@ class MacosSearchFieldTheme extends InheritedTheme {
       data != oldWidget.data;
 }
 
+/// {@template macosSearchFieldThemeData}
 /// A style that overrides the default appearance of
 /// [MacosSearchField]s when it is used with [MacosSearchFieldTheme] or with the
 /// overall [MacosTheme]'s [MacosThemeData.MacosSearchFieldTheme].
