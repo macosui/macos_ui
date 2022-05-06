@@ -59,7 +59,7 @@ class MacosSearchFieldThemeData with Diagnosticable {
   /// Creates a [MacosSearchFieldThemeData].
   const MacosSearchFieldThemeData({
     this.highlightColor,
-    this.suggestionsBackgroundColor,
+    this.resultsBackgroundColor,
   });
 
   /// The default highlight color for [MacosSearchField].
@@ -68,18 +68,18 @@ class MacosSearchFieldThemeData with Diagnosticable {
   /// hovers over it.
   final Color? highlightColor;
 
-  /// The default background color for the [MacosSearchField] search suggestions
+  /// The default background color for the [MacosSearchField] search results
   /// overlay.
-  final Color? suggestionsBackgroundColor;
+  final Color? resultsBackgroundColor;
 
   MacosSearchFieldThemeData copyWith({
     Color? highlightColor,
-    Color? suggestionsBackgroundColor,
+    Color? resultsBackgroundColor,
   }) {
     return MacosSearchFieldThemeData(
       highlightColor: highlightColor ?? this.highlightColor,
-      suggestionsBackgroundColor:
-          suggestionsBackgroundColor ?? this.suggestionsBackgroundColor,
+      resultsBackgroundColor:
+          resultsBackgroundColor ?? this.resultsBackgroundColor,
     );
   }
 
@@ -93,9 +93,9 @@ class MacosSearchFieldThemeData with Diagnosticable {
   ) {
     return MacosSearchFieldThemeData(
       highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
-      suggestionsBackgroundColor: Color.lerp(
-        a.suggestionsBackgroundColor,
-        b.suggestionsBackgroundColor,
+      resultsBackgroundColor: Color.lerp(
+        a.resultsBackgroundColor,
+        b.resultsBackgroundColor,
         t,
       ),
     );
@@ -107,20 +107,18 @@ class MacosSearchFieldThemeData with Diagnosticable {
       other is MacosSearchFieldThemeData &&
           runtimeType == other.runtimeType &&
           highlightColor?.value == other.highlightColor?.value &&
-          suggestionsBackgroundColor?.value ==
-              other.suggestionsBackgroundColor?.value;
+          resultsBackgroundColor?.value == other.resultsBackgroundColor?.value;
 
   @override
-  int get hashCode =>
-      highlightColor.hashCode ^ suggestionsBackgroundColor.hashCode;
+  int get hashCode => highlightColor.hashCode ^ resultsBackgroundColor.hashCode;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('highlightColor', highlightColor));
     properties.add(ColorProperty(
-      'suggestionsBackgroundColor',
-      suggestionsBackgroundColor,
+      'resultsBackgroundColor',
+      resultsBackgroundColor,
     ));
   }
 
@@ -128,7 +126,7 @@ class MacosSearchFieldThemeData with Diagnosticable {
     if (other == null) return this;
     return copyWith(
       highlightColor: other.highlightColor,
-      suggestionsBackgroundColor: other.suggestionsBackgroundColor,
+      resultsBackgroundColor: other.resultsBackgroundColor,
     );
   }
 }

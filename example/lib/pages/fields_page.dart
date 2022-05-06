@@ -86,10 +86,9 @@ class _FieldsPageState extends State<FieldsPage> {
                 SizedBox(
                   width: 300.0,
                   child: MacosSearchField(
-                    suggestions:
-                        countries.map((e) => SearchSuggestionItem(e)).toList(),
+                    results: countries.map((e) => SearchResultItem(e)).toList(),
                     placeholder: 'Search for a country...',
-                    onSuggestionSelected: (suggestionValue) {
+                    onResultSelected: (suggestionValue) {
                       // Retrieve the user-selected search suggestion via its
                       // searchKey property.
                       debugPrint(suggestionValue.searchKey);
@@ -100,10 +99,10 @@ class _FieldsPageState extends State<FieldsPage> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 300.0,
-                  // Example of search field with custom SearchSuggestionItems
+                  // Example of search field with custom SearchResultItems
                   // and height.
                   child: MacosSearchField(
-                    suggestions: actionSuggestions,
+                    results: actionResults,
                     suggestionHeight: 40.0,
                     emptyWidget: const Center(
                         child: Padding(
@@ -111,7 +110,7 @@ class _FieldsPageState extends State<FieldsPage> {
                       child: Text("No action found!"),
                     )),
                     placeholder: 'Search for an action...',
-                    onSuggestionSelected: (suggestionValue) {
+                    onResultSelected: (suggestionValue) {
                       // Retrieve the user-selected search suggestion via its
                       // searchKey property.
                       debugPrint(suggestionValue.searchKey);
@@ -347,8 +346,8 @@ const countries = [
   "Zimbabwe"
 ];
 
-var actionSuggestions = [
-  SearchSuggestionItem(
+var actionResults = [
+  SearchResultItem(
     "Build project",
     child: Row(
       children: const [
@@ -361,7 +360,7 @@ var actionSuggestions = [
     ),
     onSelected: () => debugPrint("Will build the project"),
   ),
-  SearchSuggestionItem(
+  SearchResultItem(
     "Debug project",
     child: Row(
       children: const [
@@ -374,7 +373,7 @@ var actionSuggestions = [
     ),
     onSelected: () => debugPrint("Will debug the project"),
   ),
-  SearchSuggestionItem(
+  SearchResultItem(
     "Open containing folder",
     child: Row(
       children: const [

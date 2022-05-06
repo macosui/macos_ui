@@ -4,8 +4,8 @@ import 'package:macos_ui/src/library.dart';
 import 'package:flutter/services.dart';
 
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
-const double _kSuggestionHeight = 20.0;
-const double _kSuggestionsOverlayMargin = 12.0;
+const double _kResultHeight = 20.0;
+const double _kResultsOverlayMargin = 12.0;
 
 /// A macOS-style search field.
 class MacosSearchField<T> extends StatefulWidget {
@@ -19,23 +19,23 @@ class MacosSearchField<T> extends StatefulWidget {
   ///
   /// Based on a [MacosTextField] widget.
   ///
-  /// When focused or tapped, it opens an overlay showing a [suggestions] list
-  /// of [SearchSuggestionItem]s to choose from.
+  /// When focused or tapped, it opens an overlay showing a [results] list
+  /// of [SearchResultItem]s to choose from.
   ///
   /// If searching yields no results, the [emptyWidget] is shown instead (set
   /// by default to [SizedBox.shrink]).
   ///
   /// Set what happens when selecting a suggestion item via the
-  /// [onSuggestionSelected] property.
+  /// [onResultSelected] property.
   ///
   /// You can also set a callback action individually for each
-  /// [SearchSuggestionItem] via the [onSelected] property.
+  /// [SearchResultItem] via the [onSelected] property.
   const MacosSearchField({
     Key? key,
-    this.suggestions,
-    this.onSuggestionSelected,
-    this.maxSuggestionsToShow = 5,
-    this.suggestionHeight = _kSuggestionHeight,
+    this.results,
+    this.onResultSelected,
+    this.maxResultsToShow = 5,
+    this.suggestionHeight = _kResultHeight,
     this.emptyWidget = const SizedBox.shrink(),
     this.controller,
     this.focusNode,
@@ -62,23 +62,23 @@ class MacosSearchField<T> extends StatefulWidget {
     this.onTap,
   }) : super(key: key);
 
-  /// List of suggestions for the searchfield.
+  /// List of results for the searchfield.
   /// each suggestion should have a unique searchKey
   ///
   /// ```dart
   /// ['ABC', 'DEF', 'GHI', 'JKL']
-  ///   .map((e) => SearchSuggestionItem(e, child: Text(e)))
+  ///   .map((e) => SearchResultItem(e, child: Text(e)))
   ///   .toList(),
   /// ```
-  final List<SearchSuggestionItem>? suggestions;
+  final List<SearchResultItem>? results;
 
   /// Callback when any suggestion is selected.
-  final Function(SearchSuggestionItem)? onSuggestionSelected;
+  final Function(SearchResultItem)? onResultSelected;
 
-  /// Specifies the number of suggestions that will be displayed.
+  /// Specifies the number of results that will be displayed.
   ///
   /// It defaults to 5.
-  final int maxSuggestionsToShow;
+  final int maxResultsToShow;
 
   /// Specifies height for each suggestion item in the list.
   ///
@@ -212,10 +212,10 @@ class MacosSearchField<T> extends StatefulWidget {
 }
 
 class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
-  final StreamController<List<SearchSuggestionItem?>?> suggestionStream =
-      StreamController<List<SearchSuggestionItem?>?>.broadcast();
+  final StreamController<List<SearchResultItem?>?> suggestionStream =
+      StreamController<List<SearchResultItem?>?>.broadcast();
   FocusNode? _focus;
-  bool isSuggestionExpanded = false;
+  bool isResultExpanded = false;
   TextEditingController? searchController;
   late OverlayEntry _overlayEntry;
   final LayerLink _layerLink = LayerLink();
@@ -234,10 +234,10 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     _focus!.addListener(() {
       if (mounted) {
         setState(() {
-          isSuggestionExpanded = _focus!.hasFocus;
+          isResultExpanded = _focus!.hasFocus;
         });
       }
-      if (isSuggestionExpanded) {
+      if (isResultExpanded) {
         _overlayEntry = _createOverlay();
         Overlay.of(context)!.insert(_overlayEntry);
       } else {
@@ -246,7 +246,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     });
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       suggestionStream.sink.add(null);
-      suggestionStream.sink.add(widget.suggestions);
+      suggestionStream.sink.add(widget.results);
     });
   }
 
@@ -277,10 +277,10 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             ),
             clearButtonMode: OverlayVisibilityMode.editing,
             onTap: () {
-              suggestionStream.sink.add(widget.suggestions);
+              suggestionStream.sink.add(widget.results);
               if (mounted) {
                 setState(() {
-                  isSuggestionExpanded = true;
+                  isResultExpanded = true;
                 });
               }
               widget.onTap?.call();
@@ -289,13 +289,13 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             focusNode: _focus,
             style: widget.style,
             onChanged: (query) {
-              final searchResult = <SearchSuggestionItem>[];
+              final searchResult = <SearchResultItem>[];
               if (query.isEmpty) {
-                suggestionStream.sink.add(widget.suggestions);
+                suggestionStream.sink.add(widget.results);
                 return;
               }
-              if (widget.suggestions != null) {
-                for (final suggestion in widget.suggestions!) {
+              if (widget.results != null) {
+                for (final suggestion in widget.results!) {
                   if (suggestion.searchKey
                       .toLowerCase()
                       .contains(query.toLowerCase())) {
@@ -331,13 +331,13 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
     return OverlayEntry(
-      builder: (context) => StreamBuilder<List<SearchSuggestionItem?>?>(
+      builder: (context) => StreamBuilder<List<SearchResultItem?>?>(
         stream: suggestionStream.stream,
         builder: (
           BuildContext context,
-          AsyncSnapshot<List<SearchSuggestionItem?>?> snapshot,
+          AsyncSnapshot<List<SearchResultItem?>?> snapshot,
         ) {
-          late var count = widget.maxSuggestionsToShow;
+          late var count = widget.maxResultsToShow;
           if (snapshot.data != null) {
             count = snapshot.data!.length;
           }
@@ -347,7 +347,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             child: CompositedTransformFollower(
               offset: _getYOffset(offset, size, count),
               link: _layerLink,
-              child: _suggestionsBuilder(),
+              child: _resultsBuilder(),
             ),
           );
         },
@@ -361,11 +361,11 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     if ((position + height) < (size.height - widget.suggestionHeight * 2)) {
       return Offset(0, fieldSize.height);
     } else {
-      if (resultCount > widget.maxSuggestionsToShow) {
+      if (resultCount > widget.maxResultsToShow) {
         showOverlayAbove = false;
         return Offset(
           0,
-          -(widget.suggestionHeight * widget.maxSuggestionsToShow),
+          -(widget.suggestionHeight * widget.maxResultsToShow),
         );
       } else {
         showOverlayAbove = true;
@@ -374,16 +374,16 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     }
   }
 
-  Widget _suggestionsBuilder() {
-    return StreamBuilder<List<SearchSuggestionItem?>?>(
+  Widget _resultsBuilder() {
+    return StreamBuilder<List<SearchResultItem?>?>(
       stream: suggestionStream.stream,
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<SearchSuggestionItem?>?> snapshot,
+        AsyncSnapshot<List<SearchResultItem?>?> snapshot,
       ) {
-        if (widget.suggestions == null ||
+        if (widget.results == null ||
             snapshot.data == null ||
-            !isSuggestionExpanded) {
+            !isResultExpanded) {
           return const SizedBox.shrink();
         } else if (snapshot.data!.isEmpty) {
           return MacosOverlayFilter(
@@ -391,26 +391,26 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
             child: widget.emptyWidget,
           );
         } else {
-          if (snapshot.data!.length > widget.maxSuggestionsToShow) {
-            height = widget.suggestionHeight * widget.maxSuggestionsToShow;
+          if (snapshot.data!.length > widget.maxResultsToShow) {
+            height = widget.suggestionHeight * widget.maxResultsToShow;
           } else if (snapshot.data!.length == 1) {
             height = widget.suggestionHeight;
           } else {
             height = snapshot.data!.length * widget.suggestionHeight;
           }
-          height += _kSuggestionsOverlayMargin;
+          height += _kResultsOverlayMargin;
 
           return MacosOverlayFilter(
             borderRadius: _kBorderRadius,
             height: height,
-            color: MacosSearchFieldTheme.of(context).suggestionsBackgroundColor,
+            color: MacosSearchFieldTheme.of(context).resultsBackgroundColor,
             child: ListView.builder(
               reverse: showOverlayAbove,
               padding: const EdgeInsets.all(6.0),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var selectedItem = snapshot.data![index]!;
-                return _SearchSuggestionItemButton(
+                return _SearchResultItemButton(
                   suggestionHeight: widget.suggestionHeight,
                   onPressed: () {
                     searchController!.text = selectedItem.searchKey;
@@ -420,10 +420,10 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                       ),
                     );
                     selectedItem.onSelected?.call();
-                    // Hide the suggestions
+                    // Hide the results
                     suggestionStream.sink.add(null);
-                    if (widget.onSuggestionSelected != null) {
-                      widget.onSuggestionSelected!(selectedItem);
+                    if (widget.onResultSelected != null) {
+                      widget.onResultSelected!(selectedItem);
                     }
                   },
                   child: selectedItem.child ??
@@ -441,12 +441,12 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
 }
 
 /// An item to show in the search results of a search field.
-class SearchSuggestionItem {
+class SearchResultItem {
   /// Creates a macOS-styled item to show in the search results of a search
   /// field.
   ///
   /// Can be further customized via its [child] property.
-  const SearchSuggestionItem(
+  const SearchResultItem(
     this.searchKey, {
     this.child,
     this.onSelected,
@@ -465,7 +465,7 @@ class SearchSuggestionItem {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is SearchSuggestionItem &&
+        other is SearchResultItem &&
             runtimeType == other.runtimeType &&
             searchKey == other.searchKey;
   }
@@ -474,10 +474,10 @@ class SearchSuggestionItem {
   int get hashCode => searchKey.hashCode;
 }
 
-/// A wrapper around the [SearchSuggestionItem] to provide it with the
+/// A wrapper around the [SearchResultItem] to provide it with the
 /// appropriate mouse and hover detection.
-class _SearchSuggestionItemButton extends StatefulWidget {
-  const _SearchSuggestionItemButton({
+class _SearchResultItemButton extends StatefulWidget {
+  const _SearchResultItemButton({
     Key? key,
     this.onPressed,
     required this.child,
@@ -489,12 +489,11 @@ class _SearchSuggestionItemButton extends StatefulWidget {
   final double suggestionHeight;
 
   @override
-  State<_SearchSuggestionItemButton> createState() =>
-      _SearchSuggestionItemButtonState();
+  State<_SearchResultItemButton> createState() =>
+      _SearchResultItemButtonState();
 }
 
-class _SearchSuggestionItemButtonState
-    extends State<_SearchSuggestionItemButton> {
+class _SearchResultItemButtonState extends State<_SearchResultItemButton> {
   bool _isHovered = false;
 
   @override

@@ -40,7 +40,7 @@ void main() {
       final builder = DiagnosticPropertiesBuilder();
       MacosSearchFieldThemeData(
         highlightColor: CupertinoColors.activeBlue.color,
-        suggestionsBackgroundColor: const Color.fromRGBO(242, 242, 247, 1),
+        resultsBackgroundColor: const Color.fromRGBO(242, 242, 247, 1),
       ).debugFillProperties(builder);
 
       final description = builder.properties
@@ -52,7 +52,7 @@ void main() {
         description,
         [
           'highlightColor: Color(0xff007aff)',
-          'suggestionsBackgroundColor: Color(0xfff2f2f7)',
+          'resultsBackgroundColor: Color(0xfff2f2f7)',
         ],
       );
     });
@@ -80,17 +80,17 @@ void main() {
 
       final theme = MacosSearchFieldTheme.of(capturedContext);
       expect(theme.highlightColor, const Color(0xff007aff));
-      expect(theme.suggestionsBackgroundColor, const Color(0xfff2f2f7));
+      expect(theme.resultsBackgroundColor, const Color(0xfff2f2f7));
     });
   });
 }
 
 final _macosSearchFieldTheme = MacosSearchFieldThemeData(
   highlightColor: CupertinoColors.activeBlue.color,
-  suggestionsBackgroundColor: const Color.fromRGBO(242, 242, 247, 1),
+  resultsBackgroundColor: const Color.fromRGBO(242, 242, 247, 1),
 );
 
 final _macosSearchFieldThemeDark = MacosSearchFieldThemeData(
   highlightColor: CupertinoColors.activeBlue.darkColor,
-  suggestionsBackgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+  resultsBackgroundColor: const Color.fromRGBO(30, 30, 30, 1),
 );

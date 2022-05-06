@@ -34,9 +34,8 @@ void main() {
                       child: SizedBox(
                         width: 300.0,
                         child: MacosSearchField(
-                          suggestions: kOptions
-                              .map((e) => SearchSuggestionItem(e))
-                              .toList(),
+                          results:
+                              kOptions.map((e) => SearchResultItem(e)).toList(),
                           controller: controller,
                         ),
                       ),

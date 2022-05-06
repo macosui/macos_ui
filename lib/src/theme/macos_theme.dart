@@ -349,7 +349,7 @@ class MacosThemeData with Diagnosticable {
       highlightColor: isDark
           ? CupertinoColors.activeBlue.darkColor
           : CupertinoColors.activeBlue.color,
-      suggestionsBackgroundColor: isDark
+      resultsBackgroundColor: isDark
           ? const Color.fromRGBO(30, 30, 30, 1)
           : const Color.fromRGBO(242, 242, 247, 1),
     );

@@ -617,6 +617,8 @@ MacosTextField(
 
 A search field is a style of text field optimized for performing text-based searches in a large collection of values.
 
+When the user starts typing into the search field, a list of results appears in an overlay below (or above) the field. 
+
 <img src="https://imgur.com/qbabwAW.png" width="75%"/>
 
 Here's an example of how to create a search field:
