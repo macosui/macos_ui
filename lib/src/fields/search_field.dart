@@ -35,7 +35,7 @@ class MacosSearchField<T> extends StatefulWidget {
     this.results,
     this.onResultSelected,
     this.maxResultsToShow = 5,
-    this.suggestionHeight = _kResultHeight,
+    this.resultHeight = _kResultHeight,
     this.emptyWidget = const SizedBox.shrink(),
     this.controller,
     this.focusNode,
@@ -83,7 +83,7 @@ class MacosSearchField<T> extends StatefulWidget {
   /// Specifies height for each suggestion item in the list.
   ///
   /// When not specified, the default value is `20.0`.
-  final double suggestionHeight;
+  final double resultHeight;
 
   /// Widget to show when the search returns no results.
   ///
@@ -358,18 +358,18 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   Offset _getYOffset(Offset widgetOffset, Size fieldSize, int resultCount) {
     final size = MediaQuery.of(context).size;
     final position = widgetOffset.dy;
-    if ((position + height) < (size.height - widget.suggestionHeight * 2)) {
+    if ((position + height) < (size.height - widget.resultHeight * 2)) {
       return Offset(0, fieldSize.height);
     } else {
       if (resultCount > widget.maxResultsToShow) {
         showOverlayAbove = false;
         return Offset(
           0,
-          -(widget.suggestionHeight * widget.maxResultsToShow),
+          -(widget.resultHeight * widget.maxResultsToShow),
         );
       } else {
         showOverlayAbove = true;
-        return Offset(0, -(widget.suggestionHeight * resultCount));
+        return Offset(0, -(widget.resultHeight * resultCount));
       }
     }
   }
@@ -392,11 +392,11 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           );
         } else {
           if (snapshot.data!.length > widget.maxResultsToShow) {
-            height = widget.suggestionHeight * widget.maxResultsToShow;
+            height = widget.resultHeight * widget.maxResultsToShow;
           } else if (snapshot.data!.length == 1) {
-            height = widget.suggestionHeight;
+            height = widget.resultHeight;
           } else {
-            height = snapshot.data!.length * widget.suggestionHeight;
+            height = snapshot.data!.length * widget.resultHeight;
           }
           height += _kResultsOverlayMargin;
 
@@ -411,7 +411,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
               itemBuilder: (context, index) {
                 var selectedItem = snapshot.data![index]!;
                 return _SearchResultItemButton(
-                  suggestionHeight: widget.suggestionHeight,
+                  resultHeight: widget.resultHeight,
                   onPressed: () {
                     searchController!.text = selectedItem.searchKey;
                     searchController!.selection = TextSelection.fromPosition(
@@ -481,12 +481,12 @@ class _SearchResultItemButton extends StatefulWidget {
     Key? key,
     this.onPressed,
     required this.child,
-    required this.suggestionHeight,
+    required this.resultHeight,
   }) : super(key: key);
 
   final VoidCallback? onPressed;
   final Widget child;
-  final double suggestionHeight;
+  final double resultHeight;
 
   @override
   State<_SearchResultItemButton> createState() =>
@@ -510,7 +510,7 @@ class _SearchResultItemButtonState extends State<_SearchResultItemButton> {
       child: GestureDetector(
         onTap: widget.onPressed,
         child: Container(
-          height: widget.suggestionHeight,
+          height: widget.resultHeight,
           decoration: BoxDecoration(
             color: _isHovered
                 ? MacosSearchFieldTheme.of(context).highlightColor

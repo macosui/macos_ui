@@ -103,7 +103,7 @@ class _FieldsPageState extends State<FieldsPage> {
                   // and height.
                   child: MacosSearchField(
                     results: actionResults,
-                    suggestionHeight: 40.0,
+                    resultHeight: 40.0,
                     emptyWidget: const Center(
                         child: Padding(
                       padding: EdgeInsets.all(8.0),
