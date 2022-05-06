@@ -1,3 +1,6 @@
+## [1.0.1+2]
+* New widget: `CustomToolbarItem` that enables any widget to be used in the `Toolbar`.
+
 ## [1.0.1]
 * Improvements to the graphical `MacosTimePicker`
   * Better color gradient on the border
