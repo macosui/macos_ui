@@ -630,15 +630,27 @@ MacosTextField(
 
 A search field is a style of text field optimized for performing text-based searches in a large collection of values.
 
+When the user starts typing into the search field, a list of selectable results appears in an overlay below (or above) the field. 
+
 <img src="https://imgur.com/qbabwAW.png" width="75%"/>
+
+| Dark Theme                                 | Light Theme                                |
+| ------------------------------------------ | ------------------------------------------ |
+| <img src="https://imgur.com/Jol85ny.jpg"/> | <img src="https://imgur.com/xP3l3Lv.jpg"/> |
 
 Here's an example of how to create a search field:
 
 ```dart
 MacosSearchField(
-  placeholder: 'Search...',
+  placeholder: 'Search for a country...',
+  results: countries.map((e) => SearchResultItem(e)).toList(),
+  onResultSelected: (resultItem) {
+    debugPrint(resultItem.searchKey);
+  },
 )
 ```
+
+Check the `examples/fields_page` for more examples.
 
 # Labels
 

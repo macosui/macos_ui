@@ -1,4 +1,8 @@
-## [1.0.1+2]
+## [1.1.0]
+* New functionality for `MacosSearchField`
+  * Shows a list of search results in an overlay below the field
+  * A result can be selected and customized.
+* A `MacosOverlayFilter` widget can now be used to apply the blurry "frosted glass" effect on surfaces.
 * New widget: `CustomToolbarItem` that enables any widget to be used in the `Toolbar`.
 
 ## [1.0.1]
