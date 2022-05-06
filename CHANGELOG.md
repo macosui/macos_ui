@@ -1,4 +1,4 @@
-## [1.0.1+1]
+## [1.1.0]
 * New functionality for `MacosSearchField`
   * Shows a list of search results in an overlay below the field
   * A result can be selected and customized.
