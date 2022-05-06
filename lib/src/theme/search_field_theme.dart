@@ -58,7 +58,7 @@ class MacosSearchFieldTheme extends InheritedTheme {
 ///    style for [MacosSearchField]s below the overall [MacosTheme].
 /// {@endtemplate}
 class MacosSearchFieldThemeData with Diagnosticable {
-  /// Creates a [MacosSearchFieldThemeData].
+  /// {@macro macosSearchFieldThemeData}
   const MacosSearchFieldThemeData({
     this.highlightColor,
     this.resultsBackgroundColor,
