@@ -15,16 +15,20 @@ class MacosOverlayFilter extends StatelessWidget {
     Key? key,
     required this.child,
     required this.borderRadius,
-    this.height,
     this.color,
   }) : super(key: key);
 
+  /// The widget to apply the blur filter to.
   final Widget child;
 
+  /// The border radius to use when applying the effect to the
+  /// child widget.
   final BorderRadius borderRadius;
 
-  final double? height;
-
+  /// The color to use as the filter's background.
+  ///
+  /// If it is null, the macOS default surface background
+  /// colors will be used.
   final Color? color;
 
   @override
@@ -32,7 +36,6 @@ class MacosOverlayFilter extends StatelessWidget {
     final brightness = MacosTheme.brightnessOf(context);
 
     return Container(
-      height: height,
       decoration: BoxDecoration(
         color: color ??
             (brightness.isDark

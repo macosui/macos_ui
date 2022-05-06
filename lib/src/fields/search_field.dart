@@ -403,36 +403,38 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
 
           return MacosOverlayFilter(
             borderRadius: _kBorderRadius,
-            height: height,
             color: MacosSearchFieldTheme.of(context).resultsBackgroundColor,
-            child: ListView.builder(
-              reverse: showOverlayAbove,
-              padding: const EdgeInsets.all(6.0),
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var selectedItem = snapshot.data![index]!;
-                return _SearchResultItemButton(
-                  resultHeight: widget.resultHeight,
-                  onPressed: () {
-                    searchController!.text = selectedItem.searchKey;
-                    searchController!.selection = TextSelection.fromPosition(
-                      TextPosition(
-                        offset: searchController!.text.length,
-                      ),
-                    );
-                    selectedItem.onSelected?.call();
-                    // Hide the results
-                    suggestionStream.sink.add(null);
-                    if (widget.onResultSelected != null) {
-                      widget.onResultSelected!(selectedItem);
-                    }
-                  },
-                  child: selectedItem.child ??
-                      Text(
-                        selectedItem.searchKey,
-                      ),
-                );
-              },
+            child: SizedBox(
+              height: height,
+              child: ListView.builder(
+                reverse: showOverlayAbove,
+                padding: const EdgeInsets.all(6.0),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  var selectedItem = snapshot.data![index]!;
+                  return _SearchResultItemButton(
+                    resultHeight: widget.resultHeight,
+                    onPressed: () {
+                      searchController!.text = selectedItem.searchKey;
+                      searchController!.selection = TextSelection.fromPosition(
+                        TextPosition(
+                          offset: searchController!.text.length,
+                        ),
+                      );
+                      selectedItem.onSelected?.call();
+                      // Hide the results
+                      suggestionStream.sink.add(null);
+                      if (widget.onResultSelected != null) {
+                        widget.onResultSelected!(selectedItem);
+                      }
+                    },
+                    child: selectedItem.child ??
+                        Text(
+                          selectedItem.searchKey,
+                        ),
+                  );
+                },
+              ),
             ),
           );
         }
