@@ -88,7 +88,7 @@ class MacosSearchField<T> extends StatefulWidget {
 
   /// Widget to show when the search returns no results.
   ///
-  /// Defaults to [SizedBox.shrink]
+  /// Defaults to [SizedBox.shrink].
   final Widget emptyWidget;
 
   /// Specifies the `TextEditingController` for [MacosSearchField].
