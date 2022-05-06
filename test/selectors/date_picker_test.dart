@@ -30,9 +30,9 @@ void main() {
           ),
         );
 
-        expect(find.text('${today.day}'), findsNWidgets(2));
+        expect(find.text('${today.day}'), findsOneWidget);
         expect(find.text('/'), findsNWidgets(2));
-        expect(find.text('${today.month}'), findsNWidgets(2));
+        expect(find.text('${today.month}'), findsOneWidget);
         expect(find.text('${today.year}'), findsOneWidget);
       },
     );
