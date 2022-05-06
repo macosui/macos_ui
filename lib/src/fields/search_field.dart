@@ -63,7 +63,7 @@ class MacosSearchField<T> extends StatefulWidget {
   }) : super(key: key);
 
   /// List of results for the searchfield.
-  /// 
+  ///
   /// Each suggestion should have a unique searchKey.
   ///
   /// ```dart
