@@ -1,7 +1,7 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-const kToolbarItemWidth = 32.0;
+const _kToolbarItemWidth = 32.0;
 
 /// A spacer utility widget for the toolbar.
 class ToolBarSpacer extends ToolbarItem {
@@ -12,7 +12,7 @@ class ToolBarSpacer extends ToolbarItem {
     this.spacerUnits = 1.0,
   }) : super(key: key);
 
-  /// How much space to generate, expressed in multiples of [kToolbarItemWidth]
+  /// How much space to generate, expressed in multiples of [_kToolbarItemWidth]
   ///
   /// Defaults to 1.0.
   final double spacerUnits;
@@ -21,7 +21,7 @@ class ToolBarSpacer extends ToolbarItem {
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       return SizedBox(
-        width: spacerUnits * kToolbarItemWidth,
+        width: spacerUnits * _kToolbarItemWidth,
       );
     } else {
       return const SizedBox.shrink();
