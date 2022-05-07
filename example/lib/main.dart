@@ -68,12 +68,6 @@ class _DemoState extends State<Demo> {
     const SelectorsPage(),
   ];
 
-  Color textLuminance(Color backgroundColor) {
-    return backgroundColor.computeLuminance() > 0.5
-        ? MacosColors.black
-        : MacosColors.white;
-  }
-
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
@@ -87,14 +81,6 @@ class _DemoState extends State<Demo> {
       // ),
       sidebar: Sidebar(
         minWidth: 200,
-        bottom: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: MacosListTile(
-            leading: MacosIcon(CupertinoIcons.profile_circled),
-            title: Text('Tim Apple'),
-            subtitle: Text('tim@apple.com'),
-          ),
-        ),
         builder: (context, controller) {
           return SidebarItems(
             currentIndex: pageIndex,
@@ -141,6 +127,14 @@ class _DemoState extends State<Demo> {
             ],
           );
         },
+        bottom: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: MacosListTile(
+            leading: MacosIcon(CupertinoIcons.profile_circled),
+            title: Text('Tim Apple'),
+            subtitle: Text('tim@apple.com'),
+          ),
+        ),
       ),
     );
   }
