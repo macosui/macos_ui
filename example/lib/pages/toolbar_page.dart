@@ -93,6 +93,7 @@ class _ToolbarPageState extends State<ToolbarPage> {
               ),
             ],
           ),
+          const ToolBarDivider(),
           ToolBarIconButton(
             label: "Table",
             icon: const MacosIcon(
