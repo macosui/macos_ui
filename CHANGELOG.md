@@ -1,3 +1,6 @@
+## [1.1.0+1]
+* Minor improvements to `README.md`
+
 ## [1.1.0]
 * New functionality for `MacosSearchField`
   * Shows a list of search results in an overlay below the field
