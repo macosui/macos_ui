@@ -33,7 +33,7 @@ class _ToolbarPageState extends State<ToolbarPage> {
             onPressed: () => debugPrint("Add..."),
             label: "Add",
             showLabel: true,
-            tooltipMessage: "This is a beautiful tooltip",
+            tooltipMessage: "This is another beautiful tooltip",
           ),
           const ToolBarSpacer(),
           ToolBarIconButton(
@@ -43,7 +43,6 @@ class _ToolbarPageState extends State<ToolbarPage> {
             ),
             onPressed: () => debugPrint("pressed"),
             showLabel: false,
-            tooltipMessage: "This is a beautiful tooltip",
           ),
           const ToolBarIconButton(
             label: "Change View",
@@ -51,11 +50,11 @@ class _ToolbarPageState extends State<ToolbarPage> {
               CupertinoIcons.list_bullet,
             ),
             showLabel: false,
-            tooltipMessage: "This is a beautiful tooltip",
           ),
           ToolBarPullDownButton(
             label: "Actions",
             icon: CupertinoIcons.ellipsis_circle,
+            tooltipMessage: "Perform tasks with the selected items",
             items: [
               MacosPulldownMenuItem(
                 label: "New Folder",

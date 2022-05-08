@@ -45,6 +45,8 @@ class ToolBarIconButton extends ToolbarItem {
   /// "image button" toolbar item.
   final bool showLabel;
 
+  /// An optional message to appear in a tooltip when user hovers over the
+  /// button.
   final String? tooltipMessage;
 
   @override
