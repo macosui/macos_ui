@@ -315,24 +315,15 @@ class _MacosTooltipState extends State<MacosTooltip>
     final MacosThemeData theme = MacosTheme.of(context);
     final tooltipTheme = theme.tooltipTheme.copyWith();
     final TextStyle? defaultTextStyle;
-    final BoxDecoration defaultDecoration;
     if (theme.brightness == Brightness.dark) {
       defaultTextStyle = theme.typography.body.copyWith(
         color: CupertinoColors.black,
         fontSize: _getDefaultFontSize(),
       );
-      defaultDecoration = BoxDecoration(
-        color: CupertinoColors.white.withOpacity(0.9),
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
-      );
     } else {
       defaultTextStyle = theme.typography.body.copyWith(
         color: CupertinoColors.white,
         fontSize: _getDefaultFontSize(),
-      );
-      defaultDecoration = BoxDecoration(
-        color: CupertinoColors.black.withOpacity(0.9),
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
       );
     }
 
@@ -342,7 +333,7 @@ class _MacosTooltipState extends State<MacosTooltip>
     verticalOffset = tooltipTheme.verticalOffset ?? _defaultVerticalOffset;
     preferBelow = tooltipTheme.preferBelow ?? _defaultPreferBelow;
     excludeFromSemantics = widget.excludeFromSemantics;
-    decoration = tooltipTheme.decoration ?? defaultDecoration;
+    decoration = tooltipTheme.decoration!;
     textStyle = tooltipTheme.textStyle ?? defaultTextStyle;
     waitDuration = tooltipTheme.waitDuration ?? _defaultWaitDuration;
     showDuration = tooltipTheme.showDuration ?? _getDefaultShowDuration();
@@ -450,6 +441,7 @@ class _TooltipOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(decoration);
     return Positioned.fill(
       child: IgnorePointer(
         child: CustomSingleChildLayout(

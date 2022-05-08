@@ -22,27 +22,44 @@ class TooltipThemeData with Diagnosticable {
     required TextStyle textStyle,
   }) {
     return TooltipThemeData(
-      height: 32.0,
-      verticalOffset: 24.0,
-      preferBelow: false,
+      height: 20.0,
+      verticalOffset: 18.0,
+      preferBelow: true,
       margin: EdgeInsets.zero,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
       waitDuration: const Duration(seconds: 1),
       textStyle: textStyle,
       decoration: () {
-        const radius = BorderRadius.zero;
-        final shadow = kElevationToShadow[4];
+        final radius = BorderRadius.circular(2.0);
+        final shadow = [
+          BoxShadow(
+            color: brightness == Brightness.light
+                ? CupertinoColors.systemGrey3.color.withOpacity(0.5)
+                : CupertinoColors.black.withOpacity(0.5),
+            offset: const Offset(0, 2),
+            spreadRadius: 0.5,
+            blurRadius: 4,
+          ),
+        ];
+        final border = Border.all(
+          width: 0.5,
+          color: brightness == Brightness.light
+              ? CupertinoColors.systemGrey3.color
+              : CupertinoColors.systemGrey3.darkColor,
+        );
         if (brightness == Brightness.light) {
           return BoxDecoration(
-            color: CupertinoColors.systemGrey6.color,
+            color: Color(0xFFE1E3E5),
             borderRadius: radius,
             boxShadow: shadow,
+            border: border,
           );
         } else {
           return BoxDecoration(
-            color: CupertinoColors.systemGrey6.darkColor,
+            color: Color(0xFF1C1C1E),
             borderRadius: radius,
             boxShadow: shadow,
+            border: border,
           );
         }
       }(),
