@@ -331,7 +331,7 @@ class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
     return positionDependentBox(
       size: size,
       childSize: childSize,
-      target: target,
+      target: Offset(target.dx + childSize.width / 2, target.dy),
       verticalOffset: verticalOffset,
       preferBelow: preferBelow,
     );
