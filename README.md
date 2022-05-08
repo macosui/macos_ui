@@ -124,11 +124,6 @@ your `MacosScaffold` in a `Builder` widget in order for this to work properly.
 
 <img src="https://imgur.com/IBbp5rN.gif" width="75%">
 
-Here is a basic example of a `MacosWindow`:
-```dart
-
-```
-
 ## MacosScaffold
 
 The `MacosScaffold` is what you might call a "page".
