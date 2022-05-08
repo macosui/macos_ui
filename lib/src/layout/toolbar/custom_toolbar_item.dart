@@ -30,6 +30,7 @@ class CustomToolbarItem extends ToolbarItem {
     Key? key,
     required this.inToolbarBuilder,
     this.inOverflowedBuilder,
+    this.tooltipMessage,
   }) : super(key: key);
 
   /// Builds a custom widget to include in the [Toolbar].
@@ -45,10 +46,21 @@ class CustomToolbarItem extends ToolbarItem {
   /// Defaults to [SizedBox.shrink].
   final WidgetBuilder? inOverflowedBuilder;
 
+  /// An optional message to appear in a tooltip when user hovers over the
+  /// custom toolbar item.
+  final String? tooltipMessage;
+
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      return inToolbarBuilder(context);
+      Widget _widget = inToolbarBuilder(context);
+      if (tooltipMessage != null) {
+        _widget = MacosTooltip(
+          message: tooltipMessage!,
+          child: _widget,
+        );
+      }
+      return _widget;
     } else {
       return (inOverflowedBuilder != null)
           ? inOverflowedBuilder!(context)

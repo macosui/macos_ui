@@ -399,7 +399,6 @@ class RenderOverflowHandler extends RenderBox
     bool flipCrossAxis = false;
 
     childConstraints = BoxConstraints(maxWidth: constraints.maxWidth);
-    //TODO:
     mainAxisLimit = constraints.maxWidth - _overflowBreakpoint;
     if (textDirection == TextDirection.rtl) flipMainAxis = true;
 

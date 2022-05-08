@@ -20,6 +20,7 @@ class ToolBarIconButton extends ToolbarItem {
     required this.icon,
     this.onPressed,
     required this.showLabel,
+    this.tooltipMessage,
   }) : super(key: key);
 
   /// The label that describes this button's action.
@@ -44,11 +45,15 @@ class ToolBarIconButton extends ToolbarItem {
   /// "image button" toolbar item.
   final bool showLabel;
 
+  /// An optional message to appear in a tooltip when user hovers over the
+  /// button.
+  final String? tooltipMessage;
+
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     final brightness = MacosTheme.of(context).brightness;
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      final Widget iconButton = MacosIconButton(
+      Widget _iconButton = MacosIconButton(
         disabledColor: Colors.transparent,
         icon: MacosIconTheme(
           data: MacosTheme.of(context).iconTheme.copyWith(
@@ -71,11 +76,11 @@ class ToolBarIconButton extends ToolbarItem {
       );
 
       if (showLabel) {
-        return Padding(
+        _iconButton = Padding(
           padding: const EdgeInsets.fromLTRB(6.0, 6.0, 6.0, 0.0),
           child: Column(
             children: [
-              iconButton,
+              _iconButton,
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
@@ -89,9 +94,15 @@ class ToolBarIconButton extends ToolbarItem {
             ],
           ),
         );
-      } else {
-        return iconButton;
       }
+
+      if (tooltipMessage != null) {
+        _iconButton = MacosTooltip(
+          message: tooltipMessage!,
+          child: _iconButton,
+        );
+      }
+      return _iconButton;
     } else {
       return ToolbarOverflowMenuItem(
         label: label,

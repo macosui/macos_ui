@@ -89,7 +89,7 @@ class ScrollbarThemeData with Diagnosticable {
   final double? thickness;
 
   /// Overrides the default value of [MacosScrollbar.hoverThickness] in all
-  /// descendant [MacosScrollbar] widgtes when hovering is active.
+  /// descendant [MacosScrollbar] widgets when hovering is active.
   final double? hoveringThickness;
 
   /// Overrides the default value of [MacosScrollbar.showTrackOnHover] in all
