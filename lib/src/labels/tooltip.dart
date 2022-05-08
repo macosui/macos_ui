@@ -27,7 +27,6 @@ class MacosTooltip extends StatefulWidget {
     Key? key,
     required this.message,
     this.child,
-    this.style,
     this.excludeFromSemantics = false,
     this.useMousePosition = true,
   }) : super(key: key);
@@ -38,10 +37,6 @@ class MacosTooltip extends StatefulWidget {
   /// The widget the tooltip will be displayed, either above or below,
   /// when the mouse is hovering or whenever it gets long pressed.
   final Widget? child;
-
-  /// The style of the tooltip. If non-null, it's mescled with
-  /// [ThemeData.tooltipThemeData]
-  final TooltipThemeData? style;
 
   /// Whether the tooltip's [message] should be excluded from the
   /// semantics tree.
@@ -390,19 +385,16 @@ class _TooltipOverlay extends StatelessWidget {
             opacity: animation,
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: height),
-              child: DefaultTextStyle(
-                style: MacosTheme.of(context).typography.body,
-                child: Container(
-                  decoration: decoration,
-                  padding: padding,
-                  margin: margin,
-                  child: Center(
-                    widthFactor: 1.0,
-                    heightFactor: 1.0,
-                    child: Text(
-                      message,
-                      style: textStyle,
-                    ),
+              child: Container(
+                decoration: decoration,
+                padding: padding,
+                margin: margin,
+                child: Center(
+                  widthFactor: 1.0,
+                  heightFactor: 1.0,
+                  child: Text(
+                    message,
+                    style: textStyle,
                   ),
                 ),
               ),
