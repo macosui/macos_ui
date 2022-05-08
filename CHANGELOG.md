@@ -5,6 +5,9 @@
 * New widget: `ToolBarDivider` that can be used as a divider (vertical/horizontal line) in the `ToolBar` [#231](https://github.com/GroovinChip/macos_ui/issues/231).
 * All toolbar widgets can now receive a `tooltipMessage` property to display a `MacosTooltip` when user hovers over them [#232](https://github.com/GroovinChip/macos_ui/issues/232).
 
+## [1.1.0+1]
+* Minor improvements to `README.md`
+
 ## [1.1.0]
 * New functionality for `MacosSearchField`
   * Shows a list of search results in an overlay below the field

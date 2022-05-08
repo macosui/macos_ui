@@ -2,10 +2,17 @@
 
 Flutter widgets and themes implementing the current macOS design language.
 
+Check out our **interactive widget gallery** online at https://groovinchip.github.io/macos_ui/#/
+
+[![pub package](https://img.shields.io/pub/v/macos_ui.svg)](https://pub.dev/packages/macos_ui)
+[![pub package](https://img.shields.io/pub/publisher/macos_ui.svg)](https://pub.dev/packages/macos_ui)  
+
 [![Flutter Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml)
 [![Pana Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/pana_analysis.yml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/pana_analysis.yml)
 [![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
 [![codecov](https://codecov.io/gh/GroovinChip/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/GroovinChip/macos_ui)
+
+<img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
 ## Contents
 
@@ -105,13 +112,22 @@ Flutter widgets and themes implementing the current macOS design language.
 
 `MacosWindow` is the basic frame for a macOS-style layout.
 
-It has a `Sidebar` on the left, an optional `TitleBar` at the top, and the rest of the window is typically filled out
-with a `MacosScaffold`. A scope for the `MacosWindow` is provided by `MacosWindowScope`.
-The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`. **Please note** that you must
-wrap your `MacosScaffold` in a `Builder` widget in order for this to work properly.
+<img src="https://imgur.com/olstQFC.png" width="40%"/>
+<img src="https://imgur.com/yFXsoSy.png" width="40%"/>
 
-<img src="https://imgur.com/LtdfKvv.png" width="75%">
+It supports a `Sidebar` on the left, an optional `TitleBar` at the top, and the rest of the window is typically filled out
+with a `MacosScaffold`. 
 
+A scope for the `MacosWindow` is provided by `MacosWindowScope`.
+The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`. **Please note** that you must wrap 
+your `MacosScaffold` in a `Builder` widget in order for this to work properly.
+
+<img src="https://imgur.com/IBbp5rN.gif" width="75%">
+
+Here is a basic example of a `MacosWindow`:
+```dart
+
+```
 
 ## MacosScaffold
 
