@@ -16,6 +16,7 @@ class ToolBarPullDownButton extends ToolbarItem {
     required this.label,
     required this.icon,
     required this.items,
+    this.tooltipMessage,
   }) : super(key: key);
 
   /// The label that describes this button's action.
@@ -43,12 +44,16 @@ class ToolBarPullDownButton extends ToolbarItem {
   /// content.
   final List<MacosPulldownMenuEntry>? items;
 
+  /// An optional message to appear in a tooltip when user hovers over the
+  /// pull-down button.
+  final String? tooltipMessage;
+
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     final brightness = MacosTheme.of(context).brightness;
 
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      return Padding(
+      Widget _pulldownButton = Padding(
         padding: const EdgeInsets.symmetric(vertical: 6.0),
         child: MacosPulldownButtonTheme(
           data: MacosPulldownButtonTheme.of(context).copyWith(
@@ -63,6 +68,14 @@ class ToolBarPullDownButton extends ToolbarItem {
           ),
         ),
       );
+
+      if (tooltipMessage != null) {
+        _pulldownButton = MacosTooltip(
+          message: tooltipMessage!,
+          child: _pulldownButton,
+        );
+      }
+      return _pulldownButton;
     } else {
       // We should show a submenu for the pulldown button items.
       final subMenuKey = GlobalKey<ToolbarPopupState>();

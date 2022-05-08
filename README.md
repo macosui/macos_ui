@@ -678,9 +678,11 @@ Tooltips succinctly describe how to use controls without shifting people’s foc
 Help tags appear when the user positions the pointer over a control for a few seconds. A tooltip remains visible for 
 10 seconds, or until the pointer moves away from the control.
 
-![Tooltip Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/help_Tooltip.png)
+| Dark Theme                                 | Light Theme                                |
+| ------------------------------------------ | ------------------------------------------ |
+| <img src="https://imgur.com/0qLFqdK.jpg"/> | <img src="https://imgur.com/Y3PLqBo.jpg"/> |
 
-To create a tooltip, wrap any widget on a `Tooltip`:
+To create a tooltip, wrap any widget on a `MacosTooltip`:
 
 ```dart
 MacosTooltip(
@@ -689,8 +691,8 @@ MacosTooltip(
 ),
 ```
 
-You can customize the tooltip the way you want using its `style` property. A tooltip automatically adapts to its 
-environment, responding to touch and pointer events.
+You can customize the tooltip the way you want by customizing the theme's `TooltipTheme`. A tooltip automatically adapts to its 
+environment, responding to touch and pointer events. To use a tooltip with a toolbar item, provide it with a `tooltipMessage` property.
 
 # Indicators
 

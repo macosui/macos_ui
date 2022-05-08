@@ -21,7 +21,7 @@ void _ensureTooltipVisible(GlobalKey key) {
   (key.currentState as dynamic).ensureTooltipVisible();
 }
 
-const String tooltipText = 'TIP';
+const String tooltipText = 'A message for the tooltip';
 
 Finder _findTooltipContainer(String tooltipText) {
   return find.ancestor(
@@ -32,7 +32,7 @@ Finder _findTooltipContainer(String tooltipText) {
 
 void main() {
   testWidgets(
-    'Does tooltip end up in the right place - center',
+    'Does tooltip end up in the right place - left aligned, below the widget',
     (tester) async {
       final key = GlobalKey();
       await tester.pumpWidget(
@@ -76,9 +76,9 @@ void main() {
       final RenderBox tip = tester.renderObject(
         _findTooltipContainer(tooltipText),
       );
-      final tipInGlobal = tip.localToGlobal(tip.size.topCenter(Offset.zero));
+      final tipInGlobal = tip.localToGlobal(tip.size.topLeft(Offset.zero));
       expect(tipInGlobal.dx, 300.0);
-      expect(tipInGlobal.dy, 24.0);
+      expect(tipInGlobal.dy, 18.0);
     },
   );
 }
