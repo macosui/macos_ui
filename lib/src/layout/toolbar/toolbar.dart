@@ -179,7 +179,7 @@ class _ToolBarState extends State<ToolBar> {
 
     // Collect the toolbar action widgets that can be shown inside the ToolBar
     // and the ones that have overflowed.
-    late List<ToolbarItem>? _inToolbarActions;
+    List<ToolbarItem>? _inToolbarActions = [];
     List<ToolbarItem> _overflowedActions = [];
     bool doAllItemsShowLabel = true;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
@@ -241,7 +241,7 @@ class _ToolBarState extends State<ToolBar> {
                         .toList(),
                   ),
                 ),
-                children: _inToolbarActions!
+                children: _inToolbarActions
                     .map((e) =>
                         e.build(context, ToolbarItemDisplayMode.inToolbar))
                     .toList(),
