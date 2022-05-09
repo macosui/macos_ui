@@ -48,7 +48,7 @@ function HomepageHeader() {
         <Spacer />
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg"
             to="/docs/getting_started/overview"
           >
             <Translate id="home.get_started">Get Started</Translate>
