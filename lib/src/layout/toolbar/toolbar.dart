@@ -123,7 +123,16 @@ class ToolBar extends StatefulWidget {
 }
 
 class _ToolBarState extends State<ToolBar> {
-  List<int> overflowedActionsIndexes = [];
+  int overflowedActionsCount = 0;
+
+  @override
+  void didUpdateWidget(ToolBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.actions != null &&
+        widget.actions!.length != oldWidget.actions!.length) {
+      overflowedActionsCount = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,13 +179,13 @@ class _ToolBarState extends State<ToolBar> {
 
     // Collect the toolbar action widgets that can be shown inside the ToolBar
     // and the ones that have overflowed.
-    List<ToolbarItem>? _inToolbarActions = [];
-    late List<ToolbarItem> _overflowedActions;
+    late List<ToolbarItem>? _inToolbarActions;
+    List<ToolbarItem> _overflowedActions = [];
     bool doAllItemsShowLabel = true;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
-      _inToolbarActions = widget.actions!;
-      _overflowedActions = overflowedActionsIndexes
-          .map((index) => widget.actions![index])
+      _inToolbarActions = widget.actions ?? [];
+      _overflowedActions = _inToolbarActions
+          .sublist(_inToolbarActions.length - overflowedActionsCount)
           .toList();
       // If all toolbar actions have labels shown below their icons,
       // reduce the overflow button's size as well.
@@ -232,12 +241,12 @@ class _ToolBarState extends State<ToolBar> {
                         .toList(),
                   ),
                 ),
-                children: _inToolbarActions
+                children: _inToolbarActions!
                     .map((e) =>
                         e.build(context, ToolbarItemDisplayMode.inToolbar))
                     .toList(),
                 overflowChangedCallback: (hiddenItems) {
-                  setState(() => overflowedActionsIndexes = hiddenItems);
+                  setState(() => overflowedActionsCount = hiddenItems.length);
                 },
               ),
               middleSpacing: 8,
