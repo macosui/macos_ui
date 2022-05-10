@@ -65,46 +65,42 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Codelabs',
             items: [
               {
-                label: 'Install',
-                to: '/docs/getting_started/installation',
+                label: 'Write your first app',
+                to: '/docs/getting_started/first_app',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Info',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Bugs & Issues',
+                href: 'https://github.com/GroovinChip/macos_ui/issues',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Discussions',
+                href: 'https://github.com/GroovinChip/macos_ui/discussions',
+              },
+            ],
+          },
+          {
+            title: 'Links',
+            items: [
+              {
+                label: 'GitHub',
+                href: 'https://github.com/GroovinChip/macos_ui',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://twitter.com/GroovinChip',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Reuben Turner (GroovinChip).`,
       },
       colorMode: {
         defaultMode: "dark",

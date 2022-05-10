@@ -1,5 +1,5 @@
 ---
-id: basic_concepts
+id: first_app
 title: Write your first app
 sidebar_position: 2
 ---
