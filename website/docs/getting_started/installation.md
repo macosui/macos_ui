@@ -31,4 +31,4 @@ Now in your Dart code, you can use:
 import 'package:macos_ui/macos_ui.dart';
 ```
 
-Congratulations! You've now added `macos_ui` to your application. Let's move on to some basic concepts.
+Congratulations! You've now added `macos_ui` to your application. Let's move on to a codelab that will introduce some basic concepts.
