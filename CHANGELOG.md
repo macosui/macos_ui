@@ -1,3 +1,6 @@
+## [1.2.1+1]
+* Fix `MacosApp` documentation
+
 ## [1.2.1]
 * Fixes issue with error thrown when toolbar actions are modified programmatically [#239](https://github.com/GroovinChip/macos_ui/issues/239) 
 
