@@ -20,6 +20,7 @@ class Sidebar {
     this.startWidth,
     this.padding = EdgeInsets.zero,
     this.windowBreakpoint = 556.0,
+    this.top,
     this.bottom,
     this.topOffset = 51.0,
   }) : dragClosedBuffer = dragClosedBuffer ?? minWidth / 2;
@@ -96,7 +97,14 @@ class Sidebar {
   /// Specifies the width of the window at which this [Sidebar] will be hidden.
   final double windowBreakpoint;
 
-  /// Widget that should be displayed at the Bottom of the Sidebar
+  /// Widget that should be displayed at the top of the [Sidebar].
+  ///
+  /// Commonly a [MacosSearchField].
+  final Widget? top;
+
+  /// Widget that should be displayed at the bottom of the [Sidebar].
+  ///
+  /// Commonly a [MacosListTile].
   final Widget? bottom;
 
   /// Specifies the top offset of the sidebar.

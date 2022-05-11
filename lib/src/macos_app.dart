@@ -6,8 +6,8 @@ import 'package:macos_ui/src/library.dart';
 ///
 /// A convenience widget that wraps a number of widgets that are commonly
 /// required for an macOS-design targeting application. It builds upon a
-/// [WidgetsApp] by macOS specific defaulting such as fonts and scrolling
-/// physics.
+/// [CupertinoApp] by adding macOS specific defaulting such as themes and
+/// scrolling physics.
 ///
 /// The [MacosApp] configures the top-level [Navigator] to search for routes
 /// in the following order:
@@ -415,7 +415,7 @@ class _MacosAppState extends State<MacosApp> {
   }
 }
 
-/// Describes how [Scrollable] widgets behave for [FluentApp]s.
+/// Describes how [Scrollable] widgets behave for [MacosApp]s.
 ///
 /// {@macro flutter.widgets.scrollBehavior}
 ///
