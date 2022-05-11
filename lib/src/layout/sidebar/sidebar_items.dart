@@ -225,26 +225,28 @@ class _SidebarItem extends StatelessWidget {
               vertical: 7 + theme.visualDensity.horizontal,
               horizontal: spacing,
             ),
-            child: Row(children: [
-              if (hasLeading)
-                Padding(
-                  padding: EdgeInsets.only(right: spacing),
-                  child: MacosIconTheme.merge(
-                    data: MacosIconThemeData(
-                      color: selected
-                          ? MacosColors.white
-                          : CupertinoColors.systemBlue,
+            child: Row(
+              children: [
+                if (hasLeading)
+                  Padding(
+                    padding: EdgeInsets.only(right: spacing),
+                    child: MacosIconTheme.merge(
+                      data: MacosIconThemeData(
+                        color: selected
+                            ? MacosColors.white
+                            : MacosColors.controlAccentColor,
+                      ),
+                      child: item.leading!,
                     ),
-                    child: item.leading!,
                   ),
+                DefaultTextStyle(
+                  style: theme.typography.title3.copyWith(
+                    color: selected ? textLuminance(selectedColor) : null,
+                  ),
+                  child: item.label,
                 ),
-              DefaultTextStyle(
-                style: theme.typography.title3.copyWith(
-                  color: selected ? textLuminance(selectedColor) : null,
-                ),
-                child: item.label,
-              ),
-            ]),
+              ],
+            ),
           ),
         ),
       ),
@@ -321,8 +323,8 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
 
   Widget _buildChildren(BuildContext context, Widget? child) {
     final theme = MacosTheme.of(context);
-
     final double spacing = 10.0 + theme.visualDensity.horizontal;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,22 +334,24 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
           child: _SidebarItem(
             item: SidebarItem(
               label: widget.item.label,
-              leading: Row(children: [
-                if (widget.item.leading != null)
-                  Padding(
-                    padding: EdgeInsets.only(right: spacing),
-                    child: widget.item.leading!,
+              leading: Row(
+                children: [
+                  if (widget.item.leading != null)
+                    Padding(
+                      padding: EdgeInsets.only(right: spacing),
+                      child: widget.item.leading!,
+                    ),
+                  RotationTransition(
+                    turns: _iconTurns,
+                    child: Icon(
+                      CupertinoIcons.chevron_right,
+                      color: theme.brightness == Brightness.light
+                          ? MacosColors.black
+                          : MacosColors.white,
+                    ),
                   ),
-                RotationTransition(
-                  turns: _iconTurns,
-                  child: Icon(
-                    CupertinoIcons.chevron_right,
-                    color: theme.brightness == Brightness.light
-                        ? MacosColors.black
-                        : MacosColors.white,
-                  ),
-                ),
-              ]),
+                ],
+              ),
               unselectedColor: MacosColors.transparent,
               focusNode: widget.item.focusNode,
               semanticLabel: widget.item.semanticLabel,
@@ -379,7 +383,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
       child: TickerMode(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: widget.item.disclosureItems!.map((e) {
+          children: widget.item.disclosureItems!.map((item) {
             return Padding(
               padding: EdgeInsets.only(
                 left: 24.0 + theme.visualDensity.horizontal,
@@ -387,11 +391,9 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
               child: SizedBox(
                 width: double.infinity,
                 child: _SidebarItem(
-                  item: e,
-                  onClick: () {
-                    widget.onChanged?.call(e);
-                  },
-                  selected: widget.selectedItem == e,
+                  item: item,
+                  onClick: () => widget.onChanged?.call(item),
+                  selected: widget.selectedItem == item,
                 ),
               ),
             );

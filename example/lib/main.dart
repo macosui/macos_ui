@@ -80,6 +80,9 @@ class _DemoState extends State<Demo> {
       //   title: Text('macOS App Name'),
       // ),
       sidebar: Sidebar(
+        top: MacosSearchField(
+          placeholder: 'Search',
+        ),
         minWidth: 200,
         builder: (context, controller) {
           return SidebarItems(
@@ -127,13 +130,10 @@ class _DemoState extends State<Demo> {
             ],
           );
         },
-        bottom: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: MacosListTile(
-            leading: MacosIcon(CupertinoIcons.profile_circled),
-            title: Text('Tim Apple'),
-            subtitle: Text('tim@apple.com'),
-          ),
+        bottom: const MacosListTile(
+          leading: MacosIcon(CupertinoIcons.profile_circled),
+          title: Text('Tim Apple'),
+          subtitle: Text('tim@apple.com'),
         ),
       ),
     );
