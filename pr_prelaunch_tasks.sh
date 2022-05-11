@@ -1,19 +1,8 @@
-flutter format lib --set-exit-if-changed
+flutter format --set-exit-if-changed .
 if [ $? -eq 1 ]; then
   flutter format lib
   git add .
-  git commit -m "chore: run flutter format lib"
-  echo "push changes? [y/n]"
-  read pushResponse
-  if [ $pushResponse = "y" ]; then
-    git push origin
-  fi
-fi
-flutter format test --set-exit-if-changed
-if [ $? -eq 1 ]; then
-  flutter format test
-  git add .
-  git commit -m "chore: run flutter format test"
+  git commit -m "chore: run flutter format ."
   echo "push changes? [y/n]"
   read pushResponse
   if [ $pushResponse = "y" ]; then
