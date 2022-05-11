@@ -1,5 +1,5 @@
 ## [1.3.0]
-* Add a `top`property to `Sidebar`
+* Add a `top` property to `Sidebar`
 * Tweak the default `primaryColor` value in `MacosThemeData`.
 
 ## [1.2.1+1]
