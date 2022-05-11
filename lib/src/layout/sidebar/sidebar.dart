@@ -102,7 +102,7 @@ class Sidebar {
   /// Commonly a [MacosSearchField].
   final Widget? top;
 
-  /// Widget that should be displayed at the bottom of the Sidebar
+  /// Widget that should be displayed at the bottom of the [Sidebar].
   ///
   /// Commonly a [MacosListTile].
   final Widget? bottom;
