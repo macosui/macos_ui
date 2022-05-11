@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
-import 'package:macos_ui/src/layout/sidebar.dart';
+import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/layout/toolbar/toolbar.dart';
 import 'package:macos_ui/src/layout/window.dart';

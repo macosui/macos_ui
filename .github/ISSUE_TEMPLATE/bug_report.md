@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: '🐛 '
+title: ''
 labels: bug
 assignees: ''
 ---
@@ -17,6 +17,26 @@ assignees: ''
 2. Click on '....'
 3. Scroll down to '....'
 4. See error -->
+
+<details>
+<summary>Code sample</summary>
+
+<!--
+      Please create a minimal reproducible sample that shows the problem
+      and attach it below between the lines with the backticks.
+
+      To create it please do the following: 
+      1. Use the `flutter create bug` command to create a new project. 
+      2. Run `flutter pub add macos_ui` to add `macos_ui` to your project. 
+      3. Update the `main.dart` file with the code that produces the bug.
+
+      This will help us diagnose the problem.
+-->
+
+```dart
+```
+
+</details>
 
 **Expected behavior**
 

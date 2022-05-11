@@ -1,8 +1,8 @@
 ---
 name: Feature request
 about: Suggest a new idea for the package.
-title: '💡 '
-labels: ''
+title: ''
+labels: 'enhancement'
 assignees: ''
 
 ---
@@ -19,7 +19,7 @@ assignees: ''
 ## Proposal
 
 <!--
-     Briefly but precisely describe what you would like Flutter to be able to do.
+     Briefly but precisely describe what you would like `macos_ui` to be able to do.
 
      Consider attaching images showing what you are imagining.
 -->

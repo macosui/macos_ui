@@ -6,7 +6,7 @@ import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
-import 'package:macos_ui/src/layout/sidebar.dart';
+import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
@@ -159,6 +159,11 @@ class _MacosWindowState extends State<MacosWindow> {
                       if (_sidebarScrollController.hasClients &&
                           _sidebarScrollController.offset > 0.0)
                         Divider(thickness: 1, height: 1, color: dividerColor),
+                      if (widget.sidebar!.top != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: widget.sidebar!.top!,
+                        ),
                       Expanded(
                         child: MacosScrollbar(
                           controller: _sidebarScrollController,
@@ -170,7 +175,10 @@ class _MacosWindowState extends State<MacosWindow> {
                         ),
                       ),
                       if (widget.sidebar?.bottom != null)
-                        widget.sidebar!.bottom!,
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: widget.sidebar!.bottom!,
+                        ),
                     ],
                   ),
                 ),
