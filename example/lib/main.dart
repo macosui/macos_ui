@@ -51,6 +51,8 @@ class _DemoState extends State<Demo> {
 
   int pageIndex = 0;
 
+  late final searchFieldController = TextEditingController();
+
   final List<Widget> pages = [
     CupertinoTabView(
       builder: (_) => const ButtonsPage(),
@@ -82,6 +84,64 @@ class _DemoState extends State<Demo> {
       sidebar: Sidebar(
         top: MacosSearchField(
           placeholder: 'Search',
+          controller: searchFieldController,
+          onResultSelected: (result) {
+            switch (result.searchKey) {
+              case 'Buttons':
+                setState(() {
+                  pageIndex = 0;
+                  searchFieldController.clear();
+                });
+                break;
+              case 'Indicators':
+                setState(() {
+                  pageIndex = 1;
+                  searchFieldController.clear();
+                });
+                break;
+              case 'Fields':
+                setState(() {
+                  pageIndex = 2;
+                  searchFieldController.clear();
+                });
+                break;
+              case 'Colors':
+                setState(() {
+                  pageIndex = 3;
+                  searchFieldController.clear();
+                });
+                break;
+              case 'Dialogs and Sheets':
+                setState(() {
+                  pageIndex = 5;
+                  searchFieldController.clear();
+                });
+                break;
+              case 'Toolbar':
+                setState(() {
+                  pageIndex = 6;
+                  searchFieldController.clear();
+                });
+                break;
+              case 'Selectors':
+                setState(() {
+                  pageIndex = 7;
+                  searchFieldController.clear();
+                });
+                break;
+              default:
+                searchFieldController.clear();
+            }
+          },
+          results: const [
+            SearchResultItem('Buttons'),
+            SearchResultItem('Indicators'),
+            SearchResultItem('Fields'),
+            SearchResultItem('Colors'),
+            SearchResultItem('Dialogs and Sheets'),
+            SearchResultItem('Toolbar'),
+            SearchResultItem('Selectors'),
+          ],
         ),
         minWidth: 200,
         builder: (context, controller) {
