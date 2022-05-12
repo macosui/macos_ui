@@ -4,6 +4,11 @@
   * Use new super parameters feature
   * Update to `flutter_lints: ^2.0.1` with subsequent fixes
   * `MacosScrollbar` API more closely matches its material counterpart 
+* Update `MacosColor` to more closely match the `Color` class
+  * Adds `MacosColor.fromARGB` constructor
+  * Adds `MacosColor.fromRGBO` constructor
+  * Adds `alphaBlend` function
+  * Adds `getAlphaFromOpacity` function
 
 ## [1.3.0]
 * Add a `top` property to `Sidebar`
