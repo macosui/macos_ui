@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:example/pages/buttons_page.dart';
 import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
@@ -6,10 +8,15 @@ import 'package:example/pages/indicators_page.dart';
 import 'package:example/pages/selectors_page.dart';
 import 'package:example/pages/toolbar_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
 
 import 'theme.dart';
+
+enum MenuSelection {
+  about,
+}
 
 void main() {
   runApp(const MacosUIGalleryApp());
@@ -70,127 +77,180 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     const SelectorsPage(),
   ];
 
+  void _handleMenuSelection(MenuSelection value) {
+    switch (value) {
+      case MenuSelection.about:
+        showMacosAlertDialog(
+          context: context,
+          builder: (_) => const MacosAlertDialog(
+            appIcon: FlutterLogo(),
+            title: Text('macos_ui'),
+            message: Text('Version 1.4.0'),
+            primaryButton: PushButton(
+              buttonSize: ButtonSize.large,
+              child: Text('Close'),
+            ),
+          ),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MacosWindow(
-      sidebar: Sidebar(
-        top: MacosSearchField(
-          placeholder: 'Search',
-          controller: searchFieldController,
-          onResultSelected: (result) {
-            switch (result.searchKey) {
-              case 'Buttons':
-                setState(() {
-                  pageIndex = 0;
-                  searchFieldController.clear();
-                });
-                break;
-              case 'Indicators':
-                setState(() {
-                  pageIndex = 1;
-                  searchFieldController.clear();
-                });
-                break;
-              case 'Fields':
-                setState(() {
-                  pageIndex = 2;
-                  searchFieldController.clear();
-                });
-                break;
-              case 'Colors':
-                setState(() {
-                  pageIndex = 3;
-                  searchFieldController.clear();
-                });
-                break;
-              case 'Dialogs and Sheets':
-                setState(() {
-                  pageIndex = 5;
-                  searchFieldController.clear();
-                });
-                break;
-              case 'Toolbar':
-                setState(() {
-                  pageIndex = 6;
-                  searchFieldController.clear();
-                });
-                break;
-              case 'Selectors':
-                setState(() {
-                  pageIndex = 7;
-                  searchFieldController.clear();
-                });
-                break;
-              default:
-                searchFieldController.clear();
-            }
-          },
-          results: const [
-            SearchResultItem('Buttons'),
-            SearchResultItem('Indicators'),
-            SearchResultItem('Fields'),
-            SearchResultItem('Colors'),
-            SearchResultItem('Dialogs and Sheets'),
-            SearchResultItem('Toolbar'),
-            SearchResultItem('Selectors'),
+    return PlatformMenuBar(
+      menus: const [
+        PlatformMenu(
+          label: 'macos_ui Widget Gallery',
+          menus: [
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.about,
+            ),
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.quit,
+            ),
           ],
         ),
-        minWidth: 200,
-        builder: (context, controller) {
-          return SidebarItems(
-            currentIndex: pageIndex,
-            onChanged: (i) => setState(() => pageIndex = i),
-            scrollController: controller,
-            items: const [
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.square_on_circle),
-                label: Text('Buttons'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.arrow_2_circlepath),
-                label: Text('Indicators'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.textbox),
-                label: Text('Fields'),
-              ),
-              SidebarItem(
-                label: Text('Disclosure'),
-                disclosureItems: [
-                  SidebarItem(
-                    leading: MacosIcon(CupertinoIcons.infinite),
-                    label: Text('Colors'),
-                  ),
-                  SidebarItem(
-                    leading: MacosIcon(CupertinoIcons.infinite),
-                    label: Text('Item 3'),
-                  ),
-                ],
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.rectangle),
-                label: Text('Dialogs & Sheets'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.macwindow),
-                label: Text('Toolbar'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.calendar),
-                label: Text('Selectors'),
-              ),
-            ],
-          );
-        },
-        bottom: const MacosListTile(
-          leading: MacosIcon(CupertinoIcons.profile_circled),
-          title: Text('Tim Apple'),
-          subtitle: Text('tim@apple.com'),
+        PlatformMenu(
+          label: 'View',
+          menus: [
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.toggleFullScreen,
+            ),
+          ],
         ),
-      ),
-      child: IndexedStack(
-        index: pageIndex,
-        children: pages,
+        PlatformMenu(
+          label: 'Window',
+          menus: [
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.minimizeWindow,
+            ),
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.zoomWindow,
+            ),
+          ],
+        ),
+      ],
+      body: MacosWindow(
+        sidebar: Sidebar(
+          top: MacosSearchField(
+            placeholder: 'Search',
+            controller: searchFieldController,
+            onResultSelected: (result) {
+              switch (result.searchKey) {
+                case 'Buttons':
+                  setState(() {
+                    pageIndex = 0;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Indicators':
+                  setState(() {
+                    pageIndex = 1;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Fields':
+                  setState(() {
+                    pageIndex = 2;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Colors':
+                  setState(() {
+                    pageIndex = 3;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Dialogs and Sheets':
+                  setState(() {
+                    pageIndex = 5;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Toolbar':
+                  setState(() {
+                    pageIndex = 6;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Selectors':
+                  setState(() {
+                    pageIndex = 7;
+                    searchFieldController.clear();
+                  });
+                  break;
+                default:
+                  searchFieldController.clear();
+              }
+            },
+            results: const [
+              SearchResultItem('Buttons'),
+              SearchResultItem('Indicators'),
+              SearchResultItem('Fields'),
+              SearchResultItem('Colors'),
+              SearchResultItem('Dialogs and Sheets'),
+              SearchResultItem('Toolbar'),
+              SearchResultItem('Selectors'),
+            ],
+          ),
+          minWidth: 200,
+          builder: (context, controller) {
+            return SidebarItems(
+              currentIndex: pageIndex,
+              onChanged: (i) => setState(() => pageIndex = i),
+              scrollController: controller,
+              items: const [
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.square_on_circle),
+                  label: Text('Buttons'),
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.arrow_2_circlepath),
+                  label: Text('Indicators'),
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.textbox),
+                  label: Text('Fields'),
+                ),
+                SidebarItem(
+                  label: Text('Disclosure'),
+                  disclosureItems: [
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.infinite),
+                      label: Text('Colors'),
+                    ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.infinite),
+                      label: Text('Item 3'),
+                    ),
+                  ],
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.rectangle),
+                  label: Text('Dialogs & Sheets'),
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.macwindow),
+                  label: Text('Toolbar'),
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.calendar),
+                  label: Text('Selectors'),
+                ),
+              ],
+            );
+          },
+          bottom: const MacosListTile(
+            leading: MacosIcon(CupertinoIcons.profile_circled),
+            title: Text('Tim Apple'),
+            subtitle: Text('tim@apple.com'),
+          ),
+        ),
+        child: IndexedStack(
+          index: pageIndex,
+          children: pages,
+        ),
       ),
     );
   }
