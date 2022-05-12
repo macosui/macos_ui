@@ -5,10 +5,85 @@ class MacosColor extends Color {
   /// Construct a color from the lower 32 bits of an [int].
   const MacosColor(int value) : super(value);
 
+  /// Construct a color from the lower 8 bits of four integers.
+  ///
+  /// * `a` is the alpha value, with 0 being transparent and 255 being fully
+  ///   opaque.
+  /// * `r` is [red], from 0 to 255.
+  /// * `g` is [green], from 0 to 255.
+  /// * `b` is [blue], from 0 to 255.
+  ///
+  /// Out of range values are brought into range using modulo 255.
+  ///
+  /// See also [fromRGBO], which takes the alpha value as a floating point
+  /// value.
+  const MacosColor.fromARGB(int a, int r, int g, int b)
+      : super.fromARGB(a, r, g, b);
+
+  /// Create a color from red, green, blue, and opacity, similar to `rgba()`
+  /// in CSS.
+  ///
+  /// * `r` is [red], from 0 to 255.
+  /// * `g` is [green], from 0 to 255.
+  /// * `b` is [blue], from 0 to 255.
+  /// * `opacity` is alpha channel of this color as a double, with 0.0 being
+  ///   transparent and 1.0 being fully opaque.
+  ///
+  /// Out of range values are brought into range using modulo 255.
+  ///
+  /// See also [fromARGB], which takes the opacity as an integer value.
+  const MacosColor.fromRGBO(int r, int g, int b, double opcacity)
+      : super.fromRGBO(r, g, b, opcacity);
+
   /// Linearly interpolate between two [MacosColor]s.
   static MacosColor lerp(MacosColor a, MacosColor b, double t) {
     final Color? color = Color.lerp(a, b, t);
     return MacosColor(color!.value);
+  }
+
+  /// Combine the foreground color as a transparent color over top
+  /// of a background color, and return the resulting combined color.
+  ///
+  /// This uses standard alpha blending ("SRC over DST") rules to produce a
+  /// blended color from two colors. This can be used as a performance
+  /// enhancement when trying to avoid needless alpha blending compositing
+  /// operations for two things that are solid colors with the same shape, but
+  /// overlay each other: instead, just paint one with the combined color.
+  static MacosColor alphaBlend(MacosColor foreground, MacosColor background) {
+    final int alpha = foreground.alpha;
+    if (alpha == 0x00) {
+      // Foreground completely transparent.
+      return background;
+    }
+    final int invAlpha = 0xff - alpha;
+    int backAlpha = background.alpha;
+    if (backAlpha == 0xff) {
+      // Opaque background case
+      return MacosColor.fromARGB(
+        0xff,
+        (alpha * foreground.red + invAlpha * background.red) ~/ 0xff,
+        (alpha * foreground.green + invAlpha * background.green) ~/ 0xff,
+        (alpha * foreground.blue + invAlpha * background.blue) ~/ 0xff,
+      );
+    } else {
+      // General case
+      backAlpha = (backAlpha * invAlpha) ~/ 0xff;
+      final int outAlpha = alpha + backAlpha;
+      assert(outAlpha != 0x00);
+      return MacosColor.fromARGB(
+        outAlpha,
+        (foreground.red * alpha + background.red * backAlpha) ~/ outAlpha,
+        (foreground.green * alpha + background.green * backAlpha) ~/ outAlpha,
+        (foreground.blue * alpha + background.blue * backAlpha) ~/ outAlpha,
+      );
+    }
+  }
+
+  /// Returns an alpha value representative of the provided [opacity] value.
+  ///
+  /// The [opacity] value may not be null.
+  static int getAlphaFromOpacity(double opacity) {
+    return (opacity.clamp(0.0, 1.0) * 255).round();
   }
 }
 
