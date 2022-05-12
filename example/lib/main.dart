@@ -75,25 +75,6 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     const SelectorsPage(),
   ];
 
-  void _handleMenuSelection(MenuSelection value) {
-    switch (value) {
-      case MenuSelection.about:
-        showMacosAlertDialog(
-          context: context,
-          builder: (_) => const MacosAlertDialog(
-            appIcon: FlutterLogo(),
-            title: Text('macos_ui'),
-            message: Text('Version 1.4.0'),
-            primaryButton: PushButton(
-              buttonSize: ButtonSize.large,
-              child: Text('Close'),
-            ),
-          ),
-        );
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return PlatformMenuBar(
