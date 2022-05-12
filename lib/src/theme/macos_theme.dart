@@ -194,7 +194,7 @@ class MacosThemeData with Diagnosticable {
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
-    ScrollbarThemeData? scrollbarTheme,
+    MacosScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonTheme,
     MacosIconThemeData? iconTheme,
     MacosPopupButtonThemeData? popupButtonTheme,
@@ -236,7 +236,7 @@ class MacosThemeData with Diagnosticable {
       brightness: _brightness,
       textStyle: typography.callout,
     );
-    scrollbarTheme ??= const ScrollbarThemeData();
+    scrollbarTheme ??= const MacosScrollbarThemeData();
     macosIconButtonTheme ??= MacosIconButtonThemeData(
       backgroundColor: MacosColors.transparent,
       disabledColor: isDark
@@ -471,7 +471,7 @@ class MacosThemeData with Diagnosticable {
   final VisualDensity visualDensity;
 
   /// The default style for [MacosScrollbar]s below the overall [MacosTheme]
-  final ScrollbarThemeData scrollbarTheme;
+  final MacosScrollbarThemeData scrollbarTheme;
 
   /// The default style for [MacosIconButton]s below the overall [MacosTheme]
   final MacosIconButtonThemeData iconButtonTheme;
@@ -505,7 +505,7 @@ class MacosThemeData with Diagnosticable {
       tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
       scrollbarTheme:
-          ScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
+          MacosScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
       iconButtonTheme: MacosIconButtonThemeData.lerp(
         a.iconButtonTheme,
         b.iconButtonTheme,
@@ -551,7 +551,7 @@ class MacosThemeData with Diagnosticable {
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
-    ScrollbarThemeData? scrollbarTheme,
+    MacosScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? iconButtonTheme,
     MacosIconThemeData? iconTheme,
     MacosPopupButtonThemeData? popupButtonTheme,
@@ -625,7 +625,7 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<TooltipThemeData>('tooltipTheme', tooltipTheme),
     );
     properties.add(
-      DiagnosticsProperty<ScrollbarThemeData>('scrollbarTheme', scrollbarTheme),
+      DiagnosticsProperty<MacosScrollbarThemeData>('scrollbarTheme', scrollbarTheme),
     );
     properties.add(
       DiagnosticsProperty<MacosIconButtonThemeData>(

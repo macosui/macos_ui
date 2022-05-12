@@ -6,17 +6,17 @@ import 'package:macos_ui/src/library.dart';
 void main() {
   test('==, hashCode, copyWith basics', () {
     expect(
-      const ScrollbarThemeData(),
-      const ScrollbarThemeData().copyWith(),
+      const MacosScrollbarThemeData(),
+      const MacosScrollbarThemeData().copyWith(),
     );
     expect(
-      const ScrollbarThemeData().hashCode,
-      const ScrollbarThemeData().copyWith().hashCode,
+      const MacosScrollbarThemeData().hashCode,
+      const MacosScrollbarThemeData().copyWith().hashCode,
     );
   });
 
   test('lerps from light to dark', () {
-    final actual = ScrollbarThemeData.lerp(
+    final actual = MacosScrollbarThemeData.lerp(
       _scrollbarThemeData,
       _scrollbarThemeDataDark,
       1,
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('lerps from dark to light', () {
-    final actual = ScrollbarThemeData.lerp(
+    final actual = MacosScrollbarThemeData.lerp(
       _scrollbarThemeDataDark,
       _scrollbarThemeData,
       1,
@@ -38,7 +38,7 @@ void main() {
   //FIXME: Why does this pass??
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
-    const ScrollbarThemeData().debugFillProperties(builder);
+    const MacosScrollbarThemeData().debugFillProperties(builder);
 
     final description = builder.properties
         .where((node) => !node.isFiltered(DiagnosticLevel.info))
@@ -52,7 +52,7 @@ void main() {
   });
 }
 
-final _scrollbarThemeData = ScrollbarThemeData(
+final _scrollbarThemeData = MacosScrollbarThemeData(
   draggingThumbColor: Colors.grey.shade600,
   hoveringThumbColor: Colors.grey.shade600,
   hoveringTrackBorderColor: Colors.grey.shade600,
@@ -62,7 +62,7 @@ final _scrollbarThemeData = ScrollbarThemeData(
   trackColor: Colors.grey.shade600,
 );
 
-final _scrollbarThemeDataDark = ScrollbarThemeData(
+final _scrollbarThemeDataDark = MacosScrollbarThemeData(
   draggingThumbColor: Colors.grey.shade300,
   hoveringThumbColor: Colors.grey.shade300,
   hoveringTrackBorderColor: Colors.grey.shade300,

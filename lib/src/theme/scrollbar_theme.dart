@@ -6,30 +6,31 @@ import 'package:macos_ui/src/library.dart';
 
 /// Applies a scrollbar theme to descendant [MacosScrollbar] widgets.
 ///
-/// Descendant widgets obtain the current theme's [ScrollbarThemeData] using
-/// [ScrollbarTheme.of]. When a widget uses [ScrollbarTheme.of], it is
-/// automatically rebuilt if the theme later changes.
+/// Descendant widgets obtain the current theme's [MacosScrollbarThemeData]
+/// using [MacosScrollbarTheme.of]. When a widget uses
+/// [MacosScrollbarTheme.of], it is automatically rebuilt if the theme later
+/// changes.
 ///
 /// A scrollbar theme can be specified as part of the overall Material theme
 /// using [ThemeData.scrollbarTheme].
 ///
 /// See also:
 ///
-///  * [ScrollbarThemeData], which describes the configuration of a
+///  * [MacosScrollbarThemeData], which describes the configuration of a
 ///    scrollbar theme.
-class ScrollbarTheme extends InheritedWidget {
-  /// Constructs a scrollbar theme that configures all descendant [MacosScrollbar]
-  /// widgets.
-  const ScrollbarTheme({
+class MacosScrollbarTheme extends InheritedWidget {
+  /// Constructs a scrollbar theme that configures all descendant
+  /// [MacosScrollbar] widgets.
+  const MacosScrollbarTheme({
     Key? key,
     required this.data,
     required Widget child,
   }) : super(key: key, child: child);
 
   /// The properties used for all descendant [MacosScrollbar] widgets.
-  final ScrollbarThemeData data;
+  final MacosScrollbarThemeData data;
 
-  /// Returns the configuration [data] from the closest [ScrollbarTheme]
+  /// Returns the configuration [data] from the closest [MacosScrollbarTheme]
   /// ancestor. If there is no ancestor, it returns [ThemeData.scrollbarTheme].
   ///
   /// Typical usage is as follows:
@@ -37,35 +38,36 @@ class ScrollbarTheme extends InheritedWidget {
   /// ```dart
   /// ScrollbarThemeData theme = ScrollbarTheme.of(context);
   /// ```
-  static ScrollbarThemeData of(BuildContext context) {
-    final ScrollbarTheme? scrollbarTheme =
-        context.dependOnInheritedWidgetOfExactType<ScrollbarTheme>();
+  static MacosScrollbarThemeData of(BuildContext context) {
+    final MacosScrollbarTheme? scrollbarTheme =
+        context.dependOnInheritedWidgetOfExactType<MacosScrollbarTheme>();
     return scrollbarTheme?.data ?? MacosTheme.of(context).scrollbarTheme;
   }
 
   @override
-  bool updateShouldNotify(ScrollbarTheme oldWidget) => data != oldWidget.data;
+  bool updateShouldNotify(MacosScrollbarTheme oldWidget) => data != oldWidget.data;
 }
 
 /// Defines default property values for descendant [MacosScrollbar] widgets.
 ///
-/// Descendant widgets obtain the current [ScrollbarThemeData] object with
-/// `ScrollbarTheme.of(context)`. Instances of [ScrollbarThemeData] can be customized
-/// with [ScrollbarThemeData.copyWith].
+/// Descendant widgets obtain the current [MacosScrollbarThemeData] object with
+/// `ScrollbarTheme.of(context)`. Instances of [MacosScrollbarThemeData] can
+/// be customized with [MacosScrollbarThemeData.copyWith].
 ///
-/// Typically the [ScrollbarThemeData] of a [ScrollbarTheme] is specified as part of the overall
-/// [MacosTheme] with [MacosThemeData.scrollbarTheme].
+/// Typically the [MacosScrollbarThemeData] of a [MacosScrollbarTheme] is
+/// specified as part of the overall [MacosTheme] with
+/// [MacosThemeData.scrollbarTheme].
 ///
-/// All [ScrollbarThemeData] properties are `null` by default. When null, the [MacosScrollbar]
-/// computes its own default values.
+/// All [MacosScrollbarThemeData] properties are `null` by default. When null,
+/// the [MacosScrollbar] computes its own default values.
 ///
 /// See also:
 ///
 ///  * [MacosThemeData], which describes the overall theme information for the
 ///    application.
-class ScrollbarThemeData with Diagnosticable {
+class MacosScrollbarThemeData with Diagnosticable {
   /// Creates a theme that can be used for [MacosThemeData.scrollbarTheme].
-  const ScrollbarThemeData({
+  const MacosScrollbarThemeData({
     this.thickness,
     this.hoveringThickness,
     this.showTrackOnHover,
@@ -92,7 +94,7 @@ class ScrollbarThemeData with Diagnosticable {
   /// descendant [MacosScrollbar] widgets when hovering is active.
   final double? hoveringThickness;
 
-  /// Overrides the default value of [MacosScrollbar.showTrackOnHover] in all
+  /// Overrides the default value of [MacosScrollbar.trackVisibility] in all
   /// descendant [MacosScrollbar] widgets.
   final bool? showTrackOnHover;
 
@@ -108,16 +110,16 @@ class ScrollbarThemeData with Diagnosticable {
   /// descendant widgets.
   final Radius? radius;
 
-  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
-  /// [MacosScrollbar] widgets.
+  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all
+  /// descendant [MacosScrollbar] widgets.
   final Color? thumbColor;
 
-  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
-  /// [MacosScrollbar] widgets when hovering is active.
+  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all
+  /// descendant [MacosScrollbar] widgets when hovering is active.
   final Color? hoveringThumbColor;
 
-  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all descendant
-  /// [MacosScrollbar] widgets when dragging is active.
+  /// Overrides the default [Color] of the [MacosScrollbar] thumb in all
+  /// descendant [MacosScrollbar] widgets when dragging is active.
   final Color? draggingThumbColor;
 
   /// Overrides the default [Color] of the [MacosScrollbar] track when
@@ -169,7 +171,7 @@ class ScrollbarThemeData with Diagnosticable {
 
   /// Creates a copy of this object with the given fields replaced with the
   /// new values.
-  ScrollbarThemeData copyWith({
+  MacosScrollbarThemeData copyWith({
     double? thickness,
     double? hoveringThickness,
     bool? showTrackOnHover,
@@ -187,7 +189,7 @@ class ScrollbarThemeData with Diagnosticable {
     double? mainAxisMargin,
     double? minThumbLength,
   }) {
-    return ScrollbarThemeData(
+    return MacosScrollbarThemeData(
       thickness: thickness ?? this.thickness,
       hoveringThickness: hoveringThickness ?? this.hoveringThickness,
       showTrackOnHover: showTrackOnHover ?? this.showTrackOnHover,
@@ -214,12 +216,12 @@ class ScrollbarThemeData with Diagnosticable {
   ///
   /// {@macro dart.ui.shadow.lerp}
   // ignore: code-metrics
-  static ScrollbarThemeData lerp(
-    ScrollbarThemeData? a,
-    ScrollbarThemeData? b,
+  static MacosScrollbarThemeData lerp(
+    MacosScrollbarThemeData? a,
+    MacosScrollbarThemeData? b,
     double t,
   ) {
-    return ScrollbarThemeData(
+    return MacosScrollbarThemeData(
       thickness: lerpDouble(a?.thickness, b?.thickness, t),
       hoveringThickness:
           lerpDouble(a?.hoveringThickness, b?.hoveringThickness, t),
@@ -273,7 +275,7 @@ class ScrollbarThemeData with Diagnosticable {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is ScrollbarThemeData &&
+    return other is MacosScrollbarThemeData &&
         other.thickness == thickness &&
         other.hoveringThickness == hoveringThickness &&
         other.showTrackOnHover == showTrackOnHover &&
@@ -363,7 +365,7 @@ class ScrollbarThemeData with Diagnosticable {
     ));
   }
 
-  ScrollbarThemeData merge(ScrollbarThemeData? other) {
+  MacosScrollbarThemeData merge(MacosScrollbarThemeData? other) {
     if (other == null) return this;
     return copyWith(
       thickness: other.thickness,

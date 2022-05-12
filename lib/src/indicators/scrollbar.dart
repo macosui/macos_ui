@@ -12,14 +12,14 @@ import 'package:macos_ui/src/library.dart';
 /// The color of the Scrollbar will change when dragged. A hover animation is
 /// also triggered when used on web and desktop platforms. A scrollbar track
 /// can also been drawn when triggered by a hover event, which is controlled by
-/// [showTrackOnHover]. The thickness of the track and scrollbar thumb will
+/// [trackVisibility]. The thickness of the track and scrollbar thumb will
 /// become larger when hovering, unless overridden by [hoverThickness].
 ///
 /// See also:
 ///
 ///  * [RawScrollbar], a basic scrollbar that fades in and out, extended
 ///    by this class to add more animations and behaviors.
-///  * [ScrollbarTheme], which configures the Scrollbar's appearance.
+///  * [MacosScrollbarTheme], which configures the Scrollbar's appearance.
 ///  * [m.Scrollbar], a Material style scrollbar.
 ///  * [CupertinoScrollbar], an iOS style scrollbar.
 ///  * [ListView], which displays a linear, scrollable list of children.
@@ -44,8 +44,7 @@ class MacosScrollbar extends StatelessWidget {
     required this.child,
     this.controller,
     this.isAlwaysShown,
-    this.showTrackOnHover,
-    this.hoverThickness,
+    this.trackVisibility,
     this.thickness,
     this.radius,
     this.notificationPredicate,
@@ -61,20 +60,12 @@ class MacosScrollbar extends StatelessWidget {
   /// {@macro flutter.widgets.Scrollbar.isAlwaysShown}
   final bool? isAlwaysShown;
 
-  /// Controls if the track will show on hover and remain, including during drag.
+  /// Controls if the track will always be visible or not.
   ///
-  /// If this property is null, then [ScrollbarThemeData.showTrackOnHover] of
+  /// If this property is null, then [MacosScrollbarThemeData.showTrackOnHover] of
   /// [MacosThemeData.scrollbarTheme] is used. If that is also null, the default value
   /// is false.
-  final bool? showTrackOnHover;
-
-  /// The thickness of the scrollbar when a hover state is active and
-  /// [showTrackOnHover] is true.
-  ///
-  /// If this property is null, then [ScrollbarThemeData.thickness] of
-  /// [MacosThemeData.scrollbarTheme] is used to resolve a thickness. If that is also
-  /// null, the default value is 12.0 pixels.
-  final double? hoverThickness;
+  final bool? trackVisibility;
 
   /// The thickness of the scrollbar in the cross axis of the scrollable.
   ///
@@ -101,14 +92,16 @@ class MacosScrollbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
-    final theme = ScrollbarTheme.of(context);
+    final theme = MacosScrollbarTheme.of(context);
     return m.ScrollbarTheme(
       data: m.ScrollbarThemeData(
         crossAxisMargin: theme.crossAxisMargin,
         mainAxisMargin: theme.mainAxisMargin,
         interactive: theme.interactive,
-        isAlwaysShown: theme.isAlwaysShown,
-        showTrackOnHover: theme.showTrackOnHover,
+        thumbVisibility: m.MaterialStateProperty.resolveWith((states) => true),
+        trackVisibility: m.MaterialStateProperty.resolveWith((states) {
+          return trackVisibility;
+        }),
         minThumbLength: theme.minThumbLength,
         radius: theme.radius,
         thickness: m.MaterialStateProperty.resolveWith((states) {
@@ -141,9 +134,8 @@ class MacosScrollbar extends StatelessWidget {
       child: m.Scrollbar(
         child: child,
         controller: controller,
-        isAlwaysShown: isAlwaysShown,
-        showTrackOnHover: showTrackOnHover,
-        hoverThickness: hoverThickness,
+        thumbVisibility: isAlwaysShown,
+        trackVisibility: trackVisibility,
         thickness: thickness,
         radius: radius,
         interactive: interactive,
