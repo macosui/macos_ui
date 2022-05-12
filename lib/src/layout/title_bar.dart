@@ -19,7 +19,7 @@ class TitleBar extends StatelessWidget {
   ///
   /// The height of the TitleBar can be changed with [height].
   const TitleBar({
-    Key? key,
+    super.key,
     this.height = kTitleBarHeight,
     this.alignment = Alignment.center,
     this.title,
@@ -27,7 +27,7 @@ class TitleBar extends StatelessWidget {
     this.decoration,
     this.centerTitle = true,
     this.dividerColor,
-  }) : super(key: key);
+  });
 
   /// Specifies the height of this [TitleBar].
   ///

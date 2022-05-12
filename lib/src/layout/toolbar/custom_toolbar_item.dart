@@ -27,11 +27,11 @@ class CustomToolbarItem extends ToolbarItem {
   /// If [inOverflowedBuilder] is not provided, the custom toolbar item will not
   /// have an entry in the toolbar's overflowed menu (>>).
   const CustomToolbarItem({
-    Key? key,
+    super.key,
     required this.inToolbarBuilder,
     this.inOverflowedBuilder,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   /// Builds a custom widget to include in the [Toolbar].
   ///

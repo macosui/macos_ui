@@ -21,10 +21,10 @@ class MacosTheme extends StatelessWidget {
   ///
   /// The [data] and [child] parameters must not be null.
   const MacosTheme({
-    Key? key,
+    super.key,
     required this.data,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// The [MacosThemeData] styling for this theme.
   final MacosThemeData data;
@@ -120,11 +120,12 @@ class MacosTheme extends StatelessWidget {
 }
 
 class _InheritedMacosTheme extends InheritedWidget {
+  // ignore: use_super_parameters
   const _InheritedMacosTheme({
     Key? key,
     required this.theme,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  }) : super(key: key);
 
   final MacosTheme theme;
 

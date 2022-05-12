@@ -6,7 +6,7 @@ import 'package:macos_ui/src/library.dart';
 class MacosIconButton extends StatefulWidget {
   /// Builds a macOS-style icon button
   const MacosIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     this.backgroundColor,
     this.disabledColor,
@@ -26,8 +26,7 @@ class MacosIconButton extends StatefulWidget {
     this.padding,
     this.mouseCursor = SystemMouseCursors.basic,
   })  : assert(pressedOpacity == null ||
-            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
-        super(key: key);
+            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The widget to use as the icon.
   ///

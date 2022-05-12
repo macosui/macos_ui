@@ -1,6 +1,7 @@
 ## [1.4.0]
 * Migrate to Flutter 3.0
   * Minimumin dart sdk version is now 2.17.0
+  * Use new super parameters feature
   * Update to `flutter_lints: ^2.0.1` with subsequent fixes
   * `MacosScrollbar` API more closely matches its material counterpart 
 

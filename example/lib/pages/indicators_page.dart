@@ -3,7 +3,7 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 class IndicatorsPage extends StatefulWidget {
-  const IndicatorsPage({Key? key}) : super(key: key);
+  const IndicatorsPage({super.key});
 
   @override
   State<IndicatorsPage> createState() => _IndicatorsPageState();

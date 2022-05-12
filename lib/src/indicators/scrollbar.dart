@@ -40,7 +40,7 @@ class MacosScrollbar extends StatelessWidget {
   /// except for when executing on [TargetPlatform.android], which will render the
   /// thumb without a radius.
   const MacosScrollbar({
-    Key? key,
+    super.key,
     required this.child,
     this.controller,
     this.isAlwaysShown,
@@ -49,7 +49,7 @@ class MacosScrollbar extends StatelessWidget {
     this.radius,
     this.notificationPredicate,
     this.interactive,
-  }) : super(key: key);
+  });
 
   /// {@macro flutter.widgets.Scrollbar.child}
   final Widget child;

@@ -16,7 +16,7 @@ void main() {
 }
 
 class MacosUIGalleryApp extends StatelessWidget {
-  const MacosUIGalleryApp({Key? key}) : super(key: key);
+  const MacosUIGalleryApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class MacosUIGalleryApp extends StatelessWidget {
 }
 
 class WidgetGallery extends StatefulWidget {
-  const WidgetGallery({Key? key}) : super(key: key);
+  const WidgetGallery({super.key});
 
   @override
   State<WidgetGallery> createState() => _WidgetGalleryState();

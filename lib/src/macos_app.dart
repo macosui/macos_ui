@@ -39,7 +39,7 @@ class MacosApp extends StatefulWidget {
   ///
   /// The boolean arguments, [routes], and [navigatorObservers], must not be null.
   const MacosApp({
-    Key? key,
+    super.key,
     this.navigatorKey,
     this.home,
     Map<String, Widget Function(BuildContext)> this.routes =
@@ -74,12 +74,11 @@ class MacosApp extends StatefulWidget {
   })  : routeInformationProvider = null,
         routeInformationParser = null,
         routerDelegate = null,
-        backButtonDispatcher = null,
-        super(key: key);
+        backButtonDispatcher = null;
 
   /// Creates a [MacosApp] that uses the [Router] instead of a [Navigator].
   MacosApp.router({
-    Key? key,
+    super.key,
     this.routeInformationProvider,
     required RouteInformationParser<Object> this.routeInformationParser,
     required RouterDelegate<Object> this.routerDelegate,
@@ -113,8 +112,7 @@ class MacosApp extends StatefulWidget {
         onGenerateInitialRoutes = null,
         onUnknownRoute = null,
         routes = null,
-        initialRoute = null,
-        super(key: key);
+        initialRoute = null;
 
   /// {@macro flutter.widgets.widgetsApp.navigatorKey}
   final GlobalKey<NavigatorState>? navigatorKey;

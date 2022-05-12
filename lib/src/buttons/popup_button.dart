@@ -24,13 +24,13 @@ typedef MacosPopupButtonBuilder = List<Widget> Function(BuildContext context);
 // The widget that is the button wrapping the menu items.
 class _MacosPopupMenuItemButton<T> extends StatefulWidget {
   const _MacosPopupMenuItemButton({
-    Key? key,
+    super.key,
     this.padding,
     required this.route,
     required this.buttonRect,
     required this.constraints,
     required this.itemIndex,
-  }) : super(key: key);
+  });
 
   final _MacosPopupRoute<T> route;
   final EdgeInsets? padding;
@@ -157,7 +157,7 @@ class _MacosPopupMenuItemButtonState<T>
 
 class _MacosPopupMenu<T> extends StatefulWidget {
   const _MacosPopupMenu({
-    Key? key,
+    super.key,
     this.padding,
     required this.route,
     required this.buttonRect,
@@ -165,7 +165,7 @@ class _MacosPopupMenu<T> extends StatefulWidget {
     this.popupColor,
     required this.hasTopItemsNotShown,
     required this.hasBottomItemsNotShown,
-  }) : super(key: key);
+  });
 
   final _MacosPopupRoute<T> route;
   final EdgeInsets? padding;
@@ -597,7 +597,7 @@ class _MacosPopupRoute<T> extends PopupRoute<_MacosPopupRouteResult<T>> {
 
 class _MacosPopupRoutePage<T> extends StatelessWidget {
   const _MacosPopupRoutePage({
-    Key? key,
+    super.key,
     required this.route,
     required this.constraints,
     this.items,
@@ -607,7 +607,7 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
     required this.capturedThemes,
     this.style,
     required this.popupColor,
-  }) : super(key: key);
+  });
 
   final _MacosPopupRoute<T> route;
   final BoxConstraints constraints;
@@ -674,10 +674,10 @@ class _MacosPopupRoutePage<T> extends StatelessWidget {
 // as closely as possible.
 class _MenuItem<T> extends SingleChildRenderObjectWidget {
   const _MenuItem({
-    Key? key,
+    super.key,
     required this.onLayout,
     required this.item,
-  }) : super(key: key, child: item);
+  }) : super(child: item);
 
   final ValueChanged<Size> onLayout;
   final MacosPopupMenuItem<T>? item;
@@ -716,10 +716,10 @@ class _MacosPopupMenuItemContainer extends StatelessWidget {
   ///
   /// The [child] argument is required.
   const _MacosPopupMenuItemContainer({
-    Key? key,
+    super.key,
     this.alignment = AlignmentDirectional.centerStart,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// The widget below this widget in the tree.
   ///
@@ -757,13 +757,13 @@ class MacosPopupMenuItem<T> extends _MacosPopupMenuItemContainer {
   ///
   /// The [child] argument is required.
   const MacosPopupMenuItem({
-    Key? key,
+    super.key,
     this.onTap,
     this.value,
     this.enabled = true,
-    AlignmentGeometry alignment = AlignmentDirectional.centerStart,
-    required Widget child,
-  }) : super(key: key, alignment: alignment, child: child);
+    super.alignment,
+    required super.child,
+  });
 
   /// Called when the popup menu item is tapped.
   final VoidCallback? onTap;
@@ -828,7 +828,7 @@ class MacosPopupButton<T> extends StatefulWidget {
   /// popup when it is open. If it is null, the appropriate macOS canvas color
   /// will be used.
   MacosPopupButton({
-    Key? key,
+    super.key,
     required this.items,
     this.selectedItemBuilder,
     this.value,
@@ -856,8 +856,7 @@ class MacosPopupButton<T> extends StatefulWidget {
           'Either zero or 2 or more [MacosPopupMenuItem]s were detected '
           'with the same value',
         ),
-        assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension),
-        super(key: key);
+        assert(itemHeight == null || itemHeight >= _kMinInteractiveDimension);
 
   /// The list of items the user can select.
   ///

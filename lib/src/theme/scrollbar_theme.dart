@@ -22,10 +22,10 @@ class MacosScrollbarTheme extends InheritedWidget {
   /// Constructs a scrollbar theme that configures all descendant
   /// [MacosScrollbar] widgets.
   const MacosScrollbarTheme({
-    Key? key,
+    super.key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   /// The properties used for all descendant [MacosScrollbar] widgets.
   final MacosScrollbarThemeData data;

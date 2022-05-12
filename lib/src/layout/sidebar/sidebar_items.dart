@@ -15,7 +15,7 @@ const ShapeBorder _defaultShape = RoundedRectangleBorder(
 class SidebarItems extends StatelessWidget {
   /// Creates a scrollable widget that renders [SidebarItem]s.
   const SidebarItems({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onChanged,
     required this.items,
@@ -24,8 +24,7 @@ class SidebarItems extends StatelessWidget {
     this.unselectedColor,
     this.shape,
     this.cursor = SystemMouseCursors.basic,
-  })  : assert(currentIndex >= 0),
-        super(key: key);
+  })  : assert(currentIndex >= 0);
 
   /// The [SidebarItem]s used by the sidebar. If no items are provided,
   /// the sidebar is not rendered.
@@ -120,13 +119,14 @@ class SidebarItems extends StatelessWidget {
 }
 
 class _SidebarItemsConfiguration extends InheritedWidget {
+  // ignore: use_super_parameters
   const _SidebarItemsConfiguration({
     Key? key,
-    required Widget child,
+    required super.child,
     this.selectedColor = MacosColors.transparent,
     this.unselectedColor = MacosColors.transparent,
     this.shape = _defaultShape,
-  }) : super(key: key, child: child);
+  }) : super(key: key);
 
   final Color selectedColor;
   final Color unselectedColor;
@@ -146,6 +146,7 @@ class _SidebarItemsConfiguration extends InheritedWidget {
 /// A macOS style navigation-list item intended for use in a [Sidebar]
 class _SidebarItem extends StatelessWidget {
   /// Builds a [_SidebarItem].
+  // ignore: use_super_parameters
   const _SidebarItem({
     Key? key,
     required this.item,
@@ -255,6 +256,7 @@ class _SidebarItem extends StatelessWidget {
 }
 
 class _DisclosureSidebarItem extends StatefulWidget {
+  // ignore: use_super_parameters
   _DisclosureSidebarItem({
     Key? key,
     required this.item,

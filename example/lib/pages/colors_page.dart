@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class ColorsPage extends StatefulWidget {
-  const ColorsPage({Key? key}) : super(key: key);
+  const ColorsPage({super.key});
 
   @override
   State<ColorsPage> createState() => _ColorsPageState();
@@ -341,9 +341,9 @@ class _ColorsPageState extends State<ColorsPage> {
 
 class ColorBox extends StatelessWidget {
   const ColorBox({
-    Key? key,
+    super.key,
     required this.color,
-  }) : super(key: key);
+  });
 
   final Color color;
 

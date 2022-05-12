@@ -58,10 +58,10 @@ typedef OnColorSelected = void Function(Color color);
 class MacosColorWell extends StatefulWidget {
   /// {@macro macosColorWell}
   const MacosColorWell({
-    Key? key,
+    super.key,
     required this.onColorSelected,
     this.defaultMode = ColorPickerMode.wheel,
-  }) : super(key: key);
+  });
 
   /// {@macro onColorSelected}
   final OnColorSelected onColorSelected;

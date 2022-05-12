@@ -7,9 +7,9 @@ class ToolBarDivider extends ToolbarItem {
   /// line (or a horizontal line, if it appears in the overflowed menu) between
   /// the toolbar actions.
   const ToolBarDivider({
-    Key? key,
+    super.key,
     this.padding = const EdgeInsets.all(6.0),
-  }) : super(key: key);
+  });
 
   /// Optional padding to use for the divider.
   ///

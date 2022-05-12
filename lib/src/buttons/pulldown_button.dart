@@ -26,6 +26,7 @@ enum PulldownMenuAlignment {
 
 // The widget that is the button wrapping the menu items.
 class _MacosPulldownMenuItemButton extends StatefulWidget {
+  // ignore: use_super_parameters
   const _MacosPulldownMenuItemButton({
     Key? key,
     this.padding,
@@ -142,6 +143,7 @@ class _MacosPulldownMenuItemButtonState
 }
 
 class _MacosPulldownMenu extends StatefulWidget {
+  // ignore: use_super_parameters
   const _MacosPulldownMenu({
     Key? key,
     this.padding,
@@ -413,6 +415,7 @@ class _MacosPulldownRoute extends PopupRoute {
 }
 
 class _MacosPulldownRoutePage extends StatelessWidget {
+  // ignore: use_super_parameters
   const _MacosPulldownRoutePage({
     Key? key,
     required this.route,
@@ -472,6 +475,7 @@ class _MacosPulldownRoutePage extends StatelessWidget {
 // This widget enables _MacosPulldownRoute to look up the sizes of
 // each menu item.
 class _MenuItem extends SingleChildRenderObjectWidget {
+  // ignore: use_super_parameters
   const _MenuItem({
     Key? key,
     required this.onLayout,
@@ -511,7 +515,7 @@ class _RenderMenuItem extends RenderProxyBox {
 /// An entry in a menu created by a [MacosPulldownButton]. It can be either a
 /// [MacosPulldownMenuItem] or a [MacosPulldownMenuDivider].
 abstract class MacosPulldownMenuEntry extends Widget {
-  const MacosPulldownMenuEntry({Key? key}) : super(key: key);
+  const MacosPulldownMenuEntry({super.key});
 
   double get itemHeight;
 }
@@ -520,7 +524,7 @@ abstract class MacosPulldownMenuEntry extends Widget {
 class MacosPulldownMenuDivider extends StatelessWidget
     implements MacosPulldownMenuEntry {
   /// Creates a divider for a macOS-style pulldown menu.
-  const MacosPulldownMenuDivider({Key? key}) : super(key: key);
+  const MacosPulldownMenuDivider({super.key});
 
   @override
   double get itemHeight => _kMenuDividerHeight;
@@ -550,13 +554,13 @@ class MacosPulldownMenuItem extends StatelessWidget
     implements MacosPulldownMenuEntry {
   /// Creates an item for a macOS-style pulldown menu.
   const MacosPulldownMenuItem({
-    Key? key,
+    super.key,
     required this.title,
     this.onTap,
     this.enabled = true,
     this.alignment = AlignmentDirectional.centerStart,
     this.label,
-  }) : super(key: key);
+  });
 
   @override
   double get itemHeight => _kMenuItemHeight;
@@ -626,7 +630,7 @@ class MacosPulldownButton extends StatefulWidget {
   ///
   /// The [autofocus] argument must not be null.
   const MacosPulldownButton({
-    Key? key,
+    super.key,
     required this.items,
     this.title,
     this.disabledTitle,
@@ -641,8 +645,7 @@ class MacosPulldownButton extends StatefulWidget {
   })  : assert(itemHeight == null || itemHeight >= _kMenuItemHeight),
         assert(
             (title != null || icon != null) && !(title != null && icon != null),
-            "There should be either a title or an icon argument provided, and not both at at the same time."),
-        super(key: key);
+            "There should be either a title or an icon argument provided, and not both at at the same time.");
 
   /// The list of menu entries for the pull-down menu.
   ///

@@ -24,12 +24,12 @@ class MacosTooltip extends StatefulWidget {
   /// Wrap any widget in a [MacosTooltip] to show a message on mouse hover or
   /// long press event
   const MacosTooltip({
-    Key? key,
+    super.key,
     required this.message,
     this.child,
     this.excludeFromSemantics = false,
     this.useMousePosition = true,
-  }) : super(key: key);
+  });
 
   /// The text to display in the tooltip.
   final String message;
@@ -346,6 +346,7 @@ class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
 }
 
 class _TooltipOverlay extends StatelessWidget {
+  // ignore: use_super_parameters
   const _TooltipOverlay({
     Key? key,
     required this.message,

@@ -9,10 +9,10 @@ class ToolbarOverflowButton extends StatelessWidget {
   /// When clicked, it opens a [ToolbarOverflowMenu] holding all overflowed
   /// actions in a simplified menu.
   const ToolbarOverflowButton({
-    Key? key,
+    super.key,
     required this.overflowContentBuilder,
     this.isDense = false,
-  }) : super(key: key);
+  });
 
   /// A function that builds the content of the overflowed actions menu.
   final WidgetBuilder overflowContentBuilder;

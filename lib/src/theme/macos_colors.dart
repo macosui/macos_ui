@@ -3,7 +3,7 @@ import 'package:macos_ui/src/library.dart';
 /// An immutable 32 bit color value in ARGB format.
 class MacosColor extends Color {
   /// Construct a color from the lower 32 bits of an [int].
-  const MacosColor(int value) : super(value);
+  const MacosColor(super.value);
 
   /// Construct a color from the lower 8 bits of four integers.
   ///
@@ -17,8 +17,8 @@ class MacosColor extends Color {
   ///
   /// See also [fromRGBO], which takes the alpha value as a floating point
   /// value.
-  const MacosColor.fromARGB(int a, int r, int g, int b)
-      : super.fromARGB(a, r, g, b);
+  const MacosColor.fromARGB(super.a, super.r, super.g, super.b)
+      : super.fromARGB();
 
   /// Create a color from red, green, blue, and opacity, similar to `rgba()`
   /// in CSS.
@@ -32,8 +32,8 @@ class MacosColor extends Color {
   /// Out of range values are brought into range using modulo 255.
   ///
   /// See also [fromARGB], which takes the opacity as an integer value.
-  const MacosColor.fromRGBO(int r, int g, int b, double opcacity)
-      : super.fromRGBO(r, g, b, opcacity);
+  const MacosColor.fromRGBO(super.r, super.g, super.b, super.opcacity)
+      : super.fromRGBO();
 
   /// Linearly interpolate between two [MacosColor]s.
   static MacosColor lerp(MacosColor a, MacosColor b, double t) {

@@ -2,7 +2,7 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    - use_super_parameters: true
+    - use_super_parameters
 
 analyzer:
   plugins:

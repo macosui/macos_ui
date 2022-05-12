@@ -31,7 +31,7 @@ class ToolBar extends StatefulWidget {
   ///
   /// The height of the ToolBar can be changed with [height].
   const ToolBar({
-    Key? key,
+    super.key,
     this.height = _kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
@@ -43,7 +43,7 @@ class ToolBar extends StatefulWidget {
     this.actions,
     this.centerTitle = false,
     this.dividerColor,
-  }) : super(key: key);
+  });
 
   /// Specifies the height of this [ToolBar].
   ///

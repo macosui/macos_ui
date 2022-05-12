@@ -15,13 +15,13 @@ class ToolBarIconButton extends ToolbarItem {
   /// "system control" toolbar item from Apple's design guidelines. If true,
   /// it replicates the "image button" toolbar item.
   const ToolBarIconButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
     this.onPressed,
     required this.showLabel,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   /// The label that describes this button's action.
   ///

@@ -12,12 +12,12 @@ class ToolBarPullDownButton extends ToolbarItem {
   /// [ToolbarOverflowMenuItem], that opens a subsequent submenu with the
   /// pulldown items.
   const ToolBarPullDownButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
     required this.items,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   /// The label that describes this button's action.
   ///

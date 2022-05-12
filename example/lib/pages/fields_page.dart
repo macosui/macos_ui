@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
 import 'package:macos_ui/macos_ui.dart';
 
 class FieldsPage extends StatefulWidget {
-  const FieldsPage({Key? key}) : super(key: key);
+  const FieldsPage({super.key});
 
   @override
   State<FieldsPage> createState() => _FieldsPageState();

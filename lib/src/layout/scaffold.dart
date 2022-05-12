@@ -19,11 +19,11 @@ class MacosScaffold extends StatefulWidget {
   /// The [children] can only include one [ContentArea], but can include
   /// multiple [ResizablePane] widgets.
   const MacosScaffold({
-    Key? key,
+    super.key,
     this.children = const <Widget>[],
     this.toolBar,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   /// Specifies the background color for the Scaffold.
   ///
@@ -116,8 +116,8 @@ class _MacosScaffoldState extends State<MacosScaffold> {
 
 class _ScaffoldBody extends MultiChildRenderObjectWidget {
   _ScaffoldBody({
-    List<Widget> children = const <Widget>[],
-  }) : super(children: children);
+    super.children,
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) {

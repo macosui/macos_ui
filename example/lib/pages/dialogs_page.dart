@@ -3,7 +3,7 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 class DialogsPage extends StatefulWidget {
-  const DialogsPage({Key? key}) : super(key: key);
+  const DialogsPage({super.key});
 
   @override
   State<DialogsPage> createState() => _DialogsPageState();
@@ -179,7 +179,7 @@ class _DialogsPageState extends State<DialogsPage> {
 }
 
 class DoNotNotifyRow extends StatefulWidget {
-  const DoNotNotifyRow({Key? key}) : super(key: key);
+  const DoNotNotifyRow({super.key});
 
   @override
   State<DoNotNotifyRow> createState() => _DoNotNotifyRowState();
@@ -207,7 +207,7 @@ class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
 }
 
 class MacosuiSheet extends StatelessWidget {
-  const MacosuiSheet({Key? key}) : super(key: key);
+  const MacosuiSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

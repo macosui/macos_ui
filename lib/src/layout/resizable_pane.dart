@@ -20,7 +20,7 @@ class ResizablePane extends StatefulWidget {
   ///
   /// The [startWidth] is the initial width.
   const ResizablePane({
-    Key? key,
+    super.key,
     required this.builder,
     this.decoration,
     this.maxWidth = 500.0,
@@ -36,8 +36,7 @@ class ResizablePane extends StatefulWidget {
         assert(
           (startWidth >= minWidth) && (startWidth <= maxWidth),
           'startWidth must not be less than minWidth or more than maxWidth',
-        ),
-        super(key: key);
+        );
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.

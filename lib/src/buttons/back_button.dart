@@ -7,13 +7,13 @@ class MacosBackButton extends StatefulWidget {
   /// Creates a `BackButton` with the appropriate icon/background colors based
   /// on light/dark themes.
   const MacosBackButton({
-    Key? key,
+    super.key,
     this.onPressed,
     this.fillColor,
     this.hoverColor,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
-  }) : super(key: key);
+  });
 
   /// An override callback to perform instead of the default behavior which is
   /// to pop the [Navigator].
