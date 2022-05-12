@@ -25,7 +25,7 @@ class MacosIconButton extends StatefulWidget {
     ),
     this.padding,
     this.mouseCursor = SystemMouseCursors.basic,
-  })  : assert(pressedOpacity == null ||
+  }) : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The widget to use as the icon.

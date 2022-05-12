@@ -24,7 +24,7 @@ class SidebarItems extends StatelessWidget {
     this.unselectedColor,
     this.shape,
     this.cursor = SystemMouseCursors.basic,
-  })  : assert(currentIndex >= 0);
+  }) : assert(currentIndex >= 0);
 
   /// The [SidebarItem]s used by the sidebar. If no items are provided,
   /// the sidebar is not rendered.

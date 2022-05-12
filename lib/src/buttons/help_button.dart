@@ -20,7 +20,7 @@ class HelpButton extends StatefulWidget {
     this.alignment = Alignment.center,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
-  })  : assert(pressedOpacity == null ||
+  }) : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The color of the button's background.

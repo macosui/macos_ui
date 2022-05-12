@@ -23,7 +23,7 @@ class MacosRadioButton<T> extends StatelessWidget {
     this.offColor = CupertinoColors.tertiaryLabel,
     this.innerColor,
     this.semanticLabel,
-  })  : assert(size >= 0);
+  }) : assert(size >= 0);
 
   /// Whether the button is checked or not
   final T value;

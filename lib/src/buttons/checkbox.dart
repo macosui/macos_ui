@@ -20,7 +20,7 @@ class MacosCheckbox extends StatelessWidget {
     this.disabledColor = CupertinoColors.quaternaryLabel,
     this.offBorderColor = CupertinoColors.tertiaryLabel,
     this.semanticLabel,
-  })  : assert(size >= 0);
+  }) : assert(size >= 0);
 
   /// Whether the checkbox is checked or not. If null, it'll be considered
   /// mixed.

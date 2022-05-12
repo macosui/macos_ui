@@ -327,7 +327,7 @@ class MacosWindowScope extends InheritedWidget {
     required super.child,
     required this.isSidebarShown,
     required VoidCallback sidebarToggler,
-  })  : _sidebarToggler = sidebarToggler;
+  }) : _sidebarToggler = sidebarToggler;
 
   /// Provides the constraints from the [MacosWindow] to its descendants.
   final BoxConstraints constraints;

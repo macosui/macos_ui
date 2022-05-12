@@ -45,7 +45,8 @@ class MacosScrollbarTheme extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(MacosScrollbarTheme oldWidget) => data != oldWidget.data;
+  bool updateShouldNotify(MacosScrollbarTheme oldWidget) =>
+      data != oldWidget.data;
 }
 
 /// Defines default property values for descendant [MacosScrollbar] widgets.

@@ -38,7 +38,7 @@ class PushButton extends StatefulWidget {
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
     this.isSecondary,
-  })  : assert(pressedOpacity == null ||
+  }) : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The widget below this widget in the tree.
