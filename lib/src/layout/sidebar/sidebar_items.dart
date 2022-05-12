@@ -380,7 +380,9 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
     final bool closed = !_isExpanded && _controller.isDismissed;
 
     final Widget result = Offstage(
+      offstage: closed,
       child: TickerMode(
+        enabled: !closed,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: widget.item.disclosureItems!.map((item) {
@@ -399,9 +401,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
             );
           }).toList(),
         ),
-        enabled: !closed,
       ),
-      offstage: closed,
     );
 
     return AnimatedBuilder(

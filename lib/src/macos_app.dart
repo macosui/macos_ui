@@ -298,7 +298,7 @@ class MacosApp extends StatefulWidget {
   final MacosThemeData? theme;
 
   @override
-  _MacosAppState createState() => _MacosAppState();
+  State<MacosApp> createState() => _MacosAppState();
 }
 
 class _MacosAppState extends State<MacosApp> {
@@ -443,8 +443,8 @@ class MacosScrollBehavior extends ScrollBehavior {
           case TargetPlatform.macOS:
           case TargetPlatform.windows:
             return MacosScrollbar(
-              child: child,
               controller: details.controller,
+              child: child,
             );
           case TargetPlatform.android:
           case TargetPlatform.fuchsia:

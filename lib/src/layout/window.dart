@@ -44,7 +44,7 @@ class MacosWindow extends StatefulWidget {
   final Sidebar? sidebar;
 
   @override
-  _MacosWindowState createState() => _MacosWindowState();
+  State<MacosWindow> createState() => _MacosWindowState();
 }
 
 class _MacosWindowState extends State<MacosWindow> {
@@ -289,7 +289,6 @@ class _MacosWindowState extends State<MacosWindow> {
         );
 
         return MacosWindowScope(
-          child: layout,
           constraints: constraints,
           isSidebarShown: canShowSidebar,
           sidebarToggler: () async {
@@ -298,6 +297,7 @@ class _MacosWindowState extends State<MacosWindow> {
             await Future.delayed(Duration(milliseconds: _sidebarSlideDuration));
             setState(() => _sidebarSlideDuration = 0);
           },
+          child: layout,
         );
       },
     );

@@ -209,7 +209,7 @@ class MacosSearchField<T> extends StatefulWidget {
   final GestureTapCallback? onTap;
 
   @override
-  _MacosSearchFieldState<T> createState() => _MacosSearchFieldState();
+  State<MacosSearchField<T>> createState() => _MacosSearchFieldState();
 }
 
 class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {

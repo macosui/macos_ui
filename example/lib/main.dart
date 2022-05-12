@@ -12,11 +12,11 @@ import 'package:provider/provider.dart';
 import 'theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MacosUIGalleryApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MacosUIGalleryApp extends StatelessWidget {
+  const MacosUIGalleryApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,26 +25,26 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
-          title: 'macos_ui example',
+          title: 'macos_ui Widget Gallery',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
-          home: const Demo(),
+          home: const WidgetGallery(),
         );
       },
     );
   }
 }
 
-class Demo extends StatefulWidget {
-  const Demo({Key? key}) : super(key: key);
+class WidgetGallery extends StatefulWidget {
+  const WidgetGallery({Key? key}) : super(key: key);
 
   @override
-  _DemoState createState() => _DemoState();
+  State<WidgetGallery> createState() => _WidgetGalleryState();
 }
 
-class _DemoState extends State<Demo> {
+class _WidgetGalleryState extends State<WidgetGallery> {
   double ratingValue = 0;
   double sliderValue = 0;
   bool value = false;
@@ -73,14 +73,6 @@ class _DemoState extends State<Demo> {
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
-      child: IndexedStack(
-        index: pageIndex,
-        children: pages,
-      ),
-      // Optional title bar:
-      // titleBar: const TitleBar(
-      //   title: Text('macOS App Name'),
-      // ),
       sidebar: Sidebar(
         top: MacosSearchField(
           placeholder: 'Search',
@@ -195,6 +187,10 @@ class _DemoState extends State<Demo> {
           title: Text('Tim Apple'),
           subtitle: Text('tim@apple.com'),
         ),
+      ),
+      child: IndexedStack(
+        index: pageIndex,
+        children: pages,
       ),
     );
   }

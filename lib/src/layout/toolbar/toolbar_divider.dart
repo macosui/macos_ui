@@ -18,19 +18,19 @@ class ToolBarDivider extends ToolbarItem {
 
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
-    Color _color = MacosTheme.brightnessOf(context).resolve(
+    Color color = MacosTheme.brightnessOf(context).resolve(
       const Color.fromRGBO(0, 0, 0, 0.25),
       const Color.fromRGBO(255, 255, 255, 0.25),
     );
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       return Padding(
         padding: padding!,
-        child: Container(color: _color, width: 1, height: 28),
+        child: Container(color: color, width: 1, height: 28),
       );
     } else {
       return Padding(
         padding: padding!,
-        child: Container(color: _color, height: 1),
+        child: Container(color: color, height: 1),
       );
     }
   }

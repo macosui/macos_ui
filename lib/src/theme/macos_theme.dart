@@ -203,6 +203,7 @@ class MacosThemeData with Diagnosticable {
     MacosTimePickerThemeData? timePickerTheme,
     MacosSearchFieldThemeData? searchFieldTheme,
   }) {
+    // ignore: no_leading_underscores_for_local_identifiers
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
@@ -210,7 +211,7 @@ class MacosThemeData with Diagnosticable {
         ? CupertinoColors.systemBackground.darkElevatedColor
         : CupertinoColors.systemBackground;
     typography ??= MacosTypography(
-      color: brightness == Brightness.light
+      color: _brightness == Brightness.light
           ? CupertinoColors.black
           : CupertinoColors.white,
     );
@@ -625,7 +626,8 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<TooltipThemeData>('tooltipTheme', tooltipTheme),
     );
     properties.add(
-      DiagnosticsProperty<MacosScrollbarThemeData>('scrollbarTheme', scrollbarTheme),
+      DiagnosticsProperty<MacosScrollbarThemeData>(
+          'scrollbarTheme', scrollbarTheme),
     );
     properties.add(
       DiagnosticsProperty<MacosIconButtonThemeData>(

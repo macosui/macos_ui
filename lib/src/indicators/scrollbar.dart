@@ -132,7 +132,6 @@ class MacosScrollbar extends StatelessWidget {
         }),
       ),
       child: m.Scrollbar(
-        child: child,
         controller: controller,
         thumbVisibility: isAlwaysShown,
         trackVisibility: trackVisibility,
@@ -140,6 +139,7 @@ class MacosScrollbar extends StatelessWidget {
         radius: radius,
         interactive: interactive,
         notificationPredicate: notificationPredicate,
+        child: child,
       ),
     );
   }

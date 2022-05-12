@@ -5,7 +5,7 @@ class ColorsPage extends StatefulWidget {
   const ColorsPage({Key? key}) : super(key: key);
 
   @override
-  _ColorsPageState createState() => _ColorsPageState();
+  State<ColorsPage> createState() => _ColorsPageState();
 }
 
 class _ColorsPageState extends State<ColorsPage> {

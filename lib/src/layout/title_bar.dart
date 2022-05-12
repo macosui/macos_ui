@@ -75,10 +75,10 @@ class TitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final MacosThemeData theme = MacosTheme.of(context);
 
+    // ignore: no_leading_underscores_for_local_identifiers
     Widget? _title = title;
     if (_title != null) {
       _title = DefaultTextStyle(
-        child: _title,
         style: theme.typography.headline.copyWith(
           fontSize: 10,
           fontWeight: FontWeight.w600,
@@ -86,6 +86,7 @@ class TitleBar extends StatelessWidget {
               ? const Color(0xFFEAEAEA)
               : const Color(0xFF4D4D4D),
         ),
+        child: _title,
       );
     }
 
@@ -119,7 +120,7 @@ class TitleBar extends StatelessWidget {
               gradient: decoration?.gradient,
             ),
             child: NavigationToolbar(
-              middle: _title,
+              middle: title,
               centerMiddle: centerTitle,
               middleSpacing: 8,
             ),

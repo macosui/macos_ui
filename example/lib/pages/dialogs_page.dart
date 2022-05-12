@@ -6,7 +6,7 @@ class DialogsPage extends StatefulWidget {
   const DialogsPage({Key? key}) : super(key: key);
 
   @override
-  _DialogsPageState createState() => _DialogsPageState();
+  State<DialogsPage> createState() => _DialogsPageState();
 }
 
 class _DialogsPageState extends State<DialogsPage> {
@@ -53,8 +53,8 @@ class _DialogsPageState extends State<DialogsPage> {
                         //horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                       ),
                     ),
@@ -79,14 +79,14 @@ class _DialogsPageState extends State<DialogsPage> {
                         //horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                         secondaryButton: PushButton(
                           buttonSize: ButtonSize.large,
                           isSecondary: true,
-                          child: const Text('Secondary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Secondary'),
                         ),
                       ),
                     ),
@@ -111,14 +111,14 @@ class _DialogsPageState extends State<DialogsPage> {
                         horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                         secondaryButton: PushButton(
                           buttonSize: ButtonSize.large,
                           isSecondary: true,
-                          child: const Text('Secondary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Secondary'),
                         ),
                       ),
                     ),
@@ -144,14 +144,14 @@ class _DialogsPageState extends State<DialogsPage> {
                         horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                         secondaryButton: PushButton(
                           buttonSize: ButtonSize.large,
                           isSecondary: true,
-                          child: const Text('Secondary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Secondary'),
                         ),
                         suppress: const DoNotNotifyRow(),
                       ),
@@ -182,7 +182,7 @@ class DoNotNotifyRow extends StatefulWidget {
   const DoNotNotifyRow({Key? key}) : super(key: key);
 
   @override
-  _DoNotNotifyRowState createState() => _DoNotNotifyRowState();
+  State<DoNotNotifyRow> createState() => _DoNotNotifyRowState();
 }
 
 class _DoNotNotifyRowState extends State<DoNotNotifyRow> {

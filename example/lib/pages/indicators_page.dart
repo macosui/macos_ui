@@ -6,7 +6,7 @@ class IndicatorsPage extends StatefulWidget {
   const IndicatorsPage({Key? key}) : super(key: key);
 
   @override
-  _IndicatorsPageState createState() => _IndicatorsPageState();
+  State<IndicatorsPage> createState() => _IndicatorsPageState();
 }
 
 class _IndicatorsPageState extends State<IndicatorsPage> {

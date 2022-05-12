@@ -5,7 +5,7 @@ class FieldsPage extends StatefulWidget {
   const FieldsPage({Key? key}) : super(key: key);
 
   @override
-  _FieldsPageState createState() => _FieldsPageState();
+  State<FieldsPage> createState() => _FieldsPageState();
 }
 
 class _FieldsPageState extends State<FieldsPage> {

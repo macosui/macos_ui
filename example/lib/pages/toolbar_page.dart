@@ -6,7 +6,7 @@ class ToolbarPage extends StatefulWidget {
   const ToolbarPage({Key? key}) : super(key: key);
 
   @override
-  _ToolbarPageState createState() => _ToolbarPageState();
+  State<ToolbarPage> createState() => _ToolbarPageState();
 }
 
 class _ToolbarPageState extends State<ToolbarPage> {

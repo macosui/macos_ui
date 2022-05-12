@@ -137,20 +137,20 @@ class MacosBackButtonState extends State<MacosBackButton>
         ? CupertinoColors.white
         : CupertinoColors.black;
 
-    Color? _fillColor;
+    Color? fillColor;
     if (widget.fillColor != null) {
-      _fillColor = widget.fillColor;
+      fillColor = widget.fillColor;
     } else {
-      _fillColor = brightness == Brightness.dark
+      fillColor = brightness == Brightness.dark
           ? const Color(0xff323232)
           : const Color(0xffF4F5F5);
     }
 
-    Color? _hoverColor;
+    Color? hoverColor;
     if (widget.hoverColor != null) {
-      _hoverColor = widget.hoverColor;
+      hoverColor = widget.hoverColor;
     } else {
-      _hoverColor = brightness == Brightness.dark
+      hoverColor = brightness == Brightness.dark
           ? const Color(0xff333336)
           : const Color(0xffF3F2F2);
     }
@@ -194,8 +194,8 @@ class MacosBackButtonState extends State<MacosBackButton>
                               ? const Color(0xff3C383C)
                               : const Color(0xffE5E5E5)
                           : _isHovered
-                              ? _hoverColor
-                              : _fillColor,
+                              ? hoverColor
+                              : fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
                     child: Icon(

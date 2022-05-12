@@ -104,8 +104,8 @@ class _MacosColorWellState extends State<MacosColorWell> {
 
   @override
   Widget build(BuildContext context) {
-    final _theme = MacosTheme.of(context);
-    final _outerColor = _theme.brightness.isDark
+    final theme = MacosTheme.of(context);
+    final outerColor = theme.brightness.isDark
         ? MacosColors.systemGrayColor.withOpacity(0.50)
         : MacosColors.white;
     return GestureDetector(
@@ -126,7 +126,7 @@ class _MacosColorWellState extends State<MacosColorWell> {
         height: 23.0,
         width: 44.0,
         child: Container(
-          decoration: !_theme.brightness.isDark
+          decoration: !theme.brightness.isDark
               ? BoxDecoration(
                   border: Border.all(
                     color: const MacosColor(0xFFAFAEAE),
@@ -135,7 +135,7 @@ class _MacosColorWellState extends State<MacosColorWell> {
                 )
               : null,
           child: ColoredBox(
-            color: _outerColor,
+            color: outerColor,
             child: Padding(
               padding: const EdgeInsets.all(6.0),
               child: SizedBox(

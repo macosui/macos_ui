@@ -56,7 +56,7 @@ class MacosTooltip extends StatefulWidget {
   final bool useMousePosition;
 
   @override
-  _MacosTooltipState createState() => _MacosTooltipState();
+  State<MacosTooltip> createState() => _MacosTooltipState();
 }
 
 class _MacosTooltipState extends State<MacosTooltip>

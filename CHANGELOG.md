@@ -1,3 +1,9 @@
+## [1.4.0]
+* Migrate to Flutter 3.0
+  * Minimumin dart sdk version is now 2.17.0
+  * Update to `flutter_lints: ^2.0.1` with subsequent fixes
+  * `MacosScrollbar` API more closely matches its material counterpart 
+
 ## [1.3.0]
 * Add a `top` property to `Sidebar`
 * Tweak the default `primaryColor` value in `MacosThemeData`.

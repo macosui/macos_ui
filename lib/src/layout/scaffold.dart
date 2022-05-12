@@ -38,7 +38,7 @@ class MacosScaffold extends StatefulWidget {
   final ToolBar? toolBar;
 
   @override
-  _MacosScaffoldState createState() => _MacosScaffoldState();
+  State<MacosScaffold> createState() => _MacosScaffoldState();
 }
 
 class _MacosScaffoldState extends State<MacosScaffold> {
@@ -93,10 +93,10 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               width: width,
               height: height,
               child: MediaQuery(
-                child: _ScaffoldBody(children: children),
                 data: mediaQuery.copyWith(
                   padding: EdgeInsets.only(top: topPadding),
                 ),
+                child: _ScaffoldBody(children: children),
               ),
             ),
 
@@ -179,11 +179,11 @@ class _RenderScaffoldBody extends RenderBox
     RenderBox? child = firstChild;
     double sum = 0;
 
-    final _children = getChildrenAsList();
+    final children = getChildrenAsList();
     if (contentAreaIndex != null) {
-      _children.removeAt(contentAreaIndex!);
+      children.removeAt(contentAreaIndex!);
     }
-    for (var child in _children) {
+    for (var child in children) {
       child.layout(const BoxConstraints.tightFor(), parentUsesSize: true);
       sum += child.size.width;
     }

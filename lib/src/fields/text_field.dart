@@ -731,7 +731,7 @@ class MacosTextField extends StatefulWidget {
   final String? restorationId;
 
   @override
-  _MacosTextFieldState createState() => _MacosTextFieldState();
+  State<MacosTextField> createState() => _MacosTextFieldState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

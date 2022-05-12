@@ -170,7 +170,7 @@ class HelpButtonState extends State<HelpButton>
       context,
     );
 
-    final Color? foregroundColor = widget.enabled
+    final Color foregroundColor = widget.enabled
         ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
             ? const Color.fromRGBO(255, 255, 255, 0.25)
