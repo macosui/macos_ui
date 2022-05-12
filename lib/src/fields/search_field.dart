@@ -245,7 +245,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
         _overlayEntry.remove();
       }
     });
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       suggestionStream.sink.add(null);
       suggestionStream.sink.add(widget.results);
     });
