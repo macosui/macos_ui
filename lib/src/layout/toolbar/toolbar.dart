@@ -31,7 +31,7 @@ class ToolBar extends StatefulWidget {
   ///
   /// The height of the ToolBar can be changed with [height].
   const ToolBar({
-    Key? key,
+    super.key,
     this.height = _kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
@@ -43,7 +43,7 @@ class ToolBar extends StatefulWidget {
     this.actions,
     this.centerTitle = false,
     this.dividerColor,
-  }) : super(key: key);
+  });
 
   /// Specifies the height of this [ToolBar].
   ///
@@ -140,12 +140,12 @@ class _ToolBarState extends State<ToolBar> {
     final MacosThemeData theme = MacosTheme.of(context);
     Color dividerColor = widget.dividerColor ?? theme.dividerColor;
     final route = ModalRoute.of(context);
-    double _overflowBreakpoint = 0.0;
+    double overflowBreakpoint = 0.0;
 
-    Widget? _leading = widget.leading;
-    if (_leading == null && widget.automaticallyImplyLeading) {
+    Widget? leading = widget.leading;
+    if (leading == null && widget.automaticallyImplyLeading) {
       if (route?.canPop ?? false) {
-        _leading = Container(
+        leading = Container(
           width: _kLeadingWidth,
           alignment: Alignment.centerLeft,
           child: MacosBackButton(
@@ -156,15 +156,14 @@ class _ToolBarState extends State<ToolBar> {
       }
     }
     if (widget.leading != null) {
-      _overflowBreakpoint += _kLeadingWidth;
+      overflowBreakpoint += _kLeadingWidth;
     }
 
-    Widget? _title = widget.title;
-    if (_title != null) {
-      _title = SizedBox(
+    Widget? title = widget.title;
+    if (title != null) {
+      title = SizedBox(
         width: widget.titleWidth,
         child: DefaultTextStyle(
-          child: _title,
           style: MacosTheme.of(context).typography.headline.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
@@ -172,20 +171,21 @@ class _ToolBarState extends State<ToolBar> {
                     ? const Color(0xFFEAEAEA)
                     : const Color(0xFF4D4D4D),
               ),
+          child: title,
         ),
       );
-      _overflowBreakpoint += widget.titleWidth;
+      overflowBreakpoint += widget.titleWidth;
     }
 
     // Collect the toolbar action widgets that can be shown inside the ToolBar
     // and the ones that have overflowed.
-    List<ToolbarItem>? _inToolbarActions = [];
-    List<ToolbarItem> _overflowedActions = [];
+    List<ToolbarItem>? inToolbarActions = [];
+    List<ToolbarItem> overflowedActions = [];
     bool doAllItemsShowLabel = true;
     if (widget.actions != null && widget.actions!.isNotEmpty) {
-      _inToolbarActions = widget.actions ?? [];
-      _overflowedActions = _inToolbarActions
-          .sublist(_inToolbarActions.length - overflowedActionsCount)
+      inToolbarActions = widget.actions ?? [];
+      overflowedActions = inToolbarActions
+          .sublist(inToolbarActions.length - overflowedActionsCount)
           .toList();
       // If all toolbar actions have labels shown below their icons,
       // reduce the overflow button's size as well.
@@ -226,14 +226,14 @@ class _ToolBarState extends State<ToolBar> {
               gradient: widget.decoration?.gradient,
             ),
             child: NavigationToolbar(
-              middle: _title,
+              middle: title,
               centerMiddle: widget.centerTitle,
               trailing: OverflowHandler(
-                overflowBreakpoint: _overflowBreakpoint,
+                overflowBreakpoint: overflowBreakpoint,
                 overflowWidget: ToolbarOverflowButton(
                   isDense: doAllItemsShowLabel,
                   overflowContentBuilder: (context) => ToolbarOverflowMenu(
-                    children: _overflowedActions
+                    children: overflowedActions
                         .map((action) => action.build(
                               context,
                               ToolbarItemDisplayMode.overflowed,
@@ -241,7 +241,7 @@ class _ToolBarState extends State<ToolBar> {
                         .toList(),
                   ),
                 ),
-                children: _inToolbarActions
+                children: inToolbarActions
                     .map((e) =>
                         e.build(context, ToolbarItemDisplayMode.inToolbar))
                     .toList(),
@@ -255,7 +255,7 @@ class _ToolBarState extends State<ToolBar> {
                 right: false,
                 bottom: false,
                 left: !(scope?.isSidebarShown ?? false),
-                child: _leading ?? const SizedBox.shrink(),
+                child: leading ?? const SizedBox.shrink(),
               ),
             ),
           ),

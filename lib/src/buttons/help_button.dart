@@ -12,7 +12,7 @@ import 'package:macos_ui/src/library.dart';
 class HelpButton extends StatefulWidget {
   ///pressedOpacity, if non-null, must be in the range if 0.0 to 1.0
   const HelpButton({
-    Key? key,
+    super.key,
     this.color,
     this.disabledColor,
     this.onPressed,
@@ -20,9 +20,8 @@ class HelpButton extends StatefulWidget {
     this.alignment = Alignment.center,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
-  })  : assert(pressedOpacity == null ||
-            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
-        super(key: key);
+  }) : assert(pressedOpacity == null ||
+            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The color of the button's background.
   final Color? color;
@@ -170,7 +169,7 @@ class HelpButtonState extends State<HelpButton>
       context,
     );
 
-    final Color? foregroundColor = widget.enabled
+    final Color foregroundColor = widget.enabled
         ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
             ? const Color.fromRGBO(255, 255, 255, 0.25)

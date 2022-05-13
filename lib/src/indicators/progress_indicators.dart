@@ -14,15 +14,14 @@ class ProgressCircle extends StatelessWidget {
   ///
   /// [value] must be in the range of 0 and 100
   const ProgressCircle({
-    Key? key,
+    super.key,
     this.value,
     this.radius = 10,
     this.innerColor,
     this.borderColor,
     this.semanticLabel,
   })  : assert(value == null || value >= 0 && value <= 100),
-        assert(radius >= 0),
-        super(key: key);
+        assert(radius >= 0);
 
   /// The value of the progress circle. If non-null, this has to
   /// be non-negative and less the 100. If null, the progress circle
@@ -158,15 +157,14 @@ class ProgressBar extends StatelessWidget {
   ///
   /// [value] must be in the range of 0 and 100
   const ProgressBar({
-    Key? key,
+    super.key,
     this.height = 4.5,
     required this.value,
     this.trackColor,
     this.backgroundColor,
     this.semanticLabel,
   })  : assert(value >= 0 && value <= 100),
-        assert(height >= 0),
-        super(key: key);
+        assert(height >= 0);
 
   /// The value of the progress bar. If non-null, this has to
   /// be non-negative and less the 100. If null, the progress bar

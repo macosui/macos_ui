@@ -1,14 +1,14 @@
 include: package:flutter_lints/flutter.yaml
 
-#linter:
-#  rules:
-#    - avoid_relative_lib_imports
-#    - prefer_const_constructors
-#    - use_key_in_widget_constructors
+linter:
+  rules:
+    - use_super_parameters
 
 analyzer:
   plugins:
     - dart_code_metrics
+  exclude:
+    - starter_app/**
     
 dart_code_metrics:
   metrics:

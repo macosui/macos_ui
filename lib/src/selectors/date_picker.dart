@@ -35,10 +35,10 @@ typedef OnDateChanged = Function(DateTime date);
 class MacosDatePicker extends StatefulWidget {
   /// {macro macosDatePicker}
   const MacosDatePicker({
-    Key? key,
+    super.key,
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
-  }) : super(key: key);
+  });
 
   /// The [DatePickerStyle] to use.
   ///
@@ -586,11 +586,11 @@ const _DayPickerGridDelegate _dayPickerGridDelegate = _DayPickerGridDelegate();
 
 class DatePickerFieldElement extends StatelessWidget {
   const DatePickerFieldElement({
-    Key? key,
+    super.key,
     required this.element,
     required this.onSelected,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   final String element;
   final VoidCallback onSelected;

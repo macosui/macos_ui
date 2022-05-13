@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -13,7 +12,7 @@ class MacosCheckbox extends StatelessWidget {
   ///
   /// [size] must be non-negative
   const MacosCheckbox({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.size = 16.0,
@@ -21,8 +20,7 @@ class MacosCheckbox extends StatelessWidget {
     this.disabledColor = CupertinoColors.quaternaryLabel,
     this.offBorderColor = CupertinoColors.tertiaryLabel,
     this.semanticLabel,
-  })  : assert(size >= 0),
-        super(key: key);
+  }) : assert(size >= 0);
 
   /// Whether the checkbox is checked or not. If null, it'll be considered
   /// mixed.

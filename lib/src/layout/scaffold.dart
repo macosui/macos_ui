@@ -19,11 +19,11 @@ class MacosScaffold extends StatefulWidget {
   /// The [children] can only include one [ContentArea], but can include
   /// multiple [ResizablePane] widgets.
   const MacosScaffold({
-    Key? key,
+    super.key,
     this.children = const <Widget>[],
     this.toolBar,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   /// Specifies the background color for the Scaffold.
   ///
@@ -38,7 +38,7 @@ class MacosScaffold extends StatefulWidget {
   final ToolBar? toolBar;
 
   @override
-  _MacosScaffoldState createState() => _MacosScaffoldState();
+  State<MacosScaffold> createState() => _MacosScaffoldState();
 }
 
 class _MacosScaffoldState extends State<MacosScaffold> {
@@ -93,10 +93,10 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               width: width,
               height: height,
               child: MediaQuery(
-                child: _ScaffoldBody(children: children),
                 data: mediaQuery.copyWith(
                   padding: EdgeInsets.only(top: topPadding),
                 ),
+                child: _ScaffoldBody(children: children),
               ),
             ),
 
@@ -116,8 +116,8 @@ class _MacosScaffoldState extends State<MacosScaffold> {
 
 class _ScaffoldBody extends MultiChildRenderObjectWidget {
   _ScaffoldBody({
-    List<Widget> children = const <Widget>[],
-  }) : super(children: children);
+    super.children,
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -179,11 +179,11 @@ class _RenderScaffoldBody extends RenderBox
     RenderBox? child = firstChild;
     double sum = 0;
 
-    final _children = getChildrenAsList();
+    final children = getChildrenAsList();
     if (contentAreaIndex != null) {
-      _children.removeAt(contentAreaIndex!);
+      children.removeAt(contentAreaIndex!);
     }
-    for (var child in _children) {
+    for (var child in children) {
       child.layout(const BoxConstraints.tightFor(), parentUsesSize: true);
       sum += child.size.width;
     }

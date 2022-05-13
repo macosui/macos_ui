@@ -31,7 +31,7 @@ class MacosSearchField<T> extends StatefulWidget {
   /// You can also set a callback action individually for each
   /// [SearchResultItem] via the [onSelected] property.
   const MacosSearchField({
-    Key? key,
+    super.key,
     this.results,
     this.onResultSelected,
     this.maxResultsToShow = 5,
@@ -60,7 +60,7 @@ class MacosSearchField<T> extends StatefulWidget {
     this.inputFormatters,
     this.enabled = true,
     this.onTap,
-  }) : super(key: key);
+  });
 
   /// List of results for the searchfield.
   ///
@@ -209,7 +209,7 @@ class MacosSearchField<T> extends StatefulWidget {
   final GestureTapCallback? onTap;
 
   @override
-  _MacosSearchFieldState<T> createState() => _MacosSearchFieldState();
+  State<MacosSearchField<T>> createState() => _MacosSearchFieldState();
 }
 
 class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
@@ -245,7 +245,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
         _overlayEntry.remove();
       }
     });
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       suggestionStream.sink.add(null);
       suggestionStream.sink.add(widget.results);
     });
@@ -480,6 +480,7 @@ class SearchResultItem {
 /// A wrapper around the [SearchResultItem] to provide it with the
 /// appropriate mouse and hover detection.
 class _SearchResultItemButton extends StatefulWidget {
+  // ignore: use_super_parameters
   const _SearchResultItemButton({
     Key? key,
     this.onPressed,

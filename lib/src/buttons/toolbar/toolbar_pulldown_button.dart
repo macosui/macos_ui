@@ -12,12 +12,12 @@ class ToolBarPullDownButton extends ToolbarItem {
   /// [ToolbarOverflowMenuItem], that opens a subsequent submenu with the
   /// pulldown items.
   const ToolBarPullDownButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
     required this.items,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   /// The label that describes this button's action.
   ///
@@ -53,7 +53,7 @@ class ToolBarPullDownButton extends ToolbarItem {
     final brightness = MacosTheme.of(context).brightness;
 
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      Widget _pulldownButton = Padding(
+      Widget pulldownButton = Padding(
         padding: const EdgeInsets.symmetric(vertical: 6.0),
         child: MacosPulldownButtonTheme(
           data: MacosPulldownButtonTheme.of(context).copyWith(
@@ -70,12 +70,12 @@ class ToolBarPullDownButton extends ToolbarItem {
       );
 
       if (tooltipMessage != null) {
-        _pulldownButton = MacosTooltip(
+        pulldownButton = MacosTooltip(
           message: tooltipMessage!,
-          child: _pulldownButton,
+          child: pulldownButton,
         );
       }
-      return _pulldownButton;
+      return pulldownButton;
     } else {
       // We should show a submenu for the pulldown button items.
       final subMenuKey = GlobalKey<ToolbarPopupState>();

@@ -24,12 +24,12 @@ class MacosTooltip extends StatefulWidget {
   /// Wrap any widget in a [MacosTooltip] to show a message on mouse hover or
   /// long press event
   const MacosTooltip({
-    Key? key,
+    super.key,
     required this.message,
     this.child,
     this.excludeFromSemantics = false,
     this.useMousePosition = true,
-  }) : super(key: key);
+  });
 
   /// The text to display in the tooltip.
   final String message;
@@ -56,7 +56,7 @@ class MacosTooltip extends StatefulWidget {
   final bool useMousePosition;
 
   @override
-  _MacosTooltipState createState() => _MacosTooltipState();
+  State<MacosTooltip> createState() => _MacosTooltipState();
 }
 
 class _MacosTooltipState extends State<MacosTooltip>
@@ -85,18 +85,18 @@ class _MacosTooltipState extends State<MacosTooltip>
   @override
   void initState() {
     super.initState();
-    _mouseIsConnected = RendererBinding.instance!.mouseTracker.mouseIsConnected;
+    _mouseIsConnected = RendererBinding.instance.mouseTracker.mouseIsConnected;
     _controller = AnimationController(
       duration: _fadeInDuration,
       reverseDuration: _fadeOutDuration,
       vsync: this,
     )..addStatusListener(_handleStatusChanged);
     // Listen to see when a mouse is added.
-    RendererBinding.instance!.mouseTracker
+    RendererBinding.instance.mouseTracker
         .addListener(_handleMouseTrackerChange);
     // Listen to global pointer events so that we can hide a tooltip immediately
     // if some other control is clicked on.
-    GestureBinding.instance!.pointerRouter.addGlobalRoute(_handlePointerEvent);
+    GestureBinding.instance.pointerRouter.addGlobalRoute(_handlePointerEvent);
   }
 
   // Forces a rebuild if a mouse has been added or removed.
@@ -105,7 +105,7 @@ class _MacosTooltipState extends State<MacosTooltip>
       return;
     }
     final bool mouseIsConnected =
-        RendererBinding.instance!.mouseTracker.mouseIsConnected;
+        RendererBinding.instance.mouseTracker.mouseIsConnected;
     if (mouseIsConnected != _mouseIsConnected) {
       setState(() {
         _mouseIsConnected = mouseIsConnected;
@@ -238,9 +238,9 @@ class _MacosTooltipState extends State<MacosTooltip>
 
   @override
   void dispose() {
-    GestureBinding.instance!.pointerRouter
+    GestureBinding.instance.pointerRouter
         .removeGlobalRoute(_handlePointerEvent);
-    RendererBinding.instance!.mouseTracker
+    RendererBinding.instance.mouseTracker
         .removeListener(_handleMouseTrackerChange);
     if (_entry != null) _removeEntry();
     _controller.dispose();
@@ -346,6 +346,7 @@ class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
 }
 
 class _TooltipOverlay extends StatelessWidget {
+  // ignore: use_super_parameters
   const _TooltipOverlay({
     Key? key,
     required this.message,
