@@ -51,7 +51,7 @@ function HomepageHeader() {
             className="button button--primary button--lg"
             to="/docs/getting_started/installation"
           >
-            <Translate id="home.get_started">Get Started</Translate>
+            <Translate id="home.get_started">Getting Started</Translate>
           </Link>
         </div>
       </div>
@@ -105,6 +105,10 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <section className='widgetGalleryContainer'>      
+         <h2 style={{paddingTop: '25px', paddingBottom: '11px'}}>Check out the interactive Widget Gallery</h2>
+          <iframe src="https://groovinchip.github.io/macos_ui/#/" className='widgetGallery'></iframe>       
+        </section>
       </main>
     </Layout>
   );
