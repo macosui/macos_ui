@@ -34,3 +34,8 @@ vars:
     description: The name of your organization
     default: com.example
     prompt: Organization name?
+  use_translucency:
+    type: boolean
+    description: Whether to make the application window translucent
+    default: false
+    prompt: Use window translucency?
