@@ -6,7 +6,7 @@ import 'package:macos_ui/src/library.dart';
 class MacosListTile extends StatelessWidget {
   /// Builds a [MacosListTile].
   const MacosListTile({
-    Key? key,
+    super.key,
     this.leading,
     required this.title,
     this.subtitle,
@@ -14,7 +14,7 @@ class MacosListTile extends StatelessWidget {
     this.onClick,
     this.onLongPress,
     this.mouseCursor = MouseCursor.defer,
-  }) : super(key: key);
+  });
 
   /// A widget to display before the [title].
   final Widget? leading;

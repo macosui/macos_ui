@@ -9,14 +9,14 @@ import 'package:macos_ui/src/library.dart';
 /// accent color is visible and off when the switch appears colorless.
 class MacosSwitch extends StatelessWidget {
   const MacosSwitch({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.dragStartBehavior = DragStartBehavior.start,
     this.activeColor,
     this.trackColor,
     this.semanticLabel,
-  }) : super(key: key);
+  });
 
   /// Whether this switch is on or off.
   ///

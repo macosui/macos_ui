@@ -12,10 +12,10 @@ class HelpButtonTheme extends InheritedTheme {
   ///
   /// The [data] parameter must not be null.
   const HelpButtonTheme({
-    Key? key,
+    super.key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   /// The configuration of this theme.
   final HelpButtonThemeData data;

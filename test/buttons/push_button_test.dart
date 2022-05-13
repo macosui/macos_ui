@@ -28,8 +28,8 @@ void main() {
                   builder: (context, scrollController) {
                     return PushButton(
                       buttonSize: ButtonSize.small,
-                      child: const Text('Push me'),
                       onPressed: mockOnPressedFunction.handler,
+                      child: const Text('Push me'),
                     );
                   },
                 ),
@@ -61,9 +61,9 @@ void main() {
                   builder: (context, scrollController) {
                     return PushButton(
                       buttonSize: ButtonSize.small,
-                      child: const Text('Push me'),
                       key: pushButtonKey,
                       onPressed: mockOnTapCancelFunction.handler,
+                      child: const Text('Push me'),
                     );
                   },
                 ),

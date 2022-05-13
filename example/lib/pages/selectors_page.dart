@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class SelectorsPage extends StatefulWidget {
-  const SelectorsPage({
-    Key? key,
-  }) : super(key: key);
+  const SelectorsPage({super.key});
 
   @override
   State<SelectorsPage> createState() => _SelectorsPageState();

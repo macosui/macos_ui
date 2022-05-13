@@ -15,13 +15,13 @@ class ToolBarIconButton extends ToolbarItem {
   /// "system control" toolbar item from Apple's design guidelines. If true,
   /// it replicates the "image button" toolbar item.
   const ToolBarIconButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
     this.onPressed,
     required this.showLabel,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   /// The label that describes this button's action.
   ///
@@ -53,7 +53,7 @@ class ToolBarIconButton extends ToolbarItem {
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     final brightness = MacosTheme.of(context).brightness;
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      Widget _iconButton = MacosIconButton(
+      Widget iconButton = MacosIconButton(
         disabledColor: Colors.transparent,
         icon: MacosIconTheme(
           data: MacosTheme.of(context).iconTheme.copyWith(
@@ -76,11 +76,11 @@ class ToolBarIconButton extends ToolbarItem {
       );
 
       if (showLabel) {
-        _iconButton = Padding(
+        iconButton = Padding(
           padding: const EdgeInsets.fromLTRB(6.0, 6.0, 6.0, 0.0),
           child: Column(
             children: [
-              _iconButton,
+              iconButton,
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
@@ -97,12 +97,12 @@ class ToolBarIconButton extends ToolbarItem {
       }
 
       if (tooltipMessage != null) {
-        _iconButton = MacosTooltip(
+        iconButton = MacosTooltip(
           message: tooltipMessage!,
-          child: _iconButton,
+          child: iconButton,
         );
       }
-      return _iconButton;
+      return iconButton;
     } else {
       return ToolbarOverflowMenuItem(
         label: label,

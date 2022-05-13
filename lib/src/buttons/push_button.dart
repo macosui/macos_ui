@@ -25,7 +25,7 @@ const BorderRadius _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
 /// A macOS-style button.
 class PushButton extends StatefulWidget {
   const PushButton({
-    Key? key,
+    super.key,
     required this.child,
     required this.buttonSize,
     this.padding,
@@ -38,9 +38,8 @@ class PushButton extends StatefulWidget {
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
     this.isSecondary,
-  })  : assert(pressedOpacity == null ||
-            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0)),
-        super(key: key);
+  }) : assert(pressedOpacity == null ||
+            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The widget below this widget in the tree.
   ///

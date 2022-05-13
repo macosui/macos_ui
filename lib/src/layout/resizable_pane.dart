@@ -20,7 +20,7 @@ class ResizablePane extends StatefulWidget {
   ///
   /// The [startWidth] is the initial width.
   const ResizablePane({
-    Key? key,
+    super.key,
     required this.builder,
     this.decoration,
     this.maxWidth = 500.0,
@@ -36,8 +36,7 @@ class ResizablePane extends StatefulWidget {
         assert(
           (startWidth >= minWidth) && (startWidth <= maxWidth),
           'startWidth must not be less than minWidth or more than maxWidth',
-        ),
-        super(key: key);
+        );
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -74,7 +73,7 @@ class ResizablePane extends StatefulWidget {
   final double? windowBreakpoint;
 
   @override
-  _ResizablePaneState createState() => _ResizablePaneState();
+  State<ResizablePane> createState() => _ResizablePaneState();
 }
 
 class _ResizablePaneState extends State<ResizablePane> {
@@ -89,9 +88,9 @@ class _ResizablePaneState extends State<ResizablePane> {
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
   BoxDecoration get _decoration {
-    final _borderSide = BorderSide(color: _dividerColor);
-    final right = Border(right: _borderSide);
-    final left = Border(left: _borderSide);
+    final borderSide = BorderSide(color: _dividerColor);
+    final right = Border(right: borderSide);
+    final left = Border(left: borderSide);
     return BoxDecoration(border: _resizeOnRight ? right : left).copyWith(
       color: widget.decoration?.color,
       border: widget.decoration?.border,
@@ -175,17 +174,17 @@ class _ResizablePaneState extends State<ResizablePane> {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    final _maxHeight = media.size.height;
-    final _maxWidth = media.size.width;
+    final maxHeight = media.size.height;
+    final maxWidth = media.size.width;
 
     if (widget.windowBreakpoint != null &&
-        _maxWidth <= widget.windowBreakpoint!) {
+        maxWidth <= widget.windowBreakpoint!) {
       return const SizedBox.shrink();
     }
 
     return Container(
       width: _width,
-      height: _maxHeight,
+      height: maxHeight,
       decoration: _decoration,
       constraints: BoxConstraints(
         maxWidth: widget.maxWidth,
@@ -205,14 +204,14 @@ class _ResizablePaneState extends State<ResizablePane> {
             Positioned(
               left: 0,
               width: 5,
-              height: _maxHeight,
+              height: maxHeight,
               child: _resizeArea,
             ),
           if (widget.isResizable && _resizeOnRight)
             Positioned(
               right: 0,
               width: 5,
-              height: _maxHeight,
+              height: maxHeight,
               child: _resizeArea,
             ),
         ],

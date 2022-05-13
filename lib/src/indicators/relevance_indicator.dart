@@ -14,7 +14,7 @@ class RelevanceIndicator extends StatelessWidget {
   ///
   /// [barHeight] and [barWidth] must be non-null
   const RelevanceIndicator({
-    Key? key,
+    super.key,
     required this.value,
     this.amount = 20,
     this.barHeight = 20,
@@ -25,8 +25,7 @@ class RelevanceIndicator extends StatelessWidget {
   })  : assert(value >= 0 && value <= amount),
         assert(amount > 0),
         assert(barHeight >= 0),
-        assert(barWidth >= 0),
-        super(key: key);
+        assert(barWidth >= 0);
 
   /// The current value of the indicator. It must be in the range
   /// of 0 to [amount]

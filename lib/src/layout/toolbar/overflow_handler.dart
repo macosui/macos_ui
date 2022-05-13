@@ -20,7 +20,7 @@ typedef OverflowHandlerChangedCallback = void Function(
 /// Adapted from [Wrap].
 class OverflowHandler extends MultiChildRenderObjectWidget {
   OverflowHandler({
-    Key? key,
+    super.key,
     this.alignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.textDirection,
@@ -31,7 +31,7 @@ class OverflowHandler extends MultiChildRenderObjectWidget {
     this.overflowChangedCallback,
     required List<Widget> children,
     required Widget overflowWidget,
-  }) : super(key: key, children: [...children, overflowWidget]);
+  }) : super(children: [...children, overflowWidget]);
 
   /// {@macro flutter.widgets.wrap.alignment}
   final MainAxisAlignment alignment;
@@ -490,7 +490,7 @@ class RenderOverflowHandler extends RenderBox
       if (overflowChangedCallback != null) {
         // This will likely trigger setState in a parent widget,
         // so schedule to happen at the end of the frame...
-        SchedulerBinding.instance?.addPostFrameCallback((_) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
           overflowChangedCallback!(hiddenChildren);
         });
       }

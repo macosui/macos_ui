@@ -12,10 +12,10 @@ class TooltipTheme extends InheritedTheme {
   ///
   /// The data argument must not be null.
   const TooltipTheme({
-    Key? key,
+    super.key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   /// The configuration for this theme
   final TooltipThemeData data;

@@ -27,11 +27,11 @@ class CustomToolbarItem extends ToolbarItem {
   /// If [inOverflowedBuilder] is not provided, the custom toolbar item will not
   /// have an entry in the toolbar's overflowed menu (>>).
   const CustomToolbarItem({
-    Key? key,
+    super.key,
     required this.inToolbarBuilder,
     this.inOverflowedBuilder,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   /// Builds a custom widget to include in the [Toolbar].
   ///
@@ -53,14 +53,14 @@ class CustomToolbarItem extends ToolbarItem {
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      Widget _widget = inToolbarBuilder(context);
+      Widget widget = inToolbarBuilder(context);
       if (tooltipMessage != null) {
-        _widget = MacosTooltip(
+        widget = MacosTooltip(
           message: tooltipMessage!,
-          child: _widget,
+          child: widget,
         );
       }
-      return _widget;
+      return widget;
     } else {
       return (inOverflowedBuilder != null)
           ? inOverflowedBuilder!(context)

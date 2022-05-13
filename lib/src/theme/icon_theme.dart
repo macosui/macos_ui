@@ -13,10 +13,10 @@ class MacosIconTheme extends InheritedTheme {
   ///
   /// Both [data] and [child] arguments must not be null.
   const MacosIconTheme({
-    Key? key,
+    super.key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   /// Creates an icon theme that controls the color, opacity, and size of
   /// descendant widgets, and merges in the current icon theme, if any.

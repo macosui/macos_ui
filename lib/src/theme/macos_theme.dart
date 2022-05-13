@@ -21,10 +21,10 @@ class MacosTheme extends StatelessWidget {
   ///
   /// The [data] and [child] parameters must not be null.
   const MacosTheme({
-    Key? key,
+    super.key,
     required this.data,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// The [MacosThemeData] styling for this theme.
   final MacosThemeData data;
@@ -120,11 +120,12 @@ class MacosTheme extends StatelessWidget {
 }
 
 class _InheritedMacosTheme extends InheritedWidget {
+  // ignore: use_super_parameters
   const _InheritedMacosTheme({
     Key? key,
     required this.theme,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  }) : super(key: key);
 
   final MacosTheme theme;
 
@@ -194,7 +195,7 @@ class MacosThemeData with Diagnosticable {
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
-    ScrollbarThemeData? scrollbarTheme,
+    MacosScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonTheme,
     MacosIconThemeData? iconTheme,
     MacosPopupButtonThemeData? popupButtonTheme,
@@ -203,6 +204,7 @@ class MacosThemeData with Diagnosticable {
     MacosTimePickerThemeData? timePickerTheme,
     MacosSearchFieldThemeData? searchFieldTheme,
   }) {
+    // ignore: no_leading_underscores_for_local_identifiers
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
@@ -210,7 +212,7 @@ class MacosThemeData with Diagnosticable {
         ? CupertinoColors.systemBackground.darkElevatedColor
         : CupertinoColors.systemBackground;
     typography ??= MacosTypography(
-      color: brightness == Brightness.light
+      color: _brightness == Brightness.light
           ? CupertinoColors.black
           : CupertinoColors.white,
     );
@@ -236,7 +238,7 @@ class MacosThemeData with Diagnosticable {
       brightness: _brightness,
       textStyle: typography.callout,
     );
-    scrollbarTheme ??= const ScrollbarThemeData();
+    scrollbarTheme ??= const MacosScrollbarThemeData();
     macosIconButtonTheme ??= MacosIconButtonThemeData(
       backgroundColor: MacosColors.transparent,
       disabledColor: isDark
@@ -471,7 +473,7 @@ class MacosThemeData with Diagnosticable {
   final VisualDensity visualDensity;
 
   /// The default style for [MacosScrollbar]s below the overall [MacosTheme]
-  final ScrollbarThemeData scrollbarTheme;
+  final MacosScrollbarThemeData scrollbarTheme;
 
   /// The default style for [MacosIconButton]s below the overall [MacosTheme]
   final MacosIconButtonThemeData iconButtonTheme;
@@ -505,7 +507,7 @@ class MacosThemeData with Diagnosticable {
       tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
       scrollbarTheme:
-          ScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
+          MacosScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
       iconButtonTheme: MacosIconButtonThemeData.lerp(
         a.iconButtonTheme,
         b.iconButtonTheme,
@@ -551,7 +553,7 @@ class MacosThemeData with Diagnosticable {
     HelpButtonThemeData? helpButtonTheme,
     TooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
-    ScrollbarThemeData? scrollbarTheme,
+    MacosScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? iconButtonTheme,
     MacosIconThemeData? iconTheme,
     MacosPopupButtonThemeData? popupButtonTheme,
@@ -625,7 +627,8 @@ class MacosThemeData with Diagnosticable {
       DiagnosticsProperty<TooltipThemeData>('tooltipTheme', tooltipTheme),
     );
     properties.add(
-      DiagnosticsProperty<ScrollbarThemeData>('scrollbarTheme', scrollbarTheme),
+      DiagnosticsProperty<MacosScrollbarThemeData>(
+          'scrollbarTheme', scrollbarTheme),
     );
     properties.add(
       DiagnosticsProperty<MacosIconButtonThemeData>(

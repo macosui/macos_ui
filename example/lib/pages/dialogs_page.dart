@@ -3,10 +3,10 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 class DialogsPage extends StatefulWidget {
-  const DialogsPage({Key? key}) : super(key: key);
+  const DialogsPage({super.key});
 
   @override
-  _DialogsPageState createState() => _DialogsPageState();
+  State<DialogsPage> createState() => _DialogsPageState();
 }
 
 class _DialogsPageState extends State<DialogsPage> {
@@ -53,8 +53,8 @@ class _DialogsPageState extends State<DialogsPage> {
                         //horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                       ),
                     ),
@@ -79,14 +79,14 @@ class _DialogsPageState extends State<DialogsPage> {
                         //horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                         secondaryButton: PushButton(
                           buttonSize: ButtonSize.large,
                           isSecondary: true,
-                          child: const Text('Secondary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Secondary'),
                         ),
                       ),
                     ),
@@ -111,14 +111,14 @@ class _DialogsPageState extends State<DialogsPage> {
                         horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                         secondaryButton: PushButton(
                           buttonSize: ButtonSize.large,
                           isSecondary: true,
-                          child: const Text('Secondary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Secondary'),
                         ),
                       ),
                     ),
@@ -144,14 +144,14 @@ class _DialogsPageState extends State<DialogsPage> {
                         horizontalActions: false,
                         primaryButton: PushButton(
                           buttonSize: ButtonSize.large,
-                          child: const Text('Primary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Primary'),
                         ),
                         secondaryButton: PushButton(
                           buttonSize: ButtonSize.large,
                           isSecondary: true,
-                          child: const Text('Secondary'),
                           onPressed: Navigator.of(context).pop,
+                          child: const Text('Secondary'),
                         ),
                         suppress: const DoNotNotifyRow(),
                       ),
@@ -179,10 +179,10 @@ class _DialogsPageState extends State<DialogsPage> {
 }
 
 class DoNotNotifyRow extends StatefulWidget {
-  const DoNotNotifyRow({Key? key}) : super(key: key);
+  const DoNotNotifyRow({super.key});
 
   @override
-  _DoNotNotifyRowState createState() => _DoNotNotifyRowState();
+  State<DoNotNotifyRow> createState() => _DoNotNotifyRowState();
 }
 
 class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
@@ -207,7 +207,7 @@ class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
 }
 
 class MacosuiSheet extends StatelessWidget {
-  const MacosuiSheet({Key? key}) : super(key: key);
+  const MacosuiSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

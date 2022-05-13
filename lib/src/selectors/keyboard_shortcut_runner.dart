@@ -22,12 +22,12 @@ final decrementKeyset = LogicalKeySet(LogicalKeyboardKey.arrowDown);
 class KeyboardShortcutRunner extends StatelessWidget {
   /// {@macro keyboardShortcutRunner}.
   const KeyboardShortcutRunner({
-    Key? key,
+    super.key,
     required this.child,
     required this.onUpArrowKeypress,
     required this.onDownArrowKeypress,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   /// This child of this widget.
   final Widget child;
