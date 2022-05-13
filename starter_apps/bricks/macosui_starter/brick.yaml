@@ -1,0 +1,36 @@
+name: macosui_starter
+description: A starter Flutter application for macOS that uses macos_ui
+
+# The following defines the version and build number for your brick.
+# A version number is three numbers separated by dots, like 1.2.34
+# followed by an optional build number (separated by a +).
+version: 0.1.0+1
+
+# The following defines the environment for the current brick.
+# It includes the version of mason that the brick requires.
+environment:
+  mason: ">=0.1.0-dev <0.1.0"
+
+# Variables specify dynamic values that your brick depends on.
+# Zero or more variables can be specified for a given brick.
+# Each variable has:
+#  * a type (string, number, or boolean)
+#  * an optional short description
+#  * an optional default value
+#  * an optional prompt phrase used when asking for the variable.
+vars:
+  app_name:
+    type: string
+    description: The name of your application
+    default: macosui_starter
+    prompt: App name?
+  app_description:
+    type: string
+    description: The description of your application
+    default: A starter Flutter application for macOS with macos_ui
+    prompt: App description?
+  org_name:
+    type: string
+    description: The name of your organization
+    default: com.example
+    prompt: Organization name?

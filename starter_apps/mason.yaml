@@ -1,0 +1,14 @@
+# Register bricks which can be consumed via the Mason CLI.
+# https://github.com/felangel/mason
+bricks:
+  # Sample Brick
+  # Run `mason make macosui_starter` to try it out.
+  macosui_starter:
+    path: bricks/macosui_starter
+  # Bricks can also be imported via git url.
+  # Uncomment the following lines to import
+  # a brick from a remote git url.
+  # widget:
+  #   git:
+  #     url: https://github.com/felangel/mason.git
+  #     path: bricks/widget
