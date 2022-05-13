@@ -50,9 +50,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'getting_started/installation',
+            docId: '/category/getting-started',
             position: 'right',
-            label: 'Get Started',
+            label: 'Getting Started',
           },
           {
             href: 'https://github.com/GroovinChip/macos_ui',
@@ -65,10 +65,14 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Codelabs',
+            title: 'Guides & Codelabs',
             items: [
               {
-                label: 'Write your first app',
+                label: 'Quick Start',
+                to: '/docs/getting_started/quick_start',
+              },
+              {
+                label: 'Write Your First App',
                 to: '/docs/getting_started/first_app',
               },
             ],

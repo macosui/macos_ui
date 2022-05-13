@@ -1,10 +1,10 @@
 ---
 id: installation
-title: Installation
-sidebar_position: 1
+title: Manual Installation
+sidebar_position: 2
 ---
 
-## Adding macos_ui to your application
+How to add `macos_ui` to your `pubspec.yaml` file
 
 ### Depend on it
 

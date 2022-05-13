@@ -1,16 +1,18 @@
 ---
 id: first_app
-title: Write your first app
-sidebar_position: 2
+title: Writing your first app
+sidebar_position: 3
 ---
 
 :::tip
-This codelab walks you through witing your first Flutter application for macOS using `macos_ui`. If you are new to Flutter, you might want to begin with Flutter's ["Write your first Flutter app"](https://docs.flutter.dev/get-started/codelab) or ["Write your first Flutter app on the web"](https://docs.flutter.dev/get-started/codelab-web) codelabs. 
+This codelab walks you through witing your first Flutter application for macOS using `macos_ui`, *from scratch*. If you are new to Flutter, you might want to begin with Flutter's ["Write your first Flutter app"](https://docs.flutter.dev/get-started/codelab) or ["Write your first Flutter app on the web"](https://docs.flutter.dev/get-started/codelab-web) codelabs and return here afterwards. 
+
+If you are already comfortable with Flutter, the [Quick Start](quick_start.md) guide might be more appropriate for you.
 :::
 
 ## Step 1: Create the starter Flutter app
 
-Create a simple, templated Flutter app using the instructions found using the method of your choice. You can follow the instructions found in [Getting Started with your first Flutter app](https://docs.flutter.dev/get-started/test-drive#create-app). Name the project "basics".
+Create a simple, templated Flutter app using the instructions found using the method of your choice. You can follow the instructions found in Flutter's [Getting Started with your first Flutter app](https://docs.flutter.dev/get-started/test-drive#create-app). Name the project "basics".
 
 ## Step 2: Add `macos_ui`
 

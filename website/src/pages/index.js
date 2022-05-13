@@ -49,9 +49,9 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/getting_started/installation"
+            to="/docs/getting_started/quick_start"
           >
-            <Translate id="home.get_started">Getting Started</Translate>
+            <Translate id="home.quick_start">Quick Start</Translate>
           </Link>
         </div>
       </div>
