@@ -10,9 +10,9 @@ class ToolbarOverflowMenu extends StatelessWidget {
   ///
   /// Has a similar styling to a pulldown menu.
   const ToolbarOverflowMenu({
-    Key? key,
+    super.key,
     required this.children,
-  }) : super(key: key);
+  });
 
   /// The list of children widgets to lay out vertically inside the menu.
   final List<Widget> children;

@@ -19,7 +19,7 @@ class RatingIndicator extends StatelessWidget {
   ///
   /// [value] must be in range of 0 to [amount]
   const RatingIndicator({
-    Key? key,
+    super.key,
     required this.value,
     this.amount = 5,
     this.ratedIcon = CupertinoIcons.star_fill,
@@ -30,8 +30,7 @@ class RatingIndicator extends StatelessWidget {
     this.semanticLabel,
   })  : assert(iconSize >= 0),
         assert(amount > 0),
-        assert(value >= 0 && value <= amount),
-        super(key: key);
+        assert(value >= 0 && value <= amount);
 
   /// The icon used when the star is rated. [CupertinoIcons.star_fill]
   /// is used by default. If you must replace the star with a custom

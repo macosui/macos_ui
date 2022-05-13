@@ -9,12 +9,12 @@ import 'package:macos_ui/src/library.dart';
 class Label extends StatelessWidget {
   /// Creates a label.
   const Label({
-    Key? key,
+    super.key,
     this.icon,
     required this.text,
     this.child,
     this.yAlignment = CrossAxisAlignment.start,
-  }) : super(key: key);
+  });
 
   /// The icon used by the label. If non-null, it's rendered horizontally
   /// before [text].

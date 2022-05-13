@@ -31,14 +31,14 @@ class ToolbarPopup<T> extends StatefulWidget {
   /// Creates a popup for the toolbar. Used for the menu that encapsulates
   /// the overflowed toolbar actions and its possible submenus.
   const ToolbarPopup({
-    Key? key,
+    super.key,
     required this.child,
     required this.content,
     this.verticalOffset = 0,
     this.horizontalOffset = 0,
     this.placement = ToolbarPopupPlacement.center,
     this.position = ToolbarPopupPosition.above,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final WidgetBuilder content;
@@ -159,12 +159,12 @@ class ToolbarPopupState<T> extends State<ToolbarPopup<T>> {
 
 class _ToolbarPopupMenu<T> extends StatefulWidget {
   const _ToolbarPopupMenu({
-    Key? key,
+    super.key,
     required this.route,
     required this.buttonRect,
     required this.constraints,
     this.dropdownColor,
-  }) : super(key: key);
+  });
 
   final _ToolbarPopupRoute<T> route;
   final Rect buttonRect;
@@ -342,7 +342,7 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
 
 class _ToolbarPopupRoutePage<T> extends StatelessWidget {
   const _ToolbarPopupRoutePage({
-    Key? key,
+    super.key,
     required this.route,
     required this.constraints,
     required this.content,
@@ -356,7 +356,7 @@ class _ToolbarPopupRoutePage<T> extends StatelessWidget {
     required this.placement,
     required this.placementOffset,
     required this.position,
-  }) : super(key: key);
+  });
 
   final _ToolbarPopupRoute<T> route;
   final BoxConstraints constraints;
@@ -412,6 +412,7 @@ class _ToolbarPopupRoutePage<T> extends StatelessWidget {
 }
 
 class _ToolbarPopupContentManager extends StatefulWidget {
+  // ignore: use_super_parameters
   const _ToolbarPopupContentManager({
     Key? key,
     required this.content,
@@ -432,7 +433,7 @@ class _ToolbarPopupContentManagerState
 
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final context = key.currentContext;
       if (context == null) return;
       final RenderBox box = context.findRenderObject() as RenderBox;
@@ -454,11 +455,12 @@ class _ToolbarPopupContentManagerState
 }
 
 class _ToolbarPopupContentSizeInfo extends InheritedWidget {
+  // ignore: use_super_parameters
   const _ToolbarPopupContentSizeInfo({
     Key? key,
-    required Widget child,
+    required super.child,
     required this.size,
-  }) : super(key: key, child: child);
+  }) : super(key: key);
 
   final Size size;
 

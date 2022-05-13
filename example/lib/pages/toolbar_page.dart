@@ -3,10 +3,10 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 class ToolbarPage extends StatefulWidget {
-  const ToolbarPage({Key? key}) : super(key: key);
+  const ToolbarPage({super.key});
 
   @override
-  _ToolbarPageState createState() => _ToolbarPageState();
+  State<ToolbarPage> createState() => _ToolbarPageState();
 }
 
 class _ToolbarPageState extends State<ToolbarPage> {

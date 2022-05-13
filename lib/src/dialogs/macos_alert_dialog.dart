@@ -34,7 +34,7 @@ const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
 class MacosAlertDialog extends StatelessWidget {
   /// Builds a macOS-style Alert Dialog
   const MacosAlertDialog({
-    Key? key,
+    super.key,
     required this.appIcon,
     required this.title,
     required this.message,
@@ -42,7 +42,7 @@ class MacosAlertDialog extends StatelessWidget {
     this.secondaryButton,
     this.horizontalActions = true,
     this.suppress,
-  }) : super(key: key);
+  });
 
   /// This should be your application's icon.
   ///
@@ -277,12 +277,11 @@ class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
     bool barrierDismissible = false,
     Color? barrierColor = const Color(0x80000000),
     String? barrierLabel,
-    RouteSettings? settings,
+    super.settings,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel,
-        _barrierColor = barrierColor,
-        super(settings: settings);
+        _barrierColor = barrierColor;
 
   final RoutePageBuilder _pageBuilder;
 

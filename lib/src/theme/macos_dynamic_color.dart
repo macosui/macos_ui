@@ -104,9 +104,9 @@ extension MacosDynamicColor on CupertinoDynamicColor {
         }
     }
 
-    Element? _debugContext;
+    Element? debugContext;
     assert(() {
-      _debugContext = context as Element;
+      debugContext = context as Element;
       return true;
     }());
 
@@ -120,7 +120,7 @@ extension MacosDynamicColor on CupertinoDynamicColor {
       darkElevatedColor,
       highContrastElevatedColor,
       darkHighContrastElevatedColor,
-      _debugContext,
+      debugContext,
     );
   }
 }

@@ -40,10 +40,10 @@ typedef OnTimeChanged = Function(TimeOfDay time);
 class MacosTimePicker extends StatefulWidget {
   /// {@macro macosTimePicker}
   const MacosTimePicker({
-    Key? key,
+    super.key,
     required this.onTimeChanged,
     this.style = TimePickerStyle.combined,
-  }) : super(key: key);
+  });
 
   /// The [TimePickerStyle] to use.
   ///
@@ -327,14 +327,14 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
   }
 
   Widget _buildGraphicalTimePicker(MacosTimePickerThemeData timePickerTheme) {
-    const _clockHeight = 116.0;
-    const _clockWidth = 115.0;
+    const clockHeight = 116.0;
+    const clockWidth = 115.0;
     return SizedBox(
-      height: _clockHeight,
-      width: _clockWidth,
+      height: clockHeight,
+      width: clockWidth,
       child: CustomPaint(
         painter: GraphicalTimePickerPainter(
-          clockHeight: _clockHeight,
+          clockHeight: clockHeight,
           time: DateTime(
             DateTime.now().year,
             DateTime.now().month,
@@ -374,11 +374,11 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
 
 class TimePickerFieldElement extends StatelessWidget {
   const TimePickerFieldElement({
-    Key? key,
+    super.key,
     required this.element,
     required this.onSelected,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   final String element;
   final VoidCallback onSelected;

@@ -12,11 +12,11 @@ class MacosOverlayFilter extends StatelessWidget {
   /// Used mainly for the overlays that appear from various macOS-style widgets,
   /// like the pull-down and pop-up buttons, or the search field.
   const MacosOverlayFilter({
-    Key? key,
+    super.key,
     required this.child,
     required this.borderRadius,
     this.color,
-  }) : super(key: key);
+  });
 
   /// The widget to apply the blur filter to.
   final Widget child;

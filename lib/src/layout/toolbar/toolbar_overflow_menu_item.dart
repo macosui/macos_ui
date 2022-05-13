@@ -6,12 +6,12 @@ import 'package:macos_ui/src/library.dart';
 class ToolbarOverflowMenuItem extends StatefulWidget {
   /// Builds a menu-item that belongs in the toolbar overflowed actions menu.
   const ToolbarOverflowMenuItem({
-    Key? key,
+    super.key,
     this.onPressed,
     required this.label,
     this.subMenuItems,
     this.isSelected,
-  }) : super(key: key);
+  });
 
   /// The callback that is called when the menu item is tapped or otherwise
   /// activated.

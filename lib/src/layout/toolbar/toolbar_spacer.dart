@@ -8,9 +8,9 @@ class ToolBarSpacer extends ToolbarItem {
   /// Builds a spacer utility widget for the toolbar. It generates blank space
   /// between the toolbar actions.
   const ToolBarSpacer({
-    Key? key,
+    super.key,
     this.spacerUnits = 1.0,
-  }) : super(key: key);
+  });
 
   /// How much space to generate, expressed in multiples of [_kToolbarItemWidth]
   ///

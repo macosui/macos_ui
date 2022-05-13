@@ -10,12 +10,12 @@ class MacosIcon extends StatelessWidget {
   /// [MacosIconTheme].
   const MacosIcon(
     this.icon, {
-    Key? key,
+    super.key,
     this.size,
     this.color,
     this.semanticLabel,
     this.textDirection,
-  }) : super(key: key);
+  });
 
   /// The icon to display. The available icons are described in [Icons]
   /// and [CupertinoIcons].

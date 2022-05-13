@@ -34,7 +34,7 @@ class CapacityIndicator extends StatelessWidget {
   ///
   /// [value] must be in range of 0 to 100.
   const CapacityIndicator({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
     this.discrete = false,
@@ -43,8 +43,7 @@ class CapacityIndicator extends StatelessWidget {
     this.borderColor = CupertinoColors.tertiaryLabel,
     this.backgroundColor = CupertinoColors.tertiarySystemGroupedBackground,
     this.semanticLabel,
-  })  : assert(value >= 0 && value <= 100),
-        super(key: key);
+  }) : assert(value >= 0 && value <= 100);
 
   /// The current value of the indicator. Must be in the range of 0 to 100.
   final double value;
@@ -168,13 +167,12 @@ class CapacityIndicatorCell extends StatelessWidget {
   ///
   /// [value] must be in the range of 0 to 100
   const CapacityIndicatorCell({
-    Key? key,
+    super.key,
     this.value = 100,
     this.color = CupertinoColors.systemGreen,
     this.borderColor = CupertinoColors.tertiaryLabel,
     this.backgroundColor = CupertinoColors.tertiarySystemGroupedBackground,
-  })  : assert(value >= 0 && value <= 100),
-        super(key: key);
+  }) : assert(value >= 0 && value <= 100);
 
   final Color color;
   final Color backgroundColor;

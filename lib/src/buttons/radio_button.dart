@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -15,7 +14,7 @@ class MacosRadioButton<T> extends StatelessWidget {
   ///
   /// [size] must be non-negative
   const MacosRadioButton({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     required this.onChanged,
@@ -24,8 +23,7 @@ class MacosRadioButton<T> extends StatelessWidget {
     this.offColor = CupertinoColors.tertiaryLabel,
     this.innerColor,
     this.semanticLabel,
-  })  : assert(size >= 0),
-        super(key: key);
+  }) : assert(size >= 0);
 
   /// Whether the button is checked or not
   final T value;

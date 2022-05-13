@@ -9,10 +9,10 @@ class ToolbarOverflowButton extends StatelessWidget {
   /// When clicked, it opens a [ToolbarOverflowMenu] holding all overflowed
   /// actions in a simplified menu.
   const ToolbarOverflowButton({
-    Key? key,
+    super.key,
     required this.overflowContentBuilder,
     this.isDense = false,
-  }) : super(key: key);
+  });
 
   /// A function that builds the content of the overflowed actions menu.
   final WidgetBuilder overflowContentBuilder;
@@ -25,6 +25,11 @@ class ToolbarOverflowButton extends StatelessWidget {
     final popupKey = GlobalKey<ToolbarPopupState>();
     return ToolbarPopup(
       key: popupKey,
+      content: overflowContentBuilder,
+      verticalOffset: 8.0,
+      horizontalOffset: 10.0,
+      position: ToolbarPopupPosition.below,
+      placement: ToolbarPopupPlacement.end,
       child: ToolBarIconButton(
         label: "",
         icon: const MacosIcon(
@@ -35,11 +40,6 @@ class ToolbarOverflowButton extends StatelessWidget {
         },
         showLabel: isDense,
       ).build(context, ToolbarItemDisplayMode.inToolbar),
-      content: overflowContentBuilder,
-      verticalOffset: 8.0,
-      horizontalOffset: 10.0,
-      position: ToolbarPopupPosition.below,
-      placement: ToolbarPopupPlacement.end,
     );
   }
 }

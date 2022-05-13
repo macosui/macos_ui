@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 import '../theme.dart';
 
 class ButtonsPage extends StatefulWidget {
-  const ButtonsPage({Key? key}) : super(key: key);
+  const ButtonsPage({super.key});
 
   @override
-  _ButtonsPageState createState() => _ButtonsPageState();
+  State<ButtonsPage> createState() => _ButtonsPageState();
 }
 
 class _ButtonsPageState extends State<ButtonsPage> {

@@ -231,7 +231,7 @@ class MacosTextField extends StatefulWidget {
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
   const MacosTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.focusNode,
     this.decoration = kDefaultRoundedBorderDecoration,
@@ -326,8 +326,7 @@ class MacosTextField extends StatefulWidget {
                     cut: true,
                     selectAll: true,
                     paste: true,
-                  )),
-        super(key: key);
+                  ));
 
   /// Creates a borderless macOS-style text field.
   ///
@@ -366,7 +365,7 @@ class MacosTextField extends StatefulWidget {
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
   const MacosTextField.borderless({
-    Key? key,
+    super.key,
     this.controller,
     this.focusNode,
     this.decoration,
@@ -458,8 +457,7 @@ class MacosTextField extends StatefulWidget {
                     cut: true,
                     selectAll: true,
                     paste: true,
-                  )),
-        super(key: key);
+                  ));
 
   /// Controls the text being edited.
   ///
@@ -731,7 +729,7 @@ class MacosTextField extends StatefulWidget {
   final String? restorationId;
 
   @override
-  _MacosTextFieldState createState() => _MacosTextFieldState();
+  State<MacosTextField> createState() => _MacosTextFieldState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

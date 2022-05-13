@@ -22,12 +22,12 @@ class MacosWindow extends StatefulWidget {
   /// The [child] widget is typically a [MacosScaffold] which fills the
   /// rest of the screen.
   const MacosWindow({
-    Key? key,
+    super.key,
     this.child,
     this.titleBar,
     this.sidebar,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   /// Specifies the background color for the Window.
   ///
@@ -44,7 +44,7 @@ class MacosWindow extends StatefulWidget {
   final Sidebar? sidebar;
 
   @override
-  _MacosWindowState createState() => _MacosWindowState();
+  State<MacosWindow> createState() => _MacosWindowState();
 }
 
 class _MacosWindowState extends State<MacosWindow> {
@@ -289,7 +289,6 @@ class _MacosWindowState extends State<MacosWindow> {
         );
 
         return MacosWindowScope(
-          child: layout,
           constraints: constraints,
           isSidebarShown: canShowSidebar,
           sidebarToggler: () async {
@@ -298,6 +297,7 @@ class _MacosWindowState extends State<MacosWindow> {
             await Future.delayed(Duration(milliseconds: _sidebarSlideDuration));
             setState(() => _sidebarSlideDuration = 0);
           },
+          child: layout,
         );
       },
     );
@@ -322,13 +322,12 @@ class MacosWindowScope extends InheritedWidget {
   /// The [constraints], [contentAreaWidth], [child], [valueNotifier]
   /// and [_scaffoldState] arguments are required and must not be null.
   const MacosWindowScope({
-    Key? key,
+    super.key,
     required this.constraints,
-    required Widget child,
+    required super.child,
     required this.isSidebarShown,
     required VoidCallback sidebarToggler,
-  })  : _sidebarToggler = sidebarToggler,
-        super(key: key, child: child);
+  }) : _sidebarToggler = sidebarToggler;
 
   /// Provides the constraints from the [MacosWindow] to its descendants.
   final BoxConstraints constraints;
