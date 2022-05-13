@@ -11,10 +11,6 @@ import 'package:provider/provider.dart';
 
 import 'theme.dart';
 
-enum MenuSelection {
-  about,
-}
-
 void main() {
   runApp(const MacosUIGalleryApp());
 }
