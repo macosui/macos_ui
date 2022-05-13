@@ -6,14 +6,16 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:macos_ui/macos_ui.dart';
 
-import 'package:{{ app_name }}/lib/main.dart';
+import 'package:{{ app_name }}/main.dart';
 
 void main() {
-  testWidgets('Sidebar item "Home" is found', (WidgetTester tester) async {
+  testWidgets('App is built with a MacosWindow parent widget',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const App());
 
-    expect(find.text('Home'), findsOneWidget);
+    expect(find.byType(MacosWindow), findsOneWidget);
   });
 }
