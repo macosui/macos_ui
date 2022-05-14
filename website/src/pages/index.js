@@ -8,6 +8,7 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Translate, { translate } from "@docusaurus/Translate";
 import GitHubButton from "react-github-btn";
 import { Follow } from "react-twitter-widgets";
+import DockImageUrl from '@site/static/img/dock_dark.png';
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -105,10 +106,11 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        <section className='widgetGalleryContainer'>      
-          <Spacer/>
+        <section className='widgetGalleryContainer'>
+          <Spacer />
           <h2>Check out the interactive Widget Gallery</h2>
-          <iframe src="https://groovinchip.github.io/macos_ui/#/" className='widgetGallery'></iframe>       
+          <iframe src="https://groovinchip.github.io/macos_ui/#/" className='widgetGallery'></iframe>          
+          <img src={DockImageUrl} />
         </section>
       </main>
     </Layout>

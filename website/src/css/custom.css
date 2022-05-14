@@ -22,12 +22,13 @@
   text-align: center;
   background-image: url('../../static/img/wallpaper_dark.png');
   background-position: center;
+  background-size: cover;
 }
 
 .widgetGallery {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   width: 80%;
-  height: 750px;
+  height: 700px;
   margin-bottom: 5%;
 }
 
