@@ -108,8 +108,8 @@ export default function Home() {
         <HomepageFeatures />
         <section className='widgetGalleryContainer'>
           <Spacer />
-          <h2>Check out the interactive Widget Gallery</h2>
-          <iframe src="https://groovinchip.github.io/macos_ui/#/" className='widgetGallery'></iframe>          
+          <h2>Check out the interactive Widget Gallery:</h2>
+          <iframe src="https://groovinchip.github.io/macos_ui/#/" className='widgetGallery'></iframe>
           <img src={DockImageUrl} />
         </section>
       </main>

@@ -25,6 +25,11 @@
   background-size: cover;
 }
 
+.widgetGalleryContainer h2 {
+  color: #fff;
+  padding: 40px 0;
+}
+
 .widgetGallery {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   width: 80%;
@@ -43,7 +48,7 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
   --ifm-button-color: white;
-  --ifm-button-background-color:var(--ifm-color-primary);
+  --ifm-button-background-color: var(--ifm-color-primary);
   --ifm-button-border-color: var(--ifm-color-primary);
 }
 
