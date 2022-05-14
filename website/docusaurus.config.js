@@ -43,79 +43,77 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        title: 'macos_ui',
-        items: [
-          {
-            type: 'doc',
-            docId: '/category/getting-started',
-            position: 'right',
-            label: 'Getting Started',
-          },
-          {
-            href: 'https://github.com/GroovinChip/macos_ui',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Guides & Codelabs',
-            items: [
-              {
-                label: 'Quick Start',
-                to: '/docs/getting_started/quick_start',
-              },
-              {
-                label: 'Write Your First App',
-                to: '/docs/getting_started/first_app',
-              },
-            ],
-          },
-          {
-            title: 'Info',
-            items: [
-              {
-                label: 'Bugs & Issues',
-                href: 'https://github.com/GroovinChip/macos_ui/issues',
-              },
-              {
-                label: 'Discussions',
-                href: 'https://github.com/GroovinChip/macos_ui/discussions',
-              },
-            ],
-          },
-          {
-            title: 'Links',
-            items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/GroovinChip/macos_ui',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/GroovinChip',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Reuben Turner (GroovinChip).`,
-      },
-      colorMode: {
-        defaultMode: "dark",
-      },
-      prism: {
-        defaultLanguage: "dart",
-        //additionalLanguages: ["dart", "yaml"],
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-    }),
+  {
+    navbar: {
+      title: 'macos_ui',
+      items: [
+        {
+          type: 'doc',
+          docId: '/category/getting-started',
+          position: 'right',
+          label: 'Getting Started',
+        },
+        {
+          href: 'https://github.com/GroovinChip/macos_ui',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Guides & Codelabs',
+          items: [
+            {
+              label: 'Quick Start',
+              to: '/docs/getting_started/quick_start',
+            },
+            {
+              label: 'Write Your First App',
+              to: '/docs/getting_started/first_app',
+            },
+          ],
+        },
+        {
+          title: 'Info',
+          items: [
+            {
+              label: 'Bugs & Issues',
+              href: 'https://github.com/GroovinChip/macos_ui/issues',
+            },
+            {
+              label: 'Discussions',
+              href: 'https://github.com/GroovinChip/macos_ui/discussions',
+            },
+          ],
+        },
+        {
+          title: 'Links',
+          items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/GroovinChip/macos_ui',
+            },
+            {
+              label: 'Twitter',
+              href: 'https://twitter.com/GroovinChip',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Reuben Turner (GroovinChip).`,
+    },
+    colorMode: {
+      defaultMode: "dark",
+    },
+    prism: {
+      additionalLanguages: ["dart", "yaml"],
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+    },
+  },
 };
 
 module.exports = config;
