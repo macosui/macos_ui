@@ -106,7 +106,8 @@ export default function Home() {
       <main>
         <HomepageFeatures />
         <section className='widgetGalleryContainer'>      
-         <h2 style={{paddingTop: '25px', paddingBottom: '11px'}}>Check out the interactive Widget Gallery</h2>
+          <Spacer/>
+          <h2>Check out the interactive Widget Gallery</h2>
           <iframe src="https://groovinchip.github.io/macos_ui/#/" className='widgetGallery'></iframe>       
         </section>
       </main>

@@ -20,7 +20,8 @@
 
 .widgetGalleryContainer {
   text-align: center;
-  background-color: var(--ifm-background-surface-color);
+  background-image: url('../../static/img/wallpaper_dark.png');
+  background-position: center;
 }
 
 .widgetGallery {
