@@ -45,6 +45,11 @@ const config = {
   themeConfig:
   {
     navbar: {
+      logo: {
+        alt: 'macos_ui logo',
+        src: 'img/macos_ui_logo.png',
+        target: '_self',
+      },
       title: 'macos_ui',
       items: [
         {

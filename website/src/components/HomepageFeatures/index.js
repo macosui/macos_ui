@@ -5,19 +5,19 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Native look and feel',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/undraw_flutter_dev.svg').default,
     description: (
       <>
-        Create beautiful applications that match the look and feel of native Cocoa/AppKit.
+        Create beautiful Flutter applications for macOS that match the look and feel of native Cocoa/AppKit.
       </>
     ),
   },
   {
     title: 'Great Developer Experience',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/undraw-programming.svg').default,
     description: (
       <>
-        API's are easy to understand, with tons of customization options.
+        macos_ui provides API's that are easy to understand, with tons of customization options and detailed documentation.
       </>
     ),
   },
