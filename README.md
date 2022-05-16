@@ -4,6 +4,8 @@ Flutter widgets and themes implementing the current macOS design language.
 
 Check out our **interactive widget gallery** online at https://groovinchip.github.io/macos_ui/#/
 
+Guides, codelabs, and other documentation can be found at https://macosui.dev
+
 [![pub package](https://img.shields.io/pub/v/macos_ui.svg)](https://pub.dev/packages/macos_ui)
 [![pub package](https://img.shields.io/pub/publisher/macos_ui.svg)](https://pub.dev/packages/macos_ui)  
 
