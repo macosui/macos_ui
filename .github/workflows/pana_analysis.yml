@@ -2,8 +2,8 @@ name: Pana Analysis
 on: [pull_request, workflow_dispatch]
 
 jobs:
-  package-analysis:
-    runs-on: ubuntu-latest
+  pana-analysis:
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -12,40 +12,23 @@ jobs:
         with:
           channel: stable
 
-      #- name: Install dependencies
-      #  run: flutter pub get
-
-      - name: Check directory
-        run: ls
-      - name: Install Code Metrics
-        run: flutter pub global activate dart_code_metrics
-      - name: Run Code Metrics
-        run: flutter pub global run dart_code_metrics:metrics --reporter=github lib
-
-      - uses: axel-op/dart-package-analyzer@v3
-        # set an id for the current step
-        id: analysis
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-
-      # You can then use this id to retrieve the outputs in the next steps.
-      # The following step shows how to exit the workflow with an error if the total score in percentage is below 50:
-      - name: Check scores
-        env:
-          # NB: "analysis" is the id set above. Replace it with the one you used if different.
-          TOTAL: ${{ steps.analysis.outputs.total }}
-          TOTAL_MAX: ${{ steps.analysis.outputs.total_max }}
+      - name: Analyze package with Pana
         run: |
-          PERCENTAGE=$(( $TOTAL * 100 / $TOTAL_MAX ))
-          if (( $PERCENTAGE < 80 ))
-          then
-            echo Score too low!
+          flutter pub global activate pana 0.21.5
+
+          REQUIRED_RATIO=1.0
+          TEMP_FILE=/tmp/pana_results.txt
+
+          # Run pana, piping the output to both stderr and into a grep to find the result in the last line.
+          pana --no-warning | tee /dev/stderr | tail -1 | grep -o -E '[0-9]+' > $TEMP_FILE
+
+          # Extract score and calculate ratio.
+          SCORE=$(cat $TEMP_FILE | head -1)
+          TOTAL=$(cat $TEMP_FILE | tail -1)
+          RATIO=$(echo "scale=2; $SCORE / $TOTAL" | bc -l)
+          MEETS_REQUIRED_RATIO=$(echo "$RATIO >= $REQUIRED_RATIO" | bc -l)
+
+          if [[ "$MEETS_REQUIRED_RATIO" != "1" ]]; then
+            echo "Score of $SCORE out of $TOTAL is a ratio of $RATIO, which is not sufficient to meet the required ratio of $REQUIRED_RATIO"
             exit 1
           fi
-
-      # This step is useful for PR's coming from forks. It takes the raw JSON and formats a report from it.
-      - name: Format scores json
-        env:
-          JSON_OUTPUT: ${{ steps.analysis.outputs.json_output }}
-        run: |
-          TOTAL_SCORE=$(jq -r '.scores.grantedPoints' <<< "$JSON_OUTPUT")

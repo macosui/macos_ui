@@ -34,8 +34,9 @@ class BlurryContainerViewController: NSViewController {
   }
 }
 
-class MainFlutterWindow: NSWindow {
+class MainFlutterWindow: NSWindow, NSWindowDelegate {
   override func awakeFromNib() {
+    delegate = self
     let blurryContainerViewController = BlurryContainerViewController()
     let windowFrame = self.frame
     self.contentViewController = blurryContainerViewController
@@ -68,6 +69,14 @@ class MainFlutterWindow: NSWindow {
   func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
     // Hides the toolbar when in fullscreen mode
     return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
+  }
+
+  func windowWillEnterFullScreen(_ notification: Notification) {
+      self.toolbar?.isVisible = false
+  }
+  
+  func windowDidExitFullScreen(_ notification: Notification) {
+      self.toolbar?.isVisible = true
   }
 }
 {{/use_translucency}}{{^use_translucency}}
