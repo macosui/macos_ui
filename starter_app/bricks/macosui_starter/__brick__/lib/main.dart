@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       darkTheme: MacosThemeData.dark(),
       themeMode: ThemeMode.system,
       home: const MainView(),
+      debugShowCheckedModeBanner: {{debug_label_on}},
     );
   }
 }
@@ -34,7 +35,44 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return MacosWindow(
+    {{#custom_system_menu_bar}}return PlatformMenuBar(
+      menus: const [
+        PlatformMenu(
+          label: '{{app_name.pascalCase()}}',
+          menus: [
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.about,
+            ),
+            PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.quit,
+            ),
+          ],
+        ),
+      ],
+      body: MacosWindow(
+        sidebar: Sidebar(
+          minWidth: 200,
+          builder: (context, scrollController) => SidebarItems(
+            currentIndex: _pageIndex,
+            onChanged: (index) {
+              setState(() => _pageIndex = index);
+            },
+            items: const [
+              SidebarItem(
+                leading: MacosIcon(CupertinoIcons.home),
+                label: Text('Home'),
+              ),
+            ],
+          ),
+        ),
+        child: IndexedStack(
+          index: _pageIndex,
+          children: const [
+            HomePage(),
+          ],
+        ),
+      ),
+    );{{/custom_system_menu_bar}}{{^custom_system_menu_bar}}return MacosWindow(
       sidebar: Sidebar(
         minWidth: 200,
         builder: (context, scrollController) => SidebarItems(
@@ -56,7 +94,7 @@ class _MainViewState extends State<MainView> {
           HomePage(),
         ],
       ),
-    );
+    );{{/custom_system_menu_bar}}
   }
 }
 
