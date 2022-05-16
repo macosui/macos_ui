@@ -1,0 +1,20 @@
+name: Dart Code Metrics
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  dart-code-metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Check directory
+        run: ls
+      - name: Install Code Metrics
+        run: flutter pub global activate dart_code_metrics
+      - name: Run Code Metrics
+        run: flutter pub global run dart_code_metrics:metrics --reporter=github lib
