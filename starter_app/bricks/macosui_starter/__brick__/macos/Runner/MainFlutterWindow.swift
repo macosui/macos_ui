@@ -1,6 +1,6 @@
 import Cocoa
 import FlutterMacOS
-
+{{#use_translucency}}
 class BlurryContainerViewController: NSViewController {
   let flutterViewController = FlutterViewController()
 
@@ -47,7 +47,8 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
       customToolbar.showsBaselineSeparator = false
       self.toolbar = customToolbar
     }
-    self.titleVisibility = .hidden
+
+    {{#hide_native_title_bar}}self.titleVisibility = .hidden{{/hide_native_title_bar}}
     self.titlebarAppearsTransparent = true
     if #available(macOS 11.0, *) {
       // Use .expanded if the app will have a title bar, else use .unified
@@ -65,9 +66,8 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
     super.awakeFromNib()
   }
 
-  // Hides the toolbar when in fullscreen mode
   func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-    
+    // Hides the toolbar when in fullscreen mode
     return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
   }
 
@@ -79,3 +79,21 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
       self.toolbar?.isVisible = true
   }
 }
+{{/use_translucency}}{{^use_translucency}}
+class MainFlutterWindow: NSWindow {
+  override func awakeFromNib() {
+    let flutterViewController = FlutterViewController.init()
+    let windowFrame = self.frame
+    self.contentViewController = flutterViewController
+    self.setFrame(windowFrame, display: true)
+    {{#hide_native_title_bar}}self.titleVisibility = .hidden
+    self.titlebarAppearsTransparent = true
+    self.isMovableByWindowBackground = true
+    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
+    {{/hide_native_title_bar}}
+    RegisterGeneratedPlugins(registry: flutterViewController)
+
+    super.awakeFromNib()
+  }
+}
+{{/use_translucency}}

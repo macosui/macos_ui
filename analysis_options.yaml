@@ -7,6 +7,8 @@ linter:
 analyzer:
   plugins:
     - dart_code_metrics
+  exclude:
+    - starter_app/**
     
 dart_code_metrics:
   metrics:
