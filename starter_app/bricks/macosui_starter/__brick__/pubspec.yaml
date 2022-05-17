@@ -11,7 +11,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.4
-  macos_ui: ^1.4.0
+  {{#add_multi_window}}collection: ^1.16.0{{/add_multi_window}}
+  {{#add_multi_window}}desktop_multi_window: ^0.0.2{{/add_multi_window}}
+  macos_ui: ^1.4.1+1
 
 dev_dependencies:
   flutter_test:

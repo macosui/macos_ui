@@ -35,6 +35,7 @@ titlebar, as it will be hidden by default.
 | `use_translucency`       | Whether to use window transclucency           | `false`                                                 | `boolean` |
 | `debug_label_on`         | Whether to show the debug label by default    | `false`                                                 | `boolean` |
 | `custom_system_menu_bar` | Whether to add a basic custom system menu bar | `false`                                                 | `boolean` |
+| `add_multi_window`       | Whether to add basic multi-window support     | `false`                                                 | `boolean` |
 
 Setting `custom_system_menu_bar` to `true` will add a basic custom system menu bar to your application, which looks 
 like this:
