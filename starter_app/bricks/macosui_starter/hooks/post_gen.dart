@@ -3,7 +3,6 @@ import 'dart:io';
 
 void run(HookContext context) async {
   final pubGet = context.logger.progress('Running flutter pub get');
-  
   final pubGetResult = await Process.run(
     'flutter',
     [
@@ -11,6 +10,7 @@ void run(HookContext context) async {
       'get',
     ],
     runInShell: true,
+    workingDirectory: '${Directory.current.path}/${context.vars['app_name']}',
   );
   pubGet();
   if (pubGetResult.exitCode != 0) {

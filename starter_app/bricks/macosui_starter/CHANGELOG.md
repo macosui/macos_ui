@@ -1,3 +1,8 @@
+# 1.2.1
+* Ensures that generated applications will always end up in a subdirectory of the specified output directory, or if 
+none is spoecified, a subfolder of the current directory.
+  * Ensures that `flutter pub get` will always be run in the directory of the generated application.
+
 # 1.2.0
 * 🖥 Added multi-window support via the `add_multi_window` option.
 * Upgraded the `pre_gen` hook to appropriately handle configuration cases where the user enables multi-window but does
