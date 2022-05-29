@@ -236,6 +236,7 @@ class MacosTextField extends StatefulWidget {
     this.focusNode,
     this.decoration = kDefaultRoundedBorderDecoration,
     this.focusedDecoration = kDefaultFocusedBorderDecoration,
+    this.disabledColor,
     this.padding = const EdgeInsets.all(4.0),
     this.placeholder,
     this.placeholderStyle = const TextStyle(
@@ -370,6 +371,7 @@ class MacosTextField extends StatefulWidget {
     this.focusNode,
     this.decoration,
     this.focusedDecoration,
+    this.disabledColor,
     this.padding = const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 4.0),
     this.placeholder,
     this.placeholderStyle = _kDefaultPlaceholderStyle,
@@ -479,6 +481,11 @@ class MacosTextField extends StatefulWidget {
   /// Defaults to having a rounded rectangle blue border and can be null to have
   /// no box decoration.
   final BoxDecoration? focusedDecoration;
+
+  /// Controls the background color of disabled text field.
+  ///
+  /// Defaults is to use system disabled color.
+  final Color? disabledColor;
 
   /// Padding around the text entry area between the [prefix] and [suffix]
   /// or the clear button when [clearButtonMode] is not never.
@@ -1265,7 +1272,7 @@ class _MacosTextFieldState extends State<MacosTextField>
     cursorColor = MacosDynamicColor.maybeResolve(widget.cursorColor, context);
     cursorColor ??=
         themeData.brightness.isDark ? MacosColors.white : MacosColors.black;
-    final Color disabledColor =
+    final Color disabledColor = widget.disabledColor ??
         MacosDynamicColor.resolve(_kDisabledBackground, context);
 
     Color? decorationColor =
