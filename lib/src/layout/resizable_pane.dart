@@ -164,10 +164,8 @@ class _ResizablePaneState extends State<ResizablePane> {
         oldWidget.minWidth != widget.minWidth ||
         oldWidget.maxWidth != widget.maxWidth ||
         oldWidget.resizableSide != widget.resizableSide) {
-      setState(() {
-        if (widget.minWidth > _width) _width = widget.minWidth;
-        if (widget.maxWidth < _width) _width = widget.maxWidth;
-      });
+      if (widget.minWidth > _width) _width = widget.minWidth;
+      if (widget.maxWidth < _width) _width = widget.maxWidth;
     }
   }
 
