@@ -25,6 +25,3 @@ flutter:
       macos:
         package: dev.groovinchip.macos_ui
         pluginClass: MacOSUiPlugin
-
-false_secrets:
-  - /website/node_modules/**
