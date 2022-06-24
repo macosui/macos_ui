@@ -32,7 +32,7 @@ if [ "$applyResponse" = "y" ]; then
 fi
 echo "Run tests? [y/n]"
 read testResponse
-if [ "$applyResponse" = "y" ]; then
+if [ "$testResponse" = "y" ]; then
   flutter test
 else
   exit 0

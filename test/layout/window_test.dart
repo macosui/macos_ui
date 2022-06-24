@@ -38,9 +38,9 @@ void main() {
         );
       }
 
-      final sidebarFinder = find.byType(AnimatedPositioned).first;
+      final sidebarFinder = find.byType(AnimatedPositioned).at(1);
       final resizerFinder = find.byType(AnimatedPositioned).at(3);
-      final backgroundFinder = find.byType(AnimatedPositioned).at(1);
+      final backgroundFinder = find.byType(AnimatedPositioned).at(0);
 
       expectSidebarOpen(tester, {required double width}) {
         expect(

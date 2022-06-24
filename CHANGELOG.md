@@ -1,3 +1,6 @@
+## [1.5.0]
+* Adds `endSidebar` to `MacosWindow`
+
 ## [1.4.1+1]
 * Update `pubspec.yaml` with `repository` and new `homepage` field.
 
