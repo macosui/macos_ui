@@ -456,6 +456,7 @@ class _MacosWindowState extends State<MacosWindow> {
         return MacosWindowScope(
           constraints: constraints,
           isSidebarShown: canShowSidebar,
+          isEndSidebarShown: canShowEndSidebar,
           sidebarToggler: () async {
             setState(() => _sidebarSlideDuration = 300);
             setState(() => _showSidebar = !_showSidebar);
@@ -497,6 +498,7 @@ class MacosWindowScope extends InheritedWidget {
     required this.constraints,
     required super.child,
     required this.isSidebarShown,
+    required this.isEndSidebarShown,
     required VoidCallback sidebarToggler,
     required VoidCallback endSidebarToggler,
   })  : _sidebarToggler = sidebarToggler,
@@ -538,6 +540,9 @@ class MacosWindowScope extends InheritedWidget {
 
   /// Provides the current visible state of the [Sidebar].
   final bool isSidebarShown;
+
+  /// Provides the current visible state of the end [Sidebar].
+  final bool isEndSidebarShown;
 
   /// Toggles the [Sidebar] of the [MacosWindow].
   ///
