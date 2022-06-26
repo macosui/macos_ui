@@ -1,5 +1,8 @@
+## [1.5.0]
+* Adds `endSidebar` to `MacosWindow`
+
 ## [1.4.2]
-* Fixes RenderFlex overflowed in `MacosListTile` [#264](https://github.com/GroovinChip/macos_ui/issues/264) 
+* Fixes RenderFlex overflowed in `MacosListTile` [#264](https://github.com/GroovinChip/macos_ui/issues/264)
 
 ## [1.4.1+1]
 * Update `pubspec.yaml` with `repository` and new `homepage` field.

@@ -628,7 +628,9 @@ class MacosThemeData with Diagnosticable {
     );
     properties.add(
       DiagnosticsProperty<MacosScrollbarThemeData>(
-          'scrollbarTheme', scrollbarTheme),
+        'scrollbarTheme',
+        scrollbarTheme,
+      ),
     );
     properties.add(
       DiagnosticsProperty<MacosIconButtonThemeData>(
