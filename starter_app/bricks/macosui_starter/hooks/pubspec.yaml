@@ -1,7 +1,0 @@
-name: macosui_starter_hooks
-
-environment:
-  sdk: ">=2.17.0 <3.0.0"
-
-dependencies:
-  mason: any

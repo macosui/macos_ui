@@ -51,26 +51,30 @@ class MacosListTile extends StatelessWidget {
           children: [
             if (leading != null) leading!,
             SizedBox(width: leadingWhitespace),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DefaultTextStyle(
-                  style: MacosTheme.of(context).typography.headline.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                  child: title,
-                ),
-                if (subtitle != null)
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   DefaultTextStyle(
-                    style:
-                        MacosTheme.of(context).typography.subheadline.copyWith(
-                              color: MacosTheme.brightnessOf(context).isDark
-                                  ? MacosColors.systemGrayColor
-                                  : const MacosColor(0xff88888C),
-                            ),
-                    child: subtitle!,
+                    style: MacosTheme.of(context).typography.headline.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    child: title,
                   ),
-              ],
+                  if (subtitle != null)
+                    DefaultTextStyle(
+                      style: MacosTheme.of(context)
+                          .typography
+                          .subheadline
+                          .copyWith(
+                            color: MacosTheme.brightnessOf(context).isDark
+                                ? MacosColors.systemGrayColor
+                                : const MacosColor(0xff88888C),
+                          ),
+                      child: subtitle!,
+                    ),
+                ],
+              ),
             ),
           ],
         ),

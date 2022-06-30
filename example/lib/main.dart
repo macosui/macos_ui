@@ -221,6 +221,17 @@ class _WidgetGalleryState extends State<WidgetGallery> {
             subtitle: Text('tim@apple.com'),
           ),
         ),
+        endSidebar: Sidebar(
+          startWidth: 200,
+          minWidth: 200,
+          maxWidth: 300,
+          shownByDefault: false,
+          builder: (context, scrollController) {
+            return const Center(
+              child: Text('End Sidebar'),
+            );
+          },
+        ),
         child: IndexedStack(
           index: pageIndex,
           children: pages,

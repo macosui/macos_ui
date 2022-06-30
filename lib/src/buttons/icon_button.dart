@@ -146,7 +146,7 @@ class MacosIconButtonState extends State<MacosIconButton>
       vsync: this,
     );
     _opacityAnimation = _animationController
-        .drive(CurveTween(curve: Curves.decelerate))
+        .drive(CurveTween(curve: const Interval(0.0, 0.25)))
         .drive(_opacityTween);
     _setTween();
   }

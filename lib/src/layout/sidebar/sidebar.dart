@@ -23,6 +23,7 @@ class Sidebar {
     this.top,
     this.bottom,
     this.topOffset = 51.0,
+    this.shownByDefault = true,
   }) : dragClosedBuffer = dragClosedBuffer ?? minWidth / 2;
 
   /// The builder that creates a child to display in this widget, which will
@@ -111,4 +112,11 @@ class Sidebar {
   ///
   /// Defaults to `51.0` which levels it up with the default height of the [TitleBar]
   final double topOffset;
+
+  /// Whether the sidebar should be open by default or not.
+  ///
+  /// Most useful for end sidebars.
+  ///
+  /// Defaults to `true`.
+  final bool shownByDefault;
 }
