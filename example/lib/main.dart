@@ -188,6 +188,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   label: Text('Fields'),
                 ),
                 SidebarItem(
+                  leading: Icon(CupertinoIcons.folder),
                   label: Text('Disclosure'),
                   disclosureItems: [
                     SidebarItem(
