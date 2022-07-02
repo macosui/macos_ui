@@ -1,5 +1,6 @@
 ## [1.5.1]
 * Correct the placement of the leading widget in disclosure sidebar items [#268](https://github.com/GroovinChip/macos_ui/issues/268)
+* Improve the sizing of the disclosure item indicator
 
 ## [1.5.0]
 * Adds `endSidebar` to `MacosWindow`
