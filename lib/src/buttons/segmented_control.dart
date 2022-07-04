@@ -73,7 +73,6 @@ class _MacosSegmentedControlState extends State<MacosSegmentedControl> {
                           widget.controller.index = widget.tabs.indexOf(t);
                         });
                       },
-                      onTapDown: (details) {},
                       child: t.copyWith(
                         active:
                             widget.controller.index == widget.tabs.indexOf(t),
