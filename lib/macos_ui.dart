@@ -6,7 +6,11 @@
 /// other Flutter-supported platforms, we encourage the use of the following
 /// libraries for apps that run on other desktop platforms:
 /// * For Windows, [fluent_ui](https://pub.dev/packages/fluent_ui)
-/// * For Linux, [yaru](https://pub.dev/packages/yaru)
+/// * For Linux:
+///   * [yaru](https://pub.dev/packages/yaru)
+///   * [yaru_widgets](https://pub.dev/packages/yaru_widgets)
+///   * [yaru_icons](https://pub.dev/packages/yaru_icons)
+///   * [yaru_colors](https://pub.dev/packages/yaru_colors)
 
 library macos_ui;
 
@@ -18,13 +22,14 @@ export 'src/buttons/popup_button.dart';
 export 'src/buttons/pulldown_button.dart';
 export 'src/buttons/push_button.dart';
 export 'src/buttons/radio_button.dart';
+export 'src/buttons/segmented_control.dart';
 export 'src/buttons/switch.dart';
 export 'src/buttons/toolbar/toolbar_icon_button.dart';
 export 'src/buttons/toolbar/toolbar_overflow_button.dart';
 export 'src/buttons/toolbar/toolbar_pulldown_button.dart';
 export 'src/dialogs/macos_alert_dialog.dart';
-export 'src/fields/text_field.dart';
 export 'src/fields/search_field.dart';
+export 'src/fields/text_field.dart';
 export 'src/icon/macos_icon.dart';
 export 'src/indicators/capacity_indicators.dart';
 export 'src/indicators/progress_indicators.dart';
@@ -40,6 +45,9 @@ export 'src/layout/scaffold.dart';
 export 'src/layout/sidebar/sidebar.dart';
 export 'src/layout/sidebar/sidebar_item.dart';
 export 'src/layout/sidebar/sidebar_items.dart';
+export 'src/layout/tab_view/tab.dart';
+export 'src/layout/tab_view/tab_controller.dart';
+export 'src/layout/tab_view/tab_view.dart';
 export 'src/layout/title_bar.dart';
 export 'src/layout/toolbar/custom_toolbar_item.dart';
 export 'src/layout/toolbar/toolbar.dart';

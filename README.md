@@ -35,6 +35,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
   - [Modern Window Look](#modern-window-look)
   - [ToolBar](#toolbar)
   - [MacosListTile](#MacosListTile)
+  - [MacosTabView](#MacosTabView)
 </details>
 
 <details>
@@ -55,6 +56,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
   - [PopupButton](#popupbutton)
   - [PushButton](#pushbutton)
   - [MacosSwitch](#macosswitch)
+  - [MacosSegmentedControl](#macossegmentedcontrol)
 </details>
   
 <details>
@@ -354,7 +356,52 @@ MacosListTile(
 ),
 ```
 
+## MacosTabView
+A multipage interface that displays one page at a time. Must be used in a `StatefulWidget`.
 
+<img src="https://imgur.com/nQRHFxW.png"/>
+
+You can control the placement of the tabs using the `position` property.
+
+Usage:
+```dart
+final _controller = MacosTabController(
+  initialIndex: 0,
+  length: 3,
+);
+
+...
+
+MacosTabView(
+  controller: _controller,
+  tabs: [
+    MacosTab(
+      label: 'Tab 1',
+      active: _controller.index == 0,
+    ),
+    MacosTab(
+      label: 'Tab 2',
+      active: _controller.index == 1,
+    ),
+    MacosTab(
+      label: 'Tab 3',
+      active: _controller.index == 2,
+    ),
+  ],
+  children: const [
+    Center(
+      child: Text('Tab 1'),
+    ),
+    Center(
+      child: Text('Tab 2'),
+    ),
+    Center(
+      child: Text('Tab 3'),
+    ),
+  ],
+),        
+
+```
 
 # Icons
 
@@ -583,6 +630,16 @@ MacosSwitch(
   },
 ),
 ```
+
+## MacosSegmentedControl
+
+Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabBar` to navigate between the 
+different tabs of the tab bar.
+
+<img src="https://imgur.com/Igvms1w.jpg"/>
+
+The typical usage of this widget is by `MacosTabView`, to control the navigation of its children. You do not need to 
+specify a `MacosSegmentedControl` with your `MacosTabView`, as it is built by that widget.
 
 # Dialogs and Sheets
 

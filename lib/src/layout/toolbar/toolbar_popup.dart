@@ -1,5 +1,6 @@
-import 'package:macos_ui/src/library.dart';
 import 'dart:math' as math;
+
+import 'package:macos_ui/src/library.dart';
 
 /// Where the popup will be placed vertically relative to the child
 enum ToolbarPopupPosition {
