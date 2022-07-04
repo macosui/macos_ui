@@ -52,49 +52,52 @@ void main() {
       },
     );
 
-    testWidgets('Tapping the currently selected item does nothing', (tester) async  {
-      final controller = MacosTabController(length: 3, initialIndex: 0);
-      await tester.pumpWidget(
-        MacosApp(
-          home: MacosWindow(
-            child: MacosScaffold(
-              children: [
-                ContentArea(
-                  builder: (context, scrollController) {
-                    return Center(
-                      child: MacosSegmentedControl(
-                        controller: controller,
-                        tabs: [
-                          MacosTab(
-                            label: 'Tab 1',
-                            active: controller.index == 0,
-                          ),
-                          MacosTab(
-                            label: 'Tab 2',
-                            active: controller.index == 1,
-                          ),
-                          MacosTab(
-                            label: 'Tab 3',
-                            active: controller.index == 2,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
+    testWidgets(
+      'Tapping the currently selected item does nothing',
+      (tester) async {
+        final controller = MacosTabController(length: 3, initialIndex: 0);
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context, scrollController) {
+                      return Center(
+                        child: MacosSegmentedControl(
+                          controller: controller,
+                          tabs: [
+                            MacosTab(
+                              label: 'Tab 1',
+                              active: controller.index == 0,
+                            ),
+                            MacosTab(
+                              label: 'Tab 2',
+                              active: controller.index == 1,
+                            ),
+                            MacosTab(
+                              label: 'Tab 3',
+                              active: controller.index == 2,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      final macosSegmentedControl = find.byType(MacosSegmentedControl);
-      expect(macosSegmentedControl, findsOneWidget);
-      final firstTab = find.byType(MacosTab).first;
-      expect(firstTab, findsOneWidget);
-      await tester.tap(firstTab);
-      await tester.pumpAndSettle();
-      expect(controller.index, 0);
-    },);
+        final macosSegmentedControl = find.byType(MacosSegmentedControl);
+        expect(macosSegmentedControl, findsOneWidget);
+        final firstTab = find.byType(MacosTab).first;
+        expect(firstTab, findsOneWidget);
+        await tester.tap(firstTab);
+        await tester.pumpAndSettle();
+        expect(controller.index, 0);
+      },
+    );
   });
 }
