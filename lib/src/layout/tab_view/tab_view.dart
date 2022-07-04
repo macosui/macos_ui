@@ -10,9 +10,16 @@ const _kTabViewRadius = BorderRadius.all(
 
 /// Specifies layout position for [MacosTab] options inside [MacosTabView].
 enum MacosTabPosition {
+  /// The left side of the [MacosTabView].
   left,
+
+  /// The right side of the [MacosTabView].
   right,
+
+  /// The top side of the [MacosTabView].
   top,
+
+  /// The bottom side of the [MacosTabView].
   bottom,
 }
 

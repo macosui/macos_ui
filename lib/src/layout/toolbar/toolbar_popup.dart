@@ -27,10 +27,14 @@ enum ToolbarPopupPlacement {
   end,
 }
 
+/// {@template toolbarPopup}
 /// A popup widget for the toolbar.
+///
+/// Used for the menu that encapsulates the overflowed toolbar actions and
+/// its possible submenus.
+/// {@endtemplate}
 class ToolbarPopup<T> extends StatefulWidget {
-  /// Creates a popup for the toolbar. Used for the menu that encapsulates
-  /// the overflowed toolbar actions and its possible submenus.
+  /// {@macro toolbarPopup}
   const ToolbarPopup({
     super.key,
     required this.child,
@@ -41,11 +45,26 @@ class ToolbarPopup<T> extends StatefulWidget {
     this.position = ToolbarPopupPosition.above,
   });
 
+  /// The child widget to show in the popup
   final Widget child;
+
+  /// The content of the popup
   final WidgetBuilder content;
+
+  /// The vertical offset of the popup
   final double verticalOffset;
+
+  /// The horizontal offset of the popup
   final double horizontalOffset;
+
+  /// The placement of the popup.
+  ///
+  /// Defaults to [ToolbarPopupPlacement.center].
   final ToolbarPopupPlacement placement;
+
+  /// The position of the popup.
+  ///
+  /// Defaults to [ToolbarPopupPosition.above].
   final ToolbarPopupPosition position;
 
   @override

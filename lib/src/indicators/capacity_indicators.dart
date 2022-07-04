@@ -174,10 +174,16 @@ class CapacityIndicatorCell extends StatelessWidget {
     this.backgroundColor = CupertinoColors.tertiarySystemGroupedBackground,
   }) : assert(value >= 0 && value <= 100);
 
+  /// The color of the cell.
   final Color color;
+
+  /// The background color of the cell.
   final Color backgroundColor;
+
+  /// The border color of the cell.
   final Color borderColor;
 
+  /// The current value of the cell.
   final double value;
 
   @override

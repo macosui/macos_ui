@@ -17,7 +17,7 @@ import 'package:macos_ui/src/library.dart';
 /// ![Tooltip Preview](https://developer.apple.com/design/human-interface-guidelines/macos/images/help_Tooltip.png)
 ///
 /// See also:
-///   * [TooltipThemeData], used to define how the tooltip will look like
+///   * [MacosTooltipThemeData], used to define how the tooltip will look like
 class MacosTooltip extends StatefulWidget {
   /// Creates a tooltip.
   ///
@@ -257,7 +257,7 @@ class _MacosTooltipState extends State<MacosTooltip>
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     assert(Overlay.of(context, debugRequiredFor: widget) != null);
-    final tooltipTheme = TooltipTheme.of(context);
+    final tooltipTheme = MacosTooltipTheme.of(context);
 
     height = tooltipTheme.height!;
     padding = tooltipTheme.padding!;

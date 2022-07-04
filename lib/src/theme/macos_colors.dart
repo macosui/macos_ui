@@ -89,8 +89,13 @@ class MacosColor extends Color {
 
 /// A collection of color values lifted from the macOS system color picker.
 class MacosColors {
+  /// A fully transparent color.
   static const Color transparent = MacosColor(0x00000000);
+
+  /// A fully opaque black color.
   static const black = MacosColor(0xff000000);
+
+  /// A fully opaque white color.
   static const white = MacosColor(0xffffffff);
 
   /// The text of a label containing primary content.

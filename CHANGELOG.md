@@ -1,5 +1,8 @@
 ## [1.6.0]
 * New widgets: `MacosTabView` and `MacosTabView`
+* BREAKING CHANGE: `Label.yAxis` has been renamed to `Label.crossAxisAlignment`
+* BREAKING CHANGE: `TooltipTheme` and `TooltipThemeData` have been renamed to `MacosTooltipTheme` and 
+`MacosTooltipThemeData`
 
 ## [1.5.1]
 * Correct the placement of the leading widget in disclosure sidebar items [#268](https://github.com/GroovinChip/macos_ui/issues/268)

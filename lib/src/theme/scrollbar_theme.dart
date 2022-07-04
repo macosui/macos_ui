@@ -366,6 +366,7 @@ class MacosScrollbarThemeData with Diagnosticable {
     ));
   }
 
+  /// Merges this [MacosScrollbarThemeData] with another.
   MacosScrollbarThemeData merge(MacosScrollbarThemeData? other) {
     if (other == null) return this;
     return copyWith(

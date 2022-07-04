@@ -2,13 +2,20 @@ import 'package:flutter/widgets.dart';
 
 const _buttonRadius = 5.0;
 
+/// {@template downCaretPainter}
+/// A painter that draws a caret pointing down.
+/// {@endtemplate}
 class DownCaretPainter extends CustomPainter {
+  /// {@macro downCaretPainter}
   const DownCaretPainter({
     required this.color,
     required this.backgroundColor,
   });
 
+  /// The color of the caret.
   final Color color;
+
+  /// The background color of the caret.
   final Color backgroundColor;
 
   @override
@@ -44,13 +51,20 @@ class DownCaretPainter extends CustomPainter {
   bool shouldRebuildSemantics(DownCaretPainter oldDelegate) => false;
 }
 
+/// {@template upCaretPainter}
+/// A painter that draws a caret pointing up.
+/// {@endtemplate}
 class UpCaretPainter extends CustomPainter {
+  /// {@macro upCaretPainter}
   const UpCaretPainter({
     required this.color,
     required this.backgroundColor,
   });
 
+  /// The color of the caret.
   final Color color;
+
+  /// The background color of the caret.
   final Color backgroundColor;
 
   @override

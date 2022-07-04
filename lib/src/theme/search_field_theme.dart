@@ -125,6 +125,7 @@ class MacosSearchFieldThemeData with Diagnosticable {
     ));
   }
 
+  /// Merges this [MacosSearchFieldThemeData] with another.
   MacosSearchFieldThemeData merge(MacosSearchFieldThemeData? other) {
     if (other == null) return this;
     return copyWith(

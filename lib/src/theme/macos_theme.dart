@@ -193,7 +193,7 @@ class MacosThemeData with Diagnosticable {
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
-    TooltipThemeData? tooltipTheme,
+    MacosTooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
     MacosScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? macosIconButtonTheme,
@@ -234,7 +234,7 @@ class MacosThemeData with Diagnosticable {
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(244, 245, 245, 1.0),
     );
-    tooltipTheme ??= TooltipThemeData.standard(
+    tooltipTheme ??= MacosTooltipThemeData.standard(
       brightness: _brightness,
       textStyle: typography.callout,
     );
@@ -465,7 +465,7 @@ class MacosThemeData with Diagnosticable {
   final HelpButtonThemeData helpButtonTheme;
 
   /// The default style for [MacosTooltip]s below the overall [MacosTheme]
-  final TooltipThemeData tooltipTheme;
+  final MacosTooltipThemeData tooltipTheme;
 
   /// The density value for specifying the compactness of various UI components.
   ///
@@ -484,12 +484,16 @@ class MacosThemeData with Diagnosticable {
   /// The default style for [MacosPopupButton]s below the overall [MacosTheme]
   final MacosPopupButtonThemeData popupButtonTheme;
 
+  /// The default style for [MacosPulldownButton]s below the overall [MacosTheme]
   final MacosPulldownButtonThemeData pulldownButtonTheme;
 
+  /// The default style for [MacosDatePicker]s below the overall [MacosTheme]
   final MacosDatePickerThemeData datePickerTheme;
 
+  /// The default style for [MacosTimePicker]s below the overall [MacosTheme]
   final MacosTimePickerThemeData timePickerTheme;
 
+  /// The default style for [MacosSearchField]s below the overall [MacosTheme]
   final MacosSearchFieldThemeData searchFieldTheme;
 
   /// Linearly interpolate between two themes.
@@ -504,7 +508,7 @@ class MacosThemeData with Diagnosticable {
           HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
       pushButtonTheme:
           PushButtonThemeData.lerp(a.pushButtonTheme, b.pushButtonTheme, t),
-      tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
+      tooltipTheme: MacosTooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
       scrollbarTheme:
           MacosScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
@@ -551,7 +555,7 @@ class MacosThemeData with Diagnosticable {
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
     HelpButtonThemeData? helpButtonTheme,
-    TooltipThemeData? tooltipTheme,
+    MacosTooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
     MacosScrollbarThemeData? scrollbarTheme,
     MacosIconButtonThemeData? iconButtonTheme,
@@ -583,6 +587,7 @@ class MacosThemeData with Diagnosticable {
     );
   }
 
+  /// Merges this [MacosThemeData] with another.
   MacosThemeData merge(MacosThemeData? other) {
     if (other == null) return this;
     return copyWith(
@@ -624,7 +629,7 @@ class MacosThemeData with Diagnosticable {
       helpButtonTheme,
     ));
     properties.add(
-      DiagnosticsProperty<TooltipThemeData>('tooltipTheme', tooltipTheme),
+      DiagnosticsProperty<MacosTooltipThemeData>('tooltipTheme', tooltipTheme),
     );
     properties.add(
       DiagnosticsProperty<MacosScrollbarThemeData>(
@@ -671,10 +676,12 @@ class MacosThemeData with Diagnosticable {
   }
 }
 
+/// Brightness extensions
 extension BrightnessX on Brightness {
   /// Check if the brightness is dark or not.
   bool get isDark => this == Brightness.dark;
 
+  /// Resolves the given colors based on the current brightness.
   T resolve<T>(T light, T dark) {
     if (isDark) return dark;
     return light;

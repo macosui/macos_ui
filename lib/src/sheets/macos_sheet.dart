@@ -6,9 +6,12 @@ const _kSheetBorderRadius = BorderRadius.all(Radius.circular(12.0));
 const EdgeInsets _defaultInsetPadding =
     EdgeInsets.symmetric(horizontal: 140.0, vertical: 48.0);
 
+/// {@template macosSheet}
 /// A modal dialog that’s attached to a particular window and prevents further
 /// interaction with the window until the sheet is dismissed.
+/// {@endtemplate}
 class MacosSheet extends StatelessWidget {
+  /// {@macro macosSheet}
   const MacosSheet({
     super.key,
     required this.child,
