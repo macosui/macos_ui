@@ -13,7 +13,7 @@ import 'package:macos_ui/src/library.dart';
 ///
 /// See also:
 ///
-///  * [MacosThemeData], specifies the theme's visual styling
+///  * [MacosThemeData], which specifies the theme's visual styling
 ///  * [MacosApp], which will automatically add a [MacosTheme] based on the
 ///    value of [MacosApp.theme].
 class MacosTheme extends StatelessWidget {
