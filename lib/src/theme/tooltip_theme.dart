@@ -40,7 +40,8 @@ class MacosTooltipTheme extends InheritedTheme {
   }
 
   @override
-  bool updateShouldNotify(MacosTooltipTheme oldWidget) => data != oldWidget.data;
+  bool updateShouldNotify(MacosTooltipTheme oldWidget) =>
+      data != oldWidget.data;
 }
 
 /// {@template macosTooltipThemeData}

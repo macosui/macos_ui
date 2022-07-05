@@ -508,7 +508,8 @@ class MacosThemeData with Diagnosticable {
           HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
       pushButtonTheme:
           PushButtonThemeData.lerp(a.pushButtonTheme, b.pushButtonTheme, t),
-      tooltipTheme: MacosTooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
+      tooltipTheme:
+          MacosTooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
       scrollbarTheme:
           MacosScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
