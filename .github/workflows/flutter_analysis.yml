@@ -6,21 +6,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Flutter
-        uses: subosito/flutter-action@master
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: install dependencies
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: format code
+      - name: Format code
         run: flutter format --set-exit-if-changed .
 
-      - name: analyze code
-        run: flutter analyze .
+      - name: Analyze code
+        run: flutter analyze --fatal-infos .
 
-      - name: test code
+      - name: Test code
         run: flutter test
 

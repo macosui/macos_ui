@@ -6,15 +6,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Flutter
-        uses: subosito/flutter-action@master
-        with:
-          channel: stable
+      - uses: actions/checkout@v3
 
-      - name: Check directory
-        run: ls
-      - name: Install Code Metrics
-        run: flutter pub global activate dart_code_metrics
-      - name: Run Code Metrics
-        run: flutter pub global run dart_code_metrics:metrics --reporter=github lib
+      - name: Run Dart Code Metrics
+        uses: dart-code-checker/dart-code-metrics-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pull_request_comment: true
+          fatal_warnings: true
+          fatal_performance: true
+          fatal_style: true
