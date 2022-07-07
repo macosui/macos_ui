@@ -3,8 +3,38 @@ import 'package:macos_ui/src/library.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 const ShapeBorder _defaultShape = RoundedRectangleBorder(
-  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+  //TODO: consider changing to 4.0 or 5.0 - App Store, Notes and Mail seem to use 4.0 or 5.0
+  borderRadius: BorderRadius.all(Radius.circular(5.0)),
 );
+
+/// {@template sidebarItemSize}
+/// Enumerates the size specifications of [SidebarItem]s
+///
+/// Values were adapted from https://developer.apple.com/design/human-interface-guidelines/components/navigation-and-search/sidebars/#platform-considerations
+/// and were eyeballed against apps like App Store, Notes, and Mail.
+/// {@endtemplate}
+enum SidebarItemSize {
+  /// A small [SidebarItem]. Has a [height] of 24 and an [iconSize] of 12.
+  small(24.0, 12.0),
+
+  /// A medium [SidebarItem]. Has a [height] of 28 and an [iconSize] of 16.
+  medium(29.0, 16.0),
+
+  /// A large [SidebarItem]. Has a [height] of 32 and an [iconSize] of 20.0.
+  large(36.0, 18.0);
+
+  /// {@macro sidebarItemSize}
+  const SidebarItemSize(
+    this.height,
+    this.iconSize,
+  );
+
+  /// The height of the [SidebarItem].
+  final double height;
+
+  /// The maximum size of the [SidebarItem]'s leading icon.
+  final double iconSize;
+}
 
 /// A scrollable widget that renders [SidebarItem]s.
 ///
@@ -16,9 +46,10 @@ class SidebarItems extends StatelessWidget {
   /// Creates a scrollable widget that renders [SidebarItem]s.
   const SidebarItems({
     super.key,
+    required this.items,
     required this.currentIndex,
     required this.onChanged,
-    required this.items,
+    this.itemSize = SidebarItemSize.medium,
     this.scrollController,
     this.selectedColor,
     this.unselectedColor,
@@ -36,6 +67,11 @@ class SidebarItems extends StatelessWidget {
 
   /// Called when the current selected index should be changed.
   final ValueChanged<int> onChanged;
+
+  /// The size specifications for all [items].
+  ///
+  /// Defaults to [SidebarItemSize.medium].
+  final SidebarItemSize itemSize;
 
   /// The scroll controller used by this sidebar. If null, a local scroll
   /// controller is created.
@@ -85,6 +121,7 @@ class SidebarItems extends StatelessWidget {
         selectedColor: selectedColor ?? theme.primaryColor,
         unselectedColor: unselectedColor ?? MacosColors.transparent,
         shape: shape ?? _defaultShape,
+        itemSize: itemSize,
         child: ListView(
           controller: scrollController,
           physics: const ClampingScrollPhysics(),
@@ -126,11 +163,13 @@ class _SidebarItemsConfiguration extends InheritedWidget {
     this.selectedColor = MacosColors.transparent,
     this.unselectedColor = MacosColors.transparent,
     this.shape = _defaultShape,
+    this.itemSize = SidebarItemSize.medium,
   }) : super(key: key);
 
   final Color selectedColor;
   final Color unselectedColor;
   final ShapeBorder shape;
+  final SidebarItemSize itemSize;
 
   static _SidebarItemsConfiguration of(BuildContext context) {
     return context
@@ -181,6 +220,7 @@ class _SidebarItem extends StatelessWidget {
       };
 
   bool get hasLeading => item.leading != null;
+  bool get hasTrailing => item.trailing != null;
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +239,19 @@ class _SidebarItem extends StatelessWidget {
     );
 
     final double spacing = 10.0 + theme.visualDensity.horizontal;
+    final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+    TextStyle? labelStyle;
+    switch (itemSize) {
+      case SidebarItemSize.small:
+        labelStyle = theme.typography.subheadline;
+        break;
+      case SidebarItemSize.medium:
+        labelStyle = theme.typography.body;
+        break;
+      case SidebarItemSize.large:
+        labelStyle = theme.typography.title3;
+        break;
+    }
 
     return Semantics(
       label: item.semanticLabel,
@@ -217,7 +270,7 @@ class _SidebarItem extends StatelessWidget {
           actions: _actionMap,
           child: Container(
             width: 134.0 + theme.visualDensity.horizontal,
-            height: 38.0 + theme.visualDensity.vertical,
+            height: itemSize.height + theme.visualDensity.vertical,
             decoration: ShapeDecoration(
               color: selected ? selectedColor : unselectedColor,
               shape: item.shape ?? _SidebarItemsConfiguration.of(context).shape,
@@ -236,16 +289,26 @@ class _SidebarItem extends StatelessWidget {
                         color: selected
                             ? MacosColors.white
                             : MacosColors.controlAccentColor,
+                        size: itemSize.iconSize,
                       ),
                       child: item.leading!,
                     ),
                   ),
                 DefaultTextStyle(
-                  style: theme.typography.title3.copyWith(
+                  style: labelStyle.copyWith(
                     color: selected ? textLuminance(selectedColor) : null,
                   ),
                   child: item.label,
                 ),
+                if (hasTrailing) ...[
+                  const Spacer(),
+                  DefaultTextStyle(
+                    style: labelStyle.copyWith(
+                      color: selected ? textLuminance(selectedColor) : null,
+                    ),
+                    child: item.trailing!,
+                  ),
+                ],
               ],
             ),
           ),
@@ -291,6 +354,8 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
 
   bool _isExpanded = false;
 
+  bool get hasLeading => widget.item.leading != null;
+
   @override
   void initState() {
     super.initState();
@@ -327,6 +392,20 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
     final theme = MacosTheme.of(context);
     final double spacing = 10.0 + theme.visualDensity.horizontal;
 
+    final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+    TextStyle? labelStyle;
+    switch (itemSize) {
+      case SidebarItemSize.small:
+        labelStyle = theme.typography.subheadline;
+        break;
+      case SidebarItemSize.medium:
+        labelStyle = theme.typography.body;
+        break;
+      case SidebarItemSize.large:
+        labelStyle = theme.typography.title3;
+        break;
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,10 +427,14 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
                           : MacosColors.white,
                     ),
                   ),
-                  if (widget.item.leading != null)
+                  if (hasLeading)
                     Padding(
                       padding: EdgeInsets.only(left: spacing),
-                      child: widget.item.leading!,
+                      //child: widget.item.leading!,
+                      child: MacosIconTheme.merge(
+                        data: MacosIconThemeData(size: itemSize.iconSize),
+                        child: widget.item.leading!,
+                      ),
                     ),
                 ],
               ),
@@ -359,16 +442,20 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
               focusNode: widget.item.focusNode,
               semanticLabel: widget.item.semanticLabel,
               shape: widget.item.shape,
+              trailing: widget.item.trailing,
             ),
             onClick: _handleTap,
             selected: false,
           ),
         ),
         ClipRect(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            heightFactor: _heightFactor.value,
-            child: child,
+          child: DefaultTextStyle(
+            style: labelStyle,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              heightFactor: _heightFactor.value,
+              child: child,
+            ),
           ),
         ),
       ],

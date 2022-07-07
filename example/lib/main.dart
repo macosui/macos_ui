@@ -176,47 +176,77 @@ class _WidgetGalleryState extends State<WidgetGallery> {
               currentIndex: pageIndex,
               onChanged: (i) => setState(() => pageIndex = i),
               scrollController: controller,
-              items: const [
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.square_on_circle),
+              itemSize: SidebarItemSize.large,
+              items: [
+                const SidebarItem(
+                  // leading: MacosIcon(CupertinoIcons.square_on_circle),
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/button_programmable_2x.png',
+                    ),
+                  ),
                   label: Text('Buttons'),
                 ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.arrow_2_circlepath),
+                const SidebarItem(
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/lines_measurement_horizontal_2x.png',
+                    ),
+                  ),
                   label: Text('Indicators'),
                 ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.textbox),
+                const SidebarItem(
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/character_cursor_ibeam_2x.png',
+                    ),
+                  ),
                   label: Text('Fields'),
                 ),
                 SidebarItem(
-                  leading: Icon(CupertinoIcons.folder),
-                  label: Text('Disclosure'),
+                  leading: const MacosIcon(CupertinoIcons.folder),
+                  label: const Text('Disclosure'),
+                  trailing: Text(
+                    '2',
+                    style: TextStyle(
+                      color: MacosTheme.brightnessOf(context) == Brightness.dark
+                          ? MacosColors.tertiaryLabelColor.darkColor
+                          : MacosColors.tertiaryLabelColor,
+                    ),
+                  ),
                   disclosureItems: [
-                    SidebarItem(
-                      leading: MacosIcon(CupertinoIcons.infinite),
+                    const SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                          'assets/sf_symbols/rectangle_3_group_2x.png',
+                        ),
+                      ),
                       label: Text('Colors'),
                     ),
-                    SidebarItem(
+                    const SidebarItem(
                       leading: MacosIcon(CupertinoIcons.infinite),
                       label: Text('Item 3'),
                     ),
                   ],
                 ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.rectangle),
+                const SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.square_on_square),
                   label: Text('Dialogs & Sheets'),
                 ),
-                SidebarItem(
+                const SidebarItem(
                   leading: MacosIcon(CupertinoIcons.macwindow),
                   label: Text('Toolbar'),
                 ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.calendar),
+                const SidebarItem(
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/filemenu_and_selection_2x.png',
+                    ),
+                  ),
                   label: Text('Selectors'),
                 ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.table_fill),
+                const SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.uiwindow_split_2x1),
                   label: Text('TabView'),
                 ),
               ],

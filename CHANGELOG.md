@@ -1,3 +1,15 @@
+## [1.7.0]
+* ✨ New
+  * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a 
+`MacosIconThemeData` instead of an `IconThemeData`
+  * `SidebarItemSize` enum, which determines the height of sidebar items and the maximum size their `leading` widgets.
+  * `SidebarItem` now accepts an optional `trailing` widget.
+* 🔄 Updated
+  * `SidebarItems` now supports `SidebarItemSize` via the `itemSize` property, which defaults to 
+`SidebarItemSize.medium`. The widget has been updated to manage the item's height, the maximum size of the item's 
+leading widget, and the font size of the item's label widget according to the given `SidebarItemSize`.
+  * The example app has been tweaked to use some icons from the SF Symbols 4 Beta via the new `MacosImageIcon` widget.
+
 ## [1.6.0]
 * New widgets: `MacosTabView` and `MacosTabView`
 * BREAKING CHANGE: `Label.yAxis` has been renamed to `Label.crossAxisAlignment`
