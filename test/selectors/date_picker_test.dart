@@ -31,9 +31,14 @@ void main() {
         );
 
         expect(find.text('/'), findsNWidgets(2));
-        expect(find.text('${today.day}'), findsOneWidget);
-        expect(find.text('${today.month}'), findsOneWidget);
         expect(find.text('${today.year}'), findsOneWidget);
+        if (today.month == today.day) {
+          expect(find.text('${today.day}'), findsNWidgets(2));
+          expect(find.text('${today.month}'), findsNWidgets(2));
+        } else {
+          expect(find.text('${today.day}'), findsOneWidget);
+          expect(find.text('${today.month}'), findsOneWidget);
+        }
       },
     );
 
@@ -71,14 +76,10 @@ void main() {
         await tester.pumpAndSettle();
         day++;
         expect(day, today.day + 1);
-        await tester.tap(dayFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         day--;
         expect(day, today.day);
-        await tester.tap(dayFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         day--;
@@ -120,14 +121,10 @@ void main() {
         await tester.pumpAndSettle();
         month++;
         expect(month, today.month + 1);
-        await tester.tap(monthFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         month--;
         expect(month, today.month);
-        await tester.tap(monthFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         month--;
@@ -169,14 +166,10 @@ void main() {
         await tester.pumpAndSettle();
         year++;
         expect(year, today.year + 1);
-        await tester.tap(yearFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         year--;
         expect(year, today.year);
-        await tester.tap(yearFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         year--;
