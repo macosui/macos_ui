@@ -338,20 +338,21 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
               label: widget.item.label,
               leading: Row(
                 children: [
-                  if (widget.item.leading != null)
-                    Padding(
-                      padding: EdgeInsets.only(right: spacing),
-                      child: widget.item.leading!,
-                    ),
                   RotationTransition(
                     turns: _iconTurns,
                     child: Icon(
                       CupertinoIcons.chevron_right,
+                      size: 12.0,
                       color: theme.brightness == Brightness.light
                           ? MacosColors.black
                           : MacosColors.white,
                     ),
                   ),
+                  if (widget.item.leading != null)
+                    Padding(
+                      padding: EdgeInsets.only(left: spacing),
+                      child: widget.item.leading!,
+                    ),
                 ],
               ),
               unselectedColor: MacosColors.transparent,
