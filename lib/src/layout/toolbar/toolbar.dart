@@ -275,11 +275,14 @@ enum ToolbarItemDisplayMode {
   overflowed,
 }
 
+/// {@template toolbarItem}
 /// An individual action displayed within a [Toolbar]. Sub-class this
 /// to build a new type of widget that appears inside of a toolbar.
 /// It knows how to build an appropriate widget for the given
 /// [ToolbarItemDisplayMode] during build time.
+/// {@endtemplate}
 abstract class ToolbarItem with Diagnosticable {
+  /// {@macro toolbarItem}
   const ToolbarItem({required this.key});
 
   final Key? key;

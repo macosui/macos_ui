@@ -6,17 +6,17 @@ import 'package:macos_ui/src/library.dart';
 void main() {
   test('==, hashCode, copyWith basics', () {
     expect(
-      const TooltipThemeData(),
-      const TooltipThemeData().copyWith(),
+      const MacosTooltipThemeData(),
+      const MacosTooltipThemeData().copyWith(),
     );
     expect(
-      const TooltipThemeData().hashCode,
-      const TooltipThemeData().copyWith().hashCode,
+      const MacosTooltipThemeData().hashCode,
+      const MacosTooltipThemeData().copyWith().hashCode,
     );
   });
 
   test('lerps from light to dark', () {
-    final actual = TooltipThemeData.lerp(
+    final actual = MacosTooltipThemeData.lerp(
       _tooltipThemeData,
       _tooltipThemeDataDark,
       1,
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('lerps from dark to light', () {
-    final actual = TooltipThemeData.lerp(
+    final actual = MacosTooltipThemeData.lerp(
       _tooltipThemeDataDark,
       _tooltipThemeData,
       1,
@@ -37,7 +37,7 @@ void main() {
 
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
-    const TooltipThemeData().debugFillProperties(builder);
+    const MacosTooltipThemeData().debugFillProperties(builder);
 
     final description = builder.properties
         .where((node) => !node.isFiltered(DiagnosticLevel.info))
@@ -60,7 +60,7 @@ void main() {
   });
 }
 
-const _tooltipThemeData = TooltipThemeData(
+const _tooltipThemeData = MacosTooltipThemeData(
   decoration: BoxDecoration(
     color: Colors.red,
   ),
@@ -71,7 +71,7 @@ const _tooltipThemeData = TooltipThemeData(
   ),
 );
 
-const _tooltipThemeDataDark = TooltipThemeData(
+const _tooltipThemeDataDark = MacosTooltipThemeData(
   decoration: BoxDecoration(
     color: Colors.blue,
   ),

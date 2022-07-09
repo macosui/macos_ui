@@ -4,10 +4,13 @@ import 'package:flutter/gestures.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+/// {@template macosSwitch}
 /// A switch is a visual toggle between two mutually exclusive
 /// states — on and off. A switch shows that it's on when the
 /// accent color is visible and off when the switch appears colorless.
+/// {@endtemplate}
 class MacosSwitch extends StatelessWidget {
+  /// {@macro macosSwitch}
   const MacosSwitch({
     super.key,
     required this.value,

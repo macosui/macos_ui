@@ -8,8 +8,13 @@ import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
 
 /// Defines the possibles [MacosDatePicker] styles.
 enum DatePickerStyle {
+  /// A text-only date picker.
   textual,
+
+  /// A graphical-only date picker.
   graphical,
+
+  /// A text-and-graphical date picker.
   combined,
 }
 

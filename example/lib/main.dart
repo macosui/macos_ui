@@ -4,6 +4,7 @@ import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields_page.dart';
 import 'package:example/pages/indicators_page.dart';
 import 'package:example/pages/selectors_page.dart';
+import 'package:example/pages/tabview_page.dart';
 import 'package:example/pages/toolbar_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -68,6 +69,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     const DialogsPage(),
     const ToolbarPage(),
     const SelectorsPage(),
+    const TabViewPage(),
   ];
 
   @override
@@ -212,6 +214,10 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                 SidebarItem(
                   leading: MacosIcon(CupertinoIcons.calendar),
                   label: Text('Selectors'),
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.table_fill),
+                  label: Text('TabView'),
                 ),
               ],
             );
