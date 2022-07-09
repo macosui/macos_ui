@@ -15,19 +15,19 @@ class MacosTab extends StatelessWidget {
   const MacosTab({
     super.key,
     required this.label,
-    required this.active,
+    this.active = false,
   });
 
   /// The display label for this tab.
   final String label;
 
-  /// Whether this [MacosTab] is currently selected.
+  /// Whether this [MacosTab] is currently selected. Handled internally by
+  /// [MacosSegmentedControl]'s build function.
   final bool active;
 
   @override
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
-
     return PhysicalModel(
       color: active ? const Color(0xFF625E66) : MacosColors.transparent,
       borderRadius: _kTabBorderRadius,

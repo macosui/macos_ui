@@ -27,18 +27,15 @@ class _TabViewPageState extends State<TabViewPage> {
               padding: const EdgeInsets.all(24.0),
               child: MacosTabView(
                 controller: _controller,
-                tabs: [
+                tabs: const [
                   MacosTab(
                     label: 'Tab 1',
-                    active: _controller.index == 0,
                   ),
                   MacosTab(
                     label: 'Tab 2',
-                    active: _controller.index == 1,
                   ),
                   MacosTab(
                     label: 'Tab 3',
-                    active: _controller.index == 2,
                   ),
                 ],
                 children: const [
