@@ -369,7 +369,7 @@ MacosListTile(
 ## MacosTabView
 A multipage interface that displays one page at a time. Must be used in a `StatefulWidget`.
 
-<img src="https://imgur.com/nQRHFxW.png"/>
+<img src="https://imgur.com/Mdn7Li2.png"/>
 
 You can control the placement of the tabs using the `position` property.
 
