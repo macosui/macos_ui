@@ -3,7 +3,7 @@ import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
 const _kTabBorderRadius = BorderRadius.all(
-  Radius.circular(5.0),
+  Radius.circular(4.0),
 );
 
 /// {@template macosTab}
@@ -29,7 +29,7 @@ class MacosTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
     return PhysicalModel(
-      color: active ? const Color(0xFF625E66) : MacosColors.transparent,
+      color: active ? const Color(0xFF2B2E33) : MacosColors.transparent,
       borderRadius: _kTabBorderRadius,
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -37,7 +37,7 @@ class MacosTab extends StatelessWidget {
           color: active
               ? brightness.resolve(
                   MacosColors.white,
-                  const Color(0xFF625E66),
+                  const Color(0xFF646669),
                 )
               : MacosColors.transparent,
         ),
