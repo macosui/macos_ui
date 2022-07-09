@@ -145,8 +145,8 @@ class _MacosTabViewState extends State<MacosTabView> {
     final brightness = MacosTheme.brightnessOf(context);
 
     final outerBorderColor = brightness.resolve(
-      const Color(0xFFDED9E3),
-      const Color(0xFF3F3E45),
+      const Color(0xFFE1E2E4),
+      const Color(0xFF3E4045),
     );
 
     return Stack(
@@ -157,8 +157,8 @@ class _MacosTabViewState extends State<MacosTabView> {
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: brightness.resolve(
-                const Color(0xFFE9E4EB),
-                const Color(0xFF29242F),
+                const Color(0xFFE6E9EA),
+                const Color(0xFF2B2E33),
               ),
               border: Border.all(
                 color: outerBorderColor,
