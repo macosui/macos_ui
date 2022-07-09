@@ -1,5 +1,6 @@
 export 'package:flutter/cupertino.dart'
     show
+        CupertinoApp,
         CupertinoColors,
         CupertinoDynamicColor,
         CupertinoIcons,

@@ -3,14 +3,20 @@ import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// A help button appears within a view and opens app-specific help documentation when clicked.
-/// For help documentation creation guidance, see Help. All help buttons are circular,
-/// consistently sized buttons that contain a question mark icon. Whenever possible,
-/// open a help topic related to the current context. For example,
-/// the Rules pane of Mail preferences includes a help button.
+/// {@template helpButton}
+/// A help button appears within a view and opens app-specific help
+/// documentation when clicked.
+///
+/// For help documentation creation guidance, see Help. All help buttons are
+/// circular, consistently sized buttons that contain a question mark icon.
+/// Whenever possible, open a help topic related to the current context.
+/// For example, the Rules pane of Mail preferences includes a help button.
 /// When clicked, it opens directly to a Rules preferences help topic.
+///
+/// [pressedOpacity], if non-null, must be in the range if 0.0 to 1.0
+/// {@endtemplate}
 class HelpButton extends StatefulWidget {
-  ///pressedOpacity, if non-null, must be in the range if 0.0 to 1.0
+  /// {@macro helpButton}
   const HelpButton({
     super.key,
     this.color,

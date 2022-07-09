@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:macos_ui/src/library.dart';
+
+const _methodChannel = MethodChannel('dev.groovinchip.macos_ui');
 
 /// An immutable 32 bit color value in ARGB format.
 class MacosColor extends Color {
@@ -293,8 +296,17 @@ class MacosColors {
 
   /// The accent color selected by the user in system preferences.
   ///
-  /// No dark variant.
-  static const controlAccentColor = Color.fromRGBO(0, 122, 255, 1);
+  /// This function is used in [MacosApp] to get the system accent color
+  /// up-front for you. If the user changes the accent color in system
+  /// preferences, your app will need to be restarted.
+  ///
+  /// There is no dark variant of this color.
+  static Future<Color> controlAccentColor() async {
+    final colorValue = await _methodChannel.invokeMethod('accent_color');
+    return MacosColor(int.parse(colorValue));
+  }
+
+  static const controlAccentColorFallback = MacosColor.fromRGBO(0, 122, 255, 1);
 
   static const appleBlue = MacosColor(0xff0433ff);
   static const appleBrown = MacosColor(0xffaa7942);

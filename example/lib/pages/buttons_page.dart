@@ -17,6 +17,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
   String languagePopupValue = 'English';
   bool switchValue = false;
   final _tabController = MacosTabController(initialIndex: 0, length: 3);
+  bool checked = true;
 
   @override
   Widget build(BuildContext context) {
@@ -326,6 +327,15 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         items: null,
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosCheckbox'),
+                  const SizedBox(height: 8),
+                  MacosCheckbox(
+                    value: checked,
+                    onChanged: (value) {
+                      setState(() => checked = value);
+                    },
                   ),
                   const SizedBox(height: 20),
                   MacosPopupButton<String>(

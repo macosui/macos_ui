@@ -174,7 +174,7 @@ class ProgressBar extends StatelessWidget {
   /// The height of the line. Default to 4.5px
   final double height;
 
-  /// The color of the track. If null, [MacosThemeData.accentColor] is used
+  /// The color of the track. If null, [MacosThemeData.controlAccentColor] is used
   final Color? trackColor;
 
   /// The color of the background. If null, [CupertinoColors.secondarySystemFill]

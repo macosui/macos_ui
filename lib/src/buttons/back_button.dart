@@ -198,7 +198,7 @@ class MacosBackButtonState extends State<MacosBackButton>
                               : fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
-                    child: Icon(
+                    child: MacosIcon(
                       CupertinoIcons.back,
                       size: 18, // eyeballed
                       color: iconColor,

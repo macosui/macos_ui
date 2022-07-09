@@ -275,7 +275,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                                 topRight: _kSideRadius,
                               ),
                             ),
-                            child: Icon(
+                            child: MacosIcon(
                               CupertinoIcons.chevron_up,
                               color: caretColor,
                               size: 12.0,
@@ -299,7 +299,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                                 bottomRight: _kSideRadius,
                               ),
                             ),
-                            child: Icon(
+                            child: MacosIcon(
                               CupertinoIcons.chevron_down,
                               color: caretColor,
                               size: 12.0,

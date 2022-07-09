@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+/// {@template macosIconButton}
 /// A macOS-style icon button.
+/// {@endtemplate}
 class MacosIconButton extends StatefulWidget {
-  /// Builds a macOS-style icon button
+  /// {@macro macosIconButton}
   const MacosIconButton({
     super.key,
     required this.icon,

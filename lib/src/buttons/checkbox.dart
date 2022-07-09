@@ -34,7 +34,7 @@ class MacosCheckbox extends StatelessWidget {
   final double size;
 
   /// The background color when the checkbox is on or mixed. If null,
-  /// [MacosThemeData.accentColor] is used
+  /// [MacosThemeData.controlAccentColor] is used
   final Color? activeColor;
 
   /// The background color when the checkbox is disabled. [CupertinoColors.quaternaryLabel]

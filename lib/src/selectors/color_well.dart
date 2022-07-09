@@ -142,7 +142,8 @@ class _MacosColorWellState extends State<MacosColorWell> {
                 height: 17.0,
                 width: 38.0,
                 child: ColoredBox(
-                  color: _selectedColor ?? MacosColors.systemBlueColor,
+                  color:
+                      _selectedColor ?? MacosColors.controlAccentColorFallback,
                 ),
               ),
             ),

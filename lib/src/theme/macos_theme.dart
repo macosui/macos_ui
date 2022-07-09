@@ -207,7 +207,7 @@ class MacosThemeData with Diagnosticable {
     // ignore: no_leading_underscores_for_local_identifiers
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
-    primaryColor ??= MacosColors.controlAccentColor;
+    primaryColor ??= MacosColors.controlAccentColorFallback;
     canvasColor ??= isDark
         ? CupertinoColors.systemBackground.darkElevatedColor
         : CupertinoColors.systemBackground;
@@ -256,17 +256,10 @@ class MacosThemeData with Diagnosticable {
 
     visualDensity ??= VisualDensity.adaptivePlatformDensity;
 
-    iconTheme ??= MacosIconThemeData(
-      color: isDark
-          ? CupertinoColors.activeBlue.darkColor
-          : CupertinoColors.activeBlue.color,
-      size: 20,
-    );
+    iconTheme ??= MacosIconThemeData(color: primaryColor, size: 20);
 
     popupButtonTheme ??= MacosPopupButtonThemeData(
-      highlightColor: isDark
-          ? CupertinoColors.activeBlue.darkColor
-          : CupertinoColors.activeBlue.color,
+      highlightColor: primaryColor,
       backgroundColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.247)
           : const Color.fromRGBO(255, 255, 255, 1),
@@ -276,9 +269,7 @@ class MacosThemeData with Diagnosticable {
     );
 
     pulldownButtonTheme ??= MacosPulldownButtonThemeData(
-      highlightColor: isDark
-          ? CupertinoColors.activeBlue.darkColor
-          : CupertinoColors.activeBlue.color,
+      highlightColor: primaryColor,
       backgroundColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.247)
           : const Color.fromRGBO(255, 255, 255, 1),
@@ -305,16 +296,14 @@ class MacosThemeData with Diagnosticable {
       monthViewControlsColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.55)
           : const Color.fromRGBO(0, 0, 0, 0.5),
-      selectedElementColor: const Color(0xFF0063E1),
+      selectedElementColor: primaryColor,
       selectedElementTextColor: MacosColors.white,
       monthViewDateColor: isDark ? MacosColors.white : MacosColors.black,
       monthViewHeaderColor: isDark ? MacosColors.white : MacosColors.black,
       monthViewWeekdayHeaderColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.55)
           : const Color.fromRGBO(0, 0, 0, 0.5),
-      monthViewCurrentDateColor: isDark
-          ? const Color.fromRGBO(0, 88, 208, 1)
-          : const Color.fromRGBO(0, 99, 255, 1),
+      monthViewCurrentDateColor: primaryColor,
       monthViewSelectedDateColor:
           isDark ? const MacosColor(0xff464646) : const MacosColor(0xffDCDCDC),
       monthViewHeaderDividerColor: isDark
@@ -327,7 +316,7 @@ class MacosThemeData with Diagnosticable {
       backgroundColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(255, 255, 255, 1.0),
-      selectedElementColor: const Color(0xFF0063E1),
+      selectedElementColor: primaryColor,
       selectedElementTextColor: MacosColors.white,
       caretColor: isDark ? MacosColors.white : MacosColors.black,
       caretControlsBackgroundColor: isDark
@@ -423,11 +412,12 @@ class MacosThemeData with Diagnosticable {
   });
 
   /// A default light theme.
-  factory MacosThemeData.light() =>
-      MacosThemeData(brightness: Brightness.light);
+  factory MacosThemeData.light({Color? accentColor}) =>
+      MacosThemeData(brightness: Brightness.light, primaryColor: accentColor);
 
   /// A default dark theme.
-  factory MacosThemeData.dark() => MacosThemeData(brightness: Brightness.dark);
+  factory MacosThemeData.dark({Color? accentColor}) =>
+      MacosThemeData(brightness: Brightness.dark, primaryColor: accentColor);
 
   /// The default color theme. Same as [ThemeData.light].
   ///
@@ -445,7 +435,7 @@ class MacosThemeData with Diagnosticable {
 
   /// A color used on primary interactive elements of the theme.
   ///
-  /// Defaults to [CupertinoColors.activeBlue].
+  /// Defaults to [MacosColors.controlAccentColor].
   final Color primaryColor;
 
   /// The default color of Scaffold backgrounds.

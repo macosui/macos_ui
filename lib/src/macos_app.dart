@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart' as c;
+// import 'package:flutter/cupertino.dart' as c;
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -301,6 +303,16 @@ class MacosApp extends StatefulWidget {
 
 class _MacosAppState extends State<MacosApp> {
   bool get _usesRouter => widget.routerDelegate != null;
+  late Future<Color> _accentColorFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    RendererBinding.instance.deferFirstFrame();
+    _accentColorFuture = MacosColors.controlAccentColor().whenComplete(() {
+      RendererBinding.instance.allowFirstFrame();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -324,42 +336,58 @@ class _MacosAppState extends State<MacosApp> {
     final useDarkTheme = mode == ThemeMode.dark ||
         (mode == ThemeMode.system && platformBrightness == Brightness.dark);
 
-    late MacosThemeData theme;
-    if (useDarkTheme) {
-      theme = widget.darkTheme ?? MacosThemeData.dark();
-    } else {
-      theme = widget.theme ?? MacosThemeData.light();
-    }
-
-    return MacosTheme(
-      data: theme,
-      child: DefaultTextStyle(
-        style: TextStyle(color: theme.typography.body.color),
-        child: widget.builder != null
-            // See the MaterialApp source code for the explanation for
-            // wrapping a builder in a builder
-            ? Builder(
-                builder: (context) {
-                  // An Overlay is used here because MacosTooltip needs an
-                  // Overlay as an ancestor in the widget tree.
-                  return Overlay(
-                    initialEntries: [
-                      OverlayEntry(
-                        builder: (context) => widget.builder!(context, child),
-                      ),
-                    ],
-                  );
-                },
-              )
-            : child ?? const SizedBox.shrink(),
-      ),
+    return FutureBuilder<Color>(
+      future: _accentColorFuture,
+      builder: (BuildContext context, AsyncSnapshot<Color> snapshot) {
+        late MacosThemeData theme;
+        if (useDarkTheme) {
+          theme = widget.darkTheme?.merge(
+                MacosThemeData(
+                  brightness: Brightness.dark,
+                  primaryColor: snapshot.data,
+                ),
+              ) ??
+              MacosThemeData.dark(accentColor: snapshot.data);
+        } else {
+          theme = widget.theme?.merge(
+                MacosThemeData(
+                  brightness: Brightness.light,
+                  primaryColor: snapshot.data,
+                ),
+              ) ??
+              MacosThemeData.light(accentColor: snapshot.data);
+        }
+        return MacosTheme(
+          data: theme,
+          child: DefaultTextStyle(
+            style: TextStyle(color: theme.typography.body.color),
+            child: widget.builder != null
+                // See the MaterialApp source code for the explanation for
+                // wrapping a builder in a builder
+                ? Builder(
+                    builder: (context) {
+                      // An Overlay is used here because MacosTooltip needs an
+                      // Overlay as an ancestor in the widget tree.
+                      return Overlay(
+                        initialEntries: [
+                          OverlayEntry(
+                            builder: (context) =>
+                                widget.builder!(context, child),
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                : child ?? const SizedBox.shrink(),
+          ),
+        );
+      },
     );
   }
 
   Widget _buildMacosApp(BuildContext context) {
-    final defaultColor = widget.color ?? CupertinoColors.systemBlue;
     if (_usesRouter) {
-      return c.CupertinoApp.router(
+      return CupertinoApp.router(
         key: GlobalObjectKey(this),
         routeInformationProvider: widget.routeInformationProvider,
         routeInformationParser: widget.routeInformationParser!,
@@ -368,7 +396,6 @@ class _MacosAppState extends State<MacosApp> {
         builder: _macosBuilder,
         title: widget.title,
         onGenerateTitle: widget.onGenerateTitle,
-        color: defaultColor,
         locale: widget.locale,
         localeResolutionCallback: widget.localeResolutionCallback,
         localeListResolutionCallback: widget.localeListResolutionCallback,
@@ -383,7 +410,7 @@ class _MacosAppState extends State<MacosApp> {
         actions: widget.actions,
       );
     }
-    return c.CupertinoApp(
+    return CupertinoApp(
       key: GlobalObjectKey(this),
       navigatorKey: widget.navigatorKey,
       navigatorObservers: widget.navigatorObservers!,
@@ -396,7 +423,6 @@ class _MacosAppState extends State<MacosApp> {
       builder: _macosBuilder,
       title: widget.title,
       onGenerateTitle: widget.onGenerateTitle,
-      color: defaultColor,
       locale: widget.locale,
       localeResolutionCallback: widget.localeResolutionCallback,
       localeListResolutionCallback: widget.localeListResolutionCallback,
