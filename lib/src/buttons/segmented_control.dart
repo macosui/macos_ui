@@ -45,22 +45,25 @@ class _MacosSegmentedControlState extends State<MacosSegmentedControl> {
       decoration: BoxDecoration(
         // Background color
         color: brightness.resolve(
-          const Color(0xFFE3DEE8),
-          const Color(0xFF2D2934),
+          const Color(0xFFE2E3E6),
+          const Color(0xFF2B2E33),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: brightness.resolve(
+              const Color(0xFFDBDCDE),
+              const Color(0xFF4F5155),
+            ),
+            offset: const Offset(0, .5),
+            spreadRadius: .5,
+          ),
+        ],
         borderRadius: const BorderRadius.all(
           Radius.circular(5.0),
         ),
-        // Outer border
-        border: Border.all(
-          color: brightness.resolve(
-            const Color(0xFFD8D3DC),
-            const Color(0xFF37333D),
-          ),
-        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const EdgeInsets.all(0.5),
         child: IntrinsicHeight(
           child: IntrinsicWidth(
             child: Row(
