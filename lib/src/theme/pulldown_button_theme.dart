@@ -78,6 +78,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
   /// The default color for a [MacosPulldownButton]'s icon.
   final Color? iconColor;
 
+  /// Copies this [MacosPulldownButtonThemeData] into another.
   MacosPulldownButtonThemeData copyWith({
     Color? highlightColor,
     Color? backgroundColor,
@@ -130,6 +131,7 @@ class MacosPulldownButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('iconColor', iconColor));
   }
 
+  /// Merges this [MacosPulldownButtonThemeData] with another.
   MacosPulldownButtonThemeData merge(MacosPulldownButtonThemeData? other) {
     if (other == null) return this;
     return copyWith(

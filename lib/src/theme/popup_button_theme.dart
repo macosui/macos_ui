@@ -74,6 +74,7 @@ class MacosPopupButtonThemeData with Diagnosticable {
   /// The default popup menu color for [MacosPopupButton]
   final Color? popupColor;
 
+  /// Copies this [MacosPopupButtonThemeData] into another.
   MacosPopupButtonThemeData copyWith({
     Color? highlightColor,
     Color? backgroundColor,
@@ -121,6 +122,7 @@ class MacosPopupButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('popupColor', popupColor));
   }
 
+  /// Merges this [MacosPopupButtonThemeData] with another.
   MacosPopupButtonThemeData merge(MacosPopupButtonThemeData? other) {
     if (other == null) return this;
     return copyWith(

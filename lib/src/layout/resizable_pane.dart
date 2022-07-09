@@ -9,16 +9,25 @@ import 'package:macos_ui/src/theme/macos_theme.dart';
 const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
 
 /// Indicates the draggable side of the [ResizablePane] for resizing
-enum ResizableSide { left, right }
+enum ResizableSide {
+  /// The left side of the [ResizablePane].
+  left,
 
+  /// The right side of the [ResizablePane].
+  right,
+}
+
+/// {@template resizablePane}
+/// A widget that can be resized horizontally.
+///
+/// The [builder], [minWidth] and [resizableSide] can not be null.
+/// The [maxWidth] and the [windowBreakpoint] default to `500.00`.
+/// [isResizable] defaults to `true`.
+///
+/// The [startWidth] is the initial width.
+/// {@endtemplate}
 class ResizablePane extends StatefulWidget {
-  /// Creates a widget that can be resized horizontally.
-  ///
-  /// The [builder], [minWidth] and [resizableSide] can not be null.
-  /// The [maxWidth] and the [windowBreakpoint] default to `500.00`.
-  /// [isResizable] defaults to `true`.
-  ///
-  /// The [startWidth] is the initial width.
+  /// {@macro resizablePane}
   const ResizablePane({
     super.key,
     required this.builder,

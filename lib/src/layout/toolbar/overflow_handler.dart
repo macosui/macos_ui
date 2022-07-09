@@ -11,6 +11,7 @@ typedef OverflowHandlerChangedCallback = void Function(
   List<int> hiddenChildren,
 );
 
+/// {@template overflowHandler}
 /// Lays out children widgets in a single run, and if there is not
 /// room to display them all, it will hide widgets that don't fit,
 /// and display the "overflow widget" at the end. Optionally, the
@@ -18,7 +19,9 @@ typedef OverflowHandlerChangedCallback = void Function(
 /// overflow widget will take precedence over any children widgets.
 ///
 /// Adapted from [Wrap].
+/// {@endtemplate}
 class OverflowHandler extends MultiChildRenderObjectWidget {
+  /// {@macro overflowHandler}
   OverflowHandler({
     super.key,
     this.alignment = MainAxisAlignment.start,
@@ -47,18 +50,25 @@ class OverflowHandler extends MultiChildRenderObjectWidget {
   /// Defaults to [Clip.none].
   final Clip clipBehavior;
 
+  /// The breakpoint at which the items should overflow.
   final double overflowBreakpoint;
 
+  /// {@template overflowWidgetAlignment}
   /// The alignment of the overflow widget between the end of the
   /// visible regular children and the end of the container.
+  /// {@endtemplate}
   final MainAxisAlignment overflowWidgetAlignment;
 
+  /// {@template alwaysDisplayOverflowWidget}
   /// Whether or not to always display the overflowWidget, even if
   /// all other widgets are able to be displayed.
+  /// {@endtemplate}
   final bool alwaysDisplayOverflowWidget;
 
+  /// {@template overflowChangedCallback}
   /// Function that is called when the list of children that are
   /// hidden because of the dynamic overflow has changed.
+  /// {@endtemplate}
   final OverflowHandlerChangedCallback? overflowChangedCallback;
 
   @override
@@ -124,12 +134,15 @@ class OverflowHandlerParentData extends ContainerBoxParentData<RenderBox> {
   bool _isHidden = false;
 }
 
+/// {@template renderOverflowHandler}
 /// Rendering logic for [OverflowHandler] widget.
 /// Adapted from [RenderWrap].
+/// {@endtemplate}
 class RenderOverflowHandler extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, OverflowHandlerParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, OverflowHandlerParentData> {
+  /// {@macro renderOverflowHandler}
   RenderOverflowHandler({
     required MainAxisAlignment alignment,
     required CrossAxisAlignment crossAxisAlignment,
@@ -148,6 +161,8 @@ class RenderOverflowHandler extends RenderBox
         _alwaysDisplayOverflowWidget = alwaysDisplayOverflowWidget;
 
   double _overflowBreakpoint;
+
+  /// The breakpoint at which the items should overflow.
   double get overflowBreakpoint => _overflowBreakpoint;
   set overflowBreakpoint(double value) {
     if (_overflowBreakpoint != value) {
@@ -157,6 +172,8 @@ class RenderOverflowHandler extends RenderBox
   }
 
   MainAxisAlignment _alignment;
+
+  /// {@macro flutter.widgets.wrap.alignment}
   MainAxisAlignment get alignment => _alignment;
   set alignment(MainAxisAlignment value) {
     if (_alignment != value) {
@@ -166,6 +183,8 @@ class RenderOverflowHandler extends RenderBox
   }
 
   CrossAxisAlignment _crossAxisAlignment;
+
+  /// {@macro flutter.widgets.wrap.crossAxisAlignment}
   CrossAxisAlignment get crossAxisAlignment => _crossAxisAlignment;
   set crossAxisAlignment(CrossAxisAlignment value) {
     if (_crossAxisAlignment != value) {
@@ -175,6 +194,8 @@ class RenderOverflowHandler extends RenderBox
   }
 
   TextDirection? _textDirection;
+
+  /// {@macro flutter.widgets.wrap.textDirection}
   TextDirection? get textDirection => _textDirection;
   set textDirection(TextDirection? value) {
     if (_textDirection != value) {
@@ -184,6 +205,8 @@ class RenderOverflowHandler extends RenderBox
   }
 
   Clip _clipBehavior;
+
+  /// {@macro flutter.material.Material.clipBehavior}
   Clip get clipBehavior => _clipBehavior;
   set clipBehavior(Clip value) {
     if (_clipBehavior != value) {
@@ -194,6 +217,8 @@ class RenderOverflowHandler extends RenderBox
   }
 
   MainAxisAlignment _overflowWidgetAlignment;
+
+  /// {@macro overflowWidgetAlignment}
   MainAxisAlignment get overflowWidgetAlignment => _overflowWidgetAlignment;
   set overflowWidgetAlignment(MainAxisAlignment value) {
     if (_overflowWidgetAlignment != value) {
@@ -203,6 +228,8 @@ class RenderOverflowHandler extends RenderBox
   }
 
   bool _alwaysDisplayOverflowWidget;
+
+  /// {@macro alwaysDisplayOverflowWidget}
   bool get alwaysDisplayOverflowWidget => _alwaysDisplayOverflowWidget;
   set alwaysDisplayOverflowWidget(bool value) {
     if (_alwaysDisplayOverflowWidget != value) {
@@ -211,6 +238,7 @@ class RenderOverflowHandler extends RenderBox
     }
   }
 
+  /// {@macro overflowChangedCallback}
   OverflowHandlerChangedCallback? overflowChangedCallback;
 
   bool get _debugHasNecessaryDirections {

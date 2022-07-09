@@ -71,6 +71,7 @@ class PushButtonThemeData with Diagnosticable {
   /// The default secondary color (e.g. Cancel/Go back buttons) for [PushButton]
   final Color? secondaryColor;
 
+  /// Copies this [PushButtonThemeData] into another.
   PushButtonThemeData copyWith({
     Color? color,
     Color? disabledColor,
@@ -118,6 +119,7 @@ class PushButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('secondaryColor', secondaryColor));
   }
 
+  /// Merges this [PushButtonThemeData] with another.
   PushButtonThemeData merge(PushButtonThemeData? other) {
     if (other == null) return this;
     return copyWith(

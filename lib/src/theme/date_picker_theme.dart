@@ -46,7 +46,19 @@ class MacosDatePickerTheme extends InheritedTheme {
       data != oldWidget.data;
 }
 
+/// {@template macosDatePickerThemeData}
+/// A style that overrides the default appearance of
+/// [MacosDatePicker]s when it's used with [MacosDatePickerTheme] or with the
+/// overall [MacosTheme]'s [MacosThemeData.datePickerTheme].
+///
+/// See also:
+///
+///  * [MacosDatePickerTheme], the theme which is configured with this class.
+///  * [MacosThemeData.datePickerTheme], which can be used to override
+///  the default style for [MacosDatePicker]s below the overall [MacosTheme].
+/// {@endtemplate}
 class MacosDatePickerThemeData with Diagnosticable {
+  /// {@macro macosDatePickerThemeData}
   MacosDatePickerThemeData({
     this.backgroundColor,
     this.selectedElementColor,
@@ -65,20 +77,49 @@ class MacosDatePickerThemeData with Diagnosticable {
     this.shadowColor,
   });
 
+  /// The background color of the date picker.
   final Color? backgroundColor;
+
+  /// The color of the selected element in the textual picker.
   final Color? selectedElementColor;
+
+  /// The text color of the selected element in the textual picker.
   final Color? selectedElementTextColor;
+
+  /// The color of the caret in the textual picker.
   final Color? caretColor;
+
+  /// The color of the controls in the textual picker.
   final Color? caretControlsBackgroundColor;
+
+  /// The color of the controls separator in the textual picker.
   final Color? caretControlsSeparatorColor;
+
+  /// The color of the month view controls.
   final Color? monthViewControlsColor;
+
+  /// The color of the month view header.
   final Color? monthViewHeaderColor;
+
+  /// The color of the selected date in the month view.
   final Color? monthViewSelectedDateColor;
+
+  /// The text color of the selected date in the month view.
   final Color? monthViewSelectedDateTextColor;
+
+  /// The color of the current date in the month view.
   final Color? monthViewCurrentDateColor;
+
+  /// The color of the weekday header in the month view.
   final Color? monthViewWeekdayHeaderColor;
+
+  /// The color of the header divider in the month view.
   final Color? monthViewHeaderDividerColor;
+
+  /// The color of the date in the month view.
   final Color? monthViewDateColor;
+
+  /// The color of the shadow in the month view.
   final Color? shadowColor;
 
   /// Copies this [MacosDatePickerThemeData] into another.
@@ -187,6 +228,7 @@ class MacosDatePickerThemeData with Diagnosticable {
     );
   }
 
+  /// Merges this [MacosDatePickerThemeData] with another.
   MacosDatePickerThemeData merge(MacosDatePickerThemeData? other) {
     if (other == null) return this;
     return copyWith(
