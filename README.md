@@ -630,7 +630,7 @@ MacosSwitch(
 
 ## MacosSegmentedControl
 
-Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabBar` to navigate between the 
+Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabView` to navigate between the 
 different tabs of the tab bar.
 
 <img src="https://imgur.com/Igvms1w.jpg"/>
