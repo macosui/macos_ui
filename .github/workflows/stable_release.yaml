@@ -10,12 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get Package Version
-        id: get_flutter_version
-        uses: its404/get-flutter-version@v1.0.0
+        id: package-version
+        uses: NiklasLehnfeld/flutter-version-number-action@v1
       - name: Create a Stable Release
-        uses: rymndhng/release-on-push-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: create-release
+        uses: actions/github-script@v6
         with:
-          use_github_release_notes: true
-          release_name: "Version ${{ steps.get_flutter_version.outputs.version_number }}"
+          script: |
+            github.rest.repos.createRelease({
+              owner: "GroovinChip",
+              repo: "macos_ui",
+              name: "Version ${{ steps.package-version.outputs.version-number }}",
+              tag_name: "${{ steps.package-version.outputs.version-number }}",
+              generate_release_notes: true,
+            })
+
