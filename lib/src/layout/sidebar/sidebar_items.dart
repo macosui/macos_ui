@@ -430,7 +430,6 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
                   if (hasLeading)
                     Padding(
                       padding: EdgeInsets.only(left: spacing),
-                      //child: widget.item.leading!,
                       child: MacosIconTheme.merge(
                         data: MacosIconThemeData(size: itemSize.iconSize),
                         child: widget.item.leading!,
