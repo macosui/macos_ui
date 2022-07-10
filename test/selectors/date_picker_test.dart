@@ -180,6 +180,7 @@ void main() {
     testWidgets(
       'The selected calendar day matches the expected value',
       (tester) async {
+        final today = DateTime.now();
         int selectedDay = 0;
         await tester.pumpWidget(
           MacosApp(
@@ -203,10 +204,11 @@ void main() {
           ),
         );
 
-        final dayToSelect = find.text('10');
+        int dayToFind = today.day == 21 ? 22 : 21;
+        final dayToSelect = find.text(dayToFind.toString());
         await tester.tap(dayToSelect);
         await tester.pumpAndSettle();
-        expect(selectedDay, 10);
+        expect(selectedDay, dayToFind);
       },
     );
 
