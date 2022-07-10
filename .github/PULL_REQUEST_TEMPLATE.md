@@ -1,7 +1,7 @@
 <!--
 
     Add a concise description of what this PR is changing or adding, and why. Consider including before/after screenshots.
-    Consider mentioninig issues related to this pull request
+    Consider mentioning issues related to this pull request
 
 -->
 

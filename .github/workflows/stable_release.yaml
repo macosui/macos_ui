@@ -1,0 +1,28 @@
+name: Create Stable Release
+on:
+  push:
+    branches:
+      - stable
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get Package Version
+        id: package-version
+        uses: NiklasLehnfeld/flutter-version-number-action@v1
+      - name: Create a Stable Release
+        uses: rymndhng/release-on-push-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_prefix: ""
+          bump_version_scheme: minor
+          use_github_release_notes: true
+          release_name: "Version ${{ steps.package-version.outputs.version-number }}"
+      - name: Correct tag generated in previous step
+        uses: EndBug/latest-tag@latest
+        with:
+          ref: ${{ steps.package-version.outputs.version-number }}
+
