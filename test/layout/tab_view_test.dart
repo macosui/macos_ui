@@ -19,18 +19,15 @@ void main() {
                         padding: const EdgeInsets.all(24.0),
                         child: MacosTabView(
                           controller: controller,
-                          tabs: [
+                          tabs: const [
                             MacosTab(
                               label: 'Tab 1',
-                              active: controller.index == 0,
                             ),
                             MacosTab(
                               label: 'Tab 2',
-                              active: controller.index == 1,
                             ),
                             MacosTab(
                               label: 'Tab 3',
-                              active: controller.index == 2,
                             ),
                           ],
                           children: const [

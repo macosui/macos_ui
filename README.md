@@ -374,18 +374,15 @@ final _controller = MacosTabController(
 
 MacosTabView(
   controller: _controller,
-  tabs: [
+  tabs: const [
     MacosTab(
       label: 'Tab 1',
-      active: _controller.index == 0,
     ),
     MacosTab(
       label: 'Tab 2',
-      active: _controller.index == 1,
     ),
     MacosTab(
       label: 'Tab 3',
-      active: _controller.index == 2,
     ),
   ],
   children: const [
@@ -633,7 +630,11 @@ MacosSwitch(
 
 ## MacosSegmentedControl
 
+<<<<<<< HEAD
 Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabBar` to navigate between the 
+=======
+Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabView` to navigate between the 
+>>>>>>> d534f79a8efc6190a233cc058c4643ae06aa7e3b
 different tabs of the tab bar.
 
 <img src="https://imgur.com/Igvms1w.jpg"/>

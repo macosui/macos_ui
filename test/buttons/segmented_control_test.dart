@@ -18,18 +18,15 @@ void main() {
                       return Center(
                         child: MacosSegmentedControl(
                           controller: controller,
-                          tabs: [
+                          tabs: const [
                             MacosTab(
                               label: 'Tab 1',
-                              active: controller.index == 0,
                             ),
                             MacosTab(
                               label: 'Tab 2',
-                              active: controller.index == 1,
                             ),
                             MacosTab(
                               label: 'Tab 3',
-                              active: controller.index == 2,
                             ),
                           ],
                         ),
@@ -66,18 +63,15 @@ void main() {
                       return Center(
                         child: MacosSegmentedControl(
                           controller: controller,
-                          tabs: [
+                          tabs: const [
                             MacosTab(
                               label: 'Tab 1',
-                              active: controller.index == 0,
                             ),
                             MacosTab(
                               label: 'Tab 2',
-                              active: controller.index == 1,
                             ),
                             MacosTab(
                               label: 'Tab 3',
-                              active: controller.index == 2,
                             ),
                           ],
                         ),

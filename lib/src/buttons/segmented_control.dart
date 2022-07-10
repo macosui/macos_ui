@@ -4,7 +4,7 @@ import 'package:macos_ui/src/library.dart';
 /// {@template macosSegmentedControl}
 /// Displays one or more navigational tabs in a single horizontal group.
 ///
-/// Used by [MacosTabBar] to navigate between the different tabs of the tab bar.
+/// Used by [MacosTabView] to navigate between the different tabs of the tab bar.
 ///
 /// [MacosSegmentedControl] can be considered somewhat analogous to Flutter's
 /// material `TabBar` in that it requires a list of [tabs]. Unlike `TabBar`,
