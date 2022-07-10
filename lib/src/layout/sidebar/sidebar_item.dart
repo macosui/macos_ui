@@ -19,6 +19,7 @@ class SidebarItem with Diagnosticable {
     this.focusNode,
     this.semanticLabel,
     this.disclosureItems,
+    this.trailing,
   });
 
   /// The widget before [label].
@@ -57,6 +58,13 @@ class SidebarItem with Diagnosticable {
   /// If non-null and [leading] is null, a local animated icon is created
   final List<SidebarItem>? disclosureItems;
 
+  /// An optional trailing widget.
+  ///
+  /// Typically a text indicator of a count of items, like in this
+  /// screenshots from the Apple Notes app:
+  /// {@image <img src="https://imgur.com/REpW9f9.png" height="88" width="219" />}
+  final Widget? trailing;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -69,5 +77,6 @@ class SidebarItem with Diagnosticable {
       'disclosure items',
       disclosureItems,
     ));
+    properties.add(DiagnosticsProperty<Widget?>('trailing', trailing));
   }
 }
