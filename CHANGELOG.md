@@ -1,3 +1,6 @@
+## [1.7.0+1]
+* Add padding as parameter to MacosTabView constructor.
+
 ## [1.7.0]
 * ✨ New
   * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a 
