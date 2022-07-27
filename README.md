@@ -16,6 +16,15 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
+## 🚨 Usage notes  
+pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
+specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
+Flutter supports, **but you will get best results on macOS**.
+
+The features of `macos_ui` that will _not_ work on platforms other than macOS due to calling native code are:
+* The `MacosColors.controlAccentColor()` function
+* The `MacosColorWell` widget
+
 ## Contents
 
 <details>
@@ -96,6 +105,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 - [Selectors](#selectors)
   - [MacosDatePicker](#macosdatepicker)
   - [MacosTimePicker](#macostimepicker)
+  - [MacosColorWell](#macoscolorwell)
 </details>
 
 ---
@@ -894,6 +904,13 @@ There are three styles of `MacosDatePickers`:
   calendar-like interface to select a date.
 * `combined`: provides both `textual` and `graphical` interfaces.
 
+Example usage:
+```dart
+MacosDatePicker(
+  onDateChanged: (date) => debugPrint('$date'),
+),
+```
+
 ## MacosTimePicker
 
 <img src="https://imgur.com/RtPbRo2.png" width="50%"/>
@@ -907,3 +924,27 @@ There are three styles of `MacosTimePickers`:
 * `graphical`: a visual time picker where the user can move the hands of a
   clock-like interface to select a time.
 * `combined`: provides both `textual` and `graphical` interfaces.
+
+Example usage:
+```dart
+MacosTimePicker(
+  onTimeChanged: (time) => debugPrint('$time'),
+),
+```
+
+## MacosColorWell
+
+<img src="https://imgur.com/VpK4IlM.gif" width="50%"/>
+
+Lets the user choose a color via the native macOS color picker.
+
+You can choose which mode to launch the picker in using the `ColorPickerMode` enum. The default is `ColorPickerMode.wheel`
+
+🚨 This widget will not work on platforms other than macOS!
+
+Example usage: 
+```dart
+MacosColorWell(
+  onColorSelected: (color) => debugPrint('$color'),
+),
+```

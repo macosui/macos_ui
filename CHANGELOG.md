@@ -1,3 +1,6 @@
+## [1.7.1]
+* Fixed an issue where end sidebar window breakpoints were not respected
+
 ## [1.7.0]
 * ✨ New
   * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a 
