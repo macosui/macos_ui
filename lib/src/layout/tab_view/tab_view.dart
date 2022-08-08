@@ -61,7 +61,9 @@ class MacosTabView extends StatefulWidget {
   /// The placement of the [tabs], typically [MacosTabPosition.top].
   final MacosTabPosition position;
 
-  ///The padding of the tab view widget
+  /// The padding of the tab view widget.
+  ///
+  /// Defaults to `EdgeInsets.all(12.0)`.
   final EdgeInsetsGeometry padding;
 
   @override
