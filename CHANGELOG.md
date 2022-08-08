@@ -1,4 +1,4 @@
-## [1.7.0+1]
+## [1.7.2]
 * Add padding as parameter to MacosTabView constructor.
 
 ## [1.7.0]
