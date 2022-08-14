@@ -1,3 +1,6 @@
+## [1.7.2]
+* Add padding as parameter to MacosTabView constructor.
+
 ## [1.7.1]
 * Fixed an issue where end sidebar window breakpoints were not respected
 

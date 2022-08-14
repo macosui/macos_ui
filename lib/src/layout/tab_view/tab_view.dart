@@ -43,6 +43,7 @@ class MacosTabView extends StatefulWidget {
     required this.tabs,
     required this.children,
     this.position = MacosTabPosition.top,
+    this.padding = const EdgeInsets.all(12.0),
   }) : assert(controller.length == children.length &&
             controller.length == tabs.length);
 
@@ -59,6 +60,11 @@ class MacosTabView extends StatefulWidget {
 
   /// The placement of the [tabs], typically [MacosTabPosition.top].
   final MacosTabPosition position;
+
+  /// The padding of the tab view widget.
+  ///
+  /// Defaults to `EdgeInsets.all(12.0)`.
+  final EdgeInsetsGeometry padding;
 
   @override
   State<MacosTabView> createState() => _MacosTabViewState();
@@ -153,7 +159,7 @@ class _MacosTabViewState extends State<MacosTabView> {
       alignment: Alignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: widget.padding,
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: brightness.resolve(
