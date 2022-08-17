@@ -1,3 +1,9 @@
+## [1.7.3]
+* Fixed an issue where the `title` property of `TitleBar` did not apply a fitting `DefaultTextStyle`
+
+## [1.7.2]
+* Add padding as parameter to MacosTabView constructor.
+
 ## [1.7.1]
 * Fixed an issue where end sidebar window breakpoints were not respected
 
