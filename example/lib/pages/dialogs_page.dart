@@ -164,7 +164,8 @@ class _DialogsPageState extends State<DialogsPage> {
                     onPressed: () {
                       showMacosSheet(
                         context: context,
-                        builder: (_) => const MacosuiSheet(),
+                        barrierDismissible: true,
+                        builder: (_) => const DemoSheet(),
                       );
                     },
                   ),
@@ -206,8 +207,8 @@ class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
   }
 }
 
-class MacosuiSheet extends StatelessWidget {
-  const MacosuiSheet({super.key});
+class DemoSheet extends StatelessWidget {
+  const DemoSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -227,34 +228,23 @@ class MacosuiSheet extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                MacosListTile(
-                  leading: MacosIcon(CupertinoIcons.lightbulb),
-                  title: Text(
-                    'A robust library of Flutter components for macOS',
-                    //style: MacosTheme.of(context).typography.headline,
-                  ),
-                  subtitle: Text(
-                    'Create native looking macOS applications using Flutter',
-                  ),
-                ),
-              ],
+            const MacosListTile(
+              leading: MacosIcon(CupertinoIcons.lightbulb),
+              title: Text(
+                'A robust library of Flutter components for macOS',
+                //style: MacosTheme.of(context).typography.headline,
+              ),
+              subtitle: Text(
+                'Create native looking macOS applications using Flutter',
+              ),
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                MacosListTile(
-                  leading: MacosIcon(CupertinoIcons.bolt),
-                  title: Text(
-                    'Create beautiful macOS applications in minutes',
-                    //style: MacosTheme.of(context).typography.headline,
-                  ),
-                ),
-                SizedBox(width: 10),
-              ],
+            const MacosListTile(
+              leading: MacosIcon(CupertinoIcons.bolt),
+              title: Text(
+                'Create beautiful macOS applications in minutes',
+                //style: MacosTheme.of(context).typography.headline,
+              ),
             ),
             const Spacer(),
             PushButton(
