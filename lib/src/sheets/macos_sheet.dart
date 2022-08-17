@@ -18,6 +18,7 @@ class MacosSheet extends StatelessWidget {
     this.insetPadding = _defaultInsetPadding,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
     this.insetAnimationCurve = Curves.decelerate,
+    this.backgroundColor,
   });
 
   /// The widget below this widget in the tree.
@@ -35,6 +36,17 @@ class MacosSheet extends StatelessWidget {
   /// The curve to use for the animation shown when the system keyboard intrudes
   /// into the space that the dialog is placed in.
   final Curve insetAnimationCurve;
+
+  /// The background color for this widget.
+  ///
+  /// Defaults to
+  /// ```dart
+  /// brightness.resolve(
+  ///   CupertinoColors.systemGrey6.color,
+  ///   MacosColors.controlBackgroundColor.darkColor,
+  /// )
+  /// ```
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +72,11 @@ class MacosSheet extends StatelessWidget {
       curve: insetAnimationCurve,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: brightness.resolve(
-            CupertinoColors.systemGrey6.color,
-            MacosColors.controlBackgroundColor.darkColor,
-          ),
+          color: backgroundColor ??
+              brightness.resolve(
+                CupertinoColors.systemGrey6.color,
+                MacosColors.controlBackgroundColor.darkColor,
+              ),
           borderRadius: _kSheetBorderRadius,
         ),
         child: Container(
