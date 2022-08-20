@@ -1,3 +1,6 @@
+## [1.7.4]
+* Added `backgroundColor` to `MacosSheet`
+
 ## [1.7.3]
 * Fixed an issue where the `title` property of `TitleBar` did not apply a fitting `DefaultTextStyle`
 
