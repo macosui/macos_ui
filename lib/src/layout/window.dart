@@ -187,12 +187,7 @@ class _MacosWindowState extends State<MacosWindow> {
         final layout = Stack(
           children: [
             // Background color
-            AnimatedPositioned(
-              curve: curve,
-              duration: duration,
-              height: height,
-              left: visibleSidebarWidth,
-              width: width,
+            SizedBox.expand(
               child: ColoredBox(color: backgroundColor),
             ),
 
