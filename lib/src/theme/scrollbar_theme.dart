@@ -252,7 +252,7 @@ class MacosScrollbarThemeData with Diagnosticable {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       thickness,
       hoveringThickness,
       showTrackOnHover,

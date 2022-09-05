@@ -1,3 +1,6 @@
+## [1.7.5]
+* Address Flutter 3.3 analyzer warnings
+
 ## [1.7.4]
 * Added `backgroundColor` to `MacosSheet`
 
