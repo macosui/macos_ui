@@ -107,7 +107,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
           ],
         ),
       ],
-      body: MacosWindow(
+      child: MacosWindow(
         sidebar: Sidebar(
           top: MacosSearchField(
             placeholder: 'Search',

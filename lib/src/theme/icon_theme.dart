@@ -205,7 +205,7 @@ class MacosIconThemeData with Diagnosticable {
   }
 
   @override
-  int get hashCode => hashValues(color, opacity, size);
+  int get hashCode => Object.hash(color, opacity, size);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
