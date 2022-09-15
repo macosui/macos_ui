@@ -1,3 +1,7 @@
+## [1.7.7]
+* Fixed a bug where transitioning from having `MacosWindow.sidebar` null to having an actual `Sidebar` instance
+would throw a null check error.
+
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
 
