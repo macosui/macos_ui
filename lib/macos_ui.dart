@@ -63,6 +63,7 @@ export 'src/selectors/color_well.dart';
 export 'src/selectors/date_picker.dart';
 export 'src/selectors/time_picker.dart';
 export 'src/sheets/macos_sheet.dart';
+export 'src/table/macos_table.dart';
 export 'src/theme/date_picker_theme.dart';
 export 'src/theme/help_button_theme.dart';
 export 'src/theme/icon_button_theme.dart';
