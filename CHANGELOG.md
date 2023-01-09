@@ -1,3 +1,6 @@
+## [1.7.7]
+* Added implementation of `MacosDisclosureButton`
+
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
 

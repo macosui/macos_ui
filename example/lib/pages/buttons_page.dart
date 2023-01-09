@@ -16,6 +16,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
   String popupValue = 'One';
   String languagePopupValue = 'English';
   bool switchValue = false;
+  bool isDisclosureButtonPressed = false;
   final _tabController = MacosTabController(initialIndex: 0, length: 3);
 
   @override
@@ -88,6 +89,23 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       MacosBackButton(
                         onPressed: () => debugPrint('click'),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosDisclosureButton'),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MacosDisclosureButton(
+                          isPressed: isDisclosureButtonPressed,
+                          onPressed: () {
+                            debugPrint('click');
+                            setState(() {
+                              isDisclosureButtonPressed =
+                                  !isDisclosureButtonPressed;
+                            });
+                          }),
                     ],
                   ),
                   const SizedBox(height: 20),
