@@ -183,6 +183,7 @@ class _MacosWindowState extends State<MacosWindow> {
         final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
         final visibleEndSidebarWidth =
             canShowEndSidebar ? _endSidebarWidth : 0.0;
+        print(constraints.maxHeight);
 
         final layout = Stack(
           children: [
@@ -219,8 +220,13 @@ class _MacosWindowState extends State<MacosWindow> {
                         SizedBox(height: widget.sidebar?.topOffset),
                       if (_sidebarScrollController.hasClients &&
                           _sidebarScrollController.offset > 0.0)
-                        Divider(thickness: 1, height: 1, color: dividerColor),
-                      if (widget.sidebar!.top != null)
+                        Divider(
+                          thickness: 1,
+                          height: 1,
+                          color: dividerColor,
+                        ),
+                      if (widget.sidebar!.top != null &&
+                          constraints.maxHeight > 81.0)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: widget.sidebar!.top!,
@@ -235,7 +241,8 @@ class _MacosWindowState extends State<MacosWindow> {
                           ),
                         ),
                       ),
-                      if (widget.sidebar?.bottom != null)
+                      if (widget.sidebar?.bottom != null &&
+                          constraints.maxHeight > 141.0)
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: widget.sidebar!.bottom!,
