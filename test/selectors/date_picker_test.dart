@@ -217,6 +217,7 @@ void main() {
       (tester) async {
         final today = DateTime.now();
         int selectedMonth = 0;
+        DateTime? selectedDate;
         await tester.pumpWidget(
           MacosApp(
             home: MacosWindow(
@@ -227,6 +228,7 @@ void main() {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {
+                            selectedDate = date;
                             selectedMonth = date.month;
                           },
                         ),
@@ -243,13 +245,26 @@ void main() {
         final rightControl = find.byType(MacosIcon).last;
         await tester.tap(leftControl);
         await tester.pumpAndSettle();
-        expect(selectedMonth, today.month - 1);
+        final diff = today.difference(selectedDate!);
+
+        // Account for going from January to December
+        if (today.month == 1) {
+          expect(today.subtract(diff).month, 12);
+        } else {
+          expect(selectedMonth, today.month - 1);
+        }
         await tester.tap(rightControl);
         await tester.pumpAndSettle();
         expect(selectedMonth, today.month);
         await tester.tap(rightControl);
         await tester.pumpAndSettle();
-        expect(selectedMonth, today.month + 1);
+
+        // Account for going from December to January
+        if (today.month == 12) {
+          expect(today.add(diff).month, 1);
+        } else {
+          expect(selectedMonth, today.month + 1);
+        }
       },
     );
   });

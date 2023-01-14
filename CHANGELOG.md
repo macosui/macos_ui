@@ -1,5 +1,8 @@
+## [1.7.6]
+* Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
+
 ## [1.7.5]
-* Address Flutter 3.3 analyzer warnings
+* Addressed Flutter 3.3 analyzer warnings
 
 ## [1.7.4]
 * Added `backgroundColor` to `MacosSheet`
@@ -8,7 +11,7 @@
 * Fixed an issue where the `title` property of `TitleBar` did not apply a fitting `DefaultTextStyle`
 
 ## [1.7.2]
-* Add padding as parameter to MacosTabView constructor.
+* Added padding as parameter to MacosTabView constructor.
 
 ## [1.7.1]
 * Fixed an issue where end sidebar window breakpoints were not respected

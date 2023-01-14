@@ -222,6 +222,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
         brightness.resolve(CupertinoColors.black, CupertinoColors.white);
 
     final itemsList = ListView.builder(
+      controller: widget.route.scrollController,
       itemCount: children.length,
       itemBuilder: (context, index) {
         return children[index];
