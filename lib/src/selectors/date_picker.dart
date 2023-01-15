@@ -43,6 +43,7 @@ class MacosDatePicker extends StatefulWidget {
     super.key,
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
+    this.initialDate,
   });
 
   /// The [DatePickerStyle] to use.
@@ -53,12 +54,18 @@ class MacosDatePicker extends StatefulWidget {
   /// {macro onDateChanged}
   final OnDateChanged onDateChanged;
 
+  /// Set an intial date for the picker.
+  /// Defaults to `DateTime.now()`.
+  final DateTime? initialDate;
+
   @override
   State<MacosDatePicker> createState() => _MacosDatePickerState();
 }
 
 class _MacosDatePickerState extends State<MacosDatePicker> {
-  final _initialDate = DateTime.now();
+  final _today = DateTime.now();
+  late final _initialDate = widget.initialDate ?? _today;
+
   late int _selectedDay;
   late int _selectedMonth;
   late int _selectedYear;
@@ -474,7 +481,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           DateTime(_selectedYear, _selectedMonth, _selectedDay),
           dayToBuild,
         );
-        final isToday = DateUtils.isSameDay(_initialDate, dayToBuild);
+        final isToday = DateUtils.isSameDay(_today, dayToBuild);
 
         BoxDecoration? decoration;
         Widget? dayText;
