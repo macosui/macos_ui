@@ -1,3 +1,6 @@
+## [1.7.7]
+* Add's optional `initialDate` to `MacosDatePicker`
+
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
 
@@ -18,20 +21,20 @@
 
 ## [1.7.0]
 * ✨ New
-  * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a 
+  * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a
 `MacosIconThemeData` instead of an `IconThemeData`
   * `SidebarItemSize` enum, which determines the height of sidebar items and the maximum size their `leading` widgets.
   * `SidebarItem` now accepts an optional `trailing` widget.
 * 🔄 Updated
-  * `SidebarItems` now supports `SidebarItemSize` via the `itemSize` property, which defaults to 
-`SidebarItemSize.medium`. The widget has been updated to manage the item's height, the maximum size of the item's 
+  * `SidebarItems` now supports `SidebarItemSize` via the `itemSize` property, which defaults to
+`SidebarItemSize.medium`. The widget has been updated to manage the item's height, the maximum size of the item's
 leading widget, and the font size of the item's label widget according to the given `SidebarItemSize`.
   * The example app has been tweaked to use some icons from the SF Symbols 4 Beta via the new `MacosImageIcon` widget.
 
 ## [1.6.0]
 * New widgets: `MacosTabView` and `MacosTabView`
 * BREAKING CHANGE: `Label.yAxis` has been renamed to `Label.crossAxisAlignment`
-* BREAKING CHANGE: `TooltipTheme` and `TooltipThemeData` have been renamed to `MacosTooltipTheme` and 
+* BREAKING CHANGE: `TooltipTheme` and `TooltipThemeData` have been renamed to `MacosTooltipTheme` and
 `MacosTooltipThemeData`
 
 ## [1.5.1]
@@ -48,14 +51,14 @@ leading widget, and the font size of the item's label widget according to the gi
 * Update `pubspec.yaml` with `repository` and new `homepage` field.
 
 ## [1.4.1]
-* Fixes an issue where if the app was displayed in full screen mode, an opaque empty toolbar would appear at the top [#249](https://github.com/GroovinChip/macos_ui/issues/249) 
-  
+* Fixes an issue where if the app was displayed in full screen mode, an opaque empty toolbar would appear at the top [#249](https://github.com/GroovinChip/macos_ui/issues/249)
+
 ## [1.4.0]
 * Migration to Flutter 3.0
   * Minimum dart sdk version is now 2.17.0
   * Use new super parameters feature
   * Update to `flutter_lints: ^2.0.1` with subsequent fixes
-  * `MacosScrollbar` API more closely matches its material counterpart 
+  * `MacosScrollbar` API more closely matches its material counterpart
 * Update `MacosColor` to more closely match the `Color` class
   * Adds `MacosColor.fromARGB` constructor
   * Adds `MacosColor.fromRGBO` constructor
@@ -70,7 +73,7 @@ leading widget, and the font size of the item's label widget according to the gi
 * Fix `MacosApp` documentation
 
 ## [1.2.1]
-* Fixes issue with error thrown when toolbar actions are modified programmatically [#239](https://github.com/GroovinChip/macos_ui/issues/239) 
+* Fixes issue with error thrown when toolbar actions are modified programmatically [#239](https://github.com/GroovinChip/macos_ui/issues/239)
 
 ## [1.2.0]
 * Improved styling for `MacosTooltip`:
@@ -128,7 +131,7 @@ leading widget, and the font size of the item's label widget according to the gi
 * Switch over to `flutter_lints`
 
 ## [0.12.4+1]
-* Improve visual design of `MacosPopupButton` and `MacosPulldownButton`, to better match the styling and translucency effect of Apple design. 
+* Improve visual design of `MacosPopupButton` and `MacosPulldownButton`, to better match the styling and translucency effect of Apple design.
 * Remove unnecessary properties of `MacosPopupButton`
 
 ## [0.12.4]
@@ -178,7 +181,7 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.10.0]
 * New widget - `MacosIcon`! `MacosIcon` is identical to regular icons, with the exception that it respects a `MacosTheme`. Also includes corresponding theme classes
-* `MacosThemeData` now sets a global, configurable `iconTheme` for `MacosIcon`s 
+* `MacosThemeData` now sets a global, configurable `iconTheme` for `MacosIcon`s
 
 ## [0.9.3]
 * Update to `PushButton`:
@@ -241,7 +244,7 @@ leading widget, and the font size of the item's label widget according to the gi
 ## [0.6.0]
 * Improved `MacosAlertDialog` design
 * Added `showMacosAlertDialog` to display a `MacosAlertDialog` with standard macOS animations and behaviour.
-  
+
 ## [0.5.2]
 * Fixes maximum height issue with `MacosAlertDialog`
 
@@ -356,11 +359,11 @@ leading widget, and the font size of the item's label widget according to the gi
 ## [0.0.4]
 * Major theme refactor that more closely resembles flutter/material and flutter/cupertino
   * The `Style` class is now `MacosThemeData`
-  * `MacosTheme` is now a `StatelessWidget` that returns a private `_InheritedMacosTheme`. 
+  * `MacosTheme` is now a `StatelessWidget` that returns a private `_InheritedMacosTheme`.
   The static `MacosTheme.of(context)` is now defined here.
-  * `MacosApp` now takes a `theme` and `darkTheme` rather than `style` and `darkStyle`. 
-  Additionally, there are minor changes to the way `MacosApp` is built that more closely 
-  resemble how `MaterialApp` is built. 
+  * `MacosApp` now takes a `theme` and `darkTheme` rather than `style` and `darkStyle`.
+  Additionally, there are minor changes to the way `MacosApp` is built that more closely
+  resemble how `MaterialApp` is built.
 
 ## [0.0.3]
 
