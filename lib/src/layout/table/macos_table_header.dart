@@ -5,24 +5,25 @@ import 'package:macos_ui/macos_ui.dart';
 class MacosTableHeader<T> extends StatelessWidget {
   const MacosTableHeader({
     super.key,
-    required this.colDefs,
-    required this.order,
+    required this.columnDefinitions,
+    required this.tableOrder,
     this.columnHeaderClicked,
   });
 
   static const double horizontalPadding = 10;
 
-  final List<ColumnDefinition<T>> colDefs;
+  final List<ColumnDefinition<T>> columnDefinitions;
   final Function(ColumnDefinition<T>)? columnHeaderClicked;
 
-  final MacosTableOrder<T>? order;
+  /// The order and direction with which the table is sorted.
+  final MacosTableOrder<T>? tableOrder;
 
   @override
   Widget build(BuildContext context) {
     return Table(
       columnWidths: [
         const FixedColumnWidth(horizontalPadding),
-        ...colDefs.map((colDef) => colDef.width),
+        ...columnDefinitions.map((colDef) => colDef.width),
         const FixedColumnWidth(horizontalPadding),
       ].asMap(),
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -30,10 +31,10 @@ class MacosTableHeader<T> extends StatelessWidget {
         TableRow(
           children: [
             const SizedBox.shrink(),
-            ...colDefs.asMap().keys.map((labelIndex) {
-              final colDef = colDefs[labelIndex];
+            ...columnDefinitions.asMap().keys.map((labelIndex) {
+              final colDef = columnDefinitions[labelIndex];
               final bool isOrderedByThisColumn =
-                  colDef.label == order?.column.label;
+                  colDef.label == tableOrder?.column.label;
               TextStyle labelStyle = MacosTheme.of(context).typography.headline;
               if (isOrderedByThisColumn) {
                 labelStyle = labelStyle.copyWith(fontWeight: FontWeight.w600);
@@ -48,7 +49,8 @@ class MacosTableHeader<T> extends StatelessWidget {
                           MacosColors.disabledControlTextColor.color,
                           MacosColors.disabledControlTextColor.darkColor,
                         ),
-                    up: order?.direction == MacosTableOrderDirection.ascending,
+                    up: tableOrder?.direction ==
+                        MacosTableOrderDirection.ascending,
                   ),
                 );
               }
@@ -64,7 +66,7 @@ class MacosTableHeader<T> extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
-                        right: (labelIndex == colDefs.length - 1)
+                        right: (labelIndex == columnDefinitions.length - 1)
                             ? BorderSide.none
                             : BorderSide(
                                 color: MacosTheme.of(context).dividerColor,

@@ -23,7 +23,7 @@ void main() {
       Person(firstName: "Charlie", lastName: "Brown", age: 15),
     ];
     final dataSource = MacosTableDataSource<Person>(
-      colDefs: [
+      columnDefinitions: [
         ColumnDefinition(
           label: "First Name",
           width: const FlexColumnWidth(),
@@ -45,7 +45,7 @@ void main() {
         key: ObjectKey(people[index]),
         value: people[index],
       ),
-      changeOrder: (order) {
+      changeTableOrder: (order) {
         return true;
       },
     );
@@ -63,22 +63,22 @@ void main() {
             ),
           ),
         );
-        expect(dataSource.order, null);
+        expect(dataSource.tableOrder, null);
         final firstNameColumnLabel = find.text("First Name");
         expect(firstNameColumnLabel, findsOneWidget);
         await tester.tap(firstNameColumnLabel);
         await tester.pump();
-        expect(dataSource.order?.column, dataSource.colDefs[0]);
+        expect(dataSource.tableOrder?.column, dataSource.columnDefinitions[0]);
         expect(
-          dataSource.order?.direction,
+          dataSource.tableOrder?.direction,
           MacosTableOrderDirection.descending,
         );
         // Reverse direction
         await tester.tap(firstNameColumnLabel);
         await tester.pump();
-        expect(dataSource.order?.column, dataSource.colDefs[0]);
+        expect(dataSource.tableOrder?.column, dataSource.columnDefinitions[0]);
         expect(
-          dataSource.order?.direction,
+          dataSource.tableOrder?.direction,
           MacosTableOrderDirection.ascending,
         );
       },

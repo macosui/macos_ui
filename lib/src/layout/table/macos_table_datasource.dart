@@ -15,14 +15,15 @@ class MacosTableValue<T> {
 
   /// A persistent identifier for this row.
   ///
-  /// If you select a row and change the data or order,
-  /// the key is how the table knows which row was selected.
+  /// The key allows the table to know which row is selected,
+  /// even after the order or data is changed.
   ///
-  /// If you never change the object instances displayed by the table,
-  /// use an `ObjectKey` of the value object.
-  /// Normally, this should be a ValueKey of some unique attribute of the row value.
-  /// If you never even change the order, you could also use a
-  /// ValueKey of the index.
+  /// If the object instances displayed by the table are never changed,
+  /// use an [ObjectKey] of the value object.
+  /// Normally, this should be a [ValueKey] of some unique attribute
+  /// of the row value.
+  /// If even the order is never changed a [ValueKey] of the index
+  /// would also suffice.
   final Key key;
 
   /// The row value.
@@ -31,17 +32,17 @@ class MacosTableValue<T> {
   final T value;
 }
 
-/// The state of a [MacosTableView].
+/// The state of a [MacosTable].
 ///
-/// Supplies the data to a [MacosTableView] and serves as a handle to execute
-/// operations on the table.
+/// Supplies the data to a [MacosTable] and serves as a handle to execute
+/// operations on it.
 class MacosTableDataSource<T> {
   MacosTableDataSource({
-    this.changeOrder,
-    required List<ColumnDefinition<T>> colDefs,
+    this.changeTableOrder,
+    required List<ColumnDefinition<T>> columnDefinitions,
     required this.getRowCount,
     required this.getRowValue,
-  })  : _colDefs = colDefs,
+  })  : _columnDefinitions = columnDefinitions,
         _rowCount = getRowCount();
 
   // Various streams to enable partial rebuilding using StreamBuilder
@@ -63,13 +64,13 @@ class MacosTableDataSource<T> {
   // TODO: Add functions to change columns (if possible with animations)
 
   /// Define which columns are shown.
-  final List<ColumnDefinition<T>> _colDefs;
-  List<ColumnDefinition<T>> get colDefs => _colDefs;
+  final List<ColumnDefinition<T>> _columnDefinitions;
+  List<ColumnDefinition<T>> get columnDefinitions => _columnDefinitions;
 
-  // By what column and in what direction the table is ordered.
-  MacosTableOrder<T>? order;
+  /// The order and direction with which the table is sorted.
+  MacosTableOrder<T>? tableOrder;
 
-  // Callback to update the row count.
+  /// Callback to update the row count.
   final int Function() getRowCount;
 
   /// The number of rows in the table.
@@ -79,8 +80,9 @@ class MacosTableDataSource<T> {
   int get rowCount => _rowCount;
 
   /// The main function through which data is fed into the table.
-  /// You need to maintain some order from index (between 0 and rowCount)
-  /// to rows.
+  ///
+  /// The rows need to be numbered (between 0 and rowCount - 1),
+  /// so that this function can return the value at some index.
   /// This function gets called when the row at a given index is rebuilt.
   final MacosTableValue<T> Function(int index) getRowValue;
 
@@ -89,37 +91,40 @@ class MacosTableDataSource<T> {
   /// Should either reject the order (by returning `false`),
   /// or change the order of items returned by [getRowValue] according to
   /// the given [MacosTableOrder].
-  final bool Function(MacosTableOrder<T>?)? changeOrder;
+  final bool Function(MacosTableOrder<T>?)? changeTableOrder;
 
   // TODO: Allow selecting multiple rows.
 
   /// The current selection of the table.
-  MacosTableSelection? _selection;
+  MacosTableSelection? _tableSelection;
 
   /// Change which rows are selected.
   ///
   /// Updates the internal selection and rebuilds
   /// the selected and previously selected rows.
   void select(MacosTableSelection? selection) {
-    final selectionChange = MacosTableSelectionChange(_selection, selection);
-    _selection = selection;
+    final selectionChange =
+        MacosTableSelectionChange(_tableSelection, selection);
+    _tableSelection = selection;
     _selectionChangedController.add(selectionChange);
   }
 
-  List<T> get selectedRows => _selection == null ? [] : [_selection!.value];
+  List<T> get selectedRows =>
+      _tableSelection == null ? [] : [_tableSelection!.row.value];
 
-  List<Key> get selectedKeys => _selection == null ? [] : [_selection!.key];
+  List<Key> get selectedKeys =>
+      _tableSelection == null ? [] : [_tableSelection!.row.key];
 
   /// Notify the view about a change in the table order.
   ///
   /// Emits an event in [onOrderChanged].
   _updateOrder() {
     // Call the callback first, so the actual data is reordered.
-    if (changeOrder != null) {
-      changeOrder!(order);
+    if (changeTableOrder != null) {
+      changeTableOrder!(tableOrder);
     }
     // Update the view through the [StreamBuilder] afterwards.
-    _orderChangedController.add(order);
+    _orderChangedController.add(tableOrder);
   }
 
   /// Notify the table about new or modified data.
@@ -135,12 +140,12 @@ class MacosTableDataSource<T> {
 
   /// Toggle between ascending and descending order.
   void reverseOrderDirection() {
-    order?.reverseDirection();
+    tableOrder?.reverseDirection();
     _updateOrder();
   }
 
   void orderBy(MacosTableOrder<T>? newOrder) {
-    order = newOrder;
+    tableOrder = newOrder;
     _updateOrder();
   }
 }

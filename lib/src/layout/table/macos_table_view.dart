@@ -5,8 +5,14 @@ import './macos_table_header.dart';
 import './macos_table_row.dart';
 import './macos_table_datasource.dart';
 
-/// A scrollable data table with sorting and selection.
+/// {@template macosTable}
+/// A scrollable data table which allows sorting by columns and row selection.
+/// Displays a set of values of some type `T`, each in one row.
+/// Data is provided and accessed through a [MacosTableDataSource],
+/// this widget simply serves as a view of such a data source.
+/// {@endtemplate}
 class MacosTable<T> extends StatelessWidget {
+  /// {@macro macosTable}
   const MacosTable({
     super.key,
     this.scrollController,
@@ -19,23 +25,27 @@ class MacosTable<T> extends StatelessWidget {
 
   /// Optionally override the scrollController.
   final ScrollController? scrollController;
+
+  /// The [MacosTableDataSource] providing the data displayed by this table.
   final MacosTableDataSource<T> dataSource;
 
   @override
   Widget build(BuildContext context) {
-    /// A map from column index to its TableColumnWidth.
+    /// A map from column index to its [TableColumnWidth].
     /// Every Table widget needs this, so it is created once and cached here.
-    final Map<int, TableColumnWidth> columnWidths =
-        dataSource.colDefs.map((colDef) => colDef.width).toList().asMap();
+    final Map<int, TableColumnWidth> columnWidths = dataSource.columnDefinitions
+        .map((colDef) => colDef.width)
+        .toList()
+        .asMap();
 
     return StreamBuilder<MacosTableOrder<T>?>(
-      initialData: dataSource.order,
+      initialData: dataSource.tableOrder,
       stream: dataSource.onOrderChanged,
       builder: (context, order) => Column(
         children: [
           MacosTableHeader<T>(
-            colDefs: dataSource.colDefs,
-            order: order.data,
+            columnDefinitions: dataSource.columnDefinitions,
+            tableOrder: order.data,
             columnHeaderClicked: (colDef) {
               if (colDef == order.data?.column) {
                 dataSource.reverseOrderDirection();
@@ -58,7 +68,7 @@ class MacosTable<T> extends StatelessWidget {
                     index: index,
                     rowHeight: rowHeight,
                     columnWidths: columnWidths,
-                    colDefs: dataSource.colDefs,
+                    columnDefinitions: dataSource.columnDefinitions,
                     row: dataSource.getRowValue(index),
                   );
                 },

@@ -4,49 +4,63 @@ import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/table/macos_table_selection.dart';
 
+/// A widget to display a single row inside a [MacosTable].
 class MacosTableRow<T> extends StatelessWidget {
   const MacosTableRow({
     super.key,
     required this.index,
     required this.columnWidths,
-    required this.colDefs,
+    required this.columnDefinitions,
     required this.row,
     required this.rowHeight,
     required this.data,
   }) : hasEvenRowHighlight = index % 2 == 1;
 
+  /// A map from column index to its [TableColumnWidth].
+  /// The same information is also contained in the [columnDefinitions],
+  /// but this is calculated once in the [MacosTable]
+  /// and reused here for performance reasons.
   final Map<int, TableColumnWidth> columnWidths;
-  final List<ColumnDefinition<T>> colDefs;
+
+  /// Definition of the columns of the table.
+  final List<ColumnDefinition<T>> columnDefinitions;
+
+  /// The value shown in this row.
   final MacosTableValue<T> row;
 
+  /// The height of this row.
   final double rowHeight;
 
+  /// All rows in a table are numbered, this is the index of this row.
+  /// Used to highlight every other row through [hasEvenRowHighlight].
   final int index;
 
+  /// The data source of the table this row is a part of.
   final MacosTableDataSource<T> data;
 
+  /// Whether this row has an even [index] and should be highlighted.
   final bool hasEvenRowHighlight;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        data.select(MacosTableSelection(key: row.key, value: row.value));
+        data.select(MacosTableSelection(row: row));
       },
       behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: StreamBuilder<MacosTableSelectionChange>(
           stream: data.onSelectionChanged.where((change) =>
-              change.oldSelection?.key == row.key ||
-              change.newSelection?.key == row.key),
+              change.oldSelection?.row.key == row.key ||
+              change.newSelection?.row.key == row.key),
           builder: (context, selection) {
             final bool isSelected = data.selectedKeys.contains(row.key);
             return _RowHighlight(
               hasEvenRowHighlight: hasEvenRowHighlight,
               isSelected: isSelected,
               columnWidths: columnWidths,
-              children: colDefs.map((colDef) {
+              children: columnDefinitions.map((colDef) {
                 final AlignmentGeometry alignmentGeometry =
                     (colDef.alignment == ColumnAlignment.start)
                         ? Alignment.centerLeft
@@ -81,9 +95,16 @@ class _RowHighlight extends StatelessWidget {
     required this.children,
   });
 
+  /// Whether this rows index is even and it should be highlighted.
   final bool hasEvenRowHighlight;
+
+  /// Whether this row is selected.
   final bool isSelected;
+
+  /// A map from column index to its [TableColumnWidth].
   final Map<int, TableColumnWidth> columnWidths;
+
+  /// The content for all of the rows cells.
   final List<Widget> children;
 
   @override
