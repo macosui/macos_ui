@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:macos_ui/src/table/macos_table_order.dart';
+import 'package:macos_ui/src/layout/table/macos_table_order.dart';
 import './macos_table_header.dart';
 import './macos_table_row.dart';
 import './macos_table_datasource.dart';

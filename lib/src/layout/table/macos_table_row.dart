@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/table/macos_table_selection.dart';
+import 'package:macos_ui/src/layout/table/macos_table_selection.dart';
 
 class MacosTableRow<T> extends StatelessWidget {
   const MacosTableRow({

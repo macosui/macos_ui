@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/table/macos_table_columns.dart';
-import 'package:macos_ui/src/table/macos_table_order.dart';
-import 'package:macos_ui/src/table/macos_table_selection.dart';
+import 'package:macos_ui/src/layout/table/macos_table_columns.dart';
+import 'package:macos_ui/src/layout/table/macos_table_order.dart';
+import 'package:macos_ui/src/layout/table/macos_table_selection.dart';
 
 /// A combination of a row [value] and a persistent identifier [key] for the row.
 @immutable
