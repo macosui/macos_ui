@@ -75,6 +75,7 @@ class MacosTableDataSource<T> {
   final int Function() getRowCount;
 
   /// The number of rows in the table.
+  ///
   /// Limits with which indices `getRow` is called.
   int _rowCount = 0;
 
@@ -130,8 +131,9 @@ class MacosTableDataSource<T> {
 
   /// Notify the table about new or modified data.
   ///
-  /// Call this after every data change you want to see,
-  /// if you don't call this function, the new data may not be shown.
+  /// Must be called after every data change. If it is not called, 
+  /// the updated data may not be shown.
+  ///
   /// Only call this function once after a series of data changes,
   /// since it causes most of the table to rebuild, which is expensive.
   dataChanged() {
