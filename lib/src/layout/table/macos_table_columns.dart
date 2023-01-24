@@ -28,6 +28,7 @@ class ColumnDefinition<T> {
   final ColumnAlignment alignment;
 
   /// The builder that creates the content of a cell.
+  ///
   /// Receives the current [BuildContext] and the row value.
   final Widget Function(BuildContext, T) cellBuilder;
 }

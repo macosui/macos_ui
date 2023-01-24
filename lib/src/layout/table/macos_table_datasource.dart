@@ -22,7 +22,8 @@ class MacosTableValue<T> {
   /// use an [ObjectKey] of the value object.
   /// Normally, this should be a [ValueKey] of some unique attribute
   /// of the row value.
-  /// If even the order is never changed a [ValueKey] of the index
+  ///
+  /// Even if the order is never changed, a [ValueKey] of the index
   /// would also suffice.
   final Key key;
 

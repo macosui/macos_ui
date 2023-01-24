@@ -32,6 +32,7 @@ class MacosTable<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// A map from column index to its [TableColumnWidth].
+    ///
     /// Every Table widget needs this, so it is created once and cached here.
     final Map<int, TableColumnWidth> columnWidths = dataSource.columnDefinitions
         .map((colDef) => colDef.width)
