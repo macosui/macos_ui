@@ -20,6 +20,7 @@ class ColumnDefinition<T> {
   final String label;
 
   /// The width of this column.
+  ///
   /// Usually either a [FlexColumnWidth] or a [FixedColumnWidth].
   final TableColumnWidth width;
 
