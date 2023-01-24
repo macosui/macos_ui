@@ -168,8 +168,8 @@ class MacosDisclosureButtonState extends State<MacosDisclosureButton>
                     decoration: BoxDecoration(
                       color: buttonHeldDown
                           ? brightness == Brightness.dark
-                              ? const Color(0xff3C383C)
-                              : const Color(0xffE5E5E5)
+                              ? const MacosColor(0xff3C383C)
+                              : const MacosColor(0xffE5E5E5)
                           : fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
