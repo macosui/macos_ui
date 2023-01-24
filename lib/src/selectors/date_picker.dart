@@ -54,7 +54,7 @@ class MacosDatePicker extends StatefulWidget {
   /// {macro onDateChanged}
   final OnDateChanged onDateChanged;
 
-  /// Set an intial date for the picker.
+  /// Set an initial date for the picker.
   ///
   /// Defaults to `DateTime.now()`.
   final DateTime? initialDate;
