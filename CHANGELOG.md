@@ -1,3 +1,6 @@
+## [1.7.6+1]
+* Ensure the color panel releases when it is closed
+
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
 
