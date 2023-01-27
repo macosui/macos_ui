@@ -27,8 +27,7 @@ class RecordedInvocation {
   String toString() => _describeInvocation(invocation);
 
   /// Converts [stack] to a string using the [FlutterError.defaultStackFilter] logic.
-  String stackToString({ String indent = '' }) {
-    assert(indent != null);
+  String stackToString({String indent = ''}) {
     return indent + FlutterError.defaultStackFilter(
       stack.toString().trimRight().split('\n'),
     ).join('\n$indent');
@@ -124,7 +123,6 @@ class TestRecordingPaintingContext extends ClipContext implements PaintingContex
     Clip clipBehavior = Clip.antiAlias,
     ClipRRectLayer? oldLayer,
   }) {
-    assert(clipBehavior != null);
     clipRRectAndPaint(clipRRect.shift(offset), clipBehavior, bounds.shift(offset), () => painter(this, offset));
     return null;
   }
