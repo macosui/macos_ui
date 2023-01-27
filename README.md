@@ -17,13 +17,23 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
 ## 🚨 Usage notes  
-pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
-specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
-Flutter supports, **but you will get best results on macOS**.
+> **Note:** Platform Compatibility
+> 
+> pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
+> specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
+> Flutter supports, **but you will get best results on macOS**.
+> 
+> The features of `macos_ui` that will _not_ work on platforms other than macOS due to calling native code are:
+> * The `MacosColors.controlAccentColor()` function
+> * The `MacosColorWell` widget
 
-The features of `macos_ui` that will _not_ work on platforms other than macOS due to calling native code are:
-* The `MacosColors.controlAccentColor()` function
-* The `MacosColorWell` widget
+> **Warning:** Popups & window resizing
+> 
+> Since at this time Flutter does not allow UI elements to overflow the bounds of the window, popups are constrained to
+> the available space.
+> 
+> Therefore, if you are using widgets that create popups in your toolbar, like `ToolBarPopupButton`, you 
+> should avoid allowing your application window to be resized below the height of your tallest popup.
 
 ## Contents
 
