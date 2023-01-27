@@ -17,7 +17,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
 ## 🚨 Usage notes  
-### Platform Compatibility
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
 
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
 specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
@@ -27,7 +27,7 @@ The features of `macos_ui` that will _not_ work on platforms other than macOS du
 * The `MacosColors.controlAccentColor()` function
 * The `MacosColorWell` widget
 
-### Popups & window resizing
+### <img src="https://imgur.com/TIP0V7H.png" height="14"/> Popups & window resizing
 
 Since at this time Flutter does not allow UI elements to overflow the bounds of the window, popups are constrained to
 the available space.
