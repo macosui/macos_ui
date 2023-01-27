@@ -1,5 +1,7 @@
-## [1.7.7]
+## [1.7.6+1]
+* Ensure the color panel releases when it is closed
 * Fixed a bug where `CapacityIndicator` did only work correctly for splits = 10
+
 
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views

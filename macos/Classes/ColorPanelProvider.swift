@@ -15,6 +15,7 @@ class ColorPanelProvider: NSObject, FlutterStreamHandler {
     colorPanel.setAction(#selector(startStream(colorPanel:)))
     colorPanel.makeKeyAndOrderFront(self)
     colorPanel.isContinuous = true
+    colorPanel.isReleasedWhenClosed = true
   }
   
   func setPickerMode(panelMode: String) {
