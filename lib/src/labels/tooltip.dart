@@ -170,7 +170,7 @@ class _MacosTooltipState extends State<MacosTooltip>
     final OverlayState overlayState = Overlay.of(
       context,
       debugRequiredFor: widget,
-    )!;
+    );
 
     final RenderBox box = context.findRenderObject()! as RenderBox;
     Offset target = box.localToGlobal(
@@ -256,7 +256,6 @@ class _MacosTooltipState extends State<MacosTooltip>
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
-    assert(Overlay.of(context, debugRequiredFor: widget) != null);
     final tooltipTheme = MacosTooltipTheme.of(context);
 
     height = tooltipTheme.height!;

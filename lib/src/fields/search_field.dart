@@ -241,7 +241,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
       }
       if (isResultExpanded) {
         _overlayEntry = _createOverlay();
-        Overlay.of(context)!.insert(_overlayEntry);
+        Overlay.of(context).insert(_overlayEntry);
       } else {
         _overlayEntry.remove();
       }

@@ -383,7 +383,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
           });
         });
       }
-      PageStorage.of(context)?.writeState(context, _isExpanded);
+      PageStorage.of(context).writeState(context, _isExpanded);
     });
     // widget.onExpansionChanged?.call(_isExpanded);
   }
