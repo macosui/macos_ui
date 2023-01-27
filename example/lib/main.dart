@@ -263,7 +263,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
           minWidth: 200,
           maxWidth: 300,
           shownByDefault: false,
-          builder: (context, scrollController) {
+          builder: (context, _) {
             return const Center(
               child: Text('End Sidebar'),
             );

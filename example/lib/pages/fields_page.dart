@@ -29,6 +29,7 @@ class _FieldsPageState extends State<FieldsPage> {
       children: [
         ContentArea(builder: (context, scrollController) {
           return SingleChildScrollView(
+            controller: scrollController,
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
