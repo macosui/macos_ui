@@ -59,27 +59,27 @@ void main() {
     );
   });
 
-testWidgets(
+  testWidgets(
     'CapacityIndicator paints the correct number of segments',
     (WidgetTester tester) async {
-    await tester.pumpWidget(
+      await tester.pumpWidget(
         const Directionality(
-        textDirection: TextDirection.ltr,
+          textDirection: TextDirection.ltr,
           child: Center(
-          child: SizedBox(
-            width: 200.0,
-            child: CapacityIndicator(
+            child: SizedBox(
+              width: 200.0,
+              child: CapacityIndicator(
                 value: 50,
                 splits: 20,
                 discrete: true,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
 
-    expect(
-      find.byType(CapacityIndicator),
+      expect(
+        find.byType(CapacityIndicator),
         // each discrete segment is drawn 3 times, two times with fill, last time with stroke
         paintsExactlyCountTimes(#drawRRect, 20 * 3),
       );
@@ -167,7 +167,6 @@ testWidgets(
             ),
           )
           ..translate(x: 20.0, y: 0.0)
-
           ..rrect(
             rrect: RRect.fromLTRBR(
               0.0,
