@@ -1,3 +1,6 @@
+## [1.8.0]
+* Update for Dart 2.19 / Flutter 3.7
+
 ## [1.7.6+1]
 * Ensure the color panel releases when it is closed
 
