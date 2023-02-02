@@ -291,6 +291,21 @@ class MacosColors {
     darkColor: Color.fromRGBO(26, 169, 255, 0.3),
   );
 
+  static const sliderThumbColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(255, 255, 255, 1),
+    darkColor: Color.fromRGBO(152, 152, 157, 1),
+  );
+
+  static const tickBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(220, 220, 220, 1),
+    darkColor: Color.fromRGBO(70, 70, 70, 1),
+  );
+
+  static const sliderBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(0, 0, 0, 0.1),
+    darkColor: Color.fromRGBO(255, 255, 255, 0.1),
+  );
+
   /// The accent color selected by the user in system preferences.
   ///
   /// No dark variant.
