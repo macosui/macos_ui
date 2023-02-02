@@ -853,7 +853,7 @@ A slider is a control that lets people select a value from a continuous or discr
 
  Continuous                                                                                                                                                         | Discrete                                                                                                                                                                                                         |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ![Continuous Slider Example](https://developer.apple.com/design/human-interface-guidelines/components/selection-and-input/sliders/images/sliders-no-tick-marks.png) | ![Discrete Slider Example](https://developer.apple.com/design/human-interface-guidelines/components/selection-and-input/sliders/images/sliders-tick-marks.png)                                                                                   |
+| ![Continuous Slider Example](https://i.imgur.com/dc4YjoX.png) | ![Discrete Slider Example](https://i.imgur.com/KckOTUf.png)                                                                                   |
 | A horizontal slider where any value continuous value between a min and max can be selected | A horizontal slider where only discrete values between a min and max can be selected. Tick marks are often displayed to provide context. |
 
 
