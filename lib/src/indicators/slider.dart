@@ -216,7 +216,7 @@ class MacosSlider extends StatelessWidget {
                         height: _kContinuousThumbSize,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: horizontalPadding),
+                              horizontal: horizontalPadding,),
                           child: _ContinuousThumb(
                             color:
                                 MacosDynamicColor.resolve(thumbColor, context),
@@ -230,7 +230,7 @@ class MacosSlider extends StatelessWidget {
                         height: _kContinuousThumbSize,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: horizontalPadding),
+                              horizontal: horizontalPadding,),
                           child: _DiscreteThumb(
                             color:
                                 MacosDynamicColor.resolve(thumbColor, context),
