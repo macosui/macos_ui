@@ -1,8 +1,18 @@
-## [1.8.0]
+## [1.9.0]
 * Implement `MacosSlider`
 
-## [1.7.6+1]
+## [1.8.0]
+🚨 Breaking Changes 🚨
+* `ContentArea.builder` has been changed from a `ScrollableWidgetBuilder` to a `WidgetBuilder` due to 
+changes in Flutter 3.7. The `MacosScrollBar` widget needs to undergo radical changes in order to achieve the
+native macOS scrollbar look and feel in the future, so this will be revisited at that time.
+
+Other changes
+* Per Flutter 3.7.0: Replace deprecated `MacosTextField.toolbarOptions` with `MacosTextField.contextMenuBuilder`
 * Ensure the color panel releases when it is closed
+* Avoid render overflows in the `Sidebar` when the window height is resized below a certain threshold ([#325](https://github.com/GroovinChip/macos_ui/issues/325))
+* Update `MacosScrollBar.thumbVisibility` with the latest change introduced in Flutter 3.7
+* Update `README.md` to address issues [#325](https://github.com/GroovinChip/macos_ui/issues/325) & [#332](https://github.com/GroovinChip/macos_ui/issues/332)
 
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
