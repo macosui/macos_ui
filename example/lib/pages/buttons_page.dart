@@ -70,9 +70,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
           },
         ),
         ContentArea(
-          builder: (context, scrollController) {
+          builder: (context) {
             return SingleChildScrollView(
-              controller: scrollController,
+              // controller: _,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
@@ -141,23 +141,22 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         buttonSize: ButtonSize.small,
                         child: const Text('Small'),
                         onPressed: () {
-                          Navigator.push(
-                            context,
+                          Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
                                   toolBar: const ToolBar(
-                                    title: Text("New page"),
+                                    title: Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
-                                      builder: (context, _) {
+                                      builder: (context) {
                                         return Center(
                                           child: PushButton(
                                             buttonSize: ButtonSize.large,
                                             child: const Text('Go Back'),
                                             onPressed: () {
-                                              Navigator.maybePop(context);
+                                              Navigator.of(context).maybePop();
                                             },
                                           ),
                                         );

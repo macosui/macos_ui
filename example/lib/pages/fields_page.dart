@@ -27,102 +27,104 @@ class _FieldsPageState extends State<FieldsPage> {
         ],
       ),
       children: [
-        ContentArea(builder: (context, scrollController) {
-          return SingleChildScrollView(
-            controller: scrollController,
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const SizedBox(
-                  width: 300.0,
-                  child: MacosTextField(
-                    placeholder: 'Type some text here',
-                    maxLines: 1,
+        ContentArea(
+          builder: (context) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    width: 300.0,
+                    child: MacosTextField(
+                      placeholder: 'Type some text here',
+                      maxLines: 1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                const SizedBox(
-                  width: 300.0,
-                  child: MacosTextField(
-                    prefix: MacosIcon(CupertinoIcons.money_dollar),
-                    placeholder: 'Type some text here',
+                  const SizedBox(height: 20),
+                  const SizedBox(
+                    width: 300.0,
+                    child: MacosTextField(
+                      prefix: MacosIcon(CupertinoIcons.money_dollar),
+                      placeholder: 'Type some text here',
 
-                    /// If both suffix and clear button mode is provided,
-                    /// suffix will override the clear button.
-                    // suffix: Text('SUFFIX'),
-                    clearButtonMode: OverlayVisibilityMode.always,
-                    maxLines: 1,
+                      /// If both suffix and clear button mode is provided,
+                      /// suffix will override the clear button.
+                      // suffix: Text('SUFFIX'),
+                      clearButtonMode: OverlayVisibilityMode.always,
+                      maxLines: 1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                const SizedBox(
-                  width: 300.0,
-                  child: MacosTextField.borderless(
-                    prefix: MacosIcon(CupertinoIcons.search),
-                    placeholder: 'Type some text here',
+                  const SizedBox(height: 20),
+                  const SizedBox(
+                    width: 300.0,
+                    child: MacosTextField.borderless(
+                      prefix: MacosIcon(CupertinoIcons.search),
+                      placeholder: 'Type some text here',
 
-                    /// If both suffix and clear button mode is provided,
-                    /// suffix will override the clear button.
-                    suffix: Text('SUFFIX'),
-                    // clearButtonMode: OverlayVisibilityMode.always,
-                    maxLines: 1,
+                      /// If both suffix and clear button mode is provided,
+                      /// suffix will override the clear button.
+                      suffix: Text('SUFFIX'),
+                      // clearButtonMode: OverlayVisibilityMode.always,
+                      maxLines: 1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                const SizedBox(
-                  width: 300.0,
-                  child: MacosTextField(
-                    enabled: false,
-                    prefix: MacosIcon(CupertinoIcons.search),
-                    placeholder: 'Disabled field',
+                  const SizedBox(height: 20),
+                  const SizedBox(
+                    width: 300.0,
+                    child: MacosTextField(
+                      enabled: false,
+                      prefix: MacosIcon(CupertinoIcons.search),
+                      placeholder: 'Disabled field',
 
-                    /// If both suffix and clear button mode is provided,
-                    /// suffix will override the clear button.
-                    // suffix: Text('SUFFIX'),
-                    clearButtonMode: OverlayVisibilityMode.always,
-                    maxLines: 1,
+                      /// If both suffix and clear button mode is provided,
+                      /// suffix will override the clear button.
+                      // suffix: Text('SUFFIX'),
+                      clearButtonMode: OverlayVisibilityMode.always,
+                      maxLines: 1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: 300.0,
-                  child: MacosSearchField(
-                    results: countries.map((e) => SearchResultItem(e)).toList(),
-                    placeholder: 'Search for a country...',
-                    onResultSelected: (resultItem) {
-                      // Retrieve the user-selected search suggestion via its
-                      // searchKey property.
-                      debugPrint(resultItem.searchKey);
-                    },
-                    onChanged: (searchQuery) => debugPrint(searchQuery),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 300.0,
+                    child: MacosSearchField(
+                      results:
+                          countries.map((e) => SearchResultItem(e)).toList(),
+                      placeholder: 'Search for a country...',
+                      onResultSelected: (resultItem) {
+                        // Retrieve the user-selected search suggestion via its
+                        // searchKey property.
+                        debugPrint(resultItem.searchKey);
+                      },
+                      onChanged: (searchQuery) => debugPrint(searchQuery),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: 300.0,
-                  // Example of search field with custom SearchResultItems
-                  // and height.
-                  child: MacosSearchField(
-                    results: actionResults,
-                    resultHeight: 40.0,
-                    emptyWidget: const Center(
-                        child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("No action found!"),
-                    )),
-                    placeholder: 'Search for an action...',
-                    onResultSelected: (resultItem) {
-                      // Retrieve the user-selected search suggestion via its
-                      // searchKey property.
-                      debugPrint(resultItem.searchKey);
-                    },
-                    onChanged: (searchQuery) => debugPrint(searchQuery),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 300.0,
+                    // Example of search field with custom SearchResultItems
+                    // and height.
+                    child: MacosSearchField(
+                      results: actionResults,
+                      resultHeight: 40.0,
+                      emptyWidget: const Center(
+                          child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("No action found!"),
+                      )),
+                      placeholder: 'Search for an action...',
+                      onResultSelected: (resultItem) {
+                        // Retrieve the user-selected search suggestion via its
+                        // searchKey property.
+                        debugPrint(resultItem.searchKey);
+                      },
+                      onChanged: (searchQuery) => debugPrint(searchQuery),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        }),
+                ],
+              ),
+            );
+          },
+        ),
         ResizablePane(
           minWidth: 180,
           startWidth: 200,

@@ -12,7 +12,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return StatefulBuilder(
                     builder: (context, setState) {
                       return MacosCheckbox(

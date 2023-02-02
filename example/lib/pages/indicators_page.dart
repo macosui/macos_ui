@@ -31,44 +31,45 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
         ],
       ),
       children: [
-        ContentArea(builder: (context, scrollController) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            controller: scrollController,
-            child: Column(
-              children: [
-                CapacityIndicator(
-                  value: sliderValue,
-                  onChanged: (v) => setState(() => sliderValue = v),
-                  discrete: true,
-                ),
-                const SizedBox(height: 20),
-                CapacityIndicator(
-                  value: sliderValue,
-                  onChanged: (v) => setState(() => sliderValue = v),
-                ),
-                const SizedBox(height: 20),
-                RatingIndicator(
-                  value: ratingValue,
-                  onChanged: (v) => setState(() => ratingValue = v),
-                ),
-                const SizedBox(height: 20),
-                const ProgressCircle(),
-                const SizedBox(height: 20),
-                const RelevanceIndicator(
-                  value: 25,
-                  amount: 50,
-                ),
-                const SizedBox(height: 20),
-                const Label(
-                  icon: MacosIcon(CupertinoIcons.tag),
-                  text: SelectableText('A determinate progress circle: '),
-                  child: ProgressCircle(value: 50),
-                ),
-              ],
-            ),
-          );
-        }),
+        ContentArea(
+          builder: (context) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  CapacityIndicator(
+                    value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
+                    discrete: true,
+                  ),
+                  const SizedBox(height: 20),
+                  CapacityIndicator(
+                    value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
+                  ),
+                  const SizedBox(height: 20),
+                  RatingIndicator(
+                    value: ratingValue,
+                    onChanged: (v) => setState(() => ratingValue = v),
+                  ),
+                  const SizedBox(height: 20),
+                  const ProgressCircle(),
+                  const SizedBox(height: 20),
+                  const RelevanceIndicator(
+                    value: 25,
+                    amount: 50,
+                  ),
+                  const SizedBox(height: 20),
+                  const Label(
+                    icon: MacosIcon(CupertinoIcons.tag),
+                    text: SelectableText('A determinate progress circle: '),
+                    child: ProgressCircle(value: 50),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ],
     );
   }
