@@ -19,7 +19,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return MacosIconButton(
                     icon: const Icon(CupertinoIcons.add),
                     onPressed: mockOnPressedFunction.handler,
@@ -48,7 +48,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return MacosIconButton(
                     key: iconButtonKey,
                     icon: const Icon(CupertinoIcons.add),

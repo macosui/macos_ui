@@ -17,6 +17,8 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
 ## 🚨 Usage notes  
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
+
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
 specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
 Flutter supports, **but you will get best results on macOS**.
@@ -24,6 +26,14 @@ Flutter supports, **but you will get best results on macOS**.
 The features of `macos_ui` that will _not_ work on platforms other than macOS due to calling native code are:
 * The `MacosColors.controlAccentColor()` function
 * The `MacosColorWell` widget
+
+### <img src="https://imgur.com/TIP0V7H.png" height="14"/> Popups & window resizing
+
+Since at this time Flutter does not allow UI elements to overflow the bounds of the window, popups are constrained to
+the available space.
+
+Therefore, if you are using widgets that create popups in your toolbar, like `ToolBarPopupButton`, you 
+should avoid allowing your application window to be resized below the height of your tallest popup.
 
 ## Contents
 
@@ -196,6 +206,7 @@ class BlurryContainerViewController: NSViewController {
     self.addChild(flutterViewController)
 
     flutterViewController.view.frame = self.view.bounds
++   flutterViewController.backgroundColor = .clear // **Required post-Flutter 3.7.0**
     flutterViewController.view.autoresizingMask = [.width, .height]
     self.view.addSubview(flutterViewController.view)
   }

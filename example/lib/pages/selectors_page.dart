@@ -28,8 +28,9 @@ class _SelectorsPageState extends State<SelectorsPage> {
       ),
       children: [
         ContentArea(
-          builder: (context, scrollController) {
+          builder: (context) {
             return SingleChildScrollView(
+              // controller: scrollController,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [

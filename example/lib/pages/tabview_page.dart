@@ -22,7 +22,7 @@ class _TabViewPageState extends State<TabViewPage> {
       ),
       children: [
         ContentArea(
-          builder: (context, scrollController) {
+          builder: (context) {
             return Padding(
               padding: const EdgeInsets.all(24.0),
               child: MacosTabView(
