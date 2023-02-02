@@ -1,3 +1,6 @@
+## [1.8.0]
+* Implement `MacosSlider`
+
 ## [1.7.6+1]
 * Ensure the color panel releases when it is closed
 
