@@ -148,13 +148,13 @@ class MacosSlider extends StatelessWidget {
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onHorizontalDragStart: (details) {
-                  _update(width, details.localPosition.dx);
+                  _update(width, details.localPosition.dx - horizontalPadding);
                 },
                 onHorizontalDragUpdate: (details) {
-                  _update(width, details.localPosition.dx);
+                  _update(width, details.localPosition.dx - horizontalPadding);
                 },
                 onTapDown: (details) {
-                  _update(width, details.localPosition.dx);
+                  _update(width, details.localPosition.dx - horizontalPadding);
                 },
                 child: Stack(
                   children: [
