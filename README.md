@@ -858,6 +858,29 @@ CapacityIndicator(
 
 You can set `discrete` to `true` to make it a discrete capacity indicator.
 
+### MacosSlider
+
+A slider is a control that lets people select a value from a continuous or discrete range of values by moving the slider thumb.
+
+ Continuous                                                                                                                                                         | Discrete                                                                                                                                                                                                         |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![Continuous Slider Example](https://i.imgur.com/dc4YjoX.png) | ![Discrete Slider Example](https://i.imgur.com/KckOTUf.png)                                                                                   |
+| A horizontal slider where any value continuous value between a min and max can be selected | A horizontal slider where only discrete values between a min and max can be selected. Tick marks are often displayed to provide context. |
+
+
+Here's an example of how to create an interactive continuous slider:
+
+```dart
+double value = 0.5;
+
+MacosSlider(
+  value: value,
+  onChanged: (v) {
+    setState(() => value = v);
+  },
+),
+```
+
 ### RatingIndicator
 
 A rating indicator uses a series of horizontally arranged graphical symbols to communicate a ranking level. The default 

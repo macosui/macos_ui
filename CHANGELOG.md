@@ -1,3 +1,6 @@
+## [1.9.0]
+* Implement `MacosSlider`
+
 ## [1.8.0]
 🚨 Breaking Changes 🚨
 * `ContentArea.builder` has been changed from a `ScrollableWidgetBuilder` to a `WidgetBuilder` due to 

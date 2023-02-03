@@ -11,7 +11,8 @@ class IndicatorsPage extends StatefulWidget {
 
 class _IndicatorsPageState extends State<IndicatorsPage> {
   double ratingValue = 0;
-  double sliderValue = 0;
+  double capacitorValue = 0;
+  double sliderValue = 0.3;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,17 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                   const SizedBox(height: 20),
                   CapacityIndicator(
                     value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
+                  ),
+                  const SizedBox(height: 20),
+                  MacosSlider(
+                    value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
+                  ),
+                  const SizedBox(height: 20),
+                  MacosSlider(
+                    value: sliderValue,
+                    discrete: true,
                     onChanged: (v) => setState(() => sliderValue = v),
                   ),
                   const SizedBox(height: 20),
