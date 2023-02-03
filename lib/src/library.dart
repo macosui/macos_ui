@@ -6,7 +6,8 @@ export 'package:flutter/cupertino.dart'
         createCupertinoColorProperty,
         cupertinoTextSelectionControls,
         DefaultCupertinoLocalizations,
-        cupertinoDesktopTextSelectionControls;
+        cupertinoDesktopTextSelectionControls,
+        CupertinoAdaptiveTextSelectionToolbar;
 export 'package:flutter/material.dart'
     show
         Brightness,

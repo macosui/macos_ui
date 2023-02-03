@@ -29,7 +29,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context) {
                     return Center(
                       child: SizedBox(
                         width: 300.0,

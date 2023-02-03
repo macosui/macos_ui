@@ -1,6 +1,6 @@
-flutter format --set-exit-if-changed .
+dart format --set-exit-if-changed .
 if [ $? -eq 1 ]; then
-  flutter format lib
+  dart format lib
   git add .
   git commit -m "chore: run flutter format ."
   echo "push changes? [y/n]"

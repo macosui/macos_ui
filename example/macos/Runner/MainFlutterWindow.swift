@@ -29,6 +29,7 @@ class BlurryContainerViewController: NSViewController {
     self.addChild(flutterViewController)
 
     flutterViewController.view.frame = self.view.bounds
+    flutterViewController.backgroundColor = .clear
     flutterViewController.view.autoresizingMask = [.width, .height]
     self.view.addSubview(flutterViewController.view)
   }

@@ -24,7 +24,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context) {
                     return HelpButton(
                       onPressed: mockOnPressedFunction.handler,
                     );
@@ -55,7 +55,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context) {
                     return HelpButton(
                       key: helpButtonKey,
                       onPressed: mockOnTapCancelFunction.handler,

@@ -23,7 +23,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return MacosListTile(
                     title: const Text('List Tile'),
                     onClick: mockOnPressedFunction.handler,
@@ -52,7 +52,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return MacosListTile(
                     title: const Text('List Tile'),
                     subtitle: const Text('Subtitle'),
