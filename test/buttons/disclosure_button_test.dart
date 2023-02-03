@@ -18,7 +18,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return MacosDisclosureButton(
                     onPressed: mockOnPressedFunction.handler,
                   );
