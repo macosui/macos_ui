@@ -16,7 +16,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
-## 🚨 Usage notes
+## 🚨 Usage notes  
 ### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
 
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 

@@ -6,7 +6,45 @@ import 'package:macos_ui/macos_ui.dart';
 void main() {
   group('MacosDatePicker tests', () {
     testWidgets(
-      'Textual MacosDatePicker renders the expected date',
+      'Textual MacosDatePicker renders the expected initial date',
+      (tester) async {
+        final initialDate = DateTime.now().add(const Duration(days: 30));
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context) {
+                      return Center(
+                        child: MacosDatePicker(
+                          onDateChanged: (date) {},
+                          initialDate: initialDate,
+                          style: DatePickerStyle.textual,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        expect(find.text('/'), findsNWidgets(2));
+        expect(find.text('${initialDate.year}'), findsOneWidget);
+        if (initialDate.month == initialDate.day) {
+          expect(find.text('${initialDate.day}'), findsNWidgets(2));
+          expect(find.text('${initialDate.month}'), findsNWidgets(2));
+        } else {
+          expect(find.text('${initialDate.day}'), findsOneWidget);
+          expect(find.text('${initialDate.month}'), findsOneWidget);
+        }
+      },
+    );
+
+    testWidgets(
+      "Textual MacosDatePicker renders the today's date by default",
       (tester) async {
         final today = DateTime.now();
         await tester.pumpWidget(
