@@ -50,8 +50,8 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                   ),
                   const SizedBox(height: 20),
                   MacosSlider(
-                  value: sliderValue,
-                  onChanged: (v) => setState(() => sliderValue = v),
+                    value: sliderValue,
+                    onChanged: (v) => setState(() => sliderValue = v),
                   ),
                   const SizedBox(height: 20),
                   MacosSlider(

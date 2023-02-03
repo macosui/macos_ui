@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 void main() {
+  final TestWidgetsFlutterBinding binding =
+      TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
     MacosSlider(
@@ -30,5 +33,82 @@ void main() {
         'semanticLabel: null',
       ],
     );
+  });
+
+  testWidgets('Continuous slider can move when tapped', (tester) async {
+    tester.binding.window.physicalSizeTestValue = const Size(100, 50);
+    binding.window.devicePixelRatioTestValue = 1.0;
+
+    final value = ValueNotifier<double>(0.25);
+    await tester.pumpWidget(
+      CupertinoApp(
+        home: Center(
+          child: MacosSlider(
+            value: value.value,
+            onChanged: (newValue) {
+              value.value = newValue;
+            },
+          ),
+        ),
+      ),
+    );
+
+    expect(value.value, 0.25);
+
+    // Tap on the right half of the slider.
+    await tester.tapAt(const Offset(50, 25));
+    await tester.pumpAndSettle();
+
+    expect(value.value, greaterThan(0.25));
+
+    await tester.tapAt(const Offset(0, 25));
+    await tester.pumpAndSettle();
+
+    expect(value.value, 0.0);
+    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+  });
+
+  testWidgets('Discrete slider snaps to correct values', (widgetTester) async {
+    widgetTester.binding.window.physicalSizeTestValue = const Size(100, 50);
+    binding.window.devicePixelRatioTestValue = 1.0;
+
+    final value = ValueNotifier<double>(0.25);
+    await widgetTester.pumpWidget(
+      CupertinoApp(
+        home: Center(
+          child: MacosSlider(
+            value: value.value,
+            onChanged: (newValue) {
+              value.value = newValue;
+            },
+            min: 0.0,
+            max: 1.0,
+            discrete: true,
+            splits: 3,
+          ),
+        ),
+      ),
+    );
+
+    expect(value.value, 0.25);
+
+    // Tap on the right half of the slider.
+    await widgetTester.tapAt(const Offset(50, 25));
+    await widgetTester.pumpAndSettle();
+
+    expect(value.value, 0.5);
+
+    await widgetTester.tapAt(const Offset(0, 25));
+    await widgetTester.pumpAndSettle();
+
+    expect(value.value, 0.0);
+
+    // Tap slightly to the right of the 0.5 mark.
+    await widgetTester.tapAt(const Offset(55, 25));
+    await widgetTester.pumpAndSettle();
+
+    expect(value.value, 0.5);
+
+    addTearDown(widgetTester.binding.window.clearPhysicalSizeTestValue);
   });
 }

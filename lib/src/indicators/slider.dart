@@ -13,14 +13,17 @@ const double _kTickHeight = 8.0;
 const double _kDiscreteThumbWidth = 6.0;
 const double _kDiscreteThumbBorderRadius = 8;
 
+/// {@template macosSlider}
 /// A slider is a horizontal track with a control, called a thumb,
 /// that people can adjust between a minimum and maximum value.
 ///
 /// The slider doesn't maintain any state itself, instead the user is expected to
 /// update this widget with a new [value] whenever the slider changes.
 ///
-/// ![Slider](https://developer.apple.com/design/human-interface-guidelines/images/intro/components/slider-intro-dark_2x.png
+/// ![Slider](https://developer.apple.com/design/human-interface-guidelines/images/intro/components/slider-intro-dark_2x.png)
+/// {@endtemplate}
 class MacosSlider extends StatelessWidget {
+  /// {@macro macosSlider}
   const MacosSlider({
     super.key,
     required this.value,
@@ -46,6 +49,12 @@ class MacosSlider extends StatelessWidget {
   /// Called whenever the value of the slider changes
   final ValueChanged<double> onChanged;
 
+  /// Whether the slider is discrete or continuous.
+  ///
+  /// Continuous sliders have a thumb that can be dragged anywhere along the track.
+  /// Discrete sliders have a thumb that can only be dragged to the tick marks.
+  ///
+  /// [splits] will only be considered if this is true.
   final bool discrete;
 
   /// The minimum value of this slider
@@ -216,7 +225,8 @@ class MacosSlider extends StatelessWidget {
                         height: _kContinuousThumbSize,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: horizontalPadding,),
+                            horizontal: horizontalPadding,
+                          ),
                           child: _ContinuousThumb(
                             color:
                                 MacosDynamicColor.resolve(thumbColor, context),
@@ -230,7 +240,8 @@ class MacosSlider extends StatelessWidget {
                         height: _kContinuousThumbSize,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: horizontalPadding,),
+                            horizontal: horizontalPadding,
+                          ),
                           child: _DiscreteThumb(
                             color:
                                 MacosDynamicColor.resolve(thumbColor, context),
