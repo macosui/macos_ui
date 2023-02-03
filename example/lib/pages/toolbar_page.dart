@@ -156,9 +156,8 @@ class _ToolbarPageState extends State<ToolbarPage> {
         ],
       ),
       children: [
-        ContentArea(builder: (context, scrollController) {
+        ContentArea(builder: (context) {
           return SingleChildScrollView(
-            controller: scrollController,
             padding: const EdgeInsets.all(30),
             child: Center(
               child: Column(

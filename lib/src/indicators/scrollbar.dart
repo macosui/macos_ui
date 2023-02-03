@@ -98,7 +98,9 @@ class MacosScrollbar extends StatelessWidget {
         crossAxisMargin: theme.crossAxisMargin,
         mainAxisMargin: theme.mainAxisMargin,
         interactive: theme.interactive,
-        thumbVisibility: m.MaterialStateProperty.resolveWith((states) => true),
+        thumbVisibility: m.MaterialStateProperty.resolveWith((states) {
+          return isAlwaysShown;
+        }),
         trackVisibility: m.MaterialStateProperty.resolveWith((states) {
           return trackVisibility;
         }),

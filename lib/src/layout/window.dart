@@ -220,7 +220,8 @@ class _MacosWindowState extends State<MacosWindow> {
                       if (_sidebarScrollController.hasClients &&
                           _sidebarScrollController.offset > 0.0)
                         Divider(thickness: 1, height: 1, color: dividerColor),
-                      if (widget.sidebar!.top != null)
+                      if (widget.sidebar!.top != null &&
+                          constraints.maxHeight < 81)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: widget.sidebar!.top!,
@@ -235,7 +236,8 @@ class _MacosWindowState extends State<MacosWindow> {
                           ),
                         ),
                       ),
-                      if (widget.sidebar?.bottom != null)
+                      if (widget.sidebar?.bottom != null &&
+                          constraints.maxHeight < 141)
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: widget.sidebar!.bottom!,
