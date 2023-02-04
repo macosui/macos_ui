@@ -1,3 +1,6 @@
+## [1.10.0]
+* Added implementation of `MacosDisclosureButton`
+
 ## [1.9.1]
 * Adds optional `initialDate` to `MacosDatePicker`
 
@@ -16,6 +19,7 @@ Other changes
 * Avoid render overflows in the `Sidebar` when the window height is resized below a certain threshold ([#325](https://github.com/GroovinChip/macos_ui/issues/325))
 * Update `MacosScrollBar.thumbVisibility` with the latest change introduced in Flutter 3.7
 * Update `README.md` to address issues [#325](https://github.com/GroovinChip/macos_ui/issues/325) & [#332](https://github.com/GroovinChip/macos_ui/issues/332)
+
 
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
