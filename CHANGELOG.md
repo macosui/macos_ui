@@ -1,8 +1,10 @@
 ## [1.10.0]
 🚨 Breaking Changes 🚨
-* `MacosScrollBar` has been completely overhauled and now resembles the native macOS scrollbar. Previously, it wrapped 
-the material scrollbar, and now creates a custom scrollbar that extends `RawScrollbar`. This allows 
-`ContentArea.builder` to return to being a `ScrollableWidgetBuilder`! 🎉
+* `MacosScrollbar` has been completely overhauled and now resembles the native macOS scrollbar in appearance and 
+behavior. Previously, it wrapped the material scrollbar, and now creates a custom scrollbar that extends 
+`RawScrollbar`. This resulted in the removal of several material-based properties for the scrollbar, and 
+`ContentArea.builder` is once again a `ScrollableWidgetBuilder`! 🎉
+* Removed material-based scrollbar properties from `MacosScrollbarThemeData`
 
 ## [1.9.1]
 * Adds optional `initialDate` to `MacosDatePicker`
@@ -13,14 +15,14 @@ the material scrollbar, and now creates a custom scrollbar that extends `RawScro
 ## [1.8.0]
 🚨 Breaking Changes 🚨
 * `ContentArea.builder` has been changed from a `ScrollableWidgetBuilder` to a `WidgetBuilder` due to
-changes in Flutter 3.7. The `MacosScrollBar` widget needs to undergo radical changes in order to achieve the
+changes in Flutter 3.7. The `MacosScrollbar` widget needs to undergo radical changes in order to achieve the
 native macOS scrollbar look and feel in the future, so this will be revisited at that time.
 
 Other changes
 * Per Flutter 3.7.0: Replace deprecated `MacosTextField.toolbarOptions` with `MacosTextField.contextMenuBuilder`
 * Ensure the color panel releases when it is closed
 * Avoid render overflows in the `Sidebar` when the window height is resized below a certain threshold ([#325](https://github.com/GroovinChip/macos_ui/issues/325))
-* Update `MacosScrollBar.thumbVisibility` with the latest change introduced in Flutter 3.7
+* Update `MacosScrollbar.thumbVisibility` with the latest change introduced in Flutter 3.7
 * Update `README.md` to address issues [#325](https://github.com/GroovinChip/macos_ui/issues/325) & [#332](https://github.com/GroovinChip/macos_ui/issues/332)
 
 ## [1.7.6]
@@ -244,7 +246,7 @@ leading widget, and the font size of the item's label widget according to the gi
 * Added `==` and `hashCode` to various classes
 
 ## [0.7.1]
-* Add generics support to `MacosRadioButton` - Thank you [Sacha Arbonel](https://github.com/sachaarbonel)!
+* Add generics support to `MacosRadioButton` - Thank you, [Sacha Arbonel](https://github.com/sachaarbonel)!
 
 ## [0.7.0+2]
 * Add note in docs that a `Builder` is required for manual sidebar toggling to work.
@@ -301,7 +303,7 @@ leading widget, and the font size of the item's label widget according to the gi
   * `Switch` -> `MacosSwitch`
 
 ## [0.2.4]
-* Fix textfield prefix icon alignment
+* Fix text field prefix icon alignment
 
 ## [0.2.3]
 * Add `canvasColor` to `MacosThemeData`. `Scaffold` now uses this as its default background color.
@@ -333,7 +335,7 @@ leading widget, and the font size of the item's label widget according to the gi
 * Updated the theme api
   * Properties in `MacosThemeData` and in `Typography` can't be null
   * Renamed `DynamicColorX` to `MacosDynamicColor`
-  * Added the method `lerp` on all theme datas.
+  * Added the method `lerp` on all theme data classes.
 
 ## [0.1.1]
 * Implemented `Label` ([#61](https://github.com/GroovinChip/macos_ui/issues/61))
