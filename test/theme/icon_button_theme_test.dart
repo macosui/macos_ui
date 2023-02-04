@@ -66,7 +66,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context) {
+                builder: (context, scrollController) {
                   capturedContext = context;
                   return MacosIconButton(
                     icon: const Icon(CupertinoIcons.add),

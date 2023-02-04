@@ -71,8 +71,8 @@ class MacosScrollbarThemeData with Diagnosticable {
   const MacosScrollbarThemeData({
     this.thickness,
     this.hoveringThickness,
-    this.showTrackOnHover,
-    this.isAlwaysShown,
+    this.thumbVisibility,
+    this.trackVisibility,
     this.radius,
     this.thumbColor,
     this.hoveringThumbColor,
@@ -95,13 +95,13 @@ class MacosScrollbarThemeData with Diagnosticable {
   /// descendant [MacosScrollbar] widgets when hovering is active.
   final double? hoveringThickness;
 
+  /// Overrides the default value of [MacosScrollbar.thumbVisibility] in all
+  /// descendant [MacosScrollbar] widgets.
+  final bool? thumbVisibility;
+
   /// Overrides the default value of [MacosScrollbar.trackVisibility] in all
   /// descendant [MacosScrollbar] widgets.
-  final bool? showTrackOnHover;
-
-  /// Overrides the default value of [MacosScrollbar.isAlwaysShown] in all
-  /// descendant [MacosScrollbar] widgets.
-  final bool? isAlwaysShown;
+  final bool? trackVisibility;
 
   /// Overrides the default value of [MacosScrollbar.interactive] in all
   /// descendant [MacosScrollbar] widgets.
@@ -176,7 +176,8 @@ class MacosScrollbarThemeData with Diagnosticable {
     double? thickness,
     double? hoveringThickness,
     bool? showTrackOnHover,
-    bool? isAlwaysShown,
+    bool? thumbVisibility,
+    bool? trackVisibility,
     bool? interactive,
     Radius? radius,
     Color? thumbColor,
@@ -193,8 +194,8 @@ class MacosScrollbarThemeData with Diagnosticable {
     return MacosScrollbarThemeData(
       thickness: thickness ?? this.thickness,
       hoveringThickness: hoveringThickness ?? this.hoveringThickness,
-      showTrackOnHover: showTrackOnHover ?? this.showTrackOnHover,
-      isAlwaysShown: isAlwaysShown ?? this.isAlwaysShown,
+      thumbVisibility: thumbVisibility ?? this.thumbVisibility,
+      trackVisibility: trackVisibility ?? this.trackVisibility,
       interactive: interactive ?? this.interactive,
       radius: radius ?? this.radius,
       thumbColor: thumbColor ?? this.thumbColor,
@@ -226,8 +227,8 @@ class MacosScrollbarThemeData with Diagnosticable {
       thickness: lerpDouble(a?.thickness, b?.thickness, t),
       hoveringThickness:
           lerpDouble(a?.hoveringThickness, b?.hoveringThickness, t),
-      showTrackOnHover: t < 0.5 ? a?.showTrackOnHover : b?.showTrackOnHover,
-      isAlwaysShown: t < 0.5 ? a?.isAlwaysShown : b?.isAlwaysShown,
+      thumbVisibility: t < 0.5 ? a?.thumbVisibility : b?.thumbVisibility,
+      trackVisibility: t < 0.5 ? a?.trackVisibility : b?.trackVisibility,
       interactive: t < 0.5 ? a?.interactive : b?.interactive,
       radius: Radius.lerp(a?.radius, b?.radius, t),
       thumbColor: Color.lerp(a?.thumbColor, b?.thumbColor, t),
@@ -255,8 +256,8 @@ class MacosScrollbarThemeData with Diagnosticable {
     return Object.hash(
       thickness,
       hoveringThickness,
-      showTrackOnHover,
-      isAlwaysShown,
+      thumbVisibility,
+      trackVisibility,
       interactive,
       radius,
       thumbColor,
@@ -279,8 +280,8 @@ class MacosScrollbarThemeData with Diagnosticable {
     return other is MacosScrollbarThemeData &&
         other.thickness == thickness &&
         other.hoveringThickness == hoveringThickness &&
-        other.showTrackOnHover == showTrackOnHover &&
-        other.isAlwaysShown == isAlwaysShown &&
+        other.thumbVisibility == thumbVisibility &&
+        other.trackVisibility == trackVisibility &&
         other.interactive == interactive &&
         other.radius == radius &&
         other.thumbColor == thumbColor &&
@@ -307,13 +308,13 @@ class MacosScrollbarThemeData with Diagnosticable {
       defaultValue: null,
     ));
     properties.add(DiagnosticsProperty<bool>(
-      'showTrackOnHover',
-      showTrackOnHover,
+      'thumbVisibility',
+      thumbVisibility,
       defaultValue: null,
     ));
     properties.add(DiagnosticsProperty<bool>(
-      'isAlwaysShown',
-      isAlwaysShown,
+      'trackVisibility',
+      trackVisibility,
       defaultValue: null,
     ));
     properties.add(
@@ -372,8 +373,7 @@ class MacosScrollbarThemeData with Diagnosticable {
     return copyWith(
       thickness: other.thickness,
       hoveringThickness: other.hoveringThickness,
-      showTrackOnHover: other.showTrackOnHover,
-      isAlwaysShown: other.isAlwaysShown,
+      thumbVisibility: other.thumbVisibility,
       interactive: other.interactive,
       radius: other.radius,
       thumbColor: other.thumbColor,

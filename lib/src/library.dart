@@ -27,7 +27,8 @@ export 'package:flutter/material.dart'
         kElevationToShadow,
         DateUtils,
         TimeOfDay,
-        DayPeriod;
+        DayPeriod,
+        MaterialState;
 export 'package:flutter/widgets.dart';
 
 export 'utils.dart';

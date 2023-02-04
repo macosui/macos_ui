@@ -1,6 +1,13 @@
-import 'package:flutter/material.dart' as m;
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
+
+const double _kScrollbarMinLength = 36.0;
+const double _kScrollbarMinOverscrollLength = 8.0;
+const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1200);
+const Duration _kScrollbarFadeDuration = Duration(milliseconds: 250);
+const Duration _kScrollbarResizeDuration = Duration(milliseconds: 100);
+const double _kScrollbarMainAxisMargin = 3.0;
+const double _kScrollbarCrossAxisMargin = 3.0;
 
 /// A Macos Design scrollbar.
 ///
@@ -43,12 +50,13 @@ class MacosScrollbar extends StatelessWidget {
     super.key,
     required this.child,
     this.controller,
-    this.isAlwaysShown,
+    this.thumbVisibility,
     this.trackVisibility,
     this.thickness,
     this.radius,
     this.notificationPredicate,
     this.interactive,
+    this.scrollbarOrientation,
   });
 
   /// {@macro flutter.widgets.Scrollbar.child}
@@ -57,8 +65,8 @@ class MacosScrollbar extends StatelessWidget {
   /// {@macro flutter.widgets.Scrollbar.controller}
   final ScrollController? controller;
 
-  /// {@macro flutter.widgets.Scrollbar.isAlwaysShown}
-  final bool? isAlwaysShown;
+  /// {@macro flutter.widgets.Scrollbar.thumbVisibility}
+  final bool? thumbVisibility;
 
   /// Controls if the track will always be visible or not.
   ///
@@ -89,60 +97,132 @@ class MacosScrollbar extends StatelessWidget {
   /// {@macro flutter.widgets.Scrollbar.notificationPredicate}
   final ScrollNotificationPredicate? notificationPredicate;
 
+  /// {@macro flutter.widgets.Scrollbar.scrollbarOrientation}
+  final ScrollbarOrientation? scrollbarOrientation;
+
+  /// Default value for [radius] if it's not specified in [CupertinoScrollbar].
+  static const Radius defaultRadius = Radius.circular(1.5);
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
-    final theme = MacosScrollbarTheme.of(context);
-    return m.ScrollbarTheme(
-      data: m.ScrollbarThemeData(
-        crossAxisMargin: theme.crossAxisMargin,
-        mainAxisMargin: theme.mainAxisMargin,
-        interactive: theme.interactive,
-        thumbVisibility: m.MaterialStateProperty.resolveWith((states) {
-          return isAlwaysShown;
-        }),
-        trackVisibility: m.MaterialStateProperty.resolveWith((states) {
-          return trackVisibility;
-        }),
-        minThumbLength: theme.minThumbLength,
-        radius: theme.radius,
-        thickness: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered)) {
-            return theme.hoveringThickness ?? theme.thickness;
-          }
-          return theme.thickness;
-        }),
-        thumbColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered)) {
-            return theme.hoveringThumbColor ?? theme.thumbColor;
-          } else if (states.contains(m.MaterialState.dragged)) {
-            return theme.draggingThumbColor ?? theme.thumbColor;
-          }
-          return theme.thumbColor;
-        }),
-        trackBorderColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered)) {
-            return theme.hoveringTrackBorderColor ?? theme.trackBorderColor;
-          }
-          return theme.trackBorderColor;
-        }),
-        trackColor: m.MaterialStateProperty.resolveWith((states) {
-          if (states.contains(m.MaterialState.hovered)) {
-            return theme.hoveringTrackColor ?? theme.trackColor;
-          }
-          return theme.trackColor;
-        }),
-      ),
-      child: m.Scrollbar(
-        controller: controller,
-        thumbVisibility: isAlwaysShown,
-        trackVisibility: trackVisibility,
-        thickness: thickness,
-        radius: radius,
-        interactive: interactive,
-        notificationPredicate: notificationPredicate,
-        child: child,
-      ),
+    final scrollbarTheme = MacosScrollbarTheme.of(context);
+
+    return _RawMacosScrollBar(
+      thumbVisibility: thumbVisibility ?? scrollbarTheme.thumbVisibility,
+      controller: controller,
+      notificationPredicate: notificationPredicate,
+      scrollbarOrientation: scrollbarOrientation,
+      effectiveThumbColor: scrollbarTheme.thumbColor!,
+      child: child,
     );
+  }
+}
+
+class _RawMacosScrollBar extends RawScrollbar {
+  const _RawMacosScrollBar({
+    // super.key,
+    required super.child,
+    super.controller,
+    bool? thumbVisibility,
+    double super.thickness = 6,
+    this.thicknessWhileDraggingOrHovering = 9,
+    ScrollNotificationPredicate? notificationPredicate,
+    super.scrollbarOrientation,
+    required this.effectiveThumbColor,
+  })  : assert(thickness < double.infinity),
+        assert(thicknessWhileDraggingOrHovering < double.infinity),
+        super(
+          thumbVisibility: thumbVisibility ?? false,
+          fadeDuration: _kScrollbarFadeDuration,
+          timeToFade: _kScrollbarTimeToFade,
+          notificationPredicate:
+              notificationPredicate ?? defaultScrollNotificationPredicate,
+        );
+
+  final double thicknessWhileDraggingOrHovering;
+  final Color effectiveThumbColor;
+
+  @override
+  RawScrollbarState<_RawMacosScrollBar> createState() =>
+      _RawMacosScrollBarState();
+}
+
+class _RawMacosScrollBarState extends RawScrollbarState<_RawMacosScrollBar> {
+  late AnimationController _thicknessAnimationController;
+  late AnimationController _colorAnimationController;
+  late Animation _colorTween;
+
+  double get _thickness {
+    return widget.thickness! +
+        _thicknessAnimationController.value *
+            (widget.thicknessWhileDraggingOrHovering - widget.thickness!);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _thicknessAnimationController = AnimationController(
+      vsync: this,
+      duration: _kScrollbarResizeDuration,
+    );
+    _colorAnimationController = AnimationController(
+      vsync: this,
+      duration: _kScrollbarResizeDuration,
+    );
+    _colorTween = ColorTween(
+      begin: MacosColors.transparent,
+      end: widget.effectiveThumbColor.withOpacity(.15),
+    ).animate(_colorAnimationController);
+    _thicknessAnimationController.addListener(() {
+      updateScrollbarPainter();
+    });
+    _colorAnimationController.addListener(() {
+      updateScrollbarPainter();
+    });
+  }
+
+  @override
+  void updateScrollbarPainter() {
+    scrollbarPainter
+      ..color = widget.effectiveThumbColor
+      ..trackColor = _colorTween.value
+      ..textDirection = Directionality.of(context)
+      ..thickness = _thickness
+      ..mainAxisMargin = _kScrollbarMainAxisMargin
+      ..crossAxisMargin = _kScrollbarCrossAxisMargin
+      ..radius = const Radius.circular(25)
+      ..padding = MediaQuery.of(context).padding
+      ..minLength = _kScrollbarMinLength
+      ..minOverscrollLength = _kScrollbarMinOverscrollLength
+      ..scrollbarOrientation = widget.scrollbarOrientation;
+  }
+
+  @override
+  void handleThumbPress() {
+    if (getScrollbarDirection() == null) {
+      return;
+    }
+    super.handleThumbPress();
+    _thicknessAnimationController.forward();
+    _colorAnimationController.forward();
+  }
+
+  @override
+  void handleThumbPressEnd(Offset localPosition, Velocity velocity) {
+    final Axis? direction = getScrollbarDirection();
+    if (direction == null) {
+      return;
+    }
+    _thicknessAnimationController.reverse();
+    _colorAnimationController.reverse();
+    super.handleThumbPressEnd(localPosition, velocity);
+  }
+
+  @override
+  void dispose() {
+    _thicknessAnimationController.dispose();
+    _colorAnimationController.dispose();
+    super.dispose();
   }
 }

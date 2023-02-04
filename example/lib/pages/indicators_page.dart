@@ -33,7 +33,7 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
       ),
       children: [
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(

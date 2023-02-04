@@ -1,3 +1,9 @@
+## [1.10.0]
+🚨 Breaking Changes 🚨
+* `MacosScrollBar` has been completely overhauled and now resembles the native macOS scrollbar. Previously, it wrapped 
+the material scrollbar, and now creates a custom scrollbar that extends `RawScrollbar`. This allows 
+`ContentArea.builder` to return to being a `ScrollableWidgetBuilder`! 🎉
+
 ## [1.9.1]
 * Adds optional `initialDate` to `MacosDatePicker`
 

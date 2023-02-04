@@ -381,6 +381,7 @@ class _MacosAppState extends State<MacosApp> {
         debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
         shortcuts: widget.shortcuts,
         actions: widget.actions,
+        scrollBehavior: widget.scrollBehavior,
       );
     }
     return c.CupertinoApp(
@@ -409,6 +410,7 @@ class _MacosAppState extends State<MacosApp> {
       debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
       shortcuts: widget.shortcuts,
       actions: widget.actions,
+      scrollBehavior: widget.scrollBehavior,
     );
   }
 }
@@ -427,6 +429,11 @@ class MacosScrollBehavior extends ScrollBehavior {
   /// Creates a MacosScrollBehavior that decorates [Scrollable]s with
   /// [MacosScrollbar]s based on the current platform and provided [ScrollableDetails].
   const MacosScrollBehavior();
+
+  /*@override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.mouse,
+  };*/
 
   @override
   Widget buildScrollbar(context, child, details) {
