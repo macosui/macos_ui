@@ -15,6 +15,9 @@ class MacosDisclosureButton extends StatefulWidget {
     this.onPressed,
   });
 
+  /// The callback that is called when the button is tapped.
+  ///
+  /// If this is set to null, the button will be disabled.
   final VoidCallback? onPressed;
 
   /// The color to fill the space around the icon with.
@@ -26,10 +29,13 @@ class MacosDisclosureButton extends StatefulWidget {
   /// The mouse cursor to use when hovering over this widget.
   final MouseCursor? mouseCursor;
 
+  /// Whether the button is in the active state (chevron pointing up)
+  /// or inactive state (chevron pointing down).
   final bool isPressed;
 
-  /// Whether the button is enabled or disabled. Buttons are disabled by default. To
-  /// enable a button, set its [onPressed] property to a non-null value.
+  /// Whether the button is enabled or disabled. Buttons are disabled by default.
+  ///
+  /// To enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
 
   @override
