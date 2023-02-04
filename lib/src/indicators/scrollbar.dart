@@ -7,55 +7,44 @@ const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1200);
 const Duration _kScrollbarFadeDuration = Duration(milliseconds: 250);
 const Duration _kScrollbarResizeDuration = Duration(milliseconds: 100);
 const double _kScrollbarMainAxisMargin = 3.0;
-const double _kScrollbarCrossAxisMargin = 3.0;
+const double _kScrollbarCrossAxisMargin = 2.0;
 
-/// A Macos Design scrollbar.
+/// A macOS-style scrollbar.
 ///
-/// To add a scrollbar to a [ScrollView], wrap the scroll view
+/// Applications built with `macos_ui` will automatically apply this widget
+/// to [ScrollView]s as the default scrollbar.
+///
+/// To explicitly add a scrollbar to a [ScrollView], wrap the scroll view
 /// widget in a [MacosScrollbar] widget.
 ///
 /// {@macro flutter.widgets.Scrollbar}
 ///
-/// The color of the Scrollbar will change when dragged. A hover animation is
-/// also triggered when used on web and desktop platforms. A scrollbar track
-/// can also been drawn when triggered by a hover event, which is controlled by
-/// [trackVisibility]. The thickness of the track and scrollbar thumb will
-/// become larger when hovering, unless overridden by [hoverThickness].
-///
 /// See also:
 ///
 ///  * [RawScrollbar], a basic scrollbar that fades in and out, extended
-///    by this class to add more animations and behaviors.
-///  * [MacosScrollbarTheme], which configures the Scrollbar's appearance.
-///  * [m.Scrollbar], a Material style scrollbar.
+///    by this class internally to add animations and behaviors that aim to
+///    match the native macOS scrollbar.
+///  * [MacosScrollbarTheme], which configures this widget's appearance.
+///  * [Scrollbar], a Material style scrollbar.
 ///  * [CupertinoScrollbar], an iOS style scrollbar.
-///  * [ListView], which displays a linear, scrollable list of children.
-///  * [GridView], which displays a 2 dimensional, scrollable array of children.
 class MacosScrollbar extends StatelessWidget {
-  /// Creates a macos design scrollbar that by default will connect to the
-  /// closest Scrollable descendent of [child].
+  /// Creates a macOS-style scrollbar that by default will connect to the
+  /// closest Scrollable descendant of [child].
   ///
   /// The [child] should be a source of [ScrollNotification] notifications,
   /// typically a [Scrollable] widget.
   ///
   /// If the [controller] is null, the default behavior is to
   /// enable scrollbar dragging using the [PrimaryScrollController].
-  ///
-  /// When null, [thickness] defaults to 8.0 pixels on desktop and web, and 4.0
-  /// pixels when on mobile platforms. A null [radius] will result in a default
-  /// of an 8.0 pixel circular radius about the corners of the scrollbar thumb,
-  /// except for when executing on [TargetPlatform.android], which will render the
-  /// thumb without a radius.
   const MacosScrollbar({
     super.key,
     required this.child,
     this.controller,
     this.thumbVisibility,
-    this.trackVisibility,
-    this.thickness,
-    this.radius,
+    this.thickness = 6,
+    this.thicknessWhileDraggingOrHovering = 9,
+    this.radius = const Radius.circular(25),
     this.notificationPredicate,
-    this.interactive,
     this.scrollbarOrientation,
   });
 
@@ -68,31 +57,21 @@ class MacosScrollbar extends StatelessWidget {
   /// {@macro flutter.widgets.Scrollbar.thumbVisibility}
   final bool? thumbVisibility;
 
-  /// Controls if the track will always be visible or not.
-  ///
-  /// If this property is null, then [MacosScrollbarThemeData.showTrackOnHover] of
-  /// [MacosThemeData.scrollbarTheme] is used. If that is also null, the default value
-  /// is false.
-  final bool? trackVisibility;
-
   /// The thickness of the scrollbar in the cross axis of the scrollable.
   ///
-  /// If null, the default value is platform dependent. On [TargetPlatform.android],
-  /// the default thickness is 4.0 pixels. On [TargetPlatform.iOS],
-  /// [CupertinoScrollbar.defaultThickness] is used. The remaining platforms have a
-  /// default thickness of 8.0 pixels.
-  final double? thickness;
+  /// Defaults to 6.
+  final double thickness;
+
+  /// The thickness of the scrollbar in the cross axis of the scrollable while
+  /// the mouse cursor is hovering over and/or dragging the scrollbar.
+  ///
+  /// Defaults to 9.
+  final double thicknessWhileDraggingOrHovering;
 
   /// The [Radius] of the scrollbar thumb's rounded rectangle corners.
   ///
-  /// If null, the default value is platform dependent. On [TargetPlatform.android],
-  /// no radius is applied to the scrollbar thumb. On [TargetPlatform.iOS],
-  /// [CupertinoScrollbar.defaultRadius] is used. The remaining platforms have a
-  /// default [Radius.circular] of 8.0 pixels.
+  /// Defaults to `const Radius.circular(25)`.
   final Radius? radius;
-
-  /// {@macro flutter.widgets.Scrollbar.interactive}
-  final bool? interactive;
 
   /// {@macro flutter.widgets.Scrollbar.notificationPredicate}
   final ScrollNotificationPredicate? notificationPredicate;
@@ -100,20 +79,20 @@ class MacosScrollbar extends StatelessWidget {
   /// {@macro flutter.widgets.Scrollbar.scrollbarOrientation}
   final ScrollbarOrientation? scrollbarOrientation;
 
-  /// Default value for [radius] if it's not specified in [CupertinoScrollbar].
-  static const Radius defaultRadius = Radius.circular(1.5);
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final scrollbarTheme = MacosScrollbarTheme.of(context);
 
     return _RawMacosScrollBar(
-      thumbVisibility: thumbVisibility ?? scrollbarTheme.thumbVisibility,
       controller: controller,
+      thumbVisibility: thumbVisibility ?? scrollbarTheme.thumbVisibility,
+      thickness: thickness,
+      thicknessWhileDraggingOrHovering: thicknessWhileDraggingOrHovering,
       notificationPredicate: notificationPredicate,
       scrollbarOrientation: scrollbarOrientation,
       effectiveThumbColor: scrollbarTheme.thumbColor!,
+      radius: radius,
       child: child,
     );
   }
@@ -121,16 +100,16 @@ class MacosScrollbar extends StatelessWidget {
 
 class _RawMacosScrollBar extends RawScrollbar {
   const _RawMacosScrollBar({
-    // super.key,
     required super.child,
     super.controller,
     bool? thumbVisibility,
-    double super.thickness = 6,
+    super.thickness,
     this.thicknessWhileDraggingOrHovering = 9,
     ScrollNotificationPredicate? notificationPredicate,
     super.scrollbarOrientation,
     required this.effectiveThumbColor,
-  })  : assert(thickness < double.infinity),
+    super.radius,
+  })  : assert(thickness != null && thickness < double.infinity),
         assert(thicknessWhileDraggingOrHovering < double.infinity),
         super(
           thumbVisibility: thumbVisibility ?? false,
@@ -191,7 +170,7 @@ class _RawMacosScrollBarState extends RawScrollbarState<_RawMacosScrollBar> {
       ..thickness = _thickness
       ..mainAxisMargin = _kScrollbarMainAxisMargin
       ..crossAxisMargin = _kScrollbarCrossAxisMargin
-      ..radius = const Radius.circular(25)
+      ..radius = widget.radius
       ..padding = MediaQuery.of(context).padding
       ..minLength = _kScrollbarMinLength
       ..minOverscrollLength = _kScrollbarMinOverscrollLength

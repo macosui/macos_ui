@@ -53,21 +53,11 @@ void main() {
 }
 
 final _scrollbarThemeData = MacosScrollbarThemeData(
-  draggingThumbColor: Colors.grey.shade600,
-  hoveringThumbColor: Colors.grey.shade600,
-  hoveringTrackBorderColor: Colors.grey.shade600,
-  hoveringTrackColor: Colors.grey.shade600,
   thumbColor: Colors.grey.shade600,
-  trackBorderColor: Colors.grey.shade600,
   trackColor: Colors.grey.shade600,
 );
 
 final _scrollbarThemeDataDark = MacosScrollbarThemeData(
-  draggingThumbColor: Colors.grey.shade300,
-  hoveringThumbColor: Colors.grey.shade300,
-  hoveringTrackBorderColor: Colors.grey.shade300,
-  hoveringTrackColor: Colors.grey.shade300,
   thumbColor: Colors.grey.shade300,
-  trackBorderColor: Colors.grey.shade300,
   trackColor: Colors.grey.shade300,
 );
