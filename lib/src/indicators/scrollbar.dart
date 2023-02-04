@@ -41,9 +41,9 @@ class MacosScrollbar extends StatelessWidget {
     required this.child,
     this.controller,
     this.thumbVisibility,
-    this.thickness = 6,
-    this.thicknessWhileDraggingOrHovering = 9,
-    this.radius = const Radius.circular(25),
+    this.thickness,
+    this.thicknessWhileDraggingOrHovering,
+    this.radius,
     this.notificationPredicate,
     this.scrollbarOrientation,
   });
@@ -59,14 +59,14 @@ class MacosScrollbar extends StatelessWidget {
 
   /// The thickness of the scrollbar in the cross axis of the scrollable.
   ///
-  /// Defaults to 6.
-  final double thickness;
+  /// Defaults to 6.0.
+  final double? thickness;
 
   /// The thickness of the scrollbar in the cross axis of the scrollable while
   /// the mouse cursor is hovering over and/or dragging the scrollbar.
   ///
-  /// Defaults to 9.
-  final double thicknessWhileDraggingOrHovering;
+  /// Defaults to 9.0.
+  final double? thicknessWhileDraggingOrHovering;
 
   /// The [Radius] of the scrollbar thumb's rounded rectangle corners.
   ///
@@ -83,16 +83,19 @@ class MacosScrollbar extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final scrollbarTheme = MacosScrollbarTheme.of(context);
+    assert(scrollbarTheme.thickness != null);
+    assert(scrollbarTheme.thicknessWhileDraggingOrHovering != null);
 
     return _RawMacosScrollBar(
       controller: controller,
       thumbVisibility: thumbVisibility ?? scrollbarTheme.thumbVisibility,
-      thickness: thickness,
-      thicknessWhileDraggingOrHovering: thicknessWhileDraggingOrHovering,
+      thickness: thickness ?? scrollbarTheme.thickness,
+      thicknessWhileDraggingOrHovering: thicknessWhileDraggingOrHovering ??
+          scrollbarTheme.thicknessWhileDraggingOrHovering!,
       notificationPredicate: notificationPredicate,
       scrollbarOrientation: scrollbarOrientation,
       effectiveThumbColor: scrollbarTheme.thumbColor!,
-      radius: radius,
+      radius: radius ?? scrollbarTheme.radius,
       child: child,
     );
   }
@@ -104,7 +107,7 @@ class _RawMacosScrollBar extends RawScrollbar {
     super.controller,
     bool? thumbVisibility,
     super.thickness,
-    this.thicknessWhileDraggingOrHovering = 9,
+    required this.thicknessWhileDraggingOrHovering,
     ScrollNotificationPredicate? notificationPredicate,
     super.scrollbarOrientation,
     required this.effectiveThumbColor,

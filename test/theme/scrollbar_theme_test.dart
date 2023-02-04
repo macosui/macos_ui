@@ -54,10 +54,8 @@ void main() {
 
 final _scrollbarThemeData = MacosScrollbarThemeData(
   thumbColor: Colors.grey.shade600,
-  trackColor: Colors.grey.shade600,
 );
 
 final _scrollbarThemeDataDark = MacosScrollbarThemeData(
   thumbColor: Colors.grey.shade300,
-  trackColor: Colors.grey.shade300,
 );

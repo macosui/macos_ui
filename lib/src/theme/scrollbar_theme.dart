@@ -74,7 +74,6 @@ class MacosScrollbarThemeData with Diagnosticable {
     this.thumbVisibility,
     this.radius,
     this.thumbColor,
-    this.trackColor,
   });
 
   /// Overrides the default value of [MacosScrollbar.thickness] in all
@@ -97,10 +96,6 @@ class MacosScrollbarThemeData with Diagnosticable {
   /// descendant [MacosScrollbar] widgets.
   final Color? thumbColor;
 
-  /// Overrides the default [Color] of the [MacosScrollbar] track when
-  /// [showTrackOnHover] is true in all descendant [MacosScrollbar] widgets.
-  final Color? trackColor;
-
   /// Creates a copy of this object with the given fields replaced with the
   /// new values.
   MacosScrollbarThemeData copyWith({
@@ -110,7 +105,6 @@ class MacosScrollbarThemeData with Diagnosticable {
     bool? thumbVisibility,
     Radius? radius,
     Color? thumbColor,
-    Color? trackColor,
   }) {
     return MacosScrollbarThemeData(
       thickness: thickness ?? this.thickness,
@@ -119,7 +113,6 @@ class MacosScrollbarThemeData with Diagnosticable {
       thumbVisibility: thumbVisibility ?? this.thumbVisibility,
       radius: radius ?? this.radius,
       thumbColor: thumbColor ?? this.thumbColor,
-      trackColor: trackColor ?? this.trackColor,
     );
   }
 
@@ -144,7 +137,6 @@ class MacosScrollbarThemeData with Diagnosticable {
       thumbVisibility: t < 0.5 ? a?.thumbVisibility : b?.thumbVisibility,
       radius: Radius.lerp(a?.radius, b?.radius, t),
       thumbColor: Color.lerp(a?.thumbColor, b?.thumbColor, t),
-      trackColor: Color.lerp(a?.trackColor, b?.trackColor, t),
     );
   }
 
@@ -156,7 +148,6 @@ class MacosScrollbarThemeData with Diagnosticable {
       thumbVisibility: other.thumbVisibility,
       radius: other.radius,
       thumbColor: other.thumbColor,
-      trackColor: other.trackColor,
     );
   }
 
@@ -168,7 +159,6 @@ class MacosScrollbarThemeData with Diagnosticable {
       thumbVisibility,
       radius,
       thumbColor,
-      trackColor,
     );
   }
 
@@ -182,8 +172,7 @@ class MacosScrollbarThemeData with Diagnosticable {
             thicknessWhileDraggingOrHovering &&
         other.thumbVisibility == thumbVisibility &&
         other.radius == radius &&
-        other.thumbColor == thumbColor &&
-        other.trackColor == trackColor;
+        other.thumbColor == thumbColor;
   }
 
   @override
@@ -206,6 +195,5 @@ class MacosScrollbarThemeData with Diagnosticable {
       DiagnosticsProperty<Radius>('radius', radius, defaultValue: null),
     );
     properties.add(ColorProperty('thumbColor', thumbColor, defaultValue: null));
-    properties.add(ColorProperty('trackColor', trackColor, defaultValue: null));
   }
 }
