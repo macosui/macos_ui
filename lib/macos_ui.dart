@@ -16,6 +16,7 @@ library macos_ui;
 
 export 'src/buttons/back_button.dart';
 export 'src/buttons/checkbox.dart';
+export 'src/buttons/disclosure_button.dart';
 export 'src/buttons/help_button.dart';
 export 'src/buttons/icon_button.dart';
 export 'src/buttons/popup_button.dart';
@@ -37,6 +38,7 @@ export 'src/indicators/progress_indicators.dart';
 export 'src/indicators/rating_indicator.dart';
 export 'src/indicators/relevance_indicator.dart';
 export 'src/indicators/scrollbar.dart';
+export 'src/indicators/slider.dart';
 export 'src/labels/label.dart';
 export 'src/labels/tooltip.dart';
 export 'src/layout/content_area.dart';

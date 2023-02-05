@@ -12,7 +12,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context) {
                   return Center(
                     child: MacosTextField(
                       controller: controller,

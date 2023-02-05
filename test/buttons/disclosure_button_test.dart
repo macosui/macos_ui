@@ -1,11 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/library.dart';
+
+import '../mocks.dart';
 
 void main() {
-  testWidgets('Toggle switch', (tester) async {
-    bool selected = false;
+  late MockOnPressedFunction mockOnPressedFunction;
+
+  setUp(() {
+    mockOnPressedFunction = MockOnPressedFunction();
+  });
+
+  testWidgets('MacosDisclosureButton onPressed works', (tester) async {
     await tester.pumpWidget(
       MacosApp(
         home: MacosWindow(
@@ -13,13 +19,8 @@ void main() {
             children: [
               ContentArea(
                 builder: (context) {
-                  return Center(
-                    child: MacosSwitch(
-                      value: selected,
-                      onChanged: (value) {
-                        selected = value;
-                      },
-                    ),
+                  return MacosDisclosureButton(
+                    onPressed: mockOnPressedFunction.handler,
                   );
                 },
               ),
@@ -29,19 +30,16 @@ void main() {
       ),
     );
 
-    final macosSwitch = find.byType(MacosSwitch);
-    expect(macosSwitch, findsOneWidget);
-    await tester.tap(macosSwitch);
+    final disclosureButton = find.byType(MacosDisclosureButton);
+    await tester.tap(disclosureButton);
     await tester.pumpAndSettle();
-    expect(selected, true);
+
+    expect(mockOnPressedFunction.called, 2);
   });
 
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
-    MacosSwitch(
-      value: false,
-      onChanged: (value) {},
-    ).debugFillProperties(builder);
+    const MacosDisclosureButton().debugFillProperties(builder);
 
     final description = builder.properties
         .where((node) => !node.isFiltered(DiagnosticLevel.info))
@@ -51,12 +49,10 @@ void main() {
     expect(
       description,
       [
-        'unchecked',
-        'dragStartBehavior: start',
-        'disabled',
-        'activeColor: null',
-        'trackColor: null',
+        'fillColor: null',
+        'hoverColor: null',
         'semanticLabel: null',
+        'disabled',
       ],
     );
   });

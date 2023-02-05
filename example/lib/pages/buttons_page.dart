@@ -16,6 +16,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
   String popupValue = 'One';
   String languagePopupValue = 'English';
   bool switchValue = false;
+  bool isDisclosureButtonPressed = false;
   final _tabController = MacosTabController(initialIndex: 0, length: 3);
 
   @override
@@ -70,8 +71,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
           },
         ),
         ContentArea(
-          builder: (context, scrollController) {
+          builder: (context) {
             return SingleChildScrollView(
+              // controller: _,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
@@ -88,6 +90,23 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       MacosBackButton(
                         onPressed: () => debugPrint('click'),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosDisclosureButton'),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MacosDisclosureButton(
+                          isPressed: isDisclosureButtonPressed,
+                          onPressed: () {
+                            debugPrint('click');
+                            setState(() {
+                              isDisclosureButtonPressed =
+                                  !isDisclosureButtonPressed;
+                            });
+                          }),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -140,23 +159,22 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         buttonSize: ButtonSize.small,
                         child: const Text('Small'),
                         onPressed: () {
-                          Navigator.push(
-                            context,
+                          Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
                                   toolBar: const ToolBar(
-                                    title: Text("New page"),
+                                    title: Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
-                                      builder: (context, scrollController) {
+                                      builder: (context) {
                                         return Center(
                                           child: PushButton(
                                             buttonSize: ButtonSize.large,
                                             child: const Text('Go Back'),
                                             onPressed: () {
-                                              Navigator.maybePop(context);
+                                              Navigator.of(context).maybePop();
                                             },
                                           ),
                                         );
