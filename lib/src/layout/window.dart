@@ -237,7 +237,7 @@ class _MacosWindowState extends State<MacosWindow> {
                         ),
                       ),
                       if (widget.sidebar?.bottom != null &&
-                          constraints.maxHeight < 141)
+                          constraints.maxHeight > 141)
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: widget.sidebar!.bottom!,
