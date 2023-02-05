@@ -161,12 +161,6 @@ class _ResizablePaneState extends State<ResizablePane> {
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   void didUpdateWidget(covariant ResizablePane oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
@@ -178,6 +172,12 @@ class _ResizablePaneState extends State<ResizablePane> {
         if (widget.maxWidth < _width) _width = widget.maxWidth;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override

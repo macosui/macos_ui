@@ -302,22 +302,6 @@ class MacosApp extends StatefulWidget {
 class _MacosAppState extends State<MacosApp> {
   bool get _usesRouter => widget.routerDelegate != null;
 
-  @override
-  Widget build(BuildContext context) {
-    // leaves room for assertions, etc
-    Widget result = _buildMacosApp(context);
-    return result;
-  }
-
-  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
-    if (widget.localizationsDelegates != null) {
-      yield* widget.localizationsDelegates!;
-    }
-    yield DefaultMaterialLocalizations.delegate;
-    yield DefaultCupertinoLocalizations.delegate;
-    yield DefaultWidgetsLocalizations.delegate;
-  }
-
   Widget _macosBuilder(BuildContext context, Widget? child) {
     final mode = widget.themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
@@ -412,6 +396,22 @@ class _MacosAppState extends State<MacosApp> {
       actions: widget.actions,
       scrollBehavior: widget.scrollBehavior,
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // leaves room for assertions, etc
+    Widget result = _buildMacosApp(context);
+    return result;
+  }
+
+  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
+    if (widget.localizationsDelegates != null) {
+      yield* widget.localizationsDelegates!;
+    }
+    yield DefaultMaterialLocalizations.delegate;
+    yield DefaultCupertinoLocalizations.delegate;
+    yield DefaultWidgetsLocalizations.delegate;
   }
 }
 

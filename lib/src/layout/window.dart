@@ -83,13 +83,6 @@ class _MacosWindowState extends State<MacosWindow> {
   }
 
   @override
-  void dispose() {
-    _sidebarScrollController.dispose();
-    _endSidebarScrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   void didUpdateWidget(covariant MacosWindow old) {
     super.didUpdateWidget(old);
     setState(() {
@@ -116,6 +109,13 @@ class _MacosWindowState extends State<MacosWindow> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _sidebarScrollController.dispose();
+    _endSidebarScrollController.dispose();
+    super.dispose();
   }
 
   @override
