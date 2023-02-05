@@ -221,7 +221,7 @@ class _MacosWindowState extends State<MacosWindow> {
                           _sidebarScrollController.offset > 0.0)
                         Divider(thickness: 1, height: 1, color: dividerColor),
                       if (widget.sidebar!.top != null &&
-                          constraints.maxHeight < 81)
+                          constraints.maxHeight > 81)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: widget.sidebar!.top!,
