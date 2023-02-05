@@ -16,6 +16,7 @@ library macos_ui;
 
 export 'src/buttons/back_button.dart';
 export 'src/buttons/checkbox.dart';
+export 'src/buttons/disclosure_button.dart';
 export 'src/buttons/help_button.dart';
 export 'src/buttons/icon_button.dart';
 export 'src/buttons/popup_button.dart';

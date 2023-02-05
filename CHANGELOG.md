@@ -1,10 +1,13 @@
 ## [1.10.0]
 🚨 Breaking Changes 🚨
-* `MacosScrollbar` has been completely overhauled and now resembles the native macOS scrollbar in appearance and 
-behavior. Previously, it wrapped the material scrollbar, and now creates a custom scrollbar that extends 
-`RawScrollbar`. This resulted in the removal of several material-based properties for the scrollbar, and 
-`ContentArea.builder` is once again a `ScrollableWidgetBuilder`! 🎉
+* `MacosScrollbar` has been completely overhauled and now resembles the native macOS scrollbar in appearance and
+  behavior. Previously, it wrapped the material scrollbar, and now creates a custom scrollbar that extends
+  `RawScrollbar`. This resulted in the removal of several material-based properties for the scrollbar, and
+  `ContentArea.builder` is once again a `ScrollableWidgetBuilder`! 🎉
 * Removed material-based scrollbar properties from `MacosScrollbarThemeData`
+
+Other changes:
+* Added implementation of `MacosDisclosureButton`
 
 ## [1.9.1]
 * Adds optional `initialDate` to `MacosDatePicker`
@@ -18,7 +21,7 @@ behavior. Previously, it wrapped the material scrollbar, and now creates a custo
 changes in Flutter 3.7. The `MacosScrollbar` widget needs to undergo radical changes in order to achieve the
 native macOS scrollbar look and feel in the future, so this will be revisited at that time.
 
-Other changes
+Other changes:
 * Per Flutter 3.7.0: Replace deprecated `MacosTextField.toolbarOptions` with `MacosTextField.contextMenuBuilder`
 * Ensure the color panel releases when it is closed
 * Avoid render overflows in the `Sidebar` when the window height is resized below a certain threshold ([#325](https://github.com/GroovinChip/macos_ui/issues/325))
