@@ -142,19 +142,12 @@ class _MacosWindowState extends State<MacosWindow> {
     // Respect the sidebar color override from parent if one is given
     if (widget.sidebar?.decoration?.color != null) {
       sidebarBackgroundColor = widget.sidebar!.decoration!.color!;
-    } else if (isMac &&
-        MediaQuery.of(context).platformBrightness.isDark ==
-            theme.brightness.isDark) {
-      // Only show blurry, transparent sidebar when platform brightness and app
-      // brightness are the same, otherwise it looks awful. Also only make the
-      // sidebar transparent on native Mac, or it will just be flat black or
-      // white.
-      sidebarBackgroundColor = Colors.transparent;
     } else {
-      sidebarBackgroundColor = theme.brightness.isDark
-          ? CupertinoColors.tertiarySystemBackground.darkColor
-          : CupertinoColors.systemGrey6.color;
+      sidebarBackgroundColor = Colors.transparent;
     }
+
+    // Set the application window's brightness on macOS
+    MacOSBrightnessOverrideHandler.ensureMatchingBrightness(theme.brightness);
 
     // Respect the end sidebar color override from parent if one is given
     if (widget.endSidebar?.decoration?.color != null) {
