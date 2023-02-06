@@ -10,6 +10,7 @@ import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
+import 'package:macos_window_utils/widgets/transparent_macos_sidebar.dart';
 
 /// A basic frame layout.
 ///
@@ -213,36 +214,40 @@ class _MacosWindowState extends State<MacosWindow> {
                     minHeight: height,
                     maxHeight: height,
                   ).normalize(),
-                  child: Column(
-                    children: [
-                      if ((widget.sidebar?.topOffset ?? 0) > 0)
-                        SizedBox(height: widget.sidebar?.topOffset),
-                      if (_sidebarScrollController.hasClients &&
-                          _sidebarScrollController.offset > 0.0)
-                        Divider(thickness: 1, height: 1, color: dividerColor),
-                      if (widget.sidebar!.top != null &&
-                          constraints.maxHeight < 81)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: widget.sidebar!.top!,
-                        ),
-                      Expanded(
-                        child: MacosScrollbar(
-                          controller: _sidebarScrollController,
-                          child: Padding(
-                            padding: widget.sidebar?.padding ?? EdgeInsets.zero,
-                            child: widget.sidebar!
-                                .builder(context, _sidebarScrollController),
+                  child: TransparentMacOSSidebar(
+                    child: Column(
+                      children: [
+                        if ((widget.sidebar?.topOffset ?? 0) > 0)
+                          SizedBox(height: widget.sidebar?.topOffset),
+                        if (_sidebarScrollController.hasClients &&
+                            _sidebarScrollController.offset > 0.0)
+                          Divider(thickness: 1, height: 1, color: dividerColor),
+                        if (widget.sidebar!.top != null &&
+                            constraints.maxHeight < 81)
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: widget.sidebar!.top!,
+                          ),
+                        Expanded(
+                          child: MacosScrollbar(
+                            controller: _sidebarScrollController,
+                            child: Padding(
+                              padding:
+                                  widget.sidebar?.padding ?? EdgeInsets.zero,
+                              child: widget.sidebar!
+                                  .builder(context, _sidebarScrollController),
+                            ),
                           ),
                         ),
-                      ),
-                      if (widget.sidebar?.bottom != null &&
-                          constraints.maxHeight < 141)
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: widget.sidebar!.bottom!,
-                        ),
-                    ],
+                        if (widget.sidebar?.bottom != null &&
+                            constraints.maxHeight < 141)
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: widget.sidebar!.bottom!,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
