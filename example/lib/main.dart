@@ -12,7 +12,16 @@ import 'package:provider/provider.dart';
 
 import 'theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await WindowManipulator.initialize();
+  WindowManipulator.setMaterial(NSVisualEffectViewMaterial.windowBackground);
+  WindowManipulator.enableFullSizeContentView();
+  WindowManipulator.makeTitlebarTransparent();
+  WindowManipulator.hideTitle();
+  WindowManipulator.addToolbar();
+  WindowManipulator.setToolbarStyle(toolbarStyle: NSWindowToolbarStyle.unified);
+
   runApp(const MacosUIGalleryApp());
 }
 

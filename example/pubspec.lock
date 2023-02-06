@@ -98,6 +98,14 @@ packages:
       relative: true
     source: path
     version: "1.10.0"
+  macos_window_utils:
+    dependency: transitive
+    description:
+      name: macos_window_utils
+      sha256: ece6315199f84931d7e32869aa3d8d4d2a82e6f4416ed292f9cf9345b0105feb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   matcher:
     dependency: transitive
     description:
@@ -208,5 +216,5 @@ packages:
     source: hosted
     version: "2.1.4"
 sdks:
-  dart: ">=2.18.0 <4.0.0"
-  flutter: ">=1.20.0"
+  dart: ">=2.18.5 <4.0.0"
+  flutter: ">=3.7.0"

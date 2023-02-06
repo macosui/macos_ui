@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  macos_window_utils: ^1.0.2
 
 dev_dependencies:
   flutter_test:

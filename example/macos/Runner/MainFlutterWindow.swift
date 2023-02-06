@@ -1,5 +1,6 @@
 import Cocoa
 import FlutterMacOS
+import macos_window_utils
 
 class BlurryContainerViewController: NSViewController {
   let flutterViewController = FlutterViewController()
@@ -37,7 +38,7 @@ class BlurryContainerViewController: NSViewController {
 
 class MainFlutterWindow: NSWindow, NSWindowDelegate {
   override func awakeFromNib() {
-    delegate = self
+    /*delegate = self
     let blurryContainerViewController = BlurryContainerViewController()
     let windowFrame = self.frame
     self.contentViewController = blurryContainerViewController
@@ -61,7 +62,17 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
     self.isOpaque = false
     self.backgroundColor = .clear
 
-    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
+    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)*/
+    
+    let windowFrame = self.frame
+    let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
+    self.contentViewController = macOSWindowUtilsViewController
+    self.setFrame(windowFrame, display: true)
+
+    /* Initialize the macos_window_utils plugin */
+    MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
+    RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
 
     super.awakeFromNib()
   }
