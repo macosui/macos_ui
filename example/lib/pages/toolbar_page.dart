@@ -157,11 +157,11 @@ class _ToolbarPageState extends State<ToolbarPage> {
       ),
       children: [
         ContentArea(builder: (context) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(30),
+          return const SingleChildScrollView(
+            padding: EdgeInsets.all(30),
             child: Center(
               child: Column(
-                children: const [
+                children: [
                   Text(
                     "The toolbar appears below the title bar of the macOS app or integrates with it.",
                     textAlign: TextAlign.center,
