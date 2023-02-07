@@ -35,7 +35,7 @@ class MacosApp extends StatefulWidget {
   /// application is launched with an intent that specifies an otherwise
   /// unsupported route.
   ///
-  /// This class creates an instance of [WidgetsApp].
+  /// This class creates an instance of [CupertinoApp].
   ///
   /// The boolean arguments, [routes], and [navigatorObservers], must not be null.
   const MacosApp({
