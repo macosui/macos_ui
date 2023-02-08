@@ -8,7 +8,7 @@ import 'package:macos_ui/src/theme/macos_theme.dart';
 /// Default value for [BottomResizablePane] top padding
 const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
 
-/// {@template resizablePane}
+/// {@template bottomResizablePane}
 /// A widget that can be resized vertically.
 ///
 /// The [builder], [minHeight] and [resizableSide] can not be null.
@@ -18,7 +18,7 @@ const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
 /// The [startHeight] is the initial height.
 /// {@endtemplate}
 class BottomResizablePane extends StatefulWidget {
-  /// {@macro resizablePane}
+  /// {@macro bottomResizablePane}
   const BottomResizablePane({
     super.key,
     required this.builder,
