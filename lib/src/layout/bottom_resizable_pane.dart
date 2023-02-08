@@ -5,9 +5,6 @@ import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
-/// Default value for [BottomResizablePane] top padding
-const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
-
 /// {@template bottomResizablePane}
 /// A widget that can be resized vertically.
 ///

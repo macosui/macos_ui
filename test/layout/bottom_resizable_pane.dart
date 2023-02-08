@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/bottom_resizable_pan.dart';
 
 void main() {
   group('BottomResizablePane', () {
@@ -25,6 +24,7 @@ void main() {
                 return Column(
                   children: [
                     const Flexible(
+                      fit: FlexFit.loose,
                       child: Center(
                         child: Text('Hello there'),
                       ),

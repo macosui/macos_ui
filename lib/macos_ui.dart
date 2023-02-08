@@ -44,6 +44,7 @@ export 'src/labels/tooltip.dart';
 export 'src/layout/content_area.dart';
 export 'src/layout/macos_list_tile.dart';
 export 'src/layout/resizable_pane.dart';
+export 'src/layout/bottom_resizable_pane.dart';
 export 'src/layout/scaffold.dart';
 export 'src/layout/sidebar/sidebar.dart';
 export 'src/layout/sidebar/sidebar_item.dart';
