@@ -1,13 +1,15 @@
 import 'dart:ui';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_cubit.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// {@template macosOverlayFilter}
 /// Applies a blur filter to its child to create a macOS-style "frosted glass"
 /// effect.
 /// {@endtemplate}
-class MacosOverlayFilter extends StatelessWidget {
+class MacosOverlayFilter extends StatefulWidget {
   /// {@macro macosOverlayFilter}
   ///
   /// Used mainly for the overlays that appear from various macOS-style widgets,
@@ -33,12 +35,35 @@ class MacosOverlayFilter extends StatelessWidget {
   final Color? color;
 
   @override
+  State<MacosOverlayFilter> createState() => _MacosOverlayFilterState();
+}
+
+class _MacosOverlayFilterState extends State<MacosOverlayFilter> {
+  WallpaperTintingSettingsCubit? _wallpaperTintingSettingsCubit;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _wallpaperTintingSettingsCubit?.removeWallpaperTintingOverride();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _wallpaperTintingSettingsCubit =
+        context.read<WallpaperTintingSettingsCubit>();
+    _wallpaperTintingSettingsCubit!.addWallpaperTintingOverride();
+
     final brightness = MacosTheme.brightnessOf(context);
 
     return Container(
       decoration: BoxDecoration(
-        color: color ??
+        color: widget.color ??
             (brightness.isDark
                 ? const Color.fromRGBO(30, 30, 30, 1)
                 : const Color.fromRGBO(242, 242, 247, 1)),
@@ -61,16 +86,16 @@ class MacosOverlayFilter extends StatelessWidget {
             CupertinoColors.systemGrey3.darkColor,
           ),
         ),
-        borderRadius: borderRadius,
+        borderRadius: widget.borderRadius,
       ),
       child: ClipRRect(
-        borderRadius: borderRadius,
+        borderRadius: widget.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(
             sigmaX: 20.0,
             sigmaY: 20.0,
           ),
-          child: child,
+          child: widget.child,
         ),
       ),
     );

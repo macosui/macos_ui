@@ -1,12 +1,15 @@
 import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/layout/toolbar/toolbar.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_cubit.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_data.dart';
 import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
@@ -96,22 +99,37 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               height: height,
               child: VisualEffectSubviewContainer(
                 material: NSVisualEffectViewMaterial.windowBackground,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    backgroundBlendMode: BlendMode.clear,
-                  ),
-                  child: Opacity(
-                    // For some reason, omitting this Opacity widget causes a
-                    // dark background to appear.
-                    opacity: 1.0,
-                    child: MediaQuery(
-                      data: mediaQuery.copyWith(
-                        padding: EdgeInsets.only(top: topPadding),
+                child: BlocBuilder<WallpaperTintingSettingsCubit,
+                    WallpaperTintingSettingsData>(
+                  builder: (context, data) {
+                    return TweenAnimationBuilder<double>(
+                      duration: const Duration(milliseconds: 100),
+                      tween: Tween<double>(
+                        begin: data.isWallpaperTintingEnabled ? 0.0 : 1.0,
+                        end: data.isWallpaperTintingEnabled ? 0.0 : 1.0,
                       ),
-                      child: _ScaffoldBody(children: children),
-                    ),
-                  ),
+                      builder: (context, value, child) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: backgroundColor.withOpacity(value),
+                            backgroundBlendMode: BlendMode.src,
+                          ),
+                          child: child,
+                        );
+                      },
+                      child: Opacity(
+                        // For some reason, omitting this Opacity widget causes
+                        // a dark background to appear.
+                        opacity: 1.0,
+                        child: MediaQuery(
+                          data: mediaQuery.copyWith(
+                            padding: EdgeInsets.only(top: topPadding),
+                          ),
+                          child: _ScaffoldBody(children: children),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
