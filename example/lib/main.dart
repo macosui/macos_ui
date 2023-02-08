@@ -67,7 +67,9 @@ class _WidgetGalleryState extends State<WidgetGallery> {
       ),
     ),
     const DialogsPage(),
-    const ToolbarPage(),
+    CupertinoTabView(
+      builder: (_) => const ToolbarPage(),
+    ),
     const SelectorsPage(),
     const TabViewPage(),
   ];
