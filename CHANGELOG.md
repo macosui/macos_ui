@@ -1,3 +1,6 @@
+## [1.11.0]
+* Added `BottomResizablePane` widget
+
 ## [1.10.0]
 * Added implementation of `MacosDisclosureButton`
 
