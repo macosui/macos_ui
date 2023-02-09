@@ -8,6 +8,7 @@ import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/layout/toolbar/toolbar.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinted_area.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_cubit.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_data.dart';
 import 'package:macos_ui/src/layout/window.dart';
@@ -97,39 +98,13 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               top: 0,
               width: width,
               height: height,
-              child: VisualEffectSubviewContainer(
-                material: NSVisualEffectViewMaterial.windowBackground,
-                child: BlocBuilder<WallpaperTintingSettingsCubit,
-                    WallpaperTintingSettingsData>(
-                  builder: (context, data) {
-                    return TweenAnimationBuilder<double>(
-                      duration: const Duration(milliseconds: 100),
-                      tween: Tween<double>(
-                        begin: data.isWallpaperTintingEnabled ? 0.0 : 1.0,
-                        end: data.isWallpaperTintingEnabled ? 0.0 : 1.0,
-                      ),
-                      builder: (context, value, child) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: backgroundColor.withOpacity(value),
-                            backgroundBlendMode: BlendMode.src,
-                          ),
-                          child: child,
-                        );
-                      },
-                      child: Opacity(
-                        // For some reason, omitting this Opacity widget causes
-                        // a dark background to appear.
-                        opacity: 1.0,
-                        child: MediaQuery(
-                          data: mediaQuery.copyWith(
-                            padding: EdgeInsets.only(top: topPadding),
-                          ),
-                          child: _ScaffoldBody(children: children),
-                        ),
-                      ),
-                    );
-                  },
+              child: WallpaperTintedArea(
+                backgroundColor: backgroundColor,
+                child: MediaQuery(
+                  data: mediaQuery.copyWith(
+                    padding: EdgeInsets.only(top: topPadding),
+                  ),
+                  child: _ScaffoldBody(children: children),
                 ),
               ),
             ),
