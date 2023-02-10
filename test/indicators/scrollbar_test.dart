@@ -30,7 +30,7 @@ void main() {
                 data: MacosThemeData.light(),
                 child: MacosScrollbar(
                   thickness: thickness,
-                  thicknessWhileDraggingOrHovering: thicknessWhenDragging,
+                  thicknessWhileHovering: thicknessWhenDragging,
                   child: SingleChildScrollView(
                     child: SizedBox(
                       width: screenSize.width * scaleFactor,

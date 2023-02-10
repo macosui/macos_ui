@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -42,7 +43,7 @@ class MacosScrollbar extends StatelessWidget {
     this.controller,
     this.thumbVisibility,
     this.thickness,
-    this.thicknessWhileDraggingOrHovering,
+    this.thicknessWhileHovering,
     this.radius,
     this.notificationPredicate,
     this.scrollbarOrientation,
@@ -63,10 +64,10 @@ class MacosScrollbar extends StatelessWidget {
   final double? thickness;
 
   /// The thickness of the scrollbar in the cross axis of the scrollable while
-  /// the mouse cursor is hovering over and/or dragging the scrollbar.
+  /// the mouse cursor is hovering over the scrollbar.
   ///
   /// Defaults to 9.0.
-  final double? thicknessWhileDraggingOrHovering;
+  final double? thicknessWhileHovering;
 
   /// The [Radius] of the scrollbar thumb's rounded rectangle corners.
   ///
@@ -84,14 +85,14 @@ class MacosScrollbar extends StatelessWidget {
     assert(debugCheckHasMacosTheme(context));
     final scrollbarTheme = MacosScrollbarTheme.of(context);
     assert(scrollbarTheme.thickness != null);
-    assert(scrollbarTheme.thicknessWhileDraggingOrHovering != null);
+    assert(scrollbarTheme.thicknessWhileHovering != null);
 
     return _RawMacosScrollBar(
       controller: controller,
       thumbVisibility: thumbVisibility ?? scrollbarTheme.thumbVisibility,
       thickness: thickness ?? scrollbarTheme.thickness,
-      thicknessWhileDraggingOrHovering: thicknessWhileDraggingOrHovering ??
-          scrollbarTheme.thicknessWhileDraggingOrHovering!,
+      thicknessWhileHovering:
+          thicknessWhileHovering ?? scrollbarTheme.thicknessWhileHovering!,
       notificationPredicate: notificationPredicate,
       scrollbarOrientation: scrollbarOrientation,
       effectiveThumbColor: scrollbarTheme.thumbColor!,
@@ -107,13 +108,13 @@ class _RawMacosScrollBar extends RawScrollbar {
     super.controller,
     bool? thumbVisibility,
     super.thickness,
-    required this.thicknessWhileDraggingOrHovering,
+    required this.thicknessWhileHovering,
     ScrollNotificationPredicate? notificationPredicate,
     super.scrollbarOrientation,
     required this.effectiveThumbColor,
     super.radius,
   })  : assert(thickness != null && thickness < double.infinity),
-        assert(thicknessWhileDraggingOrHovering < double.infinity),
+        assert(thicknessWhileHovering < double.infinity),
         super(
           thumbVisibility: thumbVisibility ?? false,
           fadeDuration: _kScrollbarFadeDuration,
@@ -122,7 +123,7 @@ class _RawMacosScrollBar extends RawScrollbar {
               notificationPredicate ?? defaultScrollNotificationPredicate,
         );
 
-  final double thicknessWhileDraggingOrHovering;
+  final double thicknessWhileHovering;
   final Color effectiveThumbColor;
 
   @override
@@ -131,35 +132,36 @@ class _RawMacosScrollBar extends RawScrollbar {
 }
 
 class _RawMacosScrollBarState extends RawScrollbarState<_RawMacosScrollBar> {
-  late AnimationController _thicknessAnimationController;
-  late AnimationController _colorAnimationController;
-  late Animation _colorTween;
+  late AnimationController _thumbThicknessAnimationController;
+  late AnimationController _trackColorAnimationController;
+  late Animation _trackColorTween;
+  bool _hoverIsActive = false;
 
   double get _thickness {
     return widget.thickness! +
-        _thicknessAnimationController.value *
-            (widget.thicknessWhileDraggingOrHovering - widget.thickness!);
+        _thumbThicknessAnimationController.value *
+            (widget.thicknessWhileHovering - widget.thickness!);
   }
 
   @override
   void initState() {
     super.initState();
-    _thicknessAnimationController = AnimationController(
+    _thumbThicknessAnimationController = AnimationController(
       vsync: this,
       duration: _kScrollbarResizeDuration,
     );
-    _colorAnimationController = AnimationController(
+    _trackColorAnimationController = AnimationController(
       vsync: this,
       duration: _kScrollbarResizeDuration,
     );
-    _colorTween = ColorTween(
+    _trackColorTween = ColorTween(
       begin: MacosColors.transparent,
       end: widget.effectiveThumbColor.withOpacity(.15),
-    ).animate(_colorAnimationController);
-    _thicknessAnimationController.addListener(() {
+    ).animate(_trackColorAnimationController);
+    _thumbThicknessAnimationController.addListener(() {
       updateScrollbarPainter();
     });
-    _colorAnimationController.addListener(() {
+    _trackColorAnimationController.addListener(() {
       updateScrollbarPainter();
     });
   }
@@ -168,7 +170,7 @@ class _RawMacosScrollBarState extends RawScrollbarState<_RawMacosScrollBar> {
   void updateScrollbarPainter() {
     scrollbarPainter
       ..color = widget.effectiveThumbColor
-      ..trackColor = _colorTween.value
+      ..trackColor = _trackColorTween.value
       ..textDirection = Directionality.of(context)
       ..thickness = _thickness
       ..mainAxisMargin = _kScrollbarMainAxisMargin
@@ -181,30 +183,31 @@ class _RawMacosScrollBarState extends RawScrollbarState<_RawMacosScrollBar> {
   }
 
   @override
-  void handleThumbPress() {
-    if (getScrollbarDirection() == null) {
-      return;
+  void handleHover(PointerHoverEvent event) {
+    super.handleHover(event);
+    if (isPointerOverScrollbar(event.position, event.kind, forHover: true)) {
+      setState(() => _hoverIsActive = true);
+      _thumbThicknessAnimationController.forward();
+      _trackColorAnimationController.forward();
+    } else if (_hoverIsActive) {
+      setState(() => _hoverIsActive = false);
+      _thumbThicknessAnimationController.reverse();
+      _trackColorAnimationController.reverse();
     }
-    super.handleThumbPress();
-    _thicknessAnimationController.forward();
-    _colorAnimationController.forward();
   }
 
   @override
-  void handleThumbPressEnd(Offset localPosition, Velocity velocity) {
-    final Axis? direction = getScrollbarDirection();
-    if (direction == null) {
-      return;
-    }
-    _thicknessAnimationController.reverse();
-    _colorAnimationController.reverse();
-    super.handleThumbPressEnd(localPosition, velocity);
+  void handleHoverExit(PointerExitEvent event) {
+    super.handleHoverExit(event);
+    setState(() => _hoverIsActive = false);
+    _thumbThicknessAnimationController.reverse();
+    _trackColorAnimationController.reverse();
   }
 
   @override
   void dispose() {
-    _thicknessAnimationController.dispose();
-    _colorAnimationController.dispose();
+    _thumbThicknessAnimationController.dispose();
+    _trackColorAnimationController.dispose();
     super.dispose();
   }
 }

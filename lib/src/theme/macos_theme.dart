@@ -245,7 +245,7 @@ class MacosThemeData with Diagnosticable {
     );
     scrollbarTheme ??= MacosScrollbarThemeData(
       thickness: 6.0,
-      thicknessWhileDraggingOrHovering: 9.0,
+      thicknessWhileHovering: 9.0,
       thumbColor: isDark ? _kScrollbarColor.darkColor : _kScrollbarColor.color,
       radius: const Radius.circular(25),
       thumbVisibility: false,

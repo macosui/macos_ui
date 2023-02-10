@@ -70,7 +70,7 @@ class MacosScrollbarThemeData with Diagnosticable {
   /// Creates a theme that can be used for [MacosThemeData.scrollbarTheme].
   const MacosScrollbarThemeData({
     this.thickness,
-    this.thicknessWhileDraggingOrHovering,
+    this.thicknessWhileHovering,
     this.thumbVisibility,
     this.radius,
     this.thumbColor,
@@ -82,7 +82,7 @@ class MacosScrollbarThemeData with Diagnosticable {
 
   /// Overrides the default value of [MacosScrollbar.hoverThickness] in all
   /// descendant [MacosScrollbar] widgets when hovering is active.
-  final double? thicknessWhileDraggingOrHovering;
+  final double? thicknessWhileHovering;
 
   /// Overrides the default value of [MacosScrollbar.thumbVisibility] in all
   /// descendant [MacosScrollbar] widgets.
@@ -100,7 +100,7 @@ class MacosScrollbarThemeData with Diagnosticable {
   /// new values.
   MacosScrollbarThemeData copyWith({
     double? thickness,
-    double? thicknessWhileDraggingOrHovering,
+    double? thicknessWhileHovering,
     bool? showTrackOnHover,
     bool? thumbVisibility,
     Radius? radius,
@@ -108,8 +108,8 @@ class MacosScrollbarThemeData with Diagnosticable {
   }) {
     return MacosScrollbarThemeData(
       thickness: thickness ?? this.thickness,
-      thicknessWhileDraggingOrHovering: thicknessWhileDraggingOrHovering ??
-          this.thicknessWhileDraggingOrHovering,
+      thicknessWhileHovering:
+          thicknessWhileHovering ?? this.thicknessWhileHovering,
       thumbVisibility: thumbVisibility ?? this.thumbVisibility,
       radius: radius ?? this.radius,
       thumbColor: thumbColor ?? this.thumbColor,
@@ -129,9 +129,9 @@ class MacosScrollbarThemeData with Diagnosticable {
   ) {
     return MacosScrollbarThemeData(
       thickness: lerpDouble(a?.thickness, b?.thickness, t),
-      thicknessWhileDraggingOrHovering: lerpDouble(
-        a?.thicknessWhileDraggingOrHovering,
-        b?.thicknessWhileDraggingOrHovering,
+      thicknessWhileHovering: lerpDouble(
+        a?.thicknessWhileHovering,
+        b?.thicknessWhileHovering,
         t,
       ),
       thumbVisibility: t < 0.5 ? a?.thumbVisibility : b?.thumbVisibility,
@@ -155,7 +155,7 @@ class MacosScrollbarThemeData with Diagnosticable {
   int get hashCode {
     return Object.hash(
       thickness,
-      thicknessWhileDraggingOrHovering,
+      thicknessWhileHovering,
       thumbVisibility,
       radius,
       thumbColor,
@@ -168,8 +168,7 @@ class MacosScrollbarThemeData with Diagnosticable {
     if (other.runtimeType != runtimeType) return false;
     return other is MacosScrollbarThemeData &&
         other.thickness == thickness &&
-        other.thicknessWhileDraggingOrHovering ==
-            thicknessWhileDraggingOrHovering &&
+        other.thicknessWhileHovering == thicknessWhileHovering &&
         other.thumbVisibility == thumbVisibility &&
         other.radius == radius &&
         other.thumbColor == thumbColor;
@@ -182,8 +181,8 @@ class MacosScrollbarThemeData with Diagnosticable {
       DiagnosticsProperty<double?>('thickness', thickness, defaultValue: null),
     );
     properties.add(DiagnosticsProperty<double?>(
-      'hoveringThickness',
-      thicknessWhileDraggingOrHovering,
+      'thicknessWhileHovering',
+      thicknessWhileHovering,
       defaultValue: null,
     ));
     properties.add(DiagnosticsProperty<bool>(
