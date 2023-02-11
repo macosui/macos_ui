@@ -8,6 +8,7 @@
 
 Other changes:
 * Added implementation of `MacosDisclosureButton`
+* Fixed a bug where `CapacityIndicator` only worked correctly for splits = 10
 
 ## [1.9.1]
 * Adds optional `initialDate` to `MacosDatePicker`
