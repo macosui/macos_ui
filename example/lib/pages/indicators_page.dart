@@ -41,7 +41,7 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                   CapacityIndicator(
                     value: sliderValue,
                     onChanged: (v) => setState(() => sliderValue = v),
-                  splits: 20,
+                    splits: 20,
                     discrete: true,
                   ),
                   const SizedBox(height: 20),
