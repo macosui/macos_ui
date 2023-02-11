@@ -56,11 +56,9 @@ class _MacosOverlayFilterState extends State<MacosOverlayFilter> {
   @override
   Widget build(BuildContext context) {
     if (_wallpaperTintingSettingsCubit == null) {
-      try {
-        _wallpaperTintingSettingsCubit =
-            context.read<WallpaperTintingSettingsCubit>();
-        _wallpaperTintingSettingsCubit!.addWallpaperTintingOverride();
-      } on ProviderNotFoundException catch (_) {}
+      _wallpaperTintingSettingsCubit =
+          context.read<WallpaperTintingSettingsCubit?>();
+      _wallpaperTintingSettingsCubit?.addWallpaperTintingOverride();
     }
 
     final brightness = MacosTheme.brightnessOf(context);
