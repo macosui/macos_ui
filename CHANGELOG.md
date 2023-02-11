@@ -20,6 +20,8 @@ Other changes
 * Update `MacosScrollBar.thumbVisibility` with the latest change introduced in Flutter 3.7
 * Update `README.md` to address issues [#325](https://github.com/GroovinChip/macos_ui/issues/325) & [#332](https://github.com/GroovinChip/macos_ui/issues/332)
 
+* Fixed a bug where `CapacityIndicator` only worked correctly for splits = 10
+
 
 ## [1.7.6]
 * Fixed a bug where `MacosPopupButton` would report that a `ScrollController` was not attached to any views
