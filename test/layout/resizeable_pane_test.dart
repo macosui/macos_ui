@@ -14,9 +14,9 @@ void main() {
 
         final resizablePane = ResizablePane(
           builder: (context, scrollController) => const Text('Hello there'),
-          minWidth: minWidth,
-          startWidth: startWidth,
-          maxWidth: maxWidth,
+          minSize: minWidth,
+          startSize: startWidth,
+          maxSize: maxWidth,
           resizableSide: side,
         );
 

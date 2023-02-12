@@ -8,29 +8,29 @@ import 'package:macos_ui/src/theme/macos_theme.dart';
 /// {@template bottomResizablePane}
 /// A widget that can be resized vertically.
 ///
-/// The [builder], [minHeight] and [resizableSide] can not be null.
-/// The [maxHeight] and the [windowBreakpoint] default to `500.00`.
+/// The [builder], [minSize] and [resizableSide] can not be null.
+/// The [maxSize] and the [windowBreakpoint] default to `500.00`.
 /// [isResizable] defaults to `true`.
 ///
-/// The [startHeight] is the initial height.
+/// The [startSize] is the initial height.
 /// {@endtemplate}
 class BottomResizablePane extends StatefulWidget {
   /// {@macro bottomResizablePane}
   const BottomResizablePane({
     super.key,
     required this.builder,
-    required this.minHeight,
-    required this.startHeight,
+    required this.minSize,
+    required this.startSize,
     this.decoration,
-    this.maxHeight = 500.0,
+    this.maxSize = 500.0,
     this.isResizable = true,
     this.windowBreakpoint,
   })  : assert(
-          maxHeight >= minHeight,
+          maxSize >= minSize,
           'minHeight should not be more than maxHeight.',
         ),
         assert(
-          (startHeight >= minHeight) && (startHeight <= maxHeight),
+          (startSize >= minSize) && (startSize <= maxSize),
           'startHeight must not be less than minHeight or more than maxHeight',
         );
 
@@ -51,16 +51,16 @@ class BottomResizablePane extends StatefulWidget {
   /// Specifies the maximum height that this [BottomResizablePane] can have.
   ///
   /// The value can be null and defaults to `500.0`.
-  final double maxHeight;
+  final double maxSize;
 
   /// Specifies the minimum height that this [BottomResizablePane] can have.
-  final double minHeight;
+  final double minSize;
 
   /// Specifies the height that this [BottomResizablePane] first starts height.
   ///
-  /// The [startHeight] should not be more than the [maxHeight] or
-  /// less than the [minHeight].
-  final double startHeight;
+  /// The [startSize] should not be more than the [maxSize] or
+  /// less than the [minSize].
+  final double startSize;
 
   /// Specifies the height of the window at which this [BottomResizablePane] will be hidden.
   final double? windowBreakpoint;
@@ -72,8 +72,8 @@ class BottomResizablePane extends StatefulWidget {
 class _BottomResizablePaneState extends State<BottomResizablePane> {
   SystemMouseCursor _cursor = SystemMouseCursors.resizeRow;
   final _scrollController = ScrollController();
-  late double _height;
-  late double _dragStartHeight;
+  late double _size;
+  late double _dragStartSize;
   late double _dragStartPosition;
 
   Color get _dividerColor => MacosTheme.of(context).dividerColor;
@@ -101,23 +101,23 @@ class _BottomResizablePaneState extends State<BottomResizablePane> {
         child: const SizedBox(width: 5),
       ),
       onVerticalDragStart: (details) {
-        _dragStartHeight = _height;
+        _dragStartSize = _size;
         _dragStartPosition = details.globalPosition.dy;
       },
       onVerticalDragUpdate: (details) {
         setState(() {
-          final newHeight = _dragStartHeight +
+          final newHeight = _dragStartSize +
               (_dragStartPosition - details.globalPosition.dy);
-          _height = math.max(
-            widget.minHeight,
+          _size = math.max(
+            widget.minSize,
             math.min(
-              widget.maxHeight,
+              widget.maxSize,
               newHeight,
             ),
           );
-          if (_height == widget.minHeight) {
+          if (_size == widget.minSize) {
             _cursor = SystemMouseCursors.resizeUp;
-          } else if (_height == widget.maxHeight) {
+          } else if (_size == widget.maxSize) {
             _cursor = SystemMouseCursors.resizeDown;
           } else {
             _cursor = SystemMouseCursors.resizeRow;
@@ -130,7 +130,7 @@ class _BottomResizablePaneState extends State<BottomResizablePane> {
   @override
   void initState() {
     super.initState();
-    _height = widget.startHeight;
+    _size = widget.startSize;
     _scrollController.addListener(() => setState(() {}));
   }
 
@@ -144,11 +144,11 @@ class _BottomResizablePaneState extends State<BottomResizablePane> {
   void didUpdateWidget(covariant BottomResizablePane oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
-        oldWidget.minHeight != widget.minHeight ||
-        oldWidget.maxHeight != widget.maxHeight) {
+        oldWidget.minSize != widget.minSize ||
+        oldWidget.maxSize != widget.maxSize) {
       setState(() {
-        if (widget.minHeight > _height) _height = widget.minHeight;
-        if (widget.maxHeight < _height) _height = widget.maxHeight;
+        if (widget.minSize > _size) _size = widget.minSize;
+        if (widget.maxSize < _size) _size = widget.maxSize;
       });
     }
   }
@@ -166,11 +166,11 @@ class _BottomResizablePaneState extends State<BottomResizablePane> {
 
     return Container(
       width: maxWidth,
-      height: _height,
+      height: _size,
       decoration: _decoration,
       constraints: BoxConstraints(
-        maxHeight: widget.maxHeight,
-        minHeight: widget.minHeight,
+        maxHeight: widget.maxSize,
+        minHeight: widget.minSize,
       ).normalize(),
       child: Stack(
         children: [

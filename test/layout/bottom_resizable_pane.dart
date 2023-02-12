@@ -10,9 +10,9 @@ void main() {
 
     final bottomResizablePane = BottomResizablePane(
       builder: (context, scrollController) => const Text('Hello there'),
-      minHeight: minHeight,
-      startHeight: startHeight,
-      maxHeight: maxHeight,
+      minSize: minHeight,
+      startSize: startHeight,
+      maxSize: maxHeight,
     );
 
     final view = MacosApp(
