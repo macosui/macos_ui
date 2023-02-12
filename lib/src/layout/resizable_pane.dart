@@ -21,13 +21,13 @@ enum ResizableSide {
 }
 
 /// {@template resizablePane}
-/// A widget that can be resized horizontally.
+/// A widget that can be resized horizontally or vertically.
 ///
 /// The [builder], [minSize] and [resizableSide] can not be null.
 /// The [maxSize] and the [windowBreakpoint] default to `500.00`.
 /// [isResizable] defaults to `true`.
 ///
-/// The [startSize] is the initial width.
+/// The [startSize] is the initial width or height depending on the orientation of the pane.
 /// {@endtemplate}
 class ResizablePane extends StatefulWidget {
   /// {@macro resizablePane}
@@ -43,11 +43,11 @@ class ResizablePane extends StatefulWidget {
     required this.startSize,
   })  : assert(
           maxSize >= minSize,
-          'minWidth should not be more than maxWidth.',
+          'minSize should not be more than maxSize.',
         ),
         assert(
           (startSize >= minSize) && (startSize <= maxSize),
-          'startWidth must not be less than minWidth or more than maxWidth',
+          'startSize must not be less than minSize or more than maxWidth',
         );
 
   /// The builder that creates a child to display in this widget, which will
@@ -64,15 +64,24 @@ class ResizablePane extends StatefulWidget {
   /// resizable side of this widget.
   final bool isResizable;
 
-  /// Specifies the maximum width that this [ResizablePane] can have.
+  /// Specifies the maximum width or height that this [ResizablePane] can have
+  /// according to his orientation (the orientation is horizontal if the
+  /// [resizableSide] is [ResizableSide.left] or [ResizableSide.right] and
+  /// vertical if the [resizableSide] is [ResizableSide.top]).
   ///
   /// The value can be null and defaults to `500.0`.
   final double maxSize;
 
-  /// Specifies the minimum width that this [ResizablePane] can have.
+  /// Specifies the minimum width of height that this [ResizablePane] can have
+  /// according to his orientation (the orientation is horizontal if the
+  /// [resizableSide] is [ResizableSide.left] or [ResizableSide.right] and
+  /// vertical if the [resizableSide] is [ResizableSide.top]).
   final double minSize;
 
-  /// Specifies the width that this [ResizablePane] first starts width.
+  /// Specifies the width or height that this [ResizablePane] first starts with
+  /// according to his orientation (the orientation is horizontal if the
+  /// [resizableSide] is [ResizableSide.left] or [ResizableSide.right] and
+  /// vertical if the [resizableSide] is [ResizableSide.top]).
   ///
   /// The [startSize] should not be more than the [maxSize] or
   /// less than the [minSize].
@@ -89,7 +98,7 @@ class ResizablePane extends StatefulWidget {
 }
 
 class _ResizablePaneState extends State<ResizablePane> {
-  SystemMouseCursor _cursor = SystemMouseCursors.resizeColumn;
+  late SystemMouseCursor _cursor;
   final _scrollController = ScrollController();
   late double _size;
   late double _dragStartSize;
@@ -117,6 +126,19 @@ class _ResizablePaneState extends State<ResizablePane> {
       image: widget.decoration?.image,
       shape: widget.decoration?.shape,
     );
+  }
+
+  BoxConstraints get _boxConstraint {
+    if(_resizeOnTop) {
+      return BoxConstraints(
+        maxHeight: widget.maxSize,
+        minHeight: widget.minSize,
+      ).normalize();
+    }
+    return BoxConstraints(
+      maxWidth: widget.maxSize,
+      minWidth: widget.minSize,
+    ).normalize();
   }
 
   Widget get _resizeArea {
@@ -194,6 +216,8 @@ class _ResizablePaneState extends State<ResizablePane> {
   @override
   void initState() {
     super.initState();
+    _cursor = _resizeOnTop ? SystemMouseCursors.resizeRow
+        : SystemMouseCursors.resizeColumn;
     _size = widget.startSize;
     _scrollController.addListener(() => setState(() {}));
   }
@@ -240,10 +264,7 @@ class _ResizablePaneState extends State<ResizablePane> {
       width: _resizeOnTop ? maxWidth : _size,
       height: _resizeOnTop ? _size : maxHeight,
       decoration: _decoration,
-      constraints: BoxConstraints(
-        maxWidth: widget.maxSize,
-        minWidth: widget.minSize,
-      ).normalize(),
+      constraints: _boxConstraint,
       child: Stack(
         children: [
           SafeArea(
