@@ -8,9 +8,8 @@ analyzer:
   plugins:
     - dart_code_metrics
   exclude:
-    - test/mock_canvas.dart
-    - test/recording_canvas.dart
-
+    - starter_app/**
+    
 dart_code_metrics:
   metrics:
     cyclomatic-complexity: 20
