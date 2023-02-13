@@ -70,9 +70,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (
-                    context,
-                  ) {
+                  builder: (context, _) {
                     capturedContext = context;
                     return MacosPopupButton<String>(
                       value: popupValue,

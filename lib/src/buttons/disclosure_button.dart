@@ -2,28 +2,26 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// A macOS style back button.
-class MacosBackButton extends StatefulWidget {
-  /// Creates a `BackButton` with the appropriate icon/background colors based
+/// A macOS style disclosure button.
+class MacosDisclosureButton extends StatefulWidget {
+  /// Creates a `DisclosureButton` with the appropriate icon/background colors based
   /// on light/dark themes.
-  const MacosBackButton({
+  const MacosDisclosureButton({
     super.key,
-    this.onPressed,
     this.fillColor,
-    this.hoverColor,
     this.semanticLabel,
+    this.isPressed = false,
     this.mouseCursor = SystemMouseCursors.basic,
+    this.onPressed,
   });
 
-  /// An override callback to perform instead of the default behavior which is
-  /// to pop the [Navigator].
+  /// The callback that is called when the button is tapped.
+  ///
+  /// If this is set to null, the button will be disabled.
   final VoidCallback? onPressed;
 
   /// The color to fill the space around the icon with.
   final Color? fillColor;
-
-  /// The color of the button's background when the mouse hovers over the button.
-  final Color? hoverColor;
 
   /// The semantic label used by screen readers.
   final String? semanticLabel;
@@ -31,8 +29,13 @@ class MacosBackButton extends StatefulWidget {
   /// The mouse cursor to use when hovering over this widget.
   final MouseCursor? mouseCursor;
 
-  /// Whether the button is enabled or disabled. Buttons are disabled by default. To
-  /// enable a button, set its [onPressed] property to a non-null value.
+  /// Whether the button is in the active state (chevron pointing up)
+  /// or inactive state (chevron pointing down).
+  final bool isPressed;
+
+  /// Whether the button is enabled or disabled. Buttons are disabled by default.
+  ///
+  /// To enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
 
   @override
@@ -49,20 +52,17 @@ class MacosBackButton extends StatefulWidget {
   }
 
   @override
-  MacosBackButtonState createState() => MacosBackButtonState();
+  MacosDisclosureButtonState createState() => MacosDisclosureButtonState();
 }
 
-class MacosBackButtonState extends State<MacosBackButton>
+class MacosDisclosureButtonState extends State<MacosDisclosureButton>
     with SingleTickerProviderStateMixin {
-  // Eyeballed values. Feel free to tweak.
   static const Duration kFadeOutDuration = Duration(milliseconds: 10);
   static const Duration kFadeInDuration = Duration(milliseconds: 100);
   final Tween<double> _opacityTween = Tween<double>(begin: 1.0);
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
-
-  bool _isHovered = false;
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class MacosBackButtonState extends State<MacosBackButton>
   }
 
   @override
-  void didUpdateWidget(MacosBackButton oldWidget) {
+  void didUpdateWidget(MacosDisclosureButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     _setTween();
   }
@@ -146,23 +146,8 @@ class MacosBackButtonState extends State<MacosBackButton>
           : const Color(0xffF4F5F5);
     }
 
-    Color? hoverColor;
-    if (widget.hoverColor != null) {
-      hoverColor = widget.hoverColor;
-    } else {
-      hoverColor = brightness == Brightness.dark
-          ? const Color(0xff333336)
-          : const Color(0xffF3F2F2);
-    }
-
     return MouseRegion(
       cursor: widget.mouseCursor!,
-      onEnter: (e) {
-        setState(() => _isHovered = true);
-      },
-      onExit: (e) {
-        setState(() => _isHovered = false);
-      },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
@@ -171,37 +156,36 @@ class MacosBackButtonState extends State<MacosBackButton>
         onTap: () {
           if (enabled) {
             widget.onPressed!();
-          } else {
-            Navigator.of(context).maybePop();
           }
         },
         child: Semantics(
           button: true,
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-              minWidth: 20, // eyeballed
-              minHeight: 20, // eyeballed
+              minWidth: 20,
+              minHeight: 20,
             ),
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: AnimatedBuilder(
                 animation: _opacityAnimation,
-                builder: (context, widget) {
+                builder: (context, widget1) {
                   return DecoratedBox(
                     decoration: BoxDecoration(
                       color: buttonHeldDown
                           ? brightness == Brightness.dark
-                              ? const Color(0xff3C383C)
-                              : const Color(0xffE5E5E5)
-                          : _isHovered
-                              ? hoverColor
-                              : fillColor,
+                              ? const MacosColor(0xff3C383C)
+                              : const MacosColor(0xffE5E5E5)
+                          : fillColor,
                       borderRadius: BorderRadius.circular(7),
                     ),
-                    child: Icon(
-                      CupertinoIcons.back,
-                      size: 18, // eyeballed
-                      color: iconColor,
+                    child: RotatedBox(
+                      quarterTurns: widget.isPressed ? 1 : 3,
+                      child: Icon(
+                        CupertinoIcons.back,
+                        size: 14,
+                        color: iconColor,
+                      ),
                     ),
                   );
                 },

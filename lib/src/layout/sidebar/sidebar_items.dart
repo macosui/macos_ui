@@ -364,12 +364,6 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   void _handleTap() {
     setState(() {
       _isExpanded = !_isExpanded;
@@ -459,6 +453,12 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

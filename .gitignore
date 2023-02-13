@@ -31,6 +31,8 @@
 .pub-cache/
 .pub/
 build/
+.fvm/
+metrics
 
 # Android related
 **/android/**/gradle-wrapper.jar

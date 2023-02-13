@@ -16,6 +16,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
   String popupValue = 'One';
   String languagePopupValue = 'English';
   bool switchValue = false;
+  bool isDisclosureButtonPressed = false;
   final _tabController = MacosTabController(initialIndex: 0, length: 3);
 
   @override
@@ -70,9 +71,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
           },
         ),
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
-              // controller: _,
+              controller: scrollController,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
@@ -89,6 +90,23 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       MacosBackButton(
                         onPressed: () => debugPrint('click'),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MacosDisclosureButton'),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MacosDisclosureButton(
+                          isPressed: isDisclosureButtonPressed,
+                          onPressed: () {
+                            debugPrint('click');
+                            setState(() {
+                              isDisclosureButtonPressed =
+                                  !isDisclosureButtonPressed;
+                            });
+                          }),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -150,7 +168,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                   ),
                                   children: [
                                     ContentArea(
-                                      builder: (context) {
+                                      builder: (context, _) {
                                         return Center(
                                           child: PushButton(
                                             buttonSize: ButtonSize.large,
