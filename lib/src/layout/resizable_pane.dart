@@ -116,8 +116,8 @@ class _ResizablePaneState extends State<ResizablePane> {
     final left = Border(left: borderSide);
     final top = Border(top: borderSide);
     return BoxDecoration(
-            border: _resizeOnTop ? top : (_resizeOnRight ? right : left),)
-        .copyWith(
+      border: _resizeOnTop ? top : (_resizeOnRight ? right : left),
+    ).copyWith(
       color: widget.decoration?.color,
       border: widget.decoration?.border,
       borderRadius: widget.decoration?.borderRadius,
