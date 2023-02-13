@@ -115,8 +115,9 @@ class _ResizablePaneState extends State<ResizablePane> {
     final right = Border(right: borderSide);
     final left = Border(left: borderSide);
     final top = Border(top: borderSide);
-    return BoxDecoration(border: _resizeOnTop ? top
-        : (_resizeOnRight ? right : left)).copyWith(
+    return BoxDecoration(
+            border: _resizeOnTop ? top : (_resizeOnRight ? right : left))
+        .copyWith(
       color: widget.decoration?.color,
       border: widget.decoration?.border,
       borderRadius: widget.decoration?.borderRadius,
@@ -129,7 +130,7 @@ class _ResizablePaneState extends State<ResizablePane> {
   }
 
   BoxConstraints get _boxConstraint {
-    if(_resizeOnTop) {
+    if (_resizeOnTop) {
       return BoxConstraints(
         maxHeight: widget.maxSize,
         minHeight: widget.minSize,
@@ -142,81 +143,83 @@ class _ResizablePaneState extends State<ResizablePane> {
   }
 
   Widget get _resizeArea {
-    return _resizeOnTop ? GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: MouseRegion(
-        cursor: _cursor,
-        child: const SizedBox(width: 5),
-      ),
-      onVerticalDragStart: (details) {
-        _dragStartSize = _size;
-        _dragStartPosition = details.globalPosition.dy;
-      },
-      onVerticalDragUpdate: (details) {
-        setState(() {
-          final newHeight = _dragStartSize +
-              (_dragStartPosition - details.globalPosition.dy);
-          _size = math.max(
-            widget.minSize,
-            math.min(
-              widget.maxSize,
-              newHeight,
+    return _resizeOnTop
+        ? GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: MouseRegion(
+              cursor: _cursor,
+              child: const SizedBox(width: 5),
             ),
-          );
-          if (_size == widget.minSize) {
-            _cursor = SystemMouseCursors.resizeUp;
-          } else if (_size == widget.maxSize) {
-            _cursor = SystemMouseCursors.resizeDown;
-          } else {
-            _cursor = SystemMouseCursors.resizeRow;
-          }
-        });
-      },
-    ) :
-    GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: MouseRegion(
-        cursor: _cursor,
-        child: const SizedBox(width: 5),
-      ),
-      onHorizontalDragStart: (details) {
-        _dragStartSize = _size;
-        _dragStartPosition = details.globalPosition.dx;
-      },
-      onHorizontalDragUpdate: (details) {
-        setState(() {
-          final newWidth = _resizeOnRight
-              ? _dragStartSize -
-                  (_dragStartPosition - details.globalPosition.dx)
-              : _dragStartSize +
-                  (_dragStartPosition - details.globalPosition.dx);
-          _size = math.max(
-            widget.minSize,
-            math.min(
-              widget.maxSize,
-              newWidth,
+            onVerticalDragStart: (details) {
+              _dragStartSize = _size;
+              _dragStartPosition = details.globalPosition.dy;
+            },
+            onVerticalDragUpdate: (details) {
+              setState(() {
+                final newHeight = _dragStartSize +
+                    (_dragStartPosition - details.globalPosition.dy);
+                _size = math.max(
+                  widget.minSize,
+                  math.min(
+                    widget.maxSize,
+                    newHeight,
+                  ),
+                );
+                if (_size == widget.minSize) {
+                  _cursor = SystemMouseCursors.resizeUp;
+                } else if (_size == widget.maxSize) {
+                  _cursor = SystemMouseCursors.resizeDown;
+                } else {
+                  _cursor = SystemMouseCursors.resizeRow;
+                }
+              });
+            },
+          )
+        : GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: MouseRegion(
+              cursor: _cursor,
+              child: const SizedBox(width: 5),
             ),
+            onHorizontalDragStart: (details) {
+              _dragStartSize = _size;
+              _dragStartPosition = details.globalPosition.dx;
+            },
+            onHorizontalDragUpdate: (details) {
+              setState(() {
+                final newWidth = _resizeOnRight
+                    ? _dragStartSize -
+                        (_dragStartPosition - details.globalPosition.dx)
+                    : _dragStartSize +
+                        (_dragStartPosition - details.globalPosition.dx);
+                _size = math.max(
+                  widget.minSize,
+                  math.min(
+                    widget.maxSize,
+                    newWidth,
+                  ),
+                );
+                if (_size == widget.minSize) {
+                  _cursor = _resizeOnRight
+                      ? SystemMouseCursors.resizeRight
+                      : SystemMouseCursors.resizeLeft;
+                } else if (_size == widget.maxSize) {
+                  _cursor = _resizeOnRight
+                      ? SystemMouseCursors.resizeLeft
+                      : SystemMouseCursors.resizeRight;
+                } else {
+                  _cursor = SystemMouseCursors.resizeColumn;
+                }
+              });
+            },
           );
-          if (_size == widget.minSize) {
-            _cursor = _resizeOnRight
-                ? SystemMouseCursors.resizeRight
-                : SystemMouseCursors.resizeLeft;
-          } else if (_size == widget.maxSize) {
-            _cursor = _resizeOnRight
-                ? SystemMouseCursors.resizeLeft
-                : SystemMouseCursors.resizeRight;
-          } else {
-            _cursor = SystemMouseCursors.resizeColumn;
-          }
-        });
-      },
-    );
   }
 
   @override
   void initState() {
     super.initState();
-    _cursor = _resizeOnTop ? SystemMouseCursors.resizeRow
+    _cursor = _resizeOnTop
+        ? SystemMouseCursors.resizeRow
         : SystemMouseCursors.resizeColumn;
     _size = widget.startSize;
     _scrollController.addListener(() => setState(() {}));
@@ -248,7 +251,7 @@ class _ResizablePaneState extends State<ResizablePane> {
     final maxHeight = media.size.height;
     final maxWidth = media.size.width;
 
-    if(_resizeOnTop) {
+    if (_resizeOnTop) {
       if (widget.windowBreakpoint != null &&
           maxHeight <= widget.windowBreakpoint!) {
         return const SizedBox.shrink();
@@ -275,7 +278,7 @@ class _ResizablePaneState extends State<ResizablePane> {
               child: widget.builder(context, _scrollController),
             ),
           ),
-          if (widget.isResizable && !_resizeOnRight)
+          if (widget.isResizable && !_resizeOnRight && !_resizeOnTop)
             Positioned(
               left: 0,
               width: 5,

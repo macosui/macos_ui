@@ -106,8 +106,8 @@ class _BottomResizablePaneState extends State<BottomResizablePane> {
       },
       onVerticalDragUpdate: (details) {
         setState(() {
-          final newHeight = _dragStartSize +
-              (_dragStartPosition - details.globalPosition.dy);
+          final newHeight =
+              _dragStartSize + (_dragStartPosition - details.globalPosition.dy);
           _size = math.max(
             widget.minSize,
             math.min(

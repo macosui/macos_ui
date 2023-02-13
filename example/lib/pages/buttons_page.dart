@@ -450,7 +450,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     return const Center(
                       child: Text('Bottom Resizable Pane'),
                     );
-                  }, resizableSide: ResizableSide.top,
+                  },
+                  resizableSide: ResizableSide.top,
                 )
               ],
             );

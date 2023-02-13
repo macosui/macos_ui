@@ -3,7 +3,7 @@
 * `ResizablePane.startWidth` has been changed to `ResizablePane.startSize`
 * `ResizablePane.minWidth` has been changed to `ResizablePane.minSize`
 * `ResizablePane.maxWidth` has been changed to `ResizablePane.maxSize`
-* `ResizablePane` can now be vertically resized vertically
+* `ResizablePane` can now be vertically resized
 
 ## [1.10.0]
 * Added implementation of `MacosDisclosureButton`
