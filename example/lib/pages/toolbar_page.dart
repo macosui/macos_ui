@@ -156,26 +156,28 @@ class _ToolbarPageState extends State<ToolbarPage> {
         ],
       ),
       children: [
-        ContentArea(builder: (context) {
-          return const SingleChildScrollView(
-            padding: EdgeInsets.all(30),
-            child: Center(
-              child: Column(
-                children: [
-                  Text(
-                    "The toolbar appears below the title bar of the macOS app or integrates with it.",
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20.0),
-                  Text(
-                    "It provides convenient access to frequently used commands and features.",
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+        ContentArea(
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(30),
+              child: Center(
+                child: Column(
+                  children: const [
+                    Text(
+                      "The toolbar appears below the title bar of the macOS app or integrates with it.",
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(
+                      "It provides convenient access to frequently used commands and features.",
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ],
     );
   }

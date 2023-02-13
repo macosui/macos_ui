@@ -179,15 +179,6 @@ class PushButtonState extends State<PushButton>
     _opacityTween.end = widget.pressedOpacity ?? 1.0;
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @visibleForTesting
-  bool buttonHeldDown = false;
-
   void _handleTapDown(TapDownDetails event) {
     if (!buttonHeldDown) {
       buttonHeldDown = true;
@@ -219,6 +210,15 @@ class PushButtonState extends State<PushButton>
       if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   @override
   Widget build(BuildContext context) {

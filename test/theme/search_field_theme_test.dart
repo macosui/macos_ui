@@ -65,7 +65,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context) {
+                  builder: (context, scrollController) {
                     capturedContext = context;
                     return const Center(
                       child: MacosSearchField(),
