@@ -448,7 +448,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   //windowBreakpoint: 600,
                   builder: (_, __) {
                     return const Center(
-                      child: Text('Bottom Resizable Pane'),
+                      child: Text('Resizable Pane'),
                     );
                   },
                   resizableSide: ResizableSide.top,
