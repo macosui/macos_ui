@@ -60,8 +60,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
       ),
       children: [
         ResizablePane(
-          minWidth: 180,
-          startWidth: 200,
+          minSize: 180,
+          startSize: 200,
           windowBreakpoint: 700,
           resizableSide: ResizableSide.right,
           builder: (_, __) {
@@ -186,8 +186,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                             },
                                           ),
                                           ResizablePane(
-                                            minWidth: 180,
-                                            startWidth: 200,
+                                            minSize: 180,
+                                            startSize: 200,
                                             windowBreakpoint: 700,
                                             resizableSide: ResizableSide.left,
                                             builder: (_, __) {
@@ -442,23 +442,24 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ),
                   ),
                 ),
-                BottomResizablePane(
-                  minHeight: 50,
-                  startHeight: 200,
+                ResizablePane(
+                  minSize: 50,
+                  startSize: 200,
                   //windowBreakpoint: 600,
                   builder: (_, __) {
                     return const Center(
-                      child: Text('Bottom Resizable Pane'),
+                      child: Text('Resizable Pane'),
                     );
                   },
+                  resizableSide: ResizableSide.top,
                 )
               ],
             );
           },
         ),
         ResizablePane(
-          minWidth: 180,
-          startWidth: 200,
+          minSize: 180,
+          startSize: 200,
           windowBreakpoint: 800,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
