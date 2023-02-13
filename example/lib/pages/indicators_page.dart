@@ -33,20 +33,21 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
       ),
       children: [
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
+                    value: capacitorValue,
+                    onChanged: (v) => setState(() => capacitorValue = v),
+                    splits: 20,
                     discrete: true,
                   ),
                   const SizedBox(height: 20),
                   CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
+                    value: capacitorValue,
+                    onChanged: (v) => setState(() => capacitorValue = v),
                   ),
                   const SizedBox(height: 20),
                   MacosSlider(

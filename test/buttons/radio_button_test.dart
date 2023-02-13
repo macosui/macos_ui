@@ -20,7 +20,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context) {
+                builder: (context, _) {
                   return Center(
                     child: MacosRadioButton<TestOptions>(
                       value: TestOptions.first,
@@ -53,7 +53,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context) {
+                builder: (context, _) {
                   return Center(
                     child: MacosRadioButton<TestOptions>(
                       value: TestOptions.second,

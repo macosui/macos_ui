@@ -55,7 +55,9 @@ void main() {
               children: [
                 resizablePane,
                 ContentArea(
-                  builder: (context) => const Text('Hello there'),
+                  builder: (context, scrollController) {
+                    return const Text('Hello there');
+                  },
                 ),
               ],
             ),

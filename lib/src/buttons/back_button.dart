@@ -88,12 +88,6 @@ class MacosBackButtonState extends State<MacosBackButton>
     _opacityTween.end = 1.0;
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
   @visibleForTesting
   bool buttonHeldDown = false;
 
@@ -127,6 +121,12 @@ class MacosBackButtonState extends State<MacosBackButton>
     ticker.then<void>((void value) {
       if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override

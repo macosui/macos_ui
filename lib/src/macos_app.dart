@@ -302,22 +302,6 @@ class MacosApp extends StatefulWidget {
 class _MacosAppState extends State<MacosApp> {
   bool get _usesRouter => widget.routerDelegate != null;
 
-  @override
-  Widget build(BuildContext context) {
-    // leaves room for assertions, etc
-    Widget result = _buildMacosApp(context);
-    return result;
-  }
-
-  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
-    if (widget.localizationsDelegates != null) {
-      yield* widget.localizationsDelegates!;
-    }
-    yield DefaultMaterialLocalizations.delegate;
-    yield DefaultCupertinoLocalizations.delegate;
-    yield DefaultWidgetsLocalizations.delegate;
-  }
-
   Widget _macosBuilder(BuildContext context, Widget? child) {
     final mode = widget.themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
@@ -381,6 +365,7 @@ class _MacosAppState extends State<MacosApp> {
         debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
         shortcuts: widget.shortcuts,
         actions: widget.actions,
+        scrollBehavior: widget.scrollBehavior,
       );
     }
     return c.CupertinoApp(
@@ -409,7 +394,24 @@ class _MacosAppState extends State<MacosApp> {
       debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
       shortcuts: widget.shortcuts,
       actions: widget.actions,
+      scrollBehavior: widget.scrollBehavior,
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // leaves room for assertions, etc
+    Widget result = _buildMacosApp(context);
+    return result;
+  }
+
+  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
+    if (widget.localizationsDelegates != null) {
+      yield* widget.localizationsDelegates!;
+    }
+    yield DefaultMaterialLocalizations.delegate;
+    yield DefaultCupertinoLocalizations.delegate;
+    yield DefaultWidgetsLocalizations.delegate;
   }
 }
 
@@ -427,6 +429,11 @@ class MacosScrollBehavior extends ScrollBehavior {
   /// Creates a MacosScrollBehavior that decorates [Scrollable]s with
   /// [MacosScrollbar]s based on the current platform and provided [ScrollableDetails].
   const MacosScrollBehavior();
+
+  /*@override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.mouse,
+  };*/
 
   @override
   Widget buildScrollbar(context, child, details) {

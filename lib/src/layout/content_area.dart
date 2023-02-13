@@ -16,7 +16,7 @@ class ContentArea extends StatelessWidget {
   }) : super(key: const Key('macos_scaffold_content_area'));
 
   /// The builder that creates a child to display in this widget.
-  final WidgetBuilder? builder;
+  final ScrollableWidgetBuilder? builder;
 
   /// Specifies the minimum width that this [ContentArea] can have.
   final double minWidth;
@@ -30,7 +30,7 @@ class ContentArea extends StatelessWidget {
       child: SafeArea(
         left: false,
         right: false,
-        child: builder!(context),
+        child: builder!(context, ScrollController()),
       ),
     );
   }

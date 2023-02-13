@@ -71,13 +71,13 @@ class _ButtonsPageState extends State<ButtonsPage> {
           },
         ),
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return Column(
               children: [
                 Flexible(
                   fit: FlexFit.loose,
                   child: SingleChildScrollView(
-                    // controller: _,
+                    controller: scrollController,
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
@@ -108,7 +108,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                   debugPrint('click');
                                   setState(() {
                                     isDisclosureButtonPressed =
-                                        !isDisclosureButtonPressed;
+                                    !isDisclosureButtonPressed;
                                   });
                                 }),
                           ],
@@ -172,22 +172,21 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                         ),
                                         children: [
                                           ContentArea(
-                                            builder: (context) {
+                                            builder: (context, _) {
                                               return Center(
                                                 child: PushButton(
                                                   buttonSize: ButtonSize.large,
                                                   child: const Text('Go Back'),
                                                   onPressed: () {
-                                                    Navigator.of(context)
-                                                        .maybePop();
+                                                    Navigator.of(context).maybePop();
                                                   },
                                                 ),
                                               );
                                             },
                                           ),
                                           ResizablePane(
-                                            minSize: 180,
-                                            startSize: 200,
+                                            minWidth: 180,
+                                            startWidth: 200,
                                             windowBreakpoint: 700,
                                             resizableSide: ResizableSide.left,
                                             builder: (_, __) {
@@ -234,8 +233,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               items: [
                                 MacosPulldownMenuItem(
                                   title: const Text('Open in Preview'),
-                                  onTap: () =>
-                                      debugPrint("Opening in preview..."),
+                                  onTap: () => debugPrint("Opening in preview..."),
                                 ),
                                 MacosPulldownMenuItem(
                                   title: const Text('Save as PDF...'),
@@ -244,15 +242,13 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                 MacosPulldownMenuItem(
                                   enabled: false,
                                   title: const Text('Save as Postscript'),
-                                  onTap: () =>
-                                      debugPrint("Saving as Postscript..."),
+                                  onTap: () => debugPrint("Saving as Postscript..."),
                                 ),
                                 const MacosPulldownMenuDivider(),
                                 MacosPulldownMenuItem(
                                   enabled: false,
                                   title: const Text('Save to iCloud Drive'),
-                                  onTap: () =>
-                                      debugPrint("Saving to iCloud..."),
+                                  onTap: () => debugPrint("Saving to iCloud..."),
                                 ),
                                 MacosPulldownMenuItem(
                                   enabled: false,
@@ -262,8 +258,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                 ),
                                 MacosPulldownMenuItem(
                                   title: const Text('Send in Mail...'),
-                                  onTap: () =>
-                                      debugPrint("Sending via Mail..."),
+                                  onTap: () => debugPrint("Sending via Mail..."),
                                 ),
                                 const MacosPulldownMenuDivider(),
                                 MacosPulldownMenuItem(
@@ -289,8 +284,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               items: [
                                 MacosPulldownMenuItem(
                                   title: const Text('New Folder'),
-                                  onTap: () =>
-                                      debugPrint("Creating new folder..."),
+                                  onTap: () => debugPrint("Creating new folder..."),
                                 ),
                                 MacosPulldownMenuItem(
                                   title: const Text('Open'),
@@ -339,12 +333,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               onChanged: (String? newValue) {
                                 setState(() => popupValue = newValue!);
                               },
-                              items: <String>[
-                                'One',
-                                'Two',
-                                'Three',
-                                'Four'
-                              ].map<MacosPopupMenuItem<String>>((String value) {
+                              items: <String>['One', 'Two', 'Three', 'Four']
+                                  .map<MacosPopupMenuItem<String>>((String value) {
                                 return MacosPopupMenuItem<String>(
                                   value: value,
                                   child: Text(value),

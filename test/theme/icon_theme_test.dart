@@ -66,7 +66,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context) {
+                builder: (context, _) {
                   capturedContext = context;
                   return const MacosIcon(
                     CupertinoIcons.add,
