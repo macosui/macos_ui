@@ -186,8 +186,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                             },
                                           ),
                                           ResizablePane(
-                                            minWidth: 180,
-                                            startWidth: 200,
+                                            minSize: 180,
+                                            startSize: 200,
                                             windowBreakpoint: 700,
                                             resizableSide: ResizableSide.left,
                                             builder: (_, __) {

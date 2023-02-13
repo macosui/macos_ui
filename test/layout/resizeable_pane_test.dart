@@ -32,7 +32,7 @@ void main() {
                     child: MacosScaffold(
                       children: [
                         ContentArea(
-                          builder: (context) {
+                          builder: (context, scrollController) {
                             return Column(
                               children: [
                                 const Flexible(
