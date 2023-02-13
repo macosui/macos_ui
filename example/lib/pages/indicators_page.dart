@@ -39,15 +39,15 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
               child: Column(
                 children: [
                   CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
+                    value: capacitorValue,
+                    onChanged: (v) => setState(() => capacitorValue = v),
                     splits: 20,
                     discrete: true,
                   ),
                   const SizedBox(height: 20),
                   CapacityIndicator(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
+                    value: capacitorValue,
+                    onChanged: (v) => setState(() => capacitorValue = v),
                   ),
                   const SizedBox(height: 20),
                   MacosSlider(
