@@ -10,9 +10,9 @@ void main() {
       bool verticallyResizable = side == ResizableSide.top;
 
       group(
-          side == ResizableSide.top
-              ? "top"
-              : (side == ResizableSide.left ? "left" : "right"), () {
+        side == ResizableSide.top
+            ? "top"
+            : (side == ResizableSide.left ? "left" : "right"), () {
         const double maxSize = 300;
         const double minSize = 100;
         const double startSize = 200;
@@ -27,40 +27,40 @@ void main() {
 
         final view = side == ResizableSide.top
             ? MacosApp(
-                home: MacosWindow(
-                  child: MacosScaffold(
-                    children: [
-                      ContentArea(
-                        builder: (context) {
-                          return Column(
-                            children: [
-                              const Flexible(
-                                fit: FlexFit.loose,
-                                child: Center(
-                                  child: Text('Hello there'),
-                                ),
-                              ),
-                              resizablePane,
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context) {
+                    return Column(
+                      children: [
+                        const Flexible(
+                          fit: FlexFit.loose,
+                          child: Center(
+                            child: Text('Hello there'),
+                          ),
+                        ),
+                        resizablePane,
+                      ],
+                    );
+                  },
                 ),
-              )
+              ],
+            ),
+          ),
+        )
             : MacosApp(
-                home: MacosWindow(
-                  child: MacosScaffold(
-                    children: [
-                      resizablePane,
-                      ContentArea(
-                        builder: (context) => const Text('Hello there'),
-                      ),
-                    ],
-                  ),
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                resizablePane,
+                ContentArea(
+                  builder: (context) => const Text('Hello there'),
                 ),
-              );
+              ],
+            ),
+          ),
+        );
 
         final resizablePaneFinder = find.byWidget(resizablePane);
         final dragFinder = find.descendant(
@@ -78,7 +78,7 @@ void main() {
           await tester.pumpWidget(view);
 
           var resizablePaneRenderObject =
-              tester.renderObject<RenderBox>(resizablePaneFinder);
+          tester.renderObject<RenderBox>(resizablePaneFinder);
           var initialSize = verticallyResizable
               ? resizablePaneRenderObject.size.height
               : resizablePaneRenderObject.size.width;
@@ -96,7 +96,7 @@ void main() {
           await tester.pump();
 
           var resizablePaneRenderObject =
-              tester.renderObject<RenderBox>(resizablePaneFinder);
+          tester.renderObject<RenderBox>(resizablePaneFinder);
           expect(
             verticallyResizable
                 ? resizablePaneRenderObject.size.height
@@ -117,7 +117,7 @@ void main() {
           await tester.pump();
 
           var resizablePaneRenderObject =
-              tester.renderObject<RenderBox>(resizablePaneFinder);
+          tester.renderObject<RenderBox>(resizablePaneFinder);
           var currentSize = verticallyResizable
               ? resizablePaneRenderObject.size.height
               : resizablePaneRenderObject.size.width;
@@ -126,7 +126,7 @@ void main() {
 
         testWidgets(
           'drag events past maxSize have no effect $side',
-          (tester) async {
+              (tester) async {
             await tester.pumpWidget(view);
 
             final dragStartLocation = tester.getCenter(dragFinder);
@@ -145,7 +145,7 @@ void main() {
             await tester.pump();
 
             var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            tester.renderObject<RenderBox>(resizablePaneFinder);
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
@@ -163,7 +163,7 @@ void main() {
           await tester.pump();
 
           var resizablePaneRenderObject =
-              tester.renderObject<RenderBox>(resizablePaneFinder);
+          tester.renderObject<RenderBox>(resizablePaneFinder);
           var currentSize = verticallyResizable
               ? resizablePaneRenderObject.size.height
               : resizablePaneRenderObject.size.width;
@@ -185,7 +185,7 @@ void main() {
           await tester.pump();
 
           var resizablePaneRenderObject =
-              tester.renderObject<RenderBox>(resizablePaneFinder);
+          tester.renderObject<RenderBox>(resizablePaneFinder);
           var currentSize = verticallyResizable
               ? resizablePaneRenderObject.size.height
               : resizablePaneRenderObject.size.width;
@@ -194,7 +194,7 @@ void main() {
 
         testWidgets(
           'drag events past minSize have no effect',
-          (tester) async {
+              (tester) async {
             await tester.pumpWidget(view);
 
             final dragStartLocation = tester.getCenter(dragFinder);
@@ -213,14 +213,14 @@ void main() {
             await tester.pump();
 
             var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            tester.renderObject<RenderBox>(resizablePaneFinder);
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
             expect(currentSize, minSize);
           },
         );
-      });
+      },);
     }
   });
 }
