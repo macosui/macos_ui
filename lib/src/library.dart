@@ -28,7 +28,8 @@ export 'package:flutter/material.dart'
         DateUtils,
         TimeOfDay,
         DayPeriod,
-        FlexibleSpaceBar;
+        FlexibleSpaceBar,
+        MaterialState;
 export 'package:flutter/widgets.dart';
 
 export 'utils.dart';

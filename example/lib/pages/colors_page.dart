@@ -28,7 +28,7 @@ class _ColorsPageState extends State<ColorsPage> {
       ),
       children: [
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(

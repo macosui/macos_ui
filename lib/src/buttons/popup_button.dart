@@ -1007,11 +1007,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
   late Map<Type, Action<Intent>> _actionMap;
   late FocusHighlightMode _focusHighlightMode;
 
-  // Only used if needed to create _internalNode.
-  FocusNode _createFocusNode() {
-    return FocusNode(debugLabel: '${widget.runtimeType}');
-  }
-
   @override
   void initState() {
     super.initState();
@@ -1034,14 +1029,22 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _removeMacosPopupRoute();
-    WidgetsBinding.instance.focusManager
-        .removeHighlightModeListener(_handleFocusHighlightModeChange);
-    focusNode!.removeListener(_handleFocusChanged);
-    _internalNode?.dispose();
-    super.dispose();
+  void didUpdateWidget(MacosPopupButton<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusNode != oldWidget.focusNode) {
+      oldWidget.focusNode?.removeListener(_handleFocusChanged);
+      if (widget.focusNode == null) {
+        _internalNode ??= _createFocusNode();
+      }
+      _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
+      focusNode!.addListener(_handleFocusChanged);
+    }
+    _updateSelectedIndex();
+  }
+
+  // Only used if needed to create _internalNode.
+  FocusNode _createFocusNode() {
+    return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
   void _removeMacosPopupRoute() {
@@ -1060,20 +1063,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       return;
     }
     setState(() => _focusHighlightMode = mode);
-  }
-
-  @override
-  void didUpdateWidget(MacosPopupButton<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.focusNode != oldWidget.focusNode) {
-      oldWidget.focusNode?.removeListener(_handleFocusChanged);
-      if (widget.focusNode == null) {
-        _internalNode ??= _createFocusNode();
-      }
-      _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
-      focusNode!.addListener(_handleFocusChanged);
-    }
-    _updateSelectedIndex();
   }
 
   void _updateSelectedIndex() {
@@ -1099,9 +1088,6 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       }
     }
   }
-
-  TextStyle? get _textStyle =>
-      widget.style ?? MacosTheme.of(context).typography.body;
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
@@ -1160,6 +1146,20 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
 
     widget.onTap?.call();
   }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _removeMacosPopupRoute();
+    WidgetsBinding.instance.focusManager
+        .removeHighlightModeListener(_handleFocusHighlightModeChange);
+    focusNode!.removeListener(_handleFocusChanged);
+    _internalNode?.dispose();
+    super.dispose();
+  }
+
+  TextStyle? get _textStyle =>
+      widget.style ?? MacosTheme.of(context).typography.body;
 
   bool get _enabled =>
       widget.items != null &&

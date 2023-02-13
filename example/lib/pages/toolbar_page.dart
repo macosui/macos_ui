@@ -158,184 +158,25 @@ class _ToolbarPageState extends State<ToolbarPage> {
       ),
       children: [
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
+              controller: scrollController,
               padding: const EdgeInsets.all(30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Toolbars provide convenient access to frequently used menu actions and features.',
-                  ),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      const Text(
-                          'There is also a variant of this widget called SliverToolBar.'),
-                      const SizedBox(width: 4),
-                      PushButton(
-                        buttonSize: ButtonSize.small,
-                        child: const Text('Check it out'),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const SliverToolBarPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class SliverToolBarPage extends StatefulWidget {
-  const SliverToolBarPage({super.key});
-
-  @override
-  State<SliverToolBarPage> createState() => _SliverToolBarPageState();
-}
-
-class _SliverToolBarPageState extends State<SliverToolBarPage> {
-  double toolbarOpacity = 0.9;
-  bool pinned = true;
-  bool floating = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final brightness = MacosTheme.brightnessOf(context);
-    return MacosScaffold(
-      children: [
-        ContentArea(
-          builder: (context) {
-            return CustomScrollView(
-              slivers: [
-                SliverToolBar(
-                  pinned: pinned,
-                  floating: floating,
-                  title: const Text('Toolbar'),
-                  titleWidth: 100.0,
-                  toolbarOpacity: toolbarOpacity,
-                  actions: [
-                    ToolBarIconButton(
-                      label: 'Pinned',
-                      icon: MacosIcon(
-                        pinned ? CupertinoIcons.pin_fill : CupertinoIcons.pin,
-                      ),
-                      showLabel: false,
-                      tooltipMessage: pinned ? 'Unpin toolbar' : 'Pin toolbar',
-                      onPressed: () {
-                        setState(() => pinned = !pinned);
-                      },
+              child: Center(
+                child: Column(
+                  children: const [
+                    Text(
+                      'The toolbar appears below the title bar of the macOS app or integrates with it.',
+                      textAlign: TextAlign.center,
                     ),
-                    CustomToolbarItem(
-                      inToolbarBuilder: (context) {
-                        return MacosTooltip(
-                          message: 'Opacity',
-                          child: MacosPulldownButtonTheme(
-                            data: MacosTheme.of(context)
-                                .pulldownButtonTheme
-                                .copyWith(
-                                  iconColor: brightness.resolve(
-                                    const Color.fromRGBO(0, 0, 0, 0.5),
-                                    const Color.fromRGBO(255, 255, 255, 0.5),
-                                  ),
-                                ),
-                            child: MacosPulldownButton(
-                              icon: CupertinoIcons.square_stack_3d_down_right,
-                              items: [
-                                MacosPulldownMenuItem(
-                                  title: const Text('25%'),
-                                  onTap: () {
-                                    setState(() => toolbarOpacity = 0.25);
-                                  },
-                                ),
-                                MacosPulldownMenuItem(
-                                  title: const Text('50%'),
-                                  onTap: () {
-                                    setState(() => toolbarOpacity = 0.5);
-                                  },
-                                ),
-                                MacosPulldownMenuItem(
-                                  title: const Text('75%'),
-                                  onTap: () {
-                                    setState(() => toolbarOpacity = 0.75);
-                                  },
-                                ),
-                                MacosPulldownMenuItem(
-                                  title: const Text('90% (Default)'),
-                                  onTap: () {
-                                    setState(() => toolbarOpacity = 0.90);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    ToolBarIconButton(
-                      icon: MacosIcon(
-                        floating
-                            ? CupertinoIcons.arrow_up_down_circle_fill
-                            : CupertinoIcons.arrow_up_down_circle,
-                      ),
-                      tooltipMessage: floating ? 'Floating on' : 'Floating off',
-                      label: floating ? 'Floating on' : 'Floating off',
-                      showLabel: false,
-                      onPressed: () {
-                        setState(() => floating = !floating);
-                      },
+                    SizedBox(height: 20.0),
+                    Text(
+                      'It provides convenient access to frequently used commands and features.',
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-                const SliverPadding(
-                  padding: EdgeInsets.all(16.0),
-                  sliver: SliverToBoxAdapter(
-                    child: Text(
-                      'SliverToolBar is similar to Flutter\'s material SliverAppBar in the sense that it can be used directly in a CustomScrollView or a NestedScrollView. It is most useful for allowing content scrolled underneath them to be slightly visible, which is an effect that can be observed in Apple\'s App Store app.',
-                    ),
-                  ),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  sliver: SliverToBoxAdapter(
-                    child: Text(
-                      'Try adjusting the options for the SliverToolBar on this page by using the buttons on the toolbar itself.',
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 16),
-                ),
-                SliverToBoxAdapter(
-                  child: Row(
-                    children: const [
-                      FlutterLogo(size: 200.0),
-                    ],
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 16),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate.fixed([
-                    ...List<Widget>.generate(
-                      100,
-                      (index) => MacosListTile(
-                        title: Text('Item $index'),
-                      ),
-                    ),
-                  ]),
-                ),
-              ],
+              ),
             );
           },
         ),
