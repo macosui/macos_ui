@@ -114,12 +114,6 @@ class HelpButtonState extends State<HelpButton>
     _opacityTween.end = widget.pressedOpacity ?? 1.0;
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
   @visibleForTesting
   bool buttonHeldDown = false;
 
@@ -153,6 +147,12 @@ class HelpButtonState extends State<HelpButton>
     ticker.then<void>((void value) {
       if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override

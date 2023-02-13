@@ -74,6 +74,31 @@ class _MacosTabViewState extends State<MacosTabView> {
   late List<Widget> _childrenWithKey;
   int? _currentIndex;
 
+  @override
+  void initState() {
+    super.initState();
+    _updateChildren();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateTabController();
+    _currentIndex = widget.controller.index;
+  }
+
+  @override
+  void didUpdateWidget(MacosTabView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      _updateTabController();
+      _currentIndex = widget.controller.index;
+    }
+    if (widget.children != oldWidget.children) {
+      _updateChildren();
+    }
+  }
+
   int get _tabRotation {
     switch (widget.position) {
       case MacosTabPosition.left:
@@ -101,39 +126,14 @@ class _MacosTabViewState extends State<MacosTabView> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _updateChildren();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _updateTabController();
-    _currentIndex = widget.controller.index;
-  }
-
-  @override
-  void didUpdateWidget(MacosTabView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.controller != oldWidget.controller) {
-      _updateTabController();
-      _currentIndex = widget.controller.index;
-    }
-    if (widget.children != oldWidget.children) {
-      _updateChildren();
-    }
+  void _updateChildren() {
+    _childrenWithKey = KeyedSubtree.ensureUniqueKeysForList(widget.children);
   }
 
   @override
   void dispose() {
     widget.controller.removeListener(_handleTabControllerTick);
     super.dispose();
-  }
-
-  void _updateChildren() {
-    _childrenWithKey = KeyedSubtree.ensureUniqueKeysForList(widget.children);
   }
 
   @override

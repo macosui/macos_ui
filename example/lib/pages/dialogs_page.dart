@@ -29,7 +29,7 @@ class _DialogsPageState extends State<DialogsPage> {
       ),
       children: [
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Center(

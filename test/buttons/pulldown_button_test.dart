@@ -22,7 +22,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context) {
+                    builder: (context, scrollController) {
                       return Center(
                         child: MacosPulldownButton(
                           title: "test",
@@ -67,7 +67,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosPulldownButton(
                           title: "test",

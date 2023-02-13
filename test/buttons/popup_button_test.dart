@@ -17,7 +17,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context) {
+                    builder: (context, scrollController) {
                       return StatefulBuilder(
                         builder: (context, setState) {
                           return MacosPopupButton<String>(

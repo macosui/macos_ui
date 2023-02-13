@@ -14,7 +14,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context) {
+                    builder: (context, scrollController) {
                       return Center(
                         child: MacosSegmentedControl(
                           controller: controller,
@@ -59,7 +59,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosSegmentedControl(
                           controller: controller,

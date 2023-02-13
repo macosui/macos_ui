@@ -2,6 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+CupertinoDynamicColor _kScrollbarColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColors.systemGrayColor.color.withOpacity(.8),
+  darkColor: MacosColors.systemGrayColor.darkColor.withOpacity(.8),
+);
+
 /// Applies a macOS-style theme to descendant macOS widgets.
 ///
 /// Affects the color and text styles of macOS widgets whose styling
@@ -238,7 +243,13 @@ class MacosThemeData with Diagnosticable {
       brightness: _brightness,
       textStyle: typography.callout,
     );
-    scrollbarTheme ??= const MacosScrollbarThemeData();
+    scrollbarTheme ??= MacosScrollbarThemeData(
+      thickness: 6.0,
+      thicknessWhileHovering: 9.0,
+      thumbColor: isDark ? _kScrollbarColor.darkColor : _kScrollbarColor.color,
+      radius: const Radius.circular(25),
+      thumbVisibility: false,
+    );
     macosIconButtonTheme ??= MacosIconButtonThemeData(
       backgroundColor: MacosColors.transparent,
       disabledColor: isDark
