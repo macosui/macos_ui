@@ -8,7 +8,8 @@ analyzer:
   plugins:
     - dart_code_metrics
   exclude:
-    - starter_app/**
+    - test/mock_canvas.dart
+    - test/recording_canvas.dart
     
 dart_code_metrics:
   metrics:
