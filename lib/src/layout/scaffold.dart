@@ -2,17 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/content_area.dart';
-import 'package:macos_ui/src/layout/resizable_pane.dart';
-import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
-import 'package:macos_ui/src/layout/title_bar.dart';
-import 'package:macos_ui/src/layout/toolbar/toolbar.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinted_area.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_data.dart';
-import 'package:macos_ui/src/layout/window.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/theme/macos_theme.dart';
-import 'package:macos_window_utils/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
 
 /// A macOS page widget.
 ///
