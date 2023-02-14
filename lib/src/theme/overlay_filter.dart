@@ -1,15 +1,14 @@
 import 'dart:ui';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_cubit.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_override.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// {@template macosOverlayFilter}
 /// Applies a blur filter to its child to create a macOS-style "frosted glass"
 /// effect.
 /// {@endtemplate}
-class MacosOverlayFilter extends StatefulWidget {
+class MacosOverlayFilter extends StatelessWidget {
   /// {@macro macosOverlayFilter}
   ///
   /// Used mainly for the overlays that appear from various macOS-style widgets,
@@ -35,69 +34,46 @@ class MacosOverlayFilter extends StatefulWidget {
   final Color? color;
 
   @override
-  State<MacosOverlayFilter> createState() => _MacosOverlayFilterState();
-}
-
-class _MacosOverlayFilterState extends State<MacosOverlayFilter> {
-  WallpaperTintingSettingsCubit? _wallpaperTintingSettingsCubit;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _wallpaperTintingSettingsCubit?.removeWallpaperTintingOverride();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_wallpaperTintingSettingsCubit == null) {
-      _wallpaperTintingSettingsCubit =
-          context.read<WallpaperTintingSettingsCubit?>();
-      _wallpaperTintingSettingsCubit?.addWallpaperTintingOverride();
-    }
-
     final brightness = MacosTheme.brightnessOf(context);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: widget.color ??
-            (brightness.isDark
-                ? const Color.fromRGBO(30, 30, 30, 1)
-                : const Color.fromRGBO(242, 242, 247, 1)),
-        boxShadow: [
-          BoxShadow(
-            color: brightness
-                .resolve(
-                  CupertinoColors.systemGrey.color,
-                  CupertinoColors.black,
-                )
-                .withOpacity(0.25),
-            offset: const Offset(0, 4),
-            spreadRadius: 4.0,
-            blurRadius: 8.0,
+    return WallpaperTintingOverride(
+      child: Container(
+        decoration: BoxDecoration(
+          color: color ??
+              (brightness.isDark
+                  ? const Color.fromRGBO(30, 30, 30, 1)
+                  : const Color.fromRGBO(242, 242, 247, 1)),
+          boxShadow: [
+            BoxShadow(
+              color: brightness
+                  .resolve(
+                    CupertinoColors.systemGrey.color,
+                    CupertinoColors.black,
+                  )
+                  .withOpacity(0.25),
+              offset: const Offset(0, 4),
+              spreadRadius: 4.0,
+              blurRadius: 8.0,
+            ),
+          ],
+          border: Border.all(
+            color: brightness.resolve(
+              CupertinoColors.systemGrey3.color,
+              CupertinoColors.systemGrey3.darkColor,
+            ),
           ),
-        ],
-        border: Border.all(
-          color: brightness.resolve(
-            CupertinoColors.systemGrey3.color,
-            CupertinoColors.systemGrey3.darkColor,
-          ),
+          borderRadius: borderRadius,
         ),
-        borderRadius: widget.borderRadius,
-      ),
-      child: ClipRRect(
-        borderRadius: widget.borderRadius,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 20.0,
-            sigmaY: 20.0,
+        child: ClipRRect(
+          borderRadius: borderRadius,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 20.0,
+              sigmaY: 20.0,
+            ),
+            child: child,
           ),
-          child: widget.child,
         ),
       ),
     );

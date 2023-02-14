@@ -2,15 +2,12 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:macos_ui/src/indicators/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
 import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
 import 'package:macos_ui/src/layout/title_bar.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_cubit.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_data.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 import 'package:macos_window_utils/widgets/transparent_macos_sidebar.dart';
@@ -172,335 +169,325 @@ class _MacosWindowState extends State<MacosWindow> {
     const curve = Curves.linearToEaseOut;
     final duration = Duration(milliseconds: _sidebarSlideDuration);
 
-    return BlocProvider(
-      create: (context) => WallpaperTintingSettingsCubit(
-        WallpaperTintingSettingsData(
-          isWallpaperTintingInitiallyEnabled: !widget.disableWallpaperTinting,
-        ),
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
-          final isAtBreakpoint =
-              width <= (widget.sidebar?.windowBreakpoint ?? 0);
-          final isAtEndBreakpoint =
-              width <= (widget.endSidebar?.windowBreakpoint ?? 0);
-          final canShowSidebar = _showSidebar && !isAtBreakpoint;
-          final canShowEndSidebar = _showEndSidebar && !isAtEndBreakpoint;
-          final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
-          final visibleEndSidebarWidth =
-              canShowEndSidebar ? _endSidebarWidth : 0.0;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final height = constraints.maxHeight;
+        final isAtBreakpoint = width <= (widget.sidebar?.windowBreakpoint ?? 0);
+        final isAtEndBreakpoint =
+            width <= (widget.endSidebar?.windowBreakpoint ?? 0);
+        final canShowSidebar = _showSidebar && !isAtBreakpoint;
+        final canShowEndSidebar = _showEndSidebar && !isAtEndBreakpoint;
+        final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
+        final visibleEndSidebarWidth =
+            canShowEndSidebar ? _endSidebarWidth : 0.0;
 
-          final layout = Stack(
-            children: [
-              // Background color
+        final layout = Stack(
+          children: [
+            // Background color
+            AnimatedPositioned(
+              curve: curve,
+              duration: duration,
+              height: height,
+              left: visibleSidebarWidth,
+              width: width,
+              child: ColoredBox(color: backgroundColor),
+            ),
+
+            // Sidebar
+            if (widget.sidebar != null)
               AnimatedPositioned(
                 curve: curve,
                 duration: duration,
                 height: height,
-                left: visibleSidebarWidth,
-                width: width,
-                child: ColoredBox(color: backgroundColor),
-              ),
-
-              // Sidebar
-              if (widget.sidebar != null)
-                AnimatedPositioned(
-                  curve: curve,
-                  duration: duration,
-                  height: height,
-                  width: _sidebarWidth,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    color: sidebarBackgroundColor,
-                    constraints: BoxConstraints(
-                      minWidth: widget.sidebar!.minWidth,
-                      maxWidth: widget.sidebar!.maxWidth!,
-                      minHeight: height,
-                      maxHeight: height,
-                    ).normalize(),
-                    child: TransparentMacOSSidebar(
-                      child: Column(
-                        children: [
-                          if ((widget.sidebar?.topOffset ?? 0) > 0)
-                            SizedBox(height: widget.sidebar?.topOffset),
-                          if (_sidebarScrollController.hasClients &&
-                              _sidebarScrollController.offset > 0.0)
-                            Divider(
-                              thickness: 1,
-                              height: 1,
-                              color: dividerColor,
-                            ),
-                          if (widget.sidebar!.top != null &&
-                              constraints.maxHeight < 81)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: widget.sidebar!.top!,
-                            ),
-                          Expanded(
-                            child: MacosScrollbar(
-                              controller: _sidebarScrollController,
-                              child: Padding(
-                                padding:
-                                    widget.sidebar?.padding ?? EdgeInsets.zero,
-                                child: widget.sidebar!
-                                    .builder(context, _sidebarScrollController),
-                              ),
-                            ),
-                          ),
-                          if (widget.sidebar?.bottom != null &&
-                              constraints.maxHeight < 141)
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: widget.sidebar!.bottom!,
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-              // Content Area
-              AnimatedPositioned(
-                curve: curve,
-                duration: duration,
-                left: visibleSidebarWidth,
-                width: width - visibleSidebarWidth - visibleEndSidebarWidth,
-                height: height,
-                child: ClipRect(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top:
-                          widget.titleBar != null ? widget.titleBar!.height : 0,
-                    ),
-                    child: widget.child ?? const SizedBox.shrink(),
-                  ),
-                ),
-              ),
-
-              // Title bar Area
-              Positioned(
-                left: visibleSidebarWidth,
-                width: width - visibleSidebarWidth,
-                height: widget.titleBar?.height,
-                child: ClipRect(
-                  child: widget.titleBar ?? const SizedBox.shrink(),
-                ),
-              ),
-
-              // Sidebar resizer
-              if (widget.sidebar?.isResizable ?? false)
-                AnimatedPositioned(
-                  curve: curve,
-                  duration: duration,
-                  left: visibleSidebarWidth - 4,
-                  width: 7,
-                  height: height,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onHorizontalDragStart: (details) {
-                      _sidebarDragStartWidth = _sidebarWidth;
-                      _sidebarDragStartPosition = details.globalPosition.dx;
-                    },
-                    onHorizontalDragUpdate: (details) {
-                      final sidebar = widget.sidebar!;
-                      setState(() {
-                        var newWidth = _sidebarDragStartWidth +
-                            details.globalPosition.dx -
-                            _sidebarDragStartPosition;
-
-                        if (sidebar.startWidth != null &&
-                            sidebar.snapToStartBuffer != null &&
-                            (newWidth - sidebar.startWidth!).abs() <=
-                                sidebar.snapToStartBuffer!) {
-                          newWidth = sidebar.startWidth!;
-                        }
-
-                        if (sidebar.dragClosed) {
-                          final closeBelow =
-                              sidebar.minWidth - sidebar.dragClosedBuffer;
-                          _showSidebar = newWidth >= closeBelow;
-                        }
-
-                        _sidebarWidth = math.max(
-                          sidebar.minWidth,
-                          math.min(
-                            sidebar.maxWidth!,
-                            newWidth,
-                          ),
-                        );
-
-                        if (_sidebarWidth == sidebar.minWidth) {
-                          _sidebarCursor = SystemMouseCursors.resizeRight;
-                        } else if (_sidebarWidth == sidebar.maxWidth) {
-                          _sidebarCursor = SystemMouseCursors.resizeLeft;
-                        } else {
-                          _sidebarCursor = SystemMouseCursors.resizeColumn;
-                        }
-                      });
-                    },
-                    child: MouseRegion(
-                      cursor: _sidebarCursor,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: VerticalDivider(
-                          thickness: 1,
-                          width: 1,
-                          color: dividerColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-              // End sidebar
-              if (widget.endSidebar != null)
-                AnimatedPositioned(
-                  left: width - visibleEndSidebarWidth,
-                  curve: curve,
-                  duration: duration,
-                  height: height,
-                  width: _endSidebarWidth,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    color: endSidebarBackgroundColor,
-                    constraints: BoxConstraints(
-                      minWidth: widget.endSidebar!.minWidth,
-                      maxWidth: widget.endSidebar!.maxWidth!,
-                      minHeight: height,
-                      maxHeight: height,
-                    ).normalize(),
+                width: _sidebarWidth,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  color: sidebarBackgroundColor,
+                  constraints: BoxConstraints(
+                    minWidth: widget.sidebar!.minWidth,
+                    maxWidth: widget.sidebar!.maxWidth!,
+                    minHeight: height,
+                    maxHeight: height,
+                  ).normalize(),
+                  child: TransparentMacOSSidebar(
                     child: Column(
                       children: [
-                        if ((widget.endSidebar?.topOffset ?? 0) > 0)
-                          SizedBox(height: widget.endSidebar?.topOffset),
-                        if (_endSidebarScrollController.hasClients &&
-                            _endSidebarScrollController.offset > 0.0)
-                          Divider(thickness: 1, height: 1, color: dividerColor),
-                        if (widget.endSidebar!.top != null)
+                        if ((widget.sidebar?.topOffset ?? 0) > 0)
+                          SizedBox(height: widget.sidebar?.topOffset),
+                        if (_sidebarScrollController.hasClients &&
+                            _sidebarScrollController.offset > 0.0)
+                          Divider(
+                            thickness: 1,
+                            height: 1,
+                            color: dividerColor,
+                          ),
+                        if (widget.sidebar!.top != null &&
+                            constraints.maxHeight < 81)
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: widget.endSidebar!.top!,
+                            child: widget.sidebar!.top!,
                           ),
                         Expanded(
                           child: MacosScrollbar(
-                            controller: _endSidebarScrollController,
+                            controller: _sidebarScrollController,
                             child: Padding(
                               padding:
-                                  widget.endSidebar?.padding ?? EdgeInsets.zero,
-                              child: widget.endSidebar!.builder(
-                                context,
-                                _endSidebarScrollController,
-                              ),
+                                  widget.sidebar?.padding ?? EdgeInsets.zero,
+                              child: widget.sidebar!
+                                  .builder(context, _sidebarScrollController),
                             ),
                           ),
                         ),
-                        if (widget.endSidebar?.bottom != null)
+                        if (widget.sidebar?.bottom != null &&
+                            constraints.maxHeight < 141)
                           Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: widget.endSidebar!.bottom!,
+                            child: widget.sidebar!.bottom!,
                           ),
                       ],
                     ),
                   ),
                 ),
+              ),
 
-              // End sidebar resizer
-              if (widget.endSidebar?.isResizable ?? false)
-                AnimatedPositioned(
-                  curve: curve,
-                  duration: duration,
-                  right: visibleEndSidebarWidth - 4,
-                  width: 7,
-                  height: height,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onHorizontalDragStart: (details) {
-                      _endSidebarDragStartWidth = _endSidebarWidth;
-                      _endSidebarDragStartPosition = details.globalPosition.dx;
-                    },
-                    onHorizontalDragUpdate: (details) {
-                      final endSidebar = widget.endSidebar!;
-                      setState(() {
-                        var newWidth = _endSidebarDragStartWidth -
-                            details.globalPosition.dx +
-                            _endSidebarDragStartPosition;
+            // Content Area
+            AnimatedPositioned(
+              curve: curve,
+              duration: duration,
+              left: visibleSidebarWidth,
+              width: width - visibleSidebarWidth - visibleEndSidebarWidth,
+              height: height,
+              child: ClipRect(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: widget.titleBar != null ? widget.titleBar!.height : 0,
+                  ),
+                  child: widget.child ?? const SizedBox.shrink(),
+                ),
+              ),
+            ),
 
-                        if (endSidebar.startWidth != null &&
-                            endSidebar.snapToStartBuffer != null &&
-                            (newWidth + endSidebar.startWidth!).abs() <=
-                                endSidebar.snapToStartBuffer!) {
-                          newWidth = endSidebar.startWidth!;
-                        }
+            // Title bar Area
+            Positioned(
+              left: visibleSidebarWidth,
+              width: width - visibleSidebarWidth,
+              height: widget.titleBar?.height,
+              child: ClipRect(
+                child: widget.titleBar ?? const SizedBox.shrink(),
+              ),
+            ),
 
-                        if (endSidebar.dragClosed) {
-                          final closeBelow =
-                              endSidebar.minWidth - endSidebar.dragClosedBuffer;
-                          _showEndSidebar = newWidth >= closeBelow;
-                        }
+            // Sidebar resizer
+            if (widget.sidebar?.isResizable ?? false)
+              AnimatedPositioned(
+                curve: curve,
+                duration: duration,
+                left: visibleSidebarWidth - 4,
+                width: 7,
+                height: height,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onHorizontalDragStart: (details) {
+                    _sidebarDragStartWidth = _sidebarWidth;
+                    _sidebarDragStartPosition = details.globalPosition.dx;
+                  },
+                  onHorizontalDragUpdate: (details) {
+                    final sidebar = widget.sidebar!;
+                    setState(() {
+                      var newWidth = _sidebarDragStartWidth +
+                          details.globalPosition.dx -
+                          _sidebarDragStartPosition;
 
-                        _endSidebarWidth = math.max(
-                          endSidebar.minWidth,
-                          math.min(
-                            endSidebar.maxWidth!,
-                            newWidth,
-                          ),
-                        );
+                      if (sidebar.startWidth != null &&
+                          sidebar.snapToStartBuffer != null &&
+                          (newWidth - sidebar.startWidth!).abs() <=
+                              sidebar.snapToStartBuffer!) {
+                        newWidth = sidebar.startWidth!;
+                      }
 
-                        if (_endSidebarWidth == endSidebar.minWidth) {
-                          _endSidebarCursor = SystemMouseCursors.resizeLeft;
-                        } else if (_endSidebarWidth == endSidebar.maxWidth) {
-                          _endSidebarCursor = SystemMouseCursors.resizeRight;
-                        } else {
-                          _endSidebarCursor = SystemMouseCursors.resizeColumn;
-                        }
-                      });
-                    },
-                    child: MouseRegion(
-                      cursor: _endSidebarCursor,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: VerticalDivider(
-                          thickness: 1,
-                          width: 1,
-                          color: dividerColor,
+                      if (sidebar.dragClosed) {
+                        final closeBelow =
+                            sidebar.minWidth - sidebar.dragClosedBuffer;
+                        _showSidebar = newWidth >= closeBelow;
+                      }
+
+                      _sidebarWidth = math.max(
+                        sidebar.minWidth,
+                        math.min(
+                          sidebar.maxWidth!,
+                          newWidth,
                         ),
+                      );
+
+                      if (_sidebarWidth == sidebar.minWidth) {
+                        _sidebarCursor = SystemMouseCursors.resizeRight;
+                      } else if (_sidebarWidth == sidebar.maxWidth) {
+                        _sidebarCursor = SystemMouseCursors.resizeLeft;
+                      } else {
+                        _sidebarCursor = SystemMouseCursors.resizeColumn;
+                      }
+                    });
+                  },
+                  child: MouseRegion(
+                    cursor: _sidebarCursor,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: VerticalDivider(
+                        thickness: 1,
+                        width: 1,
+                        color: dividerColor,
                       ),
                     ),
                   ),
                 ),
-            ],
-          );
+              ),
 
-          return MacosWindowScope(
-            constraints: constraints,
-            isSidebarShown: canShowSidebar,
-            isEndSidebarShown: canShowEndSidebar,
-            sidebarToggler: () async {
-              setState(() => _sidebarSlideDuration = 300);
-              setState(() => _showSidebar = !_showSidebar);
-              await Future.delayed(
-                Duration(milliseconds: _sidebarSlideDuration),
-              );
-              setState(() => _sidebarSlideDuration = 0);
-            },
-            endSidebarToggler: () async {
-              setState(() => _sidebarSlideDuration = 300);
-              setState(() => _showEndSidebar = !_showEndSidebar);
-              await Future.delayed(
-                Duration(milliseconds: _sidebarSlideDuration),
-              );
-              setState(() => _sidebarSlideDuration = 0);
-            },
-            child: layout,
-          );
-        },
-      ),
+            // End sidebar
+            if (widget.endSidebar != null)
+              AnimatedPositioned(
+                left: width - visibleEndSidebarWidth,
+                curve: curve,
+                duration: duration,
+                height: height,
+                width: _endSidebarWidth,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  color: endSidebarBackgroundColor,
+                  constraints: BoxConstraints(
+                    minWidth: widget.endSidebar!.minWidth,
+                    maxWidth: widget.endSidebar!.maxWidth!,
+                    minHeight: height,
+                    maxHeight: height,
+                  ).normalize(),
+                  child: Column(
+                    children: [
+                      if ((widget.endSidebar?.topOffset ?? 0) > 0)
+                        SizedBox(height: widget.endSidebar?.topOffset),
+                      if (_endSidebarScrollController.hasClients &&
+                          _endSidebarScrollController.offset > 0.0)
+                        Divider(thickness: 1, height: 1, color: dividerColor),
+                      if (widget.endSidebar!.top != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: widget.endSidebar!.top!,
+                        ),
+                      Expanded(
+                        child: MacosScrollbar(
+                          controller: _endSidebarScrollController,
+                          child: Padding(
+                            padding:
+                                widget.endSidebar?.padding ?? EdgeInsets.zero,
+                            child: widget.endSidebar!.builder(
+                              context,
+                              _endSidebarScrollController,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (widget.endSidebar?.bottom != null)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: widget.endSidebar!.bottom!,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+
+            // End sidebar resizer
+            if (widget.endSidebar?.isResizable ?? false)
+              AnimatedPositioned(
+                curve: curve,
+                duration: duration,
+                right: visibleEndSidebarWidth - 4,
+                width: 7,
+                height: height,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onHorizontalDragStart: (details) {
+                    _endSidebarDragStartWidth = _endSidebarWidth;
+                    _endSidebarDragStartPosition = details.globalPosition.dx;
+                  },
+                  onHorizontalDragUpdate: (details) {
+                    final endSidebar = widget.endSidebar!;
+                    setState(() {
+                      var newWidth = _endSidebarDragStartWidth -
+                          details.globalPosition.dx +
+                          _endSidebarDragStartPosition;
+
+                      if (endSidebar.startWidth != null &&
+                          endSidebar.snapToStartBuffer != null &&
+                          (newWidth + endSidebar.startWidth!).abs() <=
+                              endSidebar.snapToStartBuffer!) {
+                        newWidth = endSidebar.startWidth!;
+                      }
+
+                      if (endSidebar.dragClosed) {
+                        final closeBelow =
+                            endSidebar.minWidth - endSidebar.dragClosedBuffer;
+                        _showEndSidebar = newWidth >= closeBelow;
+                      }
+
+                      _endSidebarWidth = math.max(
+                        endSidebar.minWidth,
+                        math.min(
+                          endSidebar.maxWidth!,
+                          newWidth,
+                        ),
+                      );
+
+                      if (_endSidebarWidth == endSidebar.minWidth) {
+                        _endSidebarCursor = SystemMouseCursors.resizeLeft;
+                      } else if (_endSidebarWidth == endSidebar.maxWidth) {
+                        _endSidebarCursor = SystemMouseCursors.resizeRight;
+                      } else {
+                        _endSidebarCursor = SystemMouseCursors.resizeColumn;
+                      }
+                    });
+                  },
+                  child: MouseRegion(
+                    cursor: _endSidebarCursor,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: VerticalDivider(
+                        thickness: 1,
+                        width: 1,
+                        color: dividerColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+
+        return MacosWindowScope(
+          constraints: constraints,
+          isSidebarShown: canShowSidebar,
+          isEndSidebarShown: canShowEndSidebar,
+          sidebarToggler: () async {
+            setState(() => _sidebarSlideDuration = 300);
+            setState(() => _showSidebar = !_showSidebar);
+            await Future.delayed(
+              Duration(milliseconds: _sidebarSlideDuration),
+            );
+            setState(() => _sidebarSlideDuration = 0);
+          },
+          endSidebarToggler: () async {
+            setState(() => _sidebarSlideDuration = 300);
+            setState(() => _showEndSidebar = !_showEndSidebar);
+            await Future.delayed(
+              Duration(milliseconds: _sidebarSlideDuration),
+            );
+            setState(() => _sidebarSlideDuration = 0);
+          },
+          child: layout,
+        );
+      },
     );
   }
 }

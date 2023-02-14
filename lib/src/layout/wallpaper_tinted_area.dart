@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_cubit.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_data.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_builder.dart';
 import 'package:macos_window_utils/macos/ns_visual_effect_view_material.dart';
 import 'package:macos_window_utils/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
 
@@ -20,14 +18,15 @@ class WallpaperTintedArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return VisualEffectSubviewContainer(
       material: NSVisualEffectViewMaterial.windowBackground,
-      child: BlocBuilder<WallpaperTintingSettingsCubit,
-          WallpaperTintingSettingsData>(
+      child: WallpaperTintingSettingsBuilder(
         builder: (context, data) {
+          final isWallpaperTintingEnabled = data.isWallpaperTintingEnabled;
+
           return TweenAnimationBuilder<double>(
             duration: const Duration(milliseconds: 100),
             tween: Tween<double>(
-              begin: data.isWallpaperTintingEnabled ? 0.0 : 1.0,
-              end: data.isWallpaperTintingEnabled ? 0.0 : 1.0,
+              begin: isWallpaperTintingEnabled ? 0.0 : 1.0,
+              end: isWallpaperTintingEnabled ? 0.0 : 1.0,
             ),
             builder: (context, value, child) {
               return Container(
