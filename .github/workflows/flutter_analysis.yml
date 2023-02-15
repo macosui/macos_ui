@@ -15,8 +15,20 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - uses: actions/checkout@v3
+      - name: Set up git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
       - name: Format code
-        run: dart format --set-exit-if-changed .
+        run: |
+          dart format --set-exit-if-changed .
+          if [ $? -eq 1 ]; then
+            dart format lib
+            git add .
+            git commit -m "chore: formatting corrections"
+            git push
 
       - name: Analyze code
         run: flutter analyze --fatal-infos .
