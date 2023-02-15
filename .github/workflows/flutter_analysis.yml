@@ -29,6 +29,7 @@ jobs:
             git add .
             git commit -m "chore: formatting corrections"
             git push
+          fi
 
       - name: Analyze code
         run: flutter analyze --fatal-infos .
