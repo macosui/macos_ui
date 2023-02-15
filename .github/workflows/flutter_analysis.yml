@@ -29,7 +29,9 @@ jobs:
             git add .
             git commit -m "chore: formatting corrections"
             git push
+            echo "Code has been formatted and changes have been committed and pushed."
           fi
+          echo "All code is properly formatted!"
 
       - name: Analyze code
         run: flutter analyze --fatal-infos .
