@@ -1,3 +1,6 @@
+## [1.10.1]
+* Fixed an issue where the `MacosSearchField` would not perform an action when an item was selected.
+
 ## [1.10.0]
 🚨 Breaking Changes 🚨
 * `MacosScrollbar` has been completely overhauled and now resembles the native macOS scrollbar in appearance and
