@@ -25,7 +25,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context) {
+                  builder: (context, _) {
                     return PushButton(
                       buttonSize: ButtonSize.small,
                       onPressed: mockOnPressedFunction.handler,
@@ -58,7 +58,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context) {
+                  builder: (context, _) {
                     return PushButton(
                       buttonSize: ButtonSize.small,
                       key: pushButtonKey,

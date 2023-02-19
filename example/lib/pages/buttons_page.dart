@@ -71,9 +71,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
           },
         ),
         ContentArea(
-          builder: (context) {
+          builder: (context, scrollController) {
             return SingleChildScrollView(
-              // controller: _,
+              controller: scrollController,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
@@ -168,7 +168,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                   ),
                                   children: [
                                     ContentArea(
-                                      builder: (context) {
+                                      builder: (context, _) {
                                         return Center(
                                           child: PushButton(
                                             buttonSize: ButtonSize.large,

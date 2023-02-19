@@ -1,7 +1,7 @@
 import 'dart:math' as math show max, min;
 
 import 'package:flutter/services.dart' show SystemMouseCursor;
-import 'package:macos_ui/src/indicators/scrollbar.dart';
+import 'package:macos_ui/src/layout/scrollbar.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
@@ -161,12 +161,6 @@ class _ResizablePaneState extends State<ResizablePane> {
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   void didUpdateWidget(covariant ResizablePane oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
@@ -178,6 +172,12 @@ class _ResizablePaneState extends State<ResizablePane> {
         if (widget.maxWidth < _width) _width = widget.maxWidth;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override

@@ -236,6 +236,12 @@ class _MacosTooltipState extends State<MacosTooltip>
     super.deactivate();
   }
 
+  void _handleLongPress() {
+    _longPressActivated = true;
+    final bool tooltipCreated = ensureTooltipVisible();
+    if (tooltipCreated) Feedback.forLongPress(context);
+  }
+
   @override
   void dispose() {
     GestureBinding.instance.pointerRouter
@@ -245,12 +251,6 @@ class _MacosTooltipState extends State<MacosTooltip>
     if (_entry != null) _removeEntry();
     _controller.dispose();
     super.dispose();
-  }
-
-  void _handleLongPress() {
-    _longPressActivated = true;
-    final bool tooltipCreated = ensureTooltipVisible();
-    if (tooltipCreated) Feedback.forLongPress(context);
   }
 
   @override

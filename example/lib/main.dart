@@ -180,11 +180,11 @@ class _WidgetGalleryState extends State<WidgetGallery> {
             ],
           ),
           minWidth: 200,
-          builder: (context, _) {
+          builder: (context, scrollController) {
             return SidebarItems(
               currentIndex: pageIndex,
               onChanged: (i) => setState(() => pageIndex = i),
-              scrollController: ScrollController(),
+              scrollController: scrollController,
               itemSize: SidebarItemSize.large,
               items: [
                 const SidebarItem(
