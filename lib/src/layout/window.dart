@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:macos_ui/src/indicators/scrollbar.dart';
+import 'package:macos_ui/src/layout/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
 import 'package:macos_ui/src/layout/scaffold.dart';
@@ -88,13 +88,6 @@ class _MacosWindowState extends State<MacosWindow> {
   }
 
   @override
-  void dispose() {
-    _sidebarScrollController.dispose();
-    _endSidebarScrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   void didUpdateWidget(covariant MacosWindow old) {
     super.didUpdateWidget(old);
     setState(() {
@@ -121,6 +114,13 @@ class _MacosWindowState extends State<MacosWindow> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _sidebarScrollController.dispose();
+    _endSidebarScrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -218,13 +218,9 @@ class _MacosWindowState extends State<MacosWindow> {
                           SizedBox(height: widget.sidebar?.topOffset),
                         if (_sidebarScrollController.hasClients &&
                             _sidebarScrollController.offset > 0.0)
-                          Divider(
-                            thickness: 1,
-                            height: 1,
-                            color: dividerColor,
-                          ),
+                          Divider(thickness: 1, height: 1, color: dividerColor),
                         if (widget.sidebar!.top != null &&
-                            constraints.maxHeight < 81)
+                            constraints.maxHeight > 81)
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
@@ -242,7 +238,7 @@ class _MacosWindowState extends State<MacosWindow> {
                           ),
                         ),
                         if (widget.sidebar?.bottom != null &&
-                            constraints.maxHeight < 141)
+                            constraints.maxHeight > 141)
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: widget.sidebar!.bottom!,

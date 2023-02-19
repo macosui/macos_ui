@@ -746,11 +746,6 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   late FocusHighlightMode _focusHighlightMode;
   PulldownButtonState _pullDownButtonState = PulldownButtonState.enabled;
 
-  // Only used if needed to create _internalNode.
-  FocusNode _createFocusNode() {
-    return FocusNode(debugLabel: '${widget.runtimeType}');
-  }
-
   @override
   void initState() {
     super.initState();
@@ -772,14 +767,21 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _removeMacosPulldownRoute();
-    WidgetsBinding.instance.focusManager
-        .removeHighlightModeListener(_handleFocusHighlightModeChange);
-    focusNode!.removeListener(_handleFocusChanged);
-    _internalNode?.dispose();
-    super.dispose();
+  void didUpdateWidget(MacosPulldownButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusNode != oldWidget.focusNode) {
+      oldWidget.focusNode?.removeListener(_handleFocusChanged);
+      if (widget.focusNode == null) {
+        _internalNode ??= _createFocusNode();
+      }
+      _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
+      focusNode!.addListener(_handleFocusChanged);
+    }
+  }
+
+  // Only used if needed to create _internalNode.
+  FocusNode _createFocusNode() {
+    return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
   void _removeMacosPulldownRoute() {
@@ -798,19 +800,6 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
       return;
     }
     setState(() => _focusHighlightMode = mode);
-  }
-
-  @override
-  void didUpdateWidget(MacosPulldownButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.focusNode != oldWidget.focusNode) {
-      oldWidget.focusNode?.removeListener(_handleFocusChanged);
-      if (widget.focusNode == null) {
-        _internalNode ??= _createFocusNode();
-      }
-      _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
-      focusNode!.addListener(_handleFocusChanged);
-    }
   }
 
   TextStyle? get _textStyle =>
@@ -883,6 +872,17 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
       case FocusHighlightMode.traditional:
         return _hasPrimaryFocus;
     }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _removeMacosPulldownRoute();
+    WidgetsBinding.instance.focusManager
+        .removeHighlightModeListener(_handleFocusHighlightModeChange);
+    focusNode!.removeListener(_handleFocusChanged);
+    _internalNode?.dispose();
+    super.dispose();
   }
 
   @override

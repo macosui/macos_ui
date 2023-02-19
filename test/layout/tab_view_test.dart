@@ -14,7 +14,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context) {
+                    builder: (context, _) {
                       return Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: MacosTabView(

@@ -16,7 +16,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  dart_code_metrics: ^4.17.1
+  dart_code_metrics: ^5.6.0
   flutter_lints: ^2.0.1
   mocktail: ^0.3.0
 
