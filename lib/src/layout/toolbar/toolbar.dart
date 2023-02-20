@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/toolbar/overflow_handler.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinted_area.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
@@ -208,57 +209,53 @@ class _ToolBarState extends State<ToolBar> {
           left: !kIsWeb && isMacOS ? 70 : 0,
         ),
       ),
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: widget.decoration?.color?.opacity == 1
-              ? ImageFilter.blur()
-              : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Container(
-            alignment: widget.alignment,
-            padding: widget.padding,
-            decoration: BoxDecoration(
-              color: theme.canvasColor,
-              border: Border(bottom: BorderSide(color: dividerColor)),
-            ).copyWith(
-              color: widget.decoration?.color,
-              image: widget.decoration?.image,
-              border: widget.decoration?.border,
-              borderRadius: widget.decoration?.borderRadius,
-              boxShadow: widget.decoration?.boxShadow,
-              gradient: widget.decoration?.gradient,
-            ),
-            child: NavigationToolbar(
-              middle: title,
-              centerMiddle: widget.centerTitle,
-              trailing: OverflowHandler(
-                overflowBreakpoint: overflowBreakpoint,
-                overflowWidget: ToolbarOverflowButton(
-                  isDense: doAllItemsShowLabel,
-                  overflowContentBuilder: (context) => ToolbarOverflowMenu(
-                    children: overflowedActions
-                        .map((action) => action.build(
-                              context,
-                              ToolbarItemDisplayMode.overflowed,
-                            ))
-                        .toList(),
-                  ),
+      child: WallpaperTintedArea(
+        backgroundColor: theme.canvasColor,
+        child: Container(
+          alignment: widget.alignment,
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: dividerColor)),
+          ).copyWith(
+            color: widget.decoration?.color,
+            image: widget.decoration?.image,
+            border: widget.decoration?.border,
+            borderRadius: widget.decoration?.borderRadius,
+            boxShadow: widget.decoration?.boxShadow,
+            gradient: widget.decoration?.gradient,
+          ),
+          child: NavigationToolbar(
+            middle: title,
+            centerMiddle: widget.centerTitle,
+            trailing: OverflowHandler(
+              overflowBreakpoint: overflowBreakpoint,
+              overflowWidget: ToolbarOverflowButton(
+                isDense: doAllItemsShowLabel,
+                overflowContentBuilder: (context) => ToolbarOverflowMenu(
+                  children: overflowedActions
+                      .map((action) => action.build(
+                            context,
+                            ToolbarItemDisplayMode.overflowed,
+                          ))
+                      .toList(),
                 ),
-                children: inToolbarActions
-                    .map((e) =>
-                        e.build(context, ToolbarItemDisplayMode.inToolbar))
-                    .toList(),
-                overflowChangedCallback: (hiddenItems) {
-                  setState(() => overflowedActionsCount = hiddenItems.length);
-                },
               ),
-              middleSpacing: 8,
-              leading: SafeArea(
-                top: false,
-                right: false,
-                bottom: false,
-                left: !(scope?.isSidebarShown ?? false),
-                child: leading ?? const SizedBox.shrink(),
-              ),
+              children: inToolbarActions
+                  .map(
+                    (e) => e.build(context, ToolbarItemDisplayMode.inToolbar),
+                  )
+                  .toList(),
+              overflowChangedCallback: (hiddenItems) {
+                setState(() => overflowedActionsCount = hiddenItems.length);
+              },
+            ),
+            middleSpacing: 8,
+            leading: SafeArea(
+              top: false,
+              right: false,
+              bottom: false,
+              left: !(scope?.isSidebarShown ?? false),
+              child: leading ?? const SizedBox.shrink(),
             ),
           ),
         ),
