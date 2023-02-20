@@ -11,8 +11,8 @@ void main() {
 
       group(
         side == ResizableSide.top
-            ? "top"
-            : (side == ResizableSide.left ? "left" : "right"),
+            ? 'top'
+            : (side == ResizableSide.left ? 'left' : 'right'),
         () {
           const double maxSize = 300;
           const double minSize = 100;
@@ -71,7 +71,7 @@ void main() {
             matching: find.byType(GestureDetector),
           );
 
-          //No need to check if the resizable side is top because directionModifier
+          // No need to check if the resizable side is top because directionModifier
           // would take -1 if it is the case
           final directionModifier = side == ResizableSide.right ? 1 : -1;
           final double safeDelta = 50.0 * directionModifier;
