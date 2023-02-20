@@ -49,7 +49,22 @@ class MacosWindow extends StatefulWidget {
   /// A sidebar to display at the right of the window.
   final Sidebar? endSidebar;
 
-  /// TODO: document this
+  /// Whether wallpaper tinting should be disabled.
+  ///
+  /// By default, macos_ui applies wallpaper tinting to the application's
+  /// window to match macOS' native appearance:
+  ///
+  /// <img src="https://user-images.githubusercontent.com/86920182/220182724-d78319d7-5c41-4e8c-b785-a73a6ea24927.jpg" width=640/>
+  ///
+  /// However, this effect is realized by inserting `NSVisualEffectView`s behind
+  /// Flutter's canvas and turning the background of areas that are meant to be
+  /// affected by wallpaper tinting transparent. Since Flutter's
+  /// [`ImageFilter.blur`](https://api.flutter.dev/flutter/dart-ui/ImageFilter/ImageFilter.blur.html)
+  /// does not support transparency, wallpaper tinting is disabled automatically
+  /// when a [MacosOverlayFilter] is present in the widget tree.
+  ///
+  /// Since the disabling of wallpaper tinting may be found to be too noticeable
+  /// this property may be used to disable wallpaper tinting outright.
   final bool disableWallpaperTinting;
 
   @override
