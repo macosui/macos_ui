@@ -16,36 +16,40 @@ class WallpaperTintedArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VisualEffectSubviewContainer(
-      material: NSVisualEffectViewMaterial.windowBackground,
-      child: WallpaperTintingSettingsBuilder(
-        builder: (context, data) {
-          final isWallpaperTintingEnabled = data.isWallpaperTintingEnabled;
+    return LayoutBuilder(
+      builder: (context, _) {
+        return VisualEffectSubviewContainer(
+          material: NSVisualEffectViewMaterial.windowBackground,
+          child: WallpaperTintingSettingsBuilder(
+            builder: (context, data) {
+              final isWallpaperTintingEnabled = data.isWallpaperTintingEnabled;
 
-          return TweenAnimationBuilder<double>(
-            duration: const Duration(milliseconds: 100),
-            tween: Tween<double>(
-              begin: isWallpaperTintingEnabled ? 0.0 : 1.0,
-              end: isWallpaperTintingEnabled ? 0.0 : 1.0,
-            ),
-            builder: (context, value, child) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: backgroundColor.withOpacity(value),
-                  backgroundBlendMode: BlendMode.src,
+              return TweenAnimationBuilder<double>(
+                duration: const Duration(milliseconds: 100),
+                tween: Tween<double>(
+                  begin: isWallpaperTintingEnabled ? 0.0 : 1.0,
+                  end: isWallpaperTintingEnabled ? 0.0 : 1.0,
                 ),
-                child: child,
+                builder: (context, value, child) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: backgroundColor.withOpacity(value),
+                      backgroundBlendMode: BlendMode.src,
+                    ),
+                    child: child,
+                  );
+                },
+                child: Opacity(
+                  // For some reason, omitting this Opacity widget causes
+                  // a dark background to appear.
+                  opacity: 1.0,
+                  child: child,
+                ),
               );
             },
-            child: Opacity(
-              // For some reason, omitting this Opacity widget causes
-              // a dark background to appear.
-              opacity: 1.0,
-              child: child,
-            ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
