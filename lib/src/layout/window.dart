@@ -63,6 +63,10 @@ class MacosWindow extends StatefulWidget {
   /// does not support transparency, wallpaper tinting is disabled automatically
   /// when a [MacosOverlayFilter] is present in the widget tree.
   ///
+  /// This is meant to be a temporary solution until
+  /// [#16296](https://github.com/flutter/flutter/issues/16296) is resolved in
+  /// the Flutter project.
+  ///
   /// Since the disabling of wallpaper tinting may be found to be too noticeable
   /// this property may be used to disable wallpaper tinting outright.
   final bool disableWallpaperTinting;
