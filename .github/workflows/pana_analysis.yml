@@ -11,6 +11,7 @@ jobs:
       - uses: axel-op/dart-package-analyzer@v3
         # set an id for the current step
         id: analysis
+        if: github.ref != 'refs/heads/customer_testing'
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
