@@ -1,3 +1,11 @@
+## [1.11.0]
+* 🚨 Breaking Changes 🚨
+* `ResizablePane` can now be vertically resized
+  * `ResizablePane.startWidth` has been changed to `ResizablePane.startSize`
+  * `ResizablePane.minWidth` has been changed to `ResizablePane.minSize`
+  * `ResizablePane.maxWidth` has been changed to `ResizablePane.maxSize`
+
+
 ## [1.10.0]
 🚨 Breaking Changes 🚨
 * `MacosScrollbar` has been completely overhauled and now resembles the native macOS scrollbar in appearance and
