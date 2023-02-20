@@ -15,16 +15,19 @@ enum ResizableSide {
 
   /// The right side of the [ResizablePane].
   right,
+
+  /// The top side of the [ResizablePane].
+  top,
 }
 
 /// {@template resizablePane}
-/// A widget that can be resized horizontally.
+/// A widget that can be resized horizontally or vertically.
 ///
-/// The [builder], [minWidth] and [resizableSide] can not be null.
-/// The [maxWidth] and the [windowBreakpoint] default to `500.00`.
+/// The [builder], [minSize] and [resizableSide] can not be null.
+/// The [maxSize] and the [windowBreakpoint] default to `500.00`.
 /// [isResizable] defaults to `true`.
 ///
-/// The [startWidth] is the initial width.
+/// The [startSize] is the initial width or height depending on the orientation of the pane.
 /// {@endtemplate}
 class ResizablePane extends StatefulWidget {
   /// {@macro resizablePane}
@@ -32,19 +35,19 @@ class ResizablePane extends StatefulWidget {
     super.key,
     required this.builder,
     this.decoration,
-    this.maxWidth = 500.0,
-    required this.minWidth,
+    this.maxSize = 500.0,
+    required this.minSize,
     this.isResizable = true,
     required this.resizableSide,
     this.windowBreakpoint,
-    required this.startWidth,
+    required this.startSize,
   })  : assert(
-          maxWidth >= minWidth,
-          'minWidth should not be more than maxWidth.',
+          maxSize >= minSize,
+          'minSize should not be more than maxSize.',
         ),
         assert(
-          (startWidth >= minWidth) && (startWidth <= maxWidth),
-          'startWidth must not be less than minWidth or more than maxWidth',
+          (startSize >= minSize) && (startSize <= maxSize),
+          'startSize must not be less than minSize or more than maxWidth',
         );
 
   /// The builder that creates a child to display in this widget, which will
@@ -61,19 +64,34 @@ class ResizablePane extends StatefulWidget {
   /// resizable side of this widget.
   final bool isResizable;
 
-  /// Specifies the maximum width that this [ResizablePane] can have.
+  /// Specifies the maximum width or height that this [ResizablePane] can have
+  /// according to its orientation.
   ///
-  /// The value can be null and defaults to `500.0`.
-  final double maxWidth;
-
-  /// Specifies the minimum width that this [ResizablePane] can have.
-  final double minWidth;
-
-  /// Specifies the width that this [ResizablePane] first starts width.
+  /// The orientation is horizontal if the [resizableSide] is
+  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the
+  /// [resizableSide] is [ResizableSide.top]).
   ///
-  /// The [startWidth] should not be more than the [maxWidth] or
-  /// less than the [minWidth].
-  final double startWidth;
+  /// If this value is null, it defaults to `500.0`.
+  final double maxSize;
+
+  /// Specifies the minimum width of height that this [ResizablePane] can have
+  /// according to its orientation.
+  ///
+  /// The orientation is horizontal if the [resizableSide] is
+  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the
+  /// [resizableSide] is [ResizableSide.top].
+  final double minSize;
+
+  /// Specifies the width or height that this [ResizablePane] first starts with
+  /// according to its orientation.
+  ///
+  /// The orientation is horizontal if the [resizableSide] is
+  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the
+  /// [resizableSide] is [ResizableSide.top]).
+  ///
+  /// The [startSize] should not be more than the [maxSize] or
+  /// less than the [minSize].
+  final double startSize;
 
   /// Indicates the draggable side of the [ResizablePane] for resizing
   final ResizableSide resizableSide;
@@ -86,21 +104,26 @@ class ResizablePane extends StatefulWidget {
 }
 
 class _ResizablePaneState extends State<ResizablePane> {
-  SystemMouseCursor _cursor = SystemMouseCursors.resizeColumn;
+  late SystemMouseCursor _cursor;
   final _scrollController = ScrollController();
-  late double _width;
-  late double _dragStartWidth;
+  late double _size;
+  late double _dragStartSize;
   late double _dragStartPosition;
 
   Color get _dividerColor => MacosTheme.of(context).dividerColor;
 
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
+  bool get _resizeOnTop => widget.resizableSide == ResizableSide.top;
+
   BoxDecoration get _decoration {
     final borderSide = BorderSide(color: _dividerColor);
     final right = Border(right: borderSide);
     final left = Border(left: borderSide);
-    return BoxDecoration(border: _resizeOnRight ? right : left).copyWith(
+    final top = Border(top: borderSide);
+    return BoxDecoration(
+      border: _resizeOnTop ? top : (_resizeOnRight ? right : left),
+    ).copyWith(
       color: widget.decoration?.color,
       border: widget.decoration?.border,
       borderRadius: widget.decoration?.borderRadius,
@@ -112,51 +135,99 @@ class _ResizablePaneState extends State<ResizablePane> {
     );
   }
 
+  BoxConstraints get _boxConstraint {
+    if (_resizeOnTop) {
+      return BoxConstraints(
+        maxHeight: widget.maxSize,
+        minHeight: widget.minSize,
+      ).normalize();
+    }
+    return BoxConstraints(
+      maxWidth: widget.maxSize,
+      minWidth: widget.minSize,
+    ).normalize();
+  }
+
   Widget get _resizeArea {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: MouseRegion(
-        cursor: _cursor,
-        child: const SizedBox(width: 5),
-      ),
-      onHorizontalDragStart: (details) {
-        _dragStartWidth = _width;
-        _dragStartPosition = details.globalPosition.dx;
-      },
-      onHorizontalDragUpdate: (details) {
-        setState(() {
-          final newWidth = _resizeOnRight
-              ? _dragStartWidth -
-                  (_dragStartPosition - details.globalPosition.dx)
-              : _dragStartWidth +
-                  (_dragStartPosition - details.globalPosition.dx);
-          _width = math.max(
-            widget.minWidth,
-            math.min(
-              widget.maxWidth,
-              newWidth,
+    return _resizeOnTop
+        ? GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: MouseRegion(
+              cursor: _cursor,
+              child: const SizedBox(width: 5),
             ),
+            onVerticalDragStart: (details) {
+              _dragStartSize = _size;
+              _dragStartPosition = details.globalPosition.dy;
+            },
+            onVerticalDragUpdate: (details) {
+              setState(() {
+                final newHeight = _dragStartSize +
+                    (_dragStartPosition - details.globalPosition.dy);
+                _size = math.max(
+                  widget.minSize,
+                  math.min(
+                    widget.maxSize,
+                    newHeight,
+                  ),
+                );
+                if (_size == widget.minSize) {
+                  _cursor = SystemMouseCursors.resizeUp;
+                } else if (_size == widget.maxSize) {
+                  _cursor = SystemMouseCursors.resizeDown;
+                } else {
+                  _cursor = SystemMouseCursors.resizeRow;
+                }
+              });
+            },
+          )
+        : GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: MouseRegion(
+              cursor: _cursor,
+              child: const SizedBox(width: 5),
+            ),
+            onHorizontalDragStart: (details) {
+              _dragStartSize = _size;
+              _dragStartPosition = details.globalPosition.dx;
+            },
+            onHorizontalDragUpdate: (details) {
+              setState(() {
+                final newWidth = _resizeOnRight
+                    ? _dragStartSize -
+                        (_dragStartPosition - details.globalPosition.dx)
+                    : _dragStartSize +
+                        (_dragStartPosition - details.globalPosition.dx);
+                _size = math.max(
+                  widget.minSize,
+                  math.min(
+                    widget.maxSize,
+                    newWidth,
+                  ),
+                );
+                if (_size == widget.minSize) {
+                  _cursor = _resizeOnRight
+                      ? SystemMouseCursors.resizeRight
+                      : SystemMouseCursors.resizeLeft;
+                } else if (_size == widget.maxSize) {
+                  _cursor = _resizeOnRight
+                      ? SystemMouseCursors.resizeLeft
+                      : SystemMouseCursors.resizeRight;
+                } else {
+                  _cursor = SystemMouseCursors.resizeColumn;
+                }
+              });
+            },
           );
-          if (_width == widget.minWidth) {
-            _cursor = _resizeOnRight
-                ? SystemMouseCursors.resizeRight
-                : SystemMouseCursors.resizeLeft;
-          } else if (_width == widget.maxWidth) {
-            _cursor = _resizeOnRight
-                ? SystemMouseCursors.resizeLeft
-                : SystemMouseCursors.resizeRight;
-          } else {
-            _cursor = SystemMouseCursors.resizeColumn;
-          }
-        });
-      },
-    );
   }
 
   @override
   void initState() {
     super.initState();
-    _width = widget.startWidth;
+    _cursor = _resizeOnTop
+        ? SystemMouseCursors.resizeRow
+        : SystemMouseCursors.resizeColumn;
+    _size = widget.startSize;
     _scrollController.addListener(() => setState(() {}));
   }
 
@@ -164,12 +235,12 @@ class _ResizablePaneState extends State<ResizablePane> {
   void didUpdateWidget(covariant ResizablePane oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.windowBreakpoint != widget.windowBreakpoint ||
-        oldWidget.minWidth != widget.minWidth ||
-        oldWidget.maxWidth != widget.maxWidth ||
+        oldWidget.minSize != widget.minSize ||
+        oldWidget.maxSize != widget.maxSize ||
         oldWidget.resizableSide != widget.resizableSide) {
       setState(() {
-        if (widget.minWidth > _width) _width = widget.minWidth;
-        if (widget.maxWidth < _width) _width = widget.maxWidth;
+        if (widget.minSize > _size) _size = widget.minSize;
+        if (widget.maxSize < _size) _size = widget.maxSize;
       });
     }
   }
@@ -186,19 +257,23 @@ class _ResizablePaneState extends State<ResizablePane> {
     final maxHeight = media.size.height;
     final maxWidth = media.size.width;
 
-    if (widget.windowBreakpoint != null &&
-        maxWidth <= widget.windowBreakpoint!) {
-      return const SizedBox.shrink();
+    if (_resizeOnTop) {
+      if (widget.windowBreakpoint != null &&
+          maxHeight <= widget.windowBreakpoint!) {
+        return const SizedBox.shrink();
+      }
+    } else {
+      if (widget.windowBreakpoint != null &&
+          maxWidth <= widget.windowBreakpoint!) {
+        return const SizedBox.shrink();
+      }
     }
 
     return Container(
-      width: _width,
-      height: maxHeight,
+      width: _resizeOnTop ? maxWidth : _size,
+      height: _resizeOnTop ? _size : maxHeight,
       decoration: _decoration,
-      constraints: BoxConstraints(
-        maxWidth: widget.maxWidth,
-        minWidth: widget.minWidth,
-      ).normalize(),
+      constraints: _boxConstraint,
       child: Stack(
         children: [
           SafeArea(
@@ -209,7 +284,7 @@ class _ResizablePaneState extends State<ResizablePane> {
               child: widget.builder(context, _scrollController),
             ),
           ),
-          if (widget.isResizable && !_resizeOnRight)
+          if (widget.isResizable && !_resizeOnRight && !_resizeOnTop)
             Positioned(
               left: 0,
               width: 5,
@@ -221,6 +296,13 @@ class _ResizablePaneState extends State<ResizablePane> {
               right: 0,
               width: 5,
               height: maxHeight,
+              child: _resizeArea,
+            ),
+          if (widget.isResizable && _resizeOnTop)
+            Positioned(
+              top: 0,
+              width: maxWidth,
+              height: 5,
               child: _resizeArea,
             ),
         ],
