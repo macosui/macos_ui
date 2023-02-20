@@ -3,10 +3,14 @@ import 'package:macos_ui/src/layout/wallpaper_tinting_settings/global_wallpaper_
 
 import 'wallpaper_tinting_settings_data.dart';
 
-/// TODO: document this
 class WallpaperTintingSettingsBuilder extends StatelessWidget {
+  /// Creates a [WallpaperTintingSettingsBuilder].
+  ///
+  /// This widget can be used to listen to [WallpaperTintingSettingsData]
+  /// changes and rebuild if a change has been detected.
   const WallpaperTintingSettingsBuilder({super.key, required this.builder});
 
+  /// Called when [WallpaperTintingSettingsData] changes.
   final Widget Function(BuildContext, WallpaperTintingSettingsData) builder;
 
   @override
