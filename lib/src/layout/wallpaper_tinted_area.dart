@@ -3,15 +3,22 @@ import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting
 import 'package:macos_window_utils/macos/ns_visual_effect_view_material.dart';
 import 'package:macos_window_utils/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
 
-/// TODO: document this
 class WallpaperTintedArea extends StatelessWidget {
+  /// Creates a [WallpaperTintedArea].
+  ///
+  /// Widgets wrapped in this widget will have a wallpaper tint applied to them.
+  ///
+  /// **Note:** This widget only works on macOS.
   const WallpaperTintedArea({
     super.key,
     required this.backgroundColor,
     this.child,
   });
 
+  /// The color to apply to the background when wallpaper tinting is disabled.
   final Color backgroundColor;
+
+  /// The widget below this widget in the tree.
   final Widget? child;
 
   @override
