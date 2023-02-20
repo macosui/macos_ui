@@ -1,10 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinting_settings/global_wallpaper_tinting_settings.dart';
 
-/// TODO: document this
 class WallpaperTintingOverride extends StatefulWidget {
+  /// Creates a [WallpaperTintingOverride].
+  ///
+  /// Including this widget in the widget tree will disable wallpaper tinting
+  /// globally. It is intended to be used by [MacosOverlayFilter] to disable
+  /// wallpaper tinting when an overlay filter is active, since
+  /// [`ImageFilter.blur`](https://api.flutter.dev/flutter/dart-ui/ImageFilter/ImageFilter.blur.html)
+  /// does not support transparency.
   const WallpaperTintingOverride({super.key, this.child});
 
+  /// The widget below this widget in the tree.
   final Widget? child;
 
   @override
