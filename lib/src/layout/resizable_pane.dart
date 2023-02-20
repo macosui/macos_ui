@@ -65,28 +65,28 @@ class ResizablePane extends StatefulWidget {
   final bool isResizable;
 
   /// Specifies the maximum width or height that this [ResizablePane] can have
-  /// according to its orientation. 
-  /// 
-  /// The orientation is horizontal if the [resizableSide] is 
-  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the 
+  /// according to its orientation.
+  ///
+  /// The orientation is horizontal if the [resizableSide] is
+  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the
   /// [resizableSide] is [ResizableSide.top]).
   ///
   /// If this value is null, it defaults to `500.0`.
   final double maxSize;
 
   /// Specifies the minimum width of height that this [ResizablePane] can have
-  /// according to its orientation. 
-  /// 
-  /// The orientation is horizontal if the [resizableSide] is 
-  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the 
+  /// according to its orientation.
+  ///
+  /// The orientation is horizontal if the [resizableSide] is
+  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the
   /// [resizableSide] is [ResizableSide.top].
   final double minSize;
 
   /// Specifies the width or height that this [ResizablePane] first starts with
-  /// according to its orientation. 
-  /// 
-  /// The orientation is horizontal if the [resizableSide] is 
-  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the 
+  /// according to its orientation.
+  ///
+  /// The orientation is horizontal if the [resizableSide] is
+  /// [ResizableSide.left] or [ResizableSide.right] and vertical if the
   /// [resizableSide] is [ResizableSide.top]).
   ///
   /// The [startSize] should not be more than the [maxSize] or
