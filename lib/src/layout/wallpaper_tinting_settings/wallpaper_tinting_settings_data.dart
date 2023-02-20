@@ -8,7 +8,7 @@ class WallpaperTintingSettingsData {
   /// Gets whether wallpaper tinting should be enabled.
   bool get isWallpaperTintingEnabled => _numberOfWallpaperTintingOverrides == 0;
 
-  /// Increment the number of active overrides.
+  /// Increments the number of active overrides.
   void addOverride() => _numberOfWallpaperTintingOverrides += 1;
 
   /// Decrements the number of active overrides.
