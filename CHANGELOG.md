@@ -1,10 +1,12 @@
+## [1.11.1]
+* Fixed an issue where the `MacosSearchField` would not perform an action when an item was selected.
+
 ## [1.11.0]
 * 🚨 Breaking Changes 🚨
 * `ResizablePane` can now be vertically resized
   * `ResizablePane.startWidth` has been changed to `ResizablePane.startSize`
   * `ResizablePane.minWidth` has been changed to `ResizablePane.minSize`
   * `ResizablePane.maxWidth` has been changed to `ResizablePane.maxSize`
-
 
 ## [1.10.0]
 🚨 Breaking Changes 🚨
