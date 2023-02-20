@@ -355,10 +355,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
                           widget.onResultSelected!(selectedItem);
                         }
                       },
-                      child: selectedItem.child ??
-                          Text(
-                            selectedItem.searchKey,
-                          ),
+                      child: selectedItem.child ?? Text(selectedItem.searchKey),
                     );
                   },
                 ),
