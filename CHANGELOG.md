@@ -1,3 +1,6 @@
+## [1.11.2]
+* Fixed a typo in the December abbreviation displayed in the `MacosDatePicker`.
+
 ## [1.11.1]
 * Fixed an issue where the `MacosSearchField` would not perform an action when an item was selected.
 
