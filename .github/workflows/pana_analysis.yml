@@ -4,6 +4,7 @@ on: [pull_request, workflow_dispatch]
 jobs:
   package-analysis:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/customer_testing'
 
     steps:
       - uses: actions/checkout@v3
@@ -11,7 +12,6 @@ jobs:
       - uses: axel-op/dart-package-analyzer@v3
         # set an id for the current step
         id: analysis
-        if: github.ref != 'refs/heads/customer_testing'
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
