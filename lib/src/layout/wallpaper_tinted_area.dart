@@ -12,17 +12,35 @@ class WallpaperTintedArea extends StatelessWidget {
   const WallpaperTintedArea({
     super.key,
     required this.backgroundColor,
+    this.insertRepaintBoundary = false,
     this.child,
   });
 
   /// The color to apply to the background when wallpaper tinting is disabled.
   final Color backgroundColor;
 
+  /// Whether to insert a [RepaintBoundary] above this widget in the widget
+  /// tree.
+  ///
+  /// In some instances, it may be necessary to insert a [RepaintBoundary] above
+  /// this widget into the widget tree to ensure that this widget is rendered
+  /// properly.
+  final bool insertRepaintBoundary;
+
   /// The widget below this widget in the tree.
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
+    if (insertRepaintBoundary) {
+      return RepaintBoundary(
+        child: _WallpaperTintedAreaLayoutBuilder(
+          backgroundColor: backgroundColor,
+          child: child,
+        ),
+      );
+    }
+
     return _WallpaperTintedAreaLayoutBuilder(
       backgroundColor: backgroundColor,
       child: child,
