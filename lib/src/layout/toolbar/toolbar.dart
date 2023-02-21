@@ -89,15 +89,17 @@ class ToolBar extends StatefulWidget {
   /// Typically the [leading] widget is a [MacosIcon] or a [MacosIconButton].
   final Widget? leading;
 
-  /// Controls whether we should try to imply the leading widget if null.
+  /// Controls whether the toolbar should try to imply if the [leading] widget
+  /// is null.
   ///
-  /// If `true` and [leading] is null, automatically try to deduce what the leading
-  /// widget should be. If `false` and [leading] is null, leading space is given to [title].
-  /// If leading widget is not null, this parameter has no effect.
+  /// If `true` and [leading] are null, the toolbar will automatically try to
+  /// deduce what the leading widget should be. If `false` and [leading] is
+  /// null, leading space is given to [title]. If the [leading] widget is not
+  /// null, this parameter has no effect.
   final bool automaticallyImplyLeading;
 
-  /// A list of [ToolbarItem] widgets to display in a row after the [title] widget,
-  /// as the toolbar actions.
+  /// A list of [ToolbarItem] widgets to display in a row after the [title]
+  /// widget, as the toolbar actions.
   ///
   /// Toolbar items include [ToolBarIconButton], [ToolBarPulldownButton],
   /// [ToolBarSpacer], and [CustomToolbarItem] widgets.
@@ -108,14 +110,14 @@ class ToolBar extends StatefulWidget {
   /// at the right edge of the toolbar.
   final List<ToolbarItem>? actions;
 
-  /// Whether the title should be centered.
+  /// Whether the [title] should be centered.
   final bool centerTitle;
 
   /// The color of the divider below the toolbar.
   ///
-  /// Defaults to MacosTheme.of(context).dividerColor.
+  /// Defaults to `MacosTheme.of(context).dividerColor`.
   ///
-  /// Set it to MacosColors.transparent to remove.
+  /// Set this to `MacosColors.transparent` to remove.
   final Color? dividerColor;
 
   @override
