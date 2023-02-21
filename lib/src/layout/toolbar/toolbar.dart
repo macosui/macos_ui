@@ -211,6 +211,7 @@ class _ToolBarState extends State<ToolBar> {
       ),
       child: WallpaperTintedArea(
         backgroundColor: theme.canvasColor,
+        insertRepaintBoundary: true,
         child: Container(
           alignment: widget.alignment,
           padding: widget.padding,
