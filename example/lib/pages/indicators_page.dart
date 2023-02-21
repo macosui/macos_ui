@@ -40,7 +40,7 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                 children: [
                   CapacityIndicator(
                     value: capacitorValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
+                    onChanged: (v) => setState(() => capacitorValue = v),
                     splits: 20,
                     discrete: true,
                   ),

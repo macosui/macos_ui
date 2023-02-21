@@ -18,15 +18,11 @@ This repository uses [conventional commits](https://www.conventionalcommits.org/
 As mentioned above, all pull requests should target `dev`.
 
 #### Pre-launch script
-Before opening your pull request, run the `pr_prelaunch_tasks.sh` script to ensure that your changes meet the 
-following requirements:
+Before opening your pull request, please ensure that the following
+following requirements are met:
 * All code is properly formatted
 * There are no Dart analysis warnings
 * All tests pass
-
-If the format step of the script results in changes, the script will make those change, commit them, and prompt you to push the commit.
-
-If the `dart fix` step results in changes, the script will make those changes, commit them, and prompt you to push the commit.
 
 Pull requests should **always** be merged via GitHub and not via command-line.
 

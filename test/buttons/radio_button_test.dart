@@ -20,7 +20,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context, _) {
                   return Center(
                     child: MacosRadioButton<TestOptions>(
                       value: TestOptions.first,
