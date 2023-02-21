@@ -61,7 +61,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context, _) {
                     capturedContext = context;
                     return const PushButton(
                       buttonSize: ButtonSize.small,

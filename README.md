@@ -16,7 +16,10 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
-## 🚨 Usage notes  
+## 🚨 Usage notes
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Flutter channel
+`macos_ui` is developed against Flutter's `stable` channel. To ensure a smooth development experience with `macos_ui`, you should build your application on Flutter's `stable` channel.
+
 ### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
 
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
@@ -50,6 +53,7 @@ should avoid allowing your application window to be resized below the height of 
 
 - [Layout](#layout)
   - [MacosWindow](#macoswindow)
+  - [Sidebar](#sidebar)
   - [MacosScaffold](#macosscaffold)
   - [Modern Window Look](#modern-window-look)
   - [ToolBar](#toolbar)
@@ -147,6 +151,56 @@ The sidebar can be toggled with `MacosWindowScope.of(context).toggleSidebar()`. 
 your `MacosScaffold` in a `Builder` widget in order for this to work properly.
 
 <img src="https://imgur.com/IBbp5rN.gif" width="75%">
+
+## Sidebar
+A sidebar enables app navigation and provides quick access to top-level collections of content in your app.
+
+Sidebars may be placed at the left or right of your app. To place a sidebar on the left, use the `MacosWindow.sidebar` property. To place a sidebar on the right, use the `MacosWindow.endSidebar` property.
+
+<img src="https://imgur.com/sz4VPNR.png" width="75%"/>
+
+Example usage:
+
+```dart
+int pageIndex = 0;
+
+...
+
+MacosWindow(
+  sidebar: Sidebar(
+    minWidth: 200,
+    builder: (context, scrollController) {
+      return SidebarItems(
+        currentIndex: pageIndex,
+        scrollController: scrollController,
+        itemSize: SidebarItemSize.large,
+        onChanged: (i) {
+          setState(() => pageIndex = i);
+        },
+        items: const [
+          SidebarItem(
+            label: Text('Page One'),
+          ),
+          SidebarItem(
+            label: Text('Page Two'),
+          ),
+        ],
+      );
+    },
+  ),
+  endSidebar: Sidebar(
+    startWidth: 200,
+    minWidth: 200,
+    maxWidth: 300,
+    shownByDefault: false,
+    builder: (context, _) {
+      return const Center(
+        child: Text('End Sidebar'),
+      );
+    },
+  ),
+),
+```
 
 ## MacosScaffold
 
@@ -355,7 +409,7 @@ CustomToolbarItem(
 
 ## MacosListTile
 
-A widget that aims to approximate the [ListTile] widget found in
+A widget that aims to approximate the [`ListTile`](https://api.flutter.dev/flutter/material/ListTile-class.html) widget found in
 Flutter's material library.
 
 ![MacosListTile](https://imgur.com/pQB99M2.png)
@@ -862,10 +916,10 @@ You can set `discrete` to `true` to make it a discrete capacity indicator.
 
 A slider is a control that lets people select a value from a continuous or discrete range of values by moving the slider thumb.
 
- Continuous                                                                                                                                                         | Discrete                                                                                                                                                                                                         |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ![Continuous Slider Example](https://i.imgur.com/dc4YjoX.png) | ![Discrete Slider Example](https://i.imgur.com/KckOTUf.png)                                                                                   |
-| A horizontal slider where any value continuous value between a min and max can be selected | A horizontal slider where only discrete values between a min and max can be selected. Tick marks are often displayed to provide context. |
+ | Continuous                                                                                 | Discrete                                                                                                                                 |
+ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+ | ![Continuous Slider Example](https://i.imgur.com/dc4YjoX.png)                              | ![Discrete Slider Example](https://i.imgur.com/KckOTUf.png)                                                                              |
+ | A horizontal slider where any value continuous value between a min and max can be selected | A horizontal slider where only discrete values between a min and max can be selected. Tick marks are often displayed to provide context. |
 
 
 Here's an example of how to create an interactive continuous slider:

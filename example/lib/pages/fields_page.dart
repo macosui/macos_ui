@@ -126,8 +126,8 @@ class _FieldsPageState extends State<FieldsPage> {
           },
         ),
         ResizablePane(
-          minWidth: 180,
-          startWidth: 200,
+          minSize: 180,
+          startSize: 200,
           windowBreakpoint: 800,
           resizableSide: ResizableSide.left,
           builder: (_, __) {
