@@ -182,9 +182,7 @@ class _MacosWindowState extends State<MacosWindow> {
     // Respect the end sidebar color override from parent if one is given
     if (widget.endSidebar?.decoration?.color != null) {
       endSidebarBackgroundColor = widget.endSidebar!.decoration!.color!;
-    } else if (isMac &&
-        MediaQuery.of(context).platformBrightness.isDark ==
-            theme.brightness.isDark) {
+    } else if (isMac) {
       endSidebarBackgroundColor = theme.canvasColor;
     } else {
       endSidebarBackgroundColor = theme.brightness.isDark
