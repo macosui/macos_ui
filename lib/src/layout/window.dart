@@ -31,6 +31,7 @@ class MacosWindow extends StatefulWidget {
     this.backgroundColor,
     this.endSidebar,
     this.disableWallpaperTinting = false,
+    this.sidebarState = NSVisualEffectViewState.followsWindowActiveState,
   });
 
   /// Specifies the background color for the Window.
@@ -71,6 +72,11 @@ class MacosWindow extends StatefulWidget {
   /// Since the disabling of wallpaper tinting may be found to be too noticeable
   /// this property may be used to disable wallpaper tinting outright.
   final bool disableWallpaperTinting;
+
+  /// The [NSVisualEffectViewState] of the sidebar.
+  ///
+  /// Defaults to [NSVisualEffectViewState.followsWindowActiveState].
+  final NSVisualEffectViewState sidebarState;
 
   @override
   State<MacosWindow> createState() => _MacosWindowState();
@@ -232,6 +238,7 @@ class _MacosWindowState extends State<MacosWindow> {
                     maxHeight: height,
                   ).normalize(),
                   child: TransparentMacOSSidebar(
+                    state: widget.sidebarState,
                     child: Column(
                       children: [
                         if ((widget.sidebar?.topOffset ?? 0) > 0)
