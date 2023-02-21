@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/scrollbar.dart';
 import 'package:macos_ui/src/layout/content_area.dart';
 import 'package:macos_ui/src/layout/resizable_pane.dart';
@@ -378,37 +379,46 @@ class _MacosWindowState extends State<MacosWindow> {
                     minHeight: height,
                     maxHeight: height,
                   ).normalize(),
-                  child: Column(
-                    children: [
-                      if ((widget.endSidebar?.topOffset ?? 0) > 0)
-                        SizedBox(height: widget.endSidebar?.topOffset),
-                      if (_endSidebarScrollController.hasClients &&
-                          _endSidebarScrollController.offset > 0.0)
-                        Divider(thickness: 1, height: 1, color: dividerColor),
-                      if (widget.endSidebar!.top != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: widget.endSidebar!.top!,
-                        ),
-                      Expanded(
-                        child: MacosScrollbar(
-                          controller: _endSidebarScrollController,
-                          child: Padding(
+                  child: WallpaperTintedArea(
+                    backgroundColor: endSidebarBackgroundColor,
+                    insertRepaintBoundary: true,
+                    child: Column(
+                      children: [
+                        if ((widget.endSidebar?.topOffset ?? 0) > 0)
+                          SizedBox(height: widget.endSidebar?.topOffset),
+                        if (_endSidebarScrollController.hasClients &&
+                            _endSidebarScrollController.offset > 0.0)
+                          Divider(
+                            thickness: 1,
+                            height: 1,
+                            color: dividerColor,
+                          ),
+                        if (widget.endSidebar!.top != null)
+                          Padding(
                             padding:
-                                widget.endSidebar?.padding ?? EdgeInsets.zero,
-                            child: widget.endSidebar!.builder(
-                              context,
-                              _endSidebarScrollController,
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: widget.endSidebar!.top!,
+                          ),
+                        Expanded(
+                          child: MacosScrollbar(
+                            controller: _endSidebarScrollController,
+                            child: Padding(
+                              padding:
+                                  widget.endSidebar?.padding ?? EdgeInsets.zero,
+                              child: widget.endSidebar!.builder(
+                                context,
+                                _endSidebarScrollController,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      if (widget.endSidebar?.bottom != null)
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: widget.endSidebar!.bottom!,
-                        ),
-                    ],
+                        if (widget.endSidebar?.bottom != null)
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: widget.endSidebar!.bottom!,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
