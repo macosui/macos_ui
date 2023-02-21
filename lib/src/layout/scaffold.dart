@@ -89,6 +89,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               height: height,
               child: WallpaperTintedArea(
                 backgroundColor: backgroundColor,
+                insertRepaintBoundary: true,
                 child: MediaQuery(
                   data: mediaQuery.copyWith(
                     padding: EdgeInsets.only(top: topPadding),
