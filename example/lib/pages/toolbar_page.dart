@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
-// ignore: implementation_imports
-import 'package:macos_ui/src/library.dart';
 
 class ToolbarPage extends StatefulWidget {
   const ToolbarPage({super.key});
@@ -165,14 +164,10 @@ class _ToolbarPageState extends State<ToolbarPage> {
                 child: Column(
                   children: const [
                     Text(
-                      'The toolbar appears below the title bar of the macOS app or integrates with it.',
+                      'A toolbar provides convenient access to frequently used commands and controls that perform actions relevant to the current view.',
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20.0),
-                    Text(
-                      'It provides convenient access to frequently used commands and features.',
-                      textAlign: TextAlign.center,
-                    ),
                   ],
                 ),
               ),

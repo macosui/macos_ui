@@ -4,6 +4,7 @@ import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields_page.dart';
 import 'package:example/pages/indicators_page.dart';
 import 'package:example/pages/selectors_page.dart';
+import 'package:example/pages/sliver_toolbar_page.dart';
 import 'package:example/pages/tabview_page.dart';
 import 'package:example/pages/toolbar_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,11 +68,10 @@ class _WidgetGalleryState extends State<WidgetGallery> {
       ),
     ),
     const DialogsPage(),
-    CupertinoTabView(
-      builder: (_) => const ToolbarPage(),
-    ),
-    const SelectorsPage(),
+    const ToolbarPage(),
+    const SliverToolbarPage(),
     const TabViewPage(),
+    const SelectorsPage(),
   ];
 
   @override
@@ -236,8 +236,30 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   label: Text('Dialogs & Sheets'),
                 ),
                 const SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.macwindow),
-                  label: Text('Toolbar'),
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/macwindow.on.rectangle_2x.png',
+                    ),
+                  ),
+                  label: Text('Layout'),
+                  disclosureItems: [
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.macwindow),
+                      label: Text('Toolbar'),
+                    ),
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                          'assets/sf_symbols/menubar.rectangle_2x.png',
+                        ),
+                      ),
+                      label: Text('SliverToolbar'),
+                    ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.uiwindow_split_2x1),
+                      label: Text('TabView'),
+                    ),
+                  ],
                 ),
                 const SidebarItem(
                   leading: MacosImageIcon(
@@ -246,10 +268,6 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     ),
                   ),
                   label: Text('Selectors'),
-                ),
-                const SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.uiwindow_split_2x1),
-                  label: Text('TabView'),
                 ),
               ],
             );
