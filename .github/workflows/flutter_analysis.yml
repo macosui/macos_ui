@@ -23,9 +23,8 @@ jobs:
 
       - name: Format code
         run: |
-          dart format --set-exit-if-changed .
+          dart format .
           if [ $? -eq 1 ]; then
-            dart format lib
             git add .
             git commit -m "chore: formatting corrections"
             git push
