@@ -28,10 +28,10 @@ class _WallpaperTintingOverrideState extends State<WallpaperTintingOverride> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     GlobalWallpaperTintingSettings.removeWallpaperTintingOverride();
 
-    super.deactivate();
+    super.dispose();
   }
 
   @override
