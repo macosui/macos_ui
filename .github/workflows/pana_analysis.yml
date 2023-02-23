@@ -4,6 +4,7 @@ on: [pull_request, workflow_dispatch]
 jobs:
   package-analysis:
     runs-on: ubuntu-latest
+    if: github.base_ref != 'customer_testing'
 
     steps:
       - uses: actions/checkout@v3

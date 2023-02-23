@@ -33,6 +33,7 @@ void main() {
                     return Center(
                       child: SizedBox(
                         width: 300.0,
+                        height: 500.0,
                         child: MacosSearchField(
                           results:
                               kOptions.map((e) => SearchResultItem(e)).toList(),
@@ -64,6 +65,15 @@ void main() {
       ListView list = find.byType(ListView).evaluate().first.widget as ListView;
       // 'chameleon' and 'elephant' are displayed.
       expect(list.semanticChildCount, 2);
+
+      await tester.ensureVisible(find.text('elephant'));
+      await tester.pump();
+
+      await tester.tap(find.text('elephant'));
+      await tester.pump();
+
+      expect(controller.text, 'elephant');
+      expect(find.byType(ListView), findsNothing);
     },
   );
 }
