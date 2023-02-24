@@ -3,8 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-// ignore_for_file: avoid_print
-
 void main() {
   Future<void> pumpScrollableWithSliverToolbar(
     WidgetTester tester,
