@@ -121,7 +121,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
   final bool pinned;
 
   /// Whether the toolbar should become visible as soon as the user scrolls
-  /// towards the toolbar.
+  /// upwards.
   ///
   /// Otherwise, the user will need to scroll near the top of the scroll view
   /// to reveal the toolbar.
