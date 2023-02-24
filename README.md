@@ -423,6 +423,7 @@ This widget enables developers to achieve the toolbar behaviors seen in Apple's 
 Sample usage:
 ```dart
 return CustomScrollView(
+  controller: scrollController,
   slivers: [
     SliverToolBar(
       title: const Text('SliverToolbar'),
