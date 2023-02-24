@@ -125,7 +125,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
   ///
   /// Otherwise, the user will need to scroll near the top of the scroll view
   /// to reveal the toolbar.
-  /// 
+  ///
   /// Defaults to `false`.
   final bool floating;
 
