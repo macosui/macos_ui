@@ -235,7 +235,10 @@ class MacosColors {
   );
 
   /// A placeholder string in a control or text view.
-  static const placeholderTextColor = MacosColor(0xff737473);
+  static const placeholderTextColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xFF0068DA),
+    darkColor: MacosColor(0xFF419CFF),
+  );
 
   static const windowFrameColor = MacosColor(0xffddddde);
 
