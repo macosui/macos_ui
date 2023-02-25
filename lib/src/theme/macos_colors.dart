@@ -104,6 +104,25 @@ class MacosColor extends Color {
   MacosColor withAlpha(int a) {
     return MacosColor.fromARGB(a, red, green, blue);
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is MacosColor && other.value == value;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
+
+  @override
+  String toString() {
+    return 'MacosColor(0x${value.toRadixString(16).padLeft(8, '0')})';
+  }
 }
 
 /// A collection of color values lifted from the macOS system color picker.
