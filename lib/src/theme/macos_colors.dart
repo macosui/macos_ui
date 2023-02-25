@@ -230,8 +230,8 @@ class MacosColors {
 
   /// A link to other content.
   static const linkColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xff0068DA),
-    darkColor: MacosColor.fromRGBO(65, 156, 255, 1),
+    color: MacosColor(0xFF0068DA),
+    darkColor: MacosColor(0xFF419CFF),
   );
 
   /// A placeholder string in a control or text view.
