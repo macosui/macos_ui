@@ -12,11 +12,11 @@ public class MacOSUiPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
   
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
-      name: "dev.groovinchip.macos_ui",
+      name: "dev.macosui.macos_ui",
       binaryMessenger: registrar.messenger)
     
     let colorSelectionChannel = FlutterEventChannel(
-      name: "dev.groovinchip.macos_ui/color_panel",
+      name: "dev.macosui.macos_ui/color_panel",
       binaryMessenger: registrar.messenger)
     
     let colorPanelProvider = ColorPanelProvider()
