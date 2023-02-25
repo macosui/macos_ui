@@ -214,8 +214,8 @@ class MacosThemeData with Diagnosticable {
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
     canvasColor ??= isDark
-        ? CupertinoColors.systemBackground.darkElevatedColor
-        : CupertinoColors.systemBackground;
+        ? MacosColors.windowBackgroundColor.darkColor
+        : MacosColors.windowBackgroundColor;
     typography ??= MacosTypography(
       color: _brightness == Brightness.light
           ? CupertinoColors.black

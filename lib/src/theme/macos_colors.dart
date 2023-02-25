@@ -266,8 +266,11 @@ class MacosColors {
   /// Selected text in a non-key window or view.
   static const unemphasizedSelectedTextColor = MacosColors.white;
 
-  /// The background of a window.
-  static const windowBackgroundColor = MacosColor(0xff3b373d);
+  /// The color to use for the window background.
+  static const windowBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor.fromRGBO(234, 234, 235, 1.0),
+    darkColor: MacosColor.fromRGBO(30, 29, 30, 1.0),
+  );
 
   /// The background behind a document's content.
   static const underPageBackgroundColor = MacosColor(0xff282828);
