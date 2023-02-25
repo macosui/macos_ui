@@ -85,6 +85,25 @@ class MacosColor extends Color {
   static int getAlphaFromOpacity(double opacity) {
     return (opacity.clamp(0.0, 1.0) * 255).round();
   }
+
+  /// Returns a new color that matches this color with the alpha channel
+  /// replaced with the given `opacity` (which ranges from 0.0 to 1.0).
+  ///
+  /// Out of range values will have unexpected effects.
+  @override
+  MacosColor withOpacity(double opacity) {
+    assert(opacity >= 0.0 && opacity <= 1.0);
+    return withAlpha((255.0 * opacity).round());
+  }
+
+  /// Returns a new color that matches this color with the alpha channel
+  /// replaced with `a` (which ranges from 0 to 255).
+  ///
+  /// Out of range values will have unexpected effects.
+  @override
+  MacosColor withAlpha(int a) {
+    return MacosColor.fromARGB(a, red, green, blue);
+  }
 }
 
 /// A collection of color values lifted from the macOS system color picker.
