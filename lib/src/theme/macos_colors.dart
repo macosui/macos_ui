@@ -213,8 +213,18 @@ class MacosColors {
     darkColor: MacosColor(0xFF5E5CE6),
   );
 
+  static const systemMintColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xFF00C7bE),
+    darkColor: MacosColor(0xFF5AC8F5),
+  );
+
   static const systemGrayColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor(0xFF8E8E93),
+    darkColor: MacosColor(0xFF98989D),
+  );
+
+  static const systemCyanColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xFF55BEF0),
     darkColor: MacosColor(0xFF98989D),
   );
 
