@@ -128,7 +128,7 @@ class MacosColor extends Color {
 /// A collection of color values lifted from the macOS system color picker.
 class MacosColors {
   /// A fully transparent color.
-  static const Color transparent = MacosColor(0x00000000);
+  static const transparent = MacosColor(0x00000000);
 
   /// A fully opaque black color.
   static const black = MacosColor(0xff000000);
@@ -138,29 +138,29 @@ class MacosColors {
 
   /// The text of a label containing primary content.
   static const labelColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.85),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.85),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.85),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.85),
   );
 
   /// The text of a label of lesser importance than a primary label, such as
   /// a label used to represent a subheading or additional information.
   static const secondaryLabelColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.5),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.55),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.5),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.55),
   );
 
   /// The text of a label of lesser importance than a secondary label such as
   /// a label used to represent disabled text.
   static const tertiaryLabelColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.26),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.26),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.26),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.26),
   );
 
   /// The text of a label of lesser importance than a tertiary label such as
   /// watermark text.
   static const quaternaryLabelColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.1),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.1),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.1),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.1),
   );
 
   static const systemRedColor = CupertinoDynamicColor.withBrightness(
@@ -221,7 +221,7 @@ class MacosColors {
   /// A link to other content.
   static const linkColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor(0xff0068DA),
-    darkColor: Color.fromRGBO(65, 156, 255, 1),
+    darkColor: MacosColor.fromRGBO(65, 156, 255, 1),
   );
 
   /// A placeholder string in a control or text view.
@@ -293,26 +293,26 @@ class MacosColors {
 
   /// The surface of a control.
   static const controlColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.1),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.25),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.1),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.25),
   );
 
   /// The text of a control that isn’t disabled.
   static const controlTextColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.85),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.85),
     darkColor: MacosColor(0xffddddde),
   );
 
   /// The text of a control that’s disabled.
   static const disabledControlTextColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.25),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.25),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.25),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.25),
   );
 
   /// The surface of a selected control.
   static const selectedControlColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(179, 215, 255, 1),
-    darkColor: Color.fromRGBO(63, 99, 139, 1),
+    color: MacosColor.fromRGBO(179, 215, 255, 1),
+    darkColor: MacosColor.fromRGBO(63, 99, 139, 1),
   );
 
   /// The text of a selected control.
@@ -325,33 +325,33 @@ class MacosColors {
   /// the keyboard for interface navigation.
   static const keyboardFocusIndicatorColor =
       CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 103, 244, 0.25),
-    darkColor: Color.fromRGBO(26, 169, 255, 0.3),
+    color: MacosColor.fromRGBO(0, 103, 244, 0.25),
+    darkColor: MacosColor.fromRGBO(26, 169, 255, 0.3),
   );
 
   /// The color of the thumb of [MacosSlider].
   static const sliderThumbColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(255, 255, 255, 1),
-    darkColor: Color.fromRGBO(152, 152, 157, 1),
+    color: MacosColor.fromRGBO(255, 255, 255, 1),
+    darkColor: MacosColor.fromRGBO(152, 152, 157, 1),
   );
 
   /// The color of the tick marks which are not selected (the portion to the right of the thumb) of [MacosSlider].
   static const tickBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(220, 220, 220, 1),
-    darkColor: Color.fromRGBO(70, 70, 70, 1),
+    color: MacosColor.fromRGBO(220, 220, 220, 1),
+    darkColor: MacosColor.fromRGBO(70, 70, 70, 1),
   );
 
   /// The color of the slider in [MacosSlider] which is not selected (the portion
   /// to the right of the thumb).
   static const sliderBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 0, 0, 0.1),
-    darkColor: Color.fromRGBO(255, 255, 255, 0.1),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.1),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.1),
   );
 
   /// The accent color selected by the user in system preferences.
   ///
   /// No dark variant.
-  static const controlAccentColor = Color.fromRGBO(0, 122, 255, 1);
+  static const controlAccentColor = MacosColor.fromRGBO(0, 122, 255, 1);
 
   static const appleBlue = MacosColor(0xff0433ff);
   static const appleBrown = MacosColor(0xffaa7942);
