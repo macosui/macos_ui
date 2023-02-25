@@ -240,7 +240,11 @@ class MacosColors {
     darkColor: MacosColor(0xFF419CFF),
   );
 
-  static const windowFrameColor = MacosColor(0xffddddde);
+  /// The color of text in the window’s title bar area.
+  static const windowFrameTextColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor(0xFFECECEC),
+    darkColor: MacosColor(0xFF323232),
+  );
 
   /// The text of a selected menu.
   static const selectedMenuItemTextColor = MacosColor(0xfffeffff);
