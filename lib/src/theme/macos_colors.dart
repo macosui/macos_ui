@@ -146,14 +146,14 @@ class MacosColors {
   /// a label used to represent a subheading or additional information.
   static const secondaryLabelColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(0, 0, 0, 0.5),
-    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.55),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.5),
   );
 
   /// The text of a label of lesser importance than a secondary label such as
   /// a label used to represent disabled text.
   static const tertiaryLabelColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(0, 0, 0, 0.26),
-    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.26),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.2),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.2),
   );
 
   /// The text of a label of lesser importance than a tertiary label such as
@@ -164,58 +164,58 @@ class MacosColors {
   );
 
   static const systemRedColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffFF3B30),
-    darkColor: MacosColor(0xffFF453A),
+    color: MacosColor(0xFFFF2D55),
+    darkColor: MacosColor(0xFFFF375F),
   );
 
   static const systemGreenColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xff34C759),
-    darkColor: MacosColor(0xff30D158),
+    color: MacosColor(0xFF34C759),
+    darkColor: MacosColor(0xFF32D74B),
   );
 
   static const systemBlueColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xff007AFF),
-    darkColor: MacosColor(0xff0A84FF),
+    color: MacosColor(0xFF007AFF),
+    darkColor: MacosColor(0xFF0A84FF),
   );
 
   static const systemOrangeColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffFF9500),
-    darkColor: MacosColor(0xffFF9F0A),
+    color: MacosColor(0xFFFF9500),
+    darkColor: MacosColor(0xFFFF9F0A),
   );
 
   static const systemYellowColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffFF9F0A),
-    darkColor: MacosColor(0xffFFD60A),
+    color: MacosColor(0xFFFFCC00),
+    darkColor: MacosColor(0xFFFFD60A),
   );
 
   static const systemBrownColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffA2845E),
-    darkColor: MacosColor(0xffAC8E68),
+    color: MacosColor(0xFFA2845E),
+    darkColor: MacosColor(0xFFAC8E68),
   );
 
   static const systemPinkColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffFF2D55),
-    darkColor: MacosColor(0xffFF375F),
+    color: MacosColor(0xFFFF2D55),
+    darkColor: MacosColor(0xFFFF375F),
   );
 
   static const systemPurpleColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffAF52DE),
-    darkColor: MacosColor(0xffBF5AF2),
+    color: MacosColor(0xFFAF52DE),
+    darkColor: MacosColor(0xFFBF5AF2),
   );
 
   static const systemTealColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xff55BEF0),
-    darkColor: MacosColor(0xff5AC8F5),
+    color: MacosColor(0xFF5AC8FA),
+    darkColor: MacosColor(0xFF64D2FF),
   );
 
   static const systemIndigoColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xff5856D6),
-    darkColor: MacosColor(0xff5E5CE6),
+    color: MacosColor(0xFF5856D6),
+    darkColor: MacosColor(0xFF5E5CE6),
   );
 
   static const systemGrayColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xff8E8E93),
-    darkColor: MacosColor(0xff98989D),
+    color: MacosColor(0xFF8E8E93),
+    darkColor: MacosColor(0xFF98989D),
   );
 
   /// A link to other content.
