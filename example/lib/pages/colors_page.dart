@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class ColorsPage extends StatefulWidget {
@@ -577,7 +576,8 @@ class _ColorsPageState extends State<ColorsPage> {
                               color: MacosColors.selectedContentBackgroundColor,
                             ),
                             ColorBox(
-                              color: MacosColors.selectedContentBackgroundColor.darkColor,
+                              color: MacosColors
+                                  .selectedContentBackgroundColor.darkColor,
                             ),
                             const Text('secondaryLabelColor'),
                           ],
@@ -690,7 +690,6 @@ class _ColorsPageState extends State<ColorsPage> {
                             const Text('separatorColor'),
                           ],
                         ),
-                        // todo: shadowColor
                         const TableRow(
                           children: [
                             SizedBox(height: 8.0),
