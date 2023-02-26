@@ -391,7 +391,6 @@ class _ColorsPageState extends State<ColorsPage> {
                             SizedBox(height: 8.0),
                           ],
                         ),
-                        // todo: currentControlTint
                         TableRow(
                           children: [
                             const ColorBox(
@@ -456,7 +455,6 @@ class _ColorsPageState extends State<ColorsPage> {
                             const Text('headerTextColor'),
                           ],
                         ),
-                        // todo: highlightColor
                         const TableRow(
                           children: [
                             SizedBox(height: 8.0),
@@ -548,7 +546,6 @@ class _ColorsPageState extends State<ColorsPage> {
                             const Text('quaternaryLabelColor'),
                           ],
                         ),
-                        // todo: scrubberTexturedBackgroundColor
                         const TableRow(
                           children: [
                             SizedBox(height: 8.0),
@@ -567,7 +564,24 @@ class _ColorsPageState extends State<ColorsPage> {
                             const Text('secondaryLabelColor'),
                           ],
                         ),
-                        // todo: selectedContentBackgroundColor
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.selectedContentBackgroundColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.selectedContentBackgroundColor.darkColor,
+                            ),
+                            const Text('secondaryLabelColor'),
+                          ],
+                        ),
                         const TableRow(
                           children: [
                             SizedBox(height: 8.0),

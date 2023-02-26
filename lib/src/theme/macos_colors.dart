@@ -298,6 +298,12 @@ class MacosColors {
   );
 
   /// The surface of a selected control.
+  static const selectedContentBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor.fromRGBO(41, 97, 217, 1),
+    darkColor: MacosColor.fromRGBO(36, 87, 201, 1),
+  );
+
+  /// The surface of a selected control.
   static const selectedControlColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(179, 215, 255, 1),
     darkColor: MacosColor.fromRGBO(63, 99, 139, 1),
