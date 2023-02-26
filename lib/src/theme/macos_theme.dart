@@ -218,8 +218,8 @@ class MacosThemeData with Diagnosticable {
         : MacosColors.windowBackgroundColor;
     typography ??= MacosTypography(
       color: _brightness == Brightness.light
-          ? CupertinoColors.black
-          : CupertinoColors.white,
+          ? MacosColors.black
+          : MacosColors.white,
     );
     pushButtonTheme ??= PushButtonThemeData(
       color: primaryColor,
