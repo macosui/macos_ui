@@ -1033,8 +1033,8 @@ class ColorBox extends StatelessWidget {
     return Stack(
       children: [
         SizedBox(
-          height: 75,
-          width: 75,
+          height: 100,
+          width: 100,
           child: ClipRRect(
             borderRadius: const BorderRadius.all(
               Radius.circular(10.0),
@@ -1048,7 +1048,7 @@ class ColorBox extends StatelessWidget {
           top: 12,
           left: 12,
           child: Text(
-            'R ${color.red}\nG ${color.green}\nB ${color.blue}',
+            'R ${color.red}\nG ${color.green}\nB ${color.blue}\nA ${color.opacity.toStringAsFixed(2)}',
             style: TextStyle(
                 color: color.computeLuminance() > 0.5
                     ? MacosColors.black

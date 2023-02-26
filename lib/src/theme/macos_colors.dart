@@ -131,10 +131,10 @@ class MacosColors {
   static const transparent = MacosColor(0x00000000);
 
   /// A fully opaque black color.
-  static const black = MacosColor(0xff000000);
+  static const black = MacosColor(0xFF000000);
 
   /// A fully opaque white color.
-  static const white = MacosColor(0xffffffff);
+  static const white = MacosColor(0xFFFFFFFF);
 
   static const systemRedColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(255, 59, 48, 1.0),
@@ -206,9 +206,10 @@ class MacosColors {
 
   /// The backgrounds of alternating rows or columns in a list, table, or
   /// collection view.
-  static const alternatingContentBackgroundColor = CupertinoDynamicColor.withBrightness(
+  static const alternatingContentBackgroundColor =
+      CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(245, 245, 245, 1.0),
-    darkColor: MacosColor.fromRGBO(13, 12, 12, 1.0),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.05),
   );
 
   /// The accent color selected by the user in system preferences.
@@ -224,14 +225,14 @@ class MacosColors {
 
   /// The background of a large interface element, such as a browser or table.
   static const controlBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffFFFFFF),
-    darkColor: MacosColor(0xff1E1E1E),
+    color: MacosColors.white,
+    darkColor: MacosColor.fromRGBO(30, 30, 30, 1.0),
   );
 
   /// The text of a control that isn’t disabled.
   static const controlTextColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(0, 0, 0, 0.85),
-    darkColor: MacosColor(0xffddddde),
+    darkColor: MacosColor(0xFFDDDDDE),
   );
 
   /// The text of a control that’s disabled.
@@ -243,17 +244,17 @@ class MacosColors {
   /// The color of a find indicator.
   ///
   /// Has no dark variant.
-  static const findHighlightColor = MacosColor(0xffffff00);
+  static const findHighlightColor = MacosColor(0xFFFFFF00);
 
   ///	The gridlines of an interface element such as a table.
   static const gridColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xFFCCCCCC),
-    darkColor: MacosColor(0x19FFFFFF),
+    color: MacosColor(0xFFE6E6E6),
+    darkColor: MacosColor(0xFF1A1A1A),
   );
 
   ///	The text of a header cell in a table.
   static const headerTextColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(1, 0, 0, 0.847),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.85),
     darkColor: MacosColors.white,
   );
 
@@ -261,8 +262,8 @@ class MacosColors {
   /// the keyboard for interface navigation.
   static const keyboardFocusIndicatorColor =
       CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(0, 103, 244, 0.25),
-    darkColor: MacosColor.fromRGBO(26, 169, 255, 0.3),
+    color: MacosColor.fromRGBO(0, 103, 244, 0.5),
+    darkColor: MacosColor.fromRGBO(26, 169, 255, 0.5),
   );
 
   /// The text of a label containing primary content.
@@ -279,8 +280,8 @@ class MacosColors {
 
   /// A placeholder string in a control or text view.
   static const placeholderTextColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xFF0068DA),
-    darkColor: MacosColor(0xFF419CFF),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.25),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.25),
   );
 
   /// The text of a label of lesser importance than a tertiary label such as
@@ -294,13 +295,14 @@ class MacosColors {
   /// a label used to represent a subheading or additional information.
   static const secondaryLabelColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(0, 0, 0, 0.5),
-    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.5),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.55),
   );
 
   /// The surface of a selected control.
-  static const selectedContentBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(41, 97, 217, 1),
-    darkColor: MacosColor.fromRGBO(36, 87, 201, 1),
+  static const selectedContentBackgroundColor =
+      CupertinoDynamicColor.withBrightness(
+    color: MacosColor.fromRGBO(0, 99, 255, 1),
+    darkColor: MacosColor.fromRGBO(0, 88, 208, 1),
   );
 
   /// The surface of a selected control.
@@ -311,8 +313,8 @@ class MacosColors {
 
   /// The text of a selected control.
   static const selectedControlTextColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffddddde),
-    darkColor: MacosColor(0xff5a585c),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.85),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.85),
   );
 
   /// The text of a selected menu.
@@ -321,8 +323,8 @@ class MacosColors {
   ///	The background of selected text.
   static const selectedTextBackgroundColor =
       CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xFFB3D7FF),
-    darkColor: MacosColor(0xFF3F638B),
+    color: MacosColor.fromRGBO(179, 215, 255, 1.0),
+    darkColor: MacosColor.fromRGBO(63, 99, 139, 1.0),
   );
 
   ///	Selected text.
@@ -333,15 +335,15 @@ class MacosColors {
 
   ///	A separator between different sections of content.
   static const separatorColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0x19000000),
-    darkColor: MacosColor(0x19FFFFFF),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.1),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.1),
   );
 
   /// The text of a label of lesser importance than a secondary label such as
   /// a label used to represent disabled text.
   static const tertiaryLabelColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(0, 0, 0, 0.2),
-    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.2),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.26),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.25),
   );
 
   ///	Text background.
@@ -358,7 +360,7 @@ class MacosColors {
 
   /// The background behind a document's content.
   static const underPageBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xE5969696),
+    color: MacosColor.fromRGBO(150, 150, 150, 0.9),
     darkColor: MacosColor(0xFF282828),
   );
 
@@ -372,8 +374,8 @@ class MacosColors {
   /// A background for selected text in a non-key window or view.
   static const unemphasizedSelectedTextBackgroundColor =
       CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffDCDCDC),
-    darkColor: MacosColor(0xff464646),
+    color: MacosColor(0xFFDCDCDC),
+    darkColor: MacosColor(0xFF464646),
   );
 
   /// Selected text in a non-key window or view.
@@ -384,26 +386,33 @@ class MacosColors {
   );
 
   /// The color to use for the window background.
+  /*FIXME: These values are not correct - they are the values that the Digital
+     Color Meter application shows, but aren't correct due to the translucency
+     effect of macOS applications. The CORRECT values are commented below,
+     but cannot be turned on yet due to the unknown default value of the
+     translucency effect.*/
   static const windowBackgroundColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(238, 236, 236, 1.0),
+    // color: MacosColor.fromRGBO(236, 236, 236, 1.0),
     darkColor: MacosColor.fromRGBO(31, 29, 31, 1.0),
+    // darkColor: MacosColor.fromRGBO(50, 50, 50, 1.0),
   );
 
   /// The color of text in the window’s title bar area.
   static const windowFrameTextColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xFFECECEC),
-    darkColor: MacosColor(0xFF323232),
+    color: MacosColor.fromRGBO(0, 0, 0, 0.85),
+    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.85),
   );
 
-  static const appleBlue = MacosColor(0xff0433ff);
-  static const appleBrown = MacosColor(0xffaa7942);
-  static const appleCyan = MacosColor(0xff00fdff);
-  static const appleGreen = MacosColor(0xff00f900);
-  static const appleMagenta = MacosColor(0xffff40ff);
-  static const appleOrange = MacosColor(0xffff9300);
-  static const applePurple = MacosColor(0xff0942192);
-  static const appleRed = MacosColor(0xffff2600);
-  static const appleYellow = MacosColor(0xfffffb00);
+  static const appleBlue = MacosColor(0xFF0433FF);
+  static const appleBrown = MacosColor(0xFFAA7942);
+  static const appleCyan = MacosColor(0xFF00FDFF);
+  static const appleGreen = MacosColor(0xFF00F900);
+  static const appleMagenta = MacosColor(0xFFFF40FF);
+  static const appleOrange = MacosColor(0xFFFF9300);
+  static const applePurple = MacosColor(0xFF0942192);
+  static const appleRed = MacosColor(0xFFFF2600);
+  static const appleYellow = MacosColor(0xFFFFFB00);
 
   /// The color of the thumb of [MacosSlider].
   static const sliderThumbColor = CupertinoDynamicColor.withBrightness(
