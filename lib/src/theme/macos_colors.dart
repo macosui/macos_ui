@@ -416,7 +416,7 @@ class MacosColors {
 
   /// The color of the thumb of [MacosSlider].
   static const sliderThumbColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(255, 255, 255, 1),
+    color: MacosColors.white,
     darkColor: MacosColor.fromRGBO(152, 152, 157, 1),
   );
 
