@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class ColorsPage extends StatefulWidget {
@@ -30,306 +31,968 @@ class _ColorsPageState extends State<ColorsPage> {
         ContentArea(
           builder: (context, scrollController) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
+              controller: scrollController,
               child: Column(
                 children: [
-                  Wrap(
-                    spacing: 8.0,
-                    runSpacing: 8.0,
-                    children: [
-                      const MacosTooltip(
-                        message: 'System Red',
-                        child: ColorBox(
-                          color: MacosColors.systemRedColor,
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Table(
+                      // defaultColumnWidth: const FixedColumnWidth(150),
+                      children: [
+                        const TableRow(
+                          children: [
+                            Text('Light'),
+                            Text('Dark'),
+                            Text('Name'),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Red Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemRedColor.darkColor,
+                        const TableRow(children: [
+                          SizedBox(height: 16.0),
+                          SizedBox(height: 16.0),
+                          SizedBox(height: 16.0),
+                        ]),
+                        TableRow(
+                          children: [
+                            const ColorBox(color: MacosColors.systemRedColor),
+                            ColorBox(
+                              color: MacosColors.systemRedColor.darkColor,
+                            ),
+                            const Text('systemRed'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Green',
-                        child: ColorBox(
-                          color: MacosColors.systemGreenColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Green Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemGreenColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemOrangeColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemOrangeColor.darkColor,
+                            ),
+                            const Text('systemOrange'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Blue',
-                        child: ColorBox(
-                          color: MacosColors.systemBlueColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Blue Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemBlueColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemYellowColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemYellowColor.darkColor,
+                            ),
+                            const Text('systemYellow'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Orange',
-                        child: ColorBox(
-                          color: MacosColors.systemOrangeColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Orange Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemOrangeColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemGreenColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemGreenColor.darkColor,
+                            ),
+                            const Text('systemGreen'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Yellow',
-                        child: ColorBox(
-                          color: MacosColors.systemYellowColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Yellow Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemYellowColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemMintColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemMintColor.darkColor,
+                            ),
+                            const Text('systemMint'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Brown',
-                        child: ColorBox(
-                          color: MacosColors.systemBrownColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Brown Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemBrownColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemTealColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemTealColor.darkColor,
+                            ),
+                            const Text('systemTeal'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Pink',
-                        child: ColorBox(
-                          color: MacosColors.systemPinkColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Pink Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemPinkColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemCyanColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemCyanColor.darkColor,
+                            ),
+                            const Text('systemCyan'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Purple',
-                        child: ColorBox(
-                          color: MacosColors.systemPurpleColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Purple Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemPurpleColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemBlueColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemBlueColor.darkColor,
+                            ),
+                            const Text('systemBlue'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Teal',
-                        child: ColorBox(
-                          color: MacosColors.systemTealColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Teal Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemTealColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemIndigoColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemIndigoColor.darkColor,
+                            ),
+                            const Text('systemIndigo'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Indigo',
-                        child: ColorBox(
-                          color: MacosColors.systemIndigoColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Indigo Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemIndigoColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemPurpleColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemPurpleColor.darkColor,
+                            ),
+                            const Text('systemPurple'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'System Gray',
-                        child: ColorBox(
-                          color: MacosColors.systemGrayColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'System Gray Dark',
-                        child: ColorBox(
-                          color: MacosColors.systemGrayColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemPinkColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemPinkColor.darkColor,
+                            ),
+                            const Text('systemPink'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Link',
-                        child: ColorBox(
-                          color: MacosColors.linkColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Link Dark',
-                        child: ColorBox(
-                          color: MacosColors.linkColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemBrownColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemBrownColor.darkColor,
+                            ),
+                            const Text('systemBrown'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Unemphasized Background',
-                        child: ColorBox(
-                          color: MacosColors
-                              .unemphasizedSelectedTextBackgroundColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Unemphasized Background Dark',
-                        child: ColorBox(
-                          color: MacosColors
-                              .unemphasizedSelectedTextBackgroundColor
-                              .darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.systemGrayColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.systemGrayColor.darkColor,
+                            ),
+                            const Text('systemGray'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Control Background',
-                        child: ColorBox(
-                          color: MacosColors.controlBackgroundColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Control Background Dark',
-                        child: ColorBox(
-                          color: MacosColors.controlBackgroundColor.darkColor,
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color:
+                                  MacosColors.alternateSelectedControlTextColor,
+                            ),
+                            SizedBox.shrink(),
+                            Text('alternateSelectedControlTextColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Control',
-                        child: ColorBox(
-                          color: MacosColors.controlColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Control Dark',
-                        child: ColorBox(
-                          color: MacosColors.controlColor.darkColor,
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color:
+                                  MacosColors.alternatingContentBackgroundColor,
+                            ),
+                            SizedBox.shrink(),
+                            Text('alternatingContentBackgroundColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Control Text',
-                        child: ColorBox(
-                          color: MacosColors.controlTextColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Control Text Dark',
-                        child: ColorBox(
-                          color: MacosColors.controlTextColor.darkColor,
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.controlAccentColor,
+                            ),
+                            SizedBox.shrink(),
+                            Text('controlAccent'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Control Text Disabled',
-                        child: ColorBox(
-                          color: MacosColors.disabledControlTextColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Control Text Disabled Dark',
-                        child: ColorBox(
-                          color: MacosColors.disabledControlTextColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.controlBackgroundColor,
+                            ),
+                            ColorBox(
+                              color:
+                                  MacosColors.controlBackgroundColor.darkColor,
+                            ),
+                            const Text('controlBackgroundColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Selected Control',
-                        child: ColorBox(
-                          color: MacosColors.selectedControlColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Selected Control Dark',
-                        child: ColorBox(
-                          color: MacosColors.selectedControlColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.controlColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.controlColor.darkColor,
+                            ),
+                            const Text('controlColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Selected Control Text',
-                        child: ColorBox(
-                          color: MacosColors.selectedControlTextColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Selected Control Text Dark',
-                        child: ColorBox(
-                          color: MacosColors.selectedControlTextColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.controlTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.controlTextColor.darkColor,
+                            ),
+                            const Text('controlTextColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Keyboard Focus Indicator',
-                        child: ColorBox(
-                          color: MacosColors.keyboardFocusIndicatorColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Keyboard Focus Indicator',
-                        child: ColorBox(
-                          color:
-                              MacosColors.keyboardFocusIndicatorColor.darkColor,
+                        // todo: currentControlTint
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.disabledControlTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .disabledControlTextColor.darkColor,
+                            ),
+                            const Text('disabledControlTextColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Label',
-                        child: ColorBox(
-                          color: MacosColors.labelColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Label Dark',
-                        child: ColorBox(
-                          color: MacosColors.labelColor.darkColor,
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.findHighlightColor,
+                            ),
+                            SizedBox.shrink(),
+                            Text('findHighlightColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Secondary Label',
-                        child: ColorBox(
-                          color: MacosColors.secondaryLabelColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Secondary Label Dark',
-                        child: ColorBox(
-                          color: MacosColors.secondaryLabelColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.gridColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.gridColor.darkColor,
+                            ),
+                            const Text('gridColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Tertiary Label',
-                        child: ColorBox(
-                          color: MacosColors.tertiaryLabelColor,
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Tertiary Label Dark',
-                        child: ColorBox(
-                          color: MacosColors.tertiaryLabelColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.headerTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.headerTextColor.darkColor,
+                            ),
+                            const Text('headerTextColor'),
+                          ],
                         ),
-                      ),
-                      const MacosTooltip(
-                        message: 'Quaternary Label',
-                        child: ColorBox(
-                          color: MacosColors.quaternaryLabelColor,
+                        // todo: highlightColor
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
                         ),
-                      ),
-                      MacosTooltip(
-                        message: 'Quaternary Label Dark',
-                        child: ColorBox(
-                          color: MacosColors.quaternaryLabelColor.darkColor,
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.keyboardFocusIndicatorColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .keyboardFocusIndicatorColor.darkColor,
+                            ),
+                            const Text('keyboardFocusIndicatorColor'),
+                          ],
                         ),
-                      ),
-                    ],
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.labelColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.labelColor.darkColor,
+                            ),
+                            const Text('labelColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.linkColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.linkColor.darkColor,
+                            ),
+                            const Text('linkColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.placeholderTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.placeholderTextColor.darkColor,
+                            ),
+                            const Text('placeholderTextColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.quaternaryLabelColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.quaternaryLabelColor.darkColor,
+                            ),
+                            const Text('quaternaryLabelColor'),
+                          ],
+                        ),
+                        // todo: scrubberTexturedBackgroundColor
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.secondaryLabelColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.secondaryLabelColor.darkColor,
+                            ),
+                            const Text('secondaryLabelColor'),
+                          ],
+                        ),
+                        // todo: selectedContentBackgroundColor
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.selectedControlColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.selectedControlColor.darkColor,
+                            ),
+                            const Text('selectedControlColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.selectedControlTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .selectedControlTextColor.darkColor,
+                            ),
+                            const Text('selectedControlTextColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.selectedMenuItemTextColor,
+                            ),
+                            SizedBox.shrink(),
+                            Text('selectedMenuItemTextColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.selectedTextBackgroundColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .selectedTextBackgroundColor.darkColor,
+                            ),
+                            const Text('selectedTextBackgroundColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.selectedTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.selectedTextColor.darkColor,
+                            ),
+                            const Text('selectedTextColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.separatorColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.separatorColor.darkColor,
+                            ),
+                            const Text('separatorColor'),
+                          ],
+                        ),
+                        // todo: shadowColor
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.tertiaryLabelColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.tertiaryLabelColor.darkColor,
+                            ),
+                            const Text('tertiaryLabelColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.textBackgroundColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.textBackgroundColor.darkColor,
+                            ),
+                            const Text('textBackgroundColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.textColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.textColor.darkColor,
+                            ),
+                            const Text('textColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.underPageBackgroundColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .underPageBackgroundColor.darkColor,
+                            ),
+                            const Text('underPageBackgroundColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors
+                                  .unemphasizedSelectedContentBackgroundColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .unemphasizedSelectedContentBackgroundColor
+                                  .darkColor,
+                            ),
+                            const Text(
+                                'unemphasizedSelectedContentBackgroundColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors
+                                  .unemphasizedSelectedTextBackgroundColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .unemphasizedSelectedTextBackgroundColor
+                                  .darkColor,
+                            ),
+                            const Text(
+                                'unemphasizedSelectedTextBackgroundColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.unemphasizedSelectedTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors
+                                  .unemphasizedSelectedTextColor.darkColor,
+                            ),
+                            const Text('unemphasizedSelectedTextColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.windowBackgroundColor,
+                            ),
+                            ColorBox(
+                              color:
+                                  MacosColors.windowBackgroundColor.darkColor,
+                            ),
+                            const Text('windowBackgroundColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            const ColorBox(
+                              color: MacosColors.windowFrameTextColor,
+                            ),
+                            ColorBox(
+                              color: MacosColors.windowFrameTextColor.darkColor,
+                            ),
+                            const Text('windowFrameTextColor'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleRed,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleRed'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleOrange,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleOrange'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleYellow,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleYellow'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleGreen,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleGreen'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleCyan,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleCyan'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleBlue,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleBlue'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleMagenta,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleMagenta'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.applePurple,
+                            ),
+                            SizedBox.shrink(),
+                            Text('applePurple'),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                            SizedBox(height: 8.0),
+                          ],
+                        ),
+                        const TableRow(
+                          children: [
+                            ColorBox(
+                              color: MacosColors.appleBrown,
+                            ),
+                            SizedBox.shrink(),
+                            Text('appleBrown'),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -351,12 +1014,32 @@ class ColorBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: color,
-      child: const SizedBox(
-        height: 50,
-        width: 50,
-      ),
+    return Stack(
+      children: [
+        SizedBox(
+          height: 75,
+          width: 75,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+            child: ColoredBox(
+              color: color,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 12,
+          left: 12,
+          child: Text(
+            'R ${color.red}\nG ${color.green}\nB ${color.blue}',
+            style: TextStyle(
+                color: color.computeLuminance() > 0.5
+                    ? MacosColors.black
+                    : MacosColors.white),
+          ),
+        ),
+      ],
     );
   }
 }
