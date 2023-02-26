@@ -286,7 +286,7 @@ class MacosColors {
   /// The color to use for the window background.
   static const windowBackgroundColor = CupertinoDynamicColor.withBrightness(
     color: MacosColor.fromRGBO(238, 236, 236, 1.0),
-    darkColor: MacosColor.fromRGBO(32, 30, 31, 1.0),
+    darkColor: MacosColor.fromRGBO(31, 29, 31, 1.0),
   );
 
   /// The background behind a document's content.
