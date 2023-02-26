@@ -69,7 +69,8 @@ class _MacosScaffoldState extends State<MacosScaffold> {
     );
 
     final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
+    late Color backgroundColor =
+        widget.backgroundColor ?? theme.windowBackgroundColor;
 
     return LayoutBuilder(
       builder: (context, constraints) {

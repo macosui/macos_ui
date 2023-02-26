@@ -107,7 +107,7 @@ class TitleBar extends StatelessWidget {
             alignment: alignment,
             padding: padding,
             decoration: BoxDecoration(
-              color: theme.canvasColor,
+              color: theme.windowBackgroundColor,
               border: Border(
                 bottom: BorderSide(color: dividerColor ?? theme.dividerColor),
               ),

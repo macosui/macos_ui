@@ -193,7 +193,7 @@ class MacosThemeData with Diagnosticable {
   factory MacosThemeData({
     Brightness? brightness,
     Color? primaryColor,
-    Color? canvasColor,
+    Color? windowBackgroundColor,
     MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
@@ -213,7 +213,7 @@ class MacosThemeData with Diagnosticable {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
-    canvasColor ??= isDark
+    windowBackgroundColor ??= isDark
         ? MacosColors.windowBackgroundColor.darkColor
         : MacosColors.windowBackgroundColor;
     typography ??= MacosTypography(
@@ -368,7 +368,7 @@ class MacosThemeData with Diagnosticable {
     final defaultData = MacosThemeData.raw(
       brightness: _brightness,
       primaryColor: primaryColor,
-      canvasColor: canvasColor,
+      windowBackgroundColor: windowBackgroundColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
@@ -388,7 +388,7 @@ class MacosThemeData with Diagnosticable {
     final customizedData = defaultData.copyWith(
       brightness: _brightness,
       primaryColor: primaryColor,
-      canvasColor: canvasColor,
+      windowBackgroundColor: windowBackgroundColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       dividerColor: dividerColor,
@@ -416,7 +416,7 @@ class MacosThemeData with Diagnosticable {
   const MacosThemeData.raw({
     required this.brightness,
     required this.primaryColor,
-    required this.canvasColor,
+    required this.windowBackgroundColor,
     required this.typography,
     required this.pushButtonTheme,
     required this.dividerColor,
@@ -456,11 +456,11 @@ class MacosThemeData with Diagnosticable {
 
   /// A color used on primary interactive elements of the theme.
   ///
-  /// Defaults to [CupertinoColors.activeBlue].
+  /// Defaults to [MacosColors.controlAccentColor].
   final Color primaryColor;
 
-  /// The default color of Scaffold backgrounds.
-  final Color canvasColor;
+  /// The default color of window backgrounds.
+  final Color windowBackgroundColor;
 
   /// The default text styling for this theme.
   final MacosTypography typography;
@@ -513,7 +513,7 @@ class MacosThemeData with Diagnosticable {
       brightness: t < 0.5 ? a.brightness : b.brightness,
       dividerColor: Color.lerp(a.dividerColor, b.dividerColor, t)!,
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
-      canvasColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
+      windowBackgroundColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       typography: MacosTypography.lerp(a.typography, b.typography, t),
       helpButtonTheme:
           HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
@@ -562,7 +562,7 @@ class MacosThemeData with Diagnosticable {
   MacosThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
-    Color? canvasColor,
+    Color? windowBackgroundColor,
     MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
     Color? dividerColor,
@@ -581,7 +581,8 @@ class MacosThemeData with Diagnosticable {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
       primaryColor: primaryColor ?? this.primaryColor,
-      canvasColor: canvasColor ?? this.canvasColor,
+      windowBackgroundColor:
+          windowBackgroundColor ?? this.windowBackgroundColor,
       dividerColor: dividerColor ?? this.dividerColor,
       typography: this.typography.merge(typography),
       pushButtonTheme: this.pushButtonTheme.merge(pushButtonTheme),
@@ -605,7 +606,7 @@ class MacosThemeData with Diagnosticable {
     return copyWith(
       brightness: other.brightness,
       primaryColor: other.primaryColor,
-      canvasColor: other.canvasColor,
+      windowBackgroundColor: other.windowBackgroundColor,
       dividerColor: other.dividerColor,
       typography: typography.merge(other.typography),
       pushButtonTheme: pushButtonTheme.merge(other.pushButtonTheme),
@@ -628,7 +629,8 @@ class MacosThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(EnumProperty('brightness', brightness));
     properties.add(ColorProperty('primaryColor', primaryColor));
-    properties.add(ColorProperty('canvasColor', canvasColor));
+    properties
+        .add(ColorProperty('windowBackgroundColor', windowBackgroundColor));
     properties.add(ColorProperty('dividerColor', dividerColor));
     properties
         .add(DiagnosticsProperty<MacosTypography>('typography', typography));

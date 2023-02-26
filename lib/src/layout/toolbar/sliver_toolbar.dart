@@ -271,7 +271,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
             color: decoration?.color?.withOpacity(opacity),
           ) ??
           BoxDecoration(
-            color: MacosTheme.of(context).canvasColor.withOpacity(opacity),
+            color: MacosTheme.of(context).windowBackgroundColor.withOpacity(opacity),
           );
     }
 

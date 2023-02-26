@@ -131,7 +131,7 @@ class _MacosWindowState extends State<MacosWindow> {
           (widget.endSidebar!.startWidth! <= widget.endSidebar!.maxWidth!));
     }
     final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
+    late Color backgroundColor = widget.backgroundColor ?? theme.windowBackgroundColor;
     late Color sidebarBackgroundColor;
     late Color endSidebarBackgroundColor;
     Color dividerColor = theme.dividerColor;
@@ -161,7 +161,7 @@ class _MacosWindowState extends State<MacosWindow> {
     } else if (isMac &&
         MediaQuery.of(context).platformBrightness.isDark ==
             theme.brightness.isDark) {
-      endSidebarBackgroundColor = theme.canvasColor;
+      endSidebarBackgroundColor = theme.windowBackgroundColor;
     } else {
       endSidebarBackgroundColor = theme.brightness.isDark
           ? CupertinoColors.tertiarySystemBackground.darkColor
