@@ -300,14 +300,17 @@ class _ColorsPageState extends State<ColorsPage> {
                             SizedBox(height: 8.0),
                           ],
                         ),
-                        const TableRow(
+                        TableRow(
                           children: [
-                            ColorBox(
+                            const ColorBox(
                               color:
                                   MacosColors.alternatingContentBackgroundColor,
                             ),
-                            SizedBox.shrink(),
-                            Text('alternatingContentBackgroundColor'),
+                            ColorBox(
+                              color: MacosColors
+                                  .alternatingContentBackgroundColor.darkColor,
+                            ),
+                            const Text('alternatingContentBackgroundColor'),
                           ],
                         ),
                         const TableRow(

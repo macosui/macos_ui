@@ -206,7 +206,10 @@ class MacosColors {
 
   /// The backgrounds of alternating rows or columns in a list, table, or
   /// collection view.
-  static const alternatingContentBackgroundColor = MacosColor(0xff2e2c31);
+  static const alternatingContentBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: MacosColor.fromRGBO(245, 245, 245, 1.0),
+    darkColor: MacosColor.fromRGBO(13, 12, 12, 1.0),
+  );
 
   /// The accent color selected by the user in system preferences.
   ///
