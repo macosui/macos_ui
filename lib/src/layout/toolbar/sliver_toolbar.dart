@@ -36,7 +36,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     this.automaticallyImplyLeading = true,
     this.actions,
     this.centerTitle = false,
-    this.dividerColor,
+    this.separatorColor,
     this.pinned = true,
     this.floating = false,
     this.toolbarOpacity = 0.9,
@@ -110,10 +110,10 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
 
   /// The color of the divider below the toolbar.
   ///
-  /// Defaults to MacosTheme.of(context).dividerColor.
+  /// Defaults to [MacosColors.separatorColor].
   ///
-  /// Set it to MacosColors.transparent to remove.
-  final Color? dividerColor;
+  /// Set it to [MacosColors.transparent] to remove.
+  final MacosColor? separatorColor;
 
   /// Whether the toolbar should remain visible at the start of the scroll view.
   ///
@@ -158,7 +158,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     properties.add(
       FlagProperty('centerTitle', value: centerTitle, ifTrue: 'center title'),
     );
-    properties.add(DiagnosticsProperty<Color>('dividerColor', dividerColor));
+    properties.add(DiagnosticsProperty<Color>('dividerColor', separatorColor));
     properties.add(FlagProperty('pinned', value: pinned, ifTrue: 'pinned'));
     properties
         .add(FlagProperty('floating', value: floating, ifTrue: 'floating'));
@@ -200,7 +200,7 @@ class _SliverToolBarState extends State<SliverToolBar>
           automaticallyImplyLeading: widget.automaticallyImplyLeading,
           actions: widget.actions,
           centerTitle: widget.centerTitle,
-          dividerColor: widget.dividerColor,
+          separatorColor: widget.separatorColor,
           floating: widget.floating,
           pinned: widget.pinned,
           toolbarOpacity: widget.toolbarOpacity,
@@ -223,7 +223,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
     required this.automaticallyImplyLeading,
     required this.actions,
     required this.centerTitle,
-    required this.dividerColor,
+    required this.separatorColor,
     required this.vsync,
     required this.floating,
     required this.pinned,
@@ -240,7 +240,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
   final bool automaticallyImplyLeading;
   final List<ToolbarItem>? actions;
   final bool centerTitle;
-  final Color? dividerColor;
+  final MacosColor? separatorColor;
   final bool floating;
   final bool pinned;
   final double toolbarOpacity;
@@ -290,7 +290,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         padding: padding,
         actions: actions,
         centerTitle: centerTitle,
-        dividerColor: dividerColor,
+        separatorColor: separatorColor,
         alignment: alignment,
         height: height,
       ),
@@ -310,7 +310,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         leading != oldDelegate.leading ||
         actions != oldDelegate.actions ||
         centerTitle != oldDelegate.centerTitle ||
-        dividerColor != oldDelegate.dividerColor ||
+        separatorColor != oldDelegate.separatorColor ||
         floating != oldDelegate.floating ||
         pinned != oldDelegate.pinned;
   }

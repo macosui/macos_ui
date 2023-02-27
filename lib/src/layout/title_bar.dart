@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
 /// Defines the height of a regular-sized [TitleBar].
@@ -26,7 +27,7 @@ class TitleBar extends StatelessWidget {
     this.padding = const EdgeInsets.all(8),
     this.decoration,
     this.centerTitle = true,
-    this.dividerColor,
+    this.separatorColor,
   });
 
   /// Specifies the height of this [TitleBar].
@@ -69,7 +70,7 @@ class TitleBar extends StatelessWidget {
   /// Defaults to MacosTheme.of(context).dividerColor.
   ///
   /// Set it to MacosColors.transparent to remove.
-  final Color? dividerColor;
+  final MacosColor? separatorColor;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +110,7 @@ class TitleBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: theme.windowBackgroundColor,
               border: Border(
-                bottom: BorderSide(color: dividerColor ?? theme.dividerColor),
+                bottom: BorderSide(color: separatorColor ?? theme.separatorColor),
               ),
             ).copyWith(
               color: decoration?.color,

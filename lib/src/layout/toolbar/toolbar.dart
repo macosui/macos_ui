@@ -42,7 +42,7 @@ class ToolBar extends StatefulWidget with Diagnosticable {
     this.automaticallyImplyLeading = true,
     this.actions,
     this.centerTitle = false,
-    this.dividerColor,
+    this.separatorColor,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -115,10 +115,10 @@ class ToolBar extends StatefulWidget with Diagnosticable {
 
   /// The color of the divider below the toolbar.
   ///
-  /// Defaults to `MacosTheme.of(context).dividerColor`.
+  /// Defaults to [MacosColors.separatorColor].
   ///
-  /// Set this to `MacosColors.transparent` to remove.
-  final Color? dividerColor;
+  /// Set this to [MacosColors.transparent] to remove.
+  final MacosColor? separatorColor;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -142,7 +142,7 @@ class ToolBar extends StatefulWidget with Diagnosticable {
       value: centerTitle,
       ifTrue: 'center title',
     ));
-    properties.add(DiagnosticsProperty<Color>('dividerColor', dividerColor));
+    properties.add(DiagnosticsProperty<Color>('dividerColor', separatorColor));
   }
 
   @override
@@ -165,7 +165,7 @@ class _ToolBarState extends State<ToolBar> {
   Widget build(BuildContext context) {
     final scope = MacosWindowScope.maybeOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
-    Color dividerColor = widget.dividerColor ?? theme.dividerColor;
+    MacosColor dividerColor = widget.separatorColor ?? theme.separatorColor;
     final route = ModalRoute.of(context);
     double overflowBreakpoint = 0.0;
 

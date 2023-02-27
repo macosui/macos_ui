@@ -125,6 +125,13 @@ class MacosColor extends Color {
   }
 }
 
+extension ColorX on Color {
+  /// Returns a [MacosColor] with the same color values as this [Color].
+  MacosColor toMacosColor() {
+    return MacosColor(value);
+  }
+}
+
 /// A collection of color values lifted from the macOS system color picker.
 class MacosColors {
   /// A fully transparent color.

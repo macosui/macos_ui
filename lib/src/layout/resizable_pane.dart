@@ -3,6 +3,7 @@ import 'dart:math' as math show max, min;
 import 'package:flutter/services.dart' show SystemMouseCursor;
 import 'package:macos_ui/src/layout/scrollbar.dart';
 import 'package:macos_ui/src/library.dart';
+import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
 /// Default value for [ResizablePane] top padding
@@ -110,14 +111,14 @@ class _ResizablePaneState extends State<ResizablePane> {
   late double _dragStartSize;
   late double _dragStartPosition;
 
-  Color get _dividerColor => MacosTheme.of(context).dividerColor;
+  MacosColor get _separatorColor => MacosTheme.of(context).separatorColor;
 
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 
   bool get _resizeOnTop => widget.resizableSide == ResizableSide.top;
 
   BoxDecoration get _decoration {
-    final borderSide = BorderSide(color: _dividerColor);
+    final borderSide = BorderSide(color: _separatorColor);
     final right = Border(right: borderSide);
     final left = Border(left: borderSide);
     final top = Border(top: borderSide);

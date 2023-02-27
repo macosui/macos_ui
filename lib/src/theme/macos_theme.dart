@@ -196,7 +196,7 @@ class MacosThemeData with Diagnosticable {
     Color? windowBackgroundColor,
     MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
-    Color? dividerColor,
+    MacosColor? separatorColor,
     HelpButtonThemeData? helpButtonTheme,
     MacosTooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
@@ -230,7 +230,9 @@ class MacosThemeData with Diagnosticable {
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(244, 245, 245, 1.0),
     );
-    dividerColor ??= isDark ? const Color(0x1FFFFFFF) : const Color(0x1F000000);
+    separatorColor ??= isDark
+        ? MacosColors.separatorColor.darkColor.toMacosColor()
+        : MacosColors.separatorColor.color.toMacosColor();
     helpButtonTheme ??= HelpButtonThemeData(
       color: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
@@ -371,7 +373,7 @@ class MacosThemeData with Diagnosticable {
       windowBackgroundColor: windowBackgroundColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
-      dividerColor: dividerColor,
+      separatorColor: separatorColor,
       helpButtonTheme: helpButtonTheme,
       tooltipTheme: tooltipTheme,
       visualDensity: visualDensity,
@@ -391,7 +393,7 @@ class MacosThemeData with Diagnosticable {
       windowBackgroundColor: windowBackgroundColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
-      dividerColor: dividerColor,
+      separatorColor: separatorColor,
       helpButtonTheme: helpButtonTheme,
       tooltipTheme: tooltipTheme,
       visualDensity: visualDensity,
@@ -419,7 +421,7 @@ class MacosThemeData with Diagnosticable {
     required this.windowBackgroundColor,
     required this.typography,
     required this.pushButtonTheme,
-    required this.dividerColor,
+    required this.separatorColor,
     required this.helpButtonTheme,
     required this.tooltipTheme,
     required this.visualDensity,
@@ -470,7 +472,7 @@ class MacosThemeData with Diagnosticable {
 
   /// The color to use when painting the line used for the [TitleBar] bottom,
   /// [Sidebar] and [ResizableBar] sides
-  final Color dividerColor;
+  final MacosColor separatorColor;
 
   /// The default style for [HelpButton]s below the overall [MacosTheme].
   final HelpButtonThemeData helpButtonTheme;
@@ -511,7 +513,7 @@ class MacosThemeData with Diagnosticable {
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
     return MacosThemeData.raw(
       brightness: t < 0.5 ? a.brightness : b.brightness,
-      dividerColor: Color.lerp(a.dividerColor, b.dividerColor, t)!,
+      separatorColor: MacosColor.lerp(a.separatorColor, b.separatorColor, t),
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       windowBackgroundColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       typography: MacosTypography.lerp(a.typography, b.typography, t),
@@ -565,7 +567,7 @@ class MacosThemeData with Diagnosticable {
     Color? windowBackgroundColor,
     MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
-    Color? dividerColor,
+    MacosColor? separatorColor,
     HelpButtonThemeData? helpButtonTheme,
     MacosTooltipThemeData? tooltipTheme,
     VisualDensity? visualDensity,
@@ -583,7 +585,7 @@ class MacosThemeData with Diagnosticable {
       primaryColor: primaryColor ?? this.primaryColor,
       windowBackgroundColor:
           windowBackgroundColor ?? this.windowBackgroundColor,
-      dividerColor: dividerColor ?? this.dividerColor,
+      separatorColor: separatorColor ?? this.separatorColor,
       typography: this.typography.merge(typography),
       pushButtonTheme: this.pushButtonTheme.merge(pushButtonTheme),
       helpButtonTheme: this.helpButtonTheme.merge(helpButtonTheme),
@@ -607,7 +609,7 @@ class MacosThemeData with Diagnosticable {
       brightness: other.brightness,
       primaryColor: other.primaryColor,
       windowBackgroundColor: other.windowBackgroundColor,
-      dividerColor: other.dividerColor,
+      separatorColor: other.separatorColor,
       typography: typography.merge(other.typography),
       pushButtonTheme: pushButtonTheme.merge(other.pushButtonTheme),
       helpButtonTheme: helpButtonTheme.merge(other.helpButtonTheme),
@@ -631,7 +633,7 @@ class MacosThemeData with Diagnosticable {
     properties.add(ColorProperty('primaryColor', primaryColor));
     properties
         .add(ColorProperty('windowBackgroundColor', windowBackgroundColor));
-    properties.add(ColorProperty('dividerColor', dividerColor));
+    properties.add(ColorProperty('separatorColor', separatorColor));
     properties
         .add(DiagnosticsProperty<MacosTypography>('typography', typography));
     properties.add(DiagnosticsProperty<PushButtonThemeData>(
