@@ -103,14 +103,15 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MacosDisclosureButton(
-                                isPressed: isDisclosureButtonPressed,
-                                onPressed: () {
-                                  debugPrint('click');
-                                  setState(() {
-                                    isDisclosureButtonPressed =
-                                        !isDisclosureButtonPressed;
-                                  });
-                                }),
+                              isPressed: isDisclosureButtonPressed,
+                              onPressed: () {
+                                debugPrint('click');
+                                setState(() {
+                                  isDisclosureButtonPressed =
+                                      !isDisclosureButtonPressed;
+                                });
+                              },
+                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
