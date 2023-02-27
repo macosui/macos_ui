@@ -216,6 +216,17 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           ],
                         ),
                         const SizedBox(height: 20),
+                        const Text('HelpButton'),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            HelpButton(
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
                         const Text('MacosSwitch'),
                         const SizedBox(height: 8),
                         MacosSwitch(

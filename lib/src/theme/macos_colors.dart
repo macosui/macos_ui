@@ -36,7 +36,7 @@ class MacosColor extends Color {
       : super.fromRGBO();
 
   /// Linearly interpolate between two [MacosColor]s.
-  static MacosColor lerp(MacosColor a, MacosColor b, double t) {
+  static MacosColor lerp(MacosColor? a, MacosColor? b, double t) {
     final Color? color = Color.lerp(a, b, t);
     return MacosColor(color!.value);
   }

@@ -87,7 +87,8 @@ void main() {
       expect(
         description,
         [
-          'color: null',
+          'backgroundColor: null',
+          'iconColor: null',
           'disabledColor: null',
           'pressedOpacity: 0.4',
           'alignment: Alignment.center',
@@ -99,6 +100,6 @@ void main() {
 }
 
 const darkHelpButtonThemeData = HelpButtonThemeData(
-  color: Color.fromRGBO(255, 255, 255, 0.1),
-  disabledColor: Color.fromRGBO(255, 255, 255, 0.1),
+  backgroundColor: MacosColor.fromRGBO(84, 84, 84, 1.0),
+  disabledColor: MacosColors.white,
 );

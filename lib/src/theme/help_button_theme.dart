@@ -59,23 +59,29 @@ class HelpButtonThemeData with Diagnosticable {
   ///
   /// The [style] may be null.
   const HelpButtonThemeData({
-    this.color,
+    this.backgroundColor,
+    this.iconColor,
     this.disabledColor,
   });
 
   /// The default background color for [HelpButton]
-  final Color? color;
+  final MacosColor? backgroundColor;
+
+  /// The default icon color for [HelpButton]
+  final MacosColor? iconColor;
 
   /// The default disabled color for [HelpButton]
-  final Color? disabledColor;
+  final MacosColor? disabledColor;
 
   /// Copies one [HelpButtonThemeData] to another.
   HelpButtonThemeData copyWith({
-    Color? color,
-    Color? disabledColor,
+    MacosColor? backgroundColor,
+    MacosColor? iconColor,
+    MacosColor? disabledColor,
   }) {
     return HelpButtonThemeData(
-      color: color ?? this.color,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      iconColor: iconColor ?? this.iconColor,
       disabledColor: disabledColor ?? this.disabledColor,
     );
   }
@@ -89,8 +95,19 @@ class HelpButtonThemeData with Diagnosticable {
     double t,
   ) {
     return HelpButtonThemeData(
-      color: Color.lerp(a.color, b.color, t),
-      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t),
+      backgroundColor: MacosColor.lerp(a.backgroundColor, b.backgroundColor, t),
+      iconColor: MacosColor.lerp(a.iconColor, b.iconColor, t),
+      disabledColor: MacosColor.lerp(a.disabledColor, b.disabledColor, t),
+    );
+  }
+
+  /// Merges this [HelpButtonThemeData] with another.
+  HelpButtonThemeData merge(HelpButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      backgroundColor: other.backgroundColor,
+      iconColor: other.iconColor,
+      disabledColor: other.disabledColor,
     );
   }
 
@@ -99,26 +116,19 @@ class HelpButtonThemeData with Diagnosticable {
     return identical(this, other) ||
         other is HelpButtonThemeData &&
             runtimeType == other.runtimeType &&
-            color?.value == other.color?.value &&
+            backgroundColor?.value == other.backgroundColor?.value &&
+            iconColor?.value == other.iconColor?.value &&
             disabledColor?.value == other.disabledColor?.value;
   }
 
   @override
-  int get hashCode => color.hashCode ^ disabledColor.hashCode;
+  int get hashCode => backgroundColor.hashCode ^ iconColor.hashCode ^ disabledColor.hashCode;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
+    properties.add(ColorProperty('iconColor', iconColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
-  }
-
-  /// Merges this [HelpButtonThemeData] with another.
-  HelpButtonThemeData merge(HelpButtonThemeData? other) {
-    if (other == null) return this;
-    return copyWith(
-      color: other.color,
-      disabledColor: other.disabledColor,
-    );
   }
 }

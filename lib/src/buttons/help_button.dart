@@ -13,7 +13,8 @@ class HelpButton extends StatefulWidget {
   ///pressedOpacity, if non-null, must be in the range if 0.0 to 1.0
   const HelpButton({
     super.key,
-    this.color,
+    this.backgroundColor,
+    this.iconColor,
     this.disabledColor,
     this.onPressed,
     this.pressedOpacity = 0.4,
@@ -24,15 +25,18 @@ class HelpButton extends StatefulWidget {
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   /// The color of the button's background.
-  final Color? color;
+  final MacosColor? backgroundColor;
+
+  /// The color of the button's background.
+  final MacosColor? iconColor;
 
   /// The color of the button's background when the button is disabled.
   ///
-  /// Ignored if the [HelpButton] doesn't also have a [color].
+  /// Ignored if the [HelpButton] doesn't also have a [backgroundColor].
   ///
-  /// Defaults to [CupertinoColors.quaternarySystemFill] when [color] is
+  /// Defaults to [CupertinoColors.quaternarySystemFill] when [backgroundColor] is
   /// specified.
-  final Color? disabledColor;
+  final MacosColor? disabledColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
@@ -69,7 +73,8 @@ class HelpButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ColorProperty('color', color));
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
+    properties.add(ColorProperty('iconColor', iconColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
@@ -158,22 +163,16 @@ class HelpButtonState extends State<HelpButton>
   @override
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
-    final MacosThemeData theme = MacosTheme.of(context);
+    final theme = HelpButtonTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ?? theme.helpButtonTheme.color!,
+      widget.backgroundColor ?? theme.backgroundColor!,
       context,
     );
 
     final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.helpButtonTheme.disabledColor!,
+      widget.disabledColor ?? theme.disabledColor!,
       context,
     );
-
-    final Color foregroundColor = widget.enabled
-        ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
-        : theme.brightness.isDark
-            ? const Color.fromRGBO(255, 255, 255, 0.25)
-            : const Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
@@ -190,6 +189,8 @@ class HelpButtonState extends State<HelpButton>
             constraints: const BoxConstraints(
               minWidth: 20,
               minHeight: 20,
+              maxHeight: 20,
+              maxWidth: 20,
             ),
             child: FadeTransition(
               opacity: _opacityAnimation,
@@ -213,14 +214,19 @@ class HelpButtonState extends State<HelpButton>
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.only(left: 1.0),
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
-                    child: Icon(
+                    child: MacosIcon(
                       CupertinoIcons.question,
-                      color: foregroundColor,
+                      color: widget.enabled
+                          ? theme.iconColor
+                          : MacosTheme.brightnessOf(context).isDark
+                              ? MacosColors.disabledControlTextColor.darkColor
+                              : MacosColors.disabledControlTextColor,
+                      size: 14,
                     ),
                   ),
                 ),

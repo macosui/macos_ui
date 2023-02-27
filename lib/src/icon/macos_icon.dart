@@ -42,7 +42,7 @@ class MacosIcon extends StatelessWidget {
   /// [MacosIconTheme], if any.
   ///
   /// If no [MacosIconTheme] and no [MacosTheme] is specified, icons will
-  /// default to the color value of [CupertinoColors.activeBlue.color].
+  /// default to the color value of [CupertinoColors.activeBlue.backgroundColor].
   ///
   /// See [MacosTheme] to set the current theme and [MacosThemeData.brightness]
   /// for setting the current theme's brightness.

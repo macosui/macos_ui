@@ -225,21 +225,24 @@ class MacosThemeData with Diagnosticable {
       color: primaryColor,
       secondaryColor: isDark
           ? const MacosColor.fromRGBO(84, 84, 84, 1.0)
-          : const MacosColor.fromRGBO(255, 255, 255, 1.0),
+          : MacosColors.white,
       disabledColor: isDark
-          ? const MacosColor.fromRGBO(56, 56, 56, 1.0)
+          ? MacosColors.quaternaryLabelColor.darkColor.toMacosColor()
           : const MacosColor.fromRGBO(244, 244, 244, 1.0),
     );
     separatorColor ??= isDark
         ? MacosColors.separatorColor.darkColor.toMacosColor()
         : MacosColors.separatorColor.color.toMacosColor();
     helpButtonTheme ??= HelpButtonThemeData(
-      color: isDark
-          ? const Color.fromRGBO(255, 255, 255, 0.1)
-          : const Color.fromRGBO(244, 245, 245, 1.0),
+      backgroundColor: isDark
+          ? const MacosColor.fromRGBO(84, 84, 84, 1.0)
+          : MacosColors.white,
+      iconColor: isDark
+          ? MacosColors.controlTextColor.darkColor.toMacosColor()
+          : MacosColors.controlTextColor.color.toMacosColor(),
       disabledColor: isDark
-          ? const Color.fromRGBO(255, 255, 255, 0.1)
-          : const Color.fromRGBO(244, 245, 245, 1.0),
+          ? MacosColors.quaternaryLabelColor.darkColor.toMacosColor()
+          : const MacosColor.fromRGBO(244, 244, 244, 1.0),
     );
     tooltipTheme ??= MacosTooltipThemeData.standard(
       brightness: _brightness,

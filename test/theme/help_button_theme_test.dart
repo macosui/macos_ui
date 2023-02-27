@@ -32,10 +32,7 @@ void main() {
 
     testWidgets('debugFillProperties', (tester) async {
       final builder = DiagnosticPropertiesBuilder();
-      HelpButtonThemeData(
-        color: MacosColors.appleBlue,
-        disabledColor: MacosColors.systemGrayColor.color,
-      ).debugFillProperties(builder);
+      _helpButtonTheme.debugFillProperties(builder);
 
       final description = builder.properties
           .where((node) => !node.isFiltered(DiagnosticLevel.info))
@@ -45,13 +42,14 @@ void main() {
       expect(
         description,
         [
-          'color: Color(0xff0433ff)',
-          'disabledColor: Color(0xff8e8e93)',
+          'backgroundColor: MacosColor(0xffffffff)',
+          'iconColor: MacosColor(0xd8000000)',
+          'disabledColor: MacosColor(0xfff4f4f4)',
         ],
       );
     });
 
-    testWidgets('Default values in widget tree', (tester) async {
+    testWidgets('Default light values in widget tree', (tester) async {
       late BuildContext capturedContext;
       await tester.pumpWidget(
         MacosApp(
@@ -71,18 +69,49 @@ void main() {
       );
 
       final theme = HelpButtonTheme.of(capturedContext);
-      expect(theme.color, const Color(0xfff4f5f5));
-      expect(theme.disabledColor, const Color(0xfff4f5f5));
+      expect(theme.backgroundColor, _helpButtonTheme.backgroundColor);
+      expect(theme.iconColor, _helpButtonTheme.iconColor);
+      expect(theme.disabledColor, _helpButtonTheme.disabledColor);
+    });
+
+    testWidgets('Default light values in widget tree', (tester) async {
+      late BuildContext capturedContext;
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    capturedContext = context;
+                    return HelpButtonTheme(
+                      data: _helpButtonThemeDark,
+                      child: const HelpButton(),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      final theme = HelpButtonTheme.of(capturedContext);
+      expect(theme.backgroundColor, _helpButtonTheme.backgroundColor);
+      expect(theme.iconColor, _helpButtonTheme.iconColor);
+      expect(theme.disabledColor, _helpButtonTheme.disabledColor);
     });
   });
 }
 
 final _helpButtonTheme = HelpButtonThemeData(
-  color: MacosColors.appleRed,
-  disabledColor: MacosColors.systemGrayColor.color,
+  backgroundColor: MacosColors.white,
+  iconColor: MacosColors.controlTextColor.color.toMacosColor(),
+  disabledColor: const MacosColor.fromRGBO(244, 244, 244, 1.0),
 );
 
 final _helpButtonThemeDark = HelpButtonThemeData(
-  color: MacosColors.appleBlue,
-  disabledColor: MacosColors.systemGrayColor.darkColor,
+  backgroundColor: const MacosColor.fromRGBO(84, 84, 84, 1.0),
+  iconColor: MacosColors.controlTextColor.color.toMacosColor(),
+  disabledColor: MacosColors.quaternaryLabelColor.darkColor.toMacosColor(),
 );
