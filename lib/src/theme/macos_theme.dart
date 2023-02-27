@@ -227,8 +227,8 @@ class MacosThemeData with Diagnosticable {
           ? const MacosColor.fromRGBO(84, 84, 84, 1.0)
           : const MacosColor.fromRGBO(255, 255, 255, 1.0),
       disabledColor: isDark
-          ? const Color.fromRGBO(255, 255, 255, 0.1)
-          : const Color.fromRGBO(244, 245, 245, 1.0),
+          ? const MacosColor.fromRGBO(56, 56, 56, 1.0)
+          : const MacosColor.fromRGBO(244, 244, 244, 1.0),
     );
     separatorColor ??= isDark
         ? MacosColors.separatorColor.darkColor.toMacosColor()
