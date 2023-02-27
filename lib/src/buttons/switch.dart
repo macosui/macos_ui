@@ -253,8 +253,8 @@ class _MacosSwitchState extends State<MacosSwitch>
     assert(debugCheckHasMacosTheme(context));
     final MacosThemeData theme = MacosTheme.of(context);
     MacosColor borderColor = theme.brightness.isDark
-        ? const MacosColor.fromRGBO(79, 72, 75, 1.0)
-        : const MacosColor.fromRGBO(210, 210, 210, 1.0);
+        ? const MacosColor.fromRGBO(122, 123, 124, 1.0)
+        : const MacosColor.fromRGBO(210, 207, 208, 1.0);
 
     // Shot in the dark to try and get the border color correct for each
     // possible color
@@ -281,8 +281,9 @@ class _MacosSwitchState extends State<MacosSwitch>
         ).value),
         trackColor: widget.trackColor ??
             (theme.brightness.isDark
-                ? const MacosColor.fromRGBO(45, 37, 40, 1.0)
-                : const MacosColor.fromRGBO(227, 221, 223, 1.0)),
+                // ? const MacosColor.fromRGBO(45, 37, 40, 1.0)
+                ? const MacosColor.fromRGBO(47, 43, 45, 1.0)
+                : const MacosColor.fromRGBO(228, 226, 228, 1.0)),
         knobColor: widget.knobColor ??
             (theme.brightness.isDark
                 ? const MacosColor.fromRGBO(200, 197, 198, 1.0)
