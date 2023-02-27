@@ -224,8 +224,8 @@ class MacosThemeData with Diagnosticable {
     pushButtonTheme ??= PushButtonThemeData(
       color: primaryColor,
       secondaryColor: isDark
-          ? const Color.fromRGBO(56, 56, 56, 1.0)
-          : const Color.fromRGBO(218, 218, 223, 1.0),
+          ? const MacosColor.fromRGBO(84, 84, 84, 1.0)
+          : const MacosColor.fromRGBO(255, 255, 255, 1.0),
       disabledColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(244, 245, 245, 1.0),
