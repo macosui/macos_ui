@@ -53,6 +53,7 @@ export 'src/layout/tab_view/tab_controller.dart';
 export 'src/layout/tab_view/tab_view.dart';
 export 'src/layout/title_bar.dart';
 export 'src/layout/toolbar/custom_toolbar_item.dart';
+export 'src/layout/toolbar/sliver_toolbar.dart';
 export 'src/layout/toolbar/toolbar.dart';
 export 'src/layout/toolbar/toolbar_divider.dart';
 export 'src/layout/toolbar/toolbar_overflow_menu.dart';

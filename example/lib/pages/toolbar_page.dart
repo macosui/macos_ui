@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
-// ignore: implementation_imports
-import 'package:macos_ui/src/library.dart';
 
 class ToolbarPage extends StatefulWidget {
   const ToolbarPage({super.key});
@@ -21,92 +20,92 @@ class _ToolbarPageState extends State<ToolbarPage> {
             icon: const MacosIcon(
               CupertinoIcons.folder_badge_plus,
             ),
-            onPressed: () => debugPrint("New Folder..."),
-            label: "New Folder",
+            onPressed: () => debugPrint('New Folder...'),
+            label: 'New Folder',
             showLabel: true,
-            tooltipMessage: "This is a beautiful tooltip",
+            tooltipMessage: 'This is a beautiful tooltip',
           ),
           ToolBarIconButton(
             icon: const MacosIcon(
               CupertinoIcons.add_circled,
             ),
-            onPressed: () => debugPrint("Add..."),
-            label: "Add",
+            onPressed: () => debugPrint('Add...'),
+            label: 'Add',
             showLabel: true,
-            tooltipMessage: "This is another beautiful tooltip",
+            tooltipMessage: 'This is another beautiful tooltip',
           ),
           const ToolBarSpacer(),
           ToolBarIconButton(
-            label: "Delete",
+            label: 'Delete',
             icon: const MacosIcon(
               CupertinoIcons.trash,
             ),
-            onPressed: () => debugPrint("pressed"),
+            onPressed: () => debugPrint('pressed'),
             showLabel: false,
           ),
           const ToolBarIconButton(
-            label: "Change View",
+            label: 'Change View',
             icon: MacosIcon(
               CupertinoIcons.list_bullet,
             ),
             showLabel: false,
           ),
           ToolBarPullDownButton(
-            label: "Actions",
+            label: 'Actions',
             icon: CupertinoIcons.ellipsis_circle,
-            tooltipMessage: "Perform tasks with the selected items",
+            tooltipMessage: 'Perform tasks with the selected items',
             items: [
               MacosPulldownMenuItem(
-                label: "New Folder",
-                title: const Text("New Folder"),
-                onTap: () => debugPrint("Creating new folder..."),
+                label: 'New Folder',
+                title: const Text('New Folder'),
+                onTap: () => debugPrint('Creating new folder...'),
               ),
               MacosPulldownMenuItem(
-                label: "Open",
-                title: const Text("Open"),
-                onTap: () => debugPrint("Opening..."),
+                label: 'Open',
+                title: const Text('Open'),
+                onTap: () => debugPrint('Opening...'),
               ),
               MacosPulldownMenuItem(
-                label: "Open with...",
+                label: 'Open with...',
                 title: const Text('Open with...'),
-                onTap: () => debugPrint("Opening with..."),
+                onTap: () => debugPrint('Opening with...'),
               ),
               MacosPulldownMenuItem(
-                label: "Import from iPhone...",
+                label: 'Import from iPhone...',
                 title: const Text('Import from iPhone...'),
-                onTap: () => debugPrint("Importing..."),
+                onTap: () => debugPrint('Importing...'),
               ),
               const MacosPulldownMenuDivider(),
               MacosPulldownMenuItem(
-                label: "Remove",
+                label: 'Remove',
                 enabled: false,
                 title: const Text('Remove'),
-                onTap: () => debugPrint("Deleting..."),
+                onTap: () => debugPrint('Deleting...'),
               ),
               MacosPulldownMenuItem(
-                label: "Move to Bin",
+                label: 'Move to Bin',
                 title: const Text('Move to Bin'),
-                onTap: () => debugPrint("Moving to Bin..."),
+                onTap: () => debugPrint('Moving to Bin...'),
               ),
               const MacosPulldownMenuDivider(),
               MacosPulldownMenuItem(
-                label: "Tags...",
+                label: 'Tags...',
                 title: const Text('Tags...'),
-                onTap: () => debugPrint("Tags..."),
+                onTap: () => debugPrint('Tags...'),
               ),
             ],
           ),
           const ToolBarDivider(),
           ToolBarIconButton(
-            label: "Table",
+            label: 'Table',
             icon: const MacosIcon(
               CupertinoIcons.square_grid_3x2,
             ),
-            onPressed: () => debugPrint("Table..."),
+            onPressed: () => debugPrint('Table...'),
             showLabel: false,
           ),
           ToolBarIconButton(
-            label: "Toggle Sidebar",
+            label: 'Toggle Sidebar',
             icon: const MacosIcon(
               CupertinoIcons.sidebar_left,
             ),
@@ -114,43 +113,43 @@ class _ToolbarPageState extends State<ToolbarPage> {
             showLabel: false,
           ),
           ToolBarPullDownButton(
-            label: "Group",
+            label: 'Group',
             icon: CupertinoIcons.rectangle_grid_3x2,
             items: [
               MacosPulldownMenuItem(
-                label: "None",
+                label: 'None',
                 title: const Text('None'),
-                onTap: () => debugPrint("Remove sorting"),
+                onTap: () => debugPrint('Remove sorting'),
               ),
               const MacosPulldownMenuDivider(),
               MacosPulldownMenuItem(
-                label: "Name",
+                label: 'Name',
                 title: const Text('Name'),
-                onTap: () => debugPrint("Sorting by name"),
+                onTap: () => debugPrint('Sorting by name'),
               ),
               MacosPulldownMenuItem(
-                label: "Kind",
+                label: 'Kind',
                 title: const Text('Kind'),
-                onTap: () => debugPrint("Sorting by kind"),
+                onTap: () => debugPrint('Sorting by kind'),
               ),
               MacosPulldownMenuItem(
-                label: "Size",
+                label: 'Size',
                 title: const Text('Size'),
-                onTap: () => debugPrint("Sorting by size"),
+                onTap: () => debugPrint('Sorting by size'),
               ),
               MacosPulldownMenuItem(
-                label: "Date Added",
+                label: 'Date Added',
                 title: const Text('Date Added'),
-                onTap: () => debugPrint("Sorting by date"),
+                onTap: () => debugPrint('Sorting by date'),
               ),
             ],
           ),
           ToolBarIconButton(
-            label: "Share",
+            label: 'Share',
             icon: const MacosIcon(
               CupertinoIcons.share,
             ),
-            onPressed: () => debugPrint("pressed"),
+            onPressed: () => debugPrint('pressed'),
             showLabel: false,
           ),
         ],
@@ -158,20 +157,17 @@ class _ToolbarPageState extends State<ToolbarPage> {
       children: [
         ContentArea(
           builder: (context, scrollController) {
-            return const SingleChildScrollView(
-              padding: EdgeInsets.all(30),
-              child: Center(
+            return SingleChildScrollView(
+              controller: scrollController,
+              padding: const EdgeInsets.all(30),
+              child: const Center(
                 child: Column(
                   children: [
                     Text(
-                      "The toolbar appears below the title bar of the macOS app or integrates with it.",
+                      'A toolbar provides convenient access to frequently used commands and controls that perform actions relevant to the current view.',
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20.0),
-                    Text(
-                      "It provides convenient access to frequently used commands and features.",
-                      textAlign: TextAlign.center,
-                    ),
                   ],
                 ),
               ),
