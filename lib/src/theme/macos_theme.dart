@@ -194,6 +194,7 @@ class MacosThemeData with Diagnosticable {
     Brightness? brightness,
     Color? primaryColor,
     Color? windowBackgroundColor,
+    Color? scaffoldBackgroundColor,
     MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
     MacosColor? separatorColor,
@@ -216,6 +217,9 @@ class MacosThemeData with Diagnosticable {
     windowBackgroundColor ??= isDark
         ? MacosColors.windowBackgroundColor.darkColor
         : MacosColors.windowBackgroundColor;
+    scaffoldBackgroundColor ??= isDark
+        ? MacosColors.scaffoldBackgroundColor.darkColor
+        : MacosColors.scaffoldBackgroundColor;
     typography ??= MacosTypography(
       color: _brightness == Brightness.light
           ? MacosColors.black
@@ -374,6 +378,7 @@ class MacosThemeData with Diagnosticable {
       brightness: _brightness,
       primaryColor: primaryColor,
       windowBackgroundColor: windowBackgroundColor,
+      scaffoldBackgroundColor: scaffoldBackgroundColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       separatorColor: separatorColor,
@@ -394,6 +399,7 @@ class MacosThemeData with Diagnosticable {
       brightness: _brightness,
       primaryColor: primaryColor,
       windowBackgroundColor: windowBackgroundColor,
+      scaffoldBackgroundColor: scaffoldBackgroundColor,
       typography: typography,
       pushButtonTheme: pushButtonTheme,
       separatorColor: separatorColor,
@@ -422,6 +428,7 @@ class MacosThemeData with Diagnosticable {
     required this.brightness,
     required this.primaryColor,
     required this.windowBackgroundColor,
+    required this.scaffoldBackgroundColor,
     required this.typography,
     required this.pushButtonTheme,
     required this.separatorColor,
@@ -466,6 +473,9 @@ class MacosThemeData with Diagnosticable {
 
   /// The default color of window backgrounds.
   final Color windowBackgroundColor;
+
+  /// The default background color of content areas.
+  final Color scaffoldBackgroundColor;
 
   /// The default text styling for this theme.
   final MacosTypography typography;
@@ -519,6 +529,7 @@ class MacosThemeData with Diagnosticable {
       separatorColor: MacosColor.lerp(a.separatorColor, b.separatorColor, t),
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       windowBackgroundColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
+      scaffoldBackgroundColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       typography: MacosTypography.lerp(a.typography, b.typography, t),
       helpButtonTheme:
           HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
@@ -568,6 +579,7 @@ class MacosThemeData with Diagnosticable {
     Brightness? brightness,
     Color? primaryColor,
     Color? windowBackgroundColor,
+    Color? scaffoldBackgroundColor,
     MacosTypography? typography,
     PushButtonThemeData? pushButtonTheme,
     MacosColor? separatorColor,
@@ -588,6 +600,8 @@ class MacosThemeData with Diagnosticable {
       primaryColor: primaryColor ?? this.primaryColor,
       windowBackgroundColor:
           windowBackgroundColor ?? this.windowBackgroundColor,
+      scaffoldBackgroundColor:
+          scaffoldBackgroundColor ?? this.scaffoldBackgroundColor,
       separatorColor: separatorColor ?? this.separatorColor,
       typography: this.typography.merge(typography),
       pushButtonTheme: this.pushButtonTheme.merge(pushButtonTheme),
@@ -612,6 +626,7 @@ class MacosThemeData with Diagnosticable {
       brightness: other.brightness,
       primaryColor: other.primaryColor,
       windowBackgroundColor: other.windowBackgroundColor,
+      scaffoldBackgroundColor: other.scaffoldBackgroundColor,
       separatorColor: other.separatorColor,
       typography: typography.merge(other.typography),
       pushButtonTheme: pushButtonTheme.merge(other.pushButtonTheme),
@@ -636,6 +651,8 @@ class MacosThemeData with Diagnosticable {
     properties.add(ColorProperty('primaryColor', primaryColor));
     properties
         .add(ColorProperty('windowBackgroundColor', windowBackgroundColor));
+    properties
+        .add(ColorProperty('scaffoldBackgroundColor', scaffoldBackgroundColor));
     properties.add(ColorProperty('separatorColor', separatorColor));
     properties
         .add(DiagnosticsProperty<MacosTypography>('typography', typography));
