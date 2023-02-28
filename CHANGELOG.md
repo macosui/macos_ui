@@ -1,3 +1,6 @@
+## [1.12.1]
+* Fix SidebarItem's leading icons not respecting the theme's primary color
+
 ## [1.12.0]
 ✨ New widget: `SliverToolBar`
 
