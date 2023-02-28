@@ -115,8 +115,8 @@ class SidebarItems extends StatelessWidget {
     assert(debugCheckHasMacosTheme(context));
     assert(currentIndex < _allItems.length);
     final theme = MacosTheme.of(context);
-    return IconTheme.merge(
-      data: const IconThemeData(size: 20),
+    return MacosIconTheme.merge(
+      data: const MacosIconThemeData(size: 20),
       child: _SidebarItemsConfiguration(
         selectedColor: selectedColor ?? theme.primaryColor,
         unselectedColor: unselectedColor ?? MacosColors.transparent,
@@ -288,7 +288,7 @@ class _SidebarItem extends StatelessWidget {
                       data: MacosIconThemeData(
                         color: selected
                             ? MacosColors.white
-                            : MacosColors.controlAccentColor,
+                            : theme.primaryColor,
                         size: itemSize.iconSize,
                       ),
                       child: item.leading!,
