@@ -23,6 +23,7 @@ linter:
   # producing the lint.
   rules:
     - use_super_parameters
+    - prefer_single_quotes
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
