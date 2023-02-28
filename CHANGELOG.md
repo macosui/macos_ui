@@ -1,5 +1,8 @@
-## [1.11.2]
+## [1.12.1]
 * Fixed a typo in the December abbreviation displayed in the `MacosDatePicker`.
+
+## [1.12.0]
+✨ New widget: `SliverToolBar`
 
 ## [1.11.1]
 * Fixed an issue where the `MacosSearchField` would not perform an action when an item was selected.
