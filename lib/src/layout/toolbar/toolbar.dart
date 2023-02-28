@@ -146,6 +146,31 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   }
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DoubleProperty('height', height));
+    properties.add(DiagnosticsProperty<Alignment>('alignment', alignment));
+    properties.add(DiagnosticsProperty<Widget>('title', title));
+    properties.add(DoubleProperty('titleWidth', titleWidth));
+    properties
+        .add(DiagnosticsProperty<BoxDecoration>('decoration', decoration));
+    properties.add(DiagnosticsProperty<EdgeInsets>('padding', padding));
+    properties.add(DiagnosticsProperty<Widget>('leading', leading));
+    properties.add(FlagProperty(
+      'automaticallyImplyLeading',
+      value: automaticallyImplyLeading,
+      ifTrue: 'automatically imply leading',
+    ));
+    properties.add(DiagnosticsProperty<List<ToolbarItem>>('actions', actions));
+    properties.add(FlagProperty(
+      'centerTitle',
+      value: centerTitle,
+      ifTrue: 'center title',
+    ));
+    properties.add(DiagnosticsProperty<Color>('dividerColor', dividerColor));
+  }
+
+  @override
   State<ToolBar> createState() => _ToolBarState();
 }
 

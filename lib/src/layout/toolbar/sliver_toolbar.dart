@@ -158,7 +158,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     properties.add(
       FlagProperty('centerTitle', value: centerTitle, ifTrue: 'center title'),
     );
-    properties.add(DiagnosticsProperty<Color>('dividerColor', separatorColor));
+    properties.add(DiagnosticsProperty<Color>('separatorColor', separatorColor));
     properties.add(FlagProperty('pinned', value: pinned, ifTrue: 'pinned'));
     properties
         .add(FlagProperty('floating', value: floating, ifTrue: 'floating'));
