@@ -6,6 +6,12 @@ import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
+/// Defines the default color of the content resizer.
+const _kResizerColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColor.fromRGBO(225, 225, 225, 1.0),
+  darkColor: MacosColors.black,
+);
+
 /// Default value for [ResizablePane] top padding
 const EdgeInsets kResizablePaneSafeArea = EdgeInsets.only(top: 52);
 
@@ -111,7 +117,10 @@ class _ResizablePaneState extends State<ResizablePane> {
   late double _dragStartSize;
   late double _dragStartPosition;
 
-  MacosColor get _separatorColor => MacosTheme.of(context).separatorColor;
+  MacosColor get _separatorColor => (MacosTheme.brightnessOf(context).isDark
+          ? _kResizerColor.darkColor
+          : _kResizerColor.color)
+      .toMacosColor();
 
   bool get _resizeOnRight => widget.resizableSide == ResizableSide.right;
 

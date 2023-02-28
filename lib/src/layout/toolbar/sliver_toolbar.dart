@@ -158,7 +158,8 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     properties.add(
       FlagProperty('centerTitle', value: centerTitle, ifTrue: 'center title'),
     );
-    properties.add(DiagnosticsProperty<Color>('separatorColor', separatorColor));
+    properties
+        .add(DiagnosticsProperty<Color>('separatorColor', separatorColor));
     properties.add(FlagProperty('pinned', value: pinned, ifTrue: 'pinned'));
     properties
         .add(FlagProperty('floating', value: floating, ifTrue: 'floating'));
@@ -271,7 +272,9 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
             color: decoration?.color?.withOpacity(opacity),
           ) ??
           BoxDecoration(
-            color: MacosTheme.of(context).windowBackgroundColor.withOpacity(opacity),
+            color: MacosTheme.of(context)
+                .scaffoldBackgroundColor
+                .withOpacity(opacity),
           );
     }
 

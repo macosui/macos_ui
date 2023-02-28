@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/toolbar/overflow_handler.dart';
@@ -13,6 +11,18 @@ const _kLeadingWidth = 20.0;
 
 /// Defines the width of the [ToolBar]'s title.
 const _kTitleWidth = 150.0;
+
+/// Defines the default color of the separator between the toolbar and content
+/// below it.
+const _kDefaultSeparatorColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColor.fromRGBO(208, 208, 208, 1.0),
+  darkColor: MacosColors.black,
+);
+
+const _kDefaultToolbarBackgroundColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColors.white,
+  darkColor: MacosColor.fromRGBO(38, 38, 38, 1.0),
+);
 
 /// A toolbar to use in a [MacosScaffold].
 class ToolBar extends StatefulWidget with Diagnosticable {
@@ -142,7 +152,8 @@ class ToolBar extends StatefulWidget with Diagnosticable {
       value: centerTitle,
       ifTrue: 'center title',
     ));
-    properties.add(DiagnosticsProperty<Color>('separatorColor', separatorColor));
+    properties
+        .add(DiagnosticsProperty<Color>('separatorColor', separatorColor));
   }
 
   @override
@@ -165,7 +176,11 @@ class _ToolBarState extends State<ToolBar> {
   Widget build(BuildContext context) {
     final scope = MacosWindowScope.maybeOf(context);
     final MacosThemeData theme = MacosTheme.of(context);
-    MacosColor dividerColor = widget.separatorColor ?? theme.separatorColor;
+    MacosColor separatorColor = widget.separatorColor ??
+        (theme.brightness.isDark
+                ? _kDefaultSeparatorColor.darkColor
+                : _kDefaultSeparatorColor)
+            .toMacosColor();
     final route = ModalRoute.of(context);
     double overflowBreakpoint = 0.0;
 
@@ -234,56 +249,54 @@ class _ToolBarState extends State<ToolBar> {
         ),
       ),
       child: ClipRect(
-        child: BackdropFilter(
-          filter: widget.decoration?.color?.opacity == 1
-              ? ImageFilter.blur()
-              : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Container(
-            alignment: widget.alignment,
-            padding: widget.padding,
-            decoration: BoxDecoration(
-              color: theme.windowBackgroundColor,
-              border: Border(bottom: BorderSide(color: dividerColor)),
-            ).copyWith(
-              color: widget.decoration?.color,
-              image: widget.decoration?.image,
-              border: widget.decoration?.border,
-              borderRadius: widget.decoration?.borderRadius,
-              boxShadow: widget.decoration?.boxShadow,
-              gradient: widget.decoration?.gradient,
-            ),
-            child: NavigationToolbar(
-              middle: title,
-              centerMiddle: widget.centerTitle,
-              trailing: OverflowHandler(
-                overflowBreakpoint: overflowBreakpoint,
-                overflowWidget: ToolbarOverflowButton(
-                  isDense: doAllItemsShowLabel,
-                  overflowContentBuilder: (context) => ToolbarOverflowMenu(
-                    children: overflowedActions
-                        .map((action) => action.build(
-                              context,
-                              ToolbarItemDisplayMode.overflowed,
-                            ))
-                        .toList(),
-                  ),
+        child: Container(
+          alignment: widget.alignment,
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            color: theme.brightness.isDark
+                ? _kDefaultToolbarBackgroundColor.darkColor
+                : _kDefaultToolbarBackgroundColor,
+            border: Border(bottom: BorderSide(color: separatorColor)),
+          ).copyWith(
+            color: widget.decoration?.color,
+            image: widget.decoration?.image,
+            border: widget.decoration?.border,
+            borderRadius: widget.decoration?.borderRadius,
+            boxShadow: widget.decoration?.boxShadow,
+            gradient: widget.decoration?.gradient,
+          ),
+          child: NavigationToolbar(
+            middle: title,
+            centerMiddle: widget.centerTitle,
+            trailing: OverflowHandler(
+              overflowBreakpoint: overflowBreakpoint,
+              overflowWidget: ToolbarOverflowButton(
+                isDense: doAllItemsShowLabel,
+                overflowContentBuilder: (context) => ToolbarOverflowMenu(
+                  children: overflowedActions
+                      .map((action) => action.build(
+                            context,
+                            ToolbarItemDisplayMode.overflowed,
+                          ))
+                      .toList(),
                 ),
-                children: inToolbarActions
-                    .map((e) =>
-                        e.build(context, ToolbarItemDisplayMode.inToolbar))
-                    .toList(),
-                overflowChangedCallback: (hiddenItems) {
-                  setState(() => overflowedActionsCount = hiddenItems.length);
-                },
               ),
-              middleSpacing: 8,
-              leading: SafeArea(
-                top: false,
-                right: false,
-                bottom: false,
-                left: !(scope?.isSidebarShown ?? false),
-                child: leading ?? const SizedBox.shrink(),
-              ),
+              children: inToolbarActions
+                  .map(
+                    (e) => e.build(context, ToolbarItemDisplayMode.inToolbar),
+                  )
+                  .toList(),
+              overflowChangedCallback: (hiddenItems) {
+                setState(() => overflowedActionsCount = hiddenItems.length);
+              },
+            ),
+            middleSpacing: 8,
+            leading: SafeArea(
+              top: false,
+              right: false,
+              bottom: false,
+              left: !(scope?.isSidebarShown ?? false),
+              child: leading ?? const SizedBox.shrink(),
             ),
           ),
         ),
