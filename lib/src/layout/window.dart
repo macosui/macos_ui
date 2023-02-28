@@ -12,6 +12,18 @@ import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
+/// Defines the default color of the content resizer.
+const _kResizerColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColor.fromRGBO(208, 208, 208, 1.0),
+  darkColor: MacosColors.black,
+);
+
+/// Defines the default background color of the sidebar.
+const _kDefaultSidebarBackgroundColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColor.fromRGBO(246, 246, 246, 1.0),
+  darkColor: MacosColor.fromRGBO(56, 56, 56, 1.0),
+);
+
 /// A basic frame layout.
 ///
 /// Provides a body for main content, via [child], and a [sidebar] for
@@ -132,10 +144,14 @@ class _MacosWindowState extends State<MacosWindow> {
           (widget.endSidebar!.startWidth! <= widget.endSidebar!.maxWidth!));
     }
     final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor = widget.backgroundColor ?? theme.windowBackgroundColor;
+    late Color backgroundColor =
+        widget.backgroundColor ?? theme.windowBackgroundColor;
     late Color sidebarBackgroundColor;
     late Color endSidebarBackgroundColor;
-    MacosColor dividerColor = theme.separatorColor;
+    MacosColor resizerColor = (theme.brightness.isDark
+            ? _kResizerColor.darkColor
+            : _kResizerColor.color)
+        .toMacosColor();
 
     final isMac = !kIsWeb && defaultTargetPlatform == TargetPlatform.macOS;
 
@@ -152,8 +168,8 @@ class _MacosWindowState extends State<MacosWindow> {
       sidebarBackgroundColor = Colors.transparent;
     } else {
       sidebarBackgroundColor = theme.brightness.isDark
-          ? CupertinoColors.tertiarySystemBackground.darkColor
-          : CupertinoColors.systemGrey6.color;
+          ? _kDefaultSidebarBackgroundColor.darkColor
+          : _kDefaultSidebarBackgroundColor;
     }
 
     // Respect the end sidebar color override from parent if one is given
@@ -165,8 +181,8 @@ class _MacosWindowState extends State<MacosWindow> {
       endSidebarBackgroundColor = theme.windowBackgroundColor;
     } else {
       endSidebarBackgroundColor = theme.brightness.isDark
-          ? CupertinoColors.tertiarySystemBackground.darkColor
-          : CupertinoColors.systemGrey6.color;
+          ? _kDefaultSidebarBackgroundColor.darkColor
+          : _kDefaultSidebarBackgroundColor;
     }
 
     const curve = Curves.linearToEaseOut;
@@ -220,7 +236,7 @@ class _MacosWindowState extends State<MacosWindow> {
                         SizedBox(height: widget.sidebar?.topOffset),
                       if (_sidebarScrollController.hasClients &&
                           _sidebarScrollController.offset > 0.0)
-                        Divider(thickness: 1, height: 1, color: dividerColor),
+                        Divider(thickness: 1, height: 1, color: resizerColor),
                       if (widget.sidebar!.top != null &&
                           constraints.maxHeight > 81)
                         Padding(
@@ -333,7 +349,7 @@ class _MacosWindowState extends State<MacosWindow> {
                       child: VerticalDivider(
                         thickness: 1,
                         width: 1,
-                        color: dividerColor,
+                        color: resizerColor,
                       ),
                     ),
                   ),
@@ -364,7 +380,7 @@ class _MacosWindowState extends State<MacosWindow> {
                         SizedBox(height: widget.endSidebar?.topOffset),
                       if (_endSidebarScrollController.hasClients &&
                           _endSidebarScrollController.offset > 0.0)
-                        Divider(thickness: 1, height: 1, color: dividerColor),
+                        Divider(thickness: 1, height: 1, color: resizerColor),
                       if (widget.endSidebar!.top != null)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -449,7 +465,7 @@ class _MacosWindowState extends State<MacosWindow> {
                       child: VerticalDivider(
                         thickness: 1,
                         width: 1,
-                        color: dividerColor,
+                        color: resizerColor,
                       ),
                     ),
                   ),
