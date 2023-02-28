@@ -253,20 +253,32 @@ class _MacosSwitchState extends State<MacosSwitch>
     assert(debugCheckHasMacosTheme(context));
     final MacosThemeData theme = MacosTheme.of(context);
     MacosColor borderColor = theme.brightness.isDark
-        ? const MacosColor.fromRGBO(122, 123, 124, 1.0)
+        ? const MacosColor.fromRGBO(90, 90, 90, 1.0)
         : const MacosColor.fromRGBO(210, 207, 208, 1.0);
+    MacosColor activeColor = MacosColor(MacosDynamicColor.resolve(
+      widget.activeColor ?? theme.primaryColor,
+      context,
+    ).value);
+    MacosColor trackColor = widget.trackColor ??
+        (theme.brightness.isDark
+            ? const MacosColor.fromRGBO(54, 54, 54, 1.0)
+            : const MacosColor.fromRGBO(228, 226, 228, 1.0));
+    MacosColor knobColor = widget.knobColor ??
+        (theme.brightness.isDark
+            ? const MacosColor.fromRGBO(207, 207, 207, 1.0)
+            : MacosColors.white);
 
     // Shot in the dark to try and get the border color correct for each
     // possible color
     if (widget.value) {
       if (theme.brightness.isDark) {
         borderColor.computeLuminance() > 0.5
-            ? borderColor = MacosColor.darken(borderColor, 50)
-            : borderColor = MacosColor.lighten(borderColor, 50);
+            ? borderColor = MacosColor.darken(activeColor, 20)
+            : borderColor = MacosColor.lighten(activeColor, 20);
       } else {
         borderColor.computeLuminance() > 0.5
-            ? borderColor = MacosColor.darken(borderColor, 50)
-            : borderColor = MacosColor.lighten(borderColor, 50);
+            ? borderColor = MacosColor.darken(activeColor, 20)
+            : borderColor = MacosColor.lighten(activeColor, 20);
       }
     }
 
@@ -275,19 +287,9 @@ class _MacosSwitchState extends State<MacosSwitch>
       checked: widget.value,
       child: _MacosSwitchRenderObjectWidget(
         value: widget.value,
-        activeColor: MacosColor(MacosDynamicColor.resolve(
-          widget.activeColor ?? theme.primaryColor,
-          context,
-        ).value),
-        trackColor: widget.trackColor ??
-            (theme.brightness.isDark
-                // ? const MacosColor.fromRGBO(45, 37, 40, 1.0)
-                ? const MacosColor.fromRGBO(47, 43, 45, 1.0)
-                : const MacosColor.fromRGBO(228, 226, 228, 1.0)),
-        knobColor: widget.knobColor ??
-            (theme.brightness.isDark
-                ? const MacosColor.fromRGBO(200, 197, 198, 1.0)
-                : MacosColors.white),
+        activeColor: activeColor,
+        trackColor: trackColor,
+        knobColor: knobColor,
         borderColor: borderColor,
         onChanged: widget.onChanged,
         textDirection: Directionality.of(context),
@@ -528,8 +530,12 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
     );
     /*TODO: figure out how to paint the track with the super-slight shadows
        that Apple seems to use*/
-    canvas.drawRRect(trackRRect, Paint()..color = borderColor..style = PaintingStyle.stroke);
     canvas.drawRRect(trackRRect, paint);
+    canvas.drawRRect(
+        trackRRect,
+        Paint()
+          ..color = borderColor
+          ..style = PaintingStyle.stroke);
 
     final double currentKnobExtension =
         MacosSwitchKnobPainter.extension * currentReactionValue;
