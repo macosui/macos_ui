@@ -368,8 +368,8 @@ class MacosColors {
 
   ///	A separator between different sections of content.
   static const separatorColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(0, 0, 0, 0.1),
-    darkColor: MacosColor.fromRGBO(255, 255, 255, 0.1),
+    color: MacosColor.fromRGBO(225, 225, 225, 1.0),
+    darkColor: MacosColor.fromRGBO(65, 65, 65, 1.0),
   );
 
   /// The text of a label of lesser importance than a secondary label such as
