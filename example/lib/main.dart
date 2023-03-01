@@ -13,15 +13,53 @@ import 'package:provider/provider.dart';
 
 import 'theme.dart';
 
-void main() async {
+/// This delegate removes the toolbar in full-screen mode.
+class _FlutterWindowDelegate extends NSWindowDelegate {
+  @override
+  void windowWillEnterFullScreen() {
+    WindowManipulator.removeToolbar();
+    super.windowWillEnterFullScreen();
+  }
+
+  @override
+  void windowDidExitFullScreen() {
+    WindowManipulator.addToolbar();
+    super.windowDidExitFullScreen();
+  }
+}
+
+/// This method initializes macos_window_utils and styles the window.
+Future<void> _initMacosWindowUtils() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await WindowManipulator.initialize();
-  WindowManipulator.setMaterial(NSVisualEffectViewMaterial.windowBackground);
-  WindowManipulator.enableFullSizeContentView();
-  WindowManipulator.makeTitlebarTransparent();
-  WindowManipulator.hideTitle();
-  WindowManipulator.addToolbar();
-  WindowManipulator.setToolbarStyle(toolbarStyle: NSWindowToolbarStyle.unified);
+  await WindowManipulator.initialize(enableWindowDelegate: true);
+  await WindowManipulator.setMaterial(
+      NSVisualEffectViewMaterial.windowBackground);
+  await WindowManipulator.enableFullSizeContentView();
+  await WindowManipulator.makeTitlebarTransparent();
+  await WindowManipulator.hideTitle();
+  await WindowManipulator.addToolbar();
+
+  // Use NSWindowToolbarStyle.expanded if the app will have a title bar,
+  // otherwise use NSWindowToolbarStyle.unified.
+  await WindowManipulator.setToolbarStyle(
+      toolbarStyle: NSWindowToolbarStyle.unified);
+
+  // Create a delegate that removes the toolbar in full-screen mode.
+  final delegate = _FlutterWindowDelegate();
+  WindowManipulator.addNSWindowDelegate(delegate);
+
+  // Auto-hide toolbar and menubar in full-screen mode.
+  final options = NSAppPresentationOptions.from({
+    NSAppPresentationOption.fullScreen,
+    NSAppPresentationOption.autoHideToolbar,
+    NSAppPresentationOption.autoHideMenuBar,
+    NSAppPresentationOption.autoHideDock,
+  });
+  options.applyAsFullScreenPresentationOptions();
+}
+
+void main() async {
+  await _initMacosWindowUtils();
 
   runApp(const MacosUIGalleryApp());
 }

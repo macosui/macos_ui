@@ -85,3 +85,4 @@ export 'src/theme/typography.dart';
 export 'src/layout/wallpaper_tinted_area.dart';
 
 export 'package:macos_window_utils/macos_window_utils.dart';
+export 'package:macos_window_utils/macos/ns_window_delegate.dart';
