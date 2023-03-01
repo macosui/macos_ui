@@ -348,7 +348,8 @@ abstract class ToolbarItem with Diagnosticable {
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode);
 }
 
-/// TODO: document this
+/// Wraps the widget in either a [WallpaperTintingOverride] or a blurry backdrop
+/// filter.
 class _WallpaperTintedAreaOrBlurFilter extends StatelessWidget {
   const _WallpaperTintedAreaOrBlurFilter({
     super.key,
