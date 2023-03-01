@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/toolbar/overflow_handler.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinted_area.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_override.dart';
 import 'package:macos_ui/src/library.dart';
 
