@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class SliverToolbarPage extends StatefulWidget {
-  const SliverToolbarPage({super.key});
+  const SliverToolbarPage({super.key, required this.isVisible});
+
+  /// TODO: document this
+  final bool isVisible;
 
   @override
   State<SliverToolbarPage> createState() => _SliverToolbarPageState();
@@ -27,6 +30,7 @@ class _SliverToolbarPageState extends State<SliverToolbarPage> {
                   floating: floating,
                   pinned: pinned,
                   toolbarOpacity: opacity,
+                  isVisible: widget.isVisible,
                   actions: [
                     ToolBarIconButton(
                       label: 'Pinned',

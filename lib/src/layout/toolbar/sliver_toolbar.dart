@@ -40,6 +40,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     this.pinned = true,
     this.floating = false,
     this.toolbarOpacity = 0.9,
+    this.isVisible = true,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -138,6 +139,9 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
   /// Defaults to `0.9`.
   final double toolbarOpacity;
 
+  /// TODO: document this
+  final bool isVisible;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -204,6 +208,7 @@ class _SliverToolBarState extends State<SliverToolBar>
           floating: widget.floating,
           pinned: widget.pinned,
           toolbarOpacity: widget.toolbarOpacity,
+          isVisible: widget.isVisible,
           vsync: this,
         ),
       ),
@@ -228,6 +233,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
     required this.floating,
     required this.pinned,
     required this.toolbarOpacity,
+    required this.isVisible,
   });
 
   final double height;
@@ -244,6 +250,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
   final bool floating;
   final bool pinned;
   final double toolbarOpacity;
+  final bool isVisible;
 
   @override
   double get minExtent => _kToolbarHeight;
@@ -293,6 +300,8 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         dividerColor: dividerColor,
         alignment: alignment,
         height: height,
+        enableBlur: true,
+        isVisible: isVisible,
       ),
     );
     return toolBar;
@@ -312,6 +321,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         centerTitle != oldDelegate.centerTitle ||
         dividerColor != oldDelegate.dividerColor ||
         floating != oldDelegate.floating ||
-        pinned != oldDelegate.pinned;
+        pinned != oldDelegate.pinned ||
+        isVisible != oldDelegate.isVisible;
   }
 }

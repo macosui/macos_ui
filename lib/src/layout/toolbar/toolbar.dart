@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/toolbar/overflow_handler.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinted_area.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_override.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
@@ -44,6 +45,8 @@ class ToolBar extends StatefulWidget with Diagnosticable {
     this.actions,
     this.centerTitle = false,
     this.dividerColor,
+    this.isVisible = true,
+    this.enableBlur = false,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -120,6 +123,12 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   ///
   /// Set this to `MacosColors.transparent` to remove.
   final Color? dividerColor;
+
+  /// TODO: document this
+  final bool isVisible;
+
+  /// TODO: document this
+  final bool enableBlur;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -234,9 +243,11 @@ class _ToolBarState extends State<ToolBar> {
           left: !kIsWeb && isMacOS ? 70 : 0,
         ),
       ),
-      child: WallpaperTintedArea(
+      child: _WallpaperTintedAreaOrBlurFilter(
+        enableWallpaperTintedArea: !widget.enableBlur,
+        isWidgetVisible: widget.isVisible,
         backgroundColor: theme.canvasColor,
-        insertRepaintBoundary: true,
+        widgetOpacity: widget.decoration?.color?.opacity,
         child: Container(
           alignment: widget.alignment,
           padding: widget.padding,
@@ -316,4 +327,50 @@ abstract class ToolbarItem with Diagnosticable {
   /// Sub-classes implement this to build the widget that is appropriate
   /// for the given display mode (in toolbar or overflowed).
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode);
+}
+
+class _WallpaperTintedAreaOrBlurFilter extends StatelessWidget {
+  const _WallpaperTintedAreaOrBlurFilter({
+    super.key,
+    required this.child,
+    required this.enableWallpaperTintedArea,
+    required this.backgroundColor,
+    required this.widgetOpacity,
+    required this.isWidgetVisible,
+  });
+
+  final Widget child;
+  final bool enableWallpaperTintedArea;
+  final Color backgroundColor;
+  final double? widgetOpacity;
+  final bool isWidgetVisible;
+
+  @override
+  Widget build(BuildContext context) {
+    if (enableWallpaperTintedArea) {
+      return WallpaperTintedArea(
+        backgroundColor: backgroundColor,
+        insertRepaintBoundary: true,
+        child: child,
+      );
+    }
+
+    if (!isWidgetVisible) {
+      return child;
+    }
+
+    return WallpaperTintingOverride(
+      child: ClipRect(
+        child: BackdropFilter(
+          filter: widgetOpacity == 1.0
+              ? ImageFilter.blur()
+              : ImageFilter.blur(
+                  sigmaX: 5.0,
+                  sigmaY: 5.0,
+                ),
+          child: child,
+        ),
+      ),
+    );
+  }
 }

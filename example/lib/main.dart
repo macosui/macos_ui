@@ -102,23 +102,25 @@ class _WidgetGalleryState extends State<WidgetGallery> {
 
   late final searchFieldController = TextEditingController();
 
-  final List<Widget> pages = [
-    CupertinoTabView(
-      builder: (_) => const ButtonsPage(),
-    ),
-    const IndicatorsPage(),
-    const FieldsPage(),
-    const ColorsPage(),
-    const Center(
-      child: MacosIcon(
-        CupertinoIcons.add,
-      ),
-    ),
-    const DialogsPage(),
-    const ToolbarPage(),
-    const SliverToolbarPage(),
-    const TabViewPage(),
-    const SelectorsPage(),
+  final List<Widget Function(bool)> pages = [
+    (bool isVisible) => CupertinoTabView(
+          builder: (_) => const ButtonsPage(),
+        ),
+    (bool isVisible) => const IndicatorsPage(),
+    (bool isVisible) => const FieldsPage(),
+    (bool isVisible) => const ColorsPage(),
+    (bool isVisible) => const Center(
+          child: MacosIcon(
+            CupertinoIcons.add,
+          ),
+        ),
+    (bool isVisible) => const DialogsPage(),
+    (bool isVisible) => const ToolbarPage(),
+    (bool isVisible) => SliverToolbarPage(
+          isVisible: isVisible,
+        ),
+    (bool isVisible) => const TabViewPage(),
+    (bool isVisible) => const SelectorsPage(),
   ];
 
   @override
@@ -338,7 +340,14 @@ class _WidgetGalleryState extends State<WidgetGallery> {
         ),
         child: IndexedStack(
           index: pageIndex,
-          children: pages,
+          children: pages
+              .asMap()
+              .map((index, builder) {
+                final widget = builder(index == pageIndex);
+                return MapEntry(index, widget);
+              })
+              .values
+              .toList(),
         ),
       ),
     );
