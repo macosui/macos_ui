@@ -352,7 +352,6 @@ abstract class ToolbarItem with Diagnosticable {
 /// filter.
 class _WallpaperTintedAreaOrBlurFilter extends StatelessWidget {
   const _WallpaperTintedAreaOrBlurFilter({
-    super.key,
     required this.child,
     required this.enableWallpaperTintedArea,
     required this.backgroundColor,
