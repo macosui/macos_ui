@@ -226,96 +226,118 @@ See the documentation for customizations and `ToolBar` examples.
 ## Modern window look
 
 A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look 
-in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` 
-file should look like this:
+in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which needs to be set up as follows:
+
+Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
+
+Insert `import macos_window_utils` at the top of the file.
+Then, replace the code above the `super.awakeFromNib()`-line with the following code:
 
 ```swift
+let windowFrame = self.frame
+let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
+self.contentViewController = macOSWindowUtilsViewController
+self.setFrame(windowFrame, display: true)
+
+/* Initialize the macos_window_utils plugin */
+MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
+RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
+```
+
+Assuming you're starting with the default configuration, the finished code should look something like this:
+
+```diff
 import Cocoa
 import FlutterMacOS
++import macos_window_utils
 
-class BlurryContainerViewController: NSViewController {
-  let flutterViewController = FlutterViewController()
-
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError()
-  }
-
-  override func loadView() {
-    let blurView = NSVisualEffectView()
-    blurView.autoresizingMask = [.width, .height]
-    blurView.blendingMode = .behindWindow
-    blurView.state = .active
-    if #available(macOS 10.14, *) {
-        blurView.material = .sidebar
-    }
-    self.view = blurView
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.addChild(flutterViewController)
-
-    flutterViewController.view.frame = self.view.bounds
-+   flutterViewController.backgroundColor = .clear // **Required post-Flutter 3.7.0**
-    flutterViewController.view.autoresizingMask = [.width, .height]
-    self.view.addSubview(flutterViewController.view)
-  }
-}
-
-class MainFlutterWindow: NSWindow, NSWindowDelegate {
+class MainFlutterWindow: NSWindow {
   override func awakeFromNib() {
-    delegate = self
-    let blurryContainerViewController = BlurryContainerViewController()
-    let windowFrame = self.frame
-    self.contentViewController = blurryContainerViewController
-    self.setFrame(windowFrame, display: true)
+-   let flutterViewController = FlutterViewController.init()
+-   let windowFrame = self.frame
+-   self.contentViewController = flutterViewController
+-   self.setFrame(windowFrame, display: true)
 
-    if #available(macOS 10.13, *) {
-      let customToolbar = NSToolbar()
-      customToolbar.showsBaselineSeparator = false
-      self.toolbar = customToolbar
-    }
-    self.titleVisibility = .hidden
-    self.titlebarAppearsTransparent = true
-    if #available(macOS 11.0, *) {
-      // Use .expanded if the app will have a title bar, else use .unified
-      self.toolbarStyle = .unified
-    }
+-   RegisterGeneratedPlugins(registry: flutterViewController)
+    
++   let windowFrame = self.frame
++   let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
++   self.contentViewController = macOSWindowUtilsViewController
++   self.setFrame(windowFrame, display: true)
 
-    self.isMovableByWindowBackground = true
-    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
++   /* Initialize the macos_window_utils plugin */
++   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
 
-    self.isOpaque = false
-    self.backgroundColor = .clear
-
-    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
++   RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
 
     super.awakeFromNib()
   }
+}
+```
 
-  func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-    return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
+Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
+
+```podspec
+platform :osx, '10.14.6'
+```
+
+Now, configure your window inside your `main()` as follows:
+
+```dart
+/// This delegate removes the toolbar in full-screen mode.
+class _FlutterWindowDelegate extends NSWindowDelegate {
+  @override
+  void windowWillEnterFullScreen() {
+    WindowManipulator.removeToolbar();
+    super.windowWillEnterFullScreen();
   }
 
-  func windowWillEnterFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = false
-  }
-  
-  func windowDidExitFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = true
+  @override
+  void windowDidExitFullScreen() {
+    WindowManipulator.addToolbar();
+    super.windowDidExitFullScreen();
   }
 }
 
+/// This method initializes macos_window_utils and styles the window.
+Future<void> _initMacosWindowUtils() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await WindowManipulator.initialize(enableWindowDelegate: true);
+  await WindowManipulator.setMaterial(
+      NSVisualEffectViewMaterial.windowBackground);
+  await WindowManipulator.enableFullSizeContentView();
+  await WindowManipulator.makeTitlebarTransparent();
+  await WindowManipulator.hideTitle();
+  await WindowManipulator.addToolbar();
+
+  // Use NSWindowToolbarStyle.expanded if the app will have a title bar,
+  // otherwise use NSWindowToolbarStyle.unified.
+  await WindowManipulator.setToolbarStyle(
+      toolbarStyle: NSWindowToolbarStyle.unified);
+
+  // Create a delegate that removes the toolbar in full-screen mode.
+  final delegate = _FlutterWindowDelegate();
+  WindowManipulator.addNSWindowDelegate(delegate);
+
+  // Auto-hide toolbar and menubar in full-screen mode.
+  final options = NSAppPresentationOptions.from({
+    NSAppPresentationOption.fullScreen,
+    NSAppPresentationOption.autoHideToolbar,
+    NSAppPresentationOption.autoHideMenuBar,
+    NSAppPresentationOption.autoHideDock,
+  });
+  options.applyAsFullScreenPresentationOptions();
+}
+
+void main() async {
+  await _initMacosWindowUtils();
+
+  runApp(const MacosUIGalleryApp());
+}
 ```
 
-See [this issue comment](https://github.com/flutter/flutter/issues/59969#issuecomment-916682559) for more details on the new look and explanations for how it works.
-
-Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `.unified`. This must be set beforehand, i.e. it cannot be switched in runtime.
+Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `NSWindowToolbarStyle.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `NSWindowToolbarStyle.unified`.
 
 ## ToolBar
 
