@@ -5,7 +5,24 @@ import 'package:macos_ui/macos_ui.dart';
 class SliverToolbarPage extends StatefulWidget {
   const SliverToolbarPage({super.key, required this.isVisible});
 
-  /// TODO: document this
+  /// Whether this [SliverToolbarPage] is currently visible on the screen
+  /// (that is, not e.g. hidden by an [IndexedStack]).
+  ///
+  /// By default, macos_ui applies wallpaper tinting to the application's
+  /// window to match macOS' native appearance:
+  ///
+  /// <img src="https://user-images.githubusercontent.com/86920182/220182724-d78319d7-5c41-4e8c-b785-a73a6ea24927.jpg" width=640/>
+  ///
+  /// However, this effect is realized by inserting `NSVisualEffectView`s behind
+  /// Flutter's canvas and turning the background of areas that are meant to be
+  /// affected by wallpaper tinting transparent. Since Flutter's
+  /// [`ImageFilter.blur`](https://api.flutter.dev/flutter/dart-ui/ImageFilter/ImageFilter.blur.html)
+  /// does not support transparency, wallpaper tinting is disabled automatically
+  /// when this widget's [isVisible] is true.
+  ///
+  /// This is meant to be a temporary solution until
+  /// [#16296](https://github.com/flutter/flutter/issues/16296) is resolved in
+  /// the Flutter project.
   final bool isVisible;
 
   @override
