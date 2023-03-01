@@ -1,3 +1,9 @@
+## [1.12.1]
+* Fix SidebarItem's leading icons not respecting the theme's primary color
+
+## [1.12.0]
+✨ New widget: `SliverToolBar`
+
 ## [1.11.1]
 * Fixed an issue where the `MacosSearchField` would not perform an action when an item was selected.
 

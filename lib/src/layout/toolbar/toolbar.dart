@@ -16,7 +16,7 @@ const _kLeadingWidth = 20.0;
 const _kTitleWidth = 150.0;
 
 /// A toolbar to use in a [MacosScaffold].
-class ToolBar extends StatefulWidget {
+class ToolBar extends StatefulWidget with Diagnosticable {
   /// Creates a toolbar in the [MacosScaffold]. The toolbar appears below the
   /// title bar (if present) of the macOS app or integrates with it.
   ///
@@ -120,6 +120,31 @@ class ToolBar extends StatefulWidget {
   ///
   /// Set this to `MacosColors.transparent` to remove.
   final Color? dividerColor;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DoubleProperty('height', height));
+    properties.add(DiagnosticsProperty<Alignment>('alignment', alignment));
+    properties.add(DiagnosticsProperty<Widget>('title', title));
+    properties.add(DoubleProperty('titleWidth', titleWidth));
+    properties
+        .add(DiagnosticsProperty<BoxDecoration>('decoration', decoration));
+    properties.add(DiagnosticsProperty<EdgeInsets>('padding', padding));
+    properties.add(DiagnosticsProperty<Widget>('leading', leading));
+    properties.add(FlagProperty(
+      'automaticallyImplyLeading',
+      value: automaticallyImplyLeading,
+      ifTrue: 'automatically imply leading',
+    ));
+    properties.add(DiagnosticsProperty<List<ToolbarItem>>('actions', actions));
+    properties.add(FlagProperty(
+      'centerTitle',
+      value: centerTitle,
+      ifTrue: 'center title',
+    ));
+    properties.add(DiagnosticsProperty<Color>('dividerColor', dividerColor));
+  }
 
   @override
   State<ToolBar> createState() => _ToolBarState();

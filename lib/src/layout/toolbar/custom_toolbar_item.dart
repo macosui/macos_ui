@@ -10,17 +10,26 @@ class CustomToolbarItem extends ToolbarItem {
   /// ```dart
   /// // Add a grey vertical line as a custom toolbar item:
   /// CustomToolbarItem(
-  ///     inToolbarBuilder: (context) => Padding(
+  ///   inToolbarBuilder: (context) => Padding(
   ///     padding: const EdgeInsets.all(8.0),
-  ///     child: Container(color: Colors.grey, width: 1, height: 30),
+  ///     child: Container(
+  ///       color: Colors.grey,
+  ///       width: 1,
+  ///       height: 30,
+  ///     ),
   ///   ),
-  ///   inOverflowedBuilder: (context) =>
-  ///       Container(color: Colors.grey, width: 30, height: 1),
+  ///   inOverflowedBuilder: (context) => Container(
+  ///     color: Colors.grey,
+  ///     width: 30,
+  ///     height: 1,
+  ///   ),
   /// ),
   /// // Add a search field as a custom toolbar item:
   /// CustomToolbarItem(
-  ///   inToolbarBuilder: (context) =>
-  ///       const SizedBox(width: 200, child: MacosSearchField()),
+  ///   inToolbarBuilder: (context) => const SizedBox(
+  ///     width: 200,
+  ///     child: MacosSearchField(),
+  ///   ),
   /// ),
   /// ```
   ///
