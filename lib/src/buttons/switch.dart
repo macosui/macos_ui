@@ -528,8 +528,6 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
       trackRect,
       const Radius.circular(_kTrackRadius),
     );
-    /*TODO: figure out how to paint the track with the super-slight shadows
-       that Apple seems to use*/
     canvas.drawRRect(trackRRect, paint);
     canvas.drawRRect(
       trackRRect,
