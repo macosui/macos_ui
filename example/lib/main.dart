@@ -62,11 +62,6 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     const IndicatorsPage(),
     const FieldsPage(),
     const ColorsPage(),
-    const Center(
-      child: MacosIcon(
-        CupertinoIcons.add,
-      ),
-    ),
     const DialogsPage(),
     const ToolbarPage(),
     const SliverToolbarPage(),
@@ -179,8 +174,8 @@ class _WidgetGalleryState extends State<WidgetGallery> {
               onChanged: (i) => setState(() => pageIndex = i),
               scrollController: scrollController,
               itemSize: SidebarItemSize.large,
-              items: [
-                const SidebarItem(
+              items: const [
+                SidebarItem(
                   // leading: MacosIcon(CupertinoIcons.square_on_circle),
                   leading: MacosImageIcon(
                     AssetImage(
@@ -189,7 +184,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   ),
                   label: Text('Buttons'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/lines_measurement_horizontal_2x.png',
@@ -197,7 +192,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   ),
                   label: Text('Indicators'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/character_cursor_ibeam_2x.png',
@@ -206,36 +201,18 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   label: Text('Fields'),
                 ),
                 SidebarItem(
-                  leading: const MacosIcon(CupertinoIcons.folder),
-                  label: const Text('Disclosure'),
-                  trailing: Text(
-                    '2',
-                    style: TextStyle(
-                      color: MacosTheme.brightnessOf(context) == Brightness.dark
-                          ? MacosColors.tertiaryLabelColor.darkColor
-                          : MacosColors.tertiaryLabelColor,
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/rectangle_3_group_2x.png',
                     ),
                   ),
-                  disclosureItems: [
-                    const SidebarItem(
-                      leading: MacosImageIcon(
-                        AssetImage(
-                          'assets/sf_symbols/rectangle_3_group_2x.png',
-                        ),
-                      ),
-                      label: Text('Colors'),
-                    ),
-                    const SidebarItem(
-                      leading: MacosIcon(CupertinoIcons.infinite),
-                      label: Text('Item 3'),
-                    ),
-                  ],
+                  label: Text('Colors'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosIcon(CupertinoIcons.square_on_square),
                   label: Text('Dialogs & Sheets'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/macwindow.on.rectangle_2x.png',
@@ -261,7 +238,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     ),
                   ],
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/filemenu_and_selection_2x.png',
