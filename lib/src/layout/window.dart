@@ -3,14 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/scrollbar.dart';
-import 'package:macos_ui/src/layout/content_area.dart';
-import 'package:macos_ui/src/layout/resizable_pane.dart';
-import 'package:macos_ui/src/layout/scaffold.dart';
-import 'package:macos_ui/src/layout/sidebar/sidebar.dart';
-import 'package:macos_ui/src/layout/title_bar.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:macos_ui/src/theme/macos_theme.dart';
 import 'package:macos_window_utils/widgets/transparent_macos_sidebar.dart';
 
 /// A basic frame layout.
