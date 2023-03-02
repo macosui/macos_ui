@@ -82,7 +82,7 @@ String intToMonthAbbr(int month) {
     case 11:
       return 'Nov';
     case 12:
-      return 'Dev';
+      return 'Dec';
     default:
       throw Exception('Unsupported value');
   }
