@@ -15,6 +15,12 @@ export 'package:flutter/services.dart'
         SmartQuotesType,
         SmartDashesType;
 
+const CupertinoDynamicColor _kDefaultBackgroundColor =
+    CupertinoDynamicColor.withBrightness(
+  color: CupertinoColors.white,
+  darkColor: Color.fromRGBO(54, 54, 54, 1.0),
+);
+
 const TextStyle _kDefaultPlaceholderStyle = TextStyle(
   fontWeight: FontWeight.w400,
   color: CupertinoColors.placeholderText,
@@ -59,8 +65,8 @@ const BoxDecoration kDefaultFocusedBorderDecoration = BoxDecoration(
 );
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
-  color: Color(0xfff6f6f9),
-  darkColor: Color.fromRGBO(255, 255, 255, 0.01),
+  color: Color.fromRGBO(251, 251, 251, 1.0),
+  darkColor: Color.fromRGBO(46, 46, 46, 1.0),
 );
 
 // An eyeballed value that moves the cursor slightly left of where it is
@@ -1266,8 +1272,8 @@ class _MacosTextFieldState extends State<MacosTextField>
               const Color(0xffffffff) ||
           (decorationColor).darkColor == const Color(0xff000000)) {
         decorationColor = themeData.brightness.isDark
-            ? const Color.fromRGBO(30, 30, 30, 1)
-            : MacosColors.white;
+            ? _kDefaultBackgroundColor.darkColor
+            : _kDefaultBackgroundColor;
       }
     }
 
