@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/layout/wallpaper_tinted_area.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// A macOS page widget.
