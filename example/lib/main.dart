@@ -3,6 +3,7 @@ import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields_page.dart';
 import 'package:example/pages/indicators_page.dart';
+import 'package:example/pages/resizable_pane_page.dart';
 import 'package:example/pages/selectors_page.dart';
 import 'package:example/pages/sliver_toolbar_page.dart';
 import 'package:example/pages/tabview_page.dart';
@@ -63,6 +64,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     const FieldsPage(),
     const ColorsPage(),
     const DialogsPage(),
+    const ResizablePanePage(),
     const ToolbarPage(),
     const SliverToolbarPage(),
     const TabViewPage(),
@@ -137,19 +139,19 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   break;
                 case 'Dialogs and Sheets':
                   setState(() {
-                    pageIndex = 5;
+                    pageIndex = 4;
                     searchFieldController.clear();
                   });
                   break;
                 case 'Toolbar':
                   setState(() {
-                    pageIndex = 6;
+                    pageIndex = 7;
                     searchFieldController.clear();
                   });
                   break;
                 case 'Selectors':
                   setState(() {
-                    pageIndex = 7;
+                    pageIndex = 9;
                     searchFieldController.clear();
                   });
                   break;
@@ -220,6 +222,10 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   ),
                   label: Text('Layout'),
                   disclosureItems: [
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.rectangle_split_3x1),
+                      label: Text('ResizablePane'),
+                    ),
                     SidebarItem(
                       leading: MacosIcon(CupertinoIcons.macwindow),
                       label: Text('Toolbar'),
