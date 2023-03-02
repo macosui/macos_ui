@@ -318,7 +318,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         alignment: alignment,
         height: height,
         enableBlur: true,
-        isVisible: isVisible,
+        allowWallpaperTintingOverrides: isVisible,
       ),
     );
     return toolBar;

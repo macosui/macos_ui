@@ -44,7 +44,7 @@ class ToolBar extends StatefulWidget with Diagnosticable {
     this.actions,
     this.centerTitle = false,
     this.dividerColor,
-    this.isVisible = true,
+    this.allowWallpaperTintingOverrides = true,
     this.enableBlur = false,
   });
 
@@ -123,8 +123,11 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   /// Set this to `MacosColors.transparent` to remove.
   final Color? dividerColor;
 
-  /// Whether this [ToolBar] is currently visible on the screen (that is, not
-  /// e.g. hidden by an [IndexedStack]).
+  /// Whether this [ToolBar] is allowed to perform wallpaper tinting overrides.
+  ///
+  /// This property is supposed to be set to true when this [ToolBar] is
+  /// currently visible on the screen (that is, not e.g. hidden by an
+  /// [IndexedStack]).
   ///
   /// This parameter only needs to be supplied when [enableBlur] is true.
   ///
@@ -138,12 +141,13 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   /// affected by wallpaper tinting transparent. Since Flutter's
   /// [`ImageFilter.blur`](https://api.flutter.dev/flutter/dart-ui/ImageFilter/ImageFilter.blur.html)
   /// does not support transparency, wallpaper tinting is disabled automatically
-  /// when this widget's [enableBlur] and [isVisible] is true.
+  /// when this widget's [enableBlur] and [allowWallpaperTintingOverrides] is
+  /// true.
   ///
   /// This is meant to be a temporary solution until
   /// [#16296](https://github.com/flutter/flutter/issues/16296) is resolved in
   /// the Flutter project.
-  final bool isVisible;
+  final bool allowWallpaperTintingOverrides;
 
   /// Whether this [ToolBar] should have a blur backdrop filter applied to it.
   final bool enableBlur;
@@ -263,7 +267,7 @@ class _ToolBarState extends State<ToolBar> {
       ),
       child: _WallpaperTintedAreaOrBlurFilter(
         enableWallpaperTintedArea: !widget.enableBlur,
-        isWidgetVisible: widget.isVisible,
+        isWidgetVisible: widget.allowWallpaperTintingOverrides,
         backgroundColor: theme.canvasColor,
         widgetOpacity: widget.decoration?.color?.opacity,
         child: Container(
