@@ -16,7 +16,10 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
 
-## 🚨 Usage notes  
+## 🚨 Usage notes
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Flutter channel
+`macos_ui` is developed against Flutter's `stable` channel. To ensure a smooth development experience with `macos_ui`, you should build your application on Flutter's `stable` channel.
+
 ### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
 
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
@@ -54,6 +57,7 @@ should avoid allowing your application window to be resized below the height of 
   - [MacosScaffold](#macosscaffold)
   - [Modern Window Look](#modern-window-look)
   - [ToolBar](#toolbar)
+  - [SliverToolBar](#SliverToolBar)
   - [MacosListTile](#MacosListTile)
   - [MacosTabView](#MacosTabView)
 </details>
@@ -404,6 +408,33 @@ CustomToolbarItem(
 ),
 ```
 
+## `SliverToolBar`
+<img src="https://imgur.com/u4LDaxj.gif" width="75%"/>
+
+`SliverToolbar` is a variant of the standard `ToolBar`, with the key difference being that (as the name implies), it 
+is compatible with scrollable widgets like `CustomScrollView` and `NestedScrollView`. There are three additional 
+properties on `SliverToolBar`:
+* `pinned`, which determines if the toolbar should remain visible while scrolling
+* `floating`, which determines if the toolbar should become visible as soon as the use starts scrolling upwards
+* `opacity`, which manages the translucency effect of the toolbar
+
+This widget enables developers to achieve the toolbar behaviors seen in Apple's App Store.
+
+Sample usage:
+```dart
+return CustomScrollView(
+  controller: scrollController,
+  slivers: [
+    SliverToolBar(
+      title: const Text('SliverToolbar'),
+      pinned: true,
+      toolbarOpacity: 0.75,
+    ),
+    // Other slivers below  
+  ],
+);
+```
+
 ## MacosListTile
 
 A widget that aims to approximate the [`ListTile`](https://api.flutter.dev/flutter/material/ListTile-class.html) widget found in
@@ -411,7 +442,7 @@ Flutter's material library.
 
 ![MacosListTile](https://imgur.com/pQB99M2.png)
 
-Usage:
+Sample usage:
 ```dart
 MacosListTile(
   leading: const Icon(CupertinoIcons.lightbulb),

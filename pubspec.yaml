@@ -1,6 +1,6 @@
 name: macos_ui
 description: Flutter widgets and themes implementing the current macOS design language.
-version: 1.10.0
+version: 1.12.1
 homepage: "https://macosui.dev"
 repository: "https://github.com/GroovinChip/macos_ui"
 
@@ -23,5 +23,5 @@ flutter:
   plugin:
     platforms:
       macos:
-        package: dev.groovinchip.macos_ui
+        package: dev.macosui.macos_ui
         pluginClass: MacOSUiPlugin
