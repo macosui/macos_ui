@@ -6,6 +6,8 @@
   * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
   * Wallpaper tinting is now supported.
 
+To migrate an existing application, please refer to the “Modern window look” section in the README.
+
 ## [1.12.1]
 * Fix SidebarItem's leading icons not respecting the theme's primary color
 
