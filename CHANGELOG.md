@@ -1,5 +1,8 @@
-## [1.12.1]
+## [1.12.1+1]
 * Fixed a typo in the December abbreviation displayed in the `MacosDatePicker`.
+
+## [1.12.1]
+* Fix SidebarItem's leading icons not respecting the theme's primary color
 
 ## [1.12.0]
 ✨ New widget: `SliverToolBar`
