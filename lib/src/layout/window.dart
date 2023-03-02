@@ -90,7 +90,6 @@ class _MacosWindowState extends State<MacosWindow> {
   int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
   SystemMouseCursor _endSidebarCursor = SystemMouseCursors.resizeLeft;
-  bool _hasOverriddenWallpaperTinting = false;
 
   @override
   void initState() {
@@ -107,10 +106,9 @@ class _MacosWindowState extends State<MacosWindow> {
       _endSidebarScrollController.addListener(() => setState(() {}));
     }
 
-    if (widget.disableWallpaperTinting) {
-      GlobalWallpaperTintingSettings.addWallpaperTintingOverride();
-      _hasOverriddenWallpaperTinting = true;
-    }
+    widget.disableWallpaperTinting
+        ? GlobalWallpaperTintingSettings.disableWallpaperTinting()
+        : GlobalWallpaperTintingSettings.allowWallpaperTinting();
   }
 
   @override
@@ -146,9 +144,6 @@ class _MacosWindowState extends State<MacosWindow> {
   void dispose() {
     _sidebarScrollController.dispose();
     _endSidebarScrollController.dispose();
-    if (_hasOverriddenWallpaperTinting) {
-      GlobalWallpaperTintingSettings.removeWallpaperTintingOverride();
-    }
 
     super.dispose();
   }

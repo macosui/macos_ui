@@ -30,4 +30,16 @@ class GlobalWallpaperTintingSettings {
     data.removeOverride();
     _onDataChangedStreamController.add(data);
   }
+
+  /// Disables wallpaper tinting altogether.
+  static void disableWallpaperTinting() {
+    data.disableWallpaperTinting();
+    _onDataChangedStreamController.add(data);
+  }
+
+  /// Allows wallpaper tinting, unless overridden.
+  static void allowWallpaperTinting() {
+    data.allowWallpaperTinting();
+    _onDataChangedStreamController.add(data);
+  }
 }

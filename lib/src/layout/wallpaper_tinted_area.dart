@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/global_wallpaper_tinting_settings.dart';
 import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_settings_builder.dart';
 import 'package:macos_window_utils/macos/ns_visual_effect_view_material.dart';
 import 'package:macos_window_utils/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
@@ -62,6 +63,16 @@ class _WallpaperTintedAreaLayoutBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (GlobalWallpaperTintingSettings
+        .data.isWallpaperTintingDisabledByWindow) {
+      return Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+        ),
+        child: child,
+      );
+    }
+
     // This LayoutBuilder forces the widget to be rebuilt when a layout change
     // is detected. This is necessary for the VisualEffectSubviewContainer to
     // be updated.
