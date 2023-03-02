@@ -102,7 +102,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
 
   late final searchFieldController = TextEditingController();
 
-  final List<Widget Function(bool)> pages = [
+  final List<Widget Function(bool)> pageBuilders = [
     (bool isVisible) => CupertinoTabView(
           builder: (_) => const ButtonsPage(),
         ),
@@ -340,7 +340,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
         ),
         child: IndexedStack(
           index: pageIndex,
-          children: pages
+          children: pageBuilders
               .asMap()
               .map((index, builder) {
                 final widget = builder(index == pageIndex);
