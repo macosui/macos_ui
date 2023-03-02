@@ -214,7 +214,7 @@ class MacosThemeData with Diagnosticable {
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
 
-    // Mimic `NSWindow.windowBackgroundColor`.
+    // Mimic `NSColor.windowBackgroundColor`.
     canvasColor ??= isDark
         ? const Color.fromRGBO(50, 50, 50, 1.0)
         : const Color.fromRGBO(236, 236, 236, 1.0);
