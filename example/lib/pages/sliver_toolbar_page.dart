@@ -47,7 +47,7 @@ class _SliverToolbarPageState extends State<SliverToolbarPage> {
                   floating: floating,
                   pinned: pinned,
                   toolbarOpacity: opacity,
-                  isVisible: widget.isVisible,
+                  allowWallpaperTintingOverrides: widget.isVisible,
                   actions: [
                     ToolBarIconButton(
                       label: 'Pinned',
