@@ -2,7 +2,7 @@ import Cocoa
 import FlutterMacOS
 import macos_window_utils
 
-class MainFlutterWindow: NSWindow, NSWindowDelegate {
+class MainFlutterWindow: NSWindow {
   override func awakeFromNib() {
     let windowFrame = self.frame
     let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
