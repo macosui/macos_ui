@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/global_wallpaper_tinting_settings.dart';
 import 'package:macos_ui/src/library.dart';
 import 'package:macos_window_utils/widgets/transparent_macos_sidebar.dart';
 
@@ -89,6 +90,7 @@ class _MacosWindowState extends State<MacosWindow> {
   int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
   SystemMouseCursor _endSidebarCursor = SystemMouseCursors.resizeLeft;
+  bool _hasOverriddenWallpaperTinting = false;
 
   @override
   void initState() {
@@ -103,6 +105,11 @@ class _MacosWindowState extends State<MacosWindow> {
     }
     if (widget.endSidebar?.builder != null) {
       _endSidebarScrollController.addListener(() => setState(() {}));
+    }
+
+    if (widget.disableWallpaperTinting) {
+      GlobalWallpaperTintingSettings.addWallpaperTintingOverride();
+      _hasOverriddenWallpaperTinting = true;
     }
   }
 
@@ -139,6 +146,10 @@ class _MacosWindowState extends State<MacosWindow> {
   void dispose() {
     _sidebarScrollController.dispose();
     _endSidebarScrollController.dispose();
+    if (_hasOverriddenWallpaperTinting) {
+      GlobalWallpaperTintingSettings.removeWallpaperTintingOverride();
+    }
+
     super.dispose();
   }
 
