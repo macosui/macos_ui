@@ -532,10 +532,11 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
        that Apple seems to use*/
     canvas.drawRRect(trackRRect, paint);
     canvas.drawRRect(
-        trackRRect,
-        Paint()
-          ..color = borderColor
-          ..style = PaintingStyle.stroke);
+      trackRRect,
+      Paint()
+        ..color = borderColor
+        ..style = PaintingStyle.stroke,
+    );
 
     final double currentKnobExtension =
         MacosSwitchKnobPainter.extension * currentReactionValue;
