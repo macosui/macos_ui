@@ -35,6 +35,36 @@ const BorderSide _kDefaultRoundedBorderSide = BorderSide(
   width: 0.1,
 );
 
+const BorderSide _kDefaultSideBorderSide = BorderSide(
+  color: CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(230, 230, 230, 1.0),
+    darkColor: Color.fromRGBO(64, 64, 64, 1.0),
+  ),
+  style: BorderStyle.solid,
+  width: 1.0,
+);
+
+const Border _kDefaultSquaredBorder = Border(
+  top: BorderSide(
+    color: CupertinoDynamicColor.withBrightness(
+      color: Color.fromRGBO(230, 230, 230, 1.0),
+      darkColor: Color.fromRGBO(72, 72, 72, 1.0),
+    ),
+    style: BorderStyle.solid,
+    width: 1.0,
+  ),
+  bottom: BorderSide(
+    color: CupertinoDynamicColor.withBrightness(
+      color: Color.fromRGBO(194, 194, 194, 1.0),
+      darkColor: Color.fromRGBO(104, 104, 104, 1.0),
+    ),
+    style: BorderStyle.solid,
+    width: 1.0,
+  ),
+  left: _kDefaultSideBorderSide,
+  right: _kDefaultSideBorderSide,
+);
+
 const Border _kDefaultRoundedBorder = Border(
   top: _kDefaultRoundedBorderSide,
   bottom: _kDefaultRoundedBorderSide,
@@ -42,21 +72,48 @@ const Border _kDefaultRoundedBorder = Border(
   right: _kDefaultRoundedBorderSide,
 );
 
+const BoxDecoration kDefaultSquaredBorderDecoration = BoxDecoration(
+  color: _kDefaultBackgroundColor,
+  border: _kDefaultSquaredBorder,
+);
+
 const BoxDecoration kDefaultRoundedBorderDecoration = BoxDecoration(
-  color: CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: CupertinoColors.black,
-  ),
+  color: _kDefaultBackgroundColor,
   border: _kDefaultRoundedBorder,
-  boxShadow: [
+  /*boxShadow: [
     BoxShadow(
       color: CupertinoDynamicColor.withBrightness(
         color: Color.fromRGBO(0, 0, 0, 0.1),
-        darkColor: Color.fromRGBO(255, 255, 255, 0.1),
+        darkColor: Color.fromRGBO(72, 72, 72, 1.0),
+      ),
+      offset: Offset(0, -1),
+      blurStyle: BlurStyle.inner,
+    ),
+    BoxShadow(
+      color: CupertinoDynamicColor.withBrightness(
+        color: Color.fromRGBO(0, 0, 0, 0.1),
+        darkColor: Color.fromRGBO(66, 66, 66, 1.0),
+      ),
+      offset: Offset(1, 0),
+      blurStyle: BlurStyle.normal,
+    ),
+    BoxShadow(
+      color: CupertinoDynamicColor.withBrightness(
+        color: Color.fromRGBO(0, 0, 0, 0.1),
+        darkColor: Color.fromRGBO(66, 66, 66, 1.0),
+      ),
+      offset: Offset(-1, 0),
+      blurStyle: BlurStyle.normal,
+    ),
+    BoxShadow(
+      color: CupertinoDynamicColor.withBrightness(
+        color: Color.fromRGBO(0, 0, 0, 0.1),
+        darkColor: Color.fromRGBO(109, 109, 109, 1.0),
       ),
       offset: Offset(0, 1),
+      blurStyle: BlurStyle.normal,
     ),
-  ],
+  ],*/
   borderRadius: BorderRadius.all(Radius.circular(7.0)),
 );
 
@@ -200,6 +257,92 @@ class _TextFieldSelectionGestureDetectorBuilder
 ///    [TextField].
 ///  * Learn how to use a [TextEditingController] in one of our [cookbook recipes](https://flutter.dev/docs/cookbook/forms/text-field-changes#2-use-a-texteditingcontroller).
 class MacosTextField extends StatefulWidget {
+  const MacosTextField({
+    super.key,
+    this.controller,
+    this.focusNode,
+    this.decoration = kDefaultSquaredBorderDecoration,
+    this.focusedDecoration = kDefaultFocusedBorderDecoration,
+    this.padding = const EdgeInsets.all(4.0),
+    this.placeholder,
+    this.placeholderStyle = const TextStyle(
+      fontWeight: FontWeight.w400,
+      color: CupertinoColors.placeholderText,
+    ),
+    this.prefix,
+    this.prefixMode = OverlayVisibilityMode.always,
+    this.suffix,
+    this.suffixMode = OverlayVisibilityMode.always,
+    this.clearButtonMode = OverlayVisibilityMode.never,
+    TextInputType? keyboardType,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.style,
+    this.strutStyle,
+    this.textAlign = TextAlign.start,
+    this.textAlignVertical,
+    this.readOnly = false,
+    this.contextMenuBuilder = _defaultContextMenuBuilder,
+    this.showCursor,
+    this.autofocus = false,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.autocorrect = true,
+    SmartDashesType? smartDashesType,
+    SmartQuotesType? smartQuotesType,
+    this.enableSuggestions = true,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
+    this.maxLength,
+    this.maxLengthEnforcement,
+    this.onChanged,
+    this.onEditingComplete,
+    this.onSubmitted,
+    this.inputFormatters,
+    this.enabled,
+    this.cursorWidth = 2.0,
+    this.cursorHeight,
+    this.cursorRadius = const Radius.circular(2.0),
+    this.cursorColor,
+    this.selectionHeightStyle = ui.BoxHeightStyle.tight,
+    this.selectionWidthStyle = ui.BoxWidthStyle.tight,
+    this.keyboardAppearance,
+    this.scrollPadding = const EdgeInsets.all(20.0),
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.enableInteractiveSelection = true,
+    this.selectionControls,
+    this.onTap,
+    this.scrollController,
+    this.scrollPhysics,
+    this.autofillHints,
+    this.restorationId,
+  })  : smartDashesType = smartDashesType ??
+            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ??
+            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        assert(
+          !expands || (maxLines == null && minLines == null),
+          'minLines and maxLines must be null when expands is true.',
+        ),
+        assert(!obscureText || maxLines == 1,
+            'Obscured fields cannot be multiline.'),
+        assert(maxLength == null || maxLength > 0),
+        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+        assert(
+            !identical(textInputAction, TextInputAction.newline) ||
+                maxLines == 1 ||
+                !identical(keyboardType, TextInputType.text),
+            'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
+
   /// Creates an macos-style text field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with
@@ -236,7 +379,7 @@ class MacosTextField extends StatefulWidget {
   ///  * [expands], to allow the widget to size itself to its parent's height.
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
-  const MacosTextField({
+  const MacosTextField.rounded({
     super.key,
     this.controller,
     this.focusNode,
@@ -1236,6 +1379,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         widget.style?.backgroundColor,
         context,
       ),
+      // fontSize: 12.0,
     );
 
     final textStyle = themeData.typography.body.merge(resolvedStyle);
@@ -1249,6 +1393,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         widget.placeholderStyle?.backgroundColor,
         context,
       ),
+      // fontSize: 12.0,
     );
 
     final placeholderStyle = textStyle.merge(enabled
@@ -1288,19 +1433,36 @@ class _MacosTextFieldState extends State<MacosTextField>
               );
       }
 
-      resolvedBorder = border.runtimeType != Border
-          ? border
-          : Border(
-              top: resolveBorderSide(border.top),
-              left: resolveBorderSide(border.left),
-              bottom: resolveBorderSide(border.bottom),
-              right: resolveBorderSide(border.right),
-            );
+      if (border.runtimeType == Border) {
+        resolvedBorder = Border(
+          top: resolveBorderSide(border.top),
+          left: resolveBorderSide(border.left),
+          bottom: resolveBorderSide(border.bottom),
+          right: resolveBorderSide(border.right),
+        );
+      }
+    }
+
+    final List<BoxShadow>? boxShadow = widget.decoration?.boxShadow;
+    List<BoxShadow>? resolvedBoxShadow = [];
+    if (boxShadow != null) {
+      BoxShadow resolveBoxShadow(BoxShadow shadow) {
+        return BoxShadow(
+          color: MacosDynamicColor.resolve(shadow.color, context),
+          offset: shadow.offset,
+          blurStyle: shadow.blurStyle,
+        );
+      }
+
+      for (final shadow in boxShadow) {
+        resolvedBoxShadow.add(resolveBoxShadow(shadow));
+      }
     }
 
     final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
       border: resolvedBorder,
       color: enabled ? decorationColor : disabledColor,
+      boxShadow: resolvedBoxShadow,
     );
 
     final BoxDecoration? focusedDecoration = widget.focusedDecoration?.copyWith(
@@ -1426,6 +1588,7 @@ class _MacosTextFieldState extends State<MacosTextField>
           child: Container(
             decoration:
                 _effectiveFocusNode.hasFocus ? null : effectiveDecoration,
+            // height: 19.0,
             child: _selectionGestureDetectorBuilder.buildGestureDetector(
               behavior: HitTestBehavior.translucent,
               child: Align(

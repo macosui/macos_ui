@@ -43,6 +43,14 @@ class _FieldsPageState extends State<FieldsPage> {
                   const SizedBox(height: 20),
                   const SizedBox(
                     width: 300.0,
+                    child: MacosTextField.rounded(
+                      placeholder: 'Type some text here',
+                      maxLines: 1,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const SizedBox(
+                    width: 300.0,
                     child: MacosTextField(
                       prefix: MacosIcon(CupertinoIcons.money_dollar),
                       placeholder: 'Type some text here',
@@ -122,17 +130,6 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ],
               ),
-            );
-          },
-        ),
-        ResizablePane(
-          minSize: 180,
-          startSize: 200,
-          windowBreakpoint: 800,
-          resizableSide: ResizableSide.left,
-          builder: (_, __) {
-            return const Center(
-              child: Text('Resizable Pane'),
             );
           },
         ),

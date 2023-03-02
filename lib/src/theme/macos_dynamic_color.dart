@@ -111,7 +111,18 @@ extension MacosDynamicColor on CupertinoDynamicColor {
       return true;
     }());
 
-    return ResolvedMacosDynamicColor(
+    return CupertinoDynamicColor(
+      color: resolved,
+      darkColor: darkColor,
+      highContrastColor: highContrastColor,
+      darkHighContrastColor: darkHighContrastColor,
+      elevatedColor: elevatedColor,
+      darkElevatedColor: darkElevatedColor,
+      highContrastElevatedColor: highContrastElevatedColor,
+      darkHighContrastElevatedColor: darkHighContrastElevatedColor,
+    );
+
+    /*return ResolvedMacosDynamicColor(
       resolved,
       color,
       darkColor,
@@ -122,7 +133,7 @@ extension MacosDynamicColor on CupertinoDynamicColor {
       highContrastElevatedColor,
       darkHighContrastElevatedColor,
       debugContext,
-    );
+    );*/
   }
 }
 
