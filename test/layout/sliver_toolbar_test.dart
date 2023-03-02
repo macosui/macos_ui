@@ -81,6 +81,8 @@ void main() {
         tester.getBottomLeft(find.byKey(leadingKey)),
         const Offset(8.0, 47.0),
       );
+
+      await tester.pump(Duration.zero);
     },
   );
 
@@ -97,6 +99,8 @@ void main() {
       expect(tester.getTopLeft(navToolbar).dy, 4.0);
       expect(tester.getSize(toolbar).height, 52.0);
       expect(tester.getSize(navToolbar).height, 43.0);
+
+      await tester.pump(Duration.zero);
     },
   );
 
@@ -116,6 +120,8 @@ void main() {
 
       expect(tester.getTopLeft(toolbar).dy, 0.0);
       expect(tester.getTopLeft(navToolbar).dy, 4.0);
+
+      await tester.pump(Duration.zero);
     },
   );
 
@@ -137,6 +143,8 @@ void main() {
 
       expect(toolbar, findsNothing);
       expect(navToolbar, findsNothing);
+
+      await tester.pump(Duration.zero);
     },
   );
 
@@ -177,6 +185,8 @@ void main() {
       expect(tester.getTopLeft(toolbar).dy, 0.0);
       expect(navToolbar, findsOneWidget);
       expect(tester.getTopLeft(navToolbar).dy, 4.0);
+
+      await tester.pump(Duration.zero);
     },
   );
 }

@@ -29,6 +29,7 @@ void main() {
           final view = side == ResizableSide.top
               ? MacosApp(
                   home: MacosWindow(
+                    disableWallpaperTinting: true,
                     child: MacosScaffold(
                       children: [
                         ContentArea(
@@ -52,6 +53,7 @@ void main() {
                 )
               : MacosApp(
                   home: MacosWindow(
+                    disableWallpaperTinting: true,
                     child: MacosScaffold(
                       children: [
                         resizablePane,
