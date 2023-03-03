@@ -54,8 +54,8 @@ class _ToolbarOverflowMenuItemState extends State<ToolbarOverflowMenuItem> {
   }
 
   void _handleOnTap() {
-    widget.onPressed?.call();
     Navigator.pop(context);
+    widget.onPressed?.call();
   }
 
   bool get _isHighlighted => _isHovered || widget.isSelected == true;
