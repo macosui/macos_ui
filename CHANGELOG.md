@@ -1,3 +1,6 @@
+## [1.12.2]
+* Fixed a bug where clicking on a overflowed toolbar item with a navigation callback wouldn't work ([#346](https://github.com/GroovinChip/macos_ui/issues/346)).
+
 ## [1.12.1+1]
 * Fixed a typo in the December abbreviation displayed in the `MacosDatePicker`.
 
