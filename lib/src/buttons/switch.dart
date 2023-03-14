@@ -5,6 +5,21 @@ import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+const _kDefaultBorderColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColor.fromRGBO(215, 215, 215, 1.0),
+  darkColor: MacosColor.fromRGBO(101, 101, 101, 1.0),
+);
+
+const _kDefaultTrackColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColor.fromRGBO(228, 226, 228, 1.0),
+  darkColor: MacosColor.fromRGBO(66, 66, 66, 1.0),
+);
+
+const _kDefaultKnobColor = CupertinoDynamicColor.withBrightness(
+  color: MacosColors.white,
+  darkColor: MacosColor.fromRGBO(207, 207, 207, 1.0),
+);
+
 /// {@template macosSwitch}
 /// A switch is a control that offers a binary choice between two mutually
 /// exclusive states — on and off.
@@ -252,21 +267,16 @@ class _MacosSwitchState extends State<MacosSwitch>
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final MacosThemeData theme = MacosTheme.of(context);
-    MacosColor borderColor = theme.brightness.isDark
-        ? const MacosColor.fromRGBO(90, 90, 90, 1.0)
-        : const MacosColor.fromRGBO(210, 207, 208, 1.0);
+    MacosColor borderColor =
+        MacosDynamicColor.resolve(_kDefaultBorderColor, context).toMacosColor();
     MacosColor activeColor = MacosColor(MacosDynamicColor.resolve(
       widget.activeColor ?? theme.primaryColor,
       context,
     ).value);
     MacosColor trackColor = widget.trackColor ??
-        (theme.brightness.isDark
-            ? const MacosColor.fromRGBO(54, 54, 54, 1.0)
-            : const MacosColor.fromRGBO(228, 226, 228, 1.0));
+        MacosDynamicColor.resolve(_kDefaultTrackColor, context).toMacosColor();
     MacosColor knobColor = widget.knobColor ??
-        (theme.brightness.isDark
-            ? const MacosColor.fromRGBO(207, 207, 207, 1.0)
-            : MacosColors.white);
+        MacosDynamicColor.resolve(_kDefaultKnobColor, context).toMacosColor();
 
     // Shot in the dark to try and get the border color correct for each
     // possible color
