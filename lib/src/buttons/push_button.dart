@@ -5,6 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+// Sizes:
+// * mini: 28x13
+// * small: 41x16
+// * regular: 62x60
+// * large: 50x28
+// Borderless buttons have no padding, and therefore no explicit size.
+
 /// The sizes a [PushButton] can be.
 enum ButtonSize {
   /// A large [PushButton].
