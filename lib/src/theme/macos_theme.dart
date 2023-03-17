@@ -215,8 +215,8 @@ class MacosThemeData with Diagnosticable {
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
     windowBackgroundColor ??= isDark
-        ? MacosColors.windowBackgroundColor.darkColor
-        : MacosColors.windowBackgroundColor;
+        ? MacosColors.underPageBackgroundColor.darkColor
+        : MacosColors.underPageBackgroundColor;
     scaffoldBackgroundColor ??= isDark
         ? MacosColors.scaffoldBackgroundColor.darkColor
         : MacosColors.scaffoldBackgroundColor;

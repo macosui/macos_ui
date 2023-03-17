@@ -425,7 +425,7 @@ class MacosColors {
      but cannot be turned on yet due to the unknown default value of the
      translucency effect.*/
   static const windowBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: MacosColor.fromRGBO(246, 246, 246, 1.0),
+    color: MacosColor.fromRGBO(236, 236, 236, 1.0),
     darkColor: MacosColor.fromRGBO(50, 50, 50, 1.0),
   );
 
