@@ -32,6 +32,7 @@ class MacosSwitch extends StatefulWidget {
   const MacosSwitch({
     super.key,
     required this.value,
+    this.size = ControlSize.regular,
     required this.onChanged,
     this.dragStartBehavior = DragStartBehavior.start,
     this.activeColor,
@@ -44,6 +45,8 @@ class MacosSwitch extends StatefulWidget {
   ///
   /// Must not be null.
   final bool value;
+
+  final ControlSize size;
 
   /// Called when the user toggles with switch on or off.
   ///
@@ -99,6 +102,7 @@ class MacosSwitch extends StatefulWidget {
       value: value,
       ifFalse: 'unchecked',
     ));
+    properties.add(EnumProperty('size', size));
     properties.add(EnumProperty('dragStartBehavior', dragStartBehavior));
     properties.add(FlagProperty(
       'enabled',
@@ -229,7 +233,7 @@ class _MacosSwitchState extends State<MacosSwitch>
       position
         ..curve = Curves.linear
         ..reverseCurve = Curves.linear;
-      final double delta = details.primaryDelta! / _kTrackInnerLength;
+      final double delta = details.primaryDelta! / widget.size.trackInnerLength;
       switch (Directionality.of(context)) {
         case TextDirection.rtl:
           _positionController.value -= delta;
@@ -297,6 +301,7 @@ class _MacosSwitchState extends State<MacosSwitch>
       checked: widget.value,
       child: _MacosSwitchRenderObjectWidget(
         value: widget.value,
+        size: widget.size,
         activeColor: activeColor,
         trackColor: trackColor,
         knobColor: knobColor,
@@ -312,6 +317,7 @@ class _MacosSwitchState extends State<MacosSwitch>
 class _MacosSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   const _MacosSwitchRenderObjectWidget({
     required this.value,
+    required this.size,
     required this.activeColor,
     required this.trackColor,
     required this.knobColor,
@@ -321,6 +327,7 @@ class _MacosSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     required this.state,
   });
   final bool value;
+  final ControlSize size;
   final MacosColor activeColor;
   final MacosColor trackColor;
   final MacosColor knobColor;
@@ -333,6 +340,7 @@ class _MacosSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   _RenderMacosSwitch createRenderObject(BuildContext context) {
     return _RenderMacosSwitch(
       value: value,
+      size: size,
       activeColor: activeColor,
       trackColor: trackColor,
       knobColor: knobColor,
@@ -351,6 +359,7 @@ class _MacosSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     assert(renderObject._state == state);
     renderObject
       ..value = value
+      ..controlSize = size
       ..activeColor = activeColor
       ..trackColor = trackColor
       ..knobColor = knobColor
@@ -360,21 +369,66 @@ class _MacosSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   }
 }
 
-const double _kTrackWidth = 36.0;
-const double _kTrackHeight = 20.0;
-const double _kTrackRadius = _kTrackHeight / 2.0;
-const double _kTrackInnerStart = _kTrackHeight / 2.0;
-const double _kTrackInnerEnd = _kTrackWidth - _kTrackInnerStart;
-const double _kTrackInnerLength = _kTrackInnerEnd - _kTrackInnerStart;
-const double _kSwitchWidth = 59.0;
-const double _kSwitchHeight = 39.0;
-const Size _kKnobSize = Size(19.5, 19.5);
+// Track sizes:
+// * mini: 26w x 15h
+// * small: 32w x 18h
+// * regular & large: 38w x 22h
+//
+// Knob sizes:
+// * mini: 12w x 11h
+// * small: 15w x 14h
+// * regular & large: 19w x 18h
+//
+// Math:
+// * trackWidth = width - 2
+// * trackHeight = height - 2
+
+const Size _kMiniTrackSize = Size(26.0, 15.0);
+const Size _kSmallTrackSize = Size(32.0, 18.0);
+const Size _kRegularTrackSize = Size(38.0, 22.0);
+
+const double _kMiniKnobSize = 13.0;
+const double _kSmallKnobSize = 16.0;
+const double _kRegularKnobSize = 20.0;
+
+// Shortcuts for details about how to create the switch, based on the control
+// size.
+extension _ControlSizeX on ControlSize {
+  Size get trackSize {
+    switch (this) {
+      case ControlSize.mini:
+        return _kMiniTrackSize;
+      case ControlSize.small:
+        return _kSmallTrackSize;
+      default:
+        return _kRegularTrackSize;
+    }
+  }
+
+  double get knobSize {
+    switch (this) {
+      case ControlSize.mini:
+        return _kMiniKnobSize;
+      case ControlSize.small:
+        return _kSmallKnobSize;
+      default:
+        return _kRegularKnobSize;
+    }
+  }
+
+  double get knobRadius => knobSize / 2.0;
+  double get trackInnerStart => trackSize.height / 2.0;
+  double get trackInnerEnd => trackSize.width - trackInnerStart;
+  double get trackInnerLength => trackInnerEnd - trackInnerStart;
+}
+
 const Duration _kReactionDuration = Duration(milliseconds: 400);
 const Duration _kToggleDuration = Duration(milliseconds: 300);
 
 class _RenderMacosSwitch extends RenderConstrainedBox {
   _RenderMacosSwitch({
     required bool value,
+    required ControlSize size,
     required MacosColor activeColor,
     required MacosColor trackColor,
     required MacosColor knobColor,
@@ -383,6 +437,7 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
     required TextDirection textDirection,
     required _MacosSwitchState state,
   })  : _value = value,
+        _size = size,
         _activeColor = activeColor,
         _trackColor = trackColor,
         _knobPainter = MacosSwitchKnobPainter(
@@ -394,9 +449,9 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
         _textDirection = textDirection,
         _state = state,
         super(
-          additionalConstraints: const BoxConstraints.tightFor(
-            width: _kSwitchWidth,
-            height: _kSwitchHeight,
+          additionalConstraints: BoxConstraints.tightFor(
+            width: size.trackSize.width,
+            height: size.trackSize.height,
           ),
         ) {
     state.position.addListener(markNeedsPaint);
@@ -413,6 +468,16 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
     }
     _value = newValue;
     markNeedsSemanticsUpdate();
+  }
+
+  ControlSize get controlSize => _size;
+  ControlSize _size;
+  set controlSize(ControlSize value) {
+    if (value == _size) {
+      return;
+    }
+    _size = value;
+    markNeedsPaint();
   }
 
   MacosColor get activeColor => _activeColor;
@@ -511,9 +576,10 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     final Canvas canvas = context.canvas;
-
     final double currentValue = _state.position.value;
-    final double currentReactionValue = _state._reaction.value;
+    final trackSize = controlSize.trackSize;
+    final innerStart = controlSize.trackInnerStart;
+    final innerEnd = controlSize.trackInnerEnd;
 
     final double visualPosition;
     switch (textDirection) {
@@ -529,14 +595,14 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
       ..color = MacosColor.lerp(trackColor, activeColor, currentValue);
 
     final Rect trackRect = Rect.fromLTWH(
-      offset.dx + (size.width - _kTrackWidth) / 2.0,
-      offset.dy + (size.height - _kTrackHeight) / 2.0,
-      _kTrackWidth,
-      _kTrackHeight,
+      offset.dx + (size.width - trackSize.width) / 2.0,
+      offset.dy + (size.height - trackSize.height) / 2.0,
+      trackSize.width,
+      trackSize.height,
     );
     final RRect trackRRect = RRect.fromRectAndRadius(
       trackRect,
-      const Radius.circular(_kTrackRadius),
+      Radius.circular(trackSize.height / 2.0),
     );
     canvas.drawRRect(trackRRect, paint);
     canvas.drawRRect(
@@ -546,30 +612,22 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
         ..style = PaintingStyle.stroke,
     );
 
-    final double currentKnobExtension =
-        MacosSwitchKnobPainter.extension * currentReactionValue;
     final double knobLeft = lerpDouble(
-      trackRect.left + _kTrackInnerStart - MacosSwitchKnobPainter.radius,
-      trackRect.left +
-          _kTrackInnerEnd -
-          MacosSwitchKnobPainter.radius -
-          currentKnobExtension,
+      trackRect.left + innerStart - controlSize.knobRadius,
+      trackRect.left + innerEnd - controlSize.knobRadius,
       visualPosition,
     )!;
     final double knobRight = lerpDouble(
-      trackRect.left +
-          _kTrackInnerStart +
-          MacosSwitchKnobPainter.radius +
-          currentKnobExtension,
-      trackRect.left + _kTrackInnerEnd + MacosSwitchKnobPainter.radius,
+      trackRect.left + innerStart + controlSize.knobRadius,
+      trackRect.left + innerEnd + controlSize.knobRadius,
       visualPosition,
     )!;
     final double knobCenterY = offset.dy + size.height / 2.0;
     final Rect knobBounds = Rect.fromLTRB(
       knobLeft,
-      knobCenterY - MacosSwitchKnobPainter.radius,
+      knobCenterY - controlSize.knobRadius,
       knobRight,
-      knobCenterY + MacosSwitchKnobPainter.radius,
+      knobCenterY + controlSize.knobRadius,
     );
 
     _clipRRectLayer.layer = context.pushClipRRect(
@@ -578,7 +636,11 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
       knobBounds,
       trackRRect,
       (PaintingContext innerContext, Offset offset) {
-        _knobPainter.paint(innerContext.canvas, knobBounds);
+        _knobPainter.paint(
+          innerContext.canvas,
+          knobBounds,
+          visualPosition == 1.0,
+        );
       },
       oldLayer: _clipRRectLayer.layer,
     );
@@ -614,15 +676,30 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
   }
 }
 
-const List<BoxShadow> _kSwitchBoxShadows = <BoxShadow>[
+const List<BoxShadow> _kSwitchOffBoxShadows = <BoxShadow>[
   BoxShadow(
     color: Color(0x26000000),
-    offset: Offset(0, 3),
+    offset: Offset(3, 1),
     blurRadius: 8.0,
   ),
   BoxShadow(
     color: Color(0x0F000000),
-    offset: Offset(0, 3),
+    offset: Offset(3, 1),
+    blurRadius: 1.0,
+  ),
+];
+
+const List<BoxShadow> _kSwitchOnBoxShadows = <BoxShadow>[
+  BoxShadow(
+    color: Color(0x26000000),
+    // color: MacosColors.appleRed,
+    offset: Offset(-3, 1),
+    blurRadius: 8.0,
+  ),
+  BoxShadow(
+    color: Color(0x0F000000),
+    // color: MacosColors.appleRed,
+    offset: Offset(-1, 1),
     blurRadius: 1.0,
   ),
 ];
@@ -632,45 +709,28 @@ const List<BoxShadow> _kSwitchBoxShadows = <BoxShadow>[
 /// Used by [MacosSwitch].
 class MacosSwitchKnobPainter {
   /// Creates an object that paints a macOS-style switch knob.
-  const MacosSwitchKnobPainter({
-    required this.color,
-    // required this.borderColor,
-    this.shadows = _kSwitchBoxShadows,
-  });
+  const MacosSwitchKnobPainter({required this.color});
 
   /// The color of the interior of the knob.
   final MacosColor color;
-  // final MacosColor borderColor;
-
-  /// The list of [BoxShadow] to paint below the knob.
-  ///
-  /// Must not be null.
-  final List<BoxShadow> shadows;
-
-  /// Half the default diameter of the knob.
-  static double radius = _kKnobSize.height / 2.0;
-
-  /// The default amount the knob should be extended horizontally when pressed.
-  static const double extension = 7.0;
 
   /// Paints the knob onto the given canvas in the given rectangle.
-  ///
-  /// Consider using [radius] and [extension] when deciding how large a
-  /// rectangle to use for the knob.
-  void paint(Canvas canvas, Rect rect) {
+  void paint(Canvas canvas, Rect rect, bool isOn) {
     final RRect rrect = RRect.fromRectAndRadius(
       rect,
       Radius.circular(rect.shortestSide / 2.0),
     );
 
-    for (final BoxShadow shadow in shadows) {
-      canvas.drawRRect(rrect.shift(shadow.offset), shadow.toPaint());
+    if (isOn) {
+      for (final BoxShadow shadow in _kSwitchOnBoxShadows) {
+        canvas.drawRRect(rrect.shift(shadow.offset), shadow.toPaint());
+      }
+    } else {
+      for (final BoxShadow shadow in _kSwitchOffBoxShadows) {
+        canvas.drawRRect(rrect.shift(shadow.offset), shadow.toPaint());
+      }
     }
 
-    /*canvas.drawRRect(
-      rrect.inflate(0.5),
-      Paint()..color = borderColor,
-    );*/
     canvas.drawRRect(rrect, Paint()..color = color);
   }
 }
