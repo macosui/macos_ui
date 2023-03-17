@@ -105,11 +105,11 @@ extension MacosDynamicColor on CupertinoDynamicColor {
         }
     }
 
-    Element? debugContext;
+    /*Element? debugContext;
     assert(() {
       debugContext = context as Element;
       return true;
-    }());
+    }());*/
 
     return CupertinoDynamicColor(
       color: resolved,
