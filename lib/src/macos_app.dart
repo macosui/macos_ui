@@ -353,8 +353,8 @@ class _MacosAppState extends State<MacosApp> {
       return c.CupertinoApp.router(
         key: GlobalObjectKey(this),
         routeInformationProvider: widget.routeInformationProvider,
-        routeInformationParser: widget.routeInformationParser!,
-        routerDelegate: widget.routerDelegate!,
+        routeInformationParser: widget.routeInformationParser,
+        routerDelegate: widget.routerDelegate,
         backButtonDispatcher: widget.backButtonDispatcher,
         routerConfig: widget.routerConfig,
         builder: _macosBuilder,
