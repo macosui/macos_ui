@@ -81,8 +81,8 @@ class MacosApp extends StatefulWidget {
   MacosApp.router({
     super.key,
     this.routeInformationProvider,
-    required this.routeInformationParser,
-    required this.routerDelegate,
+    this.routeInformationParser,
+    this.routerDelegate,
     this.backButtonDispatcher,
     this.routerConfig,
     this.builder,
