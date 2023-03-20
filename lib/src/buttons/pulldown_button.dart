@@ -808,7 +808,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
     const EdgeInsetsGeometry menuMargin =
-        EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
+        EdgeInsets.symmetric(horizontal: 4.0);
 
     final List<_MenuItem> menuItems = <_MenuItem>[
       for (int index = 0; index < widget.items!.length; index += 1)
@@ -913,7 +913,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
               color: buttonStyles.bgColor,
               borderRadius: borderRadius,
             ),
-      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 2.0),
       height: buttonHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

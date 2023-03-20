@@ -319,7 +319,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(2.0, 2.0, 0.0, 4.0),
+                padding:
+                    const EdgeInsets.only(left: 2.0, top: 2.0, bottom: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -410,7 +411,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(6.0, 0.0, 5.0, 0.0),
+                padding: const EdgeInsets.only(left: 6.0, right: 5.0),
                 child: Column(
                   children: [
                     GridView.custom(

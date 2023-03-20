@@ -77,7 +77,7 @@ class ToolBarIconButton extends ToolbarItem {
 
       if (showLabel) {
         iconButton = Padding(
-          padding: const EdgeInsets.fromLTRB(6.0, 6.0, 6.0, 0.0),
+          padding: const EdgeInsets.only(left: 6.0, top: 6.0, right: 6.0),
           child: Column(
             children: [
               iconButton,
