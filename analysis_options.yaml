@@ -28,6 +28,7 @@ dart_code_metrics:
     - avoid-global-state
     - always-remove-listener
     - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
     - member-ordering:
         alphabetize: false
         order:
