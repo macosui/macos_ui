@@ -31,6 +31,7 @@ dart_code_metrics:
     - avoid-wrapping-in-padding
     - prefer-const-border-radius
     - prefer-correct-edge-insets-constructor
+    - use-setstate-synchronously
     - member-ordering:
         alphabetize: false
         order:

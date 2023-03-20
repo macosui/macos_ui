@@ -463,13 +463,17 @@ class _MacosWindowState extends State<MacosWindow> {
             setState(() => _sidebarSlideDuration = 300);
             setState(() => _showSidebar = !_showSidebar);
             await Future.delayed(Duration(milliseconds: _sidebarSlideDuration));
-            setState(() => _sidebarSlideDuration = 0);
+            if (mounted) {
+              setState(() => _sidebarSlideDuration = 0);
+            }
           },
           endSidebarToggler: () async {
             setState(() => _sidebarSlideDuration = 300);
             setState(() => _showEndSidebar = !_showEndSidebar);
             await Future.delayed(Duration(milliseconds: _sidebarSlideDuration));
-            setState(() => _sidebarSlideDuration = 0);
+            if (mounted) {
+              setState(() => _sidebarSlideDuration = 0);
+            }
           },
           child: layout,
         );
