@@ -97,7 +97,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.12.2"
+    version: "1.12.3"
   matcher:
     dependency: transitive
     description:
