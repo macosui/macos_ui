@@ -1157,6 +1157,7 @@ class _MacosTextFieldState extends State<MacosTextField>
   void dispose() {
     _focusNode?.dispose();
     _controller?.dispose();
+    _effectiveFocusNode.dispose();
     super.dispose();
   }
 
