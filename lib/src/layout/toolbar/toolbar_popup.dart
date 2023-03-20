@@ -203,7 +203,7 @@ class _ToolbarPopupMenuState<T> extends State<_ToolbarPopupMenu<T>> {
     super.initState();
     _fadeOpacity = CurvedAnimation(
       parent: widget.route.animation!,
-      curve: const Interval(0.0, 0.50),
+      curve: const Interval(0.0, 0.5),
       reverseCurve: const Interval(0.75, 1.0),
     );
   }

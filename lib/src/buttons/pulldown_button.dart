@@ -904,7 +904,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
               boxShadow: [
                 BoxShadow(
                   color: buttonStyles.borderColor,
-                  offset: const Offset(0, .5),
+                  offset: const Offset(0, 0.5),
                   blurRadius: 0.2,
                   spreadRadius: 0,
                 ),

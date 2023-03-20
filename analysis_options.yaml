@@ -21,6 +21,7 @@ dart_code_metrics:
     - example/test/**
   rules:
     - prefer-trailing-comma
+    - double-literal-format
     - member-ordering:
         alphabetize: false
         order:
