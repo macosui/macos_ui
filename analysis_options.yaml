@@ -27,6 +27,7 @@ dart_code_metrics:
     - prefer-immediate-return
     - avoid-global-state
     - always-remove-listener
+    - avoid-unnecessary-setstate
     - member-ordering:
         alphabetize: false
         order:

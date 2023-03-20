@@ -85,30 +85,28 @@ class _MacosWindowState extends State<MacosWindow> {
   @override
   void didUpdateWidget(covariant MacosWindow old) {
     super.didUpdateWidget(old);
-    setState(() {
-      if (widget.sidebar == null) {
-        _sidebarWidth = 0.0;
-      } else if (widget.sidebar!.minWidth != old.sidebar!.minWidth ||
-          widget.sidebar!.maxWidth != old.sidebar!.maxWidth) {
-        if (widget.sidebar!.minWidth > _sidebarWidth) {
-          _sidebarWidth = widget.sidebar!.minWidth;
-        }
-        if (widget.sidebar!.maxWidth! < _sidebarWidth) {
-          _sidebarWidth = widget.sidebar!.maxWidth!;
-        }
+    if (widget.sidebar == null) {
+      _sidebarWidth = 0.0;
+    } else if (widget.sidebar!.minWidth != old.sidebar!.minWidth ||
+        widget.sidebar!.maxWidth != old.sidebar!.maxWidth) {
+      if (widget.sidebar!.minWidth > _sidebarWidth) {
+        _sidebarWidth = widget.sidebar!.minWidth;
       }
-      if (widget.endSidebar == null) {
-        _endSidebarWidth = 0.0;
-      } else if (widget.endSidebar!.minWidth != old.endSidebar!.minWidth ||
-          widget.endSidebar!.maxWidth != old.endSidebar!.maxWidth) {
-        if (widget.endSidebar!.minWidth > _endSidebarWidth) {
-          _endSidebarWidth = widget.endSidebar!.minWidth;
-        }
-        if (widget.endSidebar!.maxWidth! < _endSidebarWidth) {
-          _endSidebarWidth = widget.endSidebar!.maxWidth!;
-        }
+      if (widget.sidebar!.maxWidth! < _sidebarWidth) {
+        _sidebarWidth = widget.sidebar!.maxWidth!;
       }
-    });
+    }
+    if (widget.endSidebar == null) {
+      _endSidebarWidth = 0.0;
+    } else if (widget.endSidebar!.minWidth != old.endSidebar!.minWidth ||
+        widget.endSidebar!.maxWidth != old.endSidebar!.maxWidth) {
+      if (widget.endSidebar!.minWidth > _endSidebarWidth) {
+        _endSidebarWidth = widget.endSidebar!.minWidth;
+      }
+      if (widget.endSidebar!.maxWidth! < _endSidebarWidth) {
+        _endSidebarWidth = widget.endSidebar!.maxWidth!;
+      }
+    }
   }
 
   @override
