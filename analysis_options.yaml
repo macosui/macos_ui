@@ -29,6 +29,7 @@ dart_code_metrics:
     - always-remove-listener
     - avoid-unnecessary-setstate
     - avoid-wrapping-in-padding
+    - prefer-const-border-radius
     - member-ordering:
         alphabetize: false
         order:

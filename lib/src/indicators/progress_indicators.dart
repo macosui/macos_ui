@@ -240,7 +240,7 @@ class _DeterminateBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Draw the background line
     canvas.drawRRect(
-      BorderRadius.circular(100).toRRect(
+      const BorderRadius.all(Radius.circular(100)).toRRect(
         Offset.zero & size,
       ),
       Paint()

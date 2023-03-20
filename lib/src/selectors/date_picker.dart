@@ -496,7 +496,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewCurrentDateColor,
-            borderRadius: BorderRadius.circular(3.0),
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
           );
         } else if (isToday) {
           dayText = Text(
@@ -512,7 +512,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewSelectedDateColor,
-            borderRadius: BorderRadius.circular(3.0),
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
           );
         }
 
