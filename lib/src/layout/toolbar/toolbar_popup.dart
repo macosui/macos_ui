@@ -335,7 +335,7 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(context, animation, secondaryAnimation) {
     return LayoutBuilder(builder: (context, constraints) {
-      final page = _ToolbarPopupRoutePage<T>(
+      return _ToolbarPopupRoutePage<T>(
         target: target,
         placementOffset: placementOffset,
         placement: placement,
@@ -349,7 +349,6 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
         horizontalOffset: horizontalOffset,
         position: position,
       );
-      return page;
     });
   }
 

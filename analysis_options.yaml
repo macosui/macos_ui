@@ -22,6 +22,9 @@ dart_code_metrics:
   rules:
     - prefer-trailing-comma
     - double-literal-format
+    - prefer-first
+    - prefer-last
+    - prefer-immediate-return
     - member-ordering:
         alphabetize: false
         order:

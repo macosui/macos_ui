@@ -275,7 +275,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
           );
     }
 
-    final Widget toolBar = FlexibleSpaceBar.createSettings(
+    return FlexibleSpaceBar.createSettings(
       minExtent: minExtent,
       maxExtent: maxExtent,
       currentExtent: math.max(minExtent, maxExtent - shrinkOffset),
@@ -295,7 +295,6 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         height: height,
       ),
     );
-    return toolBar;
   }
 
   @override
