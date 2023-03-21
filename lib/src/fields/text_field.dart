@@ -358,7 +358,7 @@ class MacosTextField extends StatefulWidget {
     this.focusNode,
     this.decoration,
     this.focusedDecoration,
-    this.padding = const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 4.0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
     this.placeholder,
     this.placeholderStyle = _kDefaultPlaceholderStyle,
     this.prefix,
@@ -1157,6 +1157,7 @@ class _MacosTextFieldState extends State<MacosTextField>
   void dispose() {
     _focusNode?.dispose();
     _controller?.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
     super.dispose();
   }
 
