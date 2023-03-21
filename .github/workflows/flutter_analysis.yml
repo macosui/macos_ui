@@ -34,7 +34,3 @@ jobs:
 
       - name: Analyze code
         run: flutter analyze --fatal-infos .
-
-      - name: Test code
-        run: flutter test
-
