@@ -206,9 +206,7 @@ class _SidebarItem extends StatelessWidget {
   /// Typically a [Navigator] call
   final VoidCallback? onClick;
 
-  void _handleActionTap() async {
-    onClick?.call();
-  }
+  void _handleActionTap() => onClick?.call();
 
   Map<Type, Action<Intent>> get _actionMap => <Type, Action<Intent>>{
         ActivateIntent: CallbackAction<ActivateIntent>(
@@ -286,9 +284,8 @@ class _SidebarItem extends StatelessWidget {
                     padding: EdgeInsets.only(right: spacing),
                     child: MacosIconTheme.merge(
                       data: MacosIconThemeData(
-                        color: selected
-                            ? MacosColors.white
-                            : theme.primaryColor,
+                        color:
+                            selected ? MacosColors.white : theme.primaryColor,
                         size: itemSize.iconSize,
                       ),
                       child: item.leading!,

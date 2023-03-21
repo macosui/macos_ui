@@ -319,7 +319,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(2.0, 2.0, 0.0, 4.0),
+                padding:
+                    const EdgeInsets.only(left: 2.0, top: 2.0, bottom: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -410,7 +411,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(6.0, 0.0, 5.0, 0.0),
+                padding: const EdgeInsets.only(left: 6.0, right: 5.0),
                 child: Column(
                   children: [
                     GridView.custom(
@@ -496,7 +497,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewCurrentDateColor,
-            borderRadius: BorderRadius.circular(3.0),
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
           );
         } else if (isToday) {
           dayText = Text(
@@ -512,7 +513,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewSelectedDateColor,
-            borderRadius: BorderRadius.circular(3.0),
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
           );
         }
 
@@ -524,20 +525,18 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             });
             widget.onDateChanged.call(_formatAsDateTime());
           },
-          child: Padding(
+          child: Container(
+            decoration: decoration,
             padding: const EdgeInsets.symmetric(vertical: 2.0),
-            child: Container(
-              decoration: decoration,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 2.0),
-                  child: dayText ??
-                      Text(
-                        localizations.formatDecimal(day),
-                        style: dayStyle,
-                      ),
-                ),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 2.0),
+                child: dayText ??
+                    Text(
+                      localizations.formatDecimal(day),
+                      style: dayStyle,
+                    ),
               ),
             ),
           ),

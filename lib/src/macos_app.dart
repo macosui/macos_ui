@@ -409,8 +409,7 @@ class _MacosAppState extends State<MacosApp> {
   @override
   Widget build(BuildContext context) {
     // leaves room for assertions, etc
-    Widget result = _buildMacosApp(context);
-    return result;
+    return _buildMacosApp(context);
   }
 
   Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
