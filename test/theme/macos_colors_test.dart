@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-ValueVariant<ThemeMode> modes = ValueVariant<ThemeMode>({
+final ValueVariant<ThemeMode> modes = ValueVariant<ThemeMode>({
   ThemeMode.light,
   ThemeMode.dark,
 });
