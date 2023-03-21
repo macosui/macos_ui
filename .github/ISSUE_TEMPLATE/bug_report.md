@@ -10,6 +10,9 @@ assignees: ''
 
 <!-- Write a clear and concise description of what the bug is. -->
 
+**Version of `macos_ui`**
+<!-- Let us know which version of macos_ui you are using. This will help us reproduce your issue. -->
+
 **Steps To Reproduce**
 
 <!-- Document the exact steps to reproduce the behavior in a numbered list, like so:
