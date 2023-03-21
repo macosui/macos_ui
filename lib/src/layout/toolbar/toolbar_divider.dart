@@ -23,15 +23,9 @@ class ToolBarDivider extends ToolbarItem {
       const Color.fromRGBO(255, 255, 255, 0.25),
     );
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      return Padding(
-        padding: padding!,
-        child: Container(color: color, width: 1, height: 28),
-      );
+      return Container(color: color, width: 1, height: 28, padding: padding!);
     } else {
-      return Padding(
-        padding: padding!,
-        child: Container(color: color, height: 1),
-      );
+      return Container(color: color, height: 1, padding: padding!);
     }
   }
 }

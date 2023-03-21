@@ -89,7 +89,7 @@ class MacosTooltipThemeData with Diagnosticable {
             brightness.isDark ? CupertinoColors.white : CupertinoColors.black,
       ),
       decoration: () {
-        final radius = BorderRadius.circular(2.0);
+        const radius = BorderRadius.all(Radius.circular(2.0));
         final shadow = [
           BoxShadow(
             color: brightness.isDark

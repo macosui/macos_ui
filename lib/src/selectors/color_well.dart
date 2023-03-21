@@ -106,7 +106,7 @@ class _MacosColorWellState extends State<MacosColorWell> {
   Widget build(BuildContext context) {
     final theme = MacosTheme.of(context);
     final outerColor = theme.brightness.isDark
-        ? MacosColors.systemGrayColor.withOpacity(0.50)
+        ? MacosColors.systemGrayColor.withOpacity(0.5)
         : MacosColors.white;
     return GestureDetector(
       onTap: () async {

@@ -75,7 +75,7 @@ void main() {
                             MacosPulldownMenuItem(
                               title: const Text('one'),
                               onTap: () {
-                                menuItemTapCounters[0] += 1;
+                                menuItemTapCounters.first += 1;
                               },
                             ),
                             MacosPulldownMenuItem(

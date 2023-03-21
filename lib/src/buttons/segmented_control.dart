@@ -54,8 +54,8 @@ class _MacosSegmentedControlState extends State<MacosSegmentedControl> {
               const Color(0xFFDBDCDE),
               const Color(0xFF4F5155),
             ),
-            offset: const Offset(0, .5),
-            spreadRadius: .5,
+            offset: const Offset(0, 0.5),
+            spreadRadius: 0.5,
           ),
         ],
         borderRadius: const BorderRadius.all(

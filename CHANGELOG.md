@@ -1,3 +1,12 @@
+## [1.12.3]
+* Added support for `routerConfig` to `MacosApp.router`. ([#388](https://github.com/macosui/macos_ui/issues/388))
+
+## [1.12.2]
+* Fixed a bug where clicking on a overflowed toolbar item with a navigation callback wouldn't work ([#346](https://github.com/GroovinChip/macos_ui/issues/346)).
+
+## [1.12.1+1]
+* Fixed a typo in the December abbreviation displayed in the `MacosDatePicker`.
+
 ## [1.12.1]
 * Fix SidebarItem's leading icons not respecting the theme's primary color
 
