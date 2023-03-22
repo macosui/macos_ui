@@ -226,57 +226,7 @@ See the documentation for customizations and `ToolBar` examples.
 ## Modern window look
 
 A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look 
-in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which needs to be set up as follows:
-
-Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
-
-Insert `import macos_window_utils` at the top of the file.
-Then, replace the code above the `super.awakeFromNib()`-line with the following code:
-
-```swift
-let windowFrame = self.frame
-let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
-self.contentViewController = macOSWindowUtilsViewController
-self.setFrame(windowFrame, display: true)
-
-/* Initialize the macos_window_utils plugin */
-MainFlutterWindowManipulator.start(mainFlutterWindow: self)
-
-RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
-```
-
-Assuming you're starting with the default configuration, the finished code should look something like this:
-
-```diff
-import Cocoa
-import FlutterMacOS
-+import macos_window_utils
-
-class MainFlutterWindow: NSWindow {
-  override func awakeFromNib() {
--   let flutterViewController = FlutterViewController.init()
--   let windowFrame = self.frame
--   self.contentViewController = flutterViewController
--   self.setFrame(windowFrame, display: true)
-
--   RegisterGeneratedPlugins(registry: flutterViewController)
-    
-+   let windowFrame = self.frame
-+   let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
-+   self.contentViewController = macOSWindowUtilsViewController
-+   self.setFrame(windowFrame, display: true)
-
-+   /* Initialize the macos_window_utils plugin */
-+   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
-
-+   RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
-
-    super.awakeFromNib()
-  }
-}
-```
-
-Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
+in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
 
 ```podspec
 platform :osx, '10.14.6'
