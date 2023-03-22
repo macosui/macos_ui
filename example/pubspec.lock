@@ -102,10 +102,10 @@ packages:
     dependency: transitive
     description:
       name: macos_window_utils
-      sha256: d3cffe473b41163d67cdf598fafb6293967d2ca2509341c577644e5082e3aac1
+      sha256: "510de576b5432dd9ef9e4c258abcc021c6dfbb17a78a344688848a6784b352b8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   matcher:
     dependency: transitive
     description:
