@@ -196,7 +196,7 @@ class MacosBackButtonState extends State<MacosBackButton>
                           : _isHovered
                               ? hoverColor
                               : fillColor,
-                      borderRadius: BorderRadius.circular(7),
+                      borderRadius: const BorderRadius.all(Radius.circular(7)),
                     ),
                     child: Icon(
                       CupertinoIcons.back,

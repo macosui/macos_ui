@@ -203,7 +203,7 @@ class _ToolbarPopupMenuState<T> extends State<_ToolbarPopupMenu<T>> {
     super.initState();
     _fadeOpacity = CurvedAnimation(
       parent: widget.route.animation!,
-      curve: const Interval(0.0, 0.50),
+      curve: const Interval(0.0, 0.5),
       reverseCurve: const Interval(0.75, 1.0),
     );
   }
@@ -335,7 +335,7 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(context, animation, secondaryAnimation) {
     return LayoutBuilder(builder: (context, constraints) {
-      final page = _ToolbarPopupRoutePage<T>(
+      return _ToolbarPopupRoutePage<T>(
         target: target,
         placementOffset: placementOffset,
         placement: placement,
@@ -349,7 +349,6 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
         horizontalOffset: horizontalOffset,
         position: position,
       );
-      return page;
     });
   }
 
