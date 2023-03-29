@@ -1,3 +1,6 @@
+## [1.11.2]
+* Default the `_selectedDay` state variable to be 1 when selecting the previous/next month from widget to ensure new date is valid for `_formatAsDateTime()` method
+
 ## [1.11.1]
 * Fixed an issue where the `MacosSearchField` would not perform an action when an item was selected.
 
