@@ -1,3 +1,6 @@
+## [1.12.4]
+* Fixed a bug where the `Sidebar.key` parameter wasn't used so it was impossible to properly implement a tab bar in the sidebar
+
 ## [1.12.3]
 * Added support for `routerConfig` to `MacosApp.router`. ([#388](https://github.com/macosui/macos_ui/issues/388))
 
