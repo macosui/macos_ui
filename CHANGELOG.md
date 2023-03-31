@@ -1,3 +1,6 @@
+## [1.12.4]
+* Default the `_selectedDay` state variable to be 1 when selecting the previous/next month from widget to ensure new date is valid for `_formatAsDateTime()` method (https://github.com/flutter/flutter/issues/123669 & https://github.com/macosui/macos_ui/pull/402)
+
 ## [1.12.3]
 * Added support for `routerConfig` to `MacosApp.router`. ([#388](https://github.com/macosui/macos_ui/issues/388))
 
