@@ -354,9 +354,13 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                               setState(() {
                                 _selectedYear--;
                                 _selectedMonth = 12;
+                                _selectedDay = 1;
                               });
                             } else {
-                              setState(() => _selectedMonth--);
+                              setState(() {
+                                _selectedMonth--;
+                                _selectedDay = 1;
+                              });
                             }
                             widget.onDateChanged.call(_formatAsDateTime());
                           },
@@ -397,9 +401,13 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                               setState(() {
                                 _selectedYear++;
                                 _selectedMonth = 1;
+                                _selectedDay = 1;
                               });
                             } else {
-                              setState(() => _selectedMonth++);
+                              setState(() {
+                                _selectedMonth++;
+                                _selectedDay = 1;
+                              });
                             }
 
                             widget.onDateChanged.call(_formatAsDateTime());
