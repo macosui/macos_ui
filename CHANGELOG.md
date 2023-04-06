@@ -1,4 +1,4 @@
-## [2.0.0]
+## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
 * Migrate macos_ui to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
   * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
