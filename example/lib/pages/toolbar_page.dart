@@ -162,7 +162,7 @@ class _ToolbarPageState extends State<ToolbarPage> {
               padding: const EdgeInsets.all(30),
               child: Center(
                 child: Column(
-                  children: [
+                  children: const [
                     Text(
                       'A toolbar provides convenient access to frequently used commands and controls that perform actions relevant to the current view.',
                       textAlign: TextAlign.center,
