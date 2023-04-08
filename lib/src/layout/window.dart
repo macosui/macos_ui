@@ -63,7 +63,7 @@ class MacosWindow extends StatefulWidget {
   /// [#16296](https://github.com/flutter/flutter/issues/16296) is resolved in
   /// the Flutter project.
   ///
-  /// Since the disabling of wallpaper tinting may be found to be too noticeable, 
+  /// Since the disabling of wallpaper tinting may be found to be too noticeable,
   /// this property may be used to disable wallpaper tinting outright.
   final bool disableWallpaperTinting;
 
