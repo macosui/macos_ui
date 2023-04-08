@@ -170,7 +170,7 @@ class _MacosWindowState extends State<MacosWindow> {
     if (widget.sidebar?.decoration?.color != null) {
       sidebarBackgroundColor = widget.sidebar!.decoration!.color!;
     } else {
-      sidebarBackgroundColor = Colors.transparent;
+      sidebarBackgroundColor = MacosColors.transparent;
     }
 
     // Set the application window's brightness on macOS
