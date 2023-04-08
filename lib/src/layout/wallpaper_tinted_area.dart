@@ -4,6 +4,24 @@ import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting
 import 'package:macos_window_utils/macos/ns_visual_effect_view_material.dart';
 import 'package:macos_window_utils/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
 
+/// A widget that applies a wallpaper tint to its child widget.
+///
+/// This widget only works on macOS.
+///
+/// The [backgroundColor] is the color to apply to the background when wallpaper
+/// tinting is disabled. If [insertRepaintBoundary] is true, a [RepaintBoundary]
+/// is inserted above this widget in the widget tree. In some instances, it may
+/// be necessary to insert a [RepaintBoundary] to ensure proper rendering.
+/// The [child] is the widget below this widget in the tree.
+///
+/// Example:
+///
+/// ```dart
+/// WallpaperTintedArea(
+///   backgroundColor: MacosColors.white,
+///   child: Text('Hello World'),
+/// )
+/// ```
 class WallpaperTintedArea extends StatelessWidget {
   /// Creates a [WallpaperTintedArea].
   ///
