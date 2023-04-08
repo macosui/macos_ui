@@ -3,6 +3,24 @@ import 'package:macos_ui/src/layout/wallpaper_tinting_settings/global_wallpaper_
 
 import 'wallpaper_tinting_settings_data.dart';
 
+/// A widget that listens for changes to [WallpaperTintingSettingsData] and
+/// rebuilds with the latest data when a change is detected.
+///
+/// The [builder] callback is called whenever [WallpaperTintingSettingsData]
+/// changes. It should build a widget using the latest
+/// [WallpaperTintingSettingsData].
+///
+/// Example:
+///
+/// ```dart
+/// WallpaperTintingSettingsBuilder(
+///   builder: (context, data) {
+///     return Text(
+///       'isWallpaperTintingEnabled: ${data.isWallpaperTintingEnabled}',
+///     );
+///   },
+/// )
+/// ```
 class WallpaperTintingSettingsBuilder extends StatelessWidget {
   /// Creates a [WallpaperTintingSettingsBuilder].
   ///
