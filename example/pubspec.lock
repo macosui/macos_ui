@@ -97,7 +97,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "2.0.0-beta.1"
   macos_window_utils:
     dependency: transitive
     description:
