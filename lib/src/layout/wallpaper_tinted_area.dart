@@ -148,10 +148,7 @@ class _WallpaperTintedAreaTweenAnimationBuilder extends StatelessWidget {
           child: child,
         );
       },
-      child: Opacity(
-        // For some reason, omitting this Opacity widget causes
-        // a dark background to appear.
-        opacity: 1.0,
+      child: RepaintBoundary(
         child: child,
       ),
     );
