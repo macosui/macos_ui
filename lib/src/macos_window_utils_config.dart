@@ -22,6 +22,10 @@ import 'package:macos_ui/macos_ui.dart';
 /// await config.apply();
 /// ```
 class MacosWindowUtilsConfig {
+  /// Creates a [MacosWindowUtilsConfig].
+  ///
+  /// The [toolbarStyle] is [NSWindowToolbarStyle.unified] by default. If the
+  /// app will have a title bar, use [NSWindowToolbarStyle.expanded] instead.
   const MacosWindowUtilsConfig({
     this.toolbarStyle = NSWindowToolbarStyle.unified,
     this.doEnableFullSizeContentView = true,
