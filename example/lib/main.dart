@@ -14,13 +14,13 @@ import 'package:provider/provider.dart';
 import 'theme.dart';
 
 /// This method initializes macos_window_utils and styles the window.
-Future<void> _initMacosWindowUtils() async {
+Future<void> _configureMacosWindowUtils() async {
   const config = MacosWindowUtilsConfig();
   await config.apply();
 }
 
 void main() async {
-  await _initMacosWindowUtils();
+  await _configureMacosWindowUtils();
 
   runApp(const MacosUIGalleryApp());
 }
