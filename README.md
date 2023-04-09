@@ -235,59 +235,33 @@ platform :osx, '10.14.6'
 Now, configure your window inside your `main()` as follows:
 
 ```dart
-/// This delegate removes the toolbar in full-screen mode.
-class _FlutterWindowDelegate extends NSWindowDelegate {
-  @override
-  void windowWillEnterFullScreen() {
-    WindowManipulator.removeToolbar();
-    super.windowWillEnterFullScreen();
-  }
-
-  @override
-  void windowDidExitFullScreen() {
-    WindowManipulator.addToolbar();
-    super.windowDidExitFullScreen();
-  }
-}
-
 /// This method initializes macos_window_utils and styles the window.
-Future<void> _initMacosWindowUtils() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await WindowManipulator.initialize(enableWindowDelegate: true);
-  await WindowManipulator.setMaterial(
-      NSVisualEffectViewMaterial.windowBackground);
-  await WindowManipulator.enableFullSizeContentView();
-  await WindowManipulator.makeTitlebarTransparent();
-  await WindowManipulator.hideTitle();
-  await WindowManipulator.addToolbar();
-
-  // Use NSWindowToolbarStyle.expanded if the app will have a title bar,
-  // otherwise use NSWindowToolbarStyle.unified.
-  await WindowManipulator.setToolbarStyle(
-      toolbarStyle: NSWindowToolbarStyle.unified);
-
-  // Create a delegate that removes the toolbar in full-screen mode.
-  final delegate = _FlutterWindowDelegate();
-  WindowManipulator.addNSWindowDelegate(delegate);
-
-  // Auto-hide toolbar and menubar in full-screen mode.
-  final options = NSAppPresentationOptions.from({
-    NSAppPresentationOption.fullScreen,
-    NSAppPresentationOption.autoHideToolbar,
-    NSAppPresentationOption.autoHideMenuBar,
-    NSAppPresentationOption.autoHideDock,
-  });
-  options.applyAsFullScreenPresentationOptions();
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.unified,
+  );
+  await config.apply();
 }
 
 void main() async {
-  await _initMacosWindowUtils();
+  await _configureMacosWindowUtils();
 
   runApp(const MacosUIGalleryApp());
 }
 ```
 
-Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `NSWindowToolbarStyle.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `NSWindowToolbarStyle.unified`.
+Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of your window to `NSWindowToolbarStyle.expanded`, in order to properly align the close, minimize, zoom window buttons:
+
+```dart
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.expanded,
+  );
+  await config.apply();
+}
+```
+
+In any other case, you should keep it as `NSWindowToolbarStyle.unified`.
 
 ## ToolBar
 
