@@ -67,7 +67,14 @@ class MacosWindow extends StatefulWidget {
   /// this property may be used to disable wallpaper tinting outright.
   final bool disableWallpaperTinting;
 
-  /// The [NSVisualEffectViewState] of the sidebar.
+  /// The state of the sidebar's [NSVisualEffectView].
+  ///
+  /// Possible values are:
+  ///
+  /// - [NSVisualEffectViewState.active]: The sidebar is always active.
+  /// - [NSVisualEffectViewState.inactive]: The sidebar is always inactive.
+  /// - [NSVisualEffectViewState.followsWindowActiveState]: The sidebar's state
+  /// follows the window's active state.
   ///
   /// Defaults to [NSVisualEffectViewState.followsWindowActiveState].
   final NSVisualEffectViewState sidebarState;
