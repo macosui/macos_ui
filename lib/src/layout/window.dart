@@ -198,7 +198,7 @@ class _MacosWindowState extends State<MacosWindow> {
 
     // Respect the sidebar color override from parent if one is given
     if (sidebar?.decoration?.color != null) {
-      sidebarBackgroundColor = widget.sidebar!.decoration!.color!;
+      sidebarBackgroundColor = sidebar!.decoration!.color!;
     } else {
       sidebarBackgroundColor = MacosColors.transparent;
     }
@@ -208,7 +208,7 @@ class _MacosWindowState extends State<MacosWindow> {
 
     // Respect the end sidebar color override from parent if one is given
     if (endSidebar?.decoration?.color != null) {
-      endSidebarBackgroundColor = widget.endSidebar!.decoration!.color!;
+      endSidebarBackgroundColor = endSidebar!.decoration!.color!;
     } else if (isMac) {
       endSidebarBackgroundColor = theme.canvasColor;
     } else {
@@ -231,6 +231,7 @@ class _MacosWindowState extends State<MacosWindow> {
         final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
         final visibleEndSidebarWidth =
             canShowEndSidebar ? _endSidebarWidth : 0.0;
+        final sidebarState = widget.sidebarState;
 
         final layout = Stack(
           children: [
@@ -263,7 +264,7 @@ class _MacosWindowState extends State<MacosWindow> {
                     maxHeight: height,
                   ).normalize(),
                   child: TransparentMacOSSidebar(
-                    state: widget.sidebarState,
+                    state: sidebarState,
                     child: Column(
                       children: [
                         if ((sidebar.topOffset) > 0)
@@ -283,7 +284,9 @@ class _MacosWindowState extends State<MacosWindow> {
                             child: Padding(
                               padding: sidebar.padding,
                               child: sidebar.builder(
-                                  context, _sidebarScrollController),
+                                context,
+                                _sidebarScrollController,
+                              ),
                             ),
                           ),
                         ),
