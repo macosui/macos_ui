@@ -3,16 +3,9 @@ import 'package:macos_ui/macos_ui.dart';
 
 /// A class for configuring macOS window properties.
 ///
-/// Parameters:
-/// - [toolbarStyle]: The style of the window toolbar.
-/// - [doEnableFullSizeContentView]: Whether to enable the full-size content
-///   view.
-/// - [doMakeTitlebarTransparent]: Whether to make the title bar transparent.
-/// - [doHideTitle]: Whether to hide the window title.
-/// - [doRemoveMenubarInFullScreenMode]: Whether to remove the menubar in
-/// full-screen mode.
-/// - [doAutoHideToolbarAndMenuBarInFullScreenMode]: Whether to auto-hide the
-/// toolbar and menubar in full-screen mode.
+/// [toolbarStyle] is the style of the window toolbar. It should be
+/// [NSWindowToolbarStyle.expanded] if the app will have a title bar and
+/// [NSWindowToolbarStyle.unified] otherwise.
 ///
 /// Example:
 /// ```dart
