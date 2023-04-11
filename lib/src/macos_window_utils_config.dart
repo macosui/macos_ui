@@ -21,11 +21,11 @@ class MacosWindowUtilsConfig {
   /// app will have a title bar, use [NSWindowToolbarStyle.expanded] instead.
   const MacosWindowUtilsConfig({
     this.toolbarStyle = NSWindowToolbarStyle.unified,
-    this.doEnableFullSizeContentView = true,
-    this.doMakeTitlebarTransparent = true,
-    this.doHideTitle = true,
-    this.doRemoveMenubarInFullScreenMode = true,
-    this.doAutoHideToolbarAndMenuBarInFullScreenMode = true,
+    this.enableFullSizeContentView = true,
+    this.makeTitlebarTransparent = true,
+    this.hideTitle = true,
+    this.removeMenubarInFullScreenMode = true,
+    this.autoHideToolbarAndMenuBarInFullScreenMode = true,
   });
 
   /// The style of the window toolbar.
@@ -35,19 +35,19 @@ class MacosWindowUtilsConfig {
   final NSWindowToolbarStyle toolbarStyle;
 
   /// Whether to enable the full-size content view.
-  final bool doEnableFullSizeContentView;
+  final bool enableFullSizeContentView;
 
   /// Whether to make the title bar transparent.
-  final bool doMakeTitlebarTransparent;
+  final bool makeTitlebarTransparent;
 
   /// Whether to hide the title.
-  final bool doHideTitle;
+  final bool hideTitle;
 
   /// Whether to remove the menubar in full-screen mode.
-  final bool doRemoveMenubarInFullScreenMode;
+  final bool removeMenubarInFullScreenMode;
 
   /// Whether to automatically hide the toolbar and menubar in full-screen mode.
-  final bool doAutoHideToolbarAndMenuBarInFullScreenMode;
+  final bool autoHideToolbarAndMenuBarInFullScreenMode;
 
   /// Applies the configuration to the macOS window.
   ///
@@ -56,29 +56,29 @@ class MacosWindowUtilsConfig {
   /// - Initializes Flutter bindings
   /// - Sets the window material to
   ///   [NSVisualEffectViewMaterial.windowBackground]
-  /// - Enables the full size content view if [doEnableFullSizeContentView] is
+  /// - Enables the full size content view if [enableFullSizeContentView] is
   /// `true`
-  /// - Makes the title bar transparent if [doMakeTitlebarTransparent] is `true`
-  /// - Hides the title if [doHideTitle] is `true`
+  /// - Makes the title bar transparent if [makeTitlebarTransparent] is `true`
+  /// - Hides the title if [hideTitle] is `true`
   /// - Adds a toolbar
   /// - Sets the toolbar style to [toolbarStyle]
   /// - Removes the menubar in full-screen mode if
-  /// [doRemoveMenubarInFullScreenMode] is `true`
+  /// [removeMenubarInFullScreenMode] is `true`
   /// - Auto-hides the toolbar and menubar in full-screen mode if
-  /// [doAutoHideToolbarAndMenuBarInFullScreenMode] is `true`
+  /// [autoHideToolbarAndMenuBarInFullScreenMode] is `true`
   Future<void> apply() async {
     WidgetsFlutterBinding.ensureInitialized();
     await WindowManipulator.initialize(enableWindowDelegate: true);
     await WindowManipulator.setMaterial(
       NSVisualEffectViewMaterial.windowBackground,
     );
-    if (doEnableFullSizeContentView) {
+    if (enableFullSizeContentView) {
       await WindowManipulator.enableFullSizeContentView();
     }
-    if (doMakeTitlebarTransparent) {
+    if (makeTitlebarTransparent) {
       await WindowManipulator.makeTitlebarTransparent();
     }
-    if (doHideTitle) {
+    if (hideTitle) {
       await WindowManipulator.hideTitle();
     }
     await WindowManipulator.addToolbar();
@@ -87,12 +87,12 @@ class MacosWindowUtilsConfig {
       toolbarStyle: toolbarStyle,
     );
 
-    if (doRemoveMenubarInFullScreenMode) {
+    if (removeMenubarInFullScreenMode) {
       final delegate = _FlutterWindowDelegate();
       WindowManipulator.addNSWindowDelegate(delegate);
     }
 
-    if (doAutoHideToolbarAndMenuBarInFullScreenMode) {
+    if (autoHideToolbarAndMenuBarInFullScreenMode) {
       final options = NSAppPresentationOptions.from({
         NSAppPresentationOption.fullScreen,
         NSAppPresentationOption.autoHideToolbar,
