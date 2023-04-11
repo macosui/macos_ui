@@ -3,6 +3,9 @@
 * `MacosSwitch` has been completely rewritten and now matches the native macOS switch in appearance and behavior.
 * A `ControlSize` enum has been introduced, which will allow widgets to more closely match their native counterparts.
 
+🔄 Updated 🔄
+* Some previously missing elements of the `MacosColor` class have been added.
+
 ## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
 * Migrate `macos_ui` to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
