@@ -26,6 +26,10 @@ const _kDefaultKnobColor = CupertinoDynamicColor.withBrightness(
 ///
 /// A switch shows that it's on when the [activeColor] is visible and off when
 /// the [trackColor] is visible.
+///
+/// Additional Reference:
+/// * [Toggles (Human Interface Guidelines)](https://developer.apple.com/design/human-interface-guidelines/components/selection-and-input/toggles)
+/// * [Toggles (Apple Developer)](https://developer.apple.com/documentation/swiftui/toggle)
 /// {@endtemplate}
 class MacosSwitch extends StatefulWidget {
   /// {@macro macosSwitch}
@@ -46,6 +50,11 @@ class MacosSwitch extends StatefulWidget {
   /// Must not be null.
   final bool value;
 
+  /// The size of the switch, which is [ControlSize.regular] by default.
+  ///
+  /// Allowable sizes are [ControlSize.mini], [ControlSize.small], and
+  /// [ControlSize.regular]. If [ControlSize.large] is used, the switch will
+  /// size itself as a [ControlSize.regular] switch.
   final ControlSize size;
 
   /// Called when the user toggles with switch on or off.
@@ -368,20 +377,6 @@ class _MacosSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       ..textDirection = textDirection;
   }
 }
-
-// Track sizes:
-// * mini: 26w x 15h
-// * small: 32w x 18h
-// * regular & large: 38w x 22h
-//
-// Knob sizes:
-// * mini: 12w x 11h
-// * small: 15w x 14h
-// * regular & large: 19w x 18h
-//
-// Math:
-// * trackWidth = width - 2
-// * trackHeight = height - 2
 
 const Size _kMiniTrackSize = Size(26.0, 15.0);
 const Size _kSmallTrackSize = Size(32.0, 18.0);
