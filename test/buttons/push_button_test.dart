@@ -55,6 +55,7 @@ void main() {
             pushButtonTheme: darkPushButtonThemeData,
           ),
           home: MacosWindow(
+            disableWallpaperTinting: true,
             child: MacosScaffold(
               children: [
                 ContentArea(

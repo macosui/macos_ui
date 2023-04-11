@@ -1,3 +1,13 @@
+## [2.0.0-beta.1]
+🚨 Breaking Changes 🚨
+* Migrate macos_ui to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
+  * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
+  * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
+  * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
+  * Wallpaper tinting is now supported.
+
+To migrate an existing application, please refer to the “Modern window look” section in the README.
+
 ## [1.12.5]
 * Fixed a bug where the `Sidebar.key` parameter wasn't used, which caused certain layouts to be unachievable.
 

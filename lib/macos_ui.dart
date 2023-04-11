@@ -82,3 +82,8 @@ export 'src/theme/search_field_theme.dart';
 export 'src/theme/time_picker_theme.dart';
 export 'src/theme/tooltip_theme.dart';
 export 'src/theme/typography.dart';
+export 'src/layout/wallpaper_tinted_area.dart';
+export 'src/macos_window_utils_config.dart';
+
+export 'package:macos_window_utils/macos_window_utils.dart';
+export 'package:macos_window_utils/macos/ns_window_delegate.dart';

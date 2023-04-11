@@ -226,96 +226,42 @@ See the documentation for customizations and `ToolBar` examples.
 ## Modern window look
 
 A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look 
-in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` 
-file should look like this:
+in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
 
-```swift
-import Cocoa
-import FlutterMacOS
-
-class BlurryContainerViewController: NSViewController {
-  let flutterViewController = FlutterViewController()
-
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError()
-  }
-
-  override func loadView() {
-    let blurView = NSVisualEffectView()
-    blurView.autoresizingMask = [.width, .height]
-    blurView.blendingMode = .behindWindow
-    blurView.state = .active
-    if #available(macOS 10.14, *) {
-        blurView.material = .sidebar
-    }
-    self.view = blurView
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.addChild(flutterViewController)
-
-    flutterViewController.view.frame = self.view.bounds
-    flutterViewController.backgroundColor = .clear // **Required post-Flutter 3.7.0**
-    flutterViewController.view.autoresizingMask = [.width, .height]
-    self.view.addSubview(flutterViewController.view)
-  }
-}
-
-class MainFlutterWindow: NSWindow, NSWindowDelegate {
-  override func awakeFromNib() {
-    delegate = self
-    let blurryContainerViewController = BlurryContainerViewController()
-    let windowFrame = self.frame
-    self.contentViewController = blurryContainerViewController
-    self.setFrame(windowFrame, display: true)
-
-    if #available(macOS 10.13, *) {
-      let customToolbar = NSToolbar()
-      customToolbar.showsBaselineSeparator = false
-      self.toolbar = customToolbar
-    }
-    self.titleVisibility = .hidden
-    self.titlebarAppearsTransparent = true
-    if #available(macOS 11.0, *) {
-      // Use .expanded if the app will have a title bar, else use .unified
-      self.toolbarStyle = .unified
-    }
-
-    self.isMovableByWindowBackground = true
-    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
-
-    self.isOpaque = false
-    self.backgroundColor = .clear
-
-    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
-
-    super.awakeFromNib()
-  }
-
-  func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-    return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
-  }
-
-  func windowWillEnterFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = false
-  }
-  
-  func windowDidExitFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = true
-  }
-}
-
+```podspec
+platform :osx, '10.14.6'
 ```
 
-See [this issue comment](https://github.com/flutter/flutter/issues/59969#issuecomment-916682559) for more details on the new look and explanations for how it works.
+Now, configure your window inside your `main()` as follows:
 
-Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `.unified`. This must be set beforehand, i.e. it cannot be switched in runtime.
+```dart
+/// This method initializes macos_window_utils and styles the window.
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.unified,
+  );
+  await config.apply();
+}
+
+void main() async {
+  await _configureMacosWindowUtils();
+
+  runApp(const MacosUIGalleryApp());
+}
+```
+
+Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of your window to `NSWindowToolbarStyle.expanded`, in order to properly align the close, minimize, zoom window buttons:
+
+```dart
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.expanded,
+  );
+  await config.apply();
+}
+```
+
+In any other case, you should keep it as `NSWindowToolbarStyle.unified`.
 
 ## ToolBar
 

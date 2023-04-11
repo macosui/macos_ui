@@ -213,9 +213,10 @@ class MacosThemeData with Diagnosticable {
     final Brightness _brightness = brightness ?? Brightness.light;
     final bool isDark = _brightness == Brightness.dark;
     primaryColor ??= MacosColors.controlAccentColor;
+
     canvasColor ??= isDark
-        ? CupertinoColors.systemBackground.darkElevatedColor
-        : CupertinoColors.systemBackground;
+        ? const Color.fromRGBO(40, 40, 40, 1.0)
+        : const Color.fromRGBO(246, 246, 246, 1.0);
     typography ??= MacosTypography(
       color: _brightness == Brightness.light
           ? CupertinoColors.black
