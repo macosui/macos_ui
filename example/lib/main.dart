@@ -19,7 +19,7 @@ Future<void> _configureMacosWindowUtils() async {
   await config.apply();
 }
 
-void main() async {
+Future<void> main() async {
   await _configureMacosWindowUtils();
 
   runApp(const MacosUIGalleryApp());
