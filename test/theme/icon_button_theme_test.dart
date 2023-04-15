@@ -63,10 +63,11 @@ void main() {
     await tester.pumpWidget(
       MacosApp(
         home: MacosWindow(
+          disableWallpaperTinting: true,
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context, _) {
                   capturedContext = context;
                   return MacosIconButton(
                     icon: const Icon(CupertinoIcons.add),

@@ -6,7 +6,8 @@ export 'package:flutter/cupertino.dart'
         createCupertinoColorProperty,
         cupertinoTextSelectionControls,
         DefaultCupertinoLocalizations,
-        cupertinoDesktopTextSelectionControls;
+        cupertinoDesktopTextSelectionControls,
+        CupertinoAdaptiveTextSelectionToolbar;
 export 'package:flutter/material.dart'
     show
         Brightness,
@@ -26,7 +27,9 @@ export 'package:flutter/material.dart'
         kElevationToShadow,
         DateUtils,
         TimeOfDay,
-        DayPeriod;
+        DayPeriod,
+        FlexibleSpaceBar,
+        MaterialState;
 export 'package:flutter/widgets.dart';
 
 export 'utils.dart';

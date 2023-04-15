@@ -46,7 +46,19 @@ class MacosTimePickerTheme extends InheritedTheme {
       data != oldWidget.data;
 }
 
+/// {@template macosTimePickerThemeData}
+/// A style that overrides the default appearance of
+/// [MacosTimePicker]s when it's used with [MacosTimePickerTheme] or with the
+/// overall [MacosTheme]'s [MacosThemeData.timePickerTheme].
+///
+/// See also:
+///
+///  * [MacosTimePickerTheme], the theme which is configured with this class.
+///  * [MacosThemeData.timePickerTheme], which can be used to override
+///  the default style for [MacosTimePicker]s below the overall [MacosTheme].
+/// {@endtemplate}
 class MacosTimePickerThemeData with Diagnosticable {
+  /// {@macro macosTimePickerThemeData}
   MacosTimePickerThemeData({
     this.backgroundColor,
     this.selectedElementColor,
@@ -64,19 +76,47 @@ class MacosTimePickerThemeData with Diagnosticable {
     this.shadowColor,
   });
 
+  /// The background color of the time picker.
   final Color? backgroundColor;
+
+  /// The color of the selected element in the textual time picker.
   final Color? selectedElementColor;
+
+  /// The text color of the selected element in the textual time picker.
   final Color? selectedElementTextColor;
+
+  /// The color of the caret in the textual time picker controls.
   final Color? caretColor;
+
+  /// The background color of the caret controls in the  textual time picker.
   final Color? caretControlsBackgroundColor;
+
+  /// The color of the separator between the caret controls in the textual
+  /// time picker.
   final Color? caretControlsSeparatorColor;
+
+  /// The background color of the graphical time picker.
   final Color? clockViewBackgroundColor;
+
+  /// The color of the hour hand in the graphical time picker.
   final Color? hourHandColor;
+
+  /// The color of the minute hand in the graphical time picker.
   final Color? minuteHandColor;
+
+  /// The color of the second hand in the graphical time picker.
   final Color? secondHandColor;
+
+  /// The color of the hour text in the graphical time picker.
   final Color? hourTextColor;
+
+  /// The color of the day period text in the graphical time picker.
   final Color? dayPeriodTextColor;
+
+  /// The color of the clock's outer border in the graphical time picker.
   final Color? clockViewBorderColor;
+
+  /// The color of the shadow in the graphical time picker.
   final Color? shadowColor;
 
   /// Copies this [MacosTimePickerThemeData] into another.
@@ -175,6 +215,7 @@ class MacosTimePickerThemeData with Diagnosticable {
     );
   }
 
+  /// Merges this [MacosTimePickerThemeData] with another.
   MacosTimePickerThemeData merge(MacosTimePickerThemeData? other) {
     if (other == null) return this;
     return copyWith(

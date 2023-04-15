@@ -17,10 +17,11 @@ void main() {
     await tester.pumpWidget(
       MacosApp(
         home: MacosWindow(
+          disableWallpaperTinting: true,
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context, _) {
                   return Center(
                     child: MacosRadioButton<TestOptions>(
                       value: TestOptions.first,
@@ -53,7 +54,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context, _) {
                   return Center(
                     child: MacosRadioButton<TestOptions>(
                       value: TestOptions.second,

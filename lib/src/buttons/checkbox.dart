@@ -106,7 +106,7 @@ class MacosCheckbox extends StatelessWidget {
                         : activeColor ?? theme.primaryColor,
                     context,
                   ),
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                 )
               : BoxDecoration(
                   color: isLight ? null : CupertinoColors.tertiaryLabel,
@@ -118,7 +118,7 @@ class MacosCheckbox extends StatelessWidget {
                       context,
                     ),
                   ),
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                 ),
           child: Icon(
             isDisabled || value == false

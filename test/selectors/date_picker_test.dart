@@ -6,16 +6,56 @@ import 'package:macos_ui/macos_ui.dart';
 void main() {
   group('MacosDatePicker tests', () {
     testWidgets(
-      'Textual MacosDatePicker renders the expected date',
+      'Textual MacosDatePicker renders the expected initial date',
+      (tester) async {
+        final initialDate = DateTime.now().add(const Duration(days: 30));
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              disableWallpaperTinting: true,
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context, _) {
+                      return Center(
+                        child: MacosDatePicker(
+                          onDateChanged: (date) {},
+                          initialDate: initialDate,
+                          style: DatePickerStyle.textual,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        expect(find.text('/'), findsNWidgets(2));
+        expect(find.text('${initialDate.year}'), findsOneWidget);
+        if (initialDate.month == initialDate.day) {
+          expect(find.text('${initialDate.day}'), findsNWidgets(2));
+          expect(find.text('${initialDate.month}'), findsNWidgets(2));
+        } else {
+          expect(find.text('${initialDate.day}'), findsOneWidget);
+          expect(find.text('${initialDate.month}'), findsOneWidget);
+        }
+      },
+    );
+
+    testWidgets(
+      "Textual MacosDatePicker renders the today's date by default",
       (tester) async {
         final today = DateTime.now();
         await tester.pumpWidget(
           MacosApp(
             home: MacosWindow(
+              disableWallpaperTinting: true,
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {},
@@ -31,9 +71,14 @@ void main() {
         );
 
         expect(find.text('/'), findsNWidgets(2));
-        expect(find.text('${today.day}'), findsOneWidget);
-        expect(find.text('${today.month}'), findsOneWidget);
         expect(find.text('${today.year}'), findsOneWidget);
+        if (today.month == today.day) {
+          expect(find.text('${today.day}'), findsNWidgets(2));
+          expect(find.text('${today.month}'), findsNWidgets(2));
+        } else {
+          expect(find.text('${today.day}'), findsOneWidget);
+          expect(find.text('${today.month}'), findsOneWidget);
+        }
       },
     );
 
@@ -47,7 +92,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {},
@@ -71,14 +116,10 @@ void main() {
         await tester.pumpAndSettle();
         day++;
         expect(day, today.day + 1);
-        await tester.tap(dayFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         day--;
         expect(day, today.day);
-        await tester.tap(dayFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         day--;
@@ -96,7 +137,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {},
@@ -120,14 +161,10 @@ void main() {
         await tester.pumpAndSettle();
         month++;
         expect(month, today.month + 1);
-        await tester.tap(monthFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         month--;
         expect(month, today.month);
-        await tester.tap(monthFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         month--;
@@ -145,7 +182,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {},
@@ -169,14 +206,10 @@ void main() {
         await tester.pumpAndSettle();
         year++;
         expect(year, today.year + 1);
-        await tester.tap(yearFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         year--;
         expect(year, today.year);
-        await tester.tap(yearFieldElement);
-        await tester.pumpAndSettle();
         await tester.tap(downCaretControl);
         await tester.pumpAndSettle();
         year--;
@@ -187,6 +220,7 @@ void main() {
     testWidgets(
       'The selected calendar day matches the expected value',
       (tester) async {
+        final today = DateTime.now();
         int selectedDay = 0;
         await tester.pumpWidget(
           MacosApp(
@@ -194,7 +228,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {
@@ -210,10 +244,11 @@ void main() {
           ),
         );
 
-        final dayToSelect = find.text('10');
+        int dayToFind = today.day == 21 ? 22 : 21;
+        final dayToSelect = find.text(dayToFind.toString());
         await tester.tap(dayToSelect);
         await tester.pumpAndSettle();
-        expect(selectedDay, 10);
+        expect(selectedDay, dayToFind);
       },
     );
 
@@ -222,16 +257,18 @@ void main() {
       (tester) async {
         final today = DateTime.now();
         int selectedMonth = 0;
+        DateTime? selectedDate;
         await tester.pumpWidget(
           MacosApp(
             home: MacosWindow(
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosDatePicker(
                           onDateChanged: (date) {
+                            selectedDate = date;
                             selectedMonth = date.month;
                           },
                         ),
@@ -248,13 +285,26 @@ void main() {
         final rightControl = find.byType(MacosIcon).last;
         await tester.tap(leftControl);
         await tester.pumpAndSettle();
-        expect(selectedMonth, today.month - 1);
+        final diff = today.difference(selectedDate!);
+
+        // Account for going from January to December
+        if (today.month == 1) {
+          expect(today.subtract(diff).month, 12);
+        } else {
+          expect(selectedMonth, today.month - 1);
+        }
         await tester.tap(rightControl);
         await tester.pumpAndSettle();
         expect(selectedMonth, today.month);
         await tester.tap(rightControl);
         await tester.pumpAndSettle();
-        expect(selectedMonth, today.month + 1);
+
+        // Account for going from December to January
+        if (today.month == 12) {
+          expect(today.add(diff).month, 1);
+        } else {
+          expect(selectedMonth, today.month + 1);
+        }
       },
     );
   });

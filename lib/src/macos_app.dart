@@ -35,7 +35,7 @@ class MacosApp extends StatefulWidget {
   /// application is launched with an intent that specifies an otherwise
   /// unsupported route.
   ///
-  /// This class creates an instance of [WidgetsApp].
+  /// This class creates an instance of [CupertinoApp].
   ///
   /// The boolean arguments, [routes], and [navigatorObservers], must not be null.
   const MacosApp({
@@ -74,15 +74,17 @@ class MacosApp extends StatefulWidget {
   })  : routeInformationProvider = null,
         routeInformationParser = null,
         routerDelegate = null,
-        backButtonDispatcher = null;
+        backButtonDispatcher = null,
+        routerConfig = null;
 
   /// Creates a [MacosApp] that uses the [Router] instead of a [Navigator].
   MacosApp.router({
     super.key,
     this.routeInformationProvider,
-    required RouteInformationParser<Object> this.routeInformationParser,
-    required RouterDelegate<Object> this.routerDelegate,
+    this.routeInformationParser,
+    this.routerDelegate,
     this.backButtonDispatcher,
+    this.routerConfig,
     this.builder,
     this.title = '',
     this.onGenerateTitle,
@@ -104,7 +106,8 @@ class MacosApp extends StatefulWidget {
     this.themeMode,
     this.theme,
     this.darkTheme,
-  })  : assert(supportedLocales.isNotEmpty),
+  })  : assert(routerDelegate != null || routerConfig != null),
+        assert(supportedLocales.isNotEmpty),
         navigatorObservers = null,
         navigatorKey = null,
         onGenerateRoute = null,
@@ -156,6 +159,9 @@ class MacosApp extends StatefulWidget {
 
   /// {@macro flutter.widgets.widgetsApp.backButtonDispatcher}
   final BackButtonDispatcher? backButtonDispatcher;
+
+  /// {@macro flutter.widgets.widgetsApp.routerConfig}
+  final RouterConfig<Object>? routerConfig;
 
   /// {@macro flutter.widgets.widgetsApp.builder}
   final TransitionBuilder? builder;
@@ -300,23 +306,8 @@ class MacosApp extends StatefulWidget {
 }
 
 class _MacosAppState extends State<MacosApp> {
-  bool get _usesRouter => widget.routerDelegate != null;
-
-  @override
-  Widget build(BuildContext context) {
-    // leaves room for assertions, etc
-    Widget result = _buildMacosApp(context);
-    return result;
-  }
-
-  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
-    if (widget.localizationsDelegates != null) {
-      yield* widget.localizationsDelegates!;
-    }
-    yield DefaultMaterialLocalizations.delegate;
-    yield DefaultCupertinoLocalizations.delegate;
-    yield DefaultWidgetsLocalizations.delegate;
-  }
+  bool get _usesRouter =>
+      widget.routerDelegate != null || widget.routerConfig != null;
 
   Widget _macosBuilder(BuildContext context, Widget? child) {
     final mode = widget.themeMode ?? ThemeMode.system;
@@ -362,9 +353,10 @@ class _MacosAppState extends State<MacosApp> {
       return c.CupertinoApp.router(
         key: GlobalObjectKey(this),
         routeInformationProvider: widget.routeInformationProvider,
-        routeInformationParser: widget.routeInformationParser!,
-        routerDelegate: widget.routerDelegate!,
+        routeInformationParser: widget.routeInformationParser,
+        routerDelegate: widget.routerDelegate,
         backButtonDispatcher: widget.backButtonDispatcher,
+        routerConfig: widget.routerConfig,
         builder: _macosBuilder,
         title: widget.title,
         onGenerateTitle: widget.onGenerateTitle,
@@ -381,6 +373,7 @@ class _MacosAppState extends State<MacosApp> {
         debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
         shortcuts: widget.shortcuts,
         actions: widget.actions,
+        scrollBehavior: widget.scrollBehavior,
       );
     }
     return c.CupertinoApp(
@@ -409,7 +402,23 @@ class _MacosAppState extends State<MacosApp> {
       debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
       shortcuts: widget.shortcuts,
       actions: widget.actions,
+      scrollBehavior: widget.scrollBehavior,
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // leaves room for assertions, etc
+    return _buildMacosApp(context);
+  }
+
+  Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
+    if (widget.localizationsDelegates != null) {
+      yield* widget.localizationsDelegates!;
+    }
+    yield DefaultMaterialLocalizations.delegate;
+    yield DefaultCupertinoLocalizations.delegate;
+    yield DefaultWidgetsLocalizations.delegate;
   }
 }
 
@@ -427,6 +436,11 @@ class MacosScrollBehavior extends ScrollBehavior {
   /// Creates a MacosScrollBehavior that decorates [Scrollable]s with
   /// [MacosScrollbar]s based on the current platform and provided [ScrollableDetails].
   const MacosScrollBehavior();
+
+  /*@override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.mouse,
+  };*/
 
   @override
   Widget buildScrollbar(context, child, details) {

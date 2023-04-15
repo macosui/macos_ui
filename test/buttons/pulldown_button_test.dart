@@ -22,7 +22,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosPulldownButton(
                           title: "test",
@@ -67,7 +67,7 @@ void main() {
               child: MacosScaffold(
                 children: [
                   ContentArea(
-                    builder: (context, scrollController) {
+                    builder: (context, _) {
                       return Center(
                         child: MacosPulldownButton(
                           title: "test",
@@ -75,7 +75,7 @@ void main() {
                             MacosPulldownMenuItem(
                               title: const Text('one'),
                               onTap: () {
-                                menuItemTapCounters[0] += 1;
+                                menuItemTapCounters.first += 1;
                               },
                             ),
                             MacosPulldownMenuItem(

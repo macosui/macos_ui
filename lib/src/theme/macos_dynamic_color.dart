@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'macos_theme.dart';
 
+/// Extension methods on [CupertinoDynamicColor].
 extension MacosDynamicColor on CupertinoDynamicColor {
   /// Resolves the given [Color] by calling [resolveFrom].
   ///

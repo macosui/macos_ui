@@ -256,7 +256,7 @@ class MacosTextField extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.textAlignVertical,
     this.readOnly = false,
-    ToolbarOptions? toolbarOptions,
+    this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.showCursor,
     this.autofocus = false,
     this.obscuringCharacter = '•',
@@ -315,19 +315,7 @@ class MacosTextField extends StatefulWidget {
                 !identical(keyboardType, TextInputType.text),
             'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
         keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-        toolbarOptions = toolbarOptions ??
-            (obscureText
-                ? const ToolbarOptions(
-                    selectAll: true,
-                    paste: true,
-                  )
-                : const ToolbarOptions(
-                    copy: true,
-                    cut: true,
-                    selectAll: true,
-                    paste: true,
-                  ));
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
 
   /// Creates a borderless macOS-style text field.
   ///
@@ -372,7 +360,7 @@ class MacosTextField extends StatefulWidget {
     this.decoration,
     this.focusedDecoration,
     this.disabledColor,
-    this.padding = const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 4.0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
     this.placeholder,
     this.placeholderStyle = _kDefaultPlaceholderStyle,
     this.prefix,
@@ -388,7 +376,6 @@ class MacosTextField extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.textAlignVertical,
     this.readOnly = false,
-    ToolbarOptions? toolbarOptions,
     this.showCursor,
     this.autofocus = false,
     this.obscuringCharacter = '•',
@@ -423,6 +410,7 @@ class MacosTextField extends StatefulWidget {
     this.scrollPhysics,
     this.autofillHints,
     this.restorationId,
+    this.contextMenuBuilder = _defaultContextMenuBuilder,
   })  : smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
         smartQuotesType = smartQuotesType ??
@@ -447,19 +435,16 @@ class MacosTextField extends StatefulWidget {
                 !identical(keyboardType, TextInputType.text),
             'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
         keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-        toolbarOptions = toolbarOptions ??
-            (obscureText
-                ? const ToolbarOptions(
-                    selectAll: true,
-                    paste: true,
-                  )
-                : const ToolbarOptions(
-                    copy: true,
-                    cut: true,
-                    selectAll: true,
-                    paste: true,
-                  ));
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
+
+  static Widget _defaultContextMenuBuilder(
+    BuildContext context,
+    EditableTextState editableTextState,
+  ) {
+    return CupertinoAdaptiveTextSelectionToolbar.editableText(
+      editableTextState: editableTextState,
+    );
+  }
 
   /// Controls the text being edited.
   ///
@@ -570,12 +555,14 @@ class MacosTextField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.textAlign}
   final TextAlign textAlign;
 
-  /// Configuration of toolbar options.
+  /// {@macro flutter.widgets.EditableText.contextMenuBuilder}
   ///
-  /// If not set, select all and paste will default to be enabled. Copy and cut
-  /// will be disabled if [obscureText] is true. If [readOnly] is true,
-  /// paste and cut will be disabled regardless.
-  final ToolbarOptions toolbarOptions;
+  /// If not provided, will build a default menu based on the platform.
+  ///
+  /// See also:
+  ///
+  ///  * [CupertinoAdaptiveTextSelectionToolbar], which is built by default.
+  final EditableTextContextMenuBuilder? contextMenuBuilder;
 
   /// {@macro flutter.material.InputDecorator.textAlignVertical}
   final TextAlignVertical? textAlignVertical;
@@ -887,6 +874,10 @@ class MacosTextField extends StatefulWidget {
       textAlignVertical,
       defaultValue: null,
     ));
+    properties.add(DiagnosticsProperty<EditableTextContextMenuBuilder>(
+      'contextMenuBuilder',
+      contextMenuBuilder,
+    ));
   }
 }
 
@@ -936,10 +927,6 @@ class _MacosTextFieldState extends State<MacosTextField>
     _effectiveFocusNode.addListener(_handleFocusChanged);
   }
 
-  void _handleFocusChanged() {
-    setState(() {});
-  }
-
   @override
   void didUpdateWidget(MacosTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -953,11 +940,8 @@ class _MacosTextFieldState extends State<MacosTextField>
     _effectiveFocusNode.canRequestFocus = widget.enabled ?? true;
   }
 
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    if (_controller != null) {
-      _registerController();
-    }
+  void _handleFocusChanged() {
+    setState(() {});
   }
 
   void _registerController() {
@@ -975,18 +959,6 @@ class _MacosTextFieldState extends State<MacosTextField>
       _registerController();
     }
   }
-
-  @override
-  String? get restorationId => widget.restorationId;
-
-  @override
-  void dispose() {
-    _focusNode?.dispose();
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  EditableTextState get _editableText => editableTextKey.currentState!;
 
   void _requestKeyboard() {
     _editableText.requestKeyboard();
@@ -1023,9 +995,6 @@ class _MacosTextFieldState extends State<MacosTextField>
       });
     }
   }
-
-  @override
-  bool get wantKeepAlive => _controller?.value.text.isNotEmpty == true;
 
   bool _shouldShowAttachment({
     required OverlayVisibilityMode attachment,
@@ -1064,26 +1033,6 @@ class _MacosTextFieldState extends State<MacosTextField>
       attachment: widget.clearButtonMode,
       hasText: text.text.isNotEmpty,
     );
-  }
-
-  // True if any surrounding decoration widgets will be shown.
-  bool get _hasDecoration {
-    return widget.placeholder != null ||
-        widget.clearButtonMode != OverlayVisibilityMode.never ||
-        widget.prefix != null ||
-        widget.suffix != null;
-  }
-
-  // Provide default behavior if widget.textAlignVertical is not set.
-  // TextField has top alignment by default, unless it has decoration
-  // like a prefix or suffix, in which case it's aligned to the center.
-  TextAlignVertical get _textAlignVertical {
-    if (widget.textAlignVertical != null) {
-      return widget.textAlignVertical!;
-    }
-    return widget.maxLines == null || widget.maxLines! > 1
-        ? TextAlignVertical.center
-        : TextAlignVertical.top;
   }
 
   Widget _addTextDependentAttachments(
@@ -1199,6 +1148,49 @@ class _MacosTextFieldState extends State<MacosTextField>
         );
       },
     );
+  }
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    if (_controller != null) {
+      _registerController();
+    }
+  }
+
+  @override
+  String? get restorationId => widget.restorationId;
+
+  @override
+  void dispose() {
+    _focusNode?.dispose();
+    _controller?.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
+    super.dispose();
+  }
+
+  EditableTextState get _editableText => editableTextKey.currentState!;
+
+  @override
+  bool get wantKeepAlive => _controller?.value.text.isNotEmpty == true;
+
+  // True if any surrounding decoration widgets will be shown.
+  bool get _hasDecoration {
+    return widget.placeholder != null ||
+        widget.clearButtonMode != OverlayVisibilityMode.never ||
+        widget.prefix != null ||
+        widget.suffix != null;
+  }
+
+  // Provide default behavior if widget.textAlignVertical is not set.
+  // TextField has top alignment by default, unless it has decoration
+  // like a prefix or suffix, in which case it's aligned to the center.
+  TextAlignVertical get _textAlignVertical {
+    if (widget.textAlignVertical != null) {
+      return widget.textAlignVertical!;
+    }
+    return widget.maxLines == null || widget.maxLines! > 1
+        ? TextAlignVertical.center
+        : TextAlignVertical.top;
   }
 
   @override
@@ -1357,7 +1349,6 @@ class _MacosTextFieldState extends State<MacosTextField>
             key: editableTextKey,
             controller: controller,
             readOnly: widget.readOnly,
-            toolbarOptions: widget.toolbarOptions,
             showCursor: widget.showCursor,
             showSelectionHandles: _showSelectionHandles,
             focusNode: _effectiveFocusNode,
@@ -1409,6 +1400,7 @@ class _MacosTextFieldState extends State<MacosTextField>
             autofillHints: widget.autofillHints,
             restorationId: 'editable',
             mouseCursor: SystemMouseCursors.text,
+            contextMenuBuilder: widget.contextMenuBuilder,
           ),
         ),
       ),

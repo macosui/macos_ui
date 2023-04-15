@@ -746,11 +746,6 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   late FocusHighlightMode _focusHighlightMode;
   PulldownButtonState _pullDownButtonState = PulldownButtonState.enabled;
 
-  // Only used if needed to create _internalNode.
-  FocusNode _createFocusNode() {
-    return FocusNode(debugLabel: '${widget.runtimeType}');
-  }
-
   @override
   void initState() {
     super.initState();
@@ -772,14 +767,21 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _removeMacosPulldownRoute();
-    WidgetsBinding.instance.focusManager
-        .removeHighlightModeListener(_handleFocusHighlightModeChange);
-    focusNode!.removeListener(_handleFocusChanged);
-    _internalNode?.dispose();
-    super.dispose();
+  void didUpdateWidget(MacosPulldownButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusNode != oldWidget.focusNode) {
+      oldWidget.focusNode?.removeListener(_handleFocusChanged);
+      if (widget.focusNode == null) {
+        _internalNode ??= _createFocusNode();
+      }
+      _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
+      focusNode!.addListener(_handleFocusChanged);
+    }
+  }
+
+  // Only used if needed to create _internalNode.
+  FocusNode _createFocusNode() {
+    return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
   void _removeMacosPulldownRoute() {
@@ -800,26 +802,13 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     setState(() => _focusHighlightMode = mode);
   }
 
-  @override
-  void didUpdateWidget(MacosPulldownButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.focusNode != oldWidget.focusNode) {
-      oldWidget.focusNode?.removeListener(_handleFocusChanged);
-      if (widget.focusNode == null) {
-        _internalNode ??= _createFocusNode();
-      }
-      _hasPrimaryFocus = focusNode!.hasPrimaryFocus;
-      focusNode!.addListener(_handleFocusChanged);
-    }
-  }
-
   TextStyle? get _textStyle =>
       widget.style ?? MacosTheme.of(context).typography.body;
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
     const EdgeInsetsGeometry menuMargin =
-        EdgeInsetsDirectional.only(start: 4.0, end: 4.0);
+        EdgeInsets.symmetric(horizontal: 4.0);
 
     final List<_MenuItem> menuItems = <_MenuItem>[
       for (int index = 0; index < widget.items!.length; index += 1)
@@ -886,6 +875,17 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _removeMacosPulldownRoute();
+    WidgetsBinding.instance.focusManager
+        .removeHighlightModeListener(_handleFocusHighlightModeChange);
+    focusNode!.removeListener(_handleFocusChanged);
+    _internalNode?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final buttonHeight = _hasIcon ? 28.0 : 20.0;
     final borderRadius = _hasIcon
@@ -904,7 +904,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
               boxShadow: [
                 BoxShadow(
                   color: buttonStyles.borderColor,
-                  offset: const Offset(0, .5),
+                  offset: const Offset(0, 0.5),
                   blurRadius: 0.2,
                   spreadRadius: 0,
                 ),
@@ -913,7 +913,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
               color: buttonStyles.bgColor,
               borderRadius: borderRadius,
             ),
-      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 2.0),
       height: buttonHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

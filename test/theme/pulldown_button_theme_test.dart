@@ -66,10 +66,11 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           home: MacosWindow(
+            disableWallpaperTinting: true,
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context, _) {
                     capturedContext = context;
                     return const Center(
                       child: MacosPulldownButton(

@@ -1,5 +1,6 @@
-import 'package:macos_ui/src/library.dart';
 import 'dart:math' as math;
+
+import 'package:macos_ui/src/library.dart';
 
 /// Where the popup will be placed vertically relative to the child
 enum ToolbarPopupPosition {
@@ -26,10 +27,14 @@ enum ToolbarPopupPlacement {
   end,
 }
 
+/// {@template toolbarPopup}
 /// A popup widget for the toolbar.
+///
+/// Used for the menu that encapsulates the overflowed toolbar actions and
+/// its possible submenus.
+/// {@endtemplate}
 class ToolbarPopup<T> extends StatefulWidget {
-  /// Creates a popup for the toolbar. Used for the menu that encapsulates
-  /// the overflowed toolbar actions and its possible submenus.
+  /// {@macro toolbarPopup}
   const ToolbarPopup({
     super.key,
     required this.child,
@@ -40,11 +45,26 @@ class ToolbarPopup<T> extends StatefulWidget {
     this.position = ToolbarPopupPosition.above,
   });
 
+  /// The child widget to show in the popup
   final Widget child;
+
+  /// The content of the popup
   final WidgetBuilder content;
+
+  /// The vertical offset of the popup
   final double verticalOffset;
+
+  /// The horizontal offset of the popup
   final double horizontalOffset;
+
+  /// The placement of the popup.
+  ///
+  /// Defaults to [ToolbarPopupPlacement.center].
   final ToolbarPopupPlacement placement;
+
+  /// The position of the popup.
+  ///
+  /// Defaults to [ToolbarPopupPosition.above].
   final ToolbarPopupPosition position;
 
   @override
@@ -183,7 +203,7 @@ class _ToolbarPopupMenuState<T> extends State<_ToolbarPopupMenu<T>> {
     super.initState();
     _fadeOpacity = CurvedAnimation(
       parent: widget.route.animation!,
-      curve: const Interval(0.0, 0.50),
+      curve: const Interval(0.0, 0.5),
       reverseCurve: const Interval(0.75, 1.0),
     );
   }
@@ -315,7 +335,7 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(context, animation, secondaryAnimation) {
     return LayoutBuilder(builder: (context, constraints) {
-      final page = _ToolbarPopupRoutePage<T>(
+      return _ToolbarPopupRoutePage<T>(
         target: target,
         placementOffset: placementOffset,
         placement: placement,
@@ -329,7 +349,6 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
         horizontalOffset: horizontalOffset,
         position: position,
       );
-      return page;
     });
   }
 

@@ -28,151 +28,153 @@ class _DialogsPageState extends State<DialogsPage> {
         ],
       ),
       children: [
-        ContentArea(builder: (context, scrollController) {
-          return SingleChildScrollView(
-            controller: scrollController,
-            padding: const EdgeInsets.all(20),
-            child: Center(
-              child: Column(
-                children: [
-                  PushButton(
-                    buttonSize: ButtonSize.large,
-                    child: const Text('Show Alert Dialog 1'),
-                    onPressed: () => showMacosAlertDialog(
-                      context: context,
-                      builder: (context) => MacosAlertDialog(
-                        appIcon: const FlutterLogo(
-                          size: 56,
-                        ),
-                        title: const Text(
-                          'Alert Dialog with Primary Action',
-                        ),
-                        message: const Text(
-                          'This is an alert dialog with a primary action and no secondary action',
-                        ),
-                        //horizontalActions: false,
-                        primaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Primary'),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  PushButton(
-                    buttonSize: ButtonSize.large,
-                    child: const Text('Show Alert Dialog 2'),
-                    onPressed: () => showMacosAlertDialog(
-                      context: context,
-                      builder: (context) => MacosAlertDialog(
-                        appIcon: const FlutterLogo(
-                          size: 56,
-                        ),
-                        title: const Text(
-                          'Alert Dialog with Secondary Action',
-                        ),
-                        message: const Text(
-                          'This is an alert dialog with primary action and secondary action laid out horizontally',
-                          textAlign: TextAlign.center,
-                        ),
-                        //horizontalActions: false,
-                        primaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Primary'),
-                        ),
-                        secondaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          isSecondary: true,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Secondary'),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  PushButton(
-                    buttonSize: ButtonSize.large,
-                    child: const Text('Show Alert Dialog 3'),
-                    onPressed: () => showMacosAlertDialog(
-                      context: context,
-                      builder: (context) => MacosAlertDialog(
-                        appIcon: const FlutterLogo(
-                          size: 56,
-                        ),
-                        title: const Text(
-                          'Alert Dialog with Secondary Action',
-                        ),
-                        message: const Text(
-                          'This is an alert dialog with primary action and secondary action laid out vertically',
-                          textAlign: TextAlign.center,
-                        ),
-                        horizontalActions: false,
-                        primaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Primary'),
-                        ),
-                        secondaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          isSecondary: true,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Secondary'),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  PushButton(
-                    buttonSize: ButtonSize.large,
-                    child: const Text('Show Alert Dialog 4'),
-                    onPressed: () => showMacosAlertDialog(
-                      context: context,
-                      builder: (context) => MacosAlertDialog(
-                        appIcon: const FlutterLogo(
-                          size: 56,
-                        ),
-                        title: const Text(
-                          'Alert Dialog with Secondary Action',
-                        ),
-                        message: const Text(
-                          'This is an alert dialog with primary action and secondary '
-                          'action laid out vertically. It also contains a "suppress" option.',
-                          textAlign: TextAlign.center,
-                        ),
-                        horizontalActions: false,
-                        primaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Primary'),
-                        ),
-                        secondaryButton: PushButton(
-                          buttonSize: ButtonSize.large,
-                          isSecondary: true,
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('Secondary'),
-                        ),
-                        suppress: const DoNotNotifyRow(),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  PushButton(
-                    buttonSize: ButtonSize.large,
-                    child: const Text('Show sheet'),
-                    onPressed: () {
-                      showMacosSheet(
+        ContentArea(
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: Column(
+                  children: [
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Show Alert Dialog 1'),
+                      onPressed: () => showMacosAlertDialog(
                         context: context,
-                        builder: (_) => const MacosuiSheet(),
-                      );
-                    },
-                  ),
-                ],
+                        builder: (context) => MacosAlertDialog(
+                          appIcon: const FlutterLogo(
+                            size: 56,
+                          ),
+                          title: const Text(
+                            'Alert Dialog with Primary Action',
+                          ),
+                          message: const Text(
+                            'This is an alert dialog with a primary action and no secondary action',
+                          ),
+                          //horizontalActions: false,
+                          primaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Primary'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Show Alert Dialog 2'),
+                      onPressed: () => showMacosAlertDialog(
+                        context: context,
+                        builder: (context) => MacosAlertDialog(
+                          appIcon: const FlutterLogo(
+                            size: 56,
+                          ),
+                          title: const Text(
+                            'Alert Dialog with Secondary Action',
+                          ),
+                          message: const Text(
+                            'This is an alert dialog with primary action and secondary action laid out horizontally',
+                            textAlign: TextAlign.center,
+                          ),
+                          //horizontalActions: false,
+                          primaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Primary'),
+                          ),
+                          secondaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            isSecondary: true,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Secondary'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Show Alert Dialog 3'),
+                      onPressed: () => showMacosAlertDialog(
+                        context: context,
+                        builder: (context) => MacosAlertDialog(
+                          appIcon: const FlutterLogo(
+                            size: 56,
+                          ),
+                          title: const Text(
+                            'Alert Dialog with Secondary Action',
+                          ),
+                          message: const Text(
+                            'This is an alert dialog with primary action and secondary action laid out vertically',
+                            textAlign: TextAlign.center,
+                          ),
+                          horizontalActions: false,
+                          primaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Primary'),
+                          ),
+                          secondaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            isSecondary: true,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Secondary'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Show Alert Dialog 4'),
+                      onPressed: () => showMacosAlertDialog(
+                        context: context,
+                        builder: (context) => MacosAlertDialog(
+                          appIcon: const FlutterLogo(
+                            size: 56,
+                          ),
+                          title: const Text(
+                            'Alert Dialog with Secondary Action',
+                          ),
+                          message: const Text(
+                            'This is an alert dialog with primary action and secondary '
+                            'action laid out vertically. It also contains a "suppress" option.',
+                            textAlign: TextAlign.center,
+                          ),
+                          horizontalActions: false,
+                          primaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Primary'),
+                          ),
+                          secondaryButton: PushButton(
+                            buttonSize: ButtonSize.large,
+                            isSecondary: true,
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Secondary'),
+                          ),
+                          suppress: const DoNotNotifyRow(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PushButton(
+                      buttonSize: ButtonSize.large,
+                      child: const Text('Show sheet'),
+                      onPressed: () {
+                        showMacosSheet(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (_) => const DemoSheet(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ],
     );
   }
@@ -206,8 +208,8 @@ class _DoNotNotifyRowState extends State<DoNotNotifyRow> {
   }
 }
 
-class MacosuiSheet extends StatelessWidget {
-  const MacosuiSheet({super.key});
+class DemoSheet extends StatelessWidget {
+  const DemoSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -227,34 +229,23 @@ class MacosuiSheet extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                MacosListTile(
-                  leading: MacosIcon(CupertinoIcons.lightbulb),
-                  title: Text(
-                    'A robust library of Flutter components for macOS',
-                    //style: MacosTheme.of(context).typography.headline,
-                  ),
-                  subtitle: Text(
-                    'Create native looking macOS applications using Flutter',
-                  ),
-                ),
-              ],
+            const MacosListTile(
+              leading: MacosIcon(CupertinoIcons.lightbulb),
+              title: Text(
+                'A robust library of Flutter components for macOS',
+                //style: MacosTheme.of(context).typography.headline,
+              ),
+              subtitle: Text(
+                'Create native looking macOS applications using Flutter',
+              ),
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                MacosListTile(
-                  leading: MacosIcon(CupertinoIcons.bolt),
-                  title: Text(
-                    'Create beautiful macOS applications in minutes',
-                    //style: MacosTheme.of(context).typography.headline,
-                  ),
-                ),
-                SizedBox(width: 10),
-              ],
+            const MacosListTile(
+              leading: MacosIcon(CupertinoIcons.bolt),
+              title: Text(
+                'Create beautiful macOS applications in minutes',
+                //style: MacosTheme.of(context).typography.headline,
+              ),
             ),
             const Spacer(),
             PushButton(

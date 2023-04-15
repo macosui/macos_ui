@@ -89,8 +89,13 @@ class MacosColor extends Color {
 
 /// A collection of color values lifted from the macOS system color picker.
 class MacosColors {
+  /// A fully transparent color.
   static const Color transparent = MacosColor(0x00000000);
+
+  /// A fully opaque black color.
   static const black = MacosColor(0xff000000);
+
+  /// A fully opaque white color.
   static const white = MacosColor(0xffffffff);
 
   /// The text of a label containing primary content.
@@ -284,6 +289,25 @@ class MacosColors {
       CupertinoDynamicColor.withBrightness(
     color: Color.fromRGBO(0, 103, 244, 0.25),
     darkColor: Color.fromRGBO(26, 169, 255, 0.3),
+  );
+
+  /// The color of the thumb of [MacosSlider].
+  static const sliderThumbColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(255, 255, 255, 1),
+    darkColor: Color.fromRGBO(152, 152, 157, 1),
+  );
+
+  /// The color of the tick marks which are not selected (the portion to the right of the thumb) of [MacosSlider].
+  static const tickBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(220, 220, 220, 1),
+    darkColor: Color.fromRGBO(70, 70, 70, 1),
+  );
+
+  /// The color of the slider in [MacosSlider] which is not selected (the portion
+  /// to the right of the thumb).
+  static const sliderBackgroundColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(0, 0, 0, 0.1),
+    darkColor: Color.fromRGBO(255, 255, 255, 0.1),
   );
 
   /// The accent color selected by the user in system preferences.

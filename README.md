@@ -2,19 +2,41 @@
 
 Flutter widgets and themes implementing the current macOS design language.
 
-Check out our **interactive widget gallery** online at https://groovinchip.github.io/macos_ui/#/
+Check out our **interactive widget gallery** online at https://macosui.github.io/macos_ui/#/
 
 Guides, codelabs, and other documentation can be found at https://macosui.dev
 
 [![pub package](https://img.shields.io/pub/v/macos_ui.svg)](https://pub.dev/packages/macos_ui)
 [![pub package](https://img.shields.io/pub/publisher/macos_ui.svg)](https://pub.dev/packages/macos_ui)  
 
-[![Flutter Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml)
+[![Flutter Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml/badge.svg?branch=stable)](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml)
 [![Pana Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/pana_analysis.yml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/pana_analysis.yml)
 [![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
 [![codecov](https://codecov.io/gh/GroovinChip/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/GroovinChip/macos_ui)
 
 <img src="https://imgur.com/5mFQKBU.png" width="75%"/>
+
+## 🚨 Usage notes
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Flutter channel
+`macos_ui` is developed against Flutter's `stable` channel. To ensure a smooth development experience with `macos_ui`, you should build your application on Flutter's `stable` channel.
+
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
+
+pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
+specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
+Flutter supports, **but you will get best results on macOS**.
+
+The features of `macos_ui` that will _not_ work on platforms other than macOS due to calling native code are:
+* The `MacosColors.controlAccentColor()` function
+* The `MacosColorWell` widget
+
+### <img src="https://imgur.com/TIP0V7H.png" height="14"/> Popups & window resizing
+
+Since at this time Flutter does not allow UI elements to overflow the bounds of the window, popups are constrained to
+the available space.
+
+Therefore, if you are using widgets that create popups in your toolbar, like `ToolBarPopupButton`, you 
+should avoid allowing your application window to be resized below the height of your tallest popup.
 
 ## Contents
 
@@ -31,10 +53,13 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 
 - [Layout](#layout)
   - [MacosWindow](#macoswindow)
+  - [Sidebar](#sidebar)
   - [MacosScaffold](#macosscaffold)
   - [Modern Window Look](#modern-window-look)
   - [ToolBar](#toolbar)
+  - [SliverToolBar](#SliverToolBar)
   - [MacosListTile](#MacosListTile)
+  - [MacosTabView](#MacosTabView)
 </details>
 
 <details>
@@ -55,6 +80,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
   - [PopupButton](#popupbutton)
   - [PushButton](#pushbutton)
   - [MacosSwitch](#macosswitch)
+  - [MacosSegmentedControl](#macossegmentedcontrol)
 </details>
   
 <details>
@@ -94,6 +120,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 - [Selectors](#selectors)
   - [MacosDatePicker](#macosdatepicker)
   - [MacosTimePicker](#macostimepicker)
+  - [MacosColorWell](#macoscolorwell)
 </details>
 
 ---
@@ -126,6 +153,56 @@ your `MacosScaffold` in a `Builder` widget in order for this to work properly.
 
 <img src="https://imgur.com/IBbp5rN.gif" width="75%">
 
+## Sidebar
+A sidebar enables app navigation and provides quick access to top-level collections of content in your app.
+
+Sidebars may be placed at the left or right of your app. To place a sidebar on the left, use the `MacosWindow.sidebar` property. To place a sidebar on the right, use the `MacosWindow.endSidebar` property.
+
+<img src="https://imgur.com/sz4VPNR.png" width="75%"/>
+
+Example usage:
+
+```dart
+int pageIndex = 0;
+
+...
+
+MacosWindow(
+  sidebar: Sidebar(
+    minWidth: 200,
+    builder: (context, scrollController) {
+      return SidebarItems(
+        currentIndex: pageIndex,
+        scrollController: scrollController,
+        itemSize: SidebarItemSize.large,
+        onChanged: (i) {
+          setState(() => pageIndex = i);
+        },
+        items: const [
+          SidebarItem(
+            label: Text('Page One'),
+          ),
+          SidebarItem(
+            label: Text('Page Two'),
+          ),
+        ],
+      );
+    },
+  ),
+  endSidebar: Sidebar(
+    startWidth: 200,
+    minWidth: 200,
+    maxWidth: 300,
+    shownByDefault: false,
+    builder: (context, _) {
+      return const Center(
+        child: Text('End Sidebar'),
+      );
+    },
+  ),
+),
+```
+
 ## MacosScaffold
 
 The `MacosScaffold` is what you might call a "page".
@@ -149,95 +226,42 @@ See the documentation for customizations and `ToolBar` examples.
 ## Modern window look
 
 A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look 
-in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` 
-file should look like this:
+in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
 
-```swift
-import Cocoa
-import FlutterMacOS
-
-class BlurryContainerViewController: NSViewController {
-  let flutterViewController = FlutterViewController()
-
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError()
-  }
-
-  override func loadView() {
-    let blurView = NSVisualEffectView()
-    blurView.autoresizingMask = [.width, .height]
-    blurView.blendingMode = .behindWindow
-    blurView.state = .active
-    if #available(macOS 10.14, *) {
-        blurView.material = .sidebar
-    }
-    self.view = blurView
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.addChild(flutterViewController)
-
-    flutterViewController.view.frame = self.view.bounds
-    flutterViewController.view.autoresizingMask = [.width, .height]
-    self.view.addSubview(flutterViewController.view)
-  }
-}
-
-class MainFlutterWindow: NSWindow, NSWindowDelegate {
-  override func awakeFromNib() {
-    delegate = self
-    let blurryContainerViewController = BlurryContainerViewController()
-    let windowFrame = self.frame
-    self.contentViewController = blurryContainerViewController
-    self.setFrame(windowFrame, display: true)
-
-    if #available(macOS 10.13, *) {
-      let customToolbar = NSToolbar()
-      customToolbar.showsBaselineSeparator = false
-      self.toolbar = customToolbar
-    }
-    self.titleVisibility = .hidden
-    self.titlebarAppearsTransparent = true
-    if #available(macOS 11.0, *) {
-      // Use .expanded if the app will have a title bar, else use .unified
-      self.toolbarStyle = .unified
-    }
-
-    self.isMovableByWindowBackground = true
-    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
-
-    self.isOpaque = false
-    self.backgroundColor = .clear
-
-    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
-
-    super.awakeFromNib()
-  }
-
-  func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-    return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
-  }
-
-  func windowWillEnterFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = false
-  }
-  
-  func windowDidExitFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = true
-  }
-}
-
+```podspec
+platform :osx, '10.14.6'
 ```
 
-See [this issue comment](https://github.com/flutter/flutter/issues/59969#issuecomment-916682559) for more details on the new look and explanations for how it works.
+Now, configure your window inside your `main()` as follows:
 
-Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `.unified`. This must be set beforehand, i.e. it cannot be switched in runtime.
+```dart
+/// This method initializes macos_window_utils and styles the window.
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.unified,
+  );
+  await config.apply();
+}
+
+void main() async {
+  await _configureMacosWindowUtils();
+
+  runApp(const MacosUIGalleryApp());
+}
+```
+
+Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of your window to `NSWindowToolbarStyle.expanded`, in order to properly align the close, minimize, zoom window buttons:
+
+```dart
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.expanded,
+  );
+  await config.apply();
+}
+```
+
+In any other case, you should keep it as `NSWindowToolbarStyle.unified`.
 
 ## ToolBar
 
@@ -330,14 +354,41 @@ CustomToolbarItem(
 ),
 ```
 
+## `SliverToolBar`
+<img src="https://imgur.com/u4LDaxj.gif" width="75%"/>
+
+`SliverToolbar` is a variant of the standard `ToolBar`, with the key difference being that (as the name implies), it 
+is compatible with scrollable widgets like `CustomScrollView` and `NestedScrollView`. There are three additional 
+properties on `SliverToolBar`:
+* `pinned`, which determines if the toolbar should remain visible while scrolling
+* `floating`, which determines if the toolbar should become visible as soon as the use starts scrolling upwards
+* `opacity`, which manages the translucency effect of the toolbar
+
+This widget enables developers to achieve the toolbar behaviors seen in Apple's App Store.
+
+Sample usage:
+```dart
+return CustomScrollView(
+  controller: scrollController,
+  slivers: [
+    SliverToolBar(
+      title: const Text('SliverToolbar'),
+      pinned: true,
+      toolbarOpacity: 0.75,
+    ),
+    // Other slivers below  
+  ],
+);
+```
+
 ## MacosListTile
 
-A widget that aims to approximate the [ListTile] widget found in
+A widget that aims to approximate the [`ListTile`](https://api.flutter.dev/flutter/material/ListTile-class.html) widget found in
 Flutter's material library.
 
 ![MacosListTile](https://imgur.com/pQB99M2.png)
 
-Usage:
+Sample usage:
 ```dart
 MacosListTile(
   leading: const Icon(CupertinoIcons.lightbulb),
@@ -354,7 +405,49 @@ MacosListTile(
 ),
 ```
 
+## MacosTabView
+A multipage interface that displays one page at a time. Must be used in a `StatefulWidget`.
 
+<img src="https://imgur.com/Mdn7Li2.png"/>
+
+You can control the placement of the tabs using the `position` property.
+
+Usage:
+```dart
+final _controller = MacosTabController(
+  initialIndex: 0,
+  length: 3,
+);
+
+...
+
+MacosTabView(
+  controller: _controller,
+  tabs: const [
+    MacosTab(
+      label: 'Tab 1',
+    ),
+    MacosTab(
+      label: 'Tab 2',
+    ),
+    MacosTab(
+      label: 'Tab 3',
+    ),
+  ],
+  children: const [
+    Center(
+      child: Text('Tab 1'),
+    ),
+    Center(
+      child: Text('Tab 2'),
+    ),
+    Center(
+      child: Text('Tab 3'),
+    ),
+  ],
+),        
+
+```
 
 # Icons
 
@@ -584,6 +677,16 @@ MacosSwitch(
 ),
 ```
 
+## MacosSegmentedControl
+
+Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabView` to navigate between the 
+different tabs of the tab bar.
+
+<img src="https://imgur.com/Igvms1w.jpg"/>
+
+The typical usage of this widget is by `MacosTabView`, to control the navigation of its children. You do not need to 
+specify a `MacosSegmentedControl` with your `MacosTabView`, as it is built by that widget.
+
 # Dialogs and Sheets
 
 ## MacosAlertDialog
@@ -783,6 +886,29 @@ CapacityIndicator(
 
 You can set `discrete` to `true` to make it a discrete capacity indicator.
 
+### MacosSlider
+
+A slider is a control that lets people select a value from a continuous or discrete range of values by moving the slider thumb.
+
+ | Continuous                                                                                 | Discrete                                                                                                                                 |
+ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+ | ![Continuous Slider Example](https://i.imgur.com/dc4YjoX.png)                              | ![Discrete Slider Example](https://i.imgur.com/KckOTUf.png)                                                                              |
+ | A horizontal slider where any value continuous value between a min and max can be selected | A horizontal slider where only discrete values between a min and max can be selected. Tick marks are often displayed to provide context. |
+
+
+Here's an example of how to create an interactive continuous slider:
+
+```dart
+double value = 0.5;
+
+MacosSlider(
+  value: value,
+  onChanged: (v) {
+    setState(() => value = v);
+  },
+),
+```
+
 ### RatingIndicator
 
 A rating indicator uses a series of horizontally arranged graphical symbols to communicate a ranking level. The default 
@@ -840,6 +966,13 @@ There are three styles of `MacosDatePickers`:
   calendar-like interface to select a date.
 * `combined`: provides both `textual` and `graphical` interfaces.
 
+Example usage:
+```dart
+MacosDatePicker(
+  onDateChanged: (date) => debugPrint('$date'),
+),
+```
+
 ## MacosTimePicker
 
 <img src="https://imgur.com/RtPbRo2.png" width="50%"/>
@@ -853,3 +986,27 @@ There are three styles of `MacosTimePickers`:
 * `graphical`: a visual time picker where the user can move the hands of a
   clock-like interface to select a time.
 * `combined`: provides both `textual` and `graphical` interfaces.
+
+Example usage:
+```dart
+MacosTimePicker(
+  onTimeChanged: (time) => debugPrint('$time'),
+),
+```
+
+## MacosColorWell
+
+<img src="https://imgur.com/VpK4IlM.gif" width="50%"/>
+
+Lets the user choose a color via the native macOS color picker.
+
+You can choose which mode to launch the picker in using the `ColorPickerMode` enum. The default is `ColorPickerMode.wheel`
+
+🚨 This widget will not work on platforms other than macOS!
+
+Example usage: 
+```dart
+MacosColorWell(
+  onColorSelected: (color) => debugPrint('$color'),
+),
+```

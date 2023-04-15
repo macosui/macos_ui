@@ -7,20 +7,20 @@ import 'package:macos_ui/src/library.dart';
 /// See also:
 ///
 ///  * [MacosTooltipThemeData], which is used to configure this theme.
-class TooltipTheme extends InheritedTheme {
+class MacosTooltipTheme extends InheritedTheme {
   /// Builds a [MacosTooltipTheme].
   ///
   /// The data argument must not be null.
-  const TooltipTheme({
+  const MacosTooltipTheme({
     super.key,
     required this.data,
     required super.child,
   });
 
   /// The configuration for this theme
-  final TooltipThemeData data;
+  final MacosTooltipThemeData data;
 
-  /// Returns the [data] from the closest [TooltipTheme] ancestor. If there is
+  /// Returns the [data] from the closest [MacosTooltipTheme] ancestor. If there is
   /// no ancestor, it returns [MacosThemeData.tooltipTheme].
   ///
   /// Typical usage is as follows:
@@ -28,23 +28,36 @@ class TooltipTheme extends InheritedTheme {
   /// ```dart
   /// TooltipThemeData theme = TooltipTheme.of(context);
   /// ```
-  static TooltipThemeData of(BuildContext context) {
-    final TooltipTheme? tooltipTheme =
-        context.dependOnInheritedWidgetOfExactType<TooltipTheme>();
+  static MacosTooltipThemeData of(BuildContext context) {
+    final MacosTooltipTheme? tooltipTheme =
+        context.dependOnInheritedWidgetOfExactType<MacosTooltipTheme>();
     return tooltipTheme?.data ?? MacosTheme.of(context).tooltipTheme;
   }
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    return TooltipTheme(data: data, child: child);
+    return MacosTooltipTheme(data: data, child: child);
   }
 
   @override
-  bool updateShouldNotify(TooltipTheme oldWidget) => data != oldWidget.data;
+  bool updateShouldNotify(MacosTooltipTheme oldWidget) =>
+      data != oldWidget.data;
 }
 
-class TooltipThemeData with Diagnosticable {
-  const TooltipThemeData({
+/// {@template macosTooltipThemeData}
+/// A style that overrides the default appearance of
+/// [MacosTooltip]s when it's used with [MacosTooltipTheme] or with the
+/// overall [MacosTheme]'s [MacosThemeData.tooltipTheme].
+///
+/// See also:
+///
+///  * [MacosTooltipTheme], the theme which is configured with this class.
+///  * [MacosThemeData.tooltipTheme], which can be used to override
+///  the default style for [MacosTooltip]s below the overall [MacosTheme].
+/// {@endtemplate}
+class MacosTooltipThemeData with Diagnosticable {
+  /// {@macro macosTooltipThemeData}
+  const MacosTooltipThemeData({
     this.height,
     this.verticalOffset,
     this.padding,
@@ -59,11 +72,11 @@ class TooltipThemeData with Diagnosticable {
   /// Creates a default tooltip theme.
   ///
   /// [textStyle] is usually [MacosTypography.callout]
-  factory TooltipThemeData.standard({
+  factory MacosTooltipThemeData.standard({
     required Brightness brightness,
     required TextStyle textStyle,
   }) {
-    return TooltipThemeData(
+    return MacosTooltipThemeData(
       height: 20.0,
       verticalOffset: 18.0,
       preferBelow: true,
@@ -76,7 +89,7 @@ class TooltipThemeData with Diagnosticable {
             brightness.isDark ? CupertinoColors.white : CupertinoColors.black,
       ),
       decoration: () {
-        final radius = BorderRadius.circular(2.0);
+        const radius = BorderRadius.all(Radius.circular(2.0));
         final shadow = [
           BoxShadow(
             color: brightness.isDark
@@ -170,8 +183,8 @@ class TooltipThemeData with Diagnosticable {
   /// If null, [MacosTypography.callout] is used
   final TextStyle? textStyle;
 
-  /// Copies this [TooltipThemeData] into another.
-  TooltipThemeData copyWith({
+  /// Copies this [MacosTooltipThemeData] into another.
+  MacosTooltipThemeData copyWith({
     Decoration? decoration,
     double? height,
     EdgeInsetsGeometry? margin,
@@ -182,7 +195,7 @@ class TooltipThemeData with Diagnosticable {
     double? verticalOffset,
     Duration? waitDuration,
   }) {
-    return TooltipThemeData(
+    return MacosTooltipThemeData(
       decoration: decoration ?? this.decoration,
       height: height ?? this.height,
       margin: margin ?? this.margin,
@@ -198,12 +211,12 @@ class TooltipThemeData with Diagnosticable {
   /// Linearly interpolate between two tooltip themes.
   ///
   /// All the properties must be non-null.
-  static TooltipThemeData lerp(
-    TooltipThemeData a,
-    TooltipThemeData b,
+  static MacosTooltipThemeData lerp(
+    MacosTooltipThemeData a,
+    MacosTooltipThemeData b,
     double t,
   ) {
-    return TooltipThemeData(
+    return MacosTooltipThemeData(
       decoration: Decoration.lerp(a.decoration, b.decoration, t),
       height: t < 0.5 ? a.height : b.height,
       margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t),
@@ -216,7 +229,8 @@ class TooltipThemeData with Diagnosticable {
     );
   }
 
-  TooltipThemeData merge(TooltipThemeData? other) {
+  /// Merges this [MacosTooltipThemeData] with another.
+  MacosTooltipThemeData merge(MacosTooltipThemeData? other) {
     if (other == null) return this;
     return copyWith(
       decoration: other.decoration,
@@ -234,7 +248,7 @@ class TooltipThemeData with Diagnosticable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TooltipThemeData &&
+      other is MacosTooltipThemeData &&
           runtimeType == other.runtimeType &&
           height == other.height &&
           verticalOffset == other.verticalOffset &&

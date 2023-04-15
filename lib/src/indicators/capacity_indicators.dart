@@ -90,7 +90,7 @@ class CapacityIndicator extends StatelessWidget {
   }
 
   void _handleUpdate(Offset lp, double width) {
-    double value = (lp.dx / width) * splits;
+    double value = (lp.dx / width) * 100 / splits;
     onChanged?.call(value.clamp(0.0, 100.0));
   }
 
@@ -108,7 +108,7 @@ class CapacityIndicator extends StatelessWidget {
           if (width.isInfinite) width = 100;
           final splitWidth = width / splits;
           if (discrete) {
-            final fillToIndex = value / splits - 1;
+            final fillToIndex = (value / 100) * splits - 1;
             return SizedBox(
               width: width,
               child: GestureDetector(
@@ -174,10 +174,16 @@ class CapacityIndicatorCell extends StatelessWidget {
     this.backgroundColor = CupertinoColors.tertiarySystemGroupedBackground,
   }) : assert(value >= 0 && value <= 100);
 
+  /// The color of the cell.
   final Color color;
+
+  /// The background color of the cell.
   final Color backgroundColor;
+
+  /// The border color of the cell.
   final Color borderColor;
 
+  /// The current value of the cell.
   final double value;
 
   @override

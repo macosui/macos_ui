@@ -1,0 +1,27 @@
+name: Create Stable Release
+on:
+  push:
+    branches:
+      - stable
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get Package Version
+        id: package-version
+        uses: NiklasLehnfeld/flutter-version-number-action@v1
+      - name: Create a Stable Release
+        id: create-release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.repos.createRelease({
+              owner: "GroovinChip",
+              repo: "macos_ui",
+              name: "Version ${{ steps.package-version.outputs.version-number }}",
+              tag_name: "${{ steps.package-version.outputs.version-number }}",
+              generate_release_notes: true,
+            })
+

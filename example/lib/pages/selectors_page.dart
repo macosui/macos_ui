@@ -30,6 +30,7 @@ class _SelectorsPageState extends State<SelectorsPage> {
         ContentArea(
           builder: (context, scrollController) {
             return SingleChildScrollView(
+              controller: scrollController,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [

@@ -113,6 +113,7 @@ class HelpButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('disabledColor', disabledColor));
   }
 
+  /// Merges this [HelpButtonThemeData] with another.
   HelpButtonThemeData merge(HelpButtonThemeData? other) {
     if (other == null) return this;
     return copyWith(

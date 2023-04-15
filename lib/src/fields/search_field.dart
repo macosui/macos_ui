@@ -1,7 +1,8 @@
 import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
-import 'package:flutter/services.dart';
 
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(7.0));
 const double _kResultHeight = 20.0;
@@ -240,7 +241,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
       }
       if (isResultExpanded) {
         _overlayEntry = _createOverlay();
-        Overlay.of(context)!.insert(_overlayEntry);
+        Overlay.of(context).insert(_overlayEntry);
       } else {
         _overlayEntry.remove();
       }
@@ -249,82 +250,6 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
       suggestionStream.sink.add(null);
       suggestionStream.sink.add(widget.results);
     });
-  }
-
-  @override
-  void dispose() {
-    suggestionStream.close();
-    if (widget.controller == null) {
-      searchController!.dispose();
-    }
-    if (widget.focusNode == null) {
-      _focus!.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CompositedTransformTarget(
-          link: _layerLink,
-          child: MacosTextField(
-            placeholder: widget.placeholder,
-            prefix: const Padding(
-              padding: EdgeInsets.symmetric(),
-              child: MacosIcon(CupertinoIcons.search),
-            ),
-            clearButtonMode: OverlayVisibilityMode.editing,
-            onTap: () {
-              suggestionStream.sink.add(widget.results);
-              if (mounted) {
-                setState(() {
-                  isResultExpanded = true;
-                });
-              }
-              widget.onTap?.call();
-            },
-            controller: widget.controller ?? searchController,
-            focusNode: _focus,
-            style: widget.style,
-            onChanged: (query) {
-              final searchResult = <SearchResultItem>[];
-              if (query.isEmpty) {
-                suggestionStream.sink.add(widget.results);
-                return;
-              }
-              if (widget.results != null) {
-                for (final suggestion in widget.results!) {
-                  if (suggestion.searchKey
-                      .toLowerCase()
-                      .contains(query.toLowerCase())) {
-                    searchResult.add(suggestion);
-                  }
-                }
-              }
-              suggestionStream.sink.add(searchResult);
-              widget.onChanged?.call(query);
-            },
-            decoration: widget.decoration,
-            focusedDecoration: widget.focusedDecoration,
-            padding: widget.padding,
-            placeholderStyle: widget.placeholderStyle,
-            textAlign: widget.textAlign,
-            autocorrect: widget.autocorrect,
-            autofocus: widget.autofocus,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
-            expands: widget.expands,
-            maxLength: widget.maxLength,
-            maxLengthEnforcement: widget.maxLengthEnforcement,
-            inputFormatters: widget.inputFormatters,
-            enabled: widget.enabled,
-          ),
-        ),
-      ],
-    );
   }
 
   OverlayEntry _createOverlay() {
@@ -401,44 +326,120 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
           }
           height += _kResultsOverlayMargin;
 
-          return MacosOverlayFilter(
-            borderRadius: _kBorderRadius,
-            color: MacosSearchFieldTheme.of(context).resultsBackgroundColor,
-            child: SizedBox(
-              height: height,
-              child: ListView.builder(
-                reverse: showOverlayAbove,
-                padding: const EdgeInsets.all(6.0),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  var selectedItem = snapshot.data![index]!;
-                  return _SearchResultItemButton(
-                    resultHeight: widget.resultHeight,
-                    onPressed: () {
-                      searchController!.text = selectedItem.searchKey;
-                      searchController!.selection = TextSelection.fromPosition(
-                        TextPosition(
-                          offset: searchController!.text.length,
-                        ),
-                      );
-                      selectedItem.onSelected?.call();
-                      // Hide the results
-                      suggestionStream.sink.add(null);
-                      if (widget.onResultSelected != null) {
-                        widget.onResultSelected!(selectedItem);
-                      }
-                    },
-                    child: selectedItem.child ??
-                        Text(
-                          selectedItem.searchKey,
-                        ),
-                  );
-                },
+          return TextFieldTapRegion(
+            child: MacosOverlayFilter(
+              borderRadius: _kBorderRadius,
+              color: MacosSearchFieldTheme.of(context).resultsBackgroundColor,
+              child: SizedBox(
+                height: height,
+                child: ListView.builder(
+                  reverse: showOverlayAbove,
+                  padding: const EdgeInsets.all(6.0),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    var selectedItem = snapshot.data![index]!;
+                    return _SearchResultItemButton(
+                      resultHeight: widget.resultHeight,
+                      onPressed: () {
+                        searchController!.text = selectedItem.searchKey;
+                        searchController!.selection =
+                            TextSelection.fromPosition(
+                          TextPosition(
+                            offset: searchController!.text.length,
+                          ),
+                        );
+                        selectedItem.onSelected?.call();
+                        // Hide the results
+                        suggestionStream.sink.add(null);
+                        if (widget.onResultSelected != null) {
+                          widget.onResultSelected!(selectedItem);
+                        }
+                      },
+                      child: selectedItem.child ?? Text(selectedItem.searchKey),
+                    );
+                  },
+                ),
               ),
             ),
           );
         }
       },
+    );
+  }
+
+  @override
+  void dispose() {
+    suggestionStream.close();
+    if (widget.controller == null) {
+      searchController!.dispose();
+    }
+    if (widget.focusNode == null) {
+      _focus!.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CompositedTransformTarget(
+          link: _layerLink,
+          child: MacosTextField(
+            placeholder: widget.placeholder,
+            prefix: const Padding(
+              padding: EdgeInsets.symmetric(),
+              child: MacosIcon(CupertinoIcons.search),
+            ),
+            clearButtonMode: OverlayVisibilityMode.editing,
+            onTap: () {
+              suggestionStream.sink.add(widget.results);
+              if (mounted) {
+                setState(() {
+                  isResultExpanded = true;
+                });
+              }
+              widget.onTap?.call();
+            },
+            controller: widget.controller ?? searchController,
+            focusNode: _focus,
+            style: widget.style,
+            onChanged: (query) {
+              final searchResult = <SearchResultItem>[];
+              if (query.isEmpty) {
+                suggestionStream.sink.add(widget.results);
+                return;
+              }
+              if (widget.results != null) {
+                for (final suggestion in widget.results!) {
+                  if (suggestion.searchKey
+                      .toLowerCase()
+                      .contains(query.toLowerCase())) {
+                    searchResult.add(suggestion);
+                  }
+                }
+              }
+              suggestionStream.sink.add(searchResult);
+              widget.onChanged?.call(query);
+            },
+            decoration: widget.decoration,
+            focusedDecoration: widget.focusedDecoration,
+            padding: widget.padding,
+            placeholderStyle: widget.placeholderStyle,
+            textAlign: widget.textAlign,
+            autocorrect: widget.autocorrect,
+            autofocus: widget.autofocus,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
+            expands: widget.expands,
+            maxLength: widget.maxLength,
+            maxLengthEnforcement: widget.maxLengthEnforcement,
+            inputFormatters: widget.inputFormatters,
+            enabled: widget.enabled,
+          ),
+        ),
+      ],
     );
   }
 }

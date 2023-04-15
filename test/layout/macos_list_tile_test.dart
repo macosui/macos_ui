@@ -20,10 +20,11 @@ void main() {
           pushButtonTheme: const PushButtonThemeData(),
         ),
         home: MacosWindow(
+          disableWallpaperTinting: true,
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context, _) {
                   return MacosListTile(
                     title: const Text('List Tile'),
                     onClick: mockOnPressedFunction.handler,
@@ -52,7 +53,7 @@ void main() {
           child: MacosScaffold(
             children: [
               ContentArea(
-                builder: (context, scrollController) {
+                builder: (context, _) {
                   return MacosListTile(
                     title: const Text('List Tile'),
                     subtitle: const Text('Subtitle'),

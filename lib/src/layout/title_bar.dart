@@ -120,7 +120,7 @@ class TitleBar extends StatelessWidget {
               gradient: decoration?.gradient,
             ),
             child: NavigationToolbar(
-              middle: title,
+              middle: _title,
               centerMiddle: centerTitle,
               middleSpacing: 8,
             ),

@@ -8,8 +8,13 @@ import 'package:macos_ui/src/selectors/keyboard_shortcut_runner.dart';
 
 /// Defines the possibles [MacosDatePicker] styles.
 enum DatePickerStyle {
+  /// A text-only date picker.
   textual,
+
+  /// A graphical-only date picker.
   graphical,
+
+  /// A text-and-graphical date picker.
   combined,
 }
 
@@ -38,6 +43,7 @@ class MacosDatePicker extends StatefulWidget {
     super.key,
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
+    this.initialDate,
   });
 
   /// The [DatePickerStyle] to use.
@@ -48,12 +54,31 @@ class MacosDatePicker extends StatefulWidget {
   /// {macro onDateChanged}
   final OnDateChanged onDateChanged;
 
+  /// Set an initial date for the picker.
+  ///
+  /// Defaults to `DateTime.now()`.
+  final DateTime? initialDate;
+
   @override
   State<MacosDatePicker> createState() => _MacosDatePickerState();
 }
 
 class _MacosDatePickerState extends State<MacosDatePicker> {
-  final _initialDate = DateTime.now();
+  // Use this to get the weekday abbreviations instead of
+  // localizations.narrowWeekdays() in order to match Apple's spec
+  static const List<String> _narrowWeekdays = <String>[
+    'Su',
+    'Mo',
+    'Tu',
+    'We',
+    'Th',
+    'Fr',
+    'Sa',
+  ];
+
+  final _today = DateTime.now();
+  late final _initialDate = widget.initialDate ?? _today;
+
   late int _selectedDay;
   late int _selectedMonth;
   late int _selectedYear;
@@ -126,18 +151,6 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     }
     widget.onDateChanged.call(_formatAsDateTime());
   }
-
-  // Use this to get the weekday abbreviations instead of
-  // localizations.narrowWeekdays() in order to match Apple's spec
-  static const List<String> _narrowWeekdays = <String>[
-    'Su',
-    'Mo',
-    'Tu',
-    'We',
-    'Th',
-    'Fr',
-    'Sa',
-  ];
 
   // Creates the day headers - Su, Mo, Tu, We, Th, Fr, Sa
   List<Widget> _dayHeaders(
@@ -306,7 +319,8 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(2.0, 2.0, 0.0, 4.0),
+                padding:
+                    const EdgeInsets.only(left: 2.0, top: 2.0, bottom: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -340,9 +354,13 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                               setState(() {
                                 _selectedYear--;
                                 _selectedMonth = 12;
+                                _selectedDay = 1;
                               });
                             } else {
-                              setState(() => _selectedMonth--);
+                              setState(() {
+                                _selectedMonth--;
+                                _selectedDay = 1;
+                              });
                             }
                             widget.onDateChanged.call(_formatAsDateTime());
                           },
@@ -383,9 +401,13 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                               setState(() {
                                 _selectedYear++;
                                 _selectedMonth = 1;
+                                _selectedDay = 1;
                               });
                             } else {
-                              setState(() => _selectedMonth++);
+                              setState(() {
+                                _selectedMonth++;
+                                _selectedDay = 1;
+                              });
                             }
 
                             widget.onDateChanged.call(_formatAsDateTime());
@@ -397,7 +419,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(6.0, 0.0, 5.0, 0.0),
+                padding: const EdgeInsets.only(left: 6.0, right: 5.0),
                 child: Column(
                   children: [
                     GridView.custom(
@@ -469,7 +491,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           DateTime(_selectedYear, _selectedMonth, _selectedDay),
           dayToBuild,
         );
-        final isToday = DateUtils.isSameDay(_initialDate, dayToBuild);
+        final isToday = DateUtils.isSameDay(_today, dayToBuild);
 
         BoxDecoration? decoration;
         Widget? dayText;
@@ -483,7 +505,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewCurrentDateColor,
-            borderRadius: BorderRadius.circular(3.0),
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
           );
         } else if (isToday) {
           dayText = Text(
@@ -499,7 +521,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           );
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewSelectedDateColor,
-            borderRadius: BorderRadius.circular(3.0),
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
           );
         }
 
@@ -511,20 +533,18 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             });
             widget.onDateChanged.call(_formatAsDateTime());
           },
-          child: Padding(
+          child: Container(
+            decoration: decoration,
             padding: const EdgeInsets.symmetric(vertical: 2.0),
-            child: Container(
-              decoration: decoration,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 2.0),
-                  child: dayText ??
-                      Text(
-                        localizations.formatDecimal(day),
-                        style: dayStyle,
-                      ),
-                ),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 2.0),
+                child: dayText ??
+                    Text(
+                      localizations.formatDecimal(day),
+                      style: dayStyle,
+                    ),
               ),
             ),
           ),

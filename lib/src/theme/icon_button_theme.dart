@@ -129,6 +129,7 @@ class MacosIconButtonThemeData with Diagnosticable {
     );
   }
 
+  /// Merges this [MacosIconButtonThemeData] with another.
   MacosIconButtonThemeData merge(MacosIconButtonThemeData? other) {
     if (other == null) return this;
     return copyWith(

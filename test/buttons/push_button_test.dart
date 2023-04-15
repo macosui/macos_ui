@@ -25,7 +25,7 @@ void main() {
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context, _) {
                     return PushButton(
                       buttonSize: ButtonSize.small,
                       onPressed: mockOnPressedFunction.handler,
@@ -55,10 +55,11 @@ void main() {
             pushButtonTheme: darkPushButtonThemeData,
           ),
           home: MacosWindow(
+            disableWallpaperTinting: true,
             child: MacosScaffold(
               children: [
                 ContentArea(
-                  builder: (context, scrollController) {
+                  builder: (context, _) {
                     return PushButton(
                       buttonSize: ButtonSize.small,
                       key: pushButtonKey,

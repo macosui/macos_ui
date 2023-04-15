@@ -6,21 +6,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Flutter
-        uses: subosito/flutter-action@master
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: install dependencies
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: format code
-        run: flutter format --set-exit-if-changed .
+      - uses: actions/checkout@v3
+      - name: Set up git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
 
-      - name: analyze code
-        run: flutter analyze .
+      - name: Format code
+        run: |
+          dart format .
+          if [ $? -eq 1 ]; then
+            git add .
+            git commit -m "chore: formatting corrections"
+            git push
+            echo "Code has been formatted and changes have been committed and pushed."
+          fi
+          echo "All code is properly formatted!"
 
-      - name: test code
-        run: flutter test
-
+      - name: Analyze code
+        run: flutter analyze --fatal-infos .

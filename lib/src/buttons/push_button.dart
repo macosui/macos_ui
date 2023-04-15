@@ -5,8 +5,12 @@ import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+/// The sizes a [PushButton] can be.
 enum ButtonSize {
+  /// A large [PushButton].
   large,
+
+  /// A small [PushButton].
   small,
 }
 
@@ -22,8 +26,11 @@ const EdgeInsetsGeometry _kLargeButtonPadding = EdgeInsets.symmetric(
 const BorderRadius _kSmallButtonRadius = BorderRadius.all(Radius.circular(5.0));
 const BorderRadius _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
 
+/// {@template pushButton}
 /// A macOS-style button.
+/// {@endtemplate}
 class PushButton extends StatefulWidget {
+  /// {@macro pushButton}
   const PushButton({
     super.key,
     required this.child,
@@ -172,15 +179,6 @@ class PushButtonState extends State<PushButton>
     _opacityTween.end = widget.pressedOpacity ?? 1.0;
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @visibleForTesting
-  bool buttonHeldDown = false;
-
   void _handleTapDown(TapDownDetails event) {
     if (!buttonHeldDown) {
       buttonHeldDown = true;
@@ -212,6 +210,15 @@ class PushButtonState extends State<PushButton>
       if (mounted && wasHeldDown != buttonHeldDown) _animate();
     });
   }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @visibleForTesting
+  bool buttonHeldDown = false;
 
   @override
   Widget build(BuildContext context) {
