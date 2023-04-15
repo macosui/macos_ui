@@ -86,6 +86,21 @@ class _FieldsPageState extends State<FieldsPage> {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 300.0,
+                    child: MacosAutoCompleteField(
+                      results:
+                          countries.map((e) => SearchResultItem(e)).toList(),
+                      placeholder: 'Search for a country...',
+                      onResultSelected: (resultItem) {
+                        // Retrieve the user-selected search suggestion via its
+                        // searchKey property.
+                        debugPrint(resultItem.searchKey);
+                      },
+                      onChanged: (searchQuery) => debugPrint(searchQuery),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 300.0,
                     child: MacosSearchField(
                       results:
                           countries.map((e) => SearchResultItem(e)).toList(),

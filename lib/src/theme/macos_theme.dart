@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/library.dart';
+import '../../macos_ui.dart';
+import '../library.dart';
 
 CupertinoDynamicColor _kScrollbarColor = CupertinoDynamicColor.withBrightness(
   color: MacosColors.systemGrayColor.color.withOpacity(0.8),
@@ -207,7 +207,7 @@ class MacosThemeData with Diagnosticable {
     MacosPulldownButtonThemeData? pulldownButtonTheme,
     MacosDatePickerThemeData? datePickerTheme,
     MacosTimePickerThemeData? timePickerTheme,
-    MacosSearchFieldThemeData? searchFieldTheme,
+    MacosAutoCompleteFieldThemeData? autoCompleteFieldTheme,
   }) {
     // ignore: no_leading_underscores_for_local_identifiers
     final Brightness _brightness = brightness ?? Brightness.light;
@@ -357,7 +357,7 @@ class MacosThemeData with Diagnosticable {
       hourTextColor: MacosColors.black,
     );
 
-    searchFieldTheme ??= MacosSearchFieldThemeData(
+    autoCompleteFieldTheme ??= MacosAutoCompleteFieldThemeData(
       highlightColor: isDark
           ? CupertinoColors.activeBlue.darkColor
           : CupertinoColors.activeBlue.color,
@@ -383,7 +383,7 @@ class MacosThemeData with Diagnosticable {
       pulldownButtonTheme: pulldownButtonTheme,
       datePickerTheme: datePickerTheme,
       timePickerTheme: timePickerTheme,
-      searchFieldTheme: searchFieldTheme,
+      autoCompleteFieldTheme: autoCompleteFieldTheme,
     );
 
     final customizedData = defaultData.copyWith(
@@ -402,7 +402,7 @@ class MacosThemeData with Diagnosticable {
       popupButtonTheme: popupButtonTheme,
       pulldownButtonTheme: pulldownButtonTheme,
       datePickerTheme: datePickerTheme,
-      searchFieldTheme: searchFieldTheme,
+      autoCompleteFieldTheme: autoCompleteFieldTheme,
     );
 
     return defaultData.merge(customizedData);
@@ -431,7 +431,7 @@ class MacosThemeData with Diagnosticable {
     required this.pulldownButtonTheme,
     required this.datePickerTheme,
     required this.timePickerTheme,
-    required this.searchFieldTheme,
+    required this.autoCompleteFieldTheme,
   });
 
   /// A default light theme.
@@ -506,7 +506,7 @@ class MacosThemeData with Diagnosticable {
   final MacosTimePickerThemeData timePickerTheme;
 
   /// The default style for [MacosSearchField]s below the overall [MacosTheme]
-  final MacosSearchFieldThemeData searchFieldTheme;
+  final MacosAutoCompleteFieldThemeData autoCompleteFieldTheme;
 
   /// Linearly interpolate between two themes.
   static MacosThemeData lerp(MacosThemeData a, MacosThemeData b, double t) {
@@ -551,9 +551,9 @@ class MacosThemeData with Diagnosticable {
         b.timePickerTheme,
         t,
       ),
-      searchFieldTheme: MacosSearchFieldThemeData.lerp(
-        a.searchFieldTheme,
-        b.searchFieldTheme,
+      autoCompleteFieldTheme: MacosAutoCompleteFieldThemeData.lerp(
+        a.autoCompleteFieldTheme,
+        b.autoCompleteFieldTheme,
         t,
       ),
     );
@@ -577,7 +577,7 @@ class MacosThemeData with Diagnosticable {
     MacosPulldownButtonThemeData? pulldownButtonTheme,
     MacosDatePickerThemeData? datePickerTheme,
     MacosTimePickerThemeData? timePickerTheme,
-    MacosSearchFieldThemeData? searchFieldTheme,
+    MacosAutoCompleteFieldThemeData? autoCompleteFieldTheme,
   }) {
     return MacosThemeData.raw(
       brightness: brightness ?? this.brightness,
@@ -596,7 +596,8 @@ class MacosThemeData with Diagnosticable {
       pulldownButtonTheme: this.pulldownButtonTheme.merge(pulldownButtonTheme),
       datePickerTheme: this.datePickerTheme.merge(datePickerTheme),
       timePickerTheme: this.timePickerTheme.merge(timePickerTheme),
-      searchFieldTheme: this.searchFieldTheme.merge(searchFieldTheme),
+      autoCompleteFieldTheme:
+          this.autoCompleteFieldTheme.merge(autoCompleteFieldTheme),
     );
   }
 
@@ -620,7 +621,8 @@ class MacosThemeData with Diagnosticable {
       pulldownButtonTheme: pulldownButtonTheme.merge(other.pulldownButtonTheme),
       datePickerTheme: datePickerTheme.merge(other.datePickerTheme),
       timePickerTheme: timePickerTheme.merge(other.timePickerTheme),
-      searchFieldTheme: searchFieldTheme.merge(other.searchFieldTheme),
+      autoCompleteFieldTheme:
+          autoCompleteFieldTheme.merge(other.autoCompleteFieldTheme),
     );
   }
 
@@ -681,9 +683,9 @@ class MacosThemeData with Diagnosticable {
       ),
     );
     properties.add(
-      DiagnosticsProperty<MacosSearchFieldThemeData>(
-        'searchFieldTheme',
-        searchFieldTheme,
+      DiagnosticsProperty<MacosAutoCompleteFieldThemeData>(
+        'autoCompleteFieldTheme',
+        autoCompleteFieldTheme,
       ),
     );
   }
