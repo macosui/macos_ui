@@ -59,16 +59,14 @@ class _ButtonsPageState extends State<ButtonsPage> {
         ],
       ),
       children: [
-        ResizablePane(
-          minSize: 180,
-          startSize: 200,
-          windowBreakpoint: 700,
-          resizableSide: ResizableSide.right,
-          builder: (_, __) {
-            return const Center(
-              child: Text('Resizable Pane'),
-            );
-          },
+        ResizablePane.noScrollBar(
+            minSize: 180,
+            startSize: 200,
+            windowBreakpoint: 700,
+            resizableSide: ResizableSide.right,
+            child: const Center(
+                child: Text('Resizable Pane')
+            )
         ),
         ContentArea(
           builder: (context, scrollController) {
