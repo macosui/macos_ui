@@ -1,3 +1,7 @@
+##[2.0.0-beta.2]
+* Provide `ReziablePane.noScrollBar` constructor which in opposite to the default `ResizablePane` constructor does not have a built in `MaosScrollbar`
+  * The default `ResizablePane`  constructor is not `const` constructor anymore
+
 ## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
 * Migrate macos_ui to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
