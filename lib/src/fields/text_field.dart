@@ -759,7 +759,7 @@ class MacosTextField extends StatefulWidget {
       'clearButtonMode',
       clearButtonMode,
     ));
-    properties.add(EnumProperty<TextInputType>(
+    properties.add(DiagnosticsProperty<TextInputType>(
       'keyboardType',
       keyboardType,
       defaultValue: TextInputType.text,
