@@ -1,3 +1,6 @@
+## [2.1.0-beta.1]
+Updated depreciated items for flutter beta channel
+
 ## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
 * Migrate macos_ui to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
