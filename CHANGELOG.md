@@ -1,3 +1,5 @@
+## [2.0.0-beta.2]
+* Migrate macos_ui dependency to flutter 3.10 and dart 3.0.0
 ## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
 * Migrate macos_ui to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
