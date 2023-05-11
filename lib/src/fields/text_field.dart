@@ -127,7 +127,7 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 
   @override
-    void onDragSelectionEnd(TapDragEndDetails details) {
+  void onDragSelectionEnd(TapDragEndDetails details) {
     _state._requestKeyboard();
   }
 }
