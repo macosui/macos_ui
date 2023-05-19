@@ -113,7 +113,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
 }
 
 class _ScaffoldBody extends MultiChildRenderObjectWidget {
-  _ScaffoldBody({
+  const _ScaffoldBody({
     super.children,
   });
 
