@@ -160,9 +160,9 @@ class _ToolbarPageState extends State<ToolbarPage> {
             return SingleChildScrollView(
               controller: scrollController,
               padding: const EdgeInsets.all(30),
-              child: Center(
+              child: const Center(
                 child: Column(
-                  children: const [
+                  children: [
                     Text(
                       'A toolbar provides convenient access to frequently used commands and controls that perform actions relevant to the current view.',
                       textAlign: TextAlign.center,
