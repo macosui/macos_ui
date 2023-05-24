@@ -367,8 +367,8 @@ const countries = [
 var actionResults = [
   SearchResultItem(
     'Build project',
-    child: Row(
-      children: const [
+    child: const Row(
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.hammer),
@@ -380,8 +380,8 @@ var actionResults = [
   ),
   SearchResultItem(
     'Debug project',
-    child: Row(
-      children: const [
+    child: const Row(
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.tickets),
@@ -393,8 +393,8 @@ var actionResults = [
   ),
   SearchResultItem(
     'Open containing folder',
-    child: Row(
-      children: const [
+    child: const Row(
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.folder),
