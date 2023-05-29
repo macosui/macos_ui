@@ -38,6 +38,7 @@ class MacosAutoCompleteField<T> extends StatefulWidget {
     this.onResultSelected,
     this.maxResultsToShow = 5,
     this.showResultsWhenEmpty = true,
+    this.showResultsStartingWithFirst = false,
     this.resultHeight = _kResultHeight,
     this.emptyWidget = const SizedBox.shrink(),
     this.controller,
@@ -96,6 +97,11 @@ class MacosAutoCompleteField<T> extends StatefulWidget {
   ///
   /// Defaults to true.
   final bool showResultsWhenEmpty;
+
+  /// Specifies if results starting with query should be listed first
+  ///
+  /// Defaults to false.
+  final bool showResultsStartingWithFirst;
 
   /// Specifies the height of each suggestion item in the list.
   ///
@@ -477,6 +483,22 @@ class _MacosAutoCompleteFieldState<T> extends State<MacosAutoCompleteField<T>> {
                     searchResult.add(suggestion);
                   }
                 }
+              }
+              if (widget.showResultsStartingWithFirst) {
+                searchResult.sort((a, b) {
+                  bool aStartsWith = a.searchKey
+                      .startsWith(RegExp(query, caseSensitive: false));
+                  bool bStartsWith = b.searchKey
+                      .startsWith(RegExp(query, caseSensitive: false));
+                  if ((aStartsWith && bStartsWith) ||
+                      (!aStartsWith && !bStartsWith)) {
+                    return a.searchKey.compareTo(b.searchKey);
+                  } else if (aStartsWith) {
+                    return -1;
+                  } else {
+                    return 1;
+                  }
+                });
               }
               suggestionStream.sink
                   .add(searchResult.isEmpty ? null : searchResult);

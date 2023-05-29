@@ -90,6 +90,7 @@ class _FieldsPageState extends State<FieldsPage> {
                       results:
                           countries.map((e) => SearchResultItem(e)).toList(),
                       placeholder: 'Search for a country...',
+                      showResultsStartingWithFirst: true,
                       onResultSelected: (resultItem) {
                         // Retrieve the user-selected search suggestion via its
                         // searchKey property.
