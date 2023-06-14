@@ -1,3 +1,7 @@
+## [1.12.3]
+* Allows specifying the CupertinoThemeData.
+* macOS alerts can be shown without a badge/icon.
+
 ## [1.12.2]
 * Fixed a bug where clicking on a overflowed toolbar item with a navigation callback wouldn't work ([#346](https://github.com/GroovinChip/macos_ui/issues/346)).
 
