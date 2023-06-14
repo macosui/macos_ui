@@ -71,6 +71,7 @@ class MacosApp extends StatefulWidget {
     this.themeMode,
     this.theme,
     this.darkTheme,
+    this.cupertinoThemeData,
   })  : routeInformationProvider = null,
         routeInformationParser = null,
         routerDelegate = null,
@@ -104,6 +105,7 @@ class MacosApp extends StatefulWidget {
     this.themeMode,
     this.theme,
     this.darkTheme,
+    this.cupertinoThemeData,
   })  : assert(supportedLocales.isNotEmpty),
         navigatorObservers = null,
         navigatorKey = null,
@@ -295,6 +297,9 @@ class MacosApp extends StatefulWidget {
   /// The style used if [themeMode] is [ThemeMode.light]
   final MacosThemeData? theme;
 
+  /// The cupertino themedata
+  final c.CupertinoThemeData? cupertinoThemeData;
+
   @override
   State<MacosApp> createState() => _MacosAppState();
 }
@@ -366,6 +371,7 @@ class _MacosAppState extends State<MacosApp> {
         shortcuts: widget.shortcuts,
         actions: widget.actions,
         scrollBehavior: widget.scrollBehavior,
+        theme: widget.cupertinoThemeData,
       );
     }
     return c.CupertinoApp(
@@ -395,6 +401,7 @@ class _MacosAppState extends State<MacosApp> {
       shortcuts: widget.shortcuts,
       actions: widget.actions,
       scrollBehavior: widget.scrollBehavior,
+      theme: widget.cupertinoThemeData,
     );
   }
 
