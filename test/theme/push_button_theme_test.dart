@@ -46,8 +46,8 @@ void main() {
       expect(
         description,
         [
-          'color: Color(0xff0433ff)',
-          'disabledColor: Color(0xff8e8e93)',
+          'color: MacosColor(0xff0433ff)',
+          'disabledColor: MacosColor(0xff8e8e93)',
           'secondaryColor: Color(0x19000000)',
         ],
       );
