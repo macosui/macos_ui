@@ -657,25 +657,33 @@ PushButton(
 
 ## MacosSwitch
 
-A switch is a visual toggle between two mutually exclusive states — on and off. A switch shows that it's on when the 
-accent color is visible and off when the switch appears colorless. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/switches/)
+A switch (also known as a toggle) is a control that offers a binary choice between two mutually exclusive states — on and off. A switch shows that it's on when the 
+accent color is visible and off when the switch appears colorless.
 
-| On                                         | Off                                        |
-| ------------------------------------------ | ------------------------------------------ |
-| <img src="https://imgur.com/qK1VCVr.jpg"/> | <img src="https://imgur.com/IBh5jkz.jpg"/> |
+The `ContolSize` enum can be passed to the `size` property to control the size of the switch. `MacosSwitch` supports the following
+control sizes:
+* `mini`
+* `small`
+* `regular`
+
+| Off                                        | On                                         |
+|--------------------------------------------|--------------------------------------------|
+| <img src="https://imgur.com/NBeTMoZ.jpg"/> | <img src="https://imgur.com/SBfE0jf.jpg"/> |
 
 Here's an example of how to create a basic toggle switch:
 
 ```dart
-bool selected = false;
+bool switchValue = false;
 
 MacosSwitch(
-  value: selected,
+  value: switchValue,
   onChanged: (value) {
-    setState(() => selected = value);
+    setState(() => switchValue = value);
   },
 ),
 ```
+
+Learn more about switches [here](https://developer.apple.com/design/human-interface-guidelines/toggles).
 
 ## MacosSegmentedControl
 

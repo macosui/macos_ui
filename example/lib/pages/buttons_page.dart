@@ -217,11 +217,32 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         const SizedBox(height: 20),
                         const Text('MacosSwitch'),
                         const SizedBox(height: 8),
-                        MacosSwitch(
-                          value: switchValue,
-                          onChanged: (value) {
-                            setState(() => switchValue = value);
-                          },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            MacosSwitch(
+                              value: switchValue,
+                              size: ControlSize.mini,
+                              onChanged: (value) {
+                                setState(() => switchValue = value);
+                              },
+                            ),
+                            const SizedBox(width: 16.0),
+                            MacosSwitch(
+                              value: switchValue,
+                              size: ControlSize.small,
+                              onChanged: (value) {
+                                setState(() => switchValue = value);
+                              },
+                            ),
+                            const SizedBox(width: 16.0),
+                            MacosSwitch(
+                              value: switchValue,
+                              onChanged: (value) {
+                                setState(() => switchValue = value);
+                              },
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 20),
                         const Text('MacosPulldownButton'),

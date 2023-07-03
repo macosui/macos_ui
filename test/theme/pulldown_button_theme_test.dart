@@ -53,10 +53,10 @@ void main() {
       expect(
         description,
         [
-          'highlightColor: Color(0xff8e8e93)',
-          'backgroundColor: Color(0xff0433ff)',
+          'highlightColor: MacosColor(0xff8e8e93)',
+          'backgroundColor: MacosColor(0xff0433ff)',
           'pulldownColor: Color(0x19000000)',
-          'iconColor: Color(0xff00f900)',
+          'iconColor: MacosColor(0xff00f900)',
         ],
       );
     });
