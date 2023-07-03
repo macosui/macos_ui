@@ -44,6 +44,7 @@ class MacosDatePicker extends StatefulWidget {
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
     this.initialDate,
+    this.dateFormat,
   });
 
   /// The [DatePickerStyle] to use.
@@ -58,6 +59,19 @@ class MacosDatePicker extends StatefulWidget {
   ///
   /// Defaults to `DateTime.now()`.
   final DateTime? initialDate;
+
+  /// Changes the way dates are displayed in the textual interface.
+  ///
+  /// The following tokens are supported (case-insensitive):
+  /// * `D`: day of the month (1-31)
+  /// * `DD`: day of the month (01-31)
+  /// * `M`: month of the year (1-12)
+  /// * `MM`: month of the year (01-12)
+  /// * `YYYY`: year (0000-9999)
+  /// * Any separator between tokens is preserved (e.g. `/`, `-`, `.`)
+  ///
+  /// Defaults to `M/D/YYYY`.
+  final String? dateFormat;
 
   @override
   State<MacosDatePicker> createState() => _MacosDatePickerState();
@@ -175,6 +189,84 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     return result;
   }
 
+  // Creates textual date presentation based on "dateFormat" property
+  List<Widget> _textualDateElements() {
+    final separator = widget.dateFormat != null
+        ? widget.dateFormat!.toLowerCase().replaceAll(RegExp(r'[dmy]'), '')[0]
+        : '/';
+
+    final List<String> dateElements = widget.dateFormat != null
+        ? widget.dateFormat!.toLowerCase().split(RegExp(r'[^dmy]'))
+        : ['m', 'd', 'y'];
+
+    final List<Widget> dateFields = <Widget>[];
+    for (var dateElement in dateElements) {
+      if (dateElement.startsWith('d')) {
+        String value = dateElement == 'dd' && _selectedDay < 10
+            // Add a leading zero
+            ? '0$_selectedDay'
+            : '$_selectedDay';
+
+        dateFields.add(
+          DatePickerFieldElement(
+            isSelected: _isDaySelected,
+            element: value,
+            onSelected: () {
+              setState(() {
+                _focusNode.requestFocus();
+                _isDaySelected = !_isDaySelected;
+                _isMonthSelected = false;
+                _isYearSelected = false;
+              });
+            },
+          ),
+        );
+      } else if (dateElement.startsWith('m')) {
+        String value = dateElement == 'mm' && _selectedMonth < 10
+            // Add a leading zero
+            ? '0$_selectedMonth'
+            : '$_selectedMonth';
+
+        dateFields.add(
+          DatePickerFieldElement(
+            isSelected: _isMonthSelected,
+            element: value,
+            onSelected: () {
+              setState(() {
+                _focusNode.requestFocus();
+                _isMonthSelected = !_isMonthSelected;
+                _isDaySelected = false;
+                _isYearSelected = false;
+              });
+            },
+          ),
+        );
+      } else if (dateElement.startsWith('y')) {
+        dateFields.add(
+          DatePickerFieldElement(
+            isSelected: _isYearSelected,
+            element: '$_selectedYear',
+            onSelected: () {
+              setState(() {
+                _focusNode.requestFocus();
+                _isYearSelected = !_isYearSelected;
+                _isDaySelected = false;
+                _isMonthSelected = false;
+              });
+            },
+          ),
+        );
+      }
+      dateFields.add(
+        Text(separator),
+      );
+    }
+
+    dateFields.removeLast();
+
+    return dateFields;
+  }
+
   Widget _buildTextualPicker(MacosDatePickerThemeData datePickerTheme) {
     return KeyboardShortcutRunner(
       onUpArrowKeypress: _incrementElement,
@@ -195,46 +287,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DatePickerFieldElement(
-                      isSelected: _isMonthSelected,
-                      element: '$_selectedMonth',
-                      onSelected: () {
-                        setState(() {
-                          _focusNode.requestFocus();
-                          _isMonthSelected = !_isMonthSelected;
-                          _isDaySelected = false;
-                          _isYearSelected = false;
-                        });
-                      },
-                    ),
-                    const Text('/'),
-                    DatePickerFieldElement(
-                      isSelected: _isDaySelected,
-                      element: '$_selectedDay',
-                      onSelected: () {
-                        setState(() {
-                          _focusNode.requestFocus();
-                          _isDaySelected = !_isDaySelected;
-                          _isMonthSelected = false;
-                          _isYearSelected = false;
-                        });
-                      },
-                    ),
-                    const Text('/'),
-                    DatePickerFieldElement(
-                      isSelected: _isYearSelected,
-                      element: '$_selectedYear',
-                      onSelected: () {
-                        setState(() {
-                          _focusNode.requestFocus();
-                          _isYearSelected = !_isYearSelected;
-                          _isDaySelected = false;
-                          _isMonthSelected = false;
-                        });
-                      },
-                    ),
-                  ],
+                  children: _textualDateElements(),
                 ),
               ),
             ),
