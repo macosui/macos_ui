@@ -13,6 +13,7 @@
   * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
   * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
   * Wallpaper tinting is now supported.
+* Support Flutter 3.10 and Dart 3
 
 To migrate an existing application, please refer to the “Modern window look” section in the README.
 
