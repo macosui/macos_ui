@@ -15,6 +15,7 @@ const _kDefaultTrackColor = CupertinoDynamicColor.withBrightness(
   darkColor: MacosColor.fromRGBO(66, 66, 66, 1.0),
 );
 
+// Dark color might be Color.fromRGBO(255, 255, 255, 0.721)??
 const _kDefaultKnobColor = CupertinoDynamicColor.withBrightness(
   color: MacosColors.white,
   darkColor: MacosColor.fromRGBO(207, 207, 207, 1.0),
@@ -256,9 +257,7 @@ class _MacosSwitchState extends State<MacosSwitch>
 
   void _handleDragEnd(DragEndDetails details) {
     // Deferring the animation to the next build phase.
-    setState(() {
-      needsPositionAnimation = true;
-    });
+    setState(() => needsPositionAnimation = true);
     // Call onChanged when the user's intent to change value is clear.
     if (position.value >= 0.5 != widget.value) {
       widget.onChanged!(!widget.value);
@@ -435,10 +434,7 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
         _size = size,
         _activeColor = activeColor,
         _trackColor = trackColor,
-        _knobPainter = MacosSwitchKnobPainter(
-          color: knobColor,
-          // borderColor: borderColor,
-        ),
+        _knobPainter = MacosSwitchKnobPainter(color: knobColor),
         _borderColor = borderColor,
         _onChanged = onChanged,
         _textDirection = textDirection,
@@ -501,10 +497,7 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
     if (value == knobColor) {
       return;
     }
-    _knobPainter = MacosSwitchKnobPainter(
-      color: value,
-      // borderColor: borderColor,
-    );
+    _knobPainter = MacosSwitchKnobPainter(color: value);
     markNeedsPaint();
   }
 
@@ -674,28 +667,30 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
 const List<BoxShadow> _kSwitchOffBoxShadows = <BoxShadow>[
   BoxShadow(
     color: Color(0x26000000),
-    offset: Offset(3, 1),
+    // offset: Offset(1, 1),
     blurRadius: 8.0,
+    blurStyle: BlurStyle.inner,
   ),
   BoxShadow(
     color: Color(0x0F000000),
-    offset: Offset(3, 1),
+    // offset: Offset(1, 1),
     blurRadius: 1.0,
+    blurStyle: BlurStyle.inner,
   ),
 ];
 
 const List<BoxShadow> _kSwitchOnBoxShadows = <BoxShadow>[
   BoxShadow(
     color: Color(0x26000000),
-    // color: MacosColors.appleRed,
-    offset: Offset(-3, 1),
+    // offset: Offset(-3, 1),
     blurRadius: 8.0,
+    blurStyle: BlurStyle.inner,
   ),
   BoxShadow(
     color: Color(0x0F000000),
-    // color: MacosColors.appleRed,
-    offset: Offset(-1, 1),
+    // offset: Offset(-1, 1),
     blurRadius: 1.0,
+    blurStyle: BlurStyle.inner,
   ),
 ];
 
