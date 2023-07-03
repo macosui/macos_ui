@@ -526,6 +526,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
         }
 
         Widget dayWidget = GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             setState(() {
               _isDaySelected = true;

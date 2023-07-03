@@ -1,3 +1,7 @@
+## [2.0.0-beta.3]
+🛠️ Fixed 🛠️
+* Better UX of the click on the calendar elements in `MacosDatePicker`
+
 ## [2.0.0-beta.2]
 ✨New ✨
 * `MacosSwitch` has been completely rewritten and now matches the native macOS switch in appearance and behavior.
