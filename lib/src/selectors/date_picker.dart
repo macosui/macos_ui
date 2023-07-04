@@ -44,6 +44,31 @@ class MacosDatePicker extends StatefulWidget {
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
     this.initialDate,
+    // Use this to get the weekday abbreviations instead of
+    // localizations.narrowWeekdays() in order to match Apple's spec
+    this.weekdayAbbreviations = const [
+      'Su',
+      'Mo',
+      'Tu',
+      'We',
+      'Th',
+      'Fr',
+      'Sa',
+    ],
+    this.monthAbbreviations = const [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
     this.dateFormat,
     this.startWeekOnMonday,
   });
@@ -60,6 +85,12 @@ class MacosDatePicker extends StatefulWidget {
   ///
   /// Defaults to `DateTime.now()`.
   final DateTime? initialDate;
+
+  /// A list of 7 strings, one for each day of the week, starting with Sunday.
+  final List<String> weekdayAbbreviations;
+
+  /// A list of 12 strings, one for each month of the year, starting with January.
+  final List<String> monthAbbreviations;
 
   /// Changes the way dates are displayed in the textual interface.
   ///
@@ -398,7 +429,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                   children: [
                     Expanded(
                       child: Text(
-                        '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
+                        '${widget.monthAbbreviations[_selectedMonth - 1]} $_selectedYear',
                         style: const TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.w700,
