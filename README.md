@@ -974,6 +974,10 @@ There are three styles of `MacosDatePickers`:
   calendar-like interface to select a date.
 * `combined`: provides both `textual` and `graphical` interfaces.
 
+Localization of the time picker is supported by the `weekdayAbbreviations` and `monthAbbreviations` parameters (instead of e.g. standard `localizations.narrowWeekdays()` in order to match Apple's spec).
+* `weekdayAbbreviations` should be a list of 7 strings, one for each day of the week, starting with Sunday
+* `monthAbbreviations` should be a list of 12 strings, one for each month of the year, starting with January
+
 You can also define the `dateFormat` to change the way dates are displayed in the textual interface.
 It takes a string of tokens (case-insensitive) and replaces them with their corresponding values.
 The following tokens are supported:

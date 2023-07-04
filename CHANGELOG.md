@@ -4,6 +4,7 @@
 
 ## [2.0.0-beta.3]
 ✨ New ✨
+* Added support for `weekdayAbbreviations` and `monthAbbreviations` to `MacosDatePicker`.
 * Added support for `dateFormat` to `MacosDatePicker`.
 * Added support for `startWeekOnMonday` to `MacosDatePicker`.
 
