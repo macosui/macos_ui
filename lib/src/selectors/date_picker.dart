@@ -118,18 +118,6 @@ class MacosDatePicker extends StatefulWidget {
 }
 
 class _MacosDatePickerState extends State<MacosDatePicker> {
-  // Use this to get the weekday abbreviations instead of
-  // localizations.narrowWeekdays() in order to match Apple's spec
-  static const List<String> _narrowWeekdays = <String>[
-    'Su',
-    'Mo',
-    'Tu',
-    'We',
-    'Th',
-    'Fr',
-    'Sa',
-  ];
-
   final _today = DateTime.now();
   late final _initialDate = widget.initialDate ?? _today;
 
@@ -224,7 +212,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     }
 
     for (int i = firstDayOfWeekIndex; result.length < 7; i = (i + 1) % 7) {
-      final weekday = _narrowWeekdays[i];
+      final weekday = widget.weekdayAbbreviations[i];
       result.add(
         ExcludeSemantics(
           child: Center(
