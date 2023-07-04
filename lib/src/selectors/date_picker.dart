@@ -62,7 +62,9 @@ class MacosDatePicker extends StatefulWidget {
 
   /// Allows for changing the order of day headers in the graphical Date Picker
   /// to Mo, Tu, We, Th, Fr, Sa, Su.
-  ///
+  /// 
+  /// This is useful for internationalization purposes, as many countries begin their weeks on Mondays.
+  /// 
   /// Defaults to `false`.
   final bool? startWeekOnMonday;
 
