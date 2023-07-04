@@ -1,3 +1,7 @@
+## [2.0.0-beta.4]
+🛠️ Fixed 🛠️
+* `ToolBar`s in use where a `SideBar` is not present will now avoid the traffic lights (native window controls).
+
 ## [2.0.0-beta.3]
 ✨ New ✨
 * Added support for `dateFormat` to `MacosDatePicker`.
