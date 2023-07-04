@@ -308,4 +308,96 @@ void main() {
       },
     );
   });
+
+  testWidgets(
+    'Graphical MacosDatePicker with "startWeekOnMonday" set to true shows Monday as the first day of the week',
+        (tester) async {
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        startWeekOnMonday: true,
+                        initialDate: DateTime.parse('2023-04-01'),
+                        onDateChanged: (date) {},
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      final dayHeadersRow = find.byType(GridView).first;
+      final dayHeaders = find.descendant(
+        of: dayHeadersRow,
+        matching: find.byType(Text),
+      );
+      final firstWeekday = dayHeaders.first;
+      final firstWeekdayText = (firstWeekday.evaluate().first.widget as Text).data;
+      await tester.pumpAndSettle();
+
+      expect(firstWeekdayText, 'Mo');
+
+      final calendarGrid = find.byType(GridView).last;
+      final dayOffsetWidgets = find.descendant(
+        of: calendarGrid,
+        matching: find.byType(SizedBox),
+      );
+      final dayOffset = dayOffsetWidgets.evaluate().length;
+
+      expect(dayOffset, 5);
+    },
+  );
+
+  // Regression test due to invalid "firstDayOfWeekIndex" implementation in MaterialLocalizations
+  // issue: https://github.com/flutter/flutter/issues/122274
+  // TODO: remove this once the issue is fixed and test starts failing
+  testWidgets(
+    'Graphical MacosDatePicker still needs "startWeekOnMonday" to show Monday as the first day of the week, even when the locale is set to something other than "en_US"',
+        (tester) async {
+      await tester.pumpWidget(
+        MacosApp(
+          supportedLocales: const [
+            Locale('en', 'PL'),
+          ],
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        startWeekOnMonday: true,
+                        initialDate: DateTime.parse('2023-04-01'),
+                        onDateChanged: (date) {},
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      final dayHeadersRow = find.byType(GridView).first;
+      final dayHeaders = find.descendant(
+        of: dayHeadersRow,
+        matching: find.byType(Text),
+      );
+      final firstWeekday = dayHeaders.first;
+      final firstWeekdayText = (firstWeekday.evaluate().first.widget as Text).data;
+      await tester.pumpAndSettle();
+
+      // The result will be 'Tu' if the fix is no longer needed and can be removed
+      expect(firstWeekdayText, 'Mo');
+    },
+  );
 }
