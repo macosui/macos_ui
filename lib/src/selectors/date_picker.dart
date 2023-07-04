@@ -45,6 +45,7 @@ class MacosDatePicker extends StatefulWidget {
     required this.onDateChanged,
     this.initialDate,
     this.dateFormat,
+    this.startWeekOnMonday,
   });
 
   /// The [DatePickerStyle] to use.
@@ -72,6 +73,14 @@ class MacosDatePicker extends StatefulWidget {
   ///
   /// Defaults to `M/D/YYYY`.
   final String? dateFormat;
+
+  /// Allows for changing the order of day headers in the graphical Date Picker
+  /// to Mo, Tu, We, Th, Fr, Sa, Su.
+  /// 
+  /// This is useful for internationalization purposes, as many countries begin their weeks on Mondays.
+  /// 
+  /// Defaults to `false`.
+  final bool? startWeekOnMonday;
 
   @override
   State<MacosDatePicker> createState() => _MacosDatePickerState();
@@ -167,12 +176,23 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
   }
 
   // Creates the day headers - Su, Mo, Tu, We, Th, Fr, Sa
+  // or Mo, Tu, We, Th, Fr, Sa, Su depending on the value of [startWeekOnMonday]
   List<Widget> _dayHeaders(
     TextStyle? headerStyle,
     MaterialLocalizations localizations,
   ) {
     final result = <Widget>[];
-    for (int i = localizations.firstDayOfWeekIndex; true; i = (i + 1) % 7) {
+
+    // Hack due to invalid "firstDayOfWeekIndex" implementation in MaterialLocalizations
+    // issue: https://github.com/flutter/flutter/issues/122274
+    // TODO: remove this workaround once the issue is fixed.
+    //  Then, "firstDayOfWeekIndex" can be controlled by passing "localizationsDelegates" and "supportedLocales" to MacosApp
+    int firstDayOfWeekIndex = localizations.firstDayOfWeekIndex;
+    if (widget.startWeekOnMonday == true) {
+      firstDayOfWeekIndex = 1;
+    }
+
+    for (int i = firstDayOfWeekIndex; result.length < 7; i = (i + 1) % 7) {
       final weekday = _narrowWeekdays[i];
       result.add(
         ExcludeSemantics(
@@ -184,7 +204,6 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           ),
         ),
       );
-      if (i == (localizations.firstDayOfWeekIndex - 1) % 7) break;
     }
     return result;
   }
@@ -527,9 +546,19 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           ),
       localizations,
     );
+
+    // Hack due to invalid "firstDayOfWeekIndex" implementation in MaterialLocalizations
+    // issue: https://github.com/flutter/flutter/issues/122274
+    // TODO: remove this workaround once the issue is fixed.
+    //  Then, DateUtils.getDaysInMonth will work as expected when proper "localizationsDelegates" and "supportedLocales" are provided to MacosApp
+    int fixedDayOffset = dayOffset;
+    if (widget.startWeekOnMonday == true) {
+      fixedDayOffset = dayOffset - 1;
+    }
+
     // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
     // a leap year.
-    int day = -dayOffset;
+    int day = -fixedDayOffset;
 
     final dayItems = <Widget>[];
 

@@ -1,6 +1,7 @@
 ## [2.0.0-beta.3]
 ✨ New ✨
 * Added support for `dateFormat` to `MacosDatePicker`.
+* Added support for `startWeekOnMonday` to `MacosDatePicker`.
 
 🛠️ Fixed 🛠️
 * Better UX of the click on the calendar elements in `MacosDatePicker`
