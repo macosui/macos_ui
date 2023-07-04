@@ -807,8 +807,7 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 
   void _handleTap() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
-    const EdgeInsetsGeometry menuMargin =
-        EdgeInsets.symmetric(horizontal: 4.0);
+    const EdgeInsetsGeometry menuMargin = EdgeInsets.symmetric(horizontal: 4.0);
 
     final List<_MenuItem> menuItems = <_MenuItem>[
       for (int index = 0; index < widget.items!.length; index += 1)
