@@ -5,26 +5,32 @@ import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// The sizes a [PushButton] can be.
-enum ButtonSize {
-  /// A large [PushButton].
-  large,
+const _kMiniButtonSize = Size(26.0, 11.0);
+const _kSmallButtonSize = Size(39.0, 14.0);
+const _kRegularButtonSize = Size(60.0, 18.0);
+const _kLargeButtonSize = Size(48.0, 26.0);
 
-  /// A small [PushButton].
-  small,
-}
-
-const EdgeInsetsGeometry _kSmallButtonPadding = EdgeInsets.symmetric(
-  vertical: 3.0,
-  horizontal: 8.0,
+const _kMiniButtonPadding = EdgeInsets.only(left: 6.0, right: 6.0, bottom: 1.0);
+const _kSmallButtonPadding = EdgeInsets.symmetric(
+  vertical: 1.0,
+  horizontal: 7.0,
 );
-const EdgeInsetsGeometry _kLargeButtonPadding = EdgeInsets.symmetric(
-  vertical: 6.0,
-  horizontal: 8.0,
+const _kRegularButtonPadding = EdgeInsets.only(
+  left: 8.0,
+  right: 8.0,
+  top: 1.0,
+  bottom: 4.0,
+);
+const _kLargeButtonPadding = EdgeInsets.only(
+  right: 8.0,
+  left: 8.0,
+  bottom: 1.0,
 );
 
-const BorderRadius _kSmallButtonRadius = BorderRadius.all(Radius.circular(5.0));
-const BorderRadius _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
+const _kMiniButtonRadius = BorderRadius.all(Radius.circular(2.0));
+const _kSmallButtonRadius = BorderRadius.all(Radius.circular(2.0));
+const _kRegularButtonRadius = BorderRadius.all(Radius.circular(4.0));
+const _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
 
 /// {@template pushButton}
 /// A macOS-style button.
@@ -34,7 +40,7 @@ class PushButton extends StatefulWidget {
   const PushButton({
     super.key,
     required this.child,
-    required this.buttonSize,
+    required this.controlSize,
     this.padding,
     this.color,
     this.disabledColor,
@@ -55,12 +61,8 @@ class PushButton extends StatefulWidget {
 
   /// The size of the button.
   ///
-  /// Must be either [ButtonSize.small] or [ButtonSize.large].
   ///
-  /// Small buttons have a `padding` of [_kSmallButtonPadding] and a
-  /// `borderRadius` of [_kSmallButtonRadius]. Large buttons have a `padding`
-  /// of [_kLargeButtonPadding] and a `borderRadius` of [_kLargeButtonRadius].
-  final ButtonSize buttonSize;
+  final ControlSize controlSize;
 
   /// The amount of space to surround the child inside the bounds of the button.
   ///
@@ -116,7 +118,7 @@ class PushButton extends StatefulWidget {
   /// Whether the button is used as a secondary action button (e.g. Cancel buttons in dialogs)
   ///
   /// Sets its background color to [PushButtonThemeData]'s [secondaryColor] attributes (defaults
-  /// are gray colors). Can still be overriden if the [color] attribute is non-null.
+  /// are gray colors). Can still be overridden if the [color] attribute is non-null.
   final bool? isSecondary;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
@@ -126,7 +128,7 @@ class PushButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(EnumProperty<ButtonSize>('buttonSize', buttonSize));
+    properties.add(EnumProperty<ControlSize>('controlSize', controlSize));
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
@@ -240,15 +242,21 @@ class PushButtonState extends State<PushButton>
     );
 
     final EdgeInsetsGeometry? buttonPadding = widget.padding == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonPadding
-            : _kLargeButtonPadding
+        ? switch (widget.controlSize) {
+            ControlSize.mini => _kMiniButtonPadding,
+            ControlSize.small => _kSmallButtonPadding,
+            ControlSize.regular => _kRegularButtonPadding,
+            ControlSize.large => _kLargeButtonPadding,
+          }
         : widget.padding;
 
     final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonRadius
-            : _kLargeButtonRadius
+        ? switch (widget.controlSize) {
+            ControlSize.mini => _kMiniButtonRadius,
+            ControlSize.small => _kSmallButtonRadius,
+            ControlSize.regular => _kRegularButtonRadius,
+            ControlSize.large => _kLargeButtonRadius,
+          }
         : widget.borderRadius;
 
     final Color foregroundColor = widget.enabled
@@ -257,8 +265,14 @@ class PushButtonState extends State<PushButton>
             ? const Color.fromRGBO(255, 255, 255, 0.25)
             : const Color.fromRGBO(0, 0, 0, 0.25);
 
-    final TextStyle textStyle =
+    final baseStyle =
         theme.typography.headline.copyWith(color: foregroundColor);
+    final TextStyle textStyle = switch (widget.controlSize) {
+      ControlSize.mini => baseStyle.copyWith(fontSize: 9.0),
+      ControlSize.small => baseStyle.copyWith(fontSize: 11.0),
+      ControlSize.regular => baseStyle.copyWith(fontSize: 13.0),
+      ControlSize.large => baseStyle,
+    };
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
@@ -272,10 +286,24 @@ class PushButtonState extends State<PushButton>
           button: true,
           label: widget.semanticLabel,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minWidth: 49,
-              minHeight: 20,
-            ),
+            constraints: switch (widget.controlSize) {
+              ControlSize.mini => BoxConstraints(
+                  minHeight: _kMiniButtonSize.height,
+                  minWidth: _kMiniButtonSize.width,
+                ),
+              ControlSize.small => BoxConstraints(
+                  minHeight: _kSmallButtonSize.height,
+                  minWidth: _kSmallButtonSize.width,
+                ),
+              ControlSize.regular => BoxConstraints(
+                  minHeight: _kRegularButtonSize.height,
+                  minWidth: _kRegularButtonSize.width,
+                ),
+              ControlSize.large => BoxConstraints(
+                  minHeight: _kLargeButtonSize.height,
+                  minWidth: _kLargeButtonSize.width,
+                ),
+            },
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: DecoratedBox(

@@ -36,7 +36,7 @@ class _DialogsPageState extends State<DialogsPage> {
                 child: Column(
                   children: [
                     PushButton(
-                      buttonSize: ButtonSize.large,
+                      controlSize: ControlSize.regular,
                       child: const Text('Show Alert Dialog 1'),
                       onPressed: () => showMacosAlertDialog(
                         context: context,
@@ -52,7 +52,7 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           //horizontalActions: false,
                           primaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Primary'),
                           ),
@@ -61,7 +61,7 @@ class _DialogsPageState extends State<DialogsPage> {
                     ),
                     const SizedBox(height: 16),
                     PushButton(
-                      buttonSize: ButtonSize.large,
+                      controlSize: ControlSize.regular,
                       child: const Text('Show Alert Dialog 2'),
                       onPressed: () => showMacosAlertDialog(
                         context: context,
@@ -78,12 +78,12 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           //horizontalActions: false,
                           primaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Primary'),
                           ),
                           secondaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             isSecondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),
@@ -93,7 +93,7 @@ class _DialogsPageState extends State<DialogsPage> {
                     ),
                     const SizedBox(height: 16),
                     PushButton(
-                      buttonSize: ButtonSize.large,
+                      controlSize: ControlSize.regular,
                       child: const Text('Show Alert Dialog 3'),
                       onPressed: () => showMacosAlertDialog(
                         context: context,
@@ -110,12 +110,12 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           horizontalActions: false,
                           primaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Primary'),
                           ),
                           secondaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             isSecondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),
@@ -125,7 +125,7 @@ class _DialogsPageState extends State<DialogsPage> {
                     ),
                     const SizedBox(height: 16),
                     PushButton(
-                      buttonSize: ButtonSize.large,
+                      controlSize: ControlSize.regular,
                       child: const Text('Show Alert Dialog 4'),
                       onPressed: () => showMacosAlertDialog(
                         context: context,
@@ -143,12 +143,12 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           horizontalActions: false,
                           primaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Primary'),
                           ),
                           secondaryButton: PushButton(
-                            buttonSize: ButtonSize.large,
+                            controlSize: ControlSize.regular,
                             isSecondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),
@@ -159,7 +159,7 @@ class _DialogsPageState extends State<DialogsPage> {
                     ),
                     const SizedBox(height: 16),
                     PushButton(
-                      buttonSize: ButtonSize.large,
+                      controlSize: ControlSize.regular,
                       child: const Text('Show sheet'),
                       onPressed: () {
                         showMacosSheet(
@@ -249,7 +249,7 @@ class DemoSheet extends StatelessWidget {
             ),
             const Spacer(),
             PushButton(
-              buttonSize: ButtonSize.large,
+              controlSize: ControlSize.regular,
               child: const Text('Get started'),
               onPressed: () => Navigator.of(context).pop(),
             ),

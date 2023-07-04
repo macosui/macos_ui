@@ -65,7 +65,7 @@ void main() {
                   builder: (context, _) {
                     capturedContext = context;
                     return const PushButton(
-                      buttonSize: ButtonSize.small,
+                      controlSize: ControlSize.regular,
                       child: Text('Push me'),
                     );
                   },

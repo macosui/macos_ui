@@ -27,7 +27,7 @@ void main() {
                 ContentArea(
                   builder: (context, _) {
                     return PushButton(
-                      buttonSize: ButtonSize.small,
+                      controlSize: ControlSize.regular,
                       onPressed: mockOnPressedFunction.handler,
                       child: const Text('Push me'),
                     );
@@ -61,7 +61,7 @@ void main() {
                 ContentArea(
                   builder: (context, _) {
                     return PushButton(
-                      buttonSize: ButtonSize.small,
+                      controlSize: ControlSize.regular,
                       key: pushButtonKey,
                       onPressed: mockOnTapCancelFunction.handler,
                       child: const Text('Push me'),
@@ -84,7 +84,7 @@ void main() {
     testWidgets('debugFillProperties', (tester) async {
       final builder = DiagnosticPropertiesBuilder();
       const PushButton(
-        buttonSize: ButtonSize.small,
+        controlSize: ControlSize.regular,
         child: Text('Test'),
       ).debugFillProperties(builder);
 
