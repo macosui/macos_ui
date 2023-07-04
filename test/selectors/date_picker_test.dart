@@ -83,6 +83,59 @@ void main() {
     );
 
     testWidgets(
+      'Textual MacosDatePicker renders the date with respect to "dateFormat" property',
+          (tester) async {
+        renderWidget(String dateFormat) => MacosApp(
+          home: MacosWindow(
+            disableWallpaperTinting: true,
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        initialDate: DateTime.parse('2023-04-01'),
+                        onDateChanged: (date) {},
+                        dateFormat: dateFormat,
+                        style: DatePickerStyle.textual,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+
+        getNthTextFromWidget(int index) => (find.byType(Text).at(index).evaluate().first.widget as Text).data as String;
+
+        await tester.pumpWidget(renderWidget('dd.mm.yyyy'));
+        String firstDateElement = getNthTextFromWidget(0);
+        expect(firstDateElement, '01');
+        String secondDateElement = getNthTextFromWidget(1);
+        expect(secondDateElement, '.');
+        String thirdDateElement = getNthTextFromWidget(2);
+        expect(thirdDateElement, '04');
+        String fourthDateElement = getNthTextFromWidget(3);
+        expect(fourthDateElement, '.');
+        String fifthDateElement = getNthTextFromWidget(4);
+        expect(fifthDateElement, '2023');
+
+        await tester.pumpWidget(renderWidget('yyyy-m-d'));
+        firstDateElement = getNthTextFromWidget(0);
+        expect(firstDateElement, '2023');
+        secondDateElement = getNthTextFromWidget(1);
+        expect(secondDateElement, '-');
+        thirdDateElement = getNthTextFromWidget(2);
+        expect(thirdDateElement, '4');
+        fourthDateElement = getNthTextFromWidget(3);
+        expect(fourthDateElement, '-');
+        fifthDateElement = getNthTextFromWidget(4);
+        expect(fifthDateElement, '1');
+      },
+    );
+
+    testWidgets(
       'Can select the date field element and change the value',
       (tester) async {
         final today = DateTime.now();

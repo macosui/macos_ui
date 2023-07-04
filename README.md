@@ -974,6 +974,18 @@ There are three styles of `MacosDatePickers`:
   calendar-like interface to select a date.
 * `combined`: provides both `textual` and `graphical` interfaces.
 
+You can also define the `dateFormat` to change the way dates are displayed in the textual interface.
+It takes a string of tokens (case-insensitive) and replaces them with their corresponding values.
+The following tokens are supported:
+* `D`: day of the month (1-31)
+* `DD`: day of the month (01-31)
+* `M`: month of the year (1-12)
+* `MM`: month of the year (01-12)
+* `YYYY`: year (0000-9999)
+* Any separator between tokens is preserved (e.g. `/`, `-`, `.`)
+
+The default format is `M/D/YYYY`. 
+
 Example usage:
 ```dart
 MacosDatePicker(
