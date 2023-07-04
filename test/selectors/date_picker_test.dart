@@ -360,6 +360,66 @@ void main() {
         }
       },
     );
+
+    testWidgets(
+      'Graphical MacosDatePicker renders abbreviations based on "weekdayAbbreviations" and "monthAbbreviations" properties',
+          (tester) async {
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context, _) {
+                      return Center(
+                        child: MacosDatePicker(
+                          initialDate: DateTime.parse('2023-04-01'),
+                          onDateChanged: (date) {},
+                          weekdayAbbreviations: const [
+                            'Nd',
+                            'Po',
+                            'Wt',
+                            'Śr',
+                            'Cz',
+                            'Pt',
+                            'So',
+                          ],
+                          monthAbbreviations: const [
+                            'Sty',
+                            'Lut',
+                            'Mar',
+                            'Kwi',
+                            'Maj',
+                            'Cze',
+                            'Lip',
+                            'Sie',
+                            'Wrz',
+                            'Paź',
+                            'Lis',
+                            'Gru',
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        await tester.pumpAndSettle();
+
+        expect(find.text('Kwi 2023'), findsOneWidget);
+        expect(find.text('Nd'), findsOneWidget);
+        expect(find.text('Po'), findsOneWidget);
+        expect(find.text('Wt'), findsOneWidget);
+        expect(find.text('Śr'), findsOneWidget);
+        expect(find.text('Cz'), findsOneWidget);
+        expect(find.text('Pt'), findsOneWidget);
+        expect(find.text('So'), findsOneWidget);
+      },
+    );
   });
 
   testWidgets(
