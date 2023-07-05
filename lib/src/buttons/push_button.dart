@@ -337,8 +337,10 @@ class PushButtonState extends State<PushButton>
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: widget.controlSize.borderRadius,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: widget.controlSize.borderRadius,
+                  ),
                   color: !enabled ? disabledColor : backgroundColor,
                 ),
                 child: Padding(
