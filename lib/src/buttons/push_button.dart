@@ -32,6 +32,77 @@ const _kSmallButtonRadius = BorderRadius.all(Radius.circular(2.0));
 const _kRegularButtonRadius = BorderRadius.all(Radius.circular(4.0));
 const _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
 
+/// Shortcuts for various [PushButton] properties based on the [ControlSize].
+extension PushButtonControlSizeX on ControlSize {
+  /// Determines the padding of the button's text.
+  EdgeInsetsGeometry get padding {
+    switch (this) {
+      case ControlSize.mini:
+        return _kMiniButtonPadding;
+      case ControlSize.small:
+        return _kSmallButtonPadding;
+      case ControlSize.regular:
+        return _kRegularButtonPadding;
+      case ControlSize.large:
+        return _kLargeButtonPadding;
+    }
+  }
+
+  /// Determines the button's border radius.
+  BorderRadiusGeometry get borderRadius {
+    switch (this) {
+      case ControlSize.mini:
+        return _kMiniButtonRadius;
+      case ControlSize.small:
+        return _kSmallButtonRadius;
+      case ControlSize.regular:
+        return _kRegularButtonRadius;
+      case ControlSize.large:
+        return _kLargeButtonRadius;
+    }
+  }
+
+  /// Determines the styling of the button's text.
+  TextStyle textStyle(TextStyle baseStyle) {
+    switch (this) {
+      case ControlSize.mini:
+        return baseStyle.copyWith(fontSize: 9.0);
+      case ControlSize.small:
+        return baseStyle.copyWith(fontSize: 11.0);
+      case ControlSize.regular:
+        return baseStyle.copyWith(fontSize: 13.0);
+      case ControlSize.large:
+        return baseStyle;
+    }
+  }
+
+  /// Determines the button's minimum size.
+  BoxConstraints get constraints {
+    switch (this) {
+      case ControlSize.mini:
+        return BoxConstraints(
+          minHeight: _kMiniButtonSize.height,
+          minWidth: _kMiniButtonSize.width,
+        );
+      case ControlSize.small:
+        return BoxConstraints(
+          minHeight: _kSmallButtonSize.height,
+          minWidth: _kSmallButtonSize.width,
+        );
+      case ControlSize.regular:
+        return BoxConstraints(
+          minHeight: _kRegularButtonSize.height,
+          minWidth: _kRegularButtonSize.width,
+        );
+      case ControlSize.large:
+        return BoxConstraints(
+          minHeight: _kLargeButtonSize.height,
+          minWidth: _kLargeButtonSize.width,
+        );
+    }
+  }
+}
+
 /// {@template pushButton}
 /// A macOS-style button.
 /// {@endtemplate}
@@ -241,24 +312,6 @@ class PushButtonState extends State<PushButton>
       context,
     );
 
-    final EdgeInsetsGeometry? buttonPadding = widget.padding == null
-        ? switch (widget.controlSize) {
-            ControlSize.mini => _kMiniButtonPadding,
-            ControlSize.small => _kSmallButtonPadding,
-            ControlSize.regular => _kRegularButtonPadding,
-            ControlSize.large => _kLargeButtonPadding,
-          }
-        : widget.padding;
-
-    final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
-        ? switch (widget.controlSize) {
-            ControlSize.mini => _kMiniButtonRadius,
-            ControlSize.small => _kSmallButtonRadius,
-            ControlSize.regular => _kRegularButtonRadius,
-            ControlSize.large => _kLargeButtonRadius,
-          }
-        : widget.borderRadius;
-
     final Color foregroundColor = widget.enabled
         ? textLuminance(backgroundColor)
         : theme.brightness.isDark
@@ -267,12 +320,6 @@ class PushButtonState extends State<PushButton>
 
     final baseStyle =
         theme.typography.headline.copyWith(color: foregroundColor);
-    final TextStyle textStyle = switch (widget.controlSize) {
-      ControlSize.mini => baseStyle.copyWith(fontSize: 9.0),
-      ControlSize.small => baseStyle.copyWith(fontSize: 11.0),
-      ControlSize.regular => baseStyle.copyWith(fontSize: 13.0),
-      ControlSize.large => baseStyle,
-    };
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
@@ -286,39 +333,22 @@ class PushButtonState extends State<PushButton>
           button: true,
           label: widget.semanticLabel,
           child: ConstrainedBox(
-            constraints: switch (widget.controlSize) {
-              ControlSize.mini => BoxConstraints(
-                  minHeight: _kMiniButtonSize.height,
-                  minWidth: _kMiniButtonSize.width,
-                ),
-              ControlSize.small => BoxConstraints(
-                  minHeight: _kSmallButtonSize.height,
-                  minWidth: _kSmallButtonSize.width,
-                ),
-              ControlSize.regular => BoxConstraints(
-                  minHeight: _kRegularButtonSize.height,
-                  minWidth: _kRegularButtonSize.width,
-                ),
-              ControlSize.large => BoxConstraints(
-                  minHeight: _kLargeButtonSize.height,
-                  minWidth: _kLargeButtonSize.width,
-                ),
-            },
+            constraints: widget.controlSize.constraints,
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  borderRadius: borderRadius,
+                  borderRadius: widget.controlSize.borderRadius,
                   color: !enabled ? disabledColor : backgroundColor,
                 ),
                 child: Padding(
-                  padding: buttonPadding!,
+                  padding: widget.controlSize.padding,
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
                     child: DefaultTextStyle(
-                      style: textStyle,
+                      style: widget.controlSize.textStyle(baseStyle),
                       child: widget.child,
                     ),
                   ),
