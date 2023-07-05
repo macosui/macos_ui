@@ -15,7 +15,7 @@ class MacosCheckbox extends StatelessWidget {
     super.key,
     required this.value,
     required this.onChanged,
-    this.size = 16.0,
+    this.size = 14.0,
     this.activeColor,
     this.disabledColor = CupertinoColors.quaternaryLabel,
     this.offBorderColor = CupertinoColors.tertiaryLabel,
@@ -108,18 +108,55 @@ class MacosCheckbox extends StatelessWidget {
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                 )
-              : BoxDecoration(
-                  color: isLight ? null : CupertinoColors.tertiaryLabel,
-                  border: Border.all(
-                    style: isLight ? BorderStyle.solid : BorderStyle.none,
-                    width: 0.5,
-                    color: MacosDynamicColor.resolve(
-                      offBorderColor,
-                      context,
+              : isLight
+                  ? ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: const Alignment(0.0, -1.0),
+                        end: const Alignment(0, 0),
+                        colors: [
+                          Colors.white.withOpacity(0.85),
+                          Colors.white.withOpacity(1.0),
+                        ],
+                      ),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 1,
+                          blurStyle: BlurStyle.inner,
+                          offset: Offset(0, 0),
+                          spreadRadius: 0.0,
+                        ),
+                      ],
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 0.25,
+                          color: Colors.black.withOpacity(0.35000000596046448),
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(3.5)),
+                      ),
+                    )
+                  : ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: const Alignment(0.0, -1.0),
+                        end: const Alignment(0, 1),
+                        colors: [
+                          Colors.white.withOpacity(0.14000000059604645),
+                          Colors.white.withOpacity(0.2800000011920929),
+                        ],
+                      ),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(3)),
+                      ),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 1,
+                          offset: Offset(0, 0),
+                          spreadRadius: 0,
+                        ),
+                      ],
                     ),
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                ),
           child: Icon(
             isDisabled || value == false
                 ? null

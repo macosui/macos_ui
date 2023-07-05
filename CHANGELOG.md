@@ -1,3 +1,7 @@
+## [2.0.0-beta.6]
+🔄 Updated 🔄
+* `MacosCheckbox` appearance more closely matches its native counterpart.
+
 ## [2.0.0-beta.5]
 🚨 Breaking Changes 🚨
 * `PushButton` has been updated to support the `ControlSize` enum.
