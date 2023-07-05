@@ -104,7 +104,14 @@ extension PushButtonControlSizeX on ControlSize {
 }
 
 /// {@template pushButton}
-/// A macOS-style button.
+/// A control that initiates an action.
+///
+/// Push Buttons are the standard button type in macOS.
+///
+/// Reference:
+/// * [Button (SwiftUI)](https://developer.apple.com/documentation/SwiftUI/Button)
+/// * [NSButton (AppKit)](https://developer.apple.com/documentation/appkit/nsbutton)
+/// * [Buttons (Human Interface Guidelines)](https://developer.apple.com/design/human-interface-guidelines/buttons)
 /// {@endtemplate}
 class PushButton extends StatefulWidget {
   /// {@macro pushButton}
