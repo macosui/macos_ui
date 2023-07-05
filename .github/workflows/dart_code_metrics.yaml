@@ -10,9 +10,9 @@ jobs:
 
       - name: Run Dart Code Metrics
         uses: dart-code-checker/dart-code-metrics-action@v4.0.0
+      - uses: dart-lang/setup-dart@v1
+      - uses: CQLabs/setup-dcm@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_comment: true
-          fatal_warnings: true
-          fatal_performance: true
-          fatal_style: true
+
+      - run: dcm analyze --ci-key="${{ secrets.DCM_CI_KEY }}" --email="${{ secrets.DCM_EMAIL }}" lib
