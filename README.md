@@ -632,16 +632,18 @@ MacosPopupButton<String>(
 
 ## PushButton
 
-A push button appears within a view and initiates an instantaneous app-specific action, such as printing a document or 
-deleting a file. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can 
+Push buttons are the standard button type in macOS. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can 
 complete a task. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/push-buttons/)
 
 | Dark Theme                                 | Light Theme                                |
-| ------------------------------------------ | ------------------------------------------ |
-| <img src="https://imgur.com/GsShoF6.jpg"/> | <img src="https://imgur.com/klWHTAX.jpg"/> |
-| <img src="https://imgur.com/v99ekWA.jpg"/> | <img src="https://imgur.com/hj6uGhI.jpg"/> |
-| <img src="https://imgur.com/wt0K6u4.jpg"/> | <img src="https://imgur.com/7khWnwt.jpg"/> |
-| <img src="https://imgur.com/TgfjJdQ.jpg"/> | <img src="https://imgur.com/83cEMeP.jpg"/> |
+|--------------------------------------------|--------------------------------------------|
+| <img src="https://imgur.com/iWNuPqs.png"/> | <img src="https://imgur.com/QPIHrJt.png"/> |
+
+{% note %}
+
+**Note:** native push buttons can be styled as text-only, text with an icon, or icon-only. Currently, text-only push buttons are supported. To create an icon-only button, use the `MacosIconButton` widget. 
+
+{% endnote %}
 
 Here's an example of how to create a basic push button:
 
