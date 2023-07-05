@@ -84,7 +84,7 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           secondaryButton: PushButton(
                             controlSize: ControlSize.regular,
-                            isSecondary: true,
+                            secondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),
                           ),
@@ -116,7 +116,7 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           secondaryButton: PushButton(
                             controlSize: ControlSize.regular,
-                            isSecondary: true,
+                            secondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),
                           ),
@@ -149,7 +149,7 @@ class _DialogsPageState extends State<DialogsPage> {
                           ),
                           secondaryButton: PushButton(
                             controlSize: ControlSize.regular,
-                            isSecondary: true,
+                            secondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),
                           ),

@@ -324,7 +324,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               children: [
                                 PushButton(
                                   controlSize: ControlSize.mini,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: const Text('Mini'),
                                   onPressed: () {
                                     MacosWindowScope.of(context)
@@ -334,7 +334,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                 const SizedBox(width: 8),
                                 PushButton(
                                   controlSize: ControlSize.small,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: const Text('Small'),
                                   onPressed: () {
                                     Navigator.of(context).push(
@@ -384,7 +384,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                 const SizedBox(width: 8),
                                 PushButton(
                                   controlSize: ControlSize.regular,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: const Text('Regular'),
                                   onPressed: () {
                                     Navigator.of(context).push(
@@ -434,7 +434,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                 const SizedBox(width: 8),
                                 PushButton(
                                   controlSize: ControlSize.large,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: const Text('Large'),
                                   onPressed: () {
                                     Navigator.of(context).push(
@@ -528,25 +528,25 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               children: [
                                 PushButton(
                                   controlSize: ControlSize.mini,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: Text('Mini'),
                                 ),
                                 SizedBox(width: 8),
                                 PushButton(
                                   controlSize: ControlSize.small,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: Text('Small'),
                                 ),
                                 SizedBox(width: 8),
                                 PushButton(
                                   controlSize: ControlSize.regular,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: Text('Regular'),
                                 ),
                                 SizedBox(width: 8),
                                 PushButton(
                                   controlSize: ControlSize.large,
-                                  isSecondary: true,
+                                  secondary: true,
                                   child: Text('Large'),
                                 ),
                               ],

@@ -121,7 +121,7 @@ class PushButton extends StatefulWidget {
     this.alignment = Alignment.center,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
-    this.isSecondary,
+    this.secondary,
   }) : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
@@ -190,7 +190,7 @@ class PushButton extends StatefulWidget {
   ///
   /// Sets its background color to [PushButtonThemeData]'s [secondaryColor] attributes (defaults
   /// are gray colors). Can still be overridden if the [color] attribute is non-null.
-  final bool? isSecondary;
+  final bool? secondary;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -211,7 +211,7 @@ class PushButton extends StatefulWidget {
       value: enabled,
       ifFalse: 'disabled',
     ));
-    properties.add(DiagnosticsProperty('isSecondary', isSecondary));
+    properties.add(DiagnosticsProperty('secondary', secondary));
   }
 
   @override
@@ -297,7 +297,7 @@ class PushButtonState extends State<PushButton>
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
-    final bool isSecondary = widget.isSecondary != null && widget.isSecondary!;
+    final bool isSecondary = widget.secondary != null && widget.secondary!;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
       widget.color ??
