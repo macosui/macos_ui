@@ -734,6 +734,13 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           }).toList(),
                         ),
                         const SizedBox(height: 20),
+                        MacosCheckbox(
+                          value: switchValue,
+                          onChanged: (value) {
+                            setState(() => switchValue = value);
+                          },
+                        ),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
