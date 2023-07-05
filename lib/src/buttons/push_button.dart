@@ -307,10 +307,9 @@ class PushButtonState extends State<PushButton>
       context,
     );
 
-    final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.pushButtonTheme.disabledColor!,
-      context,
-    );
+    final disabledColor = !isSecondary
+        ? backgroundColor.withOpacity(0.5)
+        : backgroundColor.withOpacity(0.25);
 
     final Color foregroundColor = widget.enabled
         ? textLuminance(backgroundColor)
@@ -341,7 +340,8 @@ class PushButtonState extends State<PushButton>
                   shape: RoundedRectangleBorder(
                     borderRadius: widget.controlSize.borderRadius,
                   ),
-                  color: !enabled ? disabledColor : backgroundColor,
+                  // color: !enabled ? disabledColor : backgroundColor,
+                  color: enabled ? backgroundColor : disabledColor,
                 ),
                 child: Padding(
                   padding: widget.controlSize.padding,

@@ -146,7 +146,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        const Text('PushButton'),
+                        const Text('Primary PushButton'),
                         const SizedBox(height: 8),
                         Column(
                           mainAxisSize: MainAxisSize.min,
@@ -486,7 +486,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        const Text('Disabled PushButton'),
+                        const Text('Disabled Primary PushButton'),
                         const SizedBox(height: 8),
                         const Column(
                           mainAxisSize: MainAxisSize.min,
@@ -496,6 +496,39 @@ class _ButtonsPageState extends State<ButtonsPage> {
                               children: [
                                 PushButton(
                                   controlSize: ControlSize.mini,
+                                  child: Text('Mini'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.small,
+                                  child: Text('Small'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.regular,
+                                  child: Text('Regular'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.large,
+                                  child: Text('Large'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text('Disabled Secondary PushButton'),
+                        const SizedBox(height: 8),
+                        const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PushButton(
+                                  controlSize: ControlSize.mini,
+                                  isSecondary: true,
                                   child: Text('Mini'),
                                 ),
                                 SizedBox(width: 8),
