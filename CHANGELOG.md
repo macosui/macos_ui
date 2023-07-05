@@ -3,6 +3,10 @@
 * `PushButton` has been updated to support the `ControlSize` enum.
   * The `buttonSize` property has been changed to `controlSize`.
   * Buttons can now be any of the following sizes: mini, small, regular, or large.
+* `PushButton.isSecondary` is now `PushButton.secondary`. 
+
+🔄 Updated 🔄
+* `PushButton`'s secondary and disabled colors more closely match their native counterparts. 
 
 ## [2.0.0-beta.3]
 ✨ New ✨
