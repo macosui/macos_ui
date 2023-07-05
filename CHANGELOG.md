@@ -1,3 +1,13 @@
+## [2.0.0-beta.5]
+🚨 Breaking Changes 🚨
+* `PushButton` has been updated to support the `ControlSize` enum.
+  * The `buttonSize` property has been changed to `controlSize`.
+  * Buttons can now be any of the following sizes: mini, small, regular, or large.
+* `PushButton.isSecondary` is now `PushButton.secondary`. 
+
+🔄 Updated 🔄
+* `PushButton`'s secondary and disabled colors more closely match their native counterparts. 
+
 ## [2.0.0-beta.4]
 🛠️ Fixed 🛠️
 * `ToolBar`s in use where a `SideBar` is not present will now have their title's avoid the traffic lights (native window controls).

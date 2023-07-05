@@ -146,71 +146,410 @@ class _ButtonsPageState extends State<ButtonsPage> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        const Text('PushButton'),
+                        const Text('Primary PushButton'),
                         const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            PushButton(
-                              buttonSize: ButtonSize.large,
-                              child: const Text('Large'),
-                              onPressed: () {
-                                MacosWindowScope.of(context).toggleSidebar();
-                              },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PushButton(
+                                  controlSize: ControlSize.mini,
+                                  child: const Text('Mini'),
+                                  onPressed: () {
+                                    MacosWindowScope.of(context)
+                                        .toggleSidebar();
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.small,
+                                  child: const Text('Small'),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return MacosScaffold(
+                                            toolBar: const ToolBar(
+                                              title: Text('New page'),
+                                            ),
+                                            children: [
+                                              ContentArea(
+                                                builder: (context, _) {
+                                                  return Center(
+                                                    child: PushButton(
+                                                      controlSize:
+                                                          ControlSize.regular,
+                                                      child:
+                                                          const Text('Go Back'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .maybePop();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ResizablePane(
+                                                minSize: 180,
+                                                startSize: 200,
+                                                windowBreakpoint: 700,
+                                                resizableSide:
+                                                    ResizableSide.left,
+                                                builder: (_, __) {
+                                                  return const Center(
+                                                    child:
+                                                        Text('Resizable Pane'),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.regular,
+                                  child: const Text('Regular'),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return MacosScaffold(
+                                            toolBar: const ToolBar(
+                                              title: Text('New page'),
+                                            ),
+                                            children: [
+                                              ContentArea(
+                                                builder: (context, _) {
+                                                  return Center(
+                                                    child: PushButton(
+                                                      controlSize:
+                                                      ControlSize.regular,
+                                                      child:
+                                                      const Text('Go Back'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .maybePop();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ResizablePane(
+                                                minSize: 180,
+                                                startSize: 200,
+                                                windowBreakpoint: 700,
+                                                resizableSide:
+                                                ResizableSide.left,
+                                                builder: (_, __) {
+                                                  return const Center(
+                                                    child:
+                                                    Text('Resizable Pane'),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.large,
+                                  child: const Text('Large'),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return MacosScaffold(
+                                            toolBar: const ToolBar(
+                                              title: Text('New page'),
+                                            ),
+                                            children: [
+                                              ContentArea(
+                                                builder: (context, _) {
+                                                  return Center(
+                                                    child: PushButton(
+                                                      controlSize:
+                                                      ControlSize.regular,
+                                                      child:
+                                                      const Text('Go Back'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .maybePop();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ResizablePane(
+                                                minSize: 180,
+                                                startSize: 200,
+                                                windowBreakpoint: 700,
+                                                resizableSide:
+                                                ResizableSide.left,
+                                                builder: (_, __) {
+                                                  return const Center(
+                                                    child:
+                                                    Text('Resizable Pane'),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 20),
-                            PushButton(
-                              buttonSize: ButtonSize.small,
-                              child: const Text('Small'),
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return MacosScaffold(
-                                        toolBar: const ToolBar(
-                                          title: Text('New page'),
-                                        ),
-                                        children: [
-                                          ContentArea(
-                                            builder: (context, _) {
-                                              return Center(
-                                                child: PushButton(
-                                                  buttonSize: ButtonSize.large,
-                                                  child: const Text('Go Back'),
-                                                  onPressed: () {
-                                                    Navigator.of(context)
-                                                        .maybePop();
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          ResizablePane(
-                                            minSize: 180,
-                                            startSize: 200,
-                                            windowBreakpoint: 700,
-                                            resizableSide: ResizableSide.left,
-                                            builder: (_, __) {
-                                              return const Center(
-                                                child: Text('Resizable Pane'),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text('Secondary PushButton'),
+                        const SizedBox(height: 8),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PushButton(
+                                  controlSize: ControlSize.mini,
+                                  secondary: true,
+                                  child: const Text('Mini'),
+                                  onPressed: () {
+                                    MacosWindowScope.of(context)
+                                        .toggleSidebar();
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.small,
+                                  secondary: true,
+                                  child: const Text('Small'),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return MacosScaffold(
+                                            toolBar: const ToolBar(
+                                              title: Text('New page'),
+                                            ),
+                                            children: [
+                                              ContentArea(
+                                                builder: (context, _) {
+                                                  return Center(
+                                                    child: PushButton(
+                                                      controlSize:
+                                                      ControlSize.regular,
+                                                      child:
+                                                      const Text('Go Back'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .maybePop();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ResizablePane(
+                                                minSize: 180,
+                                                startSize: 200,
+                                                windowBreakpoint: 700,
+                                                resizableSide:
+                                                ResizableSide.left,
+                                                builder: (_, __) {
+                                                  return const Center(
+                                                    child:
+                                                    Text('Resizable Pane'),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.regular,
+                                  secondary: true,
+                                  child: const Text('Regular'),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return MacosScaffold(
+                                            toolBar: const ToolBar(
+                                              title: Text('New page'),
+                                            ),
+                                            children: [
+                                              ContentArea(
+                                                builder: (context, _) {
+                                                  return Center(
+                                                    child: PushButton(
+                                                      controlSize:
+                                                      ControlSize.regular,
+                                                      child:
+                                                      const Text('Go Back'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .maybePop();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ResizablePane(
+                                                minSize: 180,
+                                                startSize: 200,
+                                                windowBreakpoint: 700,
+                                                resizableSide:
+                                                ResizableSide.left,
+                                                builder: (_, __) {
+                                                  return const Center(
+                                                    child:
+                                                    Text('Resizable Pane'),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.large,
+                                  secondary: true,
+                                  child: const Text('Large'),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return MacosScaffold(
+                                            toolBar: const ToolBar(
+                                              title: Text('New page'),
+                                            ),
+                                            children: [
+                                              ContentArea(
+                                                builder: (context, _) {
+                                                  return Center(
+                                                    child: PushButton(
+                                                      controlSize:
+                                                      ControlSize.regular,
+                                                      child:
+                                                      const Text('Go Back'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .maybePop();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ResizablePane(
+                                                minSize: 180,
+                                                startSize: 200,
+                                                windowBreakpoint: 700,
+                                                resizableSide:
+                                                ResizableSide.left,
+                                                builder: (_, __) {
+                                                  return const Center(
+                                                    child:
+                                                    Text('Resizable Pane'),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 20),
-                            PushButton(
-                              buttonSize: ButtonSize.large,
-                              isSecondary: true,
-                              child: const Text('Secondary'),
-                              onPressed: () {
-                                MacosWindowScope.of(context).toggleSidebar();
-                              },
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text('Disabled Primary PushButton'),
+                        const SizedBox(height: 8),
+                        const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PushButton(
+                                  controlSize: ControlSize.mini,
+                                  child: Text('Mini'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.small,
+                                  child: Text('Small'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.regular,
+                                  child: Text('Regular'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.large,
+                                  child: Text('Large'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text('Disabled Secondary PushButton'),
+                        const SizedBox(height: 8),
+                        const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PushButton(
+                                  controlSize: ControlSize.mini,
+                                  secondary: true,
+                                  child: Text('Mini'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.small,
+                                  secondary: true,
+                                  child: Text('Small'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.regular,
+                                  secondary: true,
+                                  child: Text('Regular'),
+                                ),
+                                SizedBox(width: 8),
+                                PushButton(
+                                  controlSize: ControlSize.large,
+                                  secondary: true,
+                                  child: Text('Large'),
+                                ),
+                              ],
                             ),
                           ],
                         ),
