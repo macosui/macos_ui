@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 void main() {
   group('PushButton theme tests', () {
@@ -78,8 +78,8 @@ void main() {
 
       final theme = PushButtonTheme.of(capturedContext);
       expect(theme.color, const Color(0xff007aff));
-      expect(theme.disabledColor, const Color(0xfff4f5f5));
-      expect(theme.secondaryColor, const Color(0xffdadadf));
+      expect(theme.disabledColor, const Color.fromRGBO(244, 245, 245, 1.0));
+      expect(theme.secondaryColor, MacosColors.white);
     });
   });
 }

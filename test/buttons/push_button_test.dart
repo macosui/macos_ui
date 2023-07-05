@@ -96,7 +96,7 @@ void main() {
       expect(
         description,
         [
-          'buttonSize: small',
+          'controlSize: regular',
           'color: null',
           'disabledColor: null',
           'pressedOpacity: 0.4',
@@ -104,7 +104,7 @@ void main() {
           'semanticLabel: null',
           'borderRadius: BorderRadius.circular(4.0)',
           'disabled',
-          'isSecondary: null',
+          'secondary: null',
         ],
       );
     });
