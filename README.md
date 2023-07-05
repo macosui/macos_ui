@@ -639,18 +639,15 @@ complete a task. [Learn more](https://developer.apple.com/design/human-interface
 |--------------------------------------------|--------------------------------------------|
 | <img src="https://imgur.com/iWNuPqs.png"/> | <img src="https://imgur.com/QPIHrJt.png"/> |
 
-{% note %}
-
-**Note:** native push buttons can be styled as text-only, text with an icon, or icon-only. Currently, text-only push buttons are supported. To create an icon-only button, use the `MacosIconButton` widget. 
-
-{% endnote %}
+ℹ️ **Note** ℹ️
+Native push buttons can be styled as text-only, text with an icon, or icon-only. Currently, text-only push buttons are supported. To create an icon-only button, use the `MacosIconButton` widget.
 
 Here's an example of how to create a basic push button:
 
 ```dart
 PushButton(
   child: Text('button'),
-  buttonSize: ButtonSize.large,
+  controlSize: ControlSize.regular,
   onPressed: () {
     print('button pressed');
   },
