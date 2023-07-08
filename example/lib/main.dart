@@ -64,24 +64,15 @@ class _WidgetGalleryState extends State<WidgetGallery> {
   late final searchFieldController = TextEditingController();
 
   final List<Widget Function(bool)> pageBuilders = [
-    (bool isVisible) => CupertinoTabView(
-          builder: (_) => const ButtonsPage(),
-        ),
-    (bool isVisible) => const IndicatorsPage(),
-    (bool isVisible) => const FieldsPage(),
-    (bool isVisible) => const ColorsPage(),
-    (bool isVisible) => const Center(
-          child: MacosIcon(
-            CupertinoIcons.add,
-          ),
-        ),
-    (bool isVisible) => const DialogsPage(),
-    (bool isVisible) => const ToolbarPage(),
-    (bool isVisible) => SliverToolbarPage(
-          isVisible: isVisible,
-        ),
-    (bool isVisible) => const TabViewPage(),
-    (bool isVisible) => const SelectorsPage(),
+    (_) => CupertinoTabView(builder: (_) => const ButtonsPage()),
+    (_) => const IndicatorsPage(),
+    (_) => const FieldsPage(),
+    (_) => const ColorsPage(),
+    (_) => const DialogsPage(),
+    (_) => const ToolbarPage(),
+    (isVisible) => SliverToolbarPage(isVisible: isVisible),
+    (_) => const TabViewPage(),
+    (_) => const SelectorsPage(),
   ];
 
   @override
@@ -152,7 +143,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   break;
                 case 'Dialogs and Sheets':
                   setState(() {
-                    pageIndex = 5;
+                    pageIndex = 4;
                     searchFieldController.clear();
                   });
                   break;
@@ -215,31 +206,13 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   ),
                   label: Text('Fields'),
                 ),
-                SidebarItem(
-                  leading: const MacosIcon(CupertinoIcons.folder),
-                  label: const Text('Disclosure'),
-                  trailing: Text(
-                    '2',
-                    style: TextStyle(
-                      color: MacosTheme.brightnessOf(context) == Brightness.dark
-                          ? MacosColors.tertiaryLabelColor.darkColor
-                          : MacosColors.tertiaryLabelColor,
+                const SidebarItem(
+                  leading: MacosImageIcon(
+                    AssetImage(
+                      'assets/sf_symbols/rectangle_3_group_2x.png',
                     ),
                   ),
-                  disclosureItems: [
-                    const SidebarItem(
-                      leading: MacosImageIcon(
-                        AssetImage(
-                          'assets/sf_symbols/rectangle_3_group_2x.png',
-                        ),
-                      ),
-                      label: Text('Colors'),
-                    ),
-                    const SidebarItem(
-                      leading: MacosIcon(CupertinoIcons.infinite),
-                      label: Text('Item 3'),
-                    ),
-                  ],
+                  label: Text('Colors'),
                 ),
                 const SidebarItem(
                   leading: MacosIcon(CupertinoIcons.square_on_square),
