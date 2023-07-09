@@ -3,6 +3,7 @@ import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
 import 'package:example/pages/fields_page.dart';
 import 'package:example/pages/indicators_page.dart';
+import 'package:example/pages/resizable_pane_page.dart';
 import 'package:example/pages/selectors_page.dart';
 import 'package:example/pages/sliver_toolbar_page.dart';
 import 'package:example/pages/tabview_page.dart';
@@ -55,10 +56,6 @@ class WidgetGallery extends StatefulWidget {
 }
 
 class _WidgetGalleryState extends State<WidgetGallery> {
-  double ratingValue = 0;
-  double sliderValue = 0;
-  bool value = false;
-
   int pageIndex = 0;
 
   late final searchFieldController = TextEditingController();
@@ -72,6 +69,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     (_) => const ToolbarPage(),
     (isVisible) => SliverToolbarPage(isVisible: isVisible),
     (_) => const TabViewPage(),
+    (_) => const ResizablePanePage(),
     (_) => const SelectorsPage(),
   ];
 
@@ -153,9 +151,15 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     searchFieldController.clear();
                   });
                   break;
-                case 'Selectors':
+                case 'ResizablePane':
                   setState(() {
                     pageIndex = 7;
+                    searchFieldController.clear();
+                  });
+                  break;
+                case 'Selectors':
+                  setState(() {
+                    pageIndex = 8;
                     searchFieldController.clear();
                   });
                   break;
@@ -170,6 +174,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
               SearchResultItem('Colors'),
               SearchResultItem('Dialogs and Sheets'),
               SearchResultItem('Toolbar'),
+              SearchResultItem('ResizablePane'),
               SearchResultItem('Selectors'),
             ],
           ),
@@ -180,17 +185,14 @@ class _WidgetGalleryState extends State<WidgetGallery> {
               onChanged: (i) => setState(() => pageIndex = i),
               scrollController: scrollController,
               itemSize: SidebarItemSize.large,
-              items: [
-                const SidebarItem(
-                  // leading: MacosIcon(CupertinoIcons.square_on_circle),
+              items: const [
+                SidebarItem(
                   leading: MacosImageIcon(
-                    AssetImage(
-                      'assets/sf_symbols/button_programmable_2x.png',
-                    ),
+                    AssetImage('assets/sf_symbols/button_programmable_2x.png'),
                   ),
                   label: Text('Buttons'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/lines_measurement_horizontal_2x.png',
@@ -198,7 +200,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   ),
                   label: Text('Indicators'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/character_cursor_ibeam_2x.png',
@@ -206,19 +208,17 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                   ),
                   label: Text('Fields'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
-                    AssetImage(
-                      'assets/sf_symbols/rectangle_3_group_2x.png',
-                    ),
+                    AssetImage('assets/sf_symbols/rectangle_3_group_2x.png'),
                   ),
                   label: Text('Colors'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosIcon(CupertinoIcons.square_on_square),
                   label: Text('Dialogs & Sheets'),
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
                       'assets/sf_symbols/macwindow.on.rectangle_2x.png',
@@ -242,13 +242,16 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                       leading: MacosIcon(CupertinoIcons.uiwindow_split_2x1),
                       label: Text('TabView'),
                     ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.rectangle_split_3x1),
+                      label: Text('ResizablePane'),
+                    ),
                   ],
                 ),
-                const SidebarItem(
+                SidebarItem(
                   leading: MacosImageIcon(
                     AssetImage(
-                      'assets/sf_symbols/filemenu_and_selection_2x.png',
-                    ),
+                        'assets/sf_symbols/filemenu_and_selection_2x.png'),
                   ),
                   label: Text('Selectors'),
                 ),
