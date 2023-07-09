@@ -18,7 +18,7 @@ class _TabViewPageState extends State<TabViewPage> {
   Widget build(BuildContext context) {
     return MacosScaffold(
       toolBar: ToolBar(
-        title: Text('TabView'),
+        title: const Text('TabView'),
         leading: MacosTooltip(
           message: 'Toggle Sidebar',
           useMousePosition: false,
