@@ -1,3 +1,4 @@
+import 'package:example/widgets/widget_text_title1.dart';
 import 'package:macos_ui/macos_ui.dart';
 // ignore: implementation_imports
 import 'package:macos_ui/src/library.dart';
@@ -48,46 +49,97 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CapacityIndicator(
-                    value: capacitorValue,
-                    onChanged: (v) => setState(() => capacitorValue = v),
-                    splits: 20,
-                    discrete: true,
+                  const WidgetTextTitle1(widgetName: 'CapacityIndicator'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
+                  Row(
+                    children: [
+                      const Text('Standard'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: CapacityIndicator(
+                          value: capacitorValue,
+                          onChanged: (v) => setState(() => capacitorValue = v),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      const Text('Discrete'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: CapacityIndicator(
+                          value: capacitorValue,
+                          onChanged: (v) => setState(() => capacitorValue = v),
+                          splits: 20,
+                          discrete: true,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
-                  CapacityIndicator(
-                    value: capacitorValue,
-                    onChanged: (v) => setState(() => capacitorValue = v),
+                  const WidgetTextTitle1(widgetName: 'MacosSlider'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
+                  Row(
+                    children: [
+                      const Text('Standard'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: MacosSlider(
+                          value: sliderValue,
+                          onChanged: (v) => setState(() => sliderValue = v),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      const Text('Discrete'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: MacosSlider(
+                          value: sliderValue,
+                          discrete: true,
+                          onChanged: (v) => setState(() => sliderValue = v),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
-                  MacosSlider(
-                    value: sliderValue,
-                    onChanged: (v) => setState(() => sliderValue = v),
-                  ),
-                  const SizedBox(height: 20),
-                  MacosSlider(
-                    value: sliderValue,
-                    discrete: true,
-                    onChanged: (v) => setState(() => sliderValue = v),
-                  ),
-                  const SizedBox(height: 20),
+                  const WidgetTextTitle1(widgetName: 'RatingIndicator'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   RatingIndicator(
                     value: ratingValue,
                     onChanged: (v) => setState(() => ratingValue = v),
                   ),
                   const SizedBox(height: 20),
-                  const ProgressCircle(),
+                  const WidgetTextTitle1(widgetName: 'ProgressCircle'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
+                  const Row(
+                    children: [
+                      Text('Indeterminate'),
+                      SizedBox(width: 8),
+                      ProgressCircle(),
+                    ],
+                  ),
+                  const Row(
+                    children: [
+                      Text('Determinate'),
+                      SizedBox(width: 8),
+                      ProgressCircle(value: 50),
+                    ],
+                  ),
                   const SizedBox(height: 20),
+                  const WidgetTextTitle1(widgetName: 'RelevanceIndicator'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
+                  const SizedBox(height: 8),
                   const RelevanceIndicator(
                     value: 25,
                     amount: 50,
-                  ),
-                  const SizedBox(height: 20),
-                  const Label(
-                    icon: MacosIcon(CupertinoIcons.tag),
-                    text: SelectableText('A determinate progress circle: '),
-                    child: ProgressCircle(value: 50),
                   ),
                 ],
               ),
