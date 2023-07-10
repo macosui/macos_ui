@@ -1,6 +1,7 @@
+import 'package:example/widgets/widget_text_title1.dart';
+import 'package:example/widgets/widget_text_title2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -813,57 +814,3 @@ const languages = [
   'Romanian',
   'Dutch'
 ];
-
-class WidgetTextTitle1 extends StatelessWidget {
-  const WidgetTextTitle1({super.key, required this.widgetName});
-
-  final String widgetName;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: MacosColors.systemGrayColor.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 6.0,
-        ),
-        child: Text(
-          widgetName,
-          style: MacosTypography.of(context)
-              .title1
-              .copyWith(fontFamily: GoogleFonts.jetBrainsMono().fontFamily),
-        ),
-      ),
-    );
-  }
-}
-
-class WidgetTextTitle2 extends StatelessWidget {
-  const WidgetTextTitle2({super.key, required this.widgetName});
-
-  final String widgetName;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: MacosColors.systemGrayColor.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 6.0,
-        ),
-        child: Text(
-          widgetName,
-          style: MacosTypography.of(context)
-              .title2
-              .copyWith(fontFamily: GoogleFonts.jetBrainsMono().fontFamily),
-        ),
-      ),
-    );
-  }
-}
