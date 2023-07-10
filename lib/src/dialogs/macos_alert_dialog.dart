@@ -21,14 +21,12 @@ const _kDefaultDialogConstraints = BoxConstraints(
 ///     appIcon: FlutterLogo(
 ///       size: 56,
 ///     ),
-///     title: Text(
-///       'Alert Dialog with Primary Action',
-///     ),
+///     title: Text('Alert Dialog with Primary Action'),
 ///     message: Text(
 ///       'This is an alert dialog with a primary action and no secondary action',
 ///     ),
 ///     primaryButton: PushButton(
-///       buttonSize: ButtonSize.large,
+///       controlSize: ControlSize.large,
 ///       child: Text('Primary'),
 ///       onPressed: Navigator.of(context).pop,
 ///     ),

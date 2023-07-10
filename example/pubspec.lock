@@ -145,7 +145,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0-beta.6"
+    version: "2.0.0-beta.7"
   macos_window_utils:
     dependency: transitive
     description:

@@ -703,9 +703,7 @@ Usage:
 showMacosAlertDialog(
   context: context,
   builder: (_) => MacosAlertDialog(
-    appIcon: FlutterLogo(
-      size: 56,
-    ),
+    appIcon: FlutterLogo(size: 64),
     title: Text(
       'Alert Dialog with Primary Action',
       style: MacosTheme.of(context).typography.headline,
@@ -713,10 +711,10 @@ showMacosAlertDialog(
     message: Text(
       'This is an alert dialog with a primary action and no secondary action',
       textAlign: TextAlign.center,
-      style: MacosTheme.of(context).typography.headline,
+      style: MacosTypography.of(context).headline,
     ),
     primaryButton: PushButton(
-      buttonSize: ButtonSize.large,
+      controlSize: ControlSize.large,
       child: Text('Primary'),
       onPressed: () {},
     ),
