@@ -2,6 +2,9 @@ import 'package:macos_ui/macos_ui.dart';
 // ignore: implementation_imports
 import 'package:macos_ui/src/library.dart';
 
+const dialogMessage =
+    'Description text about this alert is shown here, explaining to users what the options underneath are about and what to do.';
+
 class DialogsPage extends StatefulWidget {
   const DialogsPage({super.key});
 
@@ -52,20 +55,14 @@ class _DialogsPageState extends State<DialogsPage> {
                       onPressed: () => showMacosAlertDialog(
                         context: context,
                         builder: (context) => MacosAlertDialog(
-                          appIcon: const FlutterLogo(
-                            size: 56,
-                          ),
-                          title: const Text(
-                            'Alert Dialog with Primary Action',
-                          ),
-                          message: const Text(
-                            'This is an alert dialog with a primary action and no secondary action',
-                          ),
+                          appIcon: const FlutterLogo(size: 64),
+                          title: const Text('Title'),
+                          message: const Text(dialogMessage),
                           //horizontalActions: false,
                           primaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             onPressed: Navigator.of(context).pop,
-                            child: const Text('Primary'),
+                            child: const Text('Label'),
                           ),
                         ),
                       ),
@@ -77,27 +74,23 @@ class _DialogsPageState extends State<DialogsPage> {
                       onPressed: () => showMacosAlertDialog(
                         context: context,
                         builder: (context) => MacosAlertDialog(
-                          appIcon: const FlutterLogo(
-                            size: 56,
-                          ),
-                          title: const Text(
-                            'Alert Dialog with Secondary Action',
-                          ),
+                          appIcon: const FlutterLogo(size: 64),
+                          title: const Text('Title'),
                           message: const Text(
-                            'This is an alert dialog with primary action and secondary action laid out horizontally',
+                            dialogMessage,
                             textAlign: TextAlign.center,
                           ),
                           //horizontalActions: false,
                           primaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             onPressed: Navigator.of(context).pop,
-                            child: const Text('Primary'),
+                            child: const Text('Label'),
                           ),
                           secondaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             secondary: true,
                             onPressed: Navigator.of(context).pop,
-                            child: const Text('Secondary'),
+                            child: const Text('Label'),
                           ),
                         ),
                       ),
@@ -109,27 +102,23 @@ class _DialogsPageState extends State<DialogsPage> {
                       onPressed: () => showMacosAlertDialog(
                         context: context,
                         builder: (context) => MacosAlertDialog(
-                          appIcon: const FlutterLogo(
-                            size: 56,
-                          ),
-                          title: const Text(
-                            'Alert Dialog with Secondary Action',
-                          ),
+                          appIcon: const FlutterLogo(size: 64),
+                          title: const Text('Title'),
                           message: const Text(
-                            'This is an alert dialog with primary action and secondary action laid out vertically',
+                            dialogMessage,
                             textAlign: TextAlign.center,
                           ),
                           horizontalActions: false,
                           primaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             onPressed: Navigator.of(context).pop,
-                            child: const Text('Primary'),
+                            child: const Text('Label'),
                           ),
                           secondaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             secondary: true,
                             onPressed: Navigator.of(context).pop,
-                            child: const Text('Secondary'),
+                            child: const Text('Label'),
                           ),
                         ),
                       ),
@@ -141,25 +130,20 @@ class _DialogsPageState extends State<DialogsPage> {
                       onPressed: () => showMacosAlertDialog(
                         context: context,
                         builder: (context) => MacosAlertDialog(
-                          appIcon: const FlutterLogo(
-                            size: 56,
-                          ),
-                          title: const Text(
-                            'Alert Dialog with Secondary Action',
-                          ),
+                          appIcon: const FlutterLogo(size: 64),
+                          title: const Text('Title'),
                           message: const Text(
-                            'This is an alert dialog with primary action and secondary '
-                            'action laid out vertically. It also contains a "suppress" option.',
+                            dialogMessage,
                             textAlign: TextAlign.center,
                           ),
                           horizontalActions: false,
                           primaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Primary'),
                           ),
                           secondaryButton: PushButton(
-                            controlSize: ControlSize.regular,
+                            controlSize: ControlSize.large,
                             secondary: true,
                             onPressed: Navigator.of(context).pop,
                             child: const Text('Secondary'),

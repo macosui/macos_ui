@@ -3,6 +3,10 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
+const _kDefaultDialogConstraints = BoxConstraints(
+  minWidth: 260,
+  maxWidth: 260,
+);
 
 /// A macOS-style AlertDialog.
 ///
@@ -46,7 +50,7 @@ class MacosAlertDialog extends StatelessWidget {
 
   /// This should be your application's icon.
   ///
-  /// The size of this widget should be 56x56.
+  /// The size of this widget should be 64x64.
   final Widget appIcon;
 
   /// The title for the dialog.
@@ -61,13 +65,13 @@ class MacosAlertDialog extends StatelessWidget {
 
   /// The primary action a user can take.
   ///
-  /// Typically a [PushButton].
-  final Widget primaryButton;
+  /// Must a [PushButton] with a [ControlSize] of `large`.
+  final PushButton primaryButton;
 
   /// The secondary action a user can take.
   ///
-  /// Typically a [PushButton].
-  final Widget? secondaryButton;
+  /// Must a [PushButton] with a [ControlSize] of `large`.
+  final PushButton? secondaryButton;
 
   /// Determines whether to lay out [primaryButton] and [secondaryButton]
   /// horizontally or vertically.
@@ -116,6 +120,11 @@ class MacosAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
+    assert(primaryButton.controlSize == ControlSize.large);
+    if (secondaryButton != null) {
+      assert(secondaryButton is PushButton);
+      assert(secondaryButton!.controlSize == ControlSize.large);
+    }
     final brightness = MacosTheme.brightnessOf(context);
 
     final outerBorderColor = brightness.resolve(
@@ -153,39 +162,35 @@ class MacosAlertDialog extends StatelessWidget {
           borderRadius: _kDialogBorderRadius,
         ),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 260,
-          ),
+          constraints: _kDefaultDialogConstraints,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 28),
+              const SizedBox(height: 20),
               ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxHeight: 56,
-                  maxWidth: 56,
+                  maxHeight: 64,
+                  maxWidth: 64,
                 ),
                 child: appIcon,
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 16),
               DefaultTextStyle(
                 style: MacosTheme.of(context).typography.headline,
                 textAlign: TextAlign.center,
                 child: title,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
               DefaultTextStyle(
                 textAlign: TextAlign.center,
                 style: MacosTheme.of(context).typography.headline,
                 child: message,
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
               if (secondaryButton == null) ...[
                 Row(
                   children: [
-                    Expanded(
-                      child: primaryButton,
-                    ),
+                    Expanded(child: primaryButton),
                   ],
                 ),
               ] else ...[
@@ -193,9 +198,7 @@ class MacosAlertDialog extends StatelessWidget {
                   Row(
                     children: [
                       if (secondaryButton != null) ...[
-                        Expanded(
-                          child: secondaryButton!,
-                        ),
+                        Expanded(child: secondaryButton!),
                         const SizedBox(width: 8.0),
                       ],
                       Expanded(
