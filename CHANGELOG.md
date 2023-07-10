@@ -1,3 +1,12 @@
+## [2.0.0-beta.7]
+✨ New ✨
+* You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
+
+🔄 Updated 🔄
+* `MacosAlertDialog` now defines `primaryButton` and `secondaryButton` to be of type `PushButton`.
+* `MacosAlertDialog` now requires that `primaryButton` and `secondaryButton` to have `controlSize`s of `ControlSize.large`.
+* `MacosAlertDialog` docs now suggest that `appIcon` should be of size 64x64.
+
 ## [2.0.0-beta.6]
 🔄 Updated 🔄
 * `MacosCheckbox` appearance more closely matches its native counterpart.
