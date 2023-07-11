@@ -85,7 +85,8 @@ class ResizablePane extends StatefulWidget {
   late final ScrollableWidgetBuilder? builder;
 
   /// The child to display in this widget.
-  /// this is only used when the constructor used is [ResizablePane.noScrollbar]
+  /// 
+  /// This is only referenced when the constructor used is [ResizablePane.noScrollbar].
   late final Widget? child;
 
   /// Specify if this [ResizablePane] should have an internal [MacosScrollbar]
