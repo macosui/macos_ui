@@ -66,7 +66,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
             resizableSide: ResizableSide.right,
             child: const Center(
                 child: Text('Resizable Pane')
-            )
+            ),
         ),
         ContentArea(
           builder: (context, scrollController) {
