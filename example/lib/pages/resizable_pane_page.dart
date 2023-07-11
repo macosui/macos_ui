@@ -73,16 +73,12 @@ class _ResizablePanePageState extends State<ResizablePanePage> {
             );
           },
         ),
-        ResizablePane(
+        const ResizablePane.noScrollBar(
           minSize: 180,
           startSize: 200,
-          // windowBreakpoint: 800,
-          resizableSide: ResizableSide.left,
-          builder: (_, __) {
-            return const Center(
-              child: Text('Right Resizable Pane'),
-            );
-          },
+          windowBreakpoint: 700,
+          resizableSide: ResizableSide.right,
+          child: Center(child: Text('Right Resizable Pane')),
         ),
       ],
     );
