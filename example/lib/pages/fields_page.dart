@@ -1,4 +1,6 @@
+import 'package:example/widgets/widget_text_title1.dart';
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class FieldsPage extends StatefulWidget {
@@ -43,7 +45,10 @@ class _FieldsPageState extends State<FieldsPage> {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const WidgetTextTitle1(widgetName: 'MacosTextField'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   const SizedBox(
                     width: 300.0,
                     child: MacosTextField(
@@ -95,6 +100,8 @@ class _FieldsPageState extends State<FieldsPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  const WidgetTextTitle1(widgetName: 'MacosSearchField'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   SizedBox(
                     width: 300.0,
                     child: MacosSearchField(
@@ -133,17 +140,6 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ],
               ),
-            );
-          },
-        ),
-        ResizablePane(
-          minSize: 180,
-          startSize: 200,
-          windowBreakpoint: 800,
-          resizableSide: ResizableSide.left,
-          builder: (_, __) {
-            return const Center(
-              child: Text('Resizable Pane'),
             );
           },
         ),

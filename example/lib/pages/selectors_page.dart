@@ -1,4 +1,7 @@
+import 'package:example/widgets/widget_text_title1.dart';
+import 'package:example/widgets/widget_text_title2.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class SelectorsPage extends StatefulWidget {
@@ -44,20 +47,40 @@ class _SelectorsPageState extends State<SelectorsPage> {
               controller: scrollController,
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Date & Time Pickers',
+                    style: MacosTypography.of(context).title1,
+                  ),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MacosDatePicker(
-                        onDateChanged: (date) => debugPrint('$date'),
+                      Column(
+                        children: [
+                          const WidgetTextTitle2(widgetName: 'MacosDatePicker'),
+                          const SizedBox(height: 12),
+                          MacosDatePicker(
+                            onDateChanged: (date) => debugPrint('$date'),
+                          ),
+                        ],
                       ),
-                      MacosTimePicker(
-                        onTimeChanged: (time) => debugPrint('$time'),
+                      const SizedBox(width: 50),
+                      Column(
+                        children: [
+                          const WidgetTextTitle2(widgetName: 'MacosTimePicker'),
+                          const SizedBox(height: 12),
+                          MacosTimePicker(
+                            onTimeChanged: (time) => debugPrint('$time'),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 20),
+                  const WidgetTextTitle1(widgetName: 'MacosColorWell'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   MacosColorWell(
                     onColorSelected: (color) => debugPrint('$color'),
                   ),
