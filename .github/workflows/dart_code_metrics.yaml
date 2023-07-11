@@ -8,12 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run Dart Code Metrics
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: Install dependencies
+      - name: Set Up DCM
         run: flutter pub get
       - uses: CQLabs/setup-dcm@v1.0.0
         with:
