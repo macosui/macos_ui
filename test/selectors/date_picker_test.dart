@@ -84,30 +84,32 @@ void main() {
 
     testWidgets(
       'Textual MacosDatePicker renders the date with respect to "dateFormat" property',
-          (tester) async {
+      (tester) async {
         renderWidget(String dateFormat) => MacosApp(
-          home: MacosWindow(
-            disableWallpaperTinting: true,
-            child: MacosScaffold(
-              children: [
-                ContentArea(
-                  builder: (context, _) {
-                    return Center(
-                      child: MacosDatePicker(
-                        initialDate: DateTime.parse('2023-04-01'),
-                        onDateChanged: (date) {},
-                        dateFormat: dateFormat,
-                        style: DatePickerStyle.textual,
-                      ),
-                    );
-                  },
+              home: MacosWindow(
+                disableWallpaperTinting: true,
+                child: MacosScaffold(
+                  children: [
+                    ContentArea(
+                      builder: (context, _) {
+                        return Center(
+                          child: MacosDatePicker(
+                            initialDate: DateTime.parse('2023-04-01'),
+                            onDateChanged: (date) {},
+                            dateFormat: dateFormat,
+                            style: DatePickerStyle.textual,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        );
+              ),
+            );
 
-        getNthTextFromWidget(int index) => (find.byType(Text).at(index).evaluate().first.widget as Text).data as String;
+        getNthTextFromWidget(int index) =>
+            (find.byType(Text).at(index).evaluate().first.widget as Text).data
+                as String;
 
         await tester.pumpWidget(renderWidget('dd.mm.yyyy'));
         String firstDateElement = getNthTextFromWidget(0);
@@ -363,7 +365,7 @@ void main() {
 
     testWidgets(
       'Graphical MacosDatePicker renders abbreviations based on "weekdayAbbreviations" and "monthAbbreviations" properties',
-          (tester) async {
+      (tester) async {
         await tester.pumpWidget(
           MacosApp(
             home: MacosWindow(
@@ -424,7 +426,7 @@ void main() {
 
   testWidgets(
     'Graphical MacosDatePicker with "startWeekOnMonday" set to true shows Monday as the first day of the week',
-        (tester) async {
+    (tester) async {
       await tester.pumpWidget(
         MacosApp(
           home: MacosWindow(
@@ -453,7 +455,8 @@ void main() {
         matching: find.byType(Text),
       );
       final firstWeekday = dayHeaders.first;
-      final firstWeekdayText = (firstWeekday.evaluate().first.widget as Text).data;
+      final firstWeekdayText =
+          (firstWeekday.evaluate().first.widget as Text).data;
       await tester.pumpAndSettle();
 
       expect(firstWeekdayText, 'Mo');
@@ -474,7 +477,7 @@ void main() {
   // TODO: remove this once the issue is fixed and test starts failing
   testWidgets(
     'Graphical MacosDatePicker still needs "startWeekOnMonday" to show Monday as the first day of the week, even when the locale is set to something other than "en_US"',
-        (tester) async {
+    (tester) async {
       await tester.pumpWidget(
         MacosApp(
           supportedLocales: const [
@@ -506,7 +509,8 @@ void main() {
         matching: find.byType(Text),
       );
       final firstWeekday = dayHeaders.first;
-      final firstWeekdayText = (firstWeekday.evaluate().first.widget as Text).data;
+      final firstWeekdayText =
+          (firstWeekday.evaluate().first.widget as Text).data;
       await tester.pumpAndSettle();
 
       // The result will be 'Tu' if the fix is no longer needed and can be removed
