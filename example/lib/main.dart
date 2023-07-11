@@ -8,6 +8,7 @@ import 'package:example/pages/selectors_page.dart';
 import 'package:example/pages/sliver_toolbar_page.dart';
 import 'package:example/pages/tabview_page.dart';
 import 'package:example/pages/toolbar_page.dart';
+import 'package:example/pages/typography_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
@@ -71,6 +72,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
     (_) => const TabViewPage(),
     (_) => const ResizablePanePage(),
     (_) => const SelectorsPage(),
+    (_) => const TypographyPage(),
   ];
 
   @override
@@ -254,6 +256,10 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                         'assets/sf_symbols/filemenu_and_selection_2x.png'),
                   ),
                   label: Text('Selectors'),
+                ),
+                SidebarItem(
+                  leading: MacosIcon(CupertinoIcons.textformat_size),
+                  label: Text('Typography'),
                 ),
               ],
             );
