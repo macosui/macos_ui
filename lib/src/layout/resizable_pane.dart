@@ -31,7 +31,7 @@ enum ResizableSide {
 /// {@endtemplate}
 class ResizablePane extends StatefulWidget {
 
-  ///Create a [ResizablePane] with an internal [MacosScrollbar]
+  /// Creates a [ResizablePane] with an internal [MacosScrollbar].
   /// {@macro resizablePane}
   ResizablePane({
     super.key,
