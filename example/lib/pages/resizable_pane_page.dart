@@ -78,7 +78,7 @@ class _ResizablePanePageState extends State<ResizablePanePage> {
           startSize: 200,
           windowBreakpoint: 700,
           resizableSide: ResizableSide.right,
-          child: Center(child: Text('Right Resizable Pane')),
+          child: Center(child: Text('Right non-scrollable Resizable Pane')),
         ),
       ],
     );
