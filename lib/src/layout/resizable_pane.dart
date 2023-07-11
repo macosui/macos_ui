@@ -30,10 +30,9 @@ enum ResizableSide {
 /// The [startSize] is the initial width or height depending on the orientation of the pane.
 /// {@endtemplate}
 class ResizablePane extends StatefulWidget {
-
   /// Creates a [ResizablePane] with an internal [MacosScrollbar].
   /// {@macro resizablePane}
-  ResizablePane({
+  const ResizablePane({
     super.key,
     required ScrollableWidgetBuilder this.builder,
     this.decoration,
@@ -43,20 +42,20 @@ class ResizablePane extends StatefulWidget {
     required this.resizableSide,
     this.windowBreakpoint,
     required this.startSize,
-  })  : assert(
+  })  : child = null,
+        useScrollBar = true,
+        assert(
           maxSize >= minSize,
           'minSize should not be more than maxSize.',
         ),
         assert(
           (startSize >= minSize) && (startSize <= maxSize),
           'startSize must not be less than minSize or more than maxWidth',
-        ) {
-    useScrollBar = true;
-  }
+        );
 
-  /// Create a [ResizablePane] without an internal [MacosScrollbar]
-  /// {@macro resizablePane}
-  ResizablePane.noScrollBar({
+  /// Create a [ResizablePane] without an internal [MacosScrollbar].
+  /// {@macro resizablePane}.
+  const ResizablePane.noScrollBar({
     super.key,
     required Widget this.child,
     this.decoration,
@@ -66,31 +65,31 @@ class ResizablePane extends StatefulWidget {
     required this.resizableSide,
     this.windowBreakpoint,
     required this.startSize,
-  })  : assert(
-  maxSize >= minSize,
-  'minSize should not be more than maxSize.',
-  ),
+  })  : builder = null,
+        useScrollBar = false,
         assert(
-        (startSize >= minSize) && (startSize <= maxSize),
-        'startSize must not be less than minSize or more than maxWidth',
-        ) {
-    useScrollBar = false;
-  }
+          maxSize >= minSize,
+          'minSize should not be more than maxSize.',
+        ),
+        assert(
+          (startSize >= minSize) && (startSize <= maxSize),
+          'startSize must not be less than minSize or more than maxWidth',
+        );
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
   ///
   /// Pass the [scrollController] obtained from this method, to a scrollable
   /// widget used in this method to work with the internal [MacosScrollbar].
-  late final ScrollableWidgetBuilder? builder;
+  final ScrollableWidgetBuilder? builder;
 
   /// The child to display in this widget.
-  /// 
+  ///
   /// This is only referenced when the constructor used is [ResizablePane.noScrollbar].
-  late final Widget? child;
+  final Widget? child;
 
   /// Specify if this [ResizablePane] should have an internal [MacosScrollbar].
-  late final bool useScrollBar;
+  final bool useScrollBar;
 
   /// The [BoxDecoration] to paint behind the child in the [builder].
   final BoxDecoration? decoration;
@@ -312,10 +311,12 @@ class _ResizablePaneState extends State<ResizablePane> {
           SafeArea(
             left: false,
             right: false,
-            child: widget.useScrollBar ? MacosScrollbar(
-              controller: _scrollController,
-              child: widget.builder!(context, _scrollController),
-            ) : widget.child!,
+            child: widget.useScrollBar
+                ? MacosScrollbar(
+                    controller: _scrollController,
+                    child: widget.builder!(context, _scrollController),
+                  )
+                : widget.child!,
           ),
           if (widget.isResizable && !_resizeOnRight && !_resizeOnTop)
             Positioned(

@@ -632,23 +632,22 @@ MacosPopupButton<String>(
 
 ## PushButton
 
-A push button appears within a view and initiates an instantaneous app-specific action, such as printing a document or 
-deleting a file. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can 
+Push buttons are the standard button type in macOS. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can 
 complete a task. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/push-buttons/)
 
 | Dark Theme                                 | Light Theme                                |
-| ------------------------------------------ | ------------------------------------------ |
-| <img src="https://imgur.com/GsShoF6.jpg"/> | <img src="https://imgur.com/klWHTAX.jpg"/> |
-| <img src="https://imgur.com/v99ekWA.jpg"/> | <img src="https://imgur.com/hj6uGhI.jpg"/> |
-| <img src="https://imgur.com/wt0K6u4.jpg"/> | <img src="https://imgur.com/7khWnwt.jpg"/> |
-| <img src="https://imgur.com/TgfjJdQ.jpg"/> | <img src="https://imgur.com/83cEMeP.jpg"/> |
+|--------------------------------------------|--------------------------------------------|
+| <img src="https://imgur.com/iWNuPqs.png"/> | <img src="https://imgur.com/QPIHrJt.png"/> |
+
+ℹ️ **Note** ℹ️
+Native push buttons can be styled as text-only, text with an icon, or icon-only. Currently, text-only push buttons are supported. To create an icon-only button, use the `MacosIconButton` widget.
 
 Here's an example of how to create a basic push button:
 
 ```dart
 PushButton(
   child: Text('button'),
-  buttonSize: ButtonSize.large,
+  controlSize: ControlSize.regular,
   onPressed: () {
     print('button pressed');
   },
@@ -657,25 +656,33 @@ PushButton(
 
 ## MacosSwitch
 
-A switch is a visual toggle between two mutually exclusive states — on and off. A switch shows that it's on when the 
-accent color is visible and off when the switch appears colorless. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/switches/)
+A switch (also known as a toggle) is a control that offers a binary choice between two mutually exclusive states — on and off. A switch shows that it's on when the 
+accent color is visible and off when the switch appears colorless.
 
-| On                                         | Off                                        |
-| ------------------------------------------ | ------------------------------------------ |
-| <img src="https://imgur.com/qK1VCVr.jpg"/> | <img src="https://imgur.com/IBh5jkz.jpg"/> |
+The `ContolSize` enum can be passed to the `size` property to control the size of the switch. `MacosSwitch` supports the following
+control sizes:
+* `mini`
+* `small`
+* `regular`
+
+| Off                                        | On                                         |
+|--------------------------------------------|--------------------------------------------|
+| <img src="https://imgur.com/NBeTMoZ.jpg"/> | <img src="https://imgur.com/SBfE0jf.jpg"/> |
 
 Here's an example of how to create a basic toggle switch:
 
 ```dart
-bool selected = false;
+bool switchValue = false;
 
 MacosSwitch(
-  value: selected,
+  value: switchValue,
   onChanged: (value) {
-    setState(() => selected = value);
+    setState(() => switchValue = value);
   },
 ),
 ```
+
+Learn more about switches [here](https://developer.apple.com/design/human-interface-guidelines/toggles).
 
 ## MacosSegmentedControl
 
@@ -696,9 +703,7 @@ Usage:
 showMacosAlertDialog(
   context: context,
   builder: (_) => MacosAlertDialog(
-    appIcon: FlutterLogo(
-      size: 56,
-    ),
+    appIcon: FlutterLogo(size: 64),
     title: Text(
       'Alert Dialog with Primary Action',
       style: MacosTheme.of(context).typography.headline,
@@ -706,10 +711,10 @@ showMacosAlertDialog(
     message: Text(
       'This is an alert dialog with a primary action and no secondary action',
       textAlign: TextAlign.center,
-      style: MacosTheme.of(context).typography.headline,
+      style: MacosTypography.of(context).headline,
     ),
     primaryButton: PushButton(
-      buttonSize: ButtonSize.large,
+      controlSize: ControlSize.large,
       child: Text('Primary'),
       onPressed: () {},
     ),
@@ -965,6 +970,22 @@ There are three styles of `MacosDatePickers`:
 * `graphical`: a visual date picker where the user can navigate through a
   calendar-like interface to select a date.
 * `combined`: provides both `textual` and `graphical` interfaces.
+
+Localization of the time picker is supported by the `weekdayAbbreviations` and `monthAbbreviations` parameters (instead of e.g. standard `localizations.narrowWeekdays()` in order to match Apple's spec).
+* `weekdayAbbreviations` should be a list of 7 strings, one for each day of the week, starting with Sunday
+* `monthAbbreviations` should be a list of 12 strings, one for each month of the year, starting with January
+
+You can also define the `dateFormat` to change the way dates are displayed in the textual interface.
+It takes a string of tokens (case-insensitive) and replaces them with their corresponding values.
+The following tokens are supported:
+* `D`: day of the month (1-31)
+* `DD`: day of the month (01-31)
+* `M`: month of the year (1-12)
+* `MM`: month of the year (01-12)
+* `YYYY`: year (0000-9999)
+* Any separator between tokens is preserved (e.g. `/`, `-`, `.`)
+
+The default format is `M/D/YYYY`. 
 
 Example usage:
 ```dart

@@ -85,6 +85,77 @@ class MacosColor extends Color {
   static int getAlphaFromOpacity(double opacity) {
     return (opacity.clamp(0.0, 1.0) * 255).round();
   }
+
+  /// Returns a new color that matches this color with the alpha channel
+  /// replaced with the given `opacity` (which ranges from 0.0 to 1.0).
+  ///
+  /// Out of range values will have unexpected effects.
+  @override
+  MacosColor withOpacity(double opacity) {
+    assert(opacity >= 0.0 && opacity <= 1.0);
+    return withAlpha((255.0 * opacity).round());
+  }
+
+  /// Returns a new color that matches this color with the alpha channel
+  /// replaced with `a` (which ranges from 0 to 255).
+  ///
+  /// Out of range values will have unexpected effects.
+  @override
+  MacosColor withAlpha(int a) {
+    return MacosColor.fromARGB(a, red, green, blue);
+  }
+
+  /// Darkens a [MacosColor] by a [percent] amount (100 = black) without
+  /// changing the tint of the color.
+  static MacosColor darken(MacosColor c, [int percent = 10]) {
+    assert(1 <= percent && percent <= 100);
+    var f = 1 - percent / 100;
+    return MacosColor.fromARGB(
+      c.alpha,
+      (c.red * f).round(),
+      (c.green * f).round(),
+      (c.blue * f).round(),
+    );
+  }
+
+  /// Lightens a [MacosColor] by a [percent] amount (100 = white) without
+  /// changing the tint of the color
+  static MacosColor lighten(MacosColor c, [int percent = 10]) {
+    assert(1 <= percent && percent <= 100);
+    var p = percent / 100;
+    return MacosColor.fromARGB(
+      c.alpha,
+      c.red + ((255 - c.red) * p).round(),
+      c.green + ((255 - c.green) * p).round(),
+      c.blue + ((255 - c.blue) * p).round(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is MacosColor && other.value == value;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
+
+  @override
+  String toString() {
+    return 'MacosColor(0x${value.toRadixString(16).padLeft(8, '0')})';
+  }
+}
+
+extension ColorX on Color {
+  /// Returns a [MacosColor] with the same color values as this [Color].
+  MacosColor toMacosColor() {
+    return MacosColor(value);
+  }
 }
 
 /// A collection of color values lifted from the macOS system color picker.
