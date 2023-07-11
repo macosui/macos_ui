@@ -67,7 +67,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Title3',
                             style: typography.title3
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Headline', style: typography.headline),
@@ -75,7 +75,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Headline',
                             style: typography.headline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Body', style: typography.body),
@@ -83,7 +83,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Body',
                             style: typography.body
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Callout', style: typography.callout),
@@ -91,7 +91,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Callout',
                             style: typography.callout
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Subheadline', style: typography.subheadline),
@@ -99,7 +99,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Subheadline',
                             style: typography.subheadline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Footnote', style: typography.subheadline),
@@ -107,7 +107,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Footnote',
                             style: typography.subheadline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Caption1', style: typography.caption1),
@@ -115,7 +115,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Caption1',
                             style: typography.caption1
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 24.0),
                           Text('Caption2', style: typography.caption2),
@@ -123,7 +123,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Caption2',
                             style: typography.caption2
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -173,7 +173,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Title3',
                             style: secondaryTypography.title3
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -184,7 +184,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Headline',
                             style: secondaryTypography.headline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -195,7 +195,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Body',
                             style: secondaryTypography.body
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -206,7 +206,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Callout',
                             style: secondaryTypography.callout
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -217,7 +217,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Subheadline',
                             style: secondaryTypography.subheadline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -228,7 +228,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Footnote',
                             style: secondaryTypography.footnote
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -239,7 +239,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Caption1',
                             style: secondaryTypography.caption1
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -250,7 +250,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Caption2',
                             style: secondaryTypography.caption2
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -300,7 +300,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Title3',
                             style: tertiaryTypography.title3
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -311,7 +311,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Headline',
                             style: tertiaryTypography.headline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -322,7 +322,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Body',
                             style: tertiaryTypography.body
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -333,7 +333,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Callout',
                             style: tertiaryTypography.callout
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -344,7 +344,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Subheadline',
                             style: tertiaryTypography.subheadline
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -355,7 +355,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Footnote',
                             style: tertiaryTypography.footnote
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -366,7 +366,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Caption1',
                             style: tertiaryTypography.caption1
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 24.0),
                           Text(
@@ -377,7 +377,7 @@ class TypographyPage extends StatelessWidget {
                           Text(
                             'Caption2',
                             style: tertiaryTypography.caption2
-                                .copyWith(fontWeight: FontWeight.w700),
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
