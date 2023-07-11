@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
 const _kDefaultFontFamily = '.AppleSystemUIFont';
@@ -142,9 +143,9 @@ class MacosTypography with Diagnosticable {
   });
 
   static final MacosTypography black =
-      MacosTypography(color: CupertinoColors.black);
+      MacosTypography(color: MacosColors.labelColor.color);
   static final MacosTypography white =
-      MacosTypography(color: CupertinoColors.white);
+      MacosTypography(color: MacosColors.labelColor.darkColor);
 
   /// Style used for body text.
   final TextStyle body;

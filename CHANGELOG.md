@@ -1,3 +1,7 @@
+## [2.0.0-beta.8]
+🛠️ Fixed 🛠️
+* `MacosTypography.black` and `MacosTypography.white` now conform to specification by using `MacosColors.labelColor`
+
 ## [2.0.0-beta.7]
 ✨ New ✨
 * You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
