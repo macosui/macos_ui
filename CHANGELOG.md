@@ -1,6 +1,6 @@
 ##[2.0.0-beta.2]
-* Provide `ReziablePane.noScrollBar` constructor which in opposite to the default `ResizablePane` constructor does not have a built in `MaosScrollbar`
-  * The default `ResizablePane`  constructor is not `const` constructor anymore
+🚨 Breaking Changes 🚨
+* `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor. Consequently, this means that the default constructor is no longer `const`.
 
 ## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
