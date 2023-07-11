@@ -1,5 +1,4 @@
-##[2.0.0-beta.8]
-🚨 Breaking Changes 🚨
+## [2.0.0-beta.8]
 * `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
 
 ## [2.0.0-beta.7]
