@@ -32,8 +32,8 @@ enum ResizableSide {
 class ResizablePane extends StatefulWidget {
   /// Creates a [ResizablePane] with an internal [MacosScrollbar].
   ///
-  /// Consider going with [ResizablePane.noScrollBar] constructor if the internal
-  /// [MacosScrollbar] is useless or when dealing with widgets which do not
+  /// Consider using [ResizablePane.noScrollBar] constructor when the internal
+  /// [MacosScrollbar] is not needed or when working with widgets which do not
   /// expose their scroll controllers.
   /// {@macro resizablePane}.
   const ResizablePane({
@@ -57,13 +57,13 @@ class ResizablePane extends StatefulWidget {
           'startSize must not be less than minSize or more than maxWidth',
         );
 
-  /// Create a [ResizablePane] without an internal [MacosScrollbar].
+  /// Creates a [ResizablePane] without an internal [MacosScrollbar].
   ///
-  /// Very useful when dealing with widgets which do not expose their scroll
+  /// Useful when working with widgets which do not expose their scroll
   /// controllers or when not using the platform scroll bar is preferred.
   ///
-  /// Consider going with the default constructor if showing [MacosScrollbar]
-  /// when scrolling the content of this widget is the expected behaviour.
+  /// Consider using the default constructor if showing a [MacosScrollbar]
+  /// when scrolling the content of this widget is the expected behavior.
   /// {@macro resizablePane}.
   const ResizablePane.noScrollBar({
     super.key,
