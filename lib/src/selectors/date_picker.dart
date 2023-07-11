@@ -44,6 +44,33 @@ class MacosDatePicker extends StatefulWidget {
     this.style = DatePickerStyle.combined,
     required this.onDateChanged,
     this.initialDate,
+    // Use this to get the weekday abbreviations instead of
+    // localizations.narrowWeekdays() in order to match Apple's spec
+    this.weekdayAbbreviations = const [
+      'Su',
+      'Mo',
+      'Tu',
+      'We',
+      'Th',
+      'Fr',
+      'Sa',
+    ],
+    this.monthAbbreviations = const [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    this.dateFormat,
+    this.startWeekOnMonday,
   });
 
   /// The [DatePickerStyle] to use.
@@ -59,23 +86,38 @@ class MacosDatePicker extends StatefulWidget {
   /// Defaults to `DateTime.now()`.
   final DateTime? initialDate;
 
+  /// A list of 7 strings, one for each day of the week, starting with Sunday.
+  final List<String> weekdayAbbreviations;
+
+  /// A list of 12 strings, one for each month of the year, starting with January.
+  final List<String> monthAbbreviations;
+
+  /// Changes the way dates are displayed in the textual interface.
+  ///
+  /// The following tokens are supported (case-insensitive):
+  /// * `D`: day of the month (1-31)
+  /// * `DD`: day of the month (01-31)
+  /// * `M`: month of the year (1-12)
+  /// * `MM`: month of the year (01-12)
+  /// * `YYYY`: year (0000-9999)
+  /// * Any separator between tokens is preserved (e.g. `/`, `-`, `.`)
+  ///
+  /// Defaults to `M/D/YYYY`.
+  final String? dateFormat;
+
+  /// Allows for changing the order of day headers in the graphical Date Picker
+  /// to Mo, Tu, We, Th, Fr, Sa, Su.
+  /// 
+  /// This is useful for internationalization purposes, as many countries begin their weeks on Mondays.
+  /// 
+  /// Defaults to `false`.
+  final bool? startWeekOnMonday;
+
   @override
   State<MacosDatePicker> createState() => _MacosDatePickerState();
 }
 
 class _MacosDatePickerState extends State<MacosDatePicker> {
-  // Use this to get the weekday abbreviations instead of
-  // localizations.narrowWeekdays() in order to match Apple's spec
-  static const List<String> _narrowWeekdays = <String>[
-    'Su',
-    'Mo',
-    'Tu',
-    'We',
-    'Th',
-    'Fr',
-    'Sa',
-  ];
-
   final _today = DateTime.now();
   late final _initialDate = widget.initialDate ?? _today;
 
@@ -153,13 +195,24 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
   }
 
   // Creates the day headers - Su, Mo, Tu, We, Th, Fr, Sa
+  // or Mo, Tu, We, Th, Fr, Sa, Su depending on the value of [startWeekOnMonday]
   List<Widget> _dayHeaders(
     TextStyle? headerStyle,
     MaterialLocalizations localizations,
   ) {
     final result = <Widget>[];
-    for (int i = localizations.firstDayOfWeekIndex; true; i = (i + 1) % 7) {
-      final weekday = _narrowWeekdays[i];
+
+    // Hack due to invalid "firstDayOfWeekIndex" implementation in MaterialLocalizations
+    // issue: https://github.com/flutter/flutter/issues/122274
+    // TODO: remove this workaround once the issue is fixed.
+    //  Then, "firstDayOfWeekIndex" can be controlled by passing "localizationsDelegates" and "supportedLocales" to MacosApp
+    int firstDayOfWeekIndex = localizations.firstDayOfWeekIndex;
+    if (widget.startWeekOnMonday == true) {
+      firstDayOfWeekIndex = 1;
+    }
+
+    for (int i = firstDayOfWeekIndex; result.length < 7; i = (i + 1) % 7) {
+      final weekday = widget.weekdayAbbreviations[i];
       result.add(
         ExcludeSemantics(
           child: Center(
@@ -170,9 +223,86 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           ),
         ),
       );
-      if (i == (localizations.firstDayOfWeekIndex - 1) % 7) break;
     }
     return result;
+  }
+
+  // Creates textual date presentation based on "dateFormat" property
+  List<Widget> _textualDateElements() {
+    final separator = widget.dateFormat != null
+        ? widget.dateFormat!.toLowerCase().replaceAll(RegExp(r'[dmy]'), '')[0]
+        : '/';
+
+    final List<String> dateElements = widget.dateFormat != null
+        ? widget.dateFormat!.toLowerCase().split(RegExp(r'[^dmy]'))
+        : ['m', 'd', 'y'];
+
+    final List<Widget> dateFields = <Widget>[];
+    for (var dateElement in dateElements) {
+      if (dateElement.startsWith('d')) {
+        String value = dateElement == 'dd' && _selectedDay < 10
+            // Add a leading zero
+            ? '0$_selectedDay'
+            : '$_selectedDay';
+
+        dateFields.add(
+          DatePickerFieldElement(
+            isSelected: _isDaySelected,
+            element: value,
+            onSelected: () {
+              setState(() {
+                _focusNode.requestFocus();
+                _isDaySelected = !_isDaySelected;
+                _isMonthSelected = false;
+                _isYearSelected = false;
+              });
+            },
+          ),
+        );
+      } else if (dateElement.startsWith('m')) {
+        String value = dateElement == 'mm' && _selectedMonth < 10
+            // Add a leading zero
+            ? '0$_selectedMonth'
+            : '$_selectedMonth';
+
+        dateFields.add(
+          DatePickerFieldElement(
+            isSelected: _isMonthSelected,
+            element: value,
+            onSelected: () {
+              setState(() {
+                _focusNode.requestFocus();
+                _isMonthSelected = !_isMonthSelected;
+                _isDaySelected = false;
+                _isYearSelected = false;
+              });
+            },
+          ),
+        );
+      } else if (dateElement.startsWith('y')) {
+        dateFields.add(
+          DatePickerFieldElement(
+            isSelected: _isYearSelected,
+            element: '$_selectedYear',
+            onSelected: () {
+              setState(() {
+                _focusNode.requestFocus();
+                _isYearSelected = !_isYearSelected;
+                _isDaySelected = false;
+                _isMonthSelected = false;
+              });
+            },
+          ),
+        );
+      }
+      dateFields.add(
+        Text(separator),
+      );
+    }
+
+    dateFields.removeLast();
+
+    return dateFields;
   }
 
   Widget _buildTextualPicker(MacosDatePickerThemeData datePickerTheme) {
@@ -195,46 +325,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DatePickerFieldElement(
-                      isSelected: _isMonthSelected,
-                      element: '$_selectedMonth',
-                      onSelected: () {
-                        setState(() {
-                          _focusNode.requestFocus();
-                          _isMonthSelected = !_isMonthSelected;
-                          _isDaySelected = false;
-                          _isYearSelected = false;
-                        });
-                      },
-                    ),
-                    const Text('/'),
-                    DatePickerFieldElement(
-                      isSelected: _isDaySelected,
-                      element: '$_selectedDay',
-                      onSelected: () {
-                        setState(() {
-                          _focusNode.requestFocus();
-                          _isDaySelected = !_isDaySelected;
-                          _isMonthSelected = false;
-                          _isYearSelected = false;
-                        });
-                      },
-                    ),
-                    const Text('/'),
-                    DatePickerFieldElement(
-                      isSelected: _isYearSelected,
-                      element: '$_selectedYear',
-                      onSelected: () {
-                        setState(() {
-                          _focusNode.requestFocus();
-                          _isYearSelected = !_isYearSelected;
-                          _isDaySelected = false;
-                          _isMonthSelected = false;
-                        });
-                      },
-                    ),
-                  ],
+                  children: _textualDateElements(),
                 ),
               ),
             ),
@@ -326,7 +417,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                   children: [
                     Expanded(
                       child: Text(
-                        '${intToMonthAbbr(_selectedMonth)} $_selectedYear',
+                        '${widget.monthAbbreviations[_selectedMonth - 1]} $_selectedYear',
                         style: const TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.w700,
@@ -474,9 +565,19 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           ),
       localizations,
     );
+
+    // Hack due to invalid "firstDayOfWeekIndex" implementation in MaterialLocalizations
+    // issue: https://github.com/flutter/flutter/issues/122274
+    // TODO: remove this workaround once the issue is fixed.
+    //  Then, DateUtils.getDaysInMonth will work as expected when proper "localizationsDelegates" and "supportedLocales" are provided to MacosApp
+    int fixedDayOffset = dayOffset;
+    if (widget.startWeekOnMonday == true) {
+      fixedDayOffset = dayOffset - 1;
+    }
+
     // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
     // a leap year.
-    int day = -dayOffset;
+    int day = -fixedDayOffset;
 
     final dayItems = <Widget>[];
 
@@ -526,6 +627,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
         }
 
         Widget dayWidget = GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             setState(() {
               _isDaySelected = true;

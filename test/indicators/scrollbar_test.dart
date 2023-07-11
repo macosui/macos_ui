@@ -16,8 +16,8 @@ void main() {
   testWidgets(
     'Scrollbar changes position when scrolled with the mouse wheel',
     (tester) async {
-      final Size screenSize = tester.binding.window.physicalSize /
-          tester.binding.window.devicePixelRatio;
+      final Size screenSize =
+          tester.view.physicalSize / tester.view.devicePixelRatio;
 
       await tester.pumpWidget(
         Directionality(

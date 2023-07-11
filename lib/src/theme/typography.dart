@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/theme/macos_theme.dart';
 
 const _kDefaultFontFamily = '.AppleSystemUIFont';
 
@@ -228,6 +229,11 @@ class MacosTypography with Diagnosticable {
       caption1: TextStyle.lerp(a.caption1, b.caption1, t)!,
       caption2: TextStyle.lerp(a.caption2, b.caption2, t)!,
     );
+  }
+
+  static MacosTypography of(BuildContext context) {
+    final theme = MacosTheme.of(context);
+    return theme.typography;
   }
 
   @override

@@ -1,4 +1,6 @@
+import 'package:example/widgets/widget_text_title1.dart';
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class FieldsPage extends StatefulWidget {
@@ -15,16 +17,27 @@ class _FieldsPageState extends State<FieldsPage> {
       toolBar: ToolBar(
         title: const Text('Fields'),
         titleWidth: 150.0,
-        actions: [
-          ToolBarIconButton(
-            label: 'Toggle Sidebar',
-            icon: const MacosIcon(
+        leading: MacosTooltip(
+          message: 'Toggle Sidebar',
+          useMousePosition: false,
+          child: MacosIconButton(
+            icon: MacosIcon(
               CupertinoIcons.sidebar_left,
+              color: MacosTheme.brightnessOf(context).resolve(
+                const Color.fromRGBO(0, 0, 0, 0.5),
+                const Color.fromRGBO(255, 255, 255, 0.5),
+              ),
+              size: 20.0,
+            ),
+            boxConstraints: const BoxConstraints(
+              minHeight: 20,
+              minWidth: 20,
+              maxWidth: 48,
+              maxHeight: 38,
             ),
             onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
-            showLabel: false,
           ),
-        ],
+        ),
       ),
       children: [
         ContentArea(
@@ -32,7 +45,10 @@ class _FieldsPageState extends State<FieldsPage> {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const WidgetTextTitle1(widgetName: 'MacosTextField'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   const SizedBox(
                     width: 300.0,
                     child: MacosTextField(
@@ -84,6 +100,8 @@ class _FieldsPageState extends State<FieldsPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  const WidgetTextTitle1(widgetName: 'MacosSearchField'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
                   SizedBox(
                     width: 300.0,
                     child: MacosSearchField(
@@ -122,17 +140,6 @@ class _FieldsPageState extends State<FieldsPage> {
                   ),
                 ],
               ),
-            );
-          },
-        ),
-        ResizablePane(
-          minSize: 180,
-          startSize: 200,
-          windowBreakpoint: 800,
-          resizableSide: ResizableSide.left,
-          builder: (_, __) {
-            return const Center(
-              child: Text('Resizable Pane'),
             );
           },
         ),
@@ -352,8 +359,8 @@ const countries = [
 var actionResults = [
   SearchResultItem(
     'Build project',
-    child: Row(
-      children: const [
+    child: const Row(
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.hammer),
@@ -365,8 +372,8 @@ var actionResults = [
   ),
   SearchResultItem(
     'Debug project',
-    child: Row(
-      children: const [
+    child: const Row(
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.tickets),
@@ -378,8 +385,8 @@ var actionResults = [
   ),
   SearchResultItem(
     'Open containing folder',
-    child: Row(
-      children: const [
+    child: const Row(
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: MacosIcon(CupertinoIcons.folder),
