@@ -44,7 +44,6 @@
 
 🔄 Updated 🔄
 * Some previously missing elements of the `MacosColor` class have been added.
->>>>>>> dev
 
 ## [2.0.0-beta.1]
 🚨 Breaking Changes 🚨
