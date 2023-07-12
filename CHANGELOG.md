@@ -1,3 +1,6 @@
+## [2.0.0-beta.9]
+* `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
+
 ## [2.0.0-beta.8]
 ✨ New ✨
 * `MacosFontWeight` allows using Apple-specific font weights like `w510`, `w590`, and `w860`.
