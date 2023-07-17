@@ -1,3 +1,6 @@
+## [2.0.0-beta.10]
+* Can now specify a `disabledColor` or `MacosTextField` and overwrite default one.
+
 ## [2.0.0-beta.9]
 * `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
 
