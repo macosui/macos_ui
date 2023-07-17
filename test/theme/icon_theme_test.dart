@@ -51,7 +51,7 @@ void main() {
     expect(
       description,
       [
-        'color: Color(0xffffffff)',
+        'MacosColor: MacosColor(0xffffffff)',
         'opacity: 0.0',
         'size: 20.0',
       ],

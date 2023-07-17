@@ -62,7 +62,7 @@ void main() {
       [
         'state: "unchecked"',
         'enabled',
-        'size: 16.0',
+        'size: 14.0',
         'activeColor: null',
         'disabledColor: quaternaryLabel(*color = Color(0x2d3c3c43)*, darkColor = Color(0x28ebebf5), highContrastColor = Color(0x423c3c43), darkHighContrastColor = Color(0x3debebf5), resolved by: UNRESOLVED)',
         'offBorderColor: tertiaryLabel(*color = Color(0x4c3c3c43)*, darkColor = Color(0x4cebebf5), highContrastColor = Color(0x603c3c43), darkHighContrastColor = Color(0x60ebebf5), resolved by: UNRESOLVED)',

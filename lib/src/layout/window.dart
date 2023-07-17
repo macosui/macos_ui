@@ -226,8 +226,10 @@ class _MacosWindowState extends State<MacosWindow> {
         final height = constraints.maxHeight;
         final isAtBreakpoint = width <= (sidebar?.windowBreakpoint ?? 0);
         final isAtEndBreakpoint = width <= (endSidebar?.windowBreakpoint ?? 0);
-        final canShowSidebar = _showSidebar && !isAtBreakpoint;
-        final canShowEndSidebar = _showEndSidebar && !isAtEndBreakpoint;
+        final canShowSidebar =
+            _showSidebar && !isAtBreakpoint && sidebar != null;
+        final canShowEndSidebar =
+            _showEndSidebar && !isAtEndBreakpoint && endSidebar != null;
         final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
         final visibleEndSidebarWidth =
             canShowEndSidebar ? _endSidebarWidth : 0.0;
