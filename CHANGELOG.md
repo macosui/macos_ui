@@ -1,86 +1,53 @@
-## [2.0.0-beta.11]
-🚨 Breaking Changes 🚨
-* `RelevanceIndicator` has been deprecated
-
-🔄 Updated 🔄
-* `HelpButton` now sizes itself according to specification
-
-## [2.0.0-beta.10]
-🛠️ Fixed 🛠️
-* Ensure builds targeting web do not utilize any `macos_window_utils` code
-* Ensure builds targeting web are themed correctly
-
-🔄 Updated 🔄
-* `MacosTypography` white and black are now factory constructors called `darkOpaque()` and `lightOpaque()` to reflect 
-Apple's naming conventions.
-* `PushButton` now uses the correct `body` text style instead of the incorrect `headline`
-* `Toolbar` now uses the correct `title3` text style instead of the incorrect `headline`
-* `MacosTheme` sets the global typography, per theme, more efficiently
-
-## [2.0.0-beta.9]
-* `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
-
-## [2.0.0-beta.8]
-✨ New ✨
-* `MacosFontWeight` allows using Apple-specific font weights like `w510`, `w590`, and `w860`.
-
-🛠️ Fixed 🛠️
-* `MacosTypography.black` and `MacosTypography.white` now conform to specification by using `MacosColors.labelColor`
-
-## [2.0.0-beta.7]
-✨ New ✨
-* You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
-
-🔄 Updated 🔄
-* `MacosAlertDialog` now defines `primaryButton` and `secondaryButton` to be of type `PushButton`.
-* `MacosAlertDialog` now requires that `primaryButton` and `secondaryButton` to have `controlSize`s of `ControlSize.large`.
-* `MacosAlertDialog` docs now suggest that `appIcon` should be of size 64x64.
-
-## [2.0.0-beta.6]
-🔄 Updated 🔄
-* `MacosCheckbox` appearance more closely matches its native counterpart.
-
-## [2.0.0-beta.5]
-🚨 Breaking Changes 🚨
-* `PushButton` has been updated to support the `ControlSize` enum.
-  * The `buttonSize` property has been changed to `controlSize`.
-  * Buttons can now be any of the following sizes: mini, small, regular, or large.
-* `PushButton.isSecondary` is now `PushButton.secondary`. 
-
-🔄 Updated 🔄
-* `PushButton`'s secondary and disabled colors more closely match their native counterparts. 
-
-## [2.0.0-beta.4]
-🛠️ Fixed 🛠️
-* `ToolBar`s in use where a `SideBar` is not present will now have their title's avoid the traffic lights (native window controls).
-
-## [2.0.0-beta.3]
-✨ New ✨
-* Added support for `weekdayAbbreviations` and `monthAbbreviations` to `MacosDatePicker`.
-* Added support for `dateFormat` to `MacosDatePicker`.
-* Added support for `startWeekOnMonday` to `MacosDatePicker`.
-
-🛠️ Fixed 🛠️
-* Better UX of the click on the calendar elements in `MacosDatePicker`
-
-## [2.0.0-beta.2]
-✨New ✨
-* `MacosSwitch` has been completely rewritten and now matches the native macOS switch in appearance and behavior.
-* A `ControlSize` enum has been introduced, which will allow widgets to more closely match their native counterparts.
-
-🔄 Updated 🔄
-* Some previously missing elements of the `MacosColor` class have been added.
-
-## [2.0.0-beta.1]
-🚨 Breaking Changes 🚨
+## [2.0.0]
+### 🚨 Breaking Changes 🚨
 * Migrate `macos_ui` to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
   * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
   * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
   * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
   * Wallpaper tinting is now supported.
-* Support Flutter 3.10 and Dart 3
+  * To migrate an existing application, please refer to the “Modern window look” section in the README.
 
-To migrate an existing application, please refer to the “Modern window look” section in the README.
+* Support for Flutter 3.10 and Dart 3
+* `PushButton` has been updated to support the `ControlSize` enum.
+  * The `buttonSize` property has been changed to `controlSize`.
+  * Buttons can now be any of the following sizes: mini, small, regular, or large.
+* `PushButton.isSecondary` is now `PushButton.secondary`.
+* `MacosAlertDialog`: `primaryButton` and `secondaryButton` are now declared to be of type `PushButton`.
+* `RelevanceIndicator` has been deprecated
+* `MacosTypography` white and black are now factory constructors called `darkOpaque()` and `lightOpaque()` to reflect
+  Apple's naming conventions.
+
+### ✨ New ✨
+* `MacosSwitch` has been completely rewritten and now matches the native macOS switch in appearance and behavior.
+* A `ControlSize` enum has been introduced, which will allow widgets to more closely match their native counterparts.
+* `MacosTypography`
+  * You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
+  * `MacosFontWeight` allows using Apple-specific font weights like `w510`, `w590`, and `w860`.
+* Localization
+  * Added support for `weekdayAbbreviations` and `monthAbbreviations` to `MacosDatePicker`.
+  * Added support for `dateFormat` to `MacosDatePicker`.
+  * Added support for `startWeekOnMonday` to `MacosDatePicker`.
+
+### 🔄 Updated 🔄
+* `MacosColor` has been updated with some previously missing elements.
+* `PushButton`
+  * Now uses the correct `body` text style instead of the incorrect `headline`
+* `PushButton`'s secondary and disabled colors more closely match their native counterparts.
+* `MacosCheckbox` appearance more closely matches its native counterpart.
+* `MacosAlertDialog`
+  * `primaryButton` and `secondaryButton` are now required to have `controlSize`s of `ControlSize.large`.
+  * Docs now suggest that `appIcon` should be of size 64x64.
+* `Toolbar` now uses the correct `title3` text style instead of the incorrect `headline`
+* `MacosTheme` sets the global typography more efficiently
+* `HelpButton` now sizes itself according to specification
+* `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
+
+### 🛠️ Fixed 🛠️
+* Clicking on the calendar elements in `MacosDatePicker` has better UX
+* `ToolBar`s in use where a `SideBar` is not present will now have their title's avoid the traffic lights (native window controls).
+* `MacosTypography.darkOpaque()` and `MacosTypography.lightOpaque()` now conform to specification by using `MacosColors.labelColor`
+* Ensure builds targeting web do not utilize any `macos_window_utils` code
+* Ensure builds targeting web are themed correctly
 
 ## [1.12.5]
 * Fixed a bug where the `Sidebar.key` parameter wasn't used, which caused certain layouts to be unachievable.
