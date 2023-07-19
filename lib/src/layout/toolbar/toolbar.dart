@@ -223,13 +223,10 @@ class _ToolBarState extends State<ToolBar> {
       title = SizedBox(
         width: widget.titleWidth,
         child: DefaultTextStyle(
-          style: MacosTheme.of(context).typography.headline.copyWith(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: theme.brightness.isDark
-                    ? const Color(0xFFEAEAEA)
-                    : const Color(0xFF4D4D4D),
-              ),
+          style: theme.typography.title3.copyWith(
+            fontSize: 15,
+            fontWeight: MacosFontWeight.w590,
+          ),
           child: title,
         ),
       );
@@ -266,7 +263,7 @@ class _ToolBarState extends State<ToolBar> {
         ),
       ),
       child: _WallpaperTintedAreaOrBlurFilter(
-        enableWallpaperTintedArea: !widget.enableBlur,
+        enableWallpaperTintedArea: kIsWeb ? false : !widget.enableBlur,
         isWidgetVisible: widget.allowWallpaperTintingOverrides,
         backgroundColor: theme.canvasColor,
         widgetOpacity: widget.decoration?.color?.opacity,

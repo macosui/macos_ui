@@ -18,8 +18,8 @@ const _kDefaultFontFamily = '.AppleSystemUIFont';
 class MacosTypography with Diagnosticable {
   /// Creates a typography that uses the given values.
   ///
-  /// Rather than creating a new typography, consider using [MacosTypography.black]
-  /// or [MacosTypography.white].
+  /// Rather than creating a new typography, consider using [MacosTypography.darkOpaque]
+  /// or [MacosTypography.lightOpaque].
   ///
   /// If you do decide to create your own typography, consider using one of
   /// those predefined themes as a starting point for [copyWith].
@@ -67,16 +67,9 @@ class MacosTypography with Diagnosticable {
     );
     headline ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w700,
       fontSize: 13,
       letterSpacing: -0.08,
-      color: color,
-    );
-    subheadline ??= TextStyle(
-      fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
-      fontSize: 11,
-      letterSpacing: 0.06,
       color: color,
     );
     body ??= TextStyle(
@@ -90,6 +83,13 @@ class MacosTypography with Diagnosticable {
       fontFamily: _kDefaultFontFamily,
       fontWeight: FontWeight.w400,
       fontSize: 12,
+      color: color,
+    );
+    subheadline ??= TextStyle(
+      fontFamily: _kDefaultFontFamily,
+      fontWeight: FontWeight.w400,
+      fontSize: 11,
+      letterSpacing: 0.06,
       color: color,
     );
     footnote ??= TextStyle(
@@ -108,7 +108,7 @@ class MacosTypography with Diagnosticable {
     );
     caption2 ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
+      fontWeight: MacosFontWeight.w510,
       fontSize: 10,
       letterSpacing: 0.12,
       color: color,
@@ -142,9 +142,9 @@ class MacosTypography with Diagnosticable {
     required this.caption2,
   });
 
-  static final MacosTypography black =
+  factory MacosTypography.darkOpaque() =>
       MacosTypography(color: MacosColors.labelColor.color);
-  static final MacosTypography white =
+  factory MacosTypography.lightOpaque() =>
       MacosTypography(color: MacosColors.labelColor.darkColor);
 
   /// Style used for body text.
@@ -240,7 +240,7 @@ class MacosTypography with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    final defaultStyle = MacosTypography.black;
+    final defaultStyle = MacosTypography.darkOpaque();
     properties.add(DiagnosticsProperty<TextStyle>(
       'largeTitle',
       largeTitle,

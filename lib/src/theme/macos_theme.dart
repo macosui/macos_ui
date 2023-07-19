@@ -217,11 +217,8 @@ class MacosThemeData with Diagnosticable {
     canvasColor ??= isDark
         ? const Color.fromRGBO(40, 40, 40, 1.0)
         : const Color.fromRGBO(246, 246, 246, 1.0);
-    typography ??= MacosTypography(
-      color: _brightness == Brightness.light
-          ? CupertinoColors.black
-          : CupertinoColors.white,
-    );
+    typography ??=
+        isDark ? MacosTypography.lightOpaque() : MacosTypography.darkOpaque();
     pushButtonTheme ??= PushButtonThemeData(
       color: primaryColor,
       secondaryColor:

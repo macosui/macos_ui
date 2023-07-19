@@ -1,6 +1,7 @@
 import 'package:example/widgets/widget_text_title1.dart';
 import 'package:example/widgets/widget_text_title2.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -79,11 +80,13 @@ class _SelectorsPageState extends State<SelectorsPage> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const WidgetTextTitle1(widgetName: 'MacosColorWell'),
-                  Divider(color: MacosTheme.of(context).dividerColor),
-                  MacosColorWell(
-                    onColorSelected: (color) => debugPrint('$color'),
-                  ),
+                  if (!kIsWeb) ...[
+                    const WidgetTextTitle1(widgetName: 'MacosColorWell'),
+                    Divider(color: MacosTheme.of(context).dividerColor),
+                    MacosColorWell(
+                      onColorSelected: (color) => debugPrint('$color'),
+                    ),
+                  ],
                 ],
               ),
             );

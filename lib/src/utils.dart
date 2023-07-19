@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
@@ -77,13 +78,9 @@ class MacOSBrightnessOverrideHandler {
   /// [currentBrightness] differs from the value it had when this method was
   /// previously called. Therefore, it is safe to call this method frequently.
   static void ensureMatchingBrightness(Brightness currentBrightness) {
-    if (!Platform.isMacOS) {
-      return;
-    }
-
-    if (currentBrightness == _lastBrightness) {
-      return;
-    }
+    if (kIsWeb) return;
+    if (!Platform.isMacOS) return;
+    if (currentBrightness == _lastBrightness) return;
 
     WindowManipulator.overrideMacOSBrightness(dark: currentBrightness.isDark);
     _lastBrightness = currentBrightness;
