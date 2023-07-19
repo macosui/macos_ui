@@ -5,6 +5,7 @@ import 'package:macos_ui/src/library.dart';
 /// A relevance indicator communicates relevancy using a series
 /// of vertical bars. It often appears in a list of search results
 /// for reference when sorting and comparing multiple items.
+@Deprecated('Apple no longer supports this component.')
 class RelevanceIndicator extends StatelessWidget {
   /// Creates a relevance indicator.
   ///
