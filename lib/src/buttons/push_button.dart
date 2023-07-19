@@ -324,8 +324,7 @@ class PushButtonState extends State<PushButton>
             ? const Color.fromRGBO(255, 255, 255, 0.25)
             : const Color.fromRGBO(0, 0, 0, 0.25);
 
-    final baseStyle =
-        theme.typography.headline.copyWith(color: foregroundColor);
+    final baseStyle = theme.typography.body.copyWith(color: foregroundColor);
 
     return MouseRegion(
       cursor: widget.mouseCursor!,

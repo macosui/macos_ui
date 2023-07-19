@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
@@ -63,7 +64,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
     );
 
     final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
+    Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -76,19 +77,34 @@ class _MacosScaffoldState extends State<MacosScaffold> {
 
         return Stack(
           children: [
-            // Background color
-            Positioned.fill(
-              child: ColoredBox(color: backgroundColor),
-            ),
+            if (!kIsWeb) ...[
+              // Content Area
+              Positioned(
+                top: 0,
+                width: width,
+                height: height,
+                child: WallpaperTintedArea(
+                  backgroundColor: backgroundColor,
+                  insertRepaintBoundary: true,
+                  child: MediaQuery(
+                    data: mediaQuery.copyWith(
+                      padding: EdgeInsets.only(top: topPadding),
+                    ),
+                    child: _ScaffoldBody(children: children),
+                  ),
+                ),
+              ),
+            ] else ...[
+              // Background color
+              Positioned.fill(
+                child: ColoredBox(color: backgroundColor),
+              ),
 
-            // Content Area
-            Positioned(
-              top: 0,
-              width: width,
-              height: height,
-              child: WallpaperTintedArea(
-                backgroundColor: backgroundColor,
-                insertRepaintBoundary: true,
+              // Content Area
+              Positioned(
+                top: 0,
+                width: width,
+                height: height,
                 child: MediaQuery(
                   data: mediaQuery.copyWith(
                     padding: EdgeInsets.only(top: topPadding),
@@ -96,7 +112,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
                   child: _ScaffoldBody(children: children),
                 ),
               ),
-            ),
+            ],
 
             // Toolbar
             if (widget.toolBar != null)

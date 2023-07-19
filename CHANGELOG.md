@@ -1,3 +1,15 @@
+## [2.0.0-beta.10]
+🛠️ Fixed 🛠️
+* Ensure builds targeting web do not utilize any `macos_window_utils` code
+* Ensure builds targeting web are themed correctly
+
+🔄 Updated 🔄
+* `MacosTypography` white and black are now factory constructors called `darkOpaque()` and `lightOpaque()` to reflect 
+Apple's naming conventions.
+* `PushButton` now uses the correct `body` text style instead of the incorrect `headline`
+* `Toolbar` now uses the correct `title3` text style instead of the incorrect `headline`
+* `MacosTheme` sets the global typography, per theme, more efficiently
+
 ## [2.0.0-beta.9]
 * `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
 

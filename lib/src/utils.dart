@@ -80,10 +80,7 @@ class MacOSBrightnessOverrideHandler {
   static void ensureMatchingBrightness(Brightness currentBrightness) {
     if (kIsWeb) return;
     if (!Platform.isMacOS) return;
-
-    if (currentBrightness == _lastBrightness) {
-      return;
-    }
+    if (currentBrightness == _lastBrightness) return;
 
     WindowManipulator.overrideMacOSBrightness(dark: currentBrightness.isDark);
     _lastBrightness = currentBrightness;
