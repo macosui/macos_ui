@@ -383,7 +383,7 @@ class MacosFontWeight implements FontWeight {
     w700,
     w800,
     w860,
-    w900
+    w900,
   ];
 
   /// Linearly interpolates between two font weights.
@@ -408,7 +408,10 @@ class MacosFontWeight implements FontWeight {
   /// Values for `t` are usually obtained from an [Animation<double>], such as
   /// an [AnimationController].
   static MacosFontWeight? lerp(
-      MacosFontWeight? a, MacosFontWeight? b, double t) {
+    MacosFontWeight? a,
+    MacosFontWeight? b,
+    double t,
+  ) {
     if (a == null && b == null) {
       return null;
     }
