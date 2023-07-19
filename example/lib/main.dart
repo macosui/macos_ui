@@ -70,20 +70,6 @@ class _WidgetGalleryState extends State<WidgetGallery> {
 
   late final searchFieldController = TextEditingController();
 
-  final List<Widget Function(bool)> pageBuilders = [
-    (_) => CupertinoTabView(builder: (_) => const ButtonsPage()),
-    (_) => const IndicatorsPage(),
-    (_) => const FieldsPage(),
-    (_) => const ColorsPage(),
-    (_) => const DialogsPage(),
-    (_) => const ToolbarPage(),
-    (isVisible) => SliverToolbarPage(isVisible: isVisible),
-    (_) => const TabViewPage(),
-    (_) => const ResizablePanePage(),
-    (_) => const SelectorsPage(),
-    (_) => const TypographyPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return PlatformMenuBar(
@@ -269,17 +255,6 @@ class _WidgetGalleryState extends State<WidgetGallery> {
             );
           },
         ),
-        /*child: IndexedStack(
-          index: pageIndex,
-          children: pageBuilders
-              .asMap()
-              .map((index, builder) {
-                final widget = builder(index == pageIndex);
-                return MapEntry(index, widget);
-              })
-              .values
-              .toList(),
-        ),*/
         child: [
           CupertinoTabView(builder: (_) => const ButtonsPage()),
           const IndicatorsPage(),
