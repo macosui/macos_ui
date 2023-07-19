@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:example/pages/buttons_page.dart';
 import 'package:example/pages/colors_page.dart';
 import 'package:example/pages/dialogs_page.dart';
@@ -9,9 +11,12 @@ import 'package:example/pages/sliver_toolbar_page.dart';
 import 'package:example/pages/tabview_page.dart';
 import 'package:example/pages/toolbar_page.dart';
 import 'package:example/pages/typography_page.dart';
+import 'package:example/platform_menus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'theme.dart';
 
@@ -22,7 +27,11 @@ Future<void> _configureMacosWindowUtils() async {
 }
 
 Future<void> main() async {
-  await _configureMacosWindowUtils();
+  if (!kIsWeb) {
+    if (Platform.isMacOS) {
+      await _configureMacosWindowUtils();
+    }
+  }
 
   runApp(const MacosUIGalleryApp());
 }
@@ -78,38 +87,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
   @override
   Widget build(BuildContext context) {
     return PlatformMenuBar(
-      menus: const [
-        PlatformMenu(
-          label: 'macos_ui Widget Gallery',
-          menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.about,
-            ),
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.quit,
-            ),
-          ],
-        ),
-        PlatformMenu(
-          label: 'View',
-          menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.toggleFullScreen,
-            ),
-          ],
-        ),
-        PlatformMenu(
-          label: 'Window',
-          menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.minimizeWindow,
-            ),
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.zoomWindow,
-            ),
-          ],
-        ),
-      ],
+      menus: menuBarItems(),
       child: MacosWindow(
         sidebar: Sidebar(
           top: MacosSearchField(
@@ -184,7 +162,17 @@ class _WidgetGalleryState extends State<WidgetGallery> {
           builder: (context, scrollController) {
             return SidebarItems(
               currentIndex: pageIndex,
-              onChanged: (i) => setState(() => pageIndex = i),
+              onChanged: (i) {
+                if (kIsWeb && i == 10) {
+                  launchUrl(
+                    Uri.parse(
+                      'https://www.figma.com/file/IX6ph2VWrJiRoMTI1Byz0K/Apple-Design-Resources---macOS-(Community)?node-id=0%3A1745&mode=dev',
+                    ),
+                  );
+                } else {
+                  setState(() => pageIndex = i);
+                }
+              },
               scrollController: scrollController,
               itemSize: SidebarItemSize.large,
               items: const [
@@ -281,7 +269,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
             );
           },
         ),
-        child: IndexedStack(
+        /*child: IndexedStack(
           index: pageIndex,
           children: pageBuilders
               .asMap()
@@ -291,7 +279,20 @@ class _WidgetGalleryState extends State<WidgetGallery> {
               })
               .values
               .toList(),
-        ),
+        ),*/
+        child: [
+          CupertinoTabView(builder: (_) => const ButtonsPage()),
+          const IndicatorsPage(),
+          const FieldsPage(),
+          const ColorsPage(),
+          const DialogsPage(),
+          const ToolbarPage(),
+          const SliverToolbarPage(isVisible: !kIsWeb),
+          const TabViewPage(),
+          const ResizablePanePage(),
+          const SelectorsPage(),
+          const TypographyPage(),
+        ][pageIndex],
       ),
     );
   }
