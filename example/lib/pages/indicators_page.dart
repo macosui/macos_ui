@@ -147,10 +147,6 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                   const WidgetTextTitle1(widgetName: 'RelevanceIndicator'),
                   Divider(color: MacosTheme.of(context).dividerColor),
                   const SizedBox(height: 8),
-                  const RelevanceIndicator(
-                    value: 25,
-                    amount: 50,
-                  ),
                 ],
               ),
             );
