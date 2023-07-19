@@ -177,7 +177,7 @@ class MacosDisclosureButtonState extends State<MacosDisclosureButton>
                               ? const MacosColor(0xff3C383C)
                               : const MacosColor(0xffE5E5E5)
                           : fillColor,
-                      borderRadius: BorderRadius.circular(7),
+                      borderRadius: const BorderRadius.all(Radius.circular(7)),
                     ),
                     child: RotatedBox(
                       quarterTurns: widget.isPressed ? 1 : 3,

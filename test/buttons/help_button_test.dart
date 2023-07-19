@@ -52,6 +52,7 @@ void main() {
             helpButtonTheme: darkHelpButtonThemeData,
           ),
           home: MacosWindow(
+            disableWallpaperTinting: true,
             child: MacosScaffold(
               children: [
                 ContentArea(

@@ -5,8 +5,6 @@ linter:
     - use_super_parameters
 
 analyzer:
-  plugins:
-    - dart_code_metrics
   exclude:
     - test/mock_canvas.dart
     - test/recording_canvas.dart
@@ -14,13 +12,23 @@ analyzer:
 dart_code_metrics:
   metrics:
     cyclomatic-complexity: 20
-    number-of-parameters: 4
     maximum-nesting-level: 5
   metrics-exclude:
     - test/**
     - example/test/**
   rules:
     - prefer-trailing-comma
+    - double-literal-format
+    - prefer-first
+    - prefer-last
+    - prefer-immediate-return
+    - avoid-global-state
+    - always-remove-listener
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - prefer-const-border-radius
+    - prefer-correct-edge-insets-constructor
+    - use-setstate-synchronously
     - member-ordering:
         alphabetize: false
         order:

@@ -8,11 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run Dart Code Metrics
-        uses: dart-code-checker/dart-code-metrics-action@v3
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Set Up DCM
+        run: flutter pub get
+      - uses: CQLabs/setup-dcm@v1.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_comment: true
-          fatal_warnings: true
-          fatal_performance: true
-          fatal_style: true
+
+      - run: dcm analyze --ci-key="${{ secrets.DCM_CI_KEY }}" --email="${{ secrets.DCM_EMAIL }}" lib

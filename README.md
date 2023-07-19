@@ -2,7 +2,7 @@
 
 Flutter widgets and themes implementing the current macOS design language.
 
-Check out our **interactive widget gallery** online at https://groovinchip.github.io/macos_ui/#/
+Check out our **interactive widget gallery** online at https://macosui.github.io/macos_ui/#/
 
 Guides, codelabs, and other documentation can be found at https://macosui.dev
 
@@ -12,9 +12,9 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 [![Flutter Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml/badge.svg?branch=stable)](https://github.com/GroovinChip/macos_ui/actions/workflows/flutter_analysis.yml)
 [![Pana Analysis](https://github.com/GroovinChip/macos_ui/actions/workflows/pana_analysis.yml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/pana_analysis.yml)
 [![codecov](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml/badge.svg)](https://github.com/GroovinChip/macos_ui/actions/workflows/codecov.yaml)
-[![codecov](https://codecov.io/gh/GroovinChip/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/GroovinChip/macos_ui)
+[![codecov](https://codecov.io/gh/macosui/macos_ui/branch/dev/graph/badge.svg?token=1SZGEVVMCH)](https://codecov.io/gh/macosui/macos_ui)
 
-<img src="https://imgur.com/5mFQKBU.png" width="75%"/>
+<img src="https://imgur.com/44iJB7H.png" width="75%"/>
 
 ## 🚨 Usage notes
 ### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Flutter channel
@@ -23,10 +23,13 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 ### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
 
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
-specifies macOS as a plugin platform in the `pubspec.yaml` file. `macos_ui` _will_ work on any platform that
-Flutter supports, **but you will get best results on macOS**.
+specifies macOS as a plugin platform in the `pubspec.yaml` file.
+
+`macos_ui` _technically_ will work on any platform that
+Flutter supports, **but you will get best results on macOS**. non-macOS platform support is ***not*** guaranteed.
 
 The features of `macos_ui` that will _not_ work on platforms other than macOS due to calling native code are:
+* Anything related to `macos_window_utils`
 * The `MacosColors.controlAccentColor()` function
 * The `MacosColorWell` widget
 
@@ -43,9 +46,8 @@ should avoid allowing your application window to be resized below the height of 
 <details>
 <summary>Contributing & Resources</summary>
 
-- [macos_ui](#macos_ui)
-  - [Contributing](#contributing)
-  - [Resources](#resources)
+- [Contributing](#contributing)
+- [Resources](#resources)
 </details>
 
 <details>
@@ -111,7 +113,6 @@ should avoid allowing your application window to be resized below the height of 
   - [Level Indicators](#level-indicators)
     - [CapacityIndicator](#capacityindicator)
     - [RatingIndicator](#ratingindicator)
-    - [RelevanceIndicator](#relevanceindicator)
 </details>
 
 <details>
@@ -131,9 +132,9 @@ should avoid allowing your application window to be resized below the height of 
 
 ## Resources
 
+- [macOS Sonoma Figma kit](https://www.figma.com/file/M6K5L3GK0WJh6pnsASyVeE/macOS-Big-Sur-UI-Kit?node-id=1%3A2)
+- [macOS Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/designing-for-macos)
 - [macOS Design Resources](https://developer.apple.com/design/resources/)
-- [macOS Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/macos)
-- [macOS Big Sur Figma kit](https://www.figma.com/file/M6K5L3GK0WJh6pnsASyVeE/macOS-Big-Sur-UI-Kit?node-id=1%3A2)
 
 # Layout
 
@@ -158,7 +159,7 @@ A sidebar enables app navigation and provides quick access to top-level collecti
 
 Sidebars may be placed at the left or right of your app. To place a sidebar on the left, use the `MacosWindow.sidebar` property. To place a sidebar on the right, use the `MacosWindow.endSidebar` property.
 
-<img src="https://imgur.com/sz4VPNR.png" width="75%"/>
+<img src="https://imgur.com/BfoHcXE.png" width="75%"/>
 
 Example usage:
 
@@ -217,105 +218,50 @@ covering the entire window. To push a route outside a `MacosScaffold` wrapped in
 
 See the documentation for customizations and `ToolBar` examples.
 
-<img src="https://imgur.com/KT1fdjI.png" width="75%"/>
+<img src="https://imgur.com/ePV2x2p.png" width="75%"/>
 
-<img src="https://imgur.com/4mknLAy.png" width="75%"/>
-
-<img src="https://imgur.com/mXR2wwu.png" width="75%"/>
+<img src="https://imgur.com/76fpFE2.png" width="75%"/>
 
 ## Modern window look
 
-A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look 
-in your Flutter app, like our screenshots, your `macos/Runner/MainFlutterWindow.swift` 
-file should look like this:
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
 
-```swift
-import Cocoa
-import FlutterMacOS
-
-class BlurryContainerViewController: NSViewController {
-  let flutterViewController = FlutterViewController()
-
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError()
-  }
-
-  override func loadView() {
-    let blurView = NSVisualEffectView()
-    blurView.autoresizingMask = [.width, .height]
-    blurView.blendingMode = .behindWindow
-    blurView.state = .active
-    if #available(macOS 10.14, *) {
-        blurView.material = .sidebar
-    }
-    self.view = blurView
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.addChild(flutterViewController)
-
-    flutterViewController.view.frame = self.view.bounds
-    flutterViewController.backgroundColor = .clear // **Required post-Flutter 3.7.0**
-    flutterViewController.view.autoresizingMask = [.width, .height]
-    self.view.addSubview(flutterViewController.view)
-  }
-}
-
-class MainFlutterWindow: NSWindow, NSWindowDelegate {
-  override func awakeFromNib() {
-    delegate = self
-    let blurryContainerViewController = BlurryContainerViewController()
-    let windowFrame = self.frame
-    self.contentViewController = blurryContainerViewController
-    self.setFrame(windowFrame, display: true)
-
-    if #available(macOS 10.13, *) {
-      let customToolbar = NSToolbar()
-      customToolbar.showsBaselineSeparator = false
-      self.toolbar = customToolbar
-    }
-    self.titleVisibility = .hidden
-    self.titlebarAppearsTransparent = true
-    if #available(macOS 11.0, *) {
-      // Use .expanded if the app will have a title bar, else use .unified
-      self.toolbarStyle = .unified
-    }
-
-    self.isMovableByWindowBackground = true
-    self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
-
-    self.isOpaque = false
-    self.backgroundColor = .clear
-
-    RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
-
-    super.awakeFromNib()
-  }
-
-  func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-    return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
-  }
-
-  func windowWillEnterFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = false
-  }
-  
-  func windowDidExitFullScreen(_ notification: Notification) {
-      self.toolbar?.isVisible = true
-  }
-}
-
+```podspec
+platform :osx, '10.14.6'
 ```
 
-See [this issue comment](https://github.com/flutter/flutter/issues/59969#issuecomment-916682559) for more details on the new look and explanations for how it works.
+You may also need to open up your app's `Runner.xcodeproj` in XCode and set the minimum deployment version there.
 
-Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of NSWindow to `.expanded`, in order to properly align the close, minimize, zoom window buttons. In any other case, you should keep it as `.unified`. This must be set beforehand, i.e. it cannot be switched in runtime.
+Now, configure your window inside your `main()` as follows:
+
+```dart
+/// This method initializes macos_window_utils and styles the window.
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.unified,
+  );
+  await config.apply();
+}
+
+void main() async {
+  await _configureMacosWindowUtils();
+
+  runApp(const YourAppHere());
+}
+```
+
+Please note that if you are using a title bar (`TitleBar`) in your `MacosWindow`, you should set the `toolbarStyle` of your window to `NSWindowToolbarStyle.expanded`, in order to properly align the close, minimize, zoom window buttons:
+
+```dart
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.expanded,
+  );
+  await config.apply();
+}
+```
+
+In any other case, you should keep it as `NSWindowToolbarStyle.unified`.
 
 ## ToolBar
 
@@ -389,7 +335,7 @@ Other toolbar examples:
 <img src="https://imgur.com/Ouaud12.png"/>
 
 - Toolbar with a pulldown button open:
-<img src="https://imgur.com/QCxoGmM.png"/>
+<img src="https://imgur.com/msGmcNY.png"/>
 
 - Toolbar with title bar above (also see [the note above](#modern-window-look)):
 <img src="https://imgur.com/eAgcsKY.png"/>
@@ -462,7 +408,7 @@ MacosListTile(
 ## MacosTabView
 A multipage interface that displays one page at a time. Must be used in a `StatefulWidget`.
 
-<img src="https://imgur.com/Mdn7Li2.png"/>
+<img src="https://imgur.com/WNF1CSl.png"/>
 
 You can control the placement of the tabs using the `position` property.
 
@@ -526,9 +472,9 @@ A checkbox is a type of button that lets the user choose between two opposite st
 checkbox is considered on when it contains a checkmark and off when it's empty. A checkbox is almost always followed 
 by a title unless it appears in a checklist. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/checkboxes/)
 
-| Off                                                                                                                   | On                                                                                                                 | Mixed                                                                                                              |
+| Unchecked                                                                                                                   | Checked                                                                                                                 | Mixed                                                                                                              |
 | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| ![Off Checkbox](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Deselected.svg) | ![On Checkbox](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Selected.svg) | ![Mixed Checkbox](https://developer.apple.com/design/human-interface-guidelines/macos/images/CheckBoxes_Mixed.svg) |
+| ![Unchecked Checkbox](https://imgur.com/Pu4EDAE.png) | ![Checked Checkbox](https://imgur.com/CB3Kmwo.png) | ![Mixed Checkbox](https://imgur.com/T44rV38.png) |
 
 Here's an example of how to create a basic checkbox:
 
@@ -550,7 +496,7 @@ To make a checkbox in the `mixed` state, set `value` to `null`.
 A help button appears within a view and opens app-specific help documentation when clicked. All help buttons are 
 circular, consistently sized buttons that contain a question mark icon. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/help-buttons/)
 
-![HelpButton Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/buttonsHelp.png)
+![HelpButton Example](https://imgur.com/DlP7uLV.png)
 
 Here's an example of how to create a help button:
 
@@ -571,7 +517,7 @@ A radio button is a small, circular button followed by a title. Typically presen
 buttons provide the user a set of related but mutually exclusive choices. A radio button’s state is either on 
 (a filled circle) or off (an empty circle). [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/radio-buttons/)
 
-![RadioButton Preview](https://developer.apple.com/design/human-interface-guidelines/macos/images/radioButtons.png)
+![RadioButton Preview](https://imgur.com/HI0eQsU.png)
 
 Here's an example of how to create a basic radio button:
 
@@ -686,23 +632,22 @@ MacosPopupButton<String>(
 
 ## PushButton
 
-A push button appears within a view and initiates an instantaneous app-specific action, such as printing a document or 
-deleting a file. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can 
+Push buttons are the standard button type in macOS. Push buttons contain text—not icons—and often open a separate window, dialog, or app so the user can 
 complete a task. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/push-buttons/)
 
 | Dark Theme                                 | Light Theme                                |
 | ------------------------------------------ | ------------------------------------------ |
-| <img src="https://imgur.com/GsShoF6.jpg"/> | <img src="https://imgur.com/klWHTAX.jpg"/> |
-| <img src="https://imgur.com/v99ekWA.jpg"/> | <img src="https://imgur.com/hj6uGhI.jpg"/> |
-| <img src="https://imgur.com/wt0K6u4.jpg"/> | <img src="https://imgur.com/7khWnwt.jpg"/> |
-| <img src="https://imgur.com/TgfjJdQ.jpg"/> | <img src="https://imgur.com/83cEMeP.jpg"/> |
+| <img src="https://imgur.com/RLg1tWu.png"/> | <img src="https://imgur.com/zymbEIE.png"/> |
+
+ℹ️ **Note** ℹ️
+Native push buttons can be styled as text-only, text with an icon, or icon-only. Currently, text-only push buttons are supported. To create an icon-only button, use the `MacosIconButton` widget.
 
 Here's an example of how to create a basic push button:
 
 ```dart
 PushButton(
   child: Text('button'),
-  buttonSize: ButtonSize.large,
+  controlSize: ControlSize.regular,
   onPressed: () {
     print('button pressed');
   },
@@ -711,32 +656,40 @@ PushButton(
 
 ## MacosSwitch
 
-A switch is a visual toggle between two mutually exclusive states — on and off. A switch shows that it's on when the 
-accent color is visible and off when the switch appears colorless. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/switches/)
+A switch (also known as a toggle) is a control that offers a binary choice between two mutually exclusive states — on and off. A switch shows that it's on when the 
+accent color is visible and off when the switch appears colorless.
 
-| On                                         | Off                                        |
+The `ContolSize` enum can be passed to the `size` property to control the size of the switch. `MacosSwitch` supports the following
+control sizes:
+* `mini`
+* `small`
+* `regular`
+
+| Off                                        | On                                         |
 | ------------------------------------------ | ------------------------------------------ |
-| <img src="https://imgur.com/qK1VCVr.jpg"/> | <img src="https://imgur.com/IBh5jkz.jpg"/> |
+| <img src="https://imgur.com/bH7I0Lg.png"/> | <img src="https://imgur.com/uuaXiS3.png"/> |
 
 Here's an example of how to create a basic toggle switch:
 
 ```dart
-bool selected = false;
+bool switchValue = false;
 
 MacosSwitch(
-  value: selected,
+  value: switchValue,
   onChanged: (value) {
-    setState(() => selected = value);
+    setState(() => switchValue = value);
   },
 ),
 ```
+
+Learn more about switches [here](https://developer.apple.com/design/human-interface-guidelines/toggles).
 
 ## MacosSegmentedControl
 
 Displays one or more navigational tabs in a single horizontal group. Used by `MacosTabView` to navigate between the 
 different tabs of the tab bar.
 
-<img src="https://imgur.com/Igvms1w.jpg"/>
+<img src="https://imgur.com/6fIkCMr.png"/>
 
 The typical usage of this widget is by `MacosTabView`, to control the navigation of its children. You do not need to 
 specify a `MacosSegmentedControl` with your `MacosTabView`, as it is built by that widget.
@@ -750,9 +703,7 @@ Usage:
 showMacosAlertDialog(
   context: context,
   builder: (_) => MacosAlertDialog(
-    appIcon: FlutterLogo(
-      size: 56,
-    ),
+    appIcon: FlutterLogo(size: 64),
     title: Text(
       'Alert Dialog with Primary Action',
       style: MacosTheme.of(context).typography.headline,
@@ -760,10 +711,10 @@ showMacosAlertDialog(
     message: Text(
       'This is an alert dialog with a primary action and no secondary action',
       textAlign: TextAlign.center,
-      style: MacosTheme.of(context).typography.headline,
+      style: MacosTypography.of(context).headline,
     ),
     primaryButton: PushButton(
-      buttonSize: ButtonSize.large,
+      controlSize: ControlSize.large,
       child: Text('Primary'),
       onPressed: () {},
     ),
@@ -771,9 +722,10 @@ showMacosAlertDialog(
 );
 ```
 
-![](https://imgur.com/G3dcjew.png)
-![](https://imgur.com/YHtgv59.png)
-![](https://imgur.com/xuBR5qK.png)
+![](https://imgur.com/4zbGsFi.png)
+![](https://imgur.com/5fgkRU9.png)
+![](https://imgur.com/jOyJrZO.png)
+![](https://imgur.com/NX9taPj.png)
 
 ## MacosSheet
 
@@ -785,7 +737,7 @@ showMacosSheet(
 );
 ```
 
-![](https://imgur.com/NV0o5Ws.png)
+![](https://imgur.com/Mnw2ywm.png)
 
 # Fields
 
@@ -872,8 +824,6 @@ Progress indicators have two distinct styles:
 People don't interact with progress indicators; however, they are often accompanied by a button for canceling the 
 corresponding operation. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/progress-indicators/)
 
-![Progress Indicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/ProgressIndicators_Lead.png)
-
 ### ProgressCircle
 
 A `ProgressCircle` can be either determinate or indeterminate.
@@ -919,10 +869,8 @@ indicator styles, each with a different appearance, for communicating capacity, 
 A capacity indicator illustrates the current level in relation to a finite capacity. Capacity indicators are often used 
 when communicating factors like disk and battery usage. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/level-indicators#capacity-indicators)
 
-| Continuous                                                                                                                                     | Discrete                                                                                                                                                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Continuous CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-continous.png)   | ![Discrete CapacityIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-discrete.png)                                                                        |
-| A horizontal translucent track that fills with a colored bar to indicate the current value. Tick marks are often displayed to provide context. | A horizontal row of separate, equally sized, rectangular segments. The number of segments matches the total capacity, and the segments fill completely—never partially—with color to indicate the current value. |
+<img src="https://imgur.com/U7hcCqJ.png" />
+<img src="https://imgur.com/AJyXG6p.png" />
 
 Here's an example of how to create an interactive continuous capacity indicator:
 
@@ -968,7 +916,7 @@ MacosSlider(
 A rating indicator uses a series of horizontally arranged graphical symbols to communicate a ranking level. The default 
 symbol is a star.
 
-![RatingIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicator-rating.png)
+![RatingIndicator Example](https://imgur.com/ySQBpL6.png)
 
 A rating indicator doesn’t display partial symbols—its value is rounded in order to display complete symbols only. 
 Within a rating indicator, symbols are always the same distance apart and don't expand or shrink to fit the control. 
@@ -988,22 +936,6 @@ RatingIndicator(
 )
 ```
 
-### RelevanceIndicator
-
-A relevance indicator communicates relevancy using a series of vertical bars. It often appears in a list of search 
-results for reference when sorting and comparing multiple items. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/indicators/level-indicators#relevance-indicators)
-
-![RelevanceIndicator Example](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicator-relevance.png)
-
-Here's an example of how to create a relevance indicator:
-
-```dart
-RelevanceIndicator(
-  value: 15,
-  amount: 20,
-)
-```
-
 # Selectors
 
 ## MacosDatePicker
@@ -1019,6 +951,22 @@ There are three styles of `MacosDatePickers`:
 * `graphical`: a visual date picker where the user can navigate through a
   calendar-like interface to select a date.
 * `combined`: provides both `textual` and `graphical` interfaces.
+
+Localization of the time picker is supported by the `weekdayAbbreviations` and `monthAbbreviations` parameters (instead of e.g. standard `localizations.narrowWeekdays()` in order to match Apple's spec).
+* `weekdayAbbreviations` should be a list of 7 strings, one for each day of the week, starting with Sunday
+* `monthAbbreviations` should be a list of 12 strings, one for each month of the year, starting with January
+
+You can also define the `dateFormat` to change the way dates are displayed in the textual interface.
+It takes a string of tokens (case-insensitive) and replaces them with their corresponding values.
+The following tokens are supported:
+* `D`: day of the month (1-31)
+* `DD`: day of the month (01-31)
+* `M`: month of the year (1-12)
+* `MM`: month of the year (01-12)
+* `YYYY`: year (0000-9999)
+* Any separator between tokens is preserved (e.g. `/`, `-`, `.`)
+
+The default format is `M/D/YYYY`. 
 
 Example usage:
 ```dart

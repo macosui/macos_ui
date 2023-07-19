@@ -105,7 +105,7 @@ class _TextFieldSelectionGestureDetectorBuilder
   final _MacosTextFieldState _state;
 
   @override
-  void onSingleTapUp(TapUpDetails details) {
+  void onSingleTapUp(TapDragUpDetails details) {
     // Because TextSelectionGestureDetector listens to taps that happen on
     // widgets in front of it, tapping the clear button will also trigger
     // this handler. If the clear button widget recognizes the up event,
@@ -124,11 +124,14 @@ class _TextFieldSelectionGestureDetectorBuilder
     }
     _state._requestKeyboard();
     if (_state.widget.onTap != null) _state.widget.onTap!();
+
+    super.onSingleTapUp(details);
   }
 
   @override
-  void onDragSelectionEnd(DragEndDetails details) {
+  void onDragSelectionEnd(TapDragEndDetails details) {
     _state._requestKeyboard();
+    super.onDragSelectionEnd(details);
   }
 }
 
@@ -358,7 +361,7 @@ class MacosTextField extends StatefulWidget {
     this.focusNode,
     this.decoration,
     this.focusedDecoration,
-    this.padding = const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 4.0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
     this.placeholder,
     this.placeholderStyle = _kDefaultPlaceholderStyle,
     this.prefix,
@@ -756,7 +759,7 @@ class MacosTextField extends StatefulWidget {
       'clearButtonMode',
       clearButtonMode,
     ));
-    properties.add(EnumProperty<TextInputType>(
+    properties.add(DiagnosticsProperty<TextInputType>(
       'keyboardType',
       keyboardType,
       defaultValue: TextInputType.text,
@@ -1157,6 +1160,7 @@ class _MacosTextFieldState extends State<MacosTextField>
   void dispose() {
     _focusNode?.dispose();
     _controller?.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
     super.dispose();
   }
 

@@ -62,6 +62,7 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           home: MacosWindow(
+            disableWallpaperTinting: true,
             child: MacosScaffold(
               children: [
                 ContentArea(
