@@ -1,4 +1,5 @@
 import 'package:example/widgets/widget_text_title1.dart';
+import 'package:example/widgets/widget_text_title2.dart';
 import 'package:macos_ui/macos_ui.dart';
 // ignore: implementation_imports
 import 'package:macos_ui/src/library.dart';
@@ -117,8 +118,17 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                     onChanged: (v) => setState(() => ratingValue = v),
                   ),
                   const SizedBox(height: 20),
-                  const WidgetTextTitle1(widgetName: 'ProgressCircle'),
+                  Text(
+                    'Progress Indicators',
+                    style: MacosTypography.of(context).title1,
+                  ),
                   Divider(color: MacosTheme.of(context).dividerColor),
+                  const WidgetTextTitle2(widgetName: 'ProgressBar'),
+                  const SizedBox(height: 8),
+                  const ProgressBar(value: 50),
+                  const SizedBox(height: 16),
+                  const WidgetTextTitle2(widgetName: 'ProgressCircle'),
+                  const SizedBox(height: 8),
                   const Row(
                     children: [
                       Text('Indeterminate'),
@@ -137,10 +147,6 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                   const WidgetTextTitle1(widgetName: 'RelevanceIndicator'),
                   Divider(color: MacosTheme.of(context).dividerColor),
                   const SizedBox(height: 8),
-                  const RelevanceIndicator(
-                    value: 25,
-                    amount: 50,
-                  ),
                 ],
               ),
             );

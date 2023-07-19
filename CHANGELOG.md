@@ -1,3 +1,10 @@
+## [2.0.0-beta.11]
+🚨 Breaking Changes 🚨
+* `RelevanceIndicator` has been deprecated
+
+🔄 Updated 🔄
+* `HelpButton` now sizes itself according to specification
+
 ## [2.0.0-beta.10]
 🛠️ Fixed 🛠️
 * Ensure builds targeting web do not utilize any `macos_window_utils` code

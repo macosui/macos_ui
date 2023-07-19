@@ -209,47 +209,50 @@ class DemoSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MacosSheet(
-      child: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            const FlutterLogo(
-              size: 56,
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Welcome to macos_ui',
-              style: MacosTheme.of(context).typography.largeTitle.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 24),
-            const MacosListTile(
-              leading: MacosIcon(CupertinoIcons.lightbulb),
-              title: Text(
-                'A robust library of Flutter components for macOS',
-                //style: MacosTheme.of(context).typography.headline,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              const FlutterLogo(
+                size: 56,
               ),
-              subtitle: Text(
-                'Create native looking macOS applications using Flutter',
+              const SizedBox(height: 24),
+              Text(
+                'Welcome to macos_ui',
+                style: MacosTheme.of(context).typography.largeTitle.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
-            ),
-            const SizedBox(height: 16),
-            const MacosListTile(
-              leading: MacosIcon(CupertinoIcons.bolt),
-              title: Text(
-                'Create beautiful macOS applications in minutes',
-                //style: MacosTheme.of(context).typography.headline,
+              const SizedBox(height: 24),
+              const MacosListTile(
+                leading: MacosIcon(CupertinoIcons.lightbulb),
+                title: Text(
+                  'A robust library of Flutter components for macOS',
+                  //style: MacosTheme.of(context).typography.headline,
+                ),
+                subtitle: Text(
+                  'Create native looking macOS applications using Flutter',
+                ),
               ),
-            ),
-            const Spacer(),
-            PushButton(
-              controlSize: ControlSize.regular,
-              child: const Text('Get started'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            const SizedBox(height: 50),
-          ],
+              const SizedBox(height: 16),
+              const MacosListTile(
+                leading: MacosIcon(CupertinoIcons.bolt),
+                title: Text(
+                  'Create beautiful macOS applications in minutes',
+                  //style: MacosTheme.of(context).typography.headline,
+                ),
+              ),
+              const Spacer(),
+              PushButton(
+                controlSize: ControlSize.regular,
+                child: const Text('Get started'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              const SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );
