@@ -1,6 +1,6 @@
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
-* Migrate `macos_ui` to [macos_window_utils](https://pub.dev/packages/macos_window_utils), which provides the following benefits:
+* `macos_ui` has been migrated to utilize [macos_window_utils](https://pub.dev/packages/macos_window_utils) under the hood, which provides the following benefits:
   * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
   * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
   * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
