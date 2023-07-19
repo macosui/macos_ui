@@ -431,6 +431,10 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ],
                   ),
                   const SizedBox(height: 16),
+                  const WidgetTextTitle1(widgetName: 'HelpButton'),
+                  Divider(color: MacosTheme.of(context).dividerColor),
+                  HelpButton(onPressed: () {}),
+                  const SizedBox(height: 16),
                   Text(
                     'Icon Buttons',
                     style: MacosTypography.of(context).title1,
