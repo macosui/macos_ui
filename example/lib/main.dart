@@ -148,6 +148,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
           builder: (context, scrollController) {
             return SidebarItems(
               currentIndex: pageIndex,
+              hasActiveSelection: true,
               onChanged: (i) {
                 if (kIsWeb && i == 10) {
                   launchUrl(

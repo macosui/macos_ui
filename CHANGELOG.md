@@ -1,3 +1,7 @@
+## [2.0.1]
+### 🔄 Updated 🔄
+* `SidebarItems` now accepts `hasActiveSelection` property which indicates whether any of the items in the sidebar has been selected.
+
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
 * `macos_ui` has been migrated to utilize [macos_window_utils](https://pub.dev/packages/macos_window_utils) under the hood, which provides the following benefits:

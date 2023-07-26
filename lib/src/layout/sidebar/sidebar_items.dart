@@ -55,7 +55,8 @@ class SidebarItems extends StatelessWidget {
     this.unselectedColor,
     this.shape,
     this.cursor = SystemMouseCursors.basic,
-  }) : assert(currentIndex >= 0);
+    this.hasActiveSelection = true
+  }) : assert(!(hasActiveSelection ?? true) || currentIndex >= 0);
 
   /// The [SidebarItem]s used by the sidebar. If no items are provided,
   /// the sidebar is not rendered.
@@ -97,6 +98,13 @@ class SidebarItems extends StatelessWidget {
   /// Defaults to [SystemMouseCursors.basic].
   final MouseCursor? cursor;
 
+  /// Indicates whether any of the items in the sidebar has been selected.
+  ///
+  /// Defaults to [true].
+  final bool? hasActiveSelection;
+
+  bool get _hasActiveSelection => hasActiveSelection ?? true;
+
   List<SidebarItem> get _allItems {
     List<SidebarItem> result = [];
     for (var element in items) {
@@ -113,7 +121,7 @@ class SidebarItems extends StatelessWidget {
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
     assert(debugCheckHasMacosTheme(context));
-    assert(currentIndex < _allItems.length);
+    assert(!_hasActiveSelection || currentIndex < _allItems.length);
     final theme = MacosTheme.of(context);
     return MacosIconTheme.merge(
       data: const MacosIconThemeData(size: 20),
@@ -133,7 +141,8 @@ class SidebarItems extends StatelessWidget {
                 cursor: cursor!,
                 child: _DisclosureSidebarItem(
                   item: item,
-                  selectedItem: _allItems[currentIndex],
+                  selectedItem: _hasActiveSelection
+                      ? _allItems[currentIndex] : null,
                   onChanged: (item) {
                     onChanged(_allItems.indexOf(item));
                   },
@@ -144,7 +153,8 @@ class SidebarItems extends StatelessWidget {
               cursor: cursor!,
               child: _SidebarItem(
                 item: item,
-                selected: _allItems[currentIndex] == item,
+                selected: _hasActiveSelection
+                    ? _allItems[currentIndex] == item : false,
                 onClick: () => onChanged(_allItems.indexOf(item)),
               ),
             );
