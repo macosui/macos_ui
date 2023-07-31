@@ -25,8 +25,7 @@ This repository uses [conventional commits](https://www.conventionalcommits.org/
 ## Pull Requests
 As mentioned above, all pull requests should target `dev`.
 
-Before opening your pull request, please ensure that the following
-following requirements are met:
+Before opening your pull request, please ensure that the following requirements are met:
 * You have run `flutter pub get` at the package level
 * You have incremented the version number in `pubspec.yaml` properly
 * You have updated the `CHANGELOG.md` file accordingly
