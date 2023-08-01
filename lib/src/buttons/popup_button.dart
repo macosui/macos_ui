@@ -1194,10 +1194,7 @@ class _MacosPopupButtonState<T> extends State<MacosPopupButton<T>>
       }
 
       hintIndex = items.length;
-      items.add(IgnorePointer(
-        ignoringSemantics: false,
-        child: displayedHint,
-      ));
+      items.add(ExcludeSemantics(child: displayedHint));
     }
 
     // If value is null (then _selectedIndex is null) then we
