@@ -124,11 +124,14 @@ class _TextFieldSelectionGestureDetectorBuilder
     }
     _state._requestKeyboard();
     if (_state.widget.onTap != null) _state.widget.onTap!();
+
+    super.onSingleTapUp(details);
   }
 
   @override
   void onDragSelectionEnd(TapDragEndDetails details) {
     _state._requestKeyboard();
+    super.onDragSelectionEnd(details);
   }
 }
 
@@ -756,7 +759,7 @@ class MacosTextField extends StatefulWidget {
       'clearButtonMode',
       clearButtonMode,
     ));
-    properties.add(EnumProperty<TextInputType>(
+    properties.add(DiagnosticsProperty<TextInputType>(
       'keyboardType',
       keyboardType,
       defaultValue: TextInputType.text,

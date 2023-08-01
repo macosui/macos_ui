@@ -44,6 +44,7 @@ void main() {
     await tester.pumpWidget(
       MacosApp(
         home: MacosWindow(
+          disableWallpaperTinting: true,
           child: MacosScaffold(
             toolBar: ToolBar(
               leading: MacosBackButton(

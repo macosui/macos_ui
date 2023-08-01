@@ -30,6 +30,7 @@ void main() {
       viewBuilder(Sidebar sidebar) {
         return MacosApp(
           home: MacosWindow(
+            disableWallpaperTinting: true,
             sidebar: sidebar,
             child: const MacosScaffold(
               children: [],
@@ -70,6 +71,8 @@ void main() {
         await tester.pumpWidget(view);
 
         expectSidebarOpen(tester, width: startWidth);
+
+        await tester.pump(Duration.zero);
       });
 
       test('dragClosedBuffer defaults to half minWidth', () {
@@ -84,6 +87,8 @@ void main() {
         await tester.pump();
 
         expectSidebarOpen(tester, width: startWidth + safeDelta);
+
+        await tester.pump(Duration.zero);
       });
 
       testWidgets('dragging wider respects maxWidth', (tester) async {
@@ -93,6 +98,8 @@ void main() {
         await tester.pump();
 
         expectSidebarOpen(tester, width: maxWidth);
+
+        await tester.pump(Duration.zero);
       });
 
       testWidgets('drag events past maxWidth have no effect', (tester) async {
@@ -106,6 +113,8 @@ void main() {
         await tester.pump();
 
         expectSidebarOpen(tester, width: maxWidth);
+
+        await tester.pump(Duration.zero);
       });
 
       testWidgets('dragging narrower works', (tester) async {
@@ -115,6 +124,8 @@ void main() {
         await tester.pump();
 
         expectSidebarOpen(tester, width: startWidth - safeDelta);
+
+        await tester.pump(Duration.zero);
       });
 
       group('when dragClosed is true', () {
@@ -135,6 +146,8 @@ void main() {
             await tester.pump();
 
             expectSidebarOpen(tester, width: minWidth);
+
+            await tester.pump(Duration.zero);
           },
         );
         testWidgets(
@@ -146,6 +159,8 @@ void main() {
             await tester.pump();
 
             expectSidebarClosed(tester);
+
+            await tester.pump(Duration.zero);
           },
         );
 
@@ -172,6 +187,8 @@ void main() {
             await tester.pump();
 
             expectSidebarOpen(tester, width: startWidth - safeDelta);
+
+            await tester.pump(Duration.zero);
           },
         );
 
@@ -186,6 +203,8 @@ void main() {
           await tester.pump();
 
           expectSidebarClosed(tester);
+
+          await tester.pump(Duration.zero);
         });
       });
 
@@ -199,6 +218,8 @@ void main() {
             await tester.pump();
 
             expectSidebarOpen(tester, width: minWidth);
+
+            await tester.pump(Duration.zero);
           },
         );
 
@@ -213,6 +234,8 @@ void main() {
           await tester.pump();
 
           expectSidebarOpen(tester, width: minWidth);
+
+          await tester.pump(Duration.zero);
         });
       });
 
@@ -243,6 +266,8 @@ void main() {
               tester,
               width: startWidth + snapToStartBuffer * 2,
             );
+
+            await tester.pump(Duration.zero);
           },
         );
 
@@ -273,6 +298,8 @@ void main() {
             );
             await tester.pump();
             expectSidebarOpen(tester, width: startWidth);
+
+            await tester.pump(Duration.zero);
           },
         );
       });

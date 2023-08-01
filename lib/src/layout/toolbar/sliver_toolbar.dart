@@ -40,6 +40,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     this.pinned = true,
     this.floating = false,
     this.toolbarOpacity = 0.9,
+    this.allowWallpaperTintingOverrides = true,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -138,6 +139,30 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
   /// Defaults to `0.9`.
   final double toolbarOpacity;
 
+  /// Whether this [SliverToolBar] is allowed to perform wallpaper tinting
+  /// overrides.
+  ///
+  /// This property is supposed to be set to true when this [SliverToolBar] is
+  /// currently visible on the screen (that is, not e.g. hidden by an
+  /// [IndexedStack]).
+  ///
+  /// By default, macos_ui applies wallpaper tinting to the application's
+  /// window to match macOS' native appearance:
+  ///
+  /// <img src="https://user-images.githubusercontent.com/86920182/220182724-d78319d7-5c41-4e8c-b785-a73a6ea24927.jpg" width=640/>
+  ///
+  /// However, this effect is realized by inserting `NSVisualEffectView`s behind
+  /// Flutter's canvas and turning the background of areas that are meant to be
+  /// affected by wallpaper tinting transparent. Since Flutter's
+  /// [`ImageFilter.blur`](https://api.flutter.dev/flutter/dart-ui/ImageFilter/ImageFilter.blur.html)
+  /// does not support transparency, wallpaper tinting is disabled automatically
+  /// when this widget's [allowWallpaperTintingOverrides] is true.
+  ///
+  /// This is meant to be a temporary solution until
+  /// [#16296](https://github.com/flutter/flutter/issues/16296) is resolved in
+  /// the Flutter project.
+  final bool allowWallpaperTintingOverrides;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -204,6 +229,7 @@ class _SliverToolBarState extends State<SliverToolBar>
           floating: widget.floating,
           pinned: widget.pinned,
           toolbarOpacity: widget.toolbarOpacity,
+          allowWallpaperTintingOverrides: widget.allowWallpaperTintingOverrides,
           vsync: this,
         ),
       ),
@@ -228,6 +254,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
     required this.floating,
     required this.pinned,
     required this.toolbarOpacity,
+    required this.allowWallpaperTintingOverrides,
   });
 
   final double height;
@@ -244,6 +271,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
   final bool floating;
   final bool pinned;
   final double toolbarOpacity;
+  final bool allowWallpaperTintingOverrides;
 
   @override
   double get minExtent => _kToolbarHeight;
@@ -293,6 +321,8 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         dividerColor: dividerColor,
         alignment: alignment,
         height: height,
+        enableBlur: true,
+        allowWallpaperTintingOverrides: allowWallpaperTintingOverrides,
       ),
     );
   }
@@ -311,6 +341,8 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         centerTitle != oldDelegate.centerTitle ||
         dividerColor != oldDelegate.dividerColor ||
         floating != oldDelegate.floating ||
-        pinned != oldDelegate.pinned;
+        pinned != oldDelegate.pinned ||
+        allowWallpaperTintingOverrides !=
+            oldDelegate.allowWallpaperTintingOverrides;
   }
 }

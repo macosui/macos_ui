@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/src/theme/macos_colors.dart';
+import 'package:macos_ui/src/theme/macos_theme.dart';
 
 const _kDefaultFontFamily = '.AppleSystemUIFont';
 
@@ -16,8 +18,8 @@ const _kDefaultFontFamily = '.AppleSystemUIFont';
 class MacosTypography with Diagnosticable {
   /// Creates a typography that uses the given values.
   ///
-  /// Rather than creating a new typography, consider using [MacosTypography.black]
-  /// or [MacosTypography.white].
+  /// Rather than creating a new typography, consider using [MacosTypography.darkOpaque]
+  /// or [MacosTypography.lightOpaque].
   ///
   /// If you do decide to create your own typography, consider using one of
   /// those predefined themes as a starting point for [copyWith].
@@ -65,16 +67,9 @@ class MacosTypography with Diagnosticable {
     );
     headline ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w700,
       fontSize: 13,
       letterSpacing: -0.08,
-      color: color,
-    );
-    subheadline ??= TextStyle(
-      fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
-      fontSize: 11,
-      letterSpacing: 0.06,
       color: color,
     );
     body ??= TextStyle(
@@ -88,6 +83,13 @@ class MacosTypography with Diagnosticable {
       fontFamily: _kDefaultFontFamily,
       fontWeight: FontWeight.w400,
       fontSize: 12,
+      color: color,
+    );
+    subheadline ??= TextStyle(
+      fontFamily: _kDefaultFontFamily,
+      fontWeight: FontWeight.w400,
+      fontSize: 11,
+      letterSpacing: 0.06,
       color: color,
     );
     footnote ??= TextStyle(
@@ -106,7 +108,7 @@ class MacosTypography with Diagnosticable {
     );
     caption2 ??= TextStyle(
       fontFamily: _kDefaultFontFamily,
-      fontWeight: FontWeight.w400,
+      fontWeight: MacosFontWeight.w510,
       fontSize: 10,
       letterSpacing: 0.12,
       color: color,
@@ -140,10 +142,10 @@ class MacosTypography with Diagnosticable {
     required this.caption2,
   });
 
-  static final MacosTypography black =
-      MacosTypography(color: CupertinoColors.black);
-  static final MacosTypography white =
-      MacosTypography(color: CupertinoColors.white);
+  factory MacosTypography.darkOpaque() =>
+      MacosTypography(color: MacosColors.labelColor.color);
+  factory MacosTypography.lightOpaque() =>
+      MacosTypography(color: MacosColors.labelColor.darkColor);
 
   /// Style used for body text.
   final TextStyle body;
@@ -230,10 +232,15 @@ class MacosTypography with Diagnosticable {
     );
   }
 
+  static MacosTypography of(BuildContext context) {
+    final theme = MacosTheme.of(context);
+    return theme.typography;
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    final defaultStyle = MacosTypography.black;
+    final defaultStyle = MacosTypography.darkOpaque();
     properties.add(DiagnosticsProperty<TextStyle>(
       'largeTitle',
       largeTitle,
@@ -290,4 +297,151 @@ class MacosTypography with Diagnosticable {
       defaultValue: defaultStyle.caption2,
     ));
   }
+}
+
+/// The thickness of the glyphs used to draw the text.
+///
+/// Implements [FontWeight] in order to provide the following custom weight
+/// values that Apple use in some of their text styles:
+/// * [w510]
+/// * [w590]
+/// * [w860]
+///
+/// Reference:
+/// * [macOS Sonoma Figma Kit](https://www.figma.com/file/IX6ph2VWrJiRoMTI1Byz0K/Apple-Design-Resources---macOS-(Community)?node-id=0%3A1745&mode=dev)
+class MacosFontWeight implements FontWeight {
+  const MacosFontWeight._(this.index, this.value);
+
+  /// The encoded integer value of this font weight.
+  @override
+  final int index;
+
+  /// The thickness value of this font weight.
+  @override
+  final int value;
+
+  /// Thin, the least thick
+  static const MacosFontWeight w100 = MacosFontWeight._(0, 100);
+
+  /// Extra-light
+  static const MacosFontWeight w200 = MacosFontWeight._(1, 200);
+
+  /// Light
+  static const MacosFontWeight w300 = MacosFontWeight._(2, 300);
+
+  /// Normal / regular / plain
+  static const MacosFontWeight w400 = MacosFontWeight._(3, 400);
+
+  /// Medium
+  static const MacosFontWeight w500 = MacosFontWeight._(4, 500);
+
+  /// An Apple-specific font weight.
+  ///
+  /// When [MacosTypography.caption1] needs to be bolded, use this value.
+  static const MacosFontWeight w510 = MacosFontWeight._(5, 510);
+
+  /// An Apple-specific font weight.
+  ///
+  /// When [MacosTypography.body], [MacosTypography.callout],
+  /// [MacosTypography.subheadline], [MacosTypography.footnote], or
+  /// [MacosTypography.caption2] need to be bolded, use this value.
+  static const MacosFontWeight w590 = MacosFontWeight._(6, 590);
+
+  /// Semi-bold
+  static const MacosFontWeight w600 = MacosFontWeight._(7, 600);
+
+  /// Bold
+  static const MacosFontWeight w700 = MacosFontWeight._(8, 700);
+
+  /// Extra-bold
+  static const MacosFontWeight w800 = MacosFontWeight._(9, 800);
+
+  /// An Apple-specific font weight.
+  ///
+  /// When [MacosTypography.title3] needs to be bolded, use this value.
+  static const MacosFontWeight w860 = MacosFontWeight._(10, 860);
+
+  /// Black, the most thick
+  static const MacosFontWeight w900 = MacosFontWeight._(11, 900);
+
+  /// The default font weight.
+  static const MacosFontWeight normal = w400;
+
+  /// A commonly used font weight that is heavier than normal.
+  static const MacosFontWeight bold = w700;
+
+  /// A list of all the font weights.
+  static const List<MacosFontWeight> values = <MacosFontWeight>[
+    w100,
+    w200,
+    w300,
+    w400,
+    w500,
+    w510,
+    w590,
+    w600,
+    w700,
+    w800,
+    w860,
+    w900,
+  ];
+
+  /// Linearly interpolates between two font weights.
+  ///
+  /// Rather than using fractional weights, the interpolation rounds to the
+  /// nearest weight.
+  ///
+  /// If both `a` and `b` are null, then this method will return null. Otherwise,
+  /// any null values for `a` or `b` are interpreted as equivalent to [normal]
+  /// (also known as [w400]).
+  ///
+  /// The `t` argument represents position on the timeline, with 0.0 meaning
+  /// that the interpolation has not started, returning `a` (or something
+  /// equivalent to `a`), 1.0 meaning that the interpolation has finished,
+  /// returning `b` (or something equivalent to `b`), and values in between
+  /// meaning that the interpolation is at the relevant point on the timeline
+  /// between `a` and `b`. The interpolation can be extrapolated beyond 0.0 and
+  /// 1.0, so negative values and values greater than 1.0 are valid (and can
+  /// easily be generated by curves such as [Curves.elasticInOut]). The result
+  /// is clamped to the range [w100]–[w900].
+  ///
+  /// Values for `t` are usually obtained from an [Animation<double>], such as
+  /// an [AnimationController].
+  static MacosFontWeight? lerp(
+    MacosFontWeight? a,
+    MacosFontWeight? b,
+    double t,
+  ) {
+    if (a == null && b == null) {
+      return null;
+    }
+    return values[_lerpInt((a ?? normal).index, (b ?? normal).index, t)
+        .round()
+        .clamp(0, 8)];
+  }
+
+  @override
+  String toString() {
+    return const <int, String>{
+      0: 'MacosFontWeight.w100',
+      1: 'MacosFontWeight.w200',
+      2: 'MacosFontWeight.w300',
+      3: 'MacosFontWeight.w400',
+      4: 'MacosFontWeight.w500',
+      5: 'MacosFontWeight.w510',
+      6: 'MacosFontWeight.w590',
+      7: 'MacosFontWeight.w600',
+      8: 'MacosFontWeight.w700',
+      9: 'MacosFontWeight.w800',
+      10: 'MacosFontWeight.w860',
+      11: 'MacosFontWeight.w900',
+    }[index]!;
+  }
+}
+
+/// Linearly interpolate between two integers.
+///
+/// Same as [lerpDouble] but specialized for non-null `int` type.
+double _lerpInt(int a, int b, double t) {
+  return a + (b - a) * t;
 }

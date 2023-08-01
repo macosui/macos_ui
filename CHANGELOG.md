@@ -1,3 +1,60 @@
+## [2.0.1]
+* Modified mock_canvas copy from the framework to unblock move to flutter_test
+
+## [2.0.0]
+### 🚨 Breaking Changes 🚨
+* `macos_ui` has been migrated to utilize [macos_window_utils](https://pub.dev/packages/macos_window_utils) under the hood, which provides the following benefits:
+  * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
+  * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
+  * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
+  * Wallpaper tinting is now supported.
+  * To migrate an existing application, please refer to the “Modern window look” section in the README.
+
+* Support for Flutter 3.10 and Dart 3
+* `PushButton` has been updated to support the `ControlSize` enum.
+  * The `buttonSize` property has been changed to `controlSize`.
+  * Buttons can now be any of the following sizes: mini, small, regular, or large.
+* `PushButton.isSecondary` is now `PushButton.secondary`.
+* `MacosAlertDialog`: `primaryButton` and `secondaryButton` are now declared to be of type `PushButton`.
+* `RelevanceIndicator` has been deprecated
+* `MacosTypography` white and black are now factory constructors called `darkOpaque()` and `lightOpaque()` to reflect
+  Apple's naming conventions.
+
+### ✨ New ✨
+* `MacosSwitch` has been completely rewritten and now matches the native macOS switch in appearance and behavior.
+* A `ControlSize` enum has been introduced, which will allow widgets to more closely match their native counterparts.
+* `MacosTypography`
+  * You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
+  * `MacosFontWeight` allows using Apple-specific font weights like `w510`, `w590`, and `w860`.
+* Localization
+  * Added support for `weekdayAbbreviations` and `monthAbbreviations` to `MacosDatePicker`.
+  * Added support for `dateFormat` to `MacosDatePicker`.
+  * Added support for `startWeekOnMonday` to `MacosDatePicker`.
+
+### 🔄 Updated 🔄
+* `MacosColor` has been updated with some previously missing elements.
+* `PushButton`
+  * Now uses the correct `body` text style instead of the incorrect `headline`
+* `PushButton`'s secondary and disabled colors more closely match their native counterparts.
+* `MacosCheckbox` appearance more closely matches its native counterpart.
+* `MacosAlertDialog`
+  * `primaryButton` and `secondaryButton` are now required to have `controlSize`s of `ControlSize.large`.
+  * Docs now suggest that `appIcon` should be of size 64x64.
+* `Toolbar` now uses the correct `title3` text style instead of the incorrect `headline`
+* `MacosTheme` sets the global typography more efficiently
+* `HelpButton` now sizes itself according to specification
+* `ResizablePane` can now disallow the usage of its internal scrollbar via the  `ReziablePane.noScrollBar` constructor.
+
+### 🛠️ Fixed 🛠️
+* Clicking on the calendar elements in `MacosDatePicker` has better UX
+* `ToolBar`s in use where a `SideBar` is not present will now have their title's avoid the traffic lights (native window controls).
+* `MacosTypography.darkOpaque()` and `MacosTypography.lightOpaque()` now conform to specification by using `MacosColors.labelColor`
+* Ensure builds targeting web do not utilize any `macos_window_utils` code
+* Ensure builds targeting web are themed correctly
+
+## [1.12.5]
+* Fixed a bug where the `Sidebar.key` parameter wasn't used, which caused certain layouts to be unachievable.
+
 ## [1.12.4]
 * Default the `_selectedDay` state variable to be 1 when selecting the previous/next month from widget to ensure new date is valid for `_formatAsDateTime()` method (https://github.com/flutter/flutter/issues/123669 & https://github.com/macosui/macos_ui/pull/402)
 

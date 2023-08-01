@@ -5,36 +5,120 @@ import 'package:flutter/rendering.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-/// The sizes a [PushButton] can be.
-enum ButtonSize {
-  /// A large [PushButton].
-  large,
+const _kMiniButtonSize = Size(26.0, 11.0);
+const _kSmallButtonSize = Size(39.0, 14.0);
+const _kRegularButtonSize = Size(60.0, 18.0);
+const _kLargeButtonSize = Size(48.0, 26.0);
 
-  /// A small [PushButton].
-  small,
+const _kMiniButtonPadding = EdgeInsets.only(left: 6.0, right: 6.0, bottom: 1.0);
+const _kSmallButtonPadding = EdgeInsets.symmetric(
+  vertical: 1.0,
+  horizontal: 7.0,
+);
+const _kRegularButtonPadding = EdgeInsets.only(
+  left: 8.0,
+  right: 8.0,
+  top: 1.0,
+  bottom: 4.0,
+);
+const _kLargeButtonPadding = EdgeInsets.only(
+  right: 8.0,
+  left: 8.0,
+  bottom: 1.0,
+);
+
+const _kMiniButtonRadius = BorderRadius.all(Radius.circular(2.0));
+const _kSmallButtonRadius = BorderRadius.all(Radius.circular(2.0));
+const _kRegularButtonRadius = BorderRadius.all(Radius.circular(5.0));
+const _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
+
+/// Shortcuts for various [PushButton] properties based on the [ControlSize].
+extension PushButtonControlSizeX on ControlSize {
+  /// Determines the padding of the button's text.
+  EdgeInsetsGeometry get padding {
+    switch (this) {
+      case ControlSize.mini:
+        return _kMiniButtonPadding;
+      case ControlSize.small:
+        return _kSmallButtonPadding;
+      case ControlSize.regular:
+        return _kRegularButtonPadding;
+      case ControlSize.large:
+        return _kLargeButtonPadding;
+    }
+  }
+
+  /// Determines the button's border radius.
+  BorderRadiusGeometry get borderRadius {
+    switch (this) {
+      case ControlSize.mini:
+        return _kMiniButtonRadius;
+      case ControlSize.small:
+        return _kSmallButtonRadius;
+      case ControlSize.regular:
+        return _kRegularButtonRadius;
+      case ControlSize.large:
+        return _kLargeButtonRadius;
+    }
+  }
+
+  /// Determines the styling of the button's text.
+  TextStyle textStyle(TextStyle baseStyle) {
+    switch (this) {
+      case ControlSize.mini:
+        return baseStyle.copyWith(fontSize: 9.0);
+      case ControlSize.small:
+        return baseStyle.copyWith(fontSize: 11.0);
+      case ControlSize.regular:
+        return baseStyle.copyWith(fontSize: 13.0);
+      case ControlSize.large:
+        return baseStyle;
+    }
+  }
+
+  /// Determines the button's minimum size.
+  BoxConstraints get constraints {
+    switch (this) {
+      case ControlSize.mini:
+        return BoxConstraints(
+          minHeight: _kMiniButtonSize.height,
+          minWidth: _kMiniButtonSize.width,
+        );
+      case ControlSize.small:
+        return BoxConstraints(
+          minHeight: _kSmallButtonSize.height,
+          minWidth: _kSmallButtonSize.width,
+        );
+      case ControlSize.regular:
+        return BoxConstraints(
+          minHeight: _kRegularButtonSize.height,
+          minWidth: _kRegularButtonSize.width,
+        );
+      case ControlSize.large:
+        return BoxConstraints(
+          minHeight: _kLargeButtonSize.height,
+          minWidth: _kLargeButtonSize.width,
+        );
+    }
+  }
 }
 
-const EdgeInsetsGeometry _kSmallButtonPadding = EdgeInsets.symmetric(
-  vertical: 3.0,
-  horizontal: 8.0,
-);
-const EdgeInsetsGeometry _kLargeButtonPadding = EdgeInsets.symmetric(
-  vertical: 6.0,
-  horizontal: 8.0,
-);
-
-const BorderRadius _kSmallButtonRadius = BorderRadius.all(Radius.circular(5.0));
-const BorderRadius _kLargeButtonRadius = BorderRadius.all(Radius.circular(7.0));
-
 /// {@template pushButton}
-/// A macOS-style button.
+/// A control that initiates an action.
+///
+/// Push Buttons are the standard button type in macOS.
+///
+/// Reference:
+/// * [Button (SwiftUI)](https://developer.apple.com/documentation/SwiftUI/Button)
+/// * [NSButton (AppKit)](https://developer.apple.com/documentation/appkit/nsbutton)
+/// * [Buttons (Human Interface Guidelines)](https://developer.apple.com/design/human-interface-guidelines/buttons)
 /// {@endtemplate}
 class PushButton extends StatefulWidget {
   /// {@macro pushButton}
   const PushButton({
     super.key,
     required this.child,
-    required this.buttonSize,
+    required this.controlSize,
     this.padding,
     this.color,
     this.disabledColor,
@@ -44,7 +128,7 @@ class PushButton extends StatefulWidget {
     this.alignment = Alignment.center,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
-    this.isSecondary,
+    this.secondary,
   }) : assert(pressedOpacity == null ||
             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
@@ -55,12 +139,8 @@ class PushButton extends StatefulWidget {
 
   /// The size of the button.
   ///
-  /// Must be either [ButtonSize.small] or [ButtonSize.large].
   ///
-  /// Small buttons have a `padding` of [_kSmallButtonPadding] and a
-  /// `borderRadius` of [_kSmallButtonRadius]. Large buttons have a `padding`
-  /// of [_kLargeButtonPadding] and a `borderRadius` of [_kLargeButtonRadius].
-  final ButtonSize buttonSize;
+  final ControlSize controlSize;
 
   /// The amount of space to surround the child inside the bounds of the button.
   ///
@@ -116,8 +196,8 @@ class PushButton extends StatefulWidget {
   /// Whether the button is used as a secondary action button (e.g. Cancel buttons in dialogs)
   ///
   /// Sets its background color to [PushButtonThemeData]'s [secondaryColor] attributes (defaults
-  /// are gray colors). Can still be overriden if the [color] attribute is non-null.
-  final bool? isSecondary;
+  /// are gray colors). Can still be overridden if the [color] attribute is non-null.
+  final bool? secondary;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
@@ -126,7 +206,7 @@ class PushButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(EnumProperty<ButtonSize>('buttonSize', buttonSize));
+    properties.add(EnumProperty<ControlSize>('controlSize', controlSize));
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
@@ -138,7 +218,7 @@ class PushButton extends StatefulWidget {
       value: enabled,
       ifFalse: 'disabled',
     ));
-    properties.add(DiagnosticsProperty('isSecondary', isSecondary));
+    properties.add(DiagnosticsProperty('secondary', secondary));
   }
 
   @override
@@ -224,7 +304,7 @@ class PushButtonState extends State<PushButton>
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
-    final bool isSecondary = widget.isSecondary != null && widget.isSecondary!;
+    final bool isSecondary = widget.secondary != null && widget.secondary!;
     final MacosThemeData theme = MacosTheme.of(context);
     final Color backgroundColor = MacosDynamicColor.resolve(
       widget.color ??
@@ -234,22 +314,9 @@ class PushButtonState extends State<PushButton>
       context,
     );
 
-    final Color disabledColor = MacosDynamicColor.resolve(
-      widget.disabledColor ?? theme.pushButtonTheme.disabledColor!,
-      context,
-    );
-
-    final EdgeInsetsGeometry? buttonPadding = widget.padding == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonPadding
-            : _kLargeButtonPadding
-        : widget.padding;
-
-    final BorderRadiusGeometry? borderRadius = widget.borderRadius == null
-        ? widget.buttonSize == ButtonSize.small
-            ? _kSmallButtonRadius
-            : _kLargeButtonRadius
-        : widget.borderRadius;
+    final disabledColor = !isSecondary
+        ? backgroundColor.withOpacity(0.5)
+        : backgroundColor.withOpacity(0.25);
 
     final Color foregroundColor = widget.enabled
         ? textLuminance(backgroundColor)
@@ -257,8 +324,7 @@ class PushButtonState extends State<PushButton>
             ? const Color.fromRGBO(255, 255, 255, 0.25)
             : const Color.fromRGBO(0, 0, 0, 0.25);
 
-    final TextStyle textStyle =
-        theme.typography.headline.copyWith(color: foregroundColor);
+    final baseStyle = theme.typography.body.copyWith(color: foregroundColor);
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
@@ -272,25 +338,25 @@ class PushButtonState extends State<PushButton>
           button: true,
           label: widget.semanticLabel,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minWidth: 49,
-              minHeight: 20,
-            ),
+            constraints: widget.controlSize.constraints,
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: borderRadius,
-                  color: !enabled ? disabledColor : backgroundColor,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: widget.controlSize.borderRadius,
+                  ),
+                  // color: !enabled ? disabledColor : backgroundColor,
+                  color: enabled ? backgroundColor : disabledColor,
                 ),
                 child: Padding(
-                  padding: buttonPadding!,
+                  padding: widget.controlSize.padding,
                   child: Align(
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
                     child: DefaultTextStyle(
-                      style: textStyle,
+                      style: widget.controlSize.textStyle(baseStyle),
                       child: widget.child,
                     ),
                   ),

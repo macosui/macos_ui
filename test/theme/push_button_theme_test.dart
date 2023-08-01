@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/library.dart';
 
 void main() {
   group('PushButton theme tests', () {
@@ -46,8 +46,8 @@ void main() {
       expect(
         description,
         [
-          'color: Color(0xff0433ff)',
-          'disabledColor: Color(0xff8e8e93)',
+          'color: MacosColor(0xff0433ff)',
+          'disabledColor: MacosColor(0xff8e8e93)',
           'secondaryColor: Color(0x19000000)',
         ],
       );
@@ -58,13 +58,14 @@ void main() {
       await tester.pumpWidget(
         MacosApp(
           home: MacosWindow(
+            disableWallpaperTinting: true,
             child: MacosScaffold(
               children: [
                 ContentArea(
                   builder: (context, _) {
                     capturedContext = context;
                     return const PushButton(
-                      buttonSize: ButtonSize.small,
+                      controlSize: ControlSize.regular,
                       child: Text('Push me'),
                     );
                   },
@@ -77,8 +78,8 @@ void main() {
 
       final theme = PushButtonTheme.of(capturedContext);
       expect(theme.color, const Color(0xff007aff));
-      expect(theme.disabledColor, const Color(0xfff4f5f5));
-      expect(theme.secondaryColor, const Color(0xffdadadf));
+      expect(theme.disabledColor, const Color.fromRGBO(244, 245, 245, 1.0));
+      expect(theme.secondaryColor, MacosColors.white);
     });
   });
 }

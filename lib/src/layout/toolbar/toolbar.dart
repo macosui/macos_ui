@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/layout/toolbar/overflow_handler.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_override.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
@@ -43,6 +44,8 @@ class ToolBar extends StatefulWidget with Diagnosticable {
     this.actions,
     this.centerTitle = false,
     this.dividerColor,
+    this.allowWallpaperTintingOverrides = true,
+    this.enableBlur = false,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -120,6 +123,35 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   /// Set this to `MacosColors.transparent` to remove.
   final Color? dividerColor;
 
+  /// Whether this [ToolBar] is allowed to perform wallpaper tinting overrides.
+  ///
+  /// This property is supposed to be set to true when this [ToolBar] is
+  /// currently visible on the screen (that is, not e.g. hidden by an
+  /// [IndexedStack]).
+  ///
+  /// This parameter only needs to be supplied when [enableBlur] is true.
+  ///
+  /// By default, macos_ui applies wallpaper tinting to the application's
+  /// window to match macOS' native appearance:
+  ///
+  /// <img src="https://user-images.githubusercontent.com/86920182/220182724-d78319d7-5c41-4e8c-b785-a73a6ea24927.jpg" width=640/>
+  ///
+  /// However, this effect is realized by inserting `NSVisualEffectView`s behind
+  /// Flutter's canvas and turning the background of areas that are meant to be
+  /// affected by wallpaper tinting transparent. Since Flutter's
+  /// [`ImageFilter.blur`](https://api.flutter.dev/flutter/dart-ui/ImageFilter/ImageFilter.blur.html)
+  /// does not support transparency, wallpaper tinting is disabled automatically
+  /// when this widget's [enableBlur] and [allowWallpaperTintingOverrides] is
+  /// true.
+  ///
+  /// This is meant to be a temporary solution until
+  /// [#16296](https://github.com/flutter/flutter/issues/16296) is resolved in
+  /// the Flutter project.
+  final bool allowWallpaperTintingOverrides;
+
+  /// Whether this [ToolBar] should have a blur backdrop filter applied to it.
+  final bool enableBlur;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -191,13 +223,10 @@ class _ToolBarState extends State<ToolBar> {
       title = SizedBox(
         width: widget.titleWidth,
         child: DefaultTextStyle(
-          style: MacosTheme.of(context).typography.headline.copyWith(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: theme.brightness.isDark
-                    ? const Color(0xFFEAEAEA)
-                    : const Color(0xFF4D4D4D),
-              ),
+          style: theme.typography.title3.copyWith(
+            fontSize: 15,
+            fontWeight: MacosFontWeight.w590,
+          ),
           child: title,
         ),
       );
@@ -233,57 +262,56 @@ class _ToolBarState extends State<ToolBar> {
           left: !kIsWeb && isMacOS ? 70 : 0,
         ),
       ),
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: widget.decoration?.color?.opacity == 1
-              ? ImageFilter.blur()
-              : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Container(
-            alignment: widget.alignment,
-            padding: widget.padding,
-            decoration: BoxDecoration(
-              color: theme.canvasColor,
-              border: Border(bottom: BorderSide(color: dividerColor)),
-            ).copyWith(
-              color: widget.decoration?.color,
-              image: widget.decoration?.image,
-              border: widget.decoration?.border,
-              borderRadius: widget.decoration?.borderRadius,
-              boxShadow: widget.decoration?.boxShadow,
-              gradient: widget.decoration?.gradient,
-            ),
-            child: NavigationToolbar(
-              middle: title,
-              centerMiddle: widget.centerTitle,
-              trailing: OverflowHandler(
-                overflowBreakpoint: overflowBreakpoint,
-                overflowWidget: ToolbarOverflowButton(
-                  isDense: doAllItemsShowLabel,
-                  overflowContentBuilder: (context) => ToolbarOverflowMenu(
-                    children: overflowedActions
-                        .map((action) => action.build(
-                              context,
-                              ToolbarItemDisplayMode.overflowed,
-                            ))
-                        .toList(),
-                  ),
+      child: _WallpaperTintedAreaOrBlurFilter(
+        enableWallpaperTintedArea: kIsWeb ? false : !widget.enableBlur,
+        isWidgetVisible: widget.allowWallpaperTintingOverrides,
+        backgroundColor: theme.canvasColor,
+        widgetOpacity: widget.decoration?.color?.opacity,
+        child: Container(
+          alignment: widget.alignment,
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: dividerColor)),
+          ).copyWith(
+            color: widget.decoration?.color,
+            image: widget.decoration?.image,
+            border: widget.decoration?.border,
+            borderRadius: widget.decoration?.borderRadius,
+            boxShadow: widget.decoration?.boxShadow,
+            gradient: widget.decoration?.gradient,
+          ),
+          child: NavigationToolbar(
+            middle: title,
+            centerMiddle: widget.centerTitle,
+            trailing: OverflowHandler(
+              overflowBreakpoint: overflowBreakpoint,
+              overflowWidget: ToolbarOverflowButton(
+                isDense: doAllItemsShowLabel,
+                overflowContentBuilder: (context) => ToolbarOverflowMenu(
+                  children: overflowedActions
+                      .map((action) => action.build(
+                            context,
+                            ToolbarItemDisplayMode.overflowed,
+                          ))
+                      .toList(),
                 ),
-                children: inToolbarActions
-                    .map((e) =>
-                        e.build(context, ToolbarItemDisplayMode.inToolbar))
-                    .toList(),
-                overflowChangedCallback: (hiddenItems) {
-                  setState(() => overflowedActionsCount = hiddenItems.length);
-                },
               ),
-              middleSpacing: 8,
-              leading: SafeArea(
-                top: false,
-                right: false,
-                bottom: false,
-                left: !(scope?.isSidebarShown ?? false),
-                child: leading ?? const SizedBox.shrink(),
-              ),
+              children: inToolbarActions
+                  .map(
+                    (e) => e.build(context, ToolbarItemDisplayMode.inToolbar),
+                  )
+                  .toList(),
+              overflowChangedCallback: (hiddenItems) {
+                setState(() => overflowedActionsCount = hiddenItems.length);
+              },
+            ),
+            middleSpacing: 8,
+            leading: SafeArea(
+              top: false,
+              right: false,
+              bottom: false,
+              left: !(scope?.isSidebarShown ?? false),
+              child: leading ?? const SizedBox.shrink(),
             ),
           ),
         ),
@@ -318,4 +346,51 @@ abstract class ToolbarItem with Diagnosticable {
   /// Sub-classes implement this to build the widget that is appropriate
   /// for the given display mode (in toolbar or overflowed).
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode);
+}
+
+/// Wraps the widget in either a [WallpaperTintingOverride] or a blurry backdrop
+/// filter.
+class _WallpaperTintedAreaOrBlurFilter extends StatelessWidget {
+  const _WallpaperTintedAreaOrBlurFilter({
+    required this.child,
+    required this.enableWallpaperTintedArea,
+    required this.backgroundColor,
+    required this.widgetOpacity,
+    required this.isWidgetVisible,
+  });
+
+  final Widget child;
+  final bool enableWallpaperTintedArea;
+  final Color backgroundColor;
+  final double? widgetOpacity;
+  final bool isWidgetVisible;
+
+  @override
+  Widget build(BuildContext context) {
+    if (enableWallpaperTintedArea) {
+      return WallpaperTintedArea(
+        backgroundColor: backgroundColor,
+        insertRepaintBoundary: true,
+        child: child,
+      );
+    }
+
+    if (!isWidgetVisible) {
+      return child;
+    }
+
+    return WallpaperTintingOverride(
+      child: ClipRect(
+        child: BackdropFilter(
+          filter: widgetOpacity == 1.0
+              ? ImageFilter.blur()
+              : ImageFilter.blur(
+                  sigmaX: 5.0,
+                  sigmaY: 5.0,
+                ),
+          child: child,
+        ),
+      ),
+    );
+  }
 }

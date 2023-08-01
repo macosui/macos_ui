@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting_override.dart';
 import 'package:macos_ui/src/library.dart';
 
 /// {@template macosOverlayFilter}
@@ -36,41 +37,43 @@ class MacosOverlayFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = MacosTheme.brightnessOf(context);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: color ??
-            (brightness.isDark
-                ? const Color.fromRGBO(30, 30, 30, 1)
-                : const Color.fromRGBO(242, 242, 247, 1)),
-        boxShadow: [
-          BoxShadow(
-            color: brightness
-                .resolve(
-                  CupertinoColors.systemGrey.color,
-                  CupertinoColors.black,
-                )
-                .withOpacity(0.25),
-            offset: const Offset(0, 4),
-            spreadRadius: 4.0,
-            blurRadius: 8.0,
+    return WallpaperTintingOverride(
+      child: Container(
+        decoration: BoxDecoration(
+          color: color ??
+              (brightness.isDark
+                  ? const Color.fromRGBO(30, 30, 30, 1)
+                  : const Color.fromRGBO(242, 242, 247, 1)),
+          boxShadow: [
+            BoxShadow(
+              color: brightness
+                  .resolve(
+                    CupertinoColors.systemGrey.color,
+                    CupertinoColors.black,
+                  )
+                  .withOpacity(0.25),
+              offset: const Offset(0, 4),
+              spreadRadius: 4.0,
+              blurRadius: 8.0,
+            ),
+          ],
+          border: Border.all(
+            color: brightness.resolve(
+              CupertinoColors.systemGrey3.color,
+              CupertinoColors.systemGrey3.darkColor,
+            ),
           ),
-        ],
-        border: Border.all(
-          color: brightness.resolve(
-            CupertinoColors.systemGrey3.color,
-            CupertinoColors.systemGrey3.darkColor,
-          ),
+          borderRadius: borderRadius,
         ),
-        borderRadius: borderRadius,
-      ),
-      child: ClipRRect(
-        borderRadius: borderRadius,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 20.0,
-            sigmaY: 20.0,
+        child: ClipRRect(
+          borderRadius: borderRadius,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 20.0,
+              sigmaY: 20.0,
+            ),
+            child: child,
           ),
-          child: child,
         ),
       ),
     );

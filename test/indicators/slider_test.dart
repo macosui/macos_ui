@@ -4,8 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 void main() {
-  final TestWidgetsFlutterBinding binding =
-      TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('debugFillProperties', (tester) async {
     final builder = DiagnosticPropertiesBuilder();
     MacosSlider(
@@ -36,8 +34,8 @@ void main() {
   });
 
   testWidgets('Continuous slider can move when tapped', (tester) async {
-    tester.binding.window.physicalSizeTestValue = const Size(100, 50);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    tester.view.physicalSize = const Size(100, 50);
+    tester.view.devicePixelRatio = 1.0;
 
     final value = ValueNotifier<double>(0.25);
     await tester.pumpWidget(
@@ -65,12 +63,12 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(value.value, 0.0);
-    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    addTearDown(tester.view.resetPhysicalSize);
   });
 
   testWidgets('Discrete slider snaps to correct values', (widgetTester) async {
-    widgetTester.binding.window.physicalSizeTestValue = const Size(100, 50);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(100, 50);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     final value = ValueNotifier<double>(0.25);
     await widgetTester.pumpWidget(
@@ -109,6 +107,6 @@ void main() {
 
     expect(value.value, 0.5);
 
-    addTearDown(widgetTester.binding.window.clearPhysicalSizeTestValue);
+    addTearDown(widgetTester.view.resetPhysicalSize);
   });
 }

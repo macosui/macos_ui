@@ -52,10 +52,12 @@ void main() {
       description,
       [
         'unchecked',
+        'size: regular',
         'dragStartBehavior: start',
         'disabled',
         'activeColor: null',
         'trackColor: null',
+        'knobColor: null',
         'semanticLabel: null',
       ],
     );
