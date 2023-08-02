@@ -1,3 +1,6 @@
+## [2.0.2]
+* Modified mock_canvas copy from the framework to unblock move to flutter_test
+
 ## [2.0.1]
 * Modified mock_canvas copy from the framework to unblock move to flutter_test
 
