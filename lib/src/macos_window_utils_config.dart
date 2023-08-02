@@ -26,6 +26,13 @@ class MacosWindowUtilsConfig {
     this.hideTitle = true,
     this.removeMenubarInFullScreenMode = true,
     this.autoHideToolbarAndMenuBarInFullScreenMode = true,
+    this.onWindowDidBecomeMain,
+    this.onWindowDidResignMain,
+    this.onWindowDidBecomeKey,
+    this.onWindowDidResignKey,
+    this.onWindowDidChangeScreen,
+    this.onWindowDidMove,
+    this.onWindowDidResize,
   });
 
   /// The style of the window toolbar.
@@ -48,6 +55,27 @@ class MacosWindowUtilsConfig {
 
   /// Whether to automatically hide the toolbar and menubar in full-screen mode.
   final bool autoHideToolbarAndMenuBarInFullScreenMode;
+
+  /// Exposes the [onWindowDidBecomeMain] event
+  final VoidCallback? onWindowDidBecomeMain;
+
+  /// Exposes the [onWindowDidResignMain] event
+  final VoidCallback? onWindowDidResignMain;
+
+  /// Exposes the [onWindowDidBecomeKey] event
+  final VoidCallback? onWindowDidBecomeKey;
+
+  /// Exposes the [onWindowDidResignKey] event
+  final VoidCallback? onWindowDidResignKey;
+
+  /// Exposes the [onWindowDidChangeScreen] event
+  final VoidCallback? onWindowDidChangeScreen;
+
+  /// Exposes the [onWindowDidMove] event
+  final VoidCallback? onWindowDidMove;
+
+  /// Exposes the [onWindowDidResize] event
+  final VoidCallback? onWindowDidResize;
 
   /// Applies the configuration to the macOS window.
   ///
@@ -88,7 +116,15 @@ class MacosWindowUtilsConfig {
     );
 
     if (removeMenubarInFullScreenMode) {
-      final delegate = _FlutterWindowDelegate();
+      final delegate = _FlutterWindowDelegate(
+        onWindowDidBecomeMain: onWindowDidBecomeMain,
+        onWindowDidResignMain: onWindowDidResignMain,
+        onWindowDidBecomeKey: onWindowDidBecomeKey,
+        onWindowDidResignKey: onWindowDidResignKey,
+        onWindowDidChangeScreen: onWindowDidChangeScreen,
+        onWindowDidMove: onWindowDidMove,
+        onWindowDidResize: onWindowDidResize,
+      );
       WindowManipulator.addNSWindowDelegate(delegate);
     }
 
@@ -106,6 +142,24 @@ class MacosWindowUtilsConfig {
 
 /// This delegate removes the toolbar in full-screen mode.
 class _FlutterWindowDelegate extends NSWindowDelegate {
+  final VoidCallback? onWindowDidBecomeMain;
+  final VoidCallback? onWindowDidResignMain;
+  final VoidCallback? onWindowDidBecomeKey;
+  final VoidCallback? onWindowDidResignKey;
+  final VoidCallback? onWindowDidChangeScreen;
+  final VoidCallback? onWindowDidMove;
+  final VoidCallback? onWindowDidResize;
+
+  _FlutterWindowDelegate({
+    this.onWindowDidBecomeMain,
+    this.onWindowDidResignMain,
+    this.onWindowDidBecomeKey,
+    this.onWindowDidResignKey,
+    this.onWindowDidChangeScreen,
+    this.onWindowDidMove,
+    this.onWindowDidResize,
+  });
+
   @override
   void windowWillEnterFullScreen() {
     WindowManipulator.removeToolbar();
@@ -116,5 +170,47 @@ class _FlutterWindowDelegate extends NSWindowDelegate {
   void windowDidExitFullScreen() {
     WindowManipulator.addToolbar();
     super.windowDidExitFullScreen();
+  }
+
+  @override
+  void windowDidBecomeMain() {
+    onWindowDidBecomeMain?.call();
+    super.windowDidBecomeMain();
+  }
+
+  @override
+  void windowDidResignMain() {
+    onWindowDidResignMain?.call();
+    super.windowDidResignMain();
+  }
+
+  @override
+  void windowDidBecomeKey() {
+    onWindowDidBecomeKey?.call();
+    super.windowDidBecomeKey();
+  }
+
+  @override
+  void windowDidResignKey() {
+    onWindowDidResignKey?.call();
+    super.windowDidResignKey();
+  }
+
+  @override
+  void windowDidChangeScreen() {
+    onWindowDidChangeScreen?.call();
+    super.windowDidChangeScreen();
+  }
+
+  @override
+  void windowDidMove() {
+    onWindowDidMove?.call();
+    super.windowDidMove();
+  }
+
+  @override
+  void windowDidResize() {
+    onWindowDidResize?.call();
+    super.windowDidResize();
   }
 }
