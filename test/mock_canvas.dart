@@ -40,16 +40,16 @@ import 'recording_canvas.dart';
 /// To match something which paints nothing, see [paintsNothing].
 ///
 /// To match something which asserts instead of painting, see [paintsAssertion].
-PaintPattern get paints => _TestRecordingCanvasPatternMatcher();
+PaintPattern get painted => _TestRecordingCanvasPatternMatcher();
 
 /// Matches objects or functions that does not paint anything on the canvas.
-Matcher get paintsNothing => _TestRecordingCanvasPaintsNothingMatcher();
+Matcher get paintedNothing => _TestRecordingCanvasPaintsNothingMatcher();
 
 /// Matches objects or functions that assert when they try to paint.
-Matcher get paintsAssertion => _TestRecordingCanvasPaintsAssertionMatcher();
+Matcher get paintedAssertion => _TestRecordingCanvasPaintsAssertionMatcher();
 
 /// Matches objects or functions that draw `methodName` exactly `count` number of times.
-Matcher paintsExactlyCountTimes(Symbol methodName, int count) {
+Matcher paintedExactlyCountTimes(Symbol methodName, int count) {
   return _TestRecordingCanvasPaintsCountMatcher(methodName, count);
 }
 
