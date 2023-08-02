@@ -22,7 +22,29 @@ import 'theme.dart';
 
 /// This method initializes macos_window_utils and styles the window.
 Future<void> _configureMacosWindowUtils() async {
-  const config = MacosWindowUtilsConfig();
+  final config = MacosWindowUtilsConfig(
+    onWindowDidBecomeMain: () {
+      debugPrint('onWindowDidBecomeMain');
+    },
+    onWindowDidResignMain: () {
+      debugPrint('onWindowDidResignMain');
+    },
+    onWindowDidBecomeKey: () {
+      debugPrint('onWindowDidBecomeKey');
+    },
+    onWindowDidResignKey: () {
+      debugPrint('onWindowDidResignKey');
+    },
+    onWindowDidMove: () {
+      debugPrint('onWindowDidMove');
+    },
+    onWindowDidChangeScreen: () {
+      debugPrint('onWindowDidChangeScreen');
+    },
+    onWindowDidResize: () {
+      debugPrint('onWindowDidResize');
+    },
+  );
   await config.apply();
 }
 

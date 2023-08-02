@@ -1,3 +1,14 @@
+## [2.0.3]
+### ✨ New ✨
+- Exposed the following NSWindow event callbacks via input parameters:
+  - `onWindowDidBecomeMain`
+  - `onWindowDidResignMain`
+  - `onWindowDidBecomeKey`
+  - `onWindowDidResignKey`
+  - `onWindowDidChangeScreen`
+  - `onWindowDidMove`
+  - `onWindowDidResize`
+
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
 * `macos_ui` has been migrated to utilize [macos_window_utils](https://pub.dev/packages/macos_window_utils) under the hood, which provides the following benefits:
