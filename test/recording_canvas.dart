@@ -7,9 +7,9 @@ import 'package:flutter/rendering.dart';
 /// An [Invocation] and the [stack] trace that led to it.
 ///
 /// Used by [TestRecordingCanvas] to trace canvas calls.
-class RecordedInvocation {
+class RecordInvocation {
   /// Create a record for an invocation list.
-  const RecordedInvocation(this.invocation, {required this.stack});
+  const RecordInvocation(this.invocation, {required this.stack});
 
   /// The method that was called and its arguments.
   ///
@@ -37,13 +37,13 @@ class RecordedInvocation {
 
 /// A [Canvas] for tests that records its method calls.
 ///
-/// This class can be used in conjunction with [TestRecordingPaintingContext]
+/// This class can be used in conjunction with [TestRecordPaintingContext]
 /// to record the [Canvas] method calls made by a renderer. For example:
 ///
 /// ```dart
 /// RenderBox box = tester.renderObject(find.text('ABC'));
-/// TestRecordingCanvas canvas = TestRecordingCanvas();
-/// TestRecordingPaintingContext context = TestRecordingPaintingContext(canvas);
+/// TestRecordCanvas canvas = TestRecordCanvas();
+/// TestRecordPaintingContext context = TestRecordPaintingContext(canvas);
 /// box.paint(context, Offset.zero);
 /// // Now test the expected canvas.invocations.
 /// ```
@@ -53,10 +53,10 @@ class RecordedInvocation {
 /// that the test requires.
 ///
 /// For simple tests, consider using the [paints] matcher, which overlays a
-/// pattern matching API over [TestRecordingCanvas].
-class TestRecordingCanvas implements Canvas {
+/// pattern matching API over [TestRecordCanvas].
+class TestRecordCanvas implements Canvas {
   /// All of the method calls on this canvas.
-  final List<RecordedInvocation> invocations = <RecordedInvocation>[];
+  final List<RecordInvocation> invocations = <RecordInvocation>[];
 
   int _saveCount = 0;
 
@@ -67,13 +67,13 @@ class TestRecordingCanvas implements Canvas {
   void save() {
     _saveCount += 1;
     invocations
-        .add(RecordedInvocation(_MethodCall(#save), stack: StackTrace.current));
+        .add(RecordInvocation(_MethodCall(#save), stack: StackTrace.current));
   }
 
   @override
   void saveLayer(Rect? bounds, Paint paint) {
     _saveCount += 1;
-    invocations.add(RecordedInvocation(
+    invocations.add(RecordInvocation(
         _MethodCall(#saveLayer, <dynamic>[bounds, paint]),
         stack: StackTrace.current));
   }
@@ -83,20 +83,20 @@ class TestRecordingCanvas implements Canvas {
     _saveCount -= 1;
     assert(_saveCount >= 0);
     invocations.add(
-        RecordedInvocation(_MethodCall(#restore), stack: StackTrace.current));
+        RecordInvocation(_MethodCall(#restore), stack: StackTrace.current));
   }
 
   @override
   void noSuchMethod(Invocation invocation) {
-    invocations.add(RecordedInvocation(invocation, stack: StackTrace.current));
+    invocations.add(RecordInvocation(invocation, stack: StackTrace.current));
   }
 }
 
 /// A [PaintingContext] for tests that use [TestRecordingCanvas].
-class TestRecordingPaintingContext extends ClipContext
+class TestRecordPaintingContext extends ClipContext
     implements PaintingContext {
   /// Creates a [PaintingContext] for tests that use [TestRecordingCanvas].
-  TestRecordingPaintingContext(this.canvas);
+  TestRecordPaintingContext(this.canvas);
 
   @override
   final Canvas canvas;
