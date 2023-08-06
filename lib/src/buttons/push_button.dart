@@ -239,8 +239,6 @@ class PushButtonState extends State<PushButton>
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
 
-  late StreamSubscription<bool> _onWindowMainStateChangedStreamSubcription;
-
   @override
   void initState() {
     super.initState();
@@ -253,10 +251,6 @@ class PushButtonState extends State<PushButton>
         .drive(CurveTween(curve: Curves.decelerate))
         .drive(_opacityTween);
     _setTween();
-
-    _onWindowMainStateChangedStreamSubcription = WindowMainStateListener
-        .instance.onChangedStream
-        .listen((_) => setState(() {}));
   }
 
   @override
@@ -304,7 +298,6 @@ class PushButtonState extends State<PushButton>
   @override
   void dispose() {
     _animationController.dispose();
-    _onWindowMainStateChangedStreamSubcription.cancel();
     super.dispose();
   }
 
@@ -391,23 +384,27 @@ class PushButtonState extends State<PushButton>
             constraints: widget.controlSize.constraints,
             child: FadeTransition(
               opacity: _opacityAnimation,
-              child: DecoratedBox(
-                decoration: _getBoxDecoration().copyWith(
-                  borderRadius: widget.controlSize.borderRadius,
-                ),
-                child: Padding(
-                  padding: widget.controlSize.padding,
-                  child: Align(
-                    alignment: widget.alignment,
-                    widthFactor: 1.0,
-                    heightFactor: 1.0,
-                    child: DefaultTextStyle(
-                      style: widget.controlSize.textStyle(baseStyle),
-                      child: widget.child,
-                    ),
-                  ),
-                ),
-              ),
+              child: StreamBuilder<bool>(
+                  stream: WindowMainStateListener.instance.onChangedStream,
+                  builder: (context, _) {
+                    return DecoratedBox(
+                      decoration: _getBoxDecoration().copyWith(
+                        borderRadius: widget.controlSize.borderRadius,
+                      ),
+                      child: Padding(
+                        padding: widget.controlSize.padding,
+                        child: Align(
+                          alignment: widget.alignment,
+                          widthFactor: 1.0,
+                          heightFactor: 1.0,
+                          child: DefaultTextStyle(
+                            style: widget.controlSize.textStyle(baseStyle),
+                            child: widget.child,
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
             ),
           ),
         ),
