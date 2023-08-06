@@ -324,14 +324,18 @@ class PushButtonState extends State<PushButton>
     final bool isSecondary = widget.secondary != null && widget.secondary!;
     final MacosThemeData theme = MacosTheme.of(context);
 
+    // If the window isn’t currently the main window (that is, it is not in
+    // focus), make the button look as if it was a secondary button.
+    final isWindowMain = WindowMainStateListener.instance.isWindowMain;
+
     return MacosDynamicColor.resolve(
       widget.color ??
           _BoxDecorationBuilder.getGradientColors(
-                  accentColor: _accentColor,
-                  isEnabled: enabled,
-                  isDarkModeEnabled: theme.brightness.isDark,
-                  isSecondary: isSecondary)
-              .first,
+            accentColor: _accentColor,
+            isEnabled: enabled,
+            isDarkModeEnabled: theme.brightness.isDark,
+            isSecondary: isSecondary || !isWindowMain,
+          ).first,
       context,
     );
   }
@@ -363,11 +367,6 @@ class PushButtonState extends State<PushButton>
     //           : theme.pushButtonTheme.color!),
     //   context,
     // );
-    final Color backgroundColor = _getBackgroundColor();
-
-    final Color foregroundColor = _getForegroundColor(backgroundColor);
-
-    final baseStyle = theme.typography.body.copyWith(color: foregroundColor);
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
@@ -387,6 +386,14 @@ class PushButtonState extends State<PushButton>
               child: StreamBuilder<bool>(
                   stream: WindowMainStateListener.instance.onChangedStream,
                   builder: (context, _) {
+                    final Color backgroundColor = _getBackgroundColor();
+
+                    final Color foregroundColor =
+                        _getForegroundColor(backgroundColor);
+
+                    final baseStyle =
+                        theme.typography.body.copyWith(color: foregroundColor);
+
                     return DecoratedBox(
                       decoration: _getBoxDecoration().copyWith(
                         borderRadius: widget.controlSize.borderRadius,
