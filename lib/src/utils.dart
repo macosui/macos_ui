@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -85,4 +86,75 @@ class MacOSBrightnessOverrideHandler {
     WindowManipulator.overrideMacOSBrightness(dark: currentBrightness.isDark);
     _lastBrightness = currentBrightness;
   }
+}
+
+/// A class that listens for changes to the application's window being the main
+/// window, and notifies listeners.
+class WindowMainStateListener {
+  /// A shared instance of [WindowMainStateListener].
+  static final instance = WindowMainStateListener();
+
+  /// A [NSWindowDelegateHandle], to be used when deiniting the listener.
+  NSWindowDelegateHandle? handle;
+
+  /// Whether the window is currently the main window.
+  bool _isWindowMain =
+      true; // TODO: Initialize properly once macos_window_utils supports that,
+  // see https://github.com/macosui/macos_window_utils.dart/issues/31.
+
+  /// Whether the window is currently the main window.
+  bool get isWindowMain => _isWindowMain;
+
+  /// Notifies listeners when the window’s main state changes.
+  final _windowMainStateStreamController = StreamController<bool>.broadcast();
+
+  /// A stream of the window’s main state. Emits a new value whenever the state
+  /// changes.
+  Stream<bool> get onChangedStream => _windowMainStateStreamController.stream;
+
+  /// Initializes the listener. This should only be called once.
+  void _init() {
+    final delegate = _WindowMainStateListenerDelegate(
+      onWindowDidBecomeMain: () {
+        _isWindowMain = true;
+        _windowMainStateStreamController.add(true);
+      },
+      onWindowDidResignMain: () {
+        _isWindowMain = false;
+        _windowMainStateStreamController.add(false);
+      },
+    );
+    handle = WindowManipulator.addNSWindowDelegate(delegate);
+  }
+
+  /// Deinitializes the listener.
+  void deinit() {
+    handle?.removeFromHandler();
+  }
+
+  /// A class that listens for changes to the application's window being the
+  /// main window, and notifies listeners.
+  WindowMainStateListener() {
+    _init();
+  }
+}
+
+/// The [NSWindowDelegate] used by [WindowMainStateListener].
+class _WindowMainStateListenerDelegate extends NSWindowDelegate {
+  _WindowMainStateListenerDelegate({
+    required this.onWindowDidBecomeMain,
+    required this.onWindowDidResignMain,
+  });
+
+  /// Called when the window becomes the main window.
+  final void Function() onWindowDidBecomeMain;
+
+  /// Called when the window resigns as the main window.
+  final void Function() onWindowDidResignMain;
+
+  @override
+  void windowDidBecomeMain() => onWindowDidBecomeMain();
+
+  @override
+  void windowDidResignMain() => onWindowDidResignMain();
 }

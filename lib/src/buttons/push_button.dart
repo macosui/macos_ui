@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_if_null_operators
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gradient_borders/gradient_borders.dart';
@@ -237,6 +239,8 @@ class PushButtonState extends State<PushButton>
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
 
+  late StreamSubscription<bool> _onWindowMainStateChangedStreamSubcription;
+
   @override
   void initState() {
     super.initState();
@@ -249,6 +253,10 @@ class PushButtonState extends State<PushButton>
         .drive(CurveTween(curve: Curves.decelerate))
         .drive(_opacityTween);
     _setTween();
+
+    _onWindowMainStateChangedStreamSubcription = WindowMainStateListener
+        .instance.onChangedStream
+        .listen((_) => setState(() {}));
   }
 
   @override
@@ -296,6 +304,7 @@ class PushButtonState extends State<PushButton>
   @override
   void dispose() {
     _animationController.dispose();
+    _onWindowMainStateChangedStreamSubcription.cancel();
     super.dispose();
   }
 
@@ -305,11 +314,15 @@ class PushButtonState extends State<PushButton>
   AccentColor get _accentColor => AccentColor.blue; // TODO: make this dynamic
 
   BoxDecoration _getBoxDecoration() {
+    // If the window isn’t currently the main window (that is, it is not in
+    // focus), make the button look as if it was a secondary button.
+    final isWindowMain = WindowMainStateListener.instance.isWindowMain;
+
     return _BoxDecorationBuilder.buildBoxDecoration(
       accentColor: _accentColor,
       isEnabled: widget.enabled,
       isDarkModeEnabled: MacosTheme.of(context).brightness.isDark,
-      isSecondary: widget.secondary ?? false,
+      isSecondary: !isWindowMain || (widget.secondary ?? false),
     );
   }
 
