@@ -202,6 +202,9 @@ class AccentColorListener {
 
   /// Initializes this class.
   void _init() {
+    if (kIsWeb) return;
+    if (!Platform.isMacOS) return;
+
     _initCurrentAccentColor();
     _initSystemColorObserver();
   }
