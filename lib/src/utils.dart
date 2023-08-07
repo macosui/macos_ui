@@ -117,6 +117,9 @@ class WindowMainStateListener {
 
   /// Initializes the listener. This should only be called once.
   void _init() {
+    if (kIsWeb) return;
+    if (!Platform.isMacOS) return;
+
     final delegate = _WindowMainStateListenerDelegate(
       onWindowDidBecomeMain: () {
         _isWindowMain = true;
