@@ -361,14 +361,6 @@ class PushButtonState extends State<PushButton>
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
     final MacosThemeData theme = MacosTheme.of(context);
-    // TODO: remove this
-    // final Color backgroundColor = MacosDynamicColor.resolve(
-    //   widget.color ??
-    //       (isSecondary
-    //           ? theme.pushButtonTheme.secondaryColor!
-    //           : theme.pushButtonTheme.color!),
-    //   context,
-    // );
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
