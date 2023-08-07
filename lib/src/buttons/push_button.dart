@@ -386,39 +386,40 @@ class PushButtonState extends State<PushButton>
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: StreamBuilder(
-                  stream: AccentColorListener.instance.onChangedStream,
-                  builder: (context, _) {
-                    return StreamBuilder<bool>(
-                      stream: WindowMainStateListener.instance.onChangedStream,
-                      builder: (context, _) {
-                        final Color backgroundColor = _getBackgroundColor();
+                stream: AccentColorListener.instance.onChangedStream,
+                builder: (context, _) {
+                  return StreamBuilder<bool>(
+                    stream: WindowMainStateListener.instance.onChangedStream,
+                    builder: (context, _) {
+                      final Color backgroundColor = _getBackgroundColor();
 
-                        final Color foregroundColor =
-                            _getForegroundColor(backgroundColor);
+                      final Color foregroundColor =
+                          _getForegroundColor(backgroundColor);
 
-                        final baseStyle = theme.typography.body
-                            .copyWith(color: foregroundColor);
+                      final baseStyle = theme.typography.body
+                          .copyWith(color: foregroundColor);
 
-                        return DecoratedBox(
-                          decoration: _getBoxDecoration().copyWith(
-                            borderRadius: widget.controlSize.borderRadius,
-                          ),
-                          child: Padding(
-                            padding: widget.controlSize.padding,
-                            child: Align(
-                              alignment: widget.alignment,
-                              widthFactor: 1.0,
-                              heightFactor: 1.0,
-                              child: DefaultTextStyle(
-                                style: widget.controlSize.textStyle(baseStyle),
-                                child: widget.child,
-                              ),
+                      return DecoratedBox(
+                        decoration: _getBoxDecoration().copyWith(
+                          borderRadius: widget.controlSize.borderRadius,
+                        ),
+                        child: Padding(
+                          padding: widget.controlSize.padding,
+                          child: Align(
+                            alignment: widget.alignment,
+                            widthFactor: 1.0,
+                            heightFactor: 1.0,
+                            child: DefaultTextStyle(
+                              style: widget.controlSize.textStyle(baseStyle),
+                              child: widget.child,
                             ),
                           ),
-                        );
-                      },
-                    );
-                  }),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ),
