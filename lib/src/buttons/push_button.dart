@@ -212,7 +212,6 @@ class PushButton extends StatefulWidget {
     properties.add(EnumProperty<ControlSize>('controlSize', controlSize));
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
-    properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
     properties.add(StringProperty('semanticLabel', semanticLabel));
     properties.add(DiagnosticsProperty('borderRadius', borderRadius));
