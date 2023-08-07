@@ -171,6 +171,8 @@ class PushButton extends StatefulWidget {
   ///
   /// This defaults to 0.4. If null, opacity will not change on pressed if using
   /// your own custom effects is desired.
+  @Deprecated("'PushButton' now attempts to mimic macOS’ look and feel, "
+      "therefore, its opacity no longer changes when it is pressed.")
   final double? pressedOpacity;
 
   /// The radius of the button's corners when it has a background color.
