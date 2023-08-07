@@ -7,6 +7,8 @@ import 'package:macos_ui/src/library.dart';
 /// See also:
 ///
 ///  * [PushButtonThemeData], which is used to configure this theme.
+@Deprecated("'PushButton' no longer uses singular colors and therefore cannot "
+    "be themed using a 'PushButtonTheme'.")
 class PushButtonTheme extends InheritedTheme {
   /// Create a [PushButtonTheme].
   ///
@@ -54,6 +56,8 @@ class PushButtonTheme extends InheritedTheme {
 ///  * [PushButtonTheme], the theme which is configured with this class.
 ///  * [MacosThemeData.pushButtonTheme], which can be used to override the default
 ///    style for [PushButton]s below the overall [MacosTheme].
+@Deprecated("'PushButton' no longer uses singular colors and therefore cannot "
+    "be themed using a 'PushButtonTheme'.")
 class PushButtonThemeData with Diagnosticable {
   /// Creates a [PushButtonThemeData].
   const PushButtonThemeData({
