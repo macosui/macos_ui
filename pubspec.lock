@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
+  appkit_ui_element_colors:
+    dependency: "direct main"
+    description:
+      name: appkit_ui_element_colors
+      sha256: c3e50f900aae314d339de489535736238627071457c4a4a2dbbb1545b4f04f22
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   args:
     dependency: transitive
     description:
@@ -89,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -267,6 +283,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "43798d895c929056255600343db8f049921cbec94d31ec87f1dc5c16c01935dd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.5"
   pool:
     dependency: transitive
     description:
