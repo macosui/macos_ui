@@ -232,74 +232,27 @@ class PushButton extends StatefulWidget {
 
 class PushButtonState extends State<PushButton>
     with SingleTickerProviderStateMixin {
-  // Eyeballed values. Feel free to tweak.
-  static const Duration kFadeOutDuration = Duration(milliseconds: 10);
-  static const Duration kFadeInDuration = Duration(milliseconds: 100);
-  final Tween<double> _opacityTween = Tween<double>(begin: 1.0);
-
-  late AnimationController _animationController;
-  late Animation<double> _opacityAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 200),
-      value: 0.0,
-      vsync: this,
-    );
-    _opacityAnimation = _animationController
-        .drive(CurveTween(curve: Curves.decelerate))
-        .drive(_opacityTween);
-    _setTween();
-  }
-
   @override
   void didUpdateWidget(PushButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _setTween();
-  }
-
-  void _setTween() {
-    _opacityTween.end = widget.pressedOpacity ?? 1.0;
   }
 
   void _handleTapDown(TapDownDetails event) {
     if (!buttonHeldDown) {
-      buttonHeldDown = true;
-      _animate();
+      setState(() => buttonHeldDown = true);
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
     if (buttonHeldDown) {
-      buttonHeldDown = false;
-      _animate();
+      setState(() => buttonHeldDown = false);
     }
   }
 
   void _handleTapCancel() {
     if (buttonHeldDown) {
-      buttonHeldDown = false;
-      _animate();
+      setState(() => buttonHeldDown = false);
     }
-  }
-
-  void _animate() {
-    if (_animationController.isAnimating) return;
-    final bool wasHeldDown = buttonHeldDown;
-    final TickerFuture ticker = buttonHeldDown
-        ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
-        : _animationController.animateTo(0.0, duration: kFadeInDuration);
-    ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != buttonHeldDown) _animate();
-    });
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @visibleForTesting
@@ -356,6 +309,20 @@ class PushButtonState extends State<PushButton>
         : textLuminance(blendedBackgroundColor).withOpacity(0.25);
   }
 
+  BoxDecoration _getClickEffectBoxDecoration() {
+    final MacosThemeData theme = MacosTheme.of(context);
+    final isDark = theme.brightness.isDark;
+
+    final color = isDark
+        ? const MacosColor.fromRGBO(255, 255, 255, 0.15)
+        : const MacosColor.fromRGBO(0, 0, 0, 0.06);
+
+    return BoxDecoration(
+      color: color,
+      borderRadius: widget.controlSize.borderRadius,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
@@ -375,26 +342,28 @@ class PushButtonState extends State<PushButton>
           label: widget.semanticLabel,
           child: ConstrainedBox(
             constraints: widget.controlSize.constraints,
-            child: FadeTransition(
-              opacity: _opacityAnimation,
-              child: StreamBuilder(
-                stream: AccentColorListener.instance.onChangedStream,
-                builder: (context, _) {
-                  return StreamBuilder<bool>(
-                    stream: WindowMainStateListener.instance.onChangedStream,
-                    builder: (context, _) {
-                      final Color backgroundColor = _getBackgroundColor();
+            child: StreamBuilder(
+              stream: AccentColorListener.instance.onChangedStream,
+              builder: (context, _) {
+                return StreamBuilder<bool>(
+                  stream: WindowMainStateListener.instance.onChangedStream,
+                  builder: (context, _) {
+                    final Color backgroundColor = _getBackgroundColor();
 
-                      final Color foregroundColor =
-                          _getForegroundColor(backgroundColor);
+                    final Color foregroundColor =
+                        _getForegroundColor(backgroundColor);
 
-                      final baseStyle = theme.typography.body
-                          .copyWith(color: foregroundColor);
+                    final baseStyle =
+                        theme.typography.body.copyWith(color: foregroundColor);
 
-                      return DecoratedBox(
-                        decoration: _getBoxDecoration().copyWith(
-                          borderRadius: widget.controlSize.borderRadius,
-                        ),
+                    return DecoratedBox(
+                      decoration: _getBoxDecoration().copyWith(
+                        borderRadius: widget.controlSize.borderRadius,
+                      ),
+                      child: Container(
+                        foregroundDecoration: buttonHeldDown
+                            ? _getClickEffectBoxDecoration()
+                            : const BoxDecoration(),
                         child: Padding(
                           padding: widget.controlSize.padding,
                           child: Align(
@@ -407,11 +376,11 @@ class PushButtonState extends State<PushButton>
                             ),
                           ),
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ),
