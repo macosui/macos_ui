@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:appkit_ui_element_colors/appkit_ui_element_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gradient_borders/gradient_borders.dart';
@@ -304,7 +305,8 @@ class PushButtonState extends State<PushButton>
   @visibleForTesting
   bool buttonHeldDown = false;
 
-  AccentColor get _accentColor => AccentColor.blue; // TODO: make this dynamic
+  AccentColor get _accentColor =>
+      AccentColorListener.instance.currentAccentColor ?? AccentColor.blue;
 
   BoxDecoration _getBoxDecoration() {
     // If the window isn’t currently the main window (that is, it is not in
@@ -383,36 +385,40 @@ class PushButtonState extends State<PushButton>
             constraints: widget.controlSize.constraints,
             child: FadeTransition(
               opacity: _opacityAnimation,
-              child: StreamBuilder<bool>(
-                stream: WindowMainStateListener.instance.onChangedStream,
-                builder: (context, _) {
-                  final Color backgroundColor = _getBackgroundColor();
+              child: StreamBuilder(
+                  stream: AccentColorListener.instance.onChangedStream,
+                  builder: (context, _) {
+                    return StreamBuilder<bool>(
+                      stream: WindowMainStateListener.instance.onChangedStream,
+                      builder: (context, _) {
+                        final Color backgroundColor = _getBackgroundColor();
 
-                  final Color foregroundColor =
-                      _getForegroundColor(backgroundColor);
+                        final Color foregroundColor =
+                            _getForegroundColor(backgroundColor);
 
-                  final baseStyle =
-                      theme.typography.body.copyWith(color: foregroundColor);
+                        final baseStyle = theme.typography.body
+                            .copyWith(color: foregroundColor);
 
-                  return DecoratedBox(
-                    decoration: _getBoxDecoration().copyWith(
-                      borderRadius: widget.controlSize.borderRadius,
-                    ),
-                    child: Padding(
-                      padding: widget.controlSize.padding,
-                      child: Align(
-                        alignment: widget.alignment,
-                        widthFactor: 1.0,
-                        heightFactor: 1.0,
-                        child: DefaultTextStyle(
-                          style: widget.controlSize.textStyle(baseStyle),
-                          child: widget.child,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                        return DecoratedBox(
+                          decoration: _getBoxDecoration().copyWith(
+                            borderRadius: widget.controlSize.borderRadius,
+                          ),
+                          child: Padding(
+                            padding: widget.controlSize.padding,
+                            child: Align(
+                              alignment: widget.alignment,
+                              widthFactor: 1.0,
+                              heightFactor: 1.0,
+                              child: DefaultTextStyle(
+                                style: widget.controlSize.textStyle(baseStyle),
+                                child: widget.child,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }),
             ),
           ),
         ),
