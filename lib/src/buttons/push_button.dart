@@ -197,8 +197,7 @@ class PushButton extends StatefulWidget {
 
   /// Whether the button is used as a secondary action button (e.g. Cancel buttons in dialogs)
   ///
-  /// Sets its background color to [PushButtonThemeData]'s [secondaryColor] attributes (defaults
-  /// are gray colors). Can still be overridden if the [color] attribute is non-null.
+  /// Can still be overridden if the [color] attribute is non-null.
   final bool? secondary;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
