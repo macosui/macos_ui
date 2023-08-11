@@ -261,7 +261,7 @@ class PushButtonState extends State<PushButton>
   BoxDecoration _getBoxDecoration() {
     // If the window isn’t currently the main window (that is, it is not in
     // focus), make the button look as if it was a secondary button.
-    final isWindowMain = WindowMainStateListener.instance.isWindowMain;
+    final isWindowMain = WindowMainStateListener.instance.isMainWindow;
 
     return _BoxDecorationBuilder.buildBoxDecoration(
       accentColor: _accentColor,
@@ -278,7 +278,7 @@ class PushButtonState extends State<PushButton>
 
     // If the window isn’t currently the main window (that is, it is not in
     // focus), make the button look as if it was a secondary button.
-    final isWindowMain = WindowMainStateListener.instance.isWindowMain;
+    final isWindowMain = WindowMainStateListener.instance.isMainWindow;
 
     return MacosDynamicColor.resolve(
       widget.color ??

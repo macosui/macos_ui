@@ -101,10 +101,10 @@ class WindowMainStateListener {
   NSWindowDelegateHandle? handle;
 
   /// Whether the window is currently the main window.
-  bool _isWindowMain = true;
+  bool _isMainWindow = true;
 
   /// Whether the window is currently the main window.
-  bool get isWindowMain => _isWindowMain;
+  bool get isMainWindow => _isMainWindow;
 
   /// Notifies listeners when the window’s main state changes.
   final _windowMainStateStreamController = StreamController<bool>.broadcast();
@@ -126,21 +126,21 @@ class WindowMainStateListener {
   void _initDelegate() {
     final delegate = _WindowMainStateListenerDelegate(
       onWindowDidBecomeMain: () {
-        _isWindowMain = true;
+        _isMainWindow = true;
         _windowMainStateStreamController.add(true);
       },
       onWindowDidResignMain: () {
-        _isWindowMain = false;
+        _isMainWindow = false;
         _windowMainStateStreamController.add(false);
       },
     );
     handle = WindowManipulator.addNSWindowDelegate(delegate);
   }
 
-  /// Initializes the [_isWindowMain] variable.
+  /// Initializes the [_isMainWindow] variable.
   Future<void> _initIsWindowMain() async {
-    _isWindowMain = await WindowManipulator.isMainWindow();
-    _windowMainStateStreamController.add(_isWindowMain);
+    _isMainWindow = await WindowManipulator.isMainWindow();
+    _windowMainStateStreamController.add(_isMainWindow);
   }
 
   /// Deinitializes the listener.
