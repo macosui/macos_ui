@@ -267,8 +267,7 @@ class AccentColorListener {
       return hueComponentToAccentColor[hueComponent]!;
     }
 
-    // ignore: avoid_print
-    print(
+    debugPrint(
       'Warning: Falling back on slow accent color resolution. It’s possible '
       'that the accent colors have changed in a recent version of macOS, thus '
       'invalidating macos_ui’s accent colors, which were captured in macOS '
