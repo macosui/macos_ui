@@ -101,9 +101,7 @@ class WindowMainStateListener {
   NSWindowDelegateHandle? handle;
 
   /// Whether the window is currently the main window.
-  bool _isWindowMain =
-      true; // TODO: Initialize properly once macos_window_utils supports that,
-  // see https://github.com/macosui/macos_window_utils.dart/issues/31.
+  bool _isWindowMain = true;
 
   /// Whether the window is currently the main window.
   bool get isWindowMain => _isWindowMain;
@@ -120,6 +118,12 @@ class WindowMainStateListener {
     if (kIsWeb) return;
     if (!Platform.isMacOS) return;
 
+    _initDelegate();
+    _initIsWindowMain();
+  }
+
+  /// Initializes the [NSWindowDelegate] to listen for main window changes.
+  void _initDelegate() {
     final delegate = _WindowMainStateListenerDelegate(
       onWindowDidBecomeMain: () {
         _isWindowMain = true;
@@ -131,6 +135,12 @@ class WindowMainStateListener {
       },
     );
     handle = WindowManipulator.addNSWindowDelegate(delegate);
+  }
+
+  /// Initializes the [_isWindowMain] variable.
+  Future<void> _initIsWindowMain() async {
+    _isWindowMain = await WindowManipulator.isMainWindow();
+    _windowMainStateStreamController.add(_isWindowMain);
   }
 
   /// Deinitializes the listener.
