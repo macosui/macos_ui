@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  macos_window_utils: ^1.1.3
+  macos_window_utils: ^1.2.0
   gradient_borders: ^1.0.0
   appkit_ui_element_colors: ^1.0.0
 
