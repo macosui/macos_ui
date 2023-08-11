@@ -207,7 +207,7 @@ class AccentColorListener {
   /// changes.
   Stream<void> get onChangedStream => _accentColorStreamController.stream;
 
-  /// A stream subcription for the [SystemColorObserver] stream.
+  /// A stream subscription for the [SystemColorObserver] stream.
   StreamSubscription<void>? _systemColorObserverStreamSubscription;
 
   /// Initializes this class.
