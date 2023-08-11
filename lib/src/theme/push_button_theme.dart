@@ -7,12 +7,8 @@ import 'package:macos_ui/src/library.dart';
 /// See also:
 ///
 ///  * [PushButtonThemeData], which is used to configure this theme.
-@Deprecated("'PushButton' no longer uses singular colors and therefore cannot "
-    "be themed using a 'PushButtonTheme'.")
 class PushButtonTheme extends InheritedTheme {
   /// Create a [PushButtonTheme].
-  ///
-  /// The [data] parameter must not be null.
   const PushButtonTheme({
     super.key,
     required this.data,
@@ -20,6 +16,9 @@ class PushButtonTheme extends InheritedTheme {
   });
 
   /// The configuration of this theme.
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   final PushButtonThemeData data;
 
   /// The closest instance of this class that encloses the given context.
@@ -32,6 +31,9 @@ class PushButtonTheme extends InheritedTheme {
   /// ```dart
   /// PushButtonTheme theme = PushButtonTheme.of(context);
   /// ```
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   static PushButtonThemeData of(BuildContext context) {
     final PushButtonTheme? buttonTheme =
         context.dependOnInheritedWidgetOfExactType<PushButtonTheme>();
@@ -39,11 +41,17 @@ class PushButtonTheme extends InheritedTheme {
   }
 
   @override
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   Widget wrap(BuildContext context, Widget child) {
     return PushButtonTheme(data: data, child: child);
   }
 
   @override
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   bool updateShouldNotify(PushButtonTheme oldWidget) => data != oldWidget.data;
 }
 
@@ -56,8 +64,6 @@ class PushButtonTheme extends InheritedTheme {
 ///  * [PushButtonTheme], the theme which is configured with this class.
 ///  * [MacosThemeData.pushButtonTheme], which can be used to override the default
 ///    style for [PushButton]s below the overall [MacosTheme].
-@Deprecated("'PushButton' no longer uses singular colors and therefore cannot "
-    "be themed using a 'PushButtonTheme'.")
 class PushButtonThemeData with Diagnosticable {
   /// Creates a [PushButtonThemeData].
   const PushButtonThemeData({
@@ -67,15 +73,27 @@ class PushButtonThemeData with Diagnosticable {
   });
 
   /// The default background color for [PushButton]
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   final Color? color;
 
   /// The default disabled color for [PushButton]
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   final Color? disabledColor;
 
   /// The default secondary color (e.g. Cancel/Go back buttons) for [PushButton]
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   final Color? secondaryColor;
 
   /// Copies this [PushButtonThemeData] into another.
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   PushButtonThemeData copyWith({
     Color? color,
     Color? disabledColor,
@@ -91,6 +109,9 @@ class PushButtonThemeData with Diagnosticable {
   /// Linearly interpolate between two [PushButtonThemeData].
   ///
   /// All the properties must be non-null.
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   static PushButtonThemeData lerp(
     PushButtonThemeData a,
     PushButtonThemeData b,
@@ -104,6 +125,9 @@ class PushButtonThemeData with Diagnosticable {
   }
 
   @override
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is PushButtonThemeData &&
@@ -113,9 +137,15 @@ class PushButtonThemeData with Diagnosticable {
           secondaryColor?.value == other.secondaryColor?.value;
 
   @override
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   int get hashCode => color.hashCode ^ disabledColor.hashCode;
 
   @override
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('color', color));
@@ -124,6 +154,9 @@ class PushButtonThemeData with Diagnosticable {
   }
 
   /// Merges this [PushButtonThemeData] with another.
+  @Deprecated(
+      "'PushButton' no longer uses singular colors and therefore cannot "
+      "be themed using a 'PushButtonTheme'.")
   PushButtonThemeData merge(PushButtonThemeData? other) {
     if (other == null) return this;
     return copyWith(
