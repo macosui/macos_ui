@@ -1,5 +1,5 @@
 /// The macOS accent color which can be changed by the user in *System Settings*
-/// → *Apperance* → *Accent color*.
+/// → *Appearance* → *Accent color*.
 enum AccentColor {
   /// The blue accent color.
   blue,
