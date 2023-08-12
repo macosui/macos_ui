@@ -284,7 +284,7 @@ class AccentColorListener {
     return _slowlyResolveAccentColorFromHueComponent(hueComponent);
   }
 
-  /// This is a fallback method in case the above method fails.
+  /// This is a fallback method in case [_resolveAccentColorFromHueComponent] fails.
   AccentColor _slowlyResolveAccentColorFromHueComponent(double hueComponent) {
     final entries = hueComponentToAccentColor.entries;
     var lowestDistance = double.maxFinite;
