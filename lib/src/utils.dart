@@ -93,9 +93,9 @@ class MacOSBrightnessOverrideHandler {
 
 /// A class that listens for changes to the application's main window.
 ///
-/// A common use-case for responding to such changes would be to mute the colors of certain
-/// primary UI elements when the window is no longer in focus, which is something native
-/// macOS applications do out of the box.
+/// A common use-case for responding to such changes would be to mute the colors
+/// of certain primary UI elements when the window is no longer in focus, which
+/// is something native macOS applications do out of the box.
 class WindowMainStateListener {
   /// A shared instance of [WindowMainStateListener].
   static final instance = WindowMainStateListener();
