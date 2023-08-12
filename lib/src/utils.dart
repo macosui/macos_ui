@@ -276,7 +276,7 @@ class AccentColorListener {
     debugPrint(
       'Warning: Falling back on slow accent color resolution. It’s possible '
       'that the accent colors have changed in a recent version of macOS, thus '
-      'invalidating macos_ui’s accent colors, which were captured in macOS '
+      'invalidating macos_ui’s accent colors, which were captured on macOS '
       'Ventura. If you see this message, please notify a maintainer of the '
       'macos_ui package.',
     );
