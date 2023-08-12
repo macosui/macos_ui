@@ -178,7 +178,9 @@ class _WindowMainStateListenerDelegate extends NSWindowDelegate {
   void windowDidResignMain() => onWindowDidResignMain();
 }
 
-/// A class that listens to accent color changes.
+/// A class that listens to changes to the user's selected system accent color.
+///
+/// Native macOS applications respond to such changes immediately.
 class AccentColorListener {
   /// A shared instance of [AccentColorListener].
   static final instance = AccentColorListener();
