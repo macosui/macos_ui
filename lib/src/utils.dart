@@ -208,8 +208,9 @@ class AccentColorListener {
   /// Notifies listeners when the accent color changes.
   final _accentColorStreamController = StreamController<void>.broadcast();
 
-  /// An accent color stream. Emits a new value whenever the accent color
-  /// changes.
+  /// Streams the user's system accent color selection. 
+  ///
+  /// Emits a new value whenever the system accent color selection changes.
   Stream<void> get onChangedStream => _accentColorStreamController.stream;
 
   /// A stream subscription for the [SystemColorObserver] stream.
