@@ -91,7 +91,7 @@ class MacOSBrightnessOverrideHandler {
   }
 }
 
-/// A class that listens for changes to the application's main window. 
+/// A class that listens for changes to the application's main window.
 ///
 /// A common use-case for responding to such changes would be to mute the colors of certain
 /// primary UI elements when the window is no longer in focus, which is something native
@@ -208,7 +208,7 @@ class AccentColorListener {
   /// Notifies listeners when the accent color changes.
   final _accentColorStreamController = StreamController<void>.broadcast();
 
-  /// Streams the user's system accent color selection. 
+  /// Streams the user's system accent color selection.
   ///
   /// Emits a new value whenever the system accent color selection changes.
   Stream<void> get onChangedStream => _accentColorStreamController.stream;
@@ -284,7 +284,8 @@ class AccentColorListener {
     return _slowlyResolveAccentColorFromHueComponent(hueComponent);
   }
 
-  /// This is a fallback method in case [_resolveAccentColorFromHueComponent] fails.
+  /// This is a fallback method in case [_resolveAccentColorFromHueComponent]
+  /// fails.
   AccentColor _slowlyResolveAccentColorFromHueComponent(double hueComponent) {
     final entries = hueComponentToAccentColor.entries;
     var lowestDistance = double.maxFinite;
