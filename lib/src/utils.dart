@@ -290,7 +290,7 @@ class AccentColorListener {
     var lowestDistance = double.maxFinite;
     var toBeReturnedAccentColor = AccentColor.values.first;
 
-    for (var entry in entries) {
+    for (final entry in entries) {
       final distance = _distanceBetweenHueComponents(hueComponent, entry.key);
       if (distance < lowestDistance) {
         lowestDistance = distance;
