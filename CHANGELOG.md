@@ -1,3 +1,6 @@
+## [2.0.1]
+* Fixed `CapacityIndicator` documentation images
+
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
 * `macos_ui` has been migrated to utilize [macos_window_utils](https://pub.dev/packages/macos_window_utils) under the hood, which provides the following benefits:
