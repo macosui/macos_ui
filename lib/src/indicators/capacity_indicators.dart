@@ -19,7 +19,7 @@ const double _kCapacityIndicatorMinWidth = 100.0;
 /// to indicate the current value. Tick marks are often displayed
 /// to provide context.
 ///
-/// ![Continuous Capacity Indicator](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-continous.png)
+/// ![Continuous Capacity Indicator](https://docs-assets.developer.apple.com/published/5b1ce5ce24fb7f819874616ea54c65eb/indicators-continuous~dark@2x.png)
 ///
 /// * Discrete
 ///
@@ -28,7 +28,7 @@ const double _kCapacityIndicatorMinWidth = 100.0;
 /// fill completely—never partially—with color to indicate the current
 /// value.
 ///
-/// ![Discrete Capacity Indicator](https://developer.apple.com/design/human-interface-guidelines/macos/images/indicators-discrete.png)
+/// ![Discrete Capacity Indicator](https://docs-assets.developer.apple.com/published/34f67e956ecd1cce97f01db966674bed/indicators-discrete~dark@2x.png)
 class CapacityIndicator extends StatelessWidget {
   /// Creates a capacity indicator.
   ///
