@@ -100,7 +100,7 @@ class WindowMainStateListener {
   /// A shared instance of [WindowMainStateListener].
   static final instance = WindowMainStateListener();
 
-  /// A [NSWindowDelegateHandle], to be used when deiniting the listener.
+  /// A [NSWindowDelegateHandle], to be used when disposing the listener.
   NSWindowDelegateHandle? handle;
 
   /// Whether the window is currently the main window.
@@ -146,8 +146,8 @@ class WindowMainStateListener {
     _windowMainStateStreamController.add(_isMainWindow);
   }
 
-  /// Deinitializes the listener.
-  void deinit() {
+  /// Disposes this listener.
+  void dispose() {
     handle?.removeFromHandler();
   }
 
@@ -225,8 +225,8 @@ class AccentColorListener {
     _initSystemColorObserver();
   }
 
-  /// Deinitializes this class.
-  void deinit() {
+  /// Disposes this listener.
+  void dispose() {
     _systemColorObserverStreamSubscription?.cancel();
   }
 
