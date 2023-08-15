@@ -262,13 +262,13 @@ class PushButtonState extends State<PushButton>
   BoxDecoration _getBoxDecoration() {
     // If the window isn’t currently the main window (that is, it is not in
     // focus), make the button look as if it was a secondary button.
-    final isWindowMain = WindowMainStateListener.instance.isMainWindow;
+    final isMainWindow = WindowMainStateListener.instance.isMainWindow;
 
     return _BoxDecorationBuilder.buildBoxDecoration(
       accentColor: _accentColor,
       isEnabled: widget.enabled,
       isDarkModeEnabled: MacosTheme.of(context).brightness.isDark,
-      isSecondary: !isWindowMain || (widget.secondary ?? false),
+      isSecondary: !isMainWindow || (widget.secondary ?? false),
     );
   }
 
