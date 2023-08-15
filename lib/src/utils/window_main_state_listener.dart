@@ -9,6 +9,23 @@ import 'package:macos_ui/macos_ui.dart';
 /// A common use-case for responding to such changes would be to mute the colors
 /// of certain primary UI elements when the window is no longer in focus, which
 /// is something native macOS applications do out of the box.
+///
+/// Example using [StreamBuilder]:
+///
+/// ```dart
+/// StreamBuilder(
+///   stream: WindowMainStateListener.instance.onChangedStream,
+///     builder: (context, _) {
+///       final bool isMainWindow
+///           = WindowMainStateListener.instance.isMainWindow;
+///
+///       return SomeWidget(
+///         isMainWindow: isMainWindow,
+///         child: ...
+///       );
+///     },
+///  );
+/// ```
 class WindowMainStateListener {
   /// A shared instance of [WindowMainStateListener].
   static final instance = WindowMainStateListener();
