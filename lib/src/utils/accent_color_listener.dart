@@ -9,6 +9,23 @@ import 'package:macos_ui/src/enums/accent_color.dart';
 /// A class that listens to changes to the user’s selected system accent color.
 ///
 /// Native macOS applications respond to such changes immediately.
+///
+/// Example using [StreamBuilder]:
+///
+/// ```dart
+/// StreamBuilder(
+///   stream: AccentColorListener.instance.onChangedStream,
+///     builder: (context, _) {
+///       final AccentColor? accentColor =
+///           AccentColorListener.instance.currentAccentColor;
+///
+///       return SomeWidget(
+///         accentColor: accentColor,
+///         child: ...
+///       );
+///     },
+///  );
+/// ```
 class AccentColorListener {
   /// A shared instance of [AccentColorListener].
   static final instance = AccentColorListener();
