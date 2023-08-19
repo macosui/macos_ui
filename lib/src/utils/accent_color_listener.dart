@@ -21,7 +21,7 @@ import 'package:macos_ui/src/enums/accent_color.dart';
 ///
 ///       return SomeWidget(
 ///         accentColor: accentColor,
-///         child: ...
+///         child: …
 ///       );
 ///     },
 ///  );

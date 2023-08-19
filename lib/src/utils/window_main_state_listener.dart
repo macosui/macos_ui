@@ -21,7 +21,7 @@ import 'package:macos_ui/macos_ui.dart';
 ///
 ///       return SomeWidget(
 ///         isMainWindow: isMainWindow,
-///         child: ...
+///         child: …
 ///       );
 ///     },
 ///  );
