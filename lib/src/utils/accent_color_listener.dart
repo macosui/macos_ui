@@ -44,7 +44,7 @@ class AccentColorListener {
     0.0: AccentColor.graphite,
   };
 
-  /// The currently active accent color.
+  /// The active accent color selection.
   AccentColor? _currentAccentColor;
 
   /// The currently active accent color.
