@@ -2,7 +2,9 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/enums/accent_color.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kMiniButtonSize = Size(26.0, 11.0);
@@ -169,6 +171,9 @@ class PushButton extends StatefulWidget {
   ///
   /// This defaults to 0.4. If null, opacity will not change on pressed if using
   /// your own custom effects is desired.
+  @Deprecated("'PushButton' animations now match their native macOS’ "
+      "counterparts. Therefore, its opacity no longer changes when it is "
+      "pressed.")
   final double? pressedOpacity;
 
   /// The radius of the button's corners when it has a background color.
@@ -195,8 +200,7 @@ class PushButton extends StatefulWidget {
 
   /// Whether the button is used as a secondary action button (e.g. Cancel buttons in dialogs)
   ///
-  /// Sets its background color to [PushButtonThemeData]'s [secondaryColor] attributes (defaults
-  /// are gray colors). Can still be overridden if the [color] attribute is non-null.
+  /// Can still be overridden if the [color] attribute is non-null.
   final bool? secondary;
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
@@ -209,7 +213,6 @@ class PushButton extends StatefulWidget {
     properties.add(EnumProperty<ControlSize>('controlSize', controlSize));
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('disabledColor', disabledColor));
-    properties.add(DoubleProperty('pressedOpacity', pressedOpacity));
     properties.add(DiagnosticsProperty('alignment', alignment));
     properties.add(StringProperty('semanticLabel', semanticLabel));
     properties.add(DiagnosticsProperty('borderRadius', borderRadius));
@@ -227,104 +230,102 @@ class PushButton extends StatefulWidget {
 
 class PushButtonState extends State<PushButton>
     with SingleTickerProviderStateMixin {
-  // Eyeballed values. Feel free to tweak.
-  static const Duration kFadeOutDuration = Duration(milliseconds: 10);
-  static const Duration kFadeInDuration = Duration(milliseconds: 100);
-  final Tween<double> _opacityTween = Tween<double>(begin: 1.0);
-
-  late AnimationController _animationController;
-  late Animation<double> _opacityAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 200),
-      value: 0.0,
-      vsync: this,
-    );
-    _opacityAnimation = _animationController
-        .drive(CurveTween(curve: Curves.decelerate))
-        .drive(_opacityTween);
-    _setTween();
-  }
-
   @override
   void didUpdateWidget(PushButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _setTween();
-  }
-
-  void _setTween() {
-    _opacityTween.end = widget.pressedOpacity ?? 1.0;
   }
 
   void _handleTapDown(TapDownDetails event) {
     if (!buttonHeldDown) {
-      buttonHeldDown = true;
-      _animate();
+      setState(() => buttonHeldDown = true);
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
     if (buttonHeldDown) {
-      buttonHeldDown = false;
-      _animate();
+      setState(() => buttonHeldDown = false);
     }
   }
 
   void _handleTapCancel() {
     if (buttonHeldDown) {
-      buttonHeldDown = false;
-      _animate();
+      setState(() => buttonHeldDown = false);
     }
-  }
-
-  void _animate() {
-    if (_animationController.isAnimating) return;
-    final bool wasHeldDown = buttonHeldDown;
-    final TickerFuture ticker = buttonHeldDown
-        ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
-        : _animationController.animateTo(0.0, duration: kFadeInDuration);
-    ticker.then<void>((void value) {
-      if (mounted && wasHeldDown != buttonHeldDown) _animate();
-    });
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @visibleForTesting
   bool buttonHeldDown = false;
 
+  AccentColor get _accentColor =>
+      AccentColorListener.instance.currentAccentColor ?? AccentColor.blue;
+
+  BoxDecoration _getBoxDecoration() {
+    // If the window isn’t currently the main window (that is, it is not in
+    // focus), make the button look as if it was a secondary button.
+    final isMainWindow = WindowMainStateListener.instance.isMainWindow;
+
+    return _BoxDecorationBuilder.buildBoxDecoration(
+      accentColor: _accentColor,
+      isEnabled: widget.enabled,
+      isDarkModeEnabled: MacosTheme.of(context).brightness.isDark,
+      isSecondary: !isMainWindow || (widget.secondary ?? false),
+    );
+  }
+
+  Color _getBackgroundColor() {
+    final bool enabled = widget.enabled;
+    final bool isSecondary = widget.secondary != null && widget.secondary!;
+    final MacosThemeData theme = MacosTheme.of(context);
+
+    // If the window isn’t currently the main window (that is, it is not in
+    // focus), make the button look as if it was a secondary button.
+    final isWindowMain = WindowMainStateListener.instance.isMainWindow;
+
+    return MacosDynamicColor.resolve(
+      widget.color ??
+          _BoxDecorationBuilder.getGradientColors(
+            accentColor: _accentColor,
+            isEnabled: enabled,
+            isDarkModeEnabled: theme.brightness.isDark,
+            isSecondary: isSecondary || !isWindowMain,
+          ).first,
+      context,
+    );
+  }
+
+  Color _getForegroundColor(Color backgroundColor) {
+    final MacosThemeData theme = MacosTheme.of(context);
+
+    final blendedBackgroundColor = Color.lerp(
+      theme.canvasColor,
+      backgroundColor,
+      backgroundColor.opacity,
+    )!;
+
+    return widget.enabled
+        ? textLuminance(blendedBackgroundColor)
+        : textLuminance(blendedBackgroundColor).withOpacity(0.25);
+  }
+
+  BoxDecoration _getClickEffectBoxDecoration() {
+    final MacosThemeData theme = MacosTheme.of(context);
+    final isDark = theme.brightness.isDark;
+
+    final color = isDark
+        ? const MacosColor.fromRGBO(255, 255, 255, 0.15)
+        : const MacosColor.fromRGBO(0, 0, 0, 0.06);
+
+    return BoxDecoration(
+      color: color,
+      borderRadius: widget.controlSize.borderRadius,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final bool enabled = widget.enabled;
-    final bool isSecondary = widget.secondary != null && widget.secondary!;
     final MacosThemeData theme = MacosTheme.of(context);
-    final Color backgroundColor = MacosDynamicColor.resolve(
-      widget.color ??
-          (isSecondary
-              ? theme.pushButtonTheme.secondaryColor!
-              : theme.pushButtonTheme.color!),
-      context,
-    );
-
-    final disabledColor = !isSecondary
-        ? backgroundColor.withOpacity(0.5)
-        : backgroundColor.withOpacity(0.25);
-
-    final Color foregroundColor = widget.enabled
-        ? textLuminance(backgroundColor)
-        : theme.brightness.isDark
-            ? const Color.fromRGBO(255, 255, 255, 0.25)
-            : const Color.fromRGBO(0, 0, 0, 0.25);
-
-    final baseStyle = theme.typography.body.copyWith(color: foregroundColor);
 
     return MouseRegion(
       cursor: widget.mouseCursor!,
@@ -339,32 +340,362 @@ class PushButtonState extends State<PushButton>
           label: widget.semanticLabel,
           child: ConstrainedBox(
             constraints: widget.controlSize.constraints,
-            child: FadeTransition(
-              opacity: _opacityAnimation,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: widget.controlSize.borderRadius,
-                  ),
-                  // color: !enabled ? disabledColor : backgroundColor,
-                  color: enabled ? backgroundColor : disabledColor,
-                ),
-                child: Padding(
-                  padding: widget.controlSize.padding,
-                  child: Align(
-                    alignment: widget.alignment,
-                    widthFactor: 1.0,
-                    heightFactor: 1.0,
-                    child: DefaultTextStyle(
-                      style: widget.controlSize.textStyle(baseStyle),
-                      child: widget.child,
-                    ),
-                  ),
-                ),
-              ),
+            child: StreamBuilder(
+              stream: AccentColorListener.instance.onChanged,
+              builder: (context, _) {
+                return StreamBuilder<bool>(
+                  stream: WindowMainStateListener.instance.onChanged,
+                  builder: (context, _) {
+                    final Color backgroundColor = _getBackgroundColor();
+
+                    final Color foregroundColor =
+                        _getForegroundColor(backgroundColor);
+
+                    final baseStyle =
+                        theme.typography.body.copyWith(color: foregroundColor);
+
+                    return DecoratedBox(
+                      decoration: _getBoxDecoration().copyWith(
+                        borderRadius: widget.controlSize.borderRadius,
+                      ),
+                      child: Container(
+                        foregroundDecoration: buttonHeldDown
+                            ? _getClickEffectBoxDecoration()
+                            : const BoxDecoration(),
+                        child: Padding(
+                          padding: widget.controlSize.padding,
+                          child: Align(
+                            alignment: widget.alignment,
+                            widthFactor: 1.0,
+                            heightFactor: 1.0,
+                            child: DefaultTextStyle(
+                              style: widget.controlSize.textStyle(baseStyle),
+                              child: widget.child,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _BoxDecorationBuilder {
+  /// Gets the colors to use for the [BoxDecoration]’s gradient based on the
+  /// provided [accentColor], [isEnabled], and [isDarkModeEnabled] properties.
+  static List<Color> getGradientColors({
+    required AccentColor accentColor,
+    required bool isEnabled,
+    required bool isDarkModeEnabled,
+    required bool isSecondary,
+  }) {
+    final isEnabledFactor = isEnabled ? 1.0 : 0.5;
+
+    if (isSecondary) {
+      return isDarkModeEnabled
+          ? [
+              MacosColor.fromRGBO(255, 255, 255, 0.251 * isEnabledFactor),
+              MacosColor.fromRGBO(255, 255, 255, 0.251 * isEnabledFactor),
+            ]
+          : [
+              MacosColor.fromRGBO(255, 255, 255, 1.0 * isEnabledFactor),
+              MacosColor.fromRGBO(255, 255, 255, 1.0 * isEnabledFactor),
+            ];
+    }
+
+    if (isDarkModeEnabled) {
+      switch (accentColor) {
+        case AccentColor.blue:
+          return [
+            MacosColor.fromRGBO(0, 114, 238, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(0, 94, 211, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.purple:
+          return [
+            MacosColor.fromRGBO(135, 65, 131, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(120, 57, 116, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.pink:
+          return [
+            MacosColor.fromRGBO(188, 52, 105, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(168, 46, 93, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.red:
+          return [
+            MacosColor.fromRGBO(186, 53, 46, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(166, 48, 41, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.orange:
+          return [
+            MacosColor.fromRGBO(212, 133, 33, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(189, 118, 30, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.yellow:
+          return [
+            MacosColor.fromRGBO(229, 203, 35, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(204, 179, 21, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.green:
+          return [
+            MacosColor.fromRGBO(58, 138, 46, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(52, 123, 39, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.graphite:
+          return [
+            MacosColor.fromRGBO(64, 64, 64, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(57, 57, 57, 1.0 * isEnabledFactor),
+          ];
+
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      switch (accentColor) {
+        case AccentColor.blue:
+          return [
+            MacosColor.fromRGBO(39, 125, 255, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(1, 101, 255, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.purple:
+          return [
+            MacosColor.fromRGBO(148, 73, 143, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(128, 39, 121, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.pink:
+          return [
+            MacosColor.fromRGBO(212, 71, 125, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(203, 36, 101, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.red:
+          return [
+            MacosColor.fromRGBO(198, 64, 57, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(188, 29, 21, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.orange:
+          return [
+            MacosColor.fromRGBO(237, 154, 51, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(234, 136, 13, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.yellow:
+          return [
+            MacosColor.fromRGBO(242, 211, 61, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(240, 203, 25, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.green:
+          return [
+            MacosColor.fromRGBO(77, 161, 63, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(45, 143, 28, 1.0 * isEnabledFactor),
+          ];
+
+        case AccentColor.graphite:
+          return [
+            MacosColor.fromRGBO(86, 86, 86, 1.0 * isEnabledFactor),
+            MacosColor.fromRGBO(55, 55, 55, 1.0 * isEnabledFactor),
+          ];
+
+        default:
+          throw UnimplementedError();
+      }
+    }
+  }
+
+  /// Gets the shadow to use for the [BoxDecoration] based on the provided
+  /// [accentColor], [isEnabled], and [isDarkModeEnabled] properties.
+  static List<BoxShadow> _getShadow({
+    required AccentColor accentColor,
+    required bool isEnabled,
+    required bool isDarkModeEnabled,
+    required bool isSecondary,
+  }) {
+    final isEnabledFactor = isEnabled ? 1.0 : 0.5;
+
+    if (isSecondary) {
+      return isDarkModeEnabled
+          ? [
+              BoxShadow(
+                color: MacosColor.fromRGBO(0, 0, 0, 0.4 * isEnabledFactor),
+                blurRadius: 0.5,
+                offset: Offset.zero,
+                spreadRadius: 0.0,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]
+          : [
+              BoxShadow(
+                color: MacosColor.fromRGBO(0, 0, 0, 0.4 * isEnabledFactor),
+                blurRadius: 0.5,
+                offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+                spreadRadius: 0.0,
+                blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+              ),
+            ];
+    }
+
+    if (isDarkModeEnabled) {
+      return [
+        BoxShadow(
+          color: MacosColor.fromRGBO(0, 0, 0, 0.4 * isEnabledFactor),
+          blurRadius: 0.5,
+          offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+          spreadRadius: 0.0,
+          blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+        ),
+      ];
+    } else {
+      switch (accentColor) {
+        case AccentColor.blue:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(0, 103, 255, 0.21 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.purple:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(139, 29, 125, 0.21 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.pink:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(222, 0, 101, 0.21 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.red:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(188, 29, 21, 0.35 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.orange:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(234, 136, 13, 0.35 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.yellow:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(240, 203, 25, 0.35 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.green:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(45, 143, 28, 0.35 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        case AccentColor.graphite:
+          return [
+            BoxShadow(
+              color: MacosColor.fromRGBO(55, 55, 55, 0.35 * isEnabledFactor),
+              blurRadius: 0.5,
+              offset: isEnabled ? const Offset(0.0, 0.3) : Offset.zero,
+              spreadRadius: 0.0,
+              blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
+            ),
+          ];
+
+        default:
+          throw UnimplementedError();
+      }
+    }
+  }
+
+  /// Builds a [BoxDecoration] for a [MacosPushButton].
+  static BoxDecoration buildBoxDecoration({
+    required AccentColor accentColor,
+    required bool isEnabled,
+    required bool isDarkModeEnabled,
+    required bool isSecondary,
+  }) {
+    final isEnabledFactor = isEnabled ? 1.0 : 0.5;
+
+    return BoxDecoration(
+      border: isDarkModeEnabled
+          ? GradientBoxBorder(
+              gradient: LinearGradient(
+                colors: [
+                  MacosColor.fromRGBO(255, 255, 255, 0.43 * isEnabledFactor),
+                  const MacosColor.fromRGBO(255, 255, 255, 0.0),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.0, 0.2],
+              ),
+              width: 0.7,
+            )
+          : null,
+      gradient: LinearGradient(
+        colors: getGradientColors(
+          accentColor: accentColor,
+          isEnabled: isEnabled,
+          isDarkModeEnabled: isDarkModeEnabled,
+          isSecondary: isSecondary,
+        ),
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+      boxShadow: _getShadow(
+        accentColor: accentColor,
+        isEnabled: isEnabled,
+        isDarkModeEnabled: isDarkModeEnabled,
+        isSecondary: isSecondary,
       ),
     );
   }

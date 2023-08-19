@@ -1,8 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
+
+export 'window_main_state_listener.dart';
+export 'accent_color_listener.dart';
+export 'macos_brightness_override_handler.dart';
 
 /// Asserts that the given context has a [MacosTheme] ancestor.
 ///
@@ -64,25 +65,4 @@ class Unsupported {
   const Unsupported(this.message);
 
   final String message;
-}
-
-/// A class that ensures that the application's macOS window's brightness
-/// matches the given brightness.
-class MacOSBrightnessOverrideHandler {
-  static Brightness? _lastBrightness;
-
-  /// Ensures that the application's macOS window's brightness matches
-  /// [currentBrightness].
-  ///
-  /// For performance reasons, the brightness setting will only be overridden if
-  /// [currentBrightness] differs from the value it had when this method was
-  /// previously called. Therefore, it is safe to call this method frequently.
-  static void ensureMatchingBrightness(Brightness currentBrightness) {
-    if (kIsWeb) return;
-    if (!Platform.isMacOS) return;
-    if (currentBrightness == _lastBrightness) return;
-
-    WindowManipulator.overrideMacOSBrightness(dark: currentBrightness.isDark);
-    _lastBrightness = currentBrightness;
-  }
 }

@@ -514,8 +514,7 @@ class MacosThemeData with Diagnosticable {
       typography: MacosTypography.lerp(a.typography, b.typography, t),
       helpButtonTheme:
           HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
-      pushButtonTheme:
-          PushButtonThemeData.lerp(a.pushButtonTheme, b.pushButtonTheme, t),
+      pushButtonTheme: a.pushButtonTheme,
       tooltipTheme:
           MacosTooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
@@ -581,7 +580,7 @@ class MacosThemeData with Diagnosticable {
       canvasColor: canvasColor ?? this.canvasColor,
       dividerColor: dividerColor ?? this.dividerColor,
       typography: this.typography.merge(typography),
-      pushButtonTheme: this.pushButtonTheme.merge(pushButtonTheme),
+      pushButtonTheme: this.pushButtonTheme,
       helpButtonTheme: this.helpButtonTheme.merge(helpButtonTheme),
       tooltipTheme: this.tooltipTheme.merge(tooltipTheme),
       visualDensity: visualDensity ?? this.visualDensity,
@@ -605,7 +604,7 @@ class MacosThemeData with Diagnosticable {
       canvasColor: other.canvasColor,
       dividerColor: other.dividerColor,
       typography: typography.merge(other.typography),
-      pushButtonTheme: pushButtonTheme.merge(other.pushButtonTheme),
+      pushButtonTheme: pushButtonTheme,
       helpButtonTheme: helpButtonTheme.merge(other.helpButtonTheme),
       tooltipTheme: tooltipTheme.merge(other.tooltipTheme),
       visualDensity: other.visualDensity,
