@@ -95,7 +95,7 @@ class AccentColorListener {
     });
   }
 
-  /// Returns the hue component of the currently active accent color on macOS.
+  /// Returns the hue component of the active accent color selection on macOS.
   Future<double> _getHueComponent() async {
     final color = await AppkitUiElementColors.getColorComponents(
       uiElementColor: UiElementColor.controlAccentColor,
