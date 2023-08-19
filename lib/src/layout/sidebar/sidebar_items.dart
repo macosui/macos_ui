@@ -115,13 +115,17 @@ class SidebarItems extends StatelessWidget {
     assert(debugCheckHasMacosTheme(context));
     assert(currentIndex < _allItems.length);
     final theme = MacosTheme.of(context);
+    final configuration = SidebarItemsConfiguration.of(context) ??
+        SidebarItemsConfiguration(
+          selectedColor: selectedColor ?? theme.primaryColor,
+          unselectedColor: unselectedColor ?? MacosColors.transparent,
+          shape: shape ?? _defaultShape,
+          itemSize: itemSize,
+          child: Container(),
+        );
     return MacosIconTheme.merge(
       data: const MacosIconThemeData(size: 20),
-      child: _SidebarItemsConfiguration(
-        selectedColor: selectedColor ?? theme.primaryColor,
-        unselectedColor: unselectedColor ?? MacosColors.transparent,
-        shape: shape ?? _defaultShape,
-        itemSize: itemSize,
+      child: configuration.copyWith(
         child: ListView(
           controller: scrollController,
           physics: const ClampingScrollPhysics(),
@@ -155,15 +159,20 @@ class SidebarItems extends StatelessWidget {
   }
 }
 
-class _SidebarItemsConfiguration extends InheritedWidget {
+class SidebarItemsConfiguration extends InheritedWidget {
   // ignore: use_super_parameters
-  const _SidebarItemsConfiguration({
+  const SidebarItemsConfiguration({
     Key? key,
     required super.child,
     this.selectedColor = MacosColors.transparent,
     this.unselectedColor = MacosColors.transparent,
     this.shape = _defaultShape,
     this.itemSize = SidebarItemSize.medium,
+    this.textStyle,
+    this.height,
+    this.iconSize,
+    this.selectedIconColor,
+    this.unselectedIconColor,
   }) : super(key: key);
 
   final Color selectedColor;
@@ -171,14 +180,38 @@ class _SidebarItemsConfiguration extends InheritedWidget {
   final ShapeBorder shape;
   final SidebarItemSize itemSize;
 
-  static _SidebarItemsConfiguration of(BuildContext context) {
+  final TextStyle? textStyle;
+  final double? height;
+  final double? iconSize;
+  final Color? selectedIconColor;
+  final Color? unselectedIconColor;
+
+  static SidebarItemsConfiguration of(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<_SidebarItemsConfiguration>()!;
+        .dependOnInheritedWidgetOfExactType<SidebarItemsConfiguration>()!;
   }
 
   @override
-  bool updateShouldNotify(_SidebarItemsConfiguration oldWidget) {
+  bool updateShouldNotify(SidebarItemsConfiguration oldWidget) {
     return true;
+  }
+
+  SidebarItemsConfiguration copyWith({
+    Widget? child,
+  }) {
+    return SidebarItemsConfiguration(
+      key: key,
+      selectedColor: selectedColor,
+      unselectedColor: unselectedColor,
+      shape: shape,
+      itemSize: itemSize,
+      textStyle: textStyle,
+      height: height,
+      iconSize: iconSize,
+      selectedIconColor: selectedIconColor,
+      unselectedIconColor: unselectedIconColor,
+      child: child ?? this.child,
+    );
   }
 }
 
@@ -218,6 +251,7 @@ class _SidebarItem extends StatelessWidget {
       };
 
   bool get hasLeading => item.leading != null;
+
   bool get hasTrailing => item.trailing != null;
 
   @override
@@ -226,29 +260,49 @@ class _SidebarItem extends StatelessWidget {
     final theme = MacosTheme.of(context);
 
     final selectedColor = MacosDynamicColor.resolve(
-      item.selectedColor ??
-          _SidebarItemsConfiguration.of(context).selectedColor,
+      item.selectedColor ?? SidebarItemsConfiguration.of(context).selectedColor,
       context,
     );
     final unselectedColor = MacosDynamicColor.resolve(
       item.unselectedColor ??
-          _SidebarItemsConfiguration.of(context).unselectedColor,
+          SidebarItemsConfiguration.of(context).unselectedColor,
       context,
     );
 
     final double spacing = 10.0 + theme.visualDensity.horizontal;
-    final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
-    TextStyle? labelStyle;
-    switch (itemSize) {
-      case SidebarItemSize.small:
-        labelStyle = theme.typography.subheadline;
-        break;
-      case SidebarItemSize.medium:
-        labelStyle = theme.typography.body;
-        break;
-      case SidebarItemSize.large:
-        labelStyle = theme.typography.title3;
-        break;
+    final configuration = SidebarItemsConfiguration.of(context);
+    final itemSize = configuration.itemSize;
+    TextStyle? labelStyle = configuration.textStyle;
+
+    if (labelStyle == null) {
+      switch (itemSize) {
+        case SidebarItemSize.small:
+          labelStyle = theme.typography.subheadline;
+          break;
+        case SidebarItemSize.medium:
+          labelStyle = theme.typography.body;
+          break;
+        case SidebarItemSize.large:
+          labelStyle = theme.typography.title3;
+          break;
+      }
+    }
+
+    double? height = configuration.height;
+    if (height == null) {
+      height = itemSize.height;
+    }
+
+    double? iconSize = configuration.iconSize;
+    if (iconSize == null) {
+      iconSize = itemSize.iconSize;
+    }
+
+    Color? iconColor = selected
+        ? configuration.selectedIconColor
+        : configuration.unselectedIconColor;
+    if (iconColor == null) {
+      selected ? MacosColors.white : theme.primaryColor;
     }
 
     return Semantics(
@@ -268,10 +322,10 @@ class _SidebarItem extends StatelessWidget {
           actions: _actionMap,
           child: Container(
             width: 134.0 + theme.visualDensity.horizontal,
-            height: itemSize.height + theme.visualDensity.vertical,
+            height: height + theme.visualDensity.vertical,
             decoration: ShapeDecoration(
               color: selected ? selectedColor : unselectedColor,
-              shape: item.shape ?? _SidebarItemsConfiguration.of(context).shape,
+              shape: item.shape ?? SidebarItemsConfiguration.of(context).shape,
             ),
             padding: EdgeInsets.symmetric(
               vertical: 7 + theme.visualDensity.horizontal,
@@ -284,15 +338,14 @@ class _SidebarItem extends StatelessWidget {
                     padding: EdgeInsets.only(right: spacing),
                     child: MacosIconTheme.merge(
                       data: MacosIconThemeData(
-                        color:
-                            selected ? MacosColors.white : theme.primaryColor,
-                        size: itemSize.iconSize,
+                        color: iconColor,
+                        size: iconSize,
                       ),
                       child: item.leading!,
                     ),
                   ),
                 DefaultTextStyle(
-                  style: labelStyle.copyWith(
+                  style: labelStyle!.copyWith(
                     color: selected ? textLuminance(selectedColor) : null,
                   ),
                   child: item.label,
@@ -300,7 +353,7 @@ class _SidebarItem extends StatelessWidget {
                 if (hasTrailing) ...[
                   const Spacer(),
                   DefaultTextStyle(
-                    style: labelStyle.copyWith(
+                    style: labelStyle!.copyWith(
                       color: selected ? textLuminance(selectedColor) : null,
                     ),
                     child: item.trailing!,
@@ -383,7 +436,7 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
     final theme = MacosTheme.of(context);
     final double spacing = 10.0 + theme.visualDensity.horizontal;
 
-    final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+    final itemSize = SidebarItemsConfiguration.of(context).itemSize;
     TextStyle? labelStyle;
     switch (itemSize) {
       case SidebarItemSize.small:
