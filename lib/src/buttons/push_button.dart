@@ -341,10 +341,10 @@ class PushButtonState extends State<PushButton>
           child: ConstrainedBox(
             constraints: widget.controlSize.constraints,
             child: StreamBuilder(
-              stream: AccentColorListener.instance.onChangedStream,
+              stream: AccentColorListener.instance.onChanged,
               builder: (context, _) {
                 return StreamBuilder<bool>(
-                  stream: WindowMainStateListener.instance.onChangedStream,
+                  stream: WindowMainStateListener.instance.onChanged,
                   builder: (context, _) {
                     final Color backgroundColor = _getBackgroundColor();
 

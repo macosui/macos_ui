@@ -14,7 +14,7 @@ import 'package:macos_ui/macos_ui.dart';
 ///
 /// ```dart
 /// StreamBuilder(
-///   stream: WindowMainStateListener.instance.onChangedStream,
+///   stream: WindowMainStateListener.instance.onChanged,
 ///     builder: (context, _) {
 ///       final bool isMainWindow
 ///           = WindowMainStateListener.instance.isMainWindow;
@@ -44,7 +44,7 @@ class WindowMainStateListener {
 
   /// A stream of the window’s main state. Emits a new value whenever the state
   /// changes.
-  Stream<bool> get onChangedStream => _windowMainStateStreamController.stream;
+  Stream<bool> get onChanged => _windowMainStateStreamController.stream;
 
   /// Initializes the listener. This should only be called once.
   void _init() {

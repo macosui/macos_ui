@@ -14,7 +14,7 @@ import 'package:macos_ui/src/enums/accent_color.dart';
 ///
 /// ```dart
 /// StreamBuilder(
-///   stream: AccentColorListener.instance.onChangedStream,
+///   stream: AccentColorListener.instance.onChanged,
 ///     builder: (context, _) {
 ///       final AccentColor? accentColor =
 ///           AccentColorListener.instance.currentAccentColor;
@@ -56,7 +56,7 @@ class AccentColorListener {
   /// Streams the user’s system accent color selection.
   ///
   /// Emits a new value whenever the system accent color selection changes.
-  Stream<void> get onChangedStream => _accentColorStreamController.stream;
+  Stream<void> get onChanged => _accentColorStreamController.stream;
 
   /// A stream subscription for the [SystemColorObserver] stream.
   StreamSubscription<void>? _systemColorObserverStreamSubscription;
