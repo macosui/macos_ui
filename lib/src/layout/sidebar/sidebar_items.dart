@@ -115,14 +115,16 @@ class SidebarItems extends StatelessWidget {
     assert(debugCheckHasMacosTheme(context));
     assert(currentIndex < _allItems.length);
     final theme = MacosTheme.of(context);
-    final configuration = SidebarItemsConfiguration.of(context) ??
-        SidebarItemsConfiguration(
-          selectedColor: selectedColor ?? theme.primaryColor,
-          unselectedColor: unselectedColor ?? MacosColors.transparent,
-          shape: shape ?? _defaultShape,
-          itemSize: itemSize,
-          child: Container(),
-        );
+    var configuration = SidebarItemsConfiguration.tryOf(context);
+    if (configuration == null) {
+      configuration = SidebarItemsConfiguration(
+        selectedColor: selectedColor ?? theme.primaryColor,
+        unselectedColor: unselectedColor ?? MacosColors.transparent,
+        shape: shape ?? _defaultShape,
+        itemSize: itemSize,
+        child: Container(),
+      );
+    }
     return MacosIconTheme.merge(
       data: const MacosIconThemeData(size: 20),
       child: configuration.copyWith(
@@ -187,8 +189,11 @@ class SidebarItemsConfiguration extends InheritedWidget {
   final Color? unselectedIconColor;
 
   static SidebarItemsConfiguration of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<SidebarItemsConfiguration>()!;
+    return tryOf(context)!;
+  }
+
+  static SidebarItemsConfiguration? tryOf(BuildContext context) {
+    return context.getInheritedWidgetOfExactType<SidebarItemsConfiguration>();
   }
 
   @override
@@ -302,7 +307,7 @@ class _SidebarItem extends StatelessWidget {
         ? configuration.selectedIconColor
         : configuration.unselectedIconColor;
     if (iconColor == null) {
-      selected ? MacosColors.white : theme.primaryColor;
+      iconColor = selected ? MacosColors.white : theme.primaryColor;
     }
 
     return Semantics(
