@@ -6,7 +6,7 @@ import 'package:appkit_ui_element_colors/appkit_ui_element_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/src/enums/accent_color.dart';
 
-/// A class that listens to changes to the user’s selected system accent color.
+/// A class that listens for changes to the user’s selected system accent color.
 ///
 /// Native macOS applications respond to such changes immediately.
 ///
