@@ -27,6 +27,11 @@ import 'package:macos_ui/src/enums/accent_color.dart';
 ///  );
 /// ```
 class AccentColorListener {
+  /// A class that listens to accent color changes.
+  AccentColorListener() {
+    _init();
+  }
+
   /// A shared instance of [AccentColorListener].
   static final instance = AccentColorListener();
 
@@ -151,10 +156,5 @@ class AccentColorListener {
   double _distanceBetweenHueComponents(double component1, double component2) {
     final rawDifference = (component1 - component2).abs();
     return sin(rawDifference * pi);
-  }
-
-  /// A class that listens to accent color changes.
-  AccentColorListener() {
-    _init();
   }
 }
