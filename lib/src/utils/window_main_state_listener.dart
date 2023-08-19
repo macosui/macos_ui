@@ -27,6 +27,12 @@ import 'package:macos_ui/macos_ui.dart';
 ///  );
 /// ```
 class WindowMainStateListener {
+  /// A class that listens for changes to the application’s window being the
+  /// main window, and notifies listeners.
+  WindowMainStateListener() {
+    _init();
+  }
+
   /// A shared instance of [WindowMainStateListener].
   static final instance = WindowMainStateListener();
 
@@ -79,12 +85,6 @@ class WindowMainStateListener {
   /// Disposes this listener.
   void dispose() {
     handle?.removeFromHandler();
-  }
-
-  /// A class that listens for changes to the application’s window being the
-  /// main window, and notifies listeners.
-  WindowMainStateListener() {
-    _init();
   }
 }
 
