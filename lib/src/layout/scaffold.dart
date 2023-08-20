@@ -30,7 +30,7 @@ class MacosScaffold extends StatefulWidget {
   final List<Widget> children;
 
   /// The [Toolbar] to use at the top of the layout scaffold.
-  final ToolBar? toolBar;
+  final PreferredSizeWidget? toolBar;
 
   @override
   State<MacosScaffold> createState() => _MacosScaffoldState();
@@ -73,7 +73,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
         final mediaQuery = MediaQuery.of(context);
         final children = widget.children;
         double topPadding = 0;
-        if (widget.toolBar != null) topPadding += widget.toolBar!.height;
+        if (widget.toolBar != null) topPadding += widget.toolBar!.preferredSize.height;
 
         return Stack(
           children: [
@@ -118,7 +118,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
             if (widget.toolBar != null)
               Positioned(
                 width: width,
-                height: widget.toolBar!.height,
+                height: widget.toolBar!.preferredSize.height,
                 child: widget.toolBar!,
               ),
           ],

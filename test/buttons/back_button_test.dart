@@ -21,7 +21,7 @@ void main() {
         navigatorObservers: [
           navigatorObserver,
         ],
-        home: const MacosWindow(
+        home: MacosWindow(
           child: MacosScaffold(
             toolBar: ToolBar(
               leading: MacosBackButton(),

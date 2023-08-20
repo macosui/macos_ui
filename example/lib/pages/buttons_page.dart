@@ -93,8 +93,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
-                                  toolBar: const ToolBar(
-                                    title: Text('New page'),
+                                  toolBar: ToolBar(
+                                    title: const Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
@@ -137,8 +137,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
-                                  toolBar: const ToolBar(
-                                    title: Text('New page'),
+                                  toolBar: ToolBar(
+                                    title: const Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
@@ -181,8 +181,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
-                                  toolBar: const ToolBar(
-                                    title: Text('New page'),
+                                  toolBar: ToolBar(
+                                    title: const Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
@@ -271,8 +271,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
-                                  toolBar: const ToolBar(
-                                    title: Text('New page'),
+                                  toolBar: ToolBar(
+                                    title: const Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
@@ -316,8 +316,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
-                                  toolBar: const ToolBar(
-                                    title: Text('New page'),
+                                  toolBar: ToolBar(
+                                    title: const Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
@@ -361,8 +361,8 @@ class _ButtonsPageState extends State<ButtonsPage> {
                             MaterialPageRoute(
                               builder: (_) {
                                 return MacosScaffold(
-                                  toolBar: const ToolBar(
-                                    title: Text('New page'),
+                                  toolBar: ToolBar(
+                                    title: const Text('New page'),
                                   ),
                                   children: [
                                     ContentArea(
