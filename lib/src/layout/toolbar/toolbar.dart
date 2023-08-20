@@ -7,7 +7,7 @@ import 'package:macos_ui/src/layout/wallpaper_tinting_settings/wallpaper_tinting
 import 'package:macos_ui/src/library.dart';
 
 /// Defines the height of a regular-sized [ToolBar]
-const _kToolbarHeight = 52.0;
+const kToolbarHeight = 52.0;
 
 /// Defines the width of the leading widget in the [ToolBar]
 const _kLeadingWidth = 20.0;
@@ -16,7 +16,7 @@ const _kLeadingWidth = 20.0;
 const _kTitleWidth = 150.0;
 
 /// A toolbar to use in a [MacosScaffold].
-class ToolBar extends StatefulWidget with Diagnosticable {
+class ToolBar extends StatefulWidget with Diagnosticable implements PreferredSizeWidget {
   /// Creates a toolbar in the [MacosScaffold]. The toolbar appears below the
   /// title bar (if present) of the macOS app or integrates with it.
   ///
@@ -31,9 +31,9 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   /// command of your app.
   ///
   /// The height of the ToolBar can be changed with [height].
-  const ToolBar({
+  ToolBar({
     super.key,
-    this.height = _kToolbarHeight,
+    this.height = kToolbarHeight,
     this.alignment = Alignment.center,
     this.title,
     this.titleWidth = _kTitleWidth,
@@ -46,7 +46,7 @@ class ToolBar extends StatefulWidget with Diagnosticable {
     this.dividerColor,
     this.allowWallpaperTintingOverrides = true,
     this.enableBlur = false,
-  });
+  }) : preferredSize = _PreferredToolbarSize(height);
 
   /// Specifies the height of this [ToolBar].
   ///
@@ -152,6 +152,12 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   /// Whether this [ToolBar] should have a blur backdrop filter applied to it.
   final bool enableBlur;
 
+  /// Preferred toolBar's [height].
+  ///
+  /// [MacosScaffold] uses this size to set its app bar's height.
+  @override
+  final Size preferredSize;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -179,6 +185,13 @@ class ToolBar extends StatefulWidget with Diagnosticable {
 
   @override
   State<ToolBar> createState() => _ToolBarState();
+}
+
+class _PreferredToolbarSize extends Size {
+  _PreferredToolbarSize(this.toolbarHeight)
+    : super.fromHeight((toolbarHeight ?? kToolbarHeight));
+
+  final double? toolbarHeight;
 }
 
 class _ToolBarState extends State<ToolBar> {

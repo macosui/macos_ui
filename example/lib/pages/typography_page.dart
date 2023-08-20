@@ -19,8 +19,8 @@ class TypographyPage extends StatelessWidget {
     );
 
     return MacosScaffold(
-      toolBar: const ToolBar(
-        title: Text('Typography'),
+      toolBar: ToolBar(
+        title: const Text('Typography'),
       ),
       children: [
         ContentArea(
