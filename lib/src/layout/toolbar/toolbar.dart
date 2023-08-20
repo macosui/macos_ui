@@ -152,9 +152,9 @@ class ToolBar extends StatefulWidget with Diagnosticable implements PreferredSiz
   /// Whether this [ToolBar] should have a blur backdrop filter applied to it.
   final bool enableBlur;
 
-  /// Preferred toolBar's [height].
+  /// Preferred [TooBar]'s [height].
   ///
-  /// [MacosScaffold] uses this size to set its app bar's height.
+  /// [MacosScaffold] uses this size to set its [ToolBar]'s height.
   @override
   final Size preferredSize;
 
