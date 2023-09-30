@@ -271,10 +271,10 @@ class _MacosWindowState extends State<MacosWindow> {
                           child: Column(
                             children: [
                               // If an app is running on macOS, apply
-                              // sidebar.topOffset as needed in order to avoid the
-                              // traffic lights. Otherwise, position the sidebar
-                              // by the top of the application's bounds based on
-                              // the presence of sidebar.top.
+                              // sidebar.topOffset as needed in order to avoid
+                              // the traffic lights. Otherwise, position the
+                              // sidebar by the top of the application's bounds
+                              // based on the presence of sidebar.top.
                               if (!kIsWeb && sidebar.topOffset > 0) ...[
                                 SizedBox(height: sidebar.topOffset),
                               ] else if (sidebar.top != null) ...[
@@ -291,7 +291,8 @@ class _MacosWindowState extends State<MacosWindow> {
                                   constraints.maxHeight > 81)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
+                                    horizontal: 8.0,
+                                  ),
                                   child: sidebar.top!,
                                 ),
                               Expanded(
@@ -320,10 +321,10 @@ class _MacosWindowState extends State<MacosWindow> {
                           child: Column(
                             children: [
                               // If an app is running on macOS, apply
-                              // sidebar.topOffset as needed in order to avoid the
-                              // traffic lights. Otherwise, position the sidebar
-                              // by the top of the application's bounds based on
-                              // the presence of sidebar.top.
+                              // sidebar.topOffset as needed in order to avoid
+                              // the traffic lights. Otherwise, position the
+                              // sidebar by the top of the application's bounds
+                              // based on the presence of sidebar.top.
                               if (!kIsWeb && sidebar.topOffset > 0) ...[
                                 SizedBox(height: sidebar.topOffset),
                               ] else if (sidebar.top != null) ...[
@@ -340,7 +341,8 @@ class _MacosWindowState extends State<MacosWindow> {
                                   constraints.maxHeight > 81)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
+                                    horizontal: 8.0,
+                                  ),
                                   child: sidebar.top!,
                                 ),
                               Expanded(
