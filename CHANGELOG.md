@@ -1,3 +1,7 @@
+## [2.0.2]
+### 🛠️ Fixed 🛠️
+* Fixed images in generated documentation.
+
 ## [2.0.1]
 ### 🔄 Updated 🔄
 * `PushButton` has received a facelift. It now mimics the look and feel of native macOS buttons more closely.
