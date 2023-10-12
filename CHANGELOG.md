@@ -5,7 +5,7 @@
 ## [2.0.1]
 ### 🔄 Updated 🔄
 * `PushButton` has received a facelift. It now mimics the look and feel of native macOS buttons more closely.
-  * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated. 
+    * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated.
 
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
