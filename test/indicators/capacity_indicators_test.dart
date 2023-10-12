@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:macos_ui/macos_ui.dart';
 
+// TODO(): Remove once mock_canvas in flutter_test reaches stable.
 import '../mock_canvas.dart';
 
 void main() {
@@ -81,7 +82,7 @@ void main() {
       expect(
         find.byType(CapacityIndicator),
         // each discrete segment is drawn 3 times, two times with fill, last time with stroke
-        paintsExactlyCountTimes(#drawRRect, 20 * 3),
+        paintedExactlyCountTimes(#drawRRect, 20 * 3),
       );
     },
   );
@@ -110,7 +111,7 @@ void main() {
         // each discrete segment is drawn 3 times, background - fill - stroke
         // a filled segment is drawn by fromLTRBR  with LTRB=0,0,8,16
         // an empty segment is drawnby fromLTRBAndCorners with LTRB=0,0,0,16
-        paints
+        painted
           ..rrect(
             rrect: RRect.fromLTRBR(
               0.0,

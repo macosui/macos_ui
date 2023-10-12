@@ -99,7 +99,6 @@ void main() {
           'controlSize: regular',
           'color: null',
           'disabledColor: null',
-          'pressedOpacity: 0.4',
           'alignment: Alignment.center',
           'semanticLabel: null',
           'borderRadius: BorderRadius.circular(4.0)',

@@ -40,16 +40,16 @@ import 'recording_canvas.dart';
 /// To match something which paints nothing, see [paintsNothing].
 ///
 /// To match something which asserts instead of painting, see [paintsAssertion].
-PaintPattern get paints => _TestRecordingCanvasPatternMatcher();
+PaintPattern get painted => _TestRecordingCanvasPatternMatcher();
 
 /// Matches objects or functions that does not paint anything on the canvas.
-Matcher get paintsNothing => _TestRecordingCanvasPaintsNothingMatcher();
+Matcher get paintedNothing => _TestRecordingCanvasPaintsNothingMatcher();
 
 /// Matches objects or functions that assert when they try to paint.
-Matcher get paintsAssertion => _TestRecordingCanvasPaintsAssertionMatcher();
+Matcher get paintedAssertion => _TestRecordingCanvasPaintsAssertionMatcher();
 
 /// Matches objects or functions that draw `methodName` exactly `count` number of times.
-Matcher paintsExactlyCountTimes(Symbol methodName, int count) {
+Matcher paintedExactlyCountTimes(Symbol methodName, int count) {
   return _TestRecordingCanvasPaintsCountMatcher(methodName, count);
 }
 
@@ -564,7 +564,7 @@ class _MismatchedCall {
   const _MismatchedCall(this.message, this.callIntroduction, this.call);
   final String message;
   final String callIntroduction;
-  final RecordedInvocation call;
+  final RecordInvocation call;
 }
 
 bool _evaluatePainter(Object? object, Canvas canvas, PaintingContext context) {
@@ -593,9 +593,9 @@ bool _evaluatePainter(Object? object, Canvas canvas, PaintingContext context) {
 abstract class _TestRecordingCanvasMatcher extends Matcher {
   @override
   bool matches(Object? object, Map<dynamic, dynamic> matchState) {
-    final TestRecordingCanvas canvas = TestRecordingCanvas();
-    final TestRecordingPaintingContext context =
-        TestRecordingPaintingContext(canvas);
+    final TestRecordCanvas canvas = TestRecordCanvas();
+    final TestRecordPaintingContext context =
+        TestRecordPaintingContext(canvas);
     final StringBuffer description = StringBuffer();
     String prefixMessage = 'unexpectedly failed.';
     bool result = false;
@@ -618,7 +618,7 @@ abstract class _TestRecordingCanvasMatcher extends Matcher {
     if (!result) {
       if (canvas.invocations.isNotEmpty) {
         description.write('The complete display list was:');
-        for (final RecordedInvocation call in canvas.invocations) {
+        for (final RecordInvocation call in canvas.invocations) {
           description.write('\n  * $call');
         }
       }
@@ -628,7 +628,7 @@ abstract class _TestRecordingCanvasMatcher extends Matcher {
   }
 
   bool _evaluatePredicates(
-      Iterable<RecordedInvocation> calls, StringBuffer description);
+      Iterable<RecordInvocation> calls, StringBuffer description);
 
   @override
   Description describeMismatch(
@@ -658,9 +658,9 @@ class _TestRecordingCanvasPaintsCountMatcher
 
   @override
   bool _evaluatePredicates(
-      Iterable<RecordedInvocation> calls, StringBuffer description) {
+      Iterable<RecordInvocation> calls, StringBuffer description) {
     int count = 0;
-    for (final RecordedInvocation call in calls) {
+    for (final RecordInvocation call in calls) {
       if (call.invocation.isMethod &&
           call.invocation.memberName == _methodName) {
         count++;
@@ -683,8 +683,8 @@ class _TestRecordingCanvasPaintsNothingMatcher
 
   @override
   bool _evaluatePredicates(
-      Iterable<RecordedInvocation> calls, StringBuffer description) {
-    final Iterable<RecordedInvocation> paintingCalls =
+      Iterable<RecordInvocation> calls, StringBuffer description) {
+    final Iterable<RecordInvocation> paintingCalls =
         _filterCanvasCalls(calls);
     if (paintingCalls.isEmpty) {
       return true;
@@ -702,10 +702,10 @@ class _TestRecordingCanvasPaintsNothingMatcher
   ];
 
   // Filters out canvas calls that are not painting anything.
-  static Iterable<RecordedInvocation> _filterCanvasCalls(
-      Iterable<RecordedInvocation> canvasCalls) {
+  static Iterable<RecordInvocation> _filterCanvasCalls(
+      Iterable<RecordInvocation> canvasCalls) {
     return canvasCalls.where(
-      (RecordedInvocation canvasCall) =>
+      (RecordInvocation canvasCall) =>
           !_nonPaintingOperations.contains(canvasCall.invocation.memberName),
     );
   }
@@ -714,9 +714,9 @@ class _TestRecordingCanvasPaintsNothingMatcher
 class _TestRecordingCanvasPaintsAssertionMatcher extends Matcher {
   @override
   bool matches(Object? object, Map<dynamic, dynamic> matchState) {
-    final TestRecordingCanvas canvas = TestRecordingCanvas();
-    final TestRecordingPaintingContext context =
-        TestRecordingPaintingContext(canvas);
+    final TestRecordCanvas canvas = TestRecordCanvas();
+    final TestRecordPaintingContext context =
+        TestRecordPaintingContext(canvas);
     final StringBuffer description = StringBuffer();
     String prefixMessage = 'unexpectedly failed.';
     bool result = false;
@@ -738,7 +738,7 @@ class _TestRecordingCanvasPaintsAssertionMatcher extends Matcher {
     if (!result) {
       if (canvas.invocations.isNotEmpty) {
         description.write('The complete display list was:');
-        for (final RecordedInvocation call in canvas.invocations) {
+        for (final RecordInvocation call in canvas.invocations) {
           description.write('\n  * $call');
         }
       }
@@ -1017,7 +1017,7 @@ class _TestRecordingCanvasPatternMatcher extends _TestRecordingCanvasMatcher
 
   @override
   bool _evaluatePredicates(
-      Iterable<RecordedInvocation> calls, StringBuffer description) {
+      Iterable<RecordInvocation> calls, StringBuffer description) {
     if (calls.isEmpty) {
       description.writeln('It painted nothing.');
       return false;
@@ -1030,7 +1030,7 @@ class _TestRecordingCanvasPatternMatcher extends _TestRecordingCanvasMatcher
       return false;
     }
     final Iterator<_PaintPredicate> predicate = _predicates.iterator;
-    final Iterator<RecordedInvocation> call = calls.iterator..moveNext();
+    final Iterator<RecordInvocation> call = calls.iterator..moveNext();
     try {
       while (predicate.moveNext()) {
         predicate.current.match(call);
@@ -1056,12 +1056,12 @@ class _TestRecordingCanvasPatternMatcher extends _TestRecordingCanvasMatcher
 }
 
 abstract class _PaintPredicate {
-  void match(Iterator<RecordedInvocation> call);
+  void match(Iterator<RecordInvocation> call);
 
   @protected
-  void checkMethod(Iterator<RecordedInvocation> call, Symbol symbol) {
+  void checkMethod(Iterator<RecordInvocation> call, Symbol symbol) {
     int others = 0;
-    final RecordedInvocation firstCall = call.current;
+    final RecordInvocation firstCall = call.current;
     while (!call.current.invocation.isMethod ||
         call.current.invocation.memberName != symbol) {
       others += 1;
@@ -1108,7 +1108,7 @@ abstract class _DrawCommandPaintPredicate extends _PaintPredicate {
   String get methodName => _symbolName(symbol);
 
   @override
-  void match(Iterator<RecordedInvocation> call) {
+  void match(Iterator<RecordInvocation> call) {
     checkMethod(call, symbol);
     final int actualArgumentCount =
         call.current.invocation.positionalArguments.length;
@@ -1605,7 +1605,7 @@ class _ShadowPredicate extends _PaintPredicate {
   }
 
   @override
-  void match(Iterator<RecordedInvocation> call) {
+  void match(Iterator<RecordInvocation> call) {
     checkMethod(call, symbol);
     verifyArguments(call.current.invocation.positionalArguments);
     call.moveNext();
@@ -1771,8 +1771,8 @@ class _SomethingPaintPredicate extends _PaintPredicate {
   final PaintPatternPredicate predicate;
 
   @override
-  void match(Iterator<RecordedInvocation> call) {
-    RecordedInvocation currentCall;
+  void match(Iterator<RecordInvocation> call) {
+    RecordInvocation currentCall;
     bool testedAllCalls = false;
     do {
       if (testedAllCalls) {
@@ -1807,9 +1807,9 @@ class _EverythingPaintPredicate extends _PaintPredicate {
   final PaintPatternPredicate predicate;
 
   @override
-  void match(Iterator<RecordedInvocation> call) {
+  void match(Iterator<RecordInvocation> call) {
     do {
-      final RecordedInvocation currentCall = call.current;
+      final RecordInvocation currentCall = call.current;
       if (!currentCall.invocation.isMethod) {
         throw 'It called $currentCall, which was not a method, when the paint pattern expected a method call';
       }
@@ -1842,7 +1842,7 @@ class _FunctionPaintPredicate extends _PaintPredicate {
   final List<dynamic> arguments;
 
   @override
-  void match(Iterator<RecordedInvocation> call) {
+  void match(Iterator<RecordInvocation> call) {
     checkMethod(call, symbol);
     if (call.current.invocation.positionalArguments.length !=
         arguments.length) {
@@ -1874,7 +1874,7 @@ class _FunctionPaintPredicate extends _PaintPredicate {
 
 class _SaveRestorePairPaintPredicate extends _PaintPredicate {
   @override
-  void match(Iterator<RecordedInvocation> call) {
+  void match(Iterator<RecordInvocation> call) {
     checkMethod(call, #save);
     int depth = 1;
     while (depth > 0) {

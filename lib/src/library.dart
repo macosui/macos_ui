@@ -32,4 +32,4 @@ export 'package:flutter/material.dart'
         MaterialState;
 export 'package:flutter/widgets.dart';
 
-export 'utils.dart';
+export 'utils/utils.dart';

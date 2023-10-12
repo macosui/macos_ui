@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
+export 'window_main_state_listener.dart';
+export 'accent_color_listener.dart';
+export 'macos_brightness_override_handler.dart';
+
 /// Asserts that the given context has a [MacosTheme] ancestor.
 ///
 /// To call this function, use the following pattern, typically in the
