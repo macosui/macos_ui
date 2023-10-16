@@ -283,10 +283,10 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
   final EdgeInsets? windowHandlePadding;
 
   @override
-  double get minExtent => _kToolbarHeight;
+  double get minExtent => height;
 
   @override
-  double get maxExtent => _kToolbarHeight;
+  double get maxExtent => height;
 
   @override
   final TickerProvider vsync;
