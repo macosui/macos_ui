@@ -20,7 +20,6 @@ const double _kDiscreteThumbBorderRadius = 8;
 /// The slider doesn't maintain any state itself, instead the user is expected to
 /// update this widget with a new [value] whenever the slider changes.
 ///
-/// {@image <image src="https://developer.apple.com/design/human-interface-guidelines/images/intro/components/slider-intro-dark_2x.png" height="150"/>}
 /// {@endtemplate}
 class MacosSlider extends StatelessWidget {
   /// {@macro macosSlider}
