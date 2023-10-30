@@ -1,9 +1,18 @@
+## [2.0.3]
+### 🛠️ Fixed 🛠️
+* Fixed a bug that caused the sidebar to appear darker than intended.
+
+### 🔄 Updated 🔄
+* `SidebarItems` has now respects the user’s selected accent color and mimics the look of macOS’ sidebar items more closely.
+
+## [2.0.2]
+### 🛠️ Fixed 🛠️
+* Fixed images in generated documentation.
+
 ## [2.0.1]
 ### 🔄 Updated 🔄
 * `PushButton` has received a facelift. It now mimics the look and feel of native macOS buttons more closely.
   * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated.
-* Fixed a bug that caused the sidebar to appear darker than intended.
-* `SidebarItems` has now respects the user’s selected accent color and mimics the look of macOS’ sidebar items more closely.
 
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨

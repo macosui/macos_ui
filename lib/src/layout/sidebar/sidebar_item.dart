@@ -62,7 +62,7 @@ class SidebarItem with Diagnosticable {
   ///
   /// Typically a text indicator of a count of items, like in this
   /// screenshots from the Apple Notes app:
-  /// {@image <img src="https://imgur.com/REpW9f9.png" height="88" width="219" />}
+  /// <img src="https://imgur.com/REpW9f9.png" height="88" width="219" />
   final Widget? trailing;
 
   @override
