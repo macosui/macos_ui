@@ -1,3 +1,7 @@
+## [2.0.3]
+### 🛠️ Fixed 🛠️
+* Fixed `MacosRadioButton` check null value issue.
+
 ## [2.0.2]
 ### 🛠️ Fixed 🛠️
 * Fixed images in generated documentation.
