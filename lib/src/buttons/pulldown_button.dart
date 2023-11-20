@@ -642,6 +642,7 @@ class MacosPulldownButton extends StatefulWidget {
     this.autofocus = false,
     this.alignment = AlignmentDirectional.centerStart,
     this.menuAlignment = PulldownMenuAlignment.left,
+    this.resolveButtonStyles,
   })  : assert(itemHeight == null || itemHeight >= _kMenuItemHeight),
         assert(
             (title != null || icon != null) && !(title != null && icon != null),
@@ -717,6 +718,15 @@ class MacosPulldownButton extends StatefulWidget {
   ///
   /// Defaults to [PulldownMenuAlignment.left].
   final PulldownMenuAlignment menuAlignment;
+
+  // Style resolver to override
+  // with custom styles for states
+  final MacosPullDownButtonStyles Function(
+    BuildContext context, {
+    required PulldownButtonState state,
+    required bool isEnabled,
+    required bool hasIcon,
+  })? resolveButtonStyles;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -890,8 +900,18 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     final borderRadius = _hasIcon
         ? const BorderRadius.all(Radius.circular(7.0))
         : _kBorderRadius;
-    final buttonStyles =
-        _getButtonStyles(_pullDownButtonState, _enabled, _hasIcon, context);
+    final buttonStyles = widget.resolveButtonStyles?.call(
+          context,
+          state: _pullDownButtonState,
+          isEnabled: _enabled,
+          hasIcon: _hasIcon,
+        ) ??
+        defaultMacosPulldownButtonStyleResolver(
+          context,
+          state: _pullDownButtonState,
+          isEnabled: _enabled,
+          hasIcon: _hasIcon,
+        );
 
     Widget result = Container(
       decoration: _showHighlight
@@ -986,12 +1006,12 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
 //
 // We use this utility function to get the appropriate styling, according to the
 // macOS Design Guidelines and the current MacosPulldownButtonTheme.
-_ButtonStyles _getButtonStyles(
-  PulldownButtonState pullDownButtonState,
-  bool enabled,
-  bool hasIcon,
-  BuildContext context,
-) {
+MacosPullDownButtonStyles defaultMacosPulldownButtonStyleResolver(
+  BuildContext context, {
+  required PulldownButtonState state,
+  required bool isEnabled,
+  required bool hasIcon,
+}) {
   final theme = MacosTheme.of(context);
   final brightness = theme.brightness;
   final pulldownTheme = MacosPulldownButtonTheme.of(context);
@@ -1004,7 +1024,7 @@ _ButtonStyles _getButtonStyles(
   Color caretColor = MacosColors.white;
   Color caretBgColor = pulldownTheme.highlightColor!;
   Color iconColor = pulldownTheme.iconColor!;
-  if (!enabled) {
+  if (!isEnabled) {
     caretBgColor = MacosColors.transparent;
     if (hasIcon) {
       textColor = caretColor = brightness.resolve(
@@ -1029,7 +1049,7 @@ _ButtonStyles _getButtonStyles(
   } else {
     if (hasIcon) {
       borderColor = caretBgColor = MacosColors.transparent;
-      switch (pullDownButtonState) {
+      switch (state) {
         case PulldownButtonState.enabled:
           textColor = caretColor = iconColor;
           bgColor = MacosColors.transparent;
@@ -1050,7 +1070,7 @@ _ButtonStyles _getButtonStyles(
           break;
       }
     } else {
-      switch (pullDownButtonState) {
+      switch (state) {
         case PulldownButtonState.enabled:
           borderColor = brightness.resolve(
             const Color(0xffc3c4c9),
@@ -1067,7 +1087,7 @@ _ButtonStyles _getButtonStyles(
       }
     }
   }
-  return _ButtonStyles(
+  return MacosPullDownButtonStyles(
     textColor: textColor,
     bgColor: bgColor,
     borderColor: borderColor,
@@ -1076,8 +1096,8 @@ _ButtonStyles _getButtonStyles(
   );
 }
 
-class _ButtonStyles {
-  _ButtonStyles({
+class MacosPullDownButtonStyles {
+  MacosPullDownButtonStyles({
     required this.textColor,
     required this.bgColor,
     required this.borderColor,
@@ -1085,11 +1105,27 @@ class _ButtonStyles {
     required this.caretBgColor,
   });
 
-  Color textColor;
-  Color bgColor;
-  Color borderColor;
-  Color caretColor;
-  Color caretBgColor;
+  final Color textColor;
+  final Color bgColor;
+  final Color borderColor;
+  final Color caretColor;
+  final Color caretBgColor;
+
+  MacosPullDownButtonStyles copyWith({
+    Color? textColor,
+    Color? bgColor,
+    Color? borderColor,
+    Color? caretColor,
+    Color? caretBgColor,
+  }) {
+    return MacosPullDownButtonStyles(
+      textColor: textColor ?? this.textColor,
+      bgColor: bgColor ?? this.bgColor,
+      borderColor: borderColor ?? this.borderColor,
+      caretColor: caretColor ?? this.caretColor,
+      caretBgColor: caretBgColor ?? this.caretBgColor,
+    );
+  }
 }
 
 class _DownCaretPainter extends CustomPainter {
