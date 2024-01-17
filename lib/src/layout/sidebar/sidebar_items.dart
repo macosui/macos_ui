@@ -1,4 +1,5 @@
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_ui/src/enums/accent_color.dart';
 import 'package:macos_ui/src/library.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
@@ -79,7 +80,8 @@ class SidebarItems extends StatelessWidget {
 
   /// The color to paint the item when it's selected.
   ///
-  /// If null, [MacosThemeData.primaryColor] is used.
+  /// If null, the color is chosen automatically based on the user’s selected
+  /// system accent color and whether the sidebar is in the main window.
   final Color? selectedColor;
 
   /// The color to paint the item when it's unselected.
@@ -96,6 +98,21 @@ class SidebarItems extends StatelessWidget {
   ///
   /// Defaults to [SystemMouseCursors.basic].
   final MouseCursor? cursor;
+
+  /// The user’s selected system accent color.
+  AccentColor get _accentColor =>
+      AccentColorListener.instance.currentAccentColor ?? AccentColor.blue;
+
+  /// Returns the sidebar item’s selected color.
+  Color _getColor(BuildContext context) {
+    final isMainWindow = WindowMainStateListener.instance.isMainWindow;
+
+    return _ColorProvider.getSelectedColor(
+      accentColor: _accentColor,
+      isDarkModeEnabled: MacosTheme.of(context).brightness.isDark,
+      isWindowMain: isMainWindow,
+    );
+  }
 
   List<SidebarItem> get _allItems {
     List<SidebarItem> result = [];
@@ -117,39 +134,50 @@ class SidebarItems extends StatelessWidget {
     final theme = MacosTheme.of(context);
     return MacosIconTheme.merge(
       data: const MacosIconThemeData(size: 20),
-      child: _SidebarItemsConfiguration(
-        selectedColor: selectedColor ?? theme.primaryColor,
-        unselectedColor: unselectedColor ?? MacosColors.transparent,
-        shape: shape ?? _defaultShape,
-        itemSize: itemSize,
-        child: ListView(
-          controller: scrollController,
-          physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
-          children: List.generate(items.length, (index) {
-            final item = items[index];
-            if (item.disclosureItems != null) {
-              return MouseRegion(
-                cursor: cursor!,
-                child: _DisclosureSidebarItem(
-                  item: item,
-                  selectedItem: _allItems[currentIndex],
-                  onChanged: (item) {
-                    onChanged(_allItems.indexOf(item));
-                  },
+      child: StreamBuilder(
+        stream: AccentColorListener.instance.onChanged,
+        builder: (context, _) {
+          return StreamBuilder<bool>(
+            stream: WindowMainStateListener.instance.onChanged,
+            builder: (context, _) {
+              return _SidebarItemsConfiguration(
+                selectedColor: selectedColor ?? _getColor(context),
+                unselectedColor: unselectedColor ?? MacosColors.transparent,
+                shape: shape ?? _defaultShape,
+                itemSize: itemSize,
+                child: ListView(
+                  controller: scrollController,
+                  physics: const ClampingScrollPhysics(),
+                  padding:
+                      EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
+                  children: List.generate(items.length, (index) {
+                    final item = items[index];
+                    if (item.disclosureItems != null) {
+                      return MouseRegion(
+                        cursor: cursor!,
+                        child: _DisclosureSidebarItem(
+                          item: item,
+                          selectedItem: _allItems[currentIndex],
+                          onChanged: (item) {
+                            onChanged(_allItems.indexOf(item));
+                          },
+                        ),
+                      );
+                    }
+                    return MouseRegion(
+                      cursor: cursor!,
+                      child: _SidebarItem(
+                        item: item,
+                        selected: _allItems[currentIndex] == item,
+                        onClick: () => onChanged(_allItems.indexOf(item)),
+                      ),
+                    );
+                  }),
                 ),
               );
-            }
-            return MouseRegion(
-              cursor: cursor!,
-              child: _SidebarItem(
-                item: item,
-                selected: _allItems[currentIndex] == item,
-                onClick: () => onChanged(_allItems.indexOf(item)),
-              ),
-            );
-          }),
-        ),
+            },
+          );
+        },
       ),
     );
   }
@@ -495,5 +523,76 @@ class __DisclosureSidebarItemState extends State<_DisclosureSidebarItem>
       builder: _buildChildren,
       child: closed ? null : result,
     );
+  }
+}
+
+class _ColorProvider {
+  /// Returns the selected color based on the provided parameters.
+  static Color getSelectedColor({
+    required AccentColor accentColor,
+    required bool isDarkModeEnabled,
+    required bool isWindowMain,
+  }) {
+    if (isDarkModeEnabled) {
+      if (!isWindowMain) {
+        return const MacosColor.fromRGBO(76, 78, 65, 1.0);
+      }
+
+      switch (accentColor) {
+        case AccentColor.blue:
+          return const MacosColor.fromRGBO(22, 105, 229, 0.749);
+
+        case AccentColor.purple:
+          return const MacosColor.fromRGBO(204, 45, 202, 0.749);
+
+        case AccentColor.pink:
+          return const MacosColor.fromRGBO(229, 74, 145, 0.749);
+
+        case AccentColor.red:
+          return const MacosColor.fromRGBO(238, 64, 68, 0.749);
+
+        case AccentColor.orange:
+          return const MacosColor.fromRGBO(244, 114, 0, 0.749);
+
+        case AccentColor.yellow:
+          return const MacosColor.fromRGBO(233, 176, 0, 0.749);
+
+        case AccentColor.green:
+          return const MacosColor.fromRGBO(76, 177, 45, 0.749);
+
+        case AccentColor.graphite:
+          return const MacosColor.fromRGBO(129, 129, 122, 0.824);
+      }
+    }
+
+    if (!isWindowMain) {
+      return const MacosColor.fromRGBO(213, 213, 208, 1.0);
+    }
+
+    switch (accentColor) {
+      case AccentColor.blue:
+        return const MacosColor.fromRGBO(9, 129, 255, 0.749);
+
+      case AccentColor.purple:
+        return const MacosColor.fromRGBO(162, 28, 165, 0.749);
+
+      case AccentColor.pink:
+        return const MacosColor.fromRGBO(234, 81, 152, 0.749);
+
+      case AccentColor.red:
+        return const MacosColor.fromRGBO(220, 32, 40, 0.749);
+
+      case AccentColor.orange:
+        return const MacosColor.fromRGBO(245, 113, 0, 0.749);
+
+      case AccentColor.yellow:
+        return const MacosColor.fromRGBO(240, 180, 2, 0.749);
+
+      case AccentColor.green:
+        return const MacosColor.fromRGBO(66, 174, 33, 0.749);
+
+      case AccentColor.graphite:
+        return const MacosColor.fromRGBO(174, 174, 167, 0.847);
+    }
   }
 }
