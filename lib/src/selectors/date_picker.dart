@@ -21,7 +21,7 @@ enum DatePickerStyle {
 /// {template onDateChanged}
 /// The action to perform when a new date is selected.
 /// {endtemplate}
-typedef OnDateChanged = Function(DateTime date);
+typedef OnDateChanged = void Function(DateTime date);
 
 /// {template macosDatePicker}
 /// A [MacosDatePicker] lets the user choose a date.
