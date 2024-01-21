@@ -1,3 +1,7 @@
+## [2.0.4]
+### 🔄 Updated 🔄
+* Added `initialTime` parameter to `MacosTimePicker`, allowing to set an initial time for the picker.This provides more customization options for selecting time.
+
 ## [2.0.3]
 ### 🛠️ Fixed 🛠️
 * Fixed a bug that caused the sidebar to appear darker than intended.

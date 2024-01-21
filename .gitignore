@@ -80,3 +80,4 @@ metrics
 
 coverage_report
 coverage
+example/macos/Flutter/GeneratedPluginRegistrant.swift
