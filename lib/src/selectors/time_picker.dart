@@ -20,8 +20,8 @@ enum TimePickerStyle {
 
 /// {template onTimeChanged}
 /// The action to perform when a new time is selected.
-/// {endtemplate}
-typedef OnTimeChanged = Function(TimeOfDay time);
+/// {end-template}
+typedef OnTimeChanged = void Function(TimeOfDay time);
 
 /// {template macosTimePicker}
 /// A [MacosTimePicker] lets the user choose a time.
@@ -36,14 +36,20 @@ typedef OnTimeChanged = Function(TimeOfDay time);
 ///
 /// The [onTimeChanged] callback passes through the user's selected time, and
 /// must be provided.
-/// {endtemplate}
+/// {end-template}
 class MacosTimePicker extends StatefulWidget {
   /// {@macro macosTimePicker}
   const MacosTimePicker({
     super.key,
     required this.onTimeChanged,
+    this.initialTime,
     this.style = TimePickerStyle.combined,
   });
+
+  /// Set an initial date for the picker.
+  ///
+  /// Defaults to `TimeOfDay.now()`.
+  final TimeOfDay? initialTime;
 
   /// The [TimePickerStyle] to use.
   ///
@@ -58,7 +64,7 @@ class MacosTimePicker extends StatefulWidget {
 }
 
 class _MacosTimePickerState extends State<MacosTimePicker> {
-  final _initialTime = TimeOfDay.now();
+  late final _initialTime = widget.initialTime ?? TimeOfDay.now();
   late int _selectedHour;
   late int _selectedMinute;
   late DayPeriod _selectedPeriod;
