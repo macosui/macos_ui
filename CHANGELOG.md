@@ -1,3 +1,7 @@
+## [2.0.5]
+### 🛠️ Fixed 🛠️
+* Fixed `MacosRadioButton` check null value issue.
+
 ## [2.0.4]
 ### 🔄 Updated 🔄
 * Added `initialTime` parameter to `MacosTimePicker`, allowing to set an initial time for the picker.This provides more customization options for selecting time.
@@ -16,21 +20,21 @@
 ## [2.0.1]
 ### 🔄 Updated 🔄
 * `PushButton` has received a facelift. It now mimics the look and feel of native macOS buttons more closely.
-  * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated.
+    * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated.
 
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
 * `macos_ui` has been migrated to utilize [macos_window_utils](https://pub.dev/packages/macos_window_utils) under the hood, which provides the following benefits:
-  * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
-  * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
-  * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
-  * Wallpaper tinting is now supported.
-  * To migrate an existing application, please refer to the “Modern window look” section in the README.
+    * Window animation smoothness is drastically improved, particularly when miniaturizing and deminiaturizing the application window.
+    * Some visual artifacts that occurred while the window was being (de)miniaturized (such as the application's shadow going missing) no longer occur.
+    * The sidebar remains transparent when the app's brightness setting mismatches the OS setting.
+    * Wallpaper tinting is now supported.
+    * To migrate an existing application, please refer to the “Modern window look” section in the README.
 
 * Support for Flutter 3.10 and Dart 3
 * `PushButton` has been updated to support the `ControlSize` enum.
-  * The `buttonSize` property has been changed to `controlSize`.
-  * Buttons can now be any of the following sizes: mini, small, regular, or large.
+    * The `buttonSize` property has been changed to `controlSize`.
+    * Buttons can now be any of the following sizes: mini, small, regular, or large.
 * `PushButton.isSecondary` is now `PushButton.secondary`.
 * `MacosAlertDialog`: `primaryButton` and `secondaryButton` are now declared to be of type `PushButton`.
 * `RelevanceIndicator` has been deprecated
@@ -41,22 +45,22 @@
 * `MacosSwitch` has been completely rewritten and now matches the native macOS switch in appearance and behavior.
 * A `ControlSize` enum has been introduced, which will allow widgets to more closely match their native counterparts.
 * `MacosTypography`
-  * You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
-  * `MacosFontWeight` allows using Apple-specific font weights like `w510`, `w590`, and `w860`.
+    * You can now call `MacosTypography.of(context)` as a shorthand for retrieving the typography used in your `MacosTheme`.
+    * `MacosFontWeight` allows using Apple-specific font weights like `w510`, `w590`, and `w860`.
 * Localization
-  * Added support for `weekdayAbbreviations` and `monthAbbreviations` to `MacosDatePicker`.
-  * Added support for `dateFormat` to `MacosDatePicker`.
-  * Added support for `startWeekOnMonday` to `MacosDatePicker`.
+    * Added support for `weekdayAbbreviations` and `monthAbbreviations` to `MacosDatePicker`.
+    * Added support for `dateFormat` to `MacosDatePicker`.
+    * Added support for `startWeekOnMonday` to `MacosDatePicker`.
 
 ### 🔄 Updated 🔄
 * `MacosColor` has been updated with some previously missing elements.
 * `PushButton`
-  * Now uses the correct `body` text style instead of the incorrect `headline`
+    * Now uses the correct `body` text style instead of the incorrect `headline`
 * `PushButton`'s secondary and disabled colors more closely match their native counterparts.
 * `MacosCheckbox` appearance more closely matches its native counterpart.
 * `MacosAlertDialog`
-  * `primaryButton` and `secondaryButton` are now required to have `controlSize`s of `ControlSize.large`.
-  * Docs now suggest that `appIcon` should be of size 64x64.
+    * `primaryButton` and `secondaryButton` are now required to have `controlSize`s of `ControlSize.large`.
+    * Docs now suggest that `appIcon` should be of size 64x64.
 * `Toolbar` now uses the correct `title3` text style instead of the incorrect `headline`
 * `MacosTheme` sets the global typography more efficiently
 * `HelpButton` now sizes itself according to specification
@@ -96,9 +100,9 @@
 ## [1.11.0]
 * 🚨 Breaking Changes 🚨
 * `ResizablePane` can now be vertically resized
-  * `ResizablePane.startWidth` has been changed to `ResizablePane.startSize`
-  * `ResizablePane.minWidth` has been changed to `ResizablePane.minSize`
-  * `ResizablePane.maxWidth` has been changed to `ResizablePane.maxSize`
+    * `ResizablePane.startWidth` has been changed to `ResizablePane.startSize`
+    * `ResizablePane.minWidth` has been changed to `ResizablePane.minSize`
+    * `ResizablePane.maxWidth` has been changed to `ResizablePane.maxSize`
 
 ## [1.10.0]
 🚨 Breaking Changes 🚨
@@ -121,8 +125,8 @@ Other changes:
 ## [1.8.0]
 🚨 Breaking Changes 🚨
 * `ContentArea.builder` has been changed from a `ScrollableWidgetBuilder` to a `WidgetBuilder` due to
-changes in Flutter 3.7. The `MacosScrollbar` widget needs to undergo radical changes in order to achieve the
-native macOS scrollbar look and feel in the future, so this will be revisited at that time.
+  changes in Flutter 3.7. The `MacosScrollbar` widget needs to undergo radical changes in order to achieve the
+  native macOS scrollbar look and feel in the future, so this will be revisited at that time.
 
 Other changes:
 * Per Flutter 3.7.0: Replace deprecated `MacosTextField.toolbarOptions` with `MacosTextField.contextMenuBuilder`
@@ -151,21 +155,21 @@ Other changes:
 
 ## [1.7.0]
 * ✨ New
-  * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a
-`MacosIconThemeData` instead of an `IconThemeData`
-  * `SidebarItemSize` enum, which determines the height of sidebar items and the maximum size their `leading` widgets.
-  * `SidebarItem` now accepts an optional `trailing` widget.
+    * `MacosImageIcon` widget. Identical to the `ImageIcon` from `flutter/widgets.dart` except it will obey a
+      `MacosIconThemeData` instead of an `IconThemeData`
+    * `SidebarItemSize` enum, which determines the height of sidebar items and the maximum size their `leading` widgets.
+    * `SidebarItem` now accepts an optional `trailing` widget.
 * 🔄 Updated
-  * `SidebarItems` now supports `SidebarItemSize` via the `itemSize` property, which defaults to
-`SidebarItemSize.medium`. The widget has been updated to manage the item's height, the maximum size of the item's
-leading widget, and the font size of the item's label widget according to the given `SidebarItemSize`.
-  * The example app has been tweaked to use some icons from the SF Symbols 4 Beta via the new `MacosImageIcon` widget.
+    * `SidebarItems` now supports `SidebarItemSize` via the `itemSize` property, which defaults to
+      `SidebarItemSize.medium`. The widget has been updated to manage the item's height, the maximum size of the item's
+      leading widget, and the font size of the item's label widget according to the given `SidebarItemSize`.
+    * The example app has been tweaked to use some icons from the SF Symbols 4 Beta via the new `MacosImageIcon` widget.
 
 ## [1.6.0]
 * New widgets: `MacosTabView` and `MacosTabView`
 * BREAKING CHANGE: `Label.yAxis` has been renamed to `Label.crossAxisAlignment`
 * BREAKING CHANGE: `TooltipTheme` and `TooltipThemeData` have been renamed to `MacosTooltipTheme` and
-`MacosTooltipThemeData`
+  `MacosTooltipThemeData`
 
 ## [1.5.1]
 * Correct the placement of the leading widget in disclosure sidebar items [#268](https://github.com/GroovinChip/macos_ui/issues/268)
@@ -185,15 +189,15 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [1.4.0]
 * Migration to Flutter 3.0
-  * Minimum dart sdk version is now 2.17.0
-  * Use new super parameters feature
-  * Update to `flutter_lints: ^2.0.1` with subsequent fixes
-  * `MacosScrollbar` API more closely matches its material counterpart
+    * Minimum dart sdk version is now 2.17.0
+    * Use new super parameters feature
+    * Update to `flutter_lints: ^2.0.1` with subsequent fixes
+    * `MacosScrollbar` API more closely matches its material counterpart
 * Update `MacosColor` to more closely match the `Color` class
-  * Adds `MacosColor.fromARGB` constructor
-  * Adds `MacosColor.fromRGBO` constructor
-  * Adds `alphaBlend` function
-  * Adds `getAlphaFromOpacity` function
+    * Adds `MacosColor.fromARGB` constructor
+    * Adds `MacosColor.fromRGBO` constructor
+    * Adds `alphaBlend` function
+    * Adds `getAlphaFromOpacity` function
 
 ## [1.3.0]
 * Add a `top` property to `Sidebar`
@@ -207,8 +211,8 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [1.2.0]
 * Improved styling for `MacosTooltip`:
-  * Better color and shadows.
-  * Displays left-aligned, below the mouse cursor.
+    * Better color and shadows.
+    * Displays left-aligned, below the mouse cursor.
 * New widget: `ToolBarDivider` that can be used as a divider (vertical/horizontal line) in the `ToolBar` [#231](https://github.com/GroovinChip/macos_ui/issues/231).
 * All toolbar widgets can now receive a `tooltipMessage` property to display a `MacosTooltip` when user hovers over them [#232](https://github.com/GroovinChip/macos_ui/issues/232).
 
@@ -217,17 +221,17 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [1.1.0]
 * New functionality for `MacosSearchField`
-  * Shows a list of search results in an overlay below the field
-  * A result can be selected and customized.
+    * Shows a list of search results in an overlay below the field
+    * A result can be selected and customized.
 * A `MacosOverlayFilter` widget can now be used to apply the blurry "frosted glass" effect on surfaces.
 * New widget: `CustomToolbarItem` that enables any widget to be used in the `Toolbar`.
 
 ## [1.0.1]
 * Improvements to the graphical `MacosTimePicker`
-  * Better color gradient on the border
-  * Better inner shadow
-  * Minor size adjustments
-  * API improvements
+    * Better color gradient on the border
+    * Better inner shadow
+    * Minor size adjustments
+    * API improvements
 * Throw an exception if `MacosColorWell` is clicked on a non-macOS platform
 
 ## [1.0.0+1]
@@ -299,9 +303,9 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.10.2]
 * Updates to `MacosIconButton` and `MacosBackButton`:
-  * Added a hover effect when mouse moves over the buttons ([#168](https://github.com/GroovinChip/macos_ui/issues/168))
-  * Added `hoverColor` property.
-  * Default shape is now `BoxShape.rectangle` with border radius, as it seems to be the most used in macOS design.
+    * Added a hover effect when mouse moves over the buttons ([#168](https://github.com/GroovinChip/macos_ui/issues/168))
+    * Added `hoverColor` property.
+    * Default shape is now `BoxShape.rectangle` with border radius, as it seems to be the most used in macOS design.
 
 ## [0.10.1]
 * Added support for transparent sidebar. Please note that changes to `MainFlutterWindow.swift` are required for this to work. [(#175)](https://github.com/GroovinChip/macos_ui/pull/175)
@@ -315,7 +319,7 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.9.3]
 * Update to `PushButton`:
-  * Added `isSecondary` property
+    * Added `isSecondary` property
 
 ## [0.9.2]
 * Nearly all `MouseRegion`s have been updated to use `SystemMouseCursors.basic` in order to more closely adhere to Apple norms
@@ -323,7 +327,7 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.9.1]
 * Added top-level theming for `MacosIconButton`
-  * Introduces the `MacosIconButtonTheme` InheritedTheme and the `MacosIconButtonThemeData` theme class
+    * Introduces the `MacosIconButtonTheme` InheritedTheme and the `MacosIconButtonThemeData` theme class
 * Updates `MacosThemeData` and `MacosIconButton` to use the new `MacosIconButtonThemeData`
 * Removes an unnecessary setting of VisualDensity from `MacosThemeData.dark()`
 
@@ -332,10 +336,10 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.8.2]
 * Updates to `MacosListTile`:
-  * Added `leadingWhitespace` property
-  * Added `onClick` callback
-  * Added `onLongPress` callback
-  * Added `mouseCursor` property
+    * Added `leadingWhitespace` property
+    * Added `onClick` callback
+    * Added `onLongPress` callback
+    * Added `mouseCursor` property
 
 ## [0.8.1]
 * Fix the outer border of `MacosSheet` not having a border radius
@@ -397,16 +401,16 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.3.0]
 * Add `MacosPrefix` to widgets/classes with names that overlap with the material/cupertino libraries:
-  * `TextField` -> `MacosTextField`
-  * `Scaffold` -> `MacosTextField`
-  * `IconButton` -> `MacosIconButton`
-  * `BackButton` -> `MacosBackButton`
-  * `Scrollbar` -> `MacosScrollbar`
-  * `Checkbox` -> `MacosCheckbox`
-  * `RadioButton` -> `MacosRadioButton`
-  * `Tooltip` -> `MacosTooltip`
-  * `Typography` -> `MacosTypography`
-  * `Switch` -> `MacosSwitch`
+    * `TextField` -> `MacosTextField`
+    * `Scaffold` -> `MacosTextField`
+    * `IconButton` -> `MacosIconButton`
+    * `BackButton` -> `MacosBackButton`
+    * `Scrollbar` -> `MacosScrollbar`
+    * `Checkbox` -> `MacosCheckbox`
+    * `RadioButton` -> `MacosRadioButton`
+    * `Tooltip` -> `MacosTooltip`
+    * `Typography` -> `MacosTypography`
+    * `Switch` -> `MacosSwitch`
 
 ## [0.2.4]
 * Fix text field prefix icon alignment
@@ -420,9 +424,9 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.2.1]
 * `IconButton` updates:
-  - The `color` property is now `backgroundColor`
-  - The widget now takes a `Widget icon` rather than `IconData iconData` for better control over widget properties
-  - Deprecate and remove internal `foregroundColor` value
+    - The `color` property is now `backgroundColor`
+    - The widget now takes a `Widget icon` rather than `IconData iconData` for better control over widget properties
+    - Deprecate and remove internal `foregroundColor` value
 
 ## [0.2.0]
 * New widget: `BackButton`, `IconButton`
@@ -439,9 +443,9 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.1.2]
 * Updated the theme api
-  * Properties in `MacosThemeData` and in `Typography` can't be null
-  * Renamed `DynamicColorX` to `MacosDynamicColor`
-  * Added the method `lerp` on all theme data classes.
+    * Properties in `MacosThemeData` and in `Typography` can't be null
+    * Renamed `DynamicColorX` to `MacosDynamicColor`
+    * Added the method `lerp` on all theme data classes.
 
 ## [0.1.1]
 * Implemented `Label` ([#61](https://github.com/GroovinChip/macos_ui/issues/61))
@@ -488,12 +492,12 @@ leading widget, and the font size of the item's label widget according to the gi
 
 ## [0.0.4]
 * Major theme refactor that more closely resembles flutter/material and flutter/cupertino
-  * The `Style` class is now `MacosThemeData`
-  * `MacosTheme` is now a `StatelessWidget` that returns a private `_InheritedMacosTheme`.
-  The static `MacosTheme.of(context)` is now defined here.
-  * `MacosApp` now takes a `theme` and `darkTheme` rather than `style` and `darkStyle`.
-  Additionally, there are minor changes to the way `MacosApp` is built that more closely
-  resemble how `MaterialApp` is built.
+    * The `Style` class is now `MacosThemeData`
+    * `MacosTheme` is now a `StatelessWidget` that returns a private `_InheritedMacosTheme`.
+      The static `MacosTheme.of(context)` is now defined here.
+    * `MacosApp` now takes a `theme` and `darkTheme` rather than `style` and `darkStyle`.
+      Additionally, there are minor changes to the way `MacosApp` is built that more closely
+      resemble how `MaterialApp` is built.
 
 ## [0.0.3]
 
@@ -509,6 +513,6 @@ leading widget, and the font size of the item's label widget according to the gi
 ## [0.0.1]
 
 * Project creation
-  * `MacosApp` widget
-  * Basic `Typography`
-  * Basic theming via `MacosTheme` and `Style`
+    * `MacosApp` widget
+    * Basic `Typography`
+    * Basic theming via `MacosTheme` and `Style`
