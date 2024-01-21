@@ -43,7 +43,7 @@ class SidebarItem with Diagnosticable {
   final Color? unselectedColor;
 
   /// The [shape] property specifies the outline (border) of the
-  /// decoration. The shape must not be null. It's used alonside
+  /// decoration. The shape must not be null. It's used alongside
   /// [selectedColor].
   final ShapeBorder? shape;
 

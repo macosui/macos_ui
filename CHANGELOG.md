@@ -1,6 +1,13 @@
-## [2.0.3]
+## [2.0.4]
 ### 🔄 Updated 🔄
 * Added `initialTime` parameter to `MacosTimePicker`, allowing to set an initial time for the picker.This provides more customization options for selecting time.
+
+## [2.0.3]
+### 🛠️ Fixed 🛠️
+* Fixed a bug that caused the sidebar to appear darker than intended.
+
+### 🔄 Updated 🔄
+* `SidebarItems` has now respects the user’s selected accent color and mimics the look of macOS’ sidebar items more closely.
 
 ## [2.0.2]
 ### 🛠️ Fixed 🛠️
@@ -9,7 +16,7 @@
 ## [2.0.1]
 ### 🔄 Updated 🔄
 * `PushButton` has received a facelift. It now mimics the look and feel of native macOS buttons more closely.
-    * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated.
+  * **Note:** As a result, its `pressedOpacity` property and the `PushButtonTheme` class have been deprecated.
 
 ## [2.0.0]
 ### 🚨 Breaking Changes 🚨
