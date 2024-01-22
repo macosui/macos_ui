@@ -9,6 +9,11 @@ import 'package:macos_ui/src/library.dart';
 /// Defines the height of a regular-sized [ToolBar]
 const _kToolbarHeight = 52.0;
 
+final _isMacos = defaultTargetPlatform == TargetPlatform.macOS;
+final _defaultWindowHandlePadding = EdgeInsets.only(
+  left: !kIsWeb && _isMacos ? 70 : 0,
+);
+
 /// Defines the width of the leading widget in the [ToolBar]
 const _kLeadingWidth = 20.0;
 
@@ -46,6 +51,7 @@ class ToolBar extends StatefulWidget with Diagnosticable {
     this.dividerColor,
     this.allowWallpaperTintingOverrides = true,
     this.enableBlur = false,
+    this.windowHandlePadding,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -152,6 +158,9 @@ class ToolBar extends StatefulWidget with Diagnosticable {
   /// Whether this [ToolBar] should have a blur backdrop filter applied to it.
   final bool enableBlur;
 
+  /// Padding to avoid overlapping with the window handle.
+  final EdgeInsets? windowHandlePadding;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -175,6 +184,8 @@ class ToolBar extends StatefulWidget with Diagnosticable {
       ifTrue: 'center title',
     ));
     properties.add(DiagnosticsProperty<Color>('dividerColor', dividerColor));
+    properties.add(DiagnosticsProperty<EdgeInsets>(
+        'windowHandlePadding', windowHandlePadding));
   }
 
   @override
@@ -254,14 +265,11 @@ class _ToolBarState extends State<ToolBar> {
       }
     }
 
-    final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
+    final windowHandlePadding =
+        widget.windowHandlePadding ?? _defaultWindowHandlePadding;
 
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        padding: EdgeInsets.only(
-          left: !kIsWeb && isMacOS ? 70 : 0,
-        ),
-      ),
+      data: MediaQuery.of(context).copyWith(padding: windowHandlePadding),
       child: _WallpaperTintedAreaOrBlurFilter(
         enableWallpaperTintedArea: kIsWeb ? false : !widget.enableBlur,
         isWidgetVisible: widget.allowWallpaperTintingOverrides,

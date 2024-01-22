@@ -41,6 +41,7 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     this.floating = false,
     this.toolbarOpacity = 0.9,
     this.allowWallpaperTintingOverrides = true,
+    this.windowHandlePadding,
   });
 
   /// Specifies the height of this [ToolBar].
@@ -163,6 +164,9 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
   /// the Flutter project.
   final bool allowWallpaperTintingOverrides;
 
+  /// Padding to avoid overlapping with the window handle.
+  final EdgeInsets? windowHandlePadding;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -187,6 +191,8 @@ class SliverToolBar extends StatefulWidget with Diagnosticable {
     properties.add(FlagProperty('pinned', value: pinned, ifTrue: 'pinned'));
     properties
         .add(FlagProperty('floating', value: floating, ifTrue: 'floating'));
+    properties.add(DiagnosticsProperty<EdgeInsets>(
+        'windowHandlePadding', windowHandlePadding));
   }
 
   @override
@@ -231,6 +237,7 @@ class _SliverToolBarState extends State<SliverToolBar>
           toolbarOpacity: widget.toolbarOpacity,
           allowWallpaperTintingOverrides: widget.allowWallpaperTintingOverrides,
           vsync: this,
+          windowHandlePadding: widget.windowHandlePadding,
         ),
       ),
     );
@@ -255,6 +262,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
     required this.pinned,
     required this.toolbarOpacity,
     required this.allowWallpaperTintingOverrides,
+    this.windowHandlePadding,
   });
 
   final double height;
@@ -272,12 +280,13 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
   final bool pinned;
   final double toolbarOpacity;
   final bool allowWallpaperTintingOverrides;
+  final EdgeInsets? windowHandlePadding;
 
   @override
-  double get minExtent => _kToolbarHeight;
+  double get minExtent => height;
 
   @override
-  double get maxExtent => _kToolbarHeight;
+  double get maxExtent => height;
 
   @override
   final TickerProvider vsync;
@@ -323,6 +332,7 @@ class _SliverToolBarDelegate extends SliverPersistentHeaderDelegate {
         height: height,
         enableBlur: true,
         allowWallpaperTintingOverrides: allowWallpaperTintingOverrides,
+        windowHandlePadding: windowHandlePadding,
       ),
     );
   }
