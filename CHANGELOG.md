@@ -1,3 +1,7 @@
+## [2.0.6]
+### 🛠️ Fixed 🛠️
+* Fixed `Sidebar` start sidebar not closing properly and fix black background Color.
+
 ## [2.0.5]
 ### 🛠️ Fixed 🛠️
 * Fixed `MacosRadioButton` check null value issue.
