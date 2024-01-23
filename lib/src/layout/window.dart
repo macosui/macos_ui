@@ -84,85 +84,82 @@ class MacosWindow extends StatefulWidget {
 }
 
 class _MacosWindowState extends State<MacosWindow> {
-  var _sidebarScrollController = ScrollController();
-  var _endSidebarScrollController = ScrollController();
+  late ScrollController _sidebarScrollController;
+  late ScrollController _endSidebarScrollController;
+
+  int _sidebarSlideDuration = 0;
+
+  // start-sidebar
   double _sidebarWidth = 0.0;
   double _sidebarDragStartWidth = 0.0;
   double _sidebarDragStartPosition = 0.0;
+
+  // end-sidebar
   double _endSidebarWidth = 0.0;
   double _endSidebarDragStartWidth = 0.0;
   double _endSidebarDragStartPosition = 0.0;
+
   bool _showSidebar = true;
   late bool _showEndSidebar = widget.endSidebar?.shownByDefault ?? false;
-  int _sidebarSlideDuration = 0;
+
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
   SystemMouseCursor _endSidebarCursor = SystemMouseCursors.resizeLeft;
 
   @override
   void initState() {
     super.initState();
+    initializeControllers();
+    initializeDimensions();
+    initializeWallpaperTinting();
+  }
+
+  void initializeControllers() {
+    _sidebarScrollController = ScrollController();
+    _endSidebarScrollController = ScrollController();
+    _addSidebarScrollControllerListenerIfNeeded(widget.sidebar);
+    _addSidebarScrollControllerListenerIfNeeded(widget.endSidebar);
+  }
+
+  void initializeDimensions() {
     _sidebarWidth = (widget.sidebar?.startWidth ?? widget.sidebar?.minWidth) ??
         _sidebarWidth;
     _endSidebarWidth =
         (widget.endSidebar?.startWidth ?? widget.endSidebar?.minWidth) ??
             _endSidebarWidth;
+  }
 
+  void initializeWallpaperTinting() {
     widget.disableWallpaperTinting
         ? GlobalWallpaperTintingSettings.disableWallpaperTinting()
         : GlobalWallpaperTintingSettings.allowWallpaperTinting();
-
-    _addSidebarScrollControllerListenerIfNeeded();
-    _addEndSidebarScrollControllerListenerIfNeeded();
   }
 
-  @override
-  void didUpdateWidget(covariant MacosWindow old) {
-    super.didUpdateWidget(old);
-    final sidebar = widget.sidebar;
-    if (sidebar == null) {
-      _sidebarWidth = 0.0;
-    } else if (sidebar.minWidth != old.sidebar!.minWidth ||
-        sidebar.maxWidth != old.sidebar!.maxWidth) {
-      if (sidebar.minWidth > _sidebarWidth) {
-        _sidebarWidth = sidebar.minWidth;
-      }
-      if (sidebar.maxWidth! < _sidebarWidth) {
-        _sidebarWidth = sidebar.maxWidth!;
-      }
-    }
-    if (sidebar?.key != old.sidebar?.key) {
-      _sidebarScrollController.dispose();
-      _sidebarScrollController = ScrollController();
-      _addSidebarScrollControllerListenerIfNeeded();
-    }
-    final endSidebar = widget.endSidebar;
-    if (endSidebar == null) {
-      _endSidebarWidth = 0.0;
-    } else if (endSidebar.minWidth != old.endSidebar!.minWidth ||
-        endSidebar.maxWidth != old.endSidebar!.maxWidth) {
-      if (endSidebar.minWidth > _endSidebarWidth) {
-        _endSidebarWidth = endSidebar.minWidth;
-      }
-      if (endSidebar.maxWidth! < _endSidebarWidth) {
-        _endSidebarWidth = endSidebar.maxWidth!;
-      }
-    }
-    if (endSidebar?.key != old.endSidebar?.key) {
-      _endSidebarScrollController.dispose();
-      _endSidebarScrollController = ScrollController();
-      _addEndSidebarScrollControllerListenerIfNeeded();
-    }
-  }
-
-  void _addSidebarScrollControllerListenerIfNeeded() {
-    if (widget.sidebar?.builder != null) {
+  void _addSidebarScrollControllerListenerIfNeeded(Sidebar? sidebar) {
+    if (sidebar?.builder != null) {
       _sidebarScrollController.addListener(() => setState(() {}));
     }
   }
 
-  void _addEndSidebarScrollControllerListenerIfNeeded() {
-    if (widget.endSidebar?.builder != null) {
-      _endSidebarScrollController.addListener(() => setState(() {}));
+  @override
+  void didUpdateWidget(covariant MacosWindow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateSidebarDimensions(oldWidget, widget.sidebar);
+    _updateSidebarDimensions(oldWidget, widget.endSidebar);
+  }
+
+  void _updateSidebarDimensions(MacosWindow oldWidget, Sidebar? sidebar) {
+    if (sidebar == null) {
+      _sidebarWidth = 0.0;
+    } else if (sidebar.minWidth != oldWidget.sidebar!.minWidth ||
+        sidebar.maxWidth != oldWidget.sidebar!.maxWidth) {
+      _sidebarWidth = sidebar.minWidth > _sidebarWidth
+          ? sidebar.minWidth
+          : math.min(sidebar.maxWidth!, _sidebarWidth);
+    }
+    if (sidebar?.key != oldWidget.sidebar?.key) {
+      _sidebarScrollController.dispose();
+      _sidebarScrollController = ScrollController();
+      _addSidebarScrollControllerListenerIfNeeded(sidebar);
     }
   }
 
@@ -170,52 +167,37 @@ class _MacosWindowState extends State<MacosWindow> {
   void dispose() {
     _sidebarScrollController.dispose();
     _endSidebarScrollController.dispose();
-
     super.dispose();
   }
 
-  @override
-  // ignore: code-metrics
-  Widget build(BuildContext context) {
-    assert(debugCheckHasMacosTheme(context));
-    final sidebar = widget.sidebar;
-    final endSidebar = widget.endSidebar;
+  void assertSidebarWith(Sidebar? sidebar) {
     if (sidebar?.startWidth != null) {
       assert((sidebar!.startWidth! >= sidebar.minWidth) &&
           (sidebar.startWidth! <= sidebar.maxWidth!));
     }
-    if (endSidebar?.startWidth != null) {
-      assert((endSidebar!.startWidth! >= endSidebar.minWidth) &&
-          (endSidebar.startWidth! <= endSidebar.maxWidth!));
-    }
-    final MacosThemeData theme = MacosTheme.of(context);
-    late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
-    late Color sidebarBackgroundColor;
-    late Color endSidebarBackgroundColor;
-    Color dividerColor = theme.dividerColor;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final sidebar = widget.sidebar;
+    final endSidebar = widget.endSidebar;
+    assertSidebarWith(sidebar);
+    assertSidebarWith(endSidebar);
+
+    final MacosThemeData theme = MacosTheme.of(context);
     final isMac = !kIsWeb && defaultTargetPlatform == TargetPlatform.macOS;
 
-    // Respect the sidebar color override from parent if one is given
-    if (sidebar?.decoration?.color != null) {
-      sidebarBackgroundColor = sidebar!.decoration!.color!;
-    } else {
-      sidebarBackgroundColor = MacosColors.transparent;
-    }
+    final backgroundColor = widget.backgroundColor ?? theme.canvasColor;
 
-    // Set the application window's brightness on macOS
+    final sidebarBackgroundColor = sidebar?.decoration?.color ??
+        (isMac ? MacosColors.transparent : theme.canvasColor);
+    final endSidebarBackgroundColor =
+        endSidebar?.decoration?.color ?? theme.canvasColor;
+
+    final dividerColor = theme.dividerColor;
+
     MacOSBrightnessOverrideHandler.ensureMatchingBrightness(theme.brightness);
-
-    // Respect the end sidebar color override from parent if one is given
-    if (endSidebar?.decoration?.color != null) {
-      endSidebarBackgroundColor = endSidebar!.decoration!.color!;
-    } else if (isMac) {
-      endSidebarBackgroundColor = theme.canvasColor;
-    } else {
-      endSidebarBackgroundColor = theme.brightness.isDark
-          ? CupertinoColors.tertiarySystemBackground.darkColor
-          : CupertinoColors.systemGrey6.color;
-    }
 
     const curve = Curves.linearToEaseOut;
     final duration = Duration(milliseconds: _sidebarSlideDuration);
@@ -226,13 +208,10 @@ class _MacosWindowState extends State<MacosWindow> {
         final height = constraints.maxHeight;
         final isAtBreakpoint = width <= (sidebar?.windowBreakpoint ?? 0);
         final isAtEndBreakpoint = width <= (endSidebar?.windowBreakpoint ?? 0);
-        final canShowSidebar =
-            _showSidebar && !isAtBreakpoint && sidebar != null;
-        final canShowEndSidebar =
-            _showEndSidebar && !isAtEndBreakpoint && endSidebar != null;
+        final canShowSidebar = _showSidebar && !isAtBreakpoint && sidebar != null;
+        final canShowEndSidebar = _showEndSidebar && !isAtEndBreakpoint && endSidebar != null;
         final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
-        final visibleEndSidebarWidth =
-            canShowEndSidebar ? _endSidebarWidth : 0.0;
+        final visibleEndSidebarWidth = canShowEndSidebar ? _endSidebarWidth : 0.0;
         final sidebarState = widget.sidebarState;
 
         final layout = Stack(
@@ -240,17 +219,17 @@ class _MacosWindowState extends State<MacosWindow> {
             // Background color
             AnimatedPositioned(
               curve: curve,
-              duration: duration,
-              height: height,
-              left: visibleSidebarWidth,
               width: width,
+              height: height,
+              duration: duration,
+              left: visibleSidebarWidth,
               child: ColoredBox(color: backgroundColor),
             ),
 
             // Sidebar
-            if (sidebar != null)
-              AnimatedPositioned(
+            if (sidebar != null) AnimatedPositioned(
                 key: sidebar.key,
+                right: width - visibleSidebarWidth,
                 curve: curve,
                 duration: duration,
                 height: height,
@@ -265,112 +244,16 @@ class _MacosWindowState extends State<MacosWindow> {
                     minHeight: height,
                     maxHeight: height,
                   ).normalize(),
-                  child: kIsWeb
-                      ? ColoredBox(
-                          color: theme.canvasColor,
-                          child: Column(
-                            children: [
-                              // If an app is running on macOS, apply
-                              // sidebar.topOffset as needed in order to avoid
-                              // the traffic lights. Otherwise, position the
-                              // sidebar by the top of the application's bounds
-                              // based on the presence of sidebar.top.
-                              if (!kIsWeb && sidebar.topOffset > 0) ...[
-                                SizedBox(height: sidebar.topOffset),
-                              ] else if (sidebar.top != null) ...[
-                                const SizedBox(height: 12),
-                              ] else
-                                const SizedBox.shrink(),
-                              if (_sidebarScrollController.hasClients &&
-                                  _sidebarScrollController.offset > 0.0)
-                                Divider(
-                                    thickness: 1,
-                                    height: 1,
-                                    color: dividerColor),
-                              if (sidebar.top != null &&
-                                  constraints.maxHeight > 81)
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0,
-                                  ),
-                                  child: sidebar.top!,
-                                ),
-                              Expanded(
-                                child: MacosScrollbar(
-                                  controller: _sidebarScrollController,
-                                  child: Padding(
-                                    padding: sidebar.padding,
-                                    child: sidebar.builder(
-                                      context,
-                                      _sidebarScrollController,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              if (sidebar.bottom != null &&
-                                  constraints.maxHeight > 141)
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: sidebar.bottom!,
-                                ),
-                            ],
-                          ),
-                        )
-                      : TransparentMacOSSidebar(
+                  child: isMac
+                      ? TransparentMacOSSidebar(
                           state: sidebarState,
-                          child: DecoratedBox(
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(0, 0, 0, 1.0),
-                              backgroundBlendMode: BlendMode.clear,
-                            ),
-                            child: Column(
-                              children: [
-                                // If an app is running on macOS, apply
-                                // sidebar.topOffset as needed in order to avoid
-                                // the traffic lights. Otherwise, position the
-                                // sidebar by the top of the application's bounds
-                                // based on the presence of sidebar.top.
-                                if (!kIsWeb && sidebar.topOffset > 0) ...[
-                                  SizedBox(height: sidebar.topOffset),
-                                ] else if (sidebar.top != null) ...[
-                                  const SizedBox(height: 12),
-                                ] else
-                                  const SizedBox.shrink(),
-                                if (_sidebarScrollController.hasClients &&
-                                    _sidebarScrollController.offset > 0.0)
-                                  Divider(
-                                      thickness: 1,
-                                      height: 1,
-                                      color: dividerColor),
-                                if (sidebar.top != null &&
-                                    constraints.maxHeight > 81)
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
-                                    ),
-                                    child: sidebar.top!,
-                                  ),
-                                Expanded(
-                                  child: MacosScrollbar(
-                                    controller: _sidebarScrollController,
-                                    child: Padding(
-                                      padding: sidebar.padding,
-                                      child: sidebar.builder(
-                                        context,
-                                        _sidebarScrollController,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                if (sidebar.bottom != null &&
-                                    constraints.maxHeight > 141)
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: sidebar.bottom!,
-                                  ),
-                              ],
-                            ),
-                          ),
+                          child: _buildSidebarContent(
+                              sidebar, dividerColor, constraints, context),
+                        )
+                      : ColoredBox(
+                          color: sidebarBackgroundColor,
+                          child: _buildSidebarContent(
+                              sidebar, dividerColor, constraints, context),
                         ),
                 ),
               ),
@@ -403,13 +286,13 @@ class _MacosWindowState extends State<MacosWindow> {
             ),
 
             // Sidebar resizer
-            if (sidebar?.isResizable ?? false)
+            if (sidebar?.isResizable == true)
               AnimatedPositioned(
+                width: 7,
                 curve: curve,
+                height: height,
                 duration: duration,
                 left: visibleSidebarWidth - 4,
-                width: 7,
-                height: height,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onHorizontalDragStart: (details) {
@@ -437,10 +320,7 @@ class _MacosWindowState extends State<MacosWindow> {
 
                       _sidebarWidth = math.max(
                         sidebar.minWidth,
-                        math.min(
-                          sidebar.maxWidth!,
-                          newWidth,
-                        ),
+                        math.min(sidebar.maxWidth!, newWidth),
                       );
 
                       if (_sidebarWidth == sidebar.minWidth) {
@@ -456,11 +336,7 @@ class _MacosWindowState extends State<MacosWindow> {
                     cursor: _sidebarCursor,
                     child: Align(
                       alignment: Alignment.center,
-                      child: VerticalDivider(
-                        thickness: 1,
-                        width: 1,
-                        color: dividerColor,
-                      ),
+                      child: VerticalDivider(thickness: 1, width: 1, color: dividerColor),
                     ),
                   ),
                 ),
@@ -485,51 +361,23 @@ class _MacosWindowState extends State<MacosWindow> {
                     minHeight: height,
                     maxHeight: height,
                   ).normalize(),
-                  child: WallpaperTintedArea(
-                    backgroundColor: endSidebarBackgroundColor,
-                    insertRepaintBoundary: true,
-                    child: Column(
-                      children: [
-                        if (endSidebar.topOffset > 0)
-                          SizedBox(height: endSidebar.topOffset),
-                        if (_endSidebarScrollController.hasClients &&
-                            _endSidebarScrollController.offset > 0.0)
-                          Divider(
-                            thickness: 1,
-                            height: 1,
-                            color: dividerColor,
-                          ),
-                        if (endSidebar.top != null)
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: endSidebar.top!,
-                          ),
-                        Expanded(
-                          child: MacosScrollbar(
-                            controller: _endSidebarScrollController,
-                            child: Padding(
-                              padding: endSidebar.padding,
-                              child: endSidebar.builder(
-                                context,
-                                _endSidebarScrollController,
-                              ),
-                            ),
-                          ),
+                  child: isMac
+                      ? WallpaperTintedArea(
+                          backgroundColor: endSidebarBackgroundColor,
+                          insertRepaintBoundary: true,
+                          child: _buildEndSidebarContent(
+                              endSidebar, dividerColor, context),
+                        )
+                      : ColoredBox(
+                          color: endSidebarBackgroundColor,
+                          child: _buildEndSidebarContent(
+                              endSidebar, dividerColor, context),
                         ),
-                        if (endSidebar.bottom != null)
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: endSidebar.bottom!,
-                          ),
-                      ],
-                    ),
-                  ),
                 ),
               ),
 
             // End sidebar resizer
-            if (endSidebar?.isResizable ?? false)
+            if (endSidebar?.isResizable == true)
               AnimatedPositioned(
                 curve: curve,
                 duration: duration,
@@ -583,10 +431,7 @@ class _MacosWindowState extends State<MacosWindow> {
                     child: Align(
                       alignment: Alignment.center,
                       child: VerticalDivider(
-                        thickness: 1,
-                        width: 1,
-                        color: dividerColor,
-                      ),
+                          thickness: 1, width: 1, color: dividerColor),
                     ),
                   ),
                 ),
@@ -617,6 +462,91 @@ class _MacosWindowState extends State<MacosWindow> {
           child: layout,
         );
       },
+    );
+  }
+
+  Widget _buildSidebarContent(
+    Sidebar sidebar,
+    Color dividerColor,
+    BoxConstraints constraints,
+    BuildContext context,
+  ) {
+    return Column(
+      children: [
+        // If an app is running on macOS, apply
+        // sidebar.topOffset as needed in order to avoid the
+        // traffic lights. Otherwise, position the sidebar
+        // by the top of the application's bounds based on
+        // the presence of sidebar.top.
+        if (!kIsWeb && sidebar.topOffset > 0) ...[
+          SizedBox(height: sidebar.topOffset),
+        ] else if (sidebar.top != null) ...[
+          const SizedBox(height: 12),
+        ] else
+          const SizedBox.shrink(),
+        if (_sidebarScrollController.hasClients &&
+            _sidebarScrollController.offset > 0.0)
+          Divider(thickness: 1, height: 1, color: dividerColor),
+        if (sidebar.top != null && constraints.maxHeight > 81)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: sidebar.top!,
+          ),
+        Expanded(
+          child: MacosScrollbar(
+            controller: _sidebarScrollController,
+            child: Padding(
+              padding: sidebar.padding,
+              child: sidebar.builder(
+                context,
+                _sidebarScrollController,
+              ),
+            ),
+          ),
+        ),
+        if (sidebar.bottom != null && constraints.maxHeight > 141)
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: sidebar.bottom!,
+          ),
+      ],
+    );
+  }
+
+  Widget _buildEndSidebarContent(
+    Sidebar endSidebar,
+    Color dividerColor,
+    BuildContext context,
+  ) {
+    return Column(
+      children: [
+        if (endSidebar.topOffset > 0) SizedBox(height: endSidebar.topOffset),
+        if (_endSidebarScrollController.hasClients &&
+            _endSidebarScrollController.offset > 0.0)
+          Divider(thickness: 1, height: 1, color: dividerColor),
+        if (endSidebar.top != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: endSidebar.top!,
+          ),
+        Expanded(
+          child: MacosScrollbar(
+            controller: _endSidebarScrollController,
+            child: Padding(
+              padding: endSidebar.padding,
+              child: endSidebar.builder(
+                context,
+                _endSidebarScrollController,
+              ),
+            ),
+          ),
+        ),
+        if (endSidebar.bottom != null)
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: endSidebar.bottom!,
+          ),
+      ],
     );
   }
 }
