@@ -39,9 +39,9 @@ SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   macos_ui: 6229a8922cd97bafb7d9636c8eb8dfb0744183ca
   macos_window_utils: 933f91f64805e2eb91a5bd057cf97cd097276663
-  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
-  url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
 
 PODFILE CHECKSUM: ff0a9a3ce75ee73f200ca7e2f47745698c917ef9
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.3
