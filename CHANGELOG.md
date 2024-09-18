@@ -1,3 +1,7 @@
+## [2.1.0]
+* Updated dependencies
+* Support macOS 15
+
 ## [2.0.9]
 ### 🛠️ Updated 🛠️
 * Add `expandDisclosureItems` flag to `SidebarItem` to optionally (default not changed) expand disclosure items initially
