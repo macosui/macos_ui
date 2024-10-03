@@ -1,3 +1,6 @@
+## [2.1.1]
+* Fixed a bug where `MacosPulldownMenuItem` would not show an alert dialog when tapped.
+
 ## [2.1.0]
 * Updated dependencies
 * Support macOS 15

@@ -65,8 +65,8 @@ class _MacosPulldownMenuItemButtonState
     final MacosPulldownMenuEntry menuEntity =
         widget.route.items[widget.itemIndex].item!;
     if (menuEntity is MacosPulldownMenuItem) {
+      Navigator.of(context).pop();
       menuEntity.onTap?.call();
-      Navigator.pop(context);
     }
   }
 
