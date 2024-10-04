@@ -200,7 +200,7 @@ void main() {
                             onTap: () => showMacosAlertDialog(
                               context: context,
                               builder: (context) => MacosAlertDialog(
-                                appIcon: const FlutterLogo(size: 64),
+                                appIcon: const MacosIcon(CupertinoIcons.eyedropper),
                                 title: const Text('Title'),
                                 message: const Text('Message'),
                                 primaryButton: PushButton(
