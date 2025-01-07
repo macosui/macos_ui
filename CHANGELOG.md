@@ -1,3 +1,7 @@
+## [2.1.5]
+### 🔄 Updated 🔄
+* add `header` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header.
+
 ## [2.1.4]
 ### 🛠️ Fixed 🛠️
 * Fix incorrect barrier color when calling `showMacosAlertDialog` when dark mode is enabled.

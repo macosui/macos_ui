@@ -151,6 +151,9 @@ class SidebarItems extends StatelessWidget {
                       EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
                   children: List.generate(items.length, (index) {
                     final item = items[index];
+                    if (item.section == true) {
+                      return _SidebarHeaderItem(item: item);
+                    }
                     if (item.disclosureItems != null) {
                       return MouseRegion(
                         cursor: cursor!,
@@ -162,9 +165,6 @@ class SidebarItems extends StatelessWidget {
                           },
                         ),
                       );
-                    }
-                    if (item.section == true) {
-                      return _SidebarHeaderItem(item: item);
                     }
                     return MouseRegion(
                       cursor: cursor!,
