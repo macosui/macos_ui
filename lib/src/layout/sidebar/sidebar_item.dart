@@ -21,6 +21,7 @@ class SidebarItem with Diagnosticable {
     this.disclosureItems,
     this.expandDisclosureItems = false,
     this.trailing,
+    this.section = false,
   });
 
   /// The widget before [label].
@@ -70,6 +71,9 @@ class SidebarItem with Diagnosticable {
   /// screenshots from the Apple Notes app:
   /// <img src="https://imgur.com/REpW9f9.png" height="88" width="219" />
   final Widget? trailing;
+
+  /// If true, this item is a section header.
+  final bool? section;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

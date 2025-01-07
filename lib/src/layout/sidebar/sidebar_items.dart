@@ -118,7 +118,7 @@ class SidebarItems extends StatelessWidget {
     for (var element in items) {
       if (element.disclosureItems != null) {
         result.addAll(element.disclosureItems!);
-      } else {
+      } else if (element.section == false) {
         result.add(element);
       }
     }
@@ -163,6 +163,9 @@ class SidebarItems extends StatelessWidget {
                         ),
                       );
                     }
+                    if (item.section == true) {
+                      return _SidebarHeaderItem(item: item);
+                    }
                     return MouseRegion(
                       cursor: cursor!,
                       child: _SidebarItem(
@@ -206,6 +209,88 @@ class _SidebarItemsConfiguration extends InheritedWidget {
   @override
   bool updateShouldNotify(_SidebarItemsConfiguration oldWidget) {
     return true;
+  }
+}
+
+class _SidebarHeaderItem extends StatelessWidget {
+  // ignore: use_super_parameters
+  const _SidebarHeaderItem({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final SidebarItem item;
+
+  bool get hasLeading => item.leading != null;
+  bool get hasTrailing => item.trailing != null;
+
+  @override
+  Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final theme = MacosTheme.of(context);
+
+    final double spacing = 10.0 + theme.visualDensity.horizontal;
+    final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+    TextStyle? labelStyle;
+    switch (itemSize) {
+      case SidebarItemSize.small:
+        labelStyle = theme.typography.subheadline;
+        break;
+      case SidebarItemSize.medium:
+        labelStyle = theme.typography.body;
+        break;
+      case SidebarItemSize.large:
+        labelStyle = theme.typography.title3;
+        break;
+    }
+
+    return Semantics(
+      label: item.semanticLabel,
+      child: Container(
+      width: 134.0 + theme.visualDensity.horizontal,
+      height: itemSize.height + theme.visualDensity.vertical,
+      decoration: ShapeDecoration(
+        color: MacosColors.transparent,
+        shape: item.shape ?? _SidebarItemsConfiguration.of(context).shape,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 7 + theme.visualDensity.horizontal,
+        horizontal: spacing,
+      ),
+      child: Row(
+        children: [
+          if (hasLeading)
+            Padding(
+              padding: EdgeInsets.only(right: spacing),
+              child: MacosIconTheme.merge(
+                data: MacosIconThemeData(
+                  color: theme.primaryColor,
+                  size: itemSize.iconSize,
+                ),
+                child: item.leading!,
+              ),
+            ),
+          Expanded(
+            child: DefaultTextStyle(
+              style: labelStyle.copyWith(
+                color: null,
+                overflow: TextOverflow.ellipsis,
+              ),
+              child: item.label,
+            ),
+          ),
+          if (hasTrailing) ...[
+            const Spacer(),
+            DefaultTextStyle(
+              style: labelStyle.copyWith(
+                color: null,
+              ),
+              child: item.trailing!,
+            ),
+          ],
+        ],
+      ),
+    ));
   }
 }
 
