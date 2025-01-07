@@ -1,6 +1,6 @@
 ## [2.1.5]
 ### 🔄 Updated 🔄
-* add `header` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header.
+* add `section` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header.
 
 ## [2.1.4]
 ### 🛠️ Fixed 🛠️
