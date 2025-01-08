@@ -151,6 +151,15 @@ class SidebarItems extends StatelessWidget {
                       EdgeInsets.all(10.0 - theme.visualDensity.horizontal),
                   children: List.generate(items.length, (index) {
                     final item = items[index];
+                    if (item.section == true && item.disclosureItems != null) {
+                      return _DisclosureSidebarHeaderItem(
+                        item: item,
+                        selectedItem: _allItems[currentIndex],
+                        onChanged: (item) {
+                          onChanged(_allItems.indexOf(item));
+                        },
+                      );
+                    }
                     if (item.section == true) {
                       return _SidebarHeaderItem(item: item);
                     }
@@ -245,52 +254,52 @@ class _SidebarHeaderItem extends StatelessWidget {
     }
 
     return Semantics(
-      label: item.semanticLabel,
-      child: Container(
-      width: 134.0 + theme.visualDensity.horizontal,
-      height: itemSize.height + theme.visualDensity.vertical,
-      decoration: ShapeDecoration(
-        color: MacosColors.transparent,
-        shape: item.shape ?? _SidebarItemsConfiguration.of(context).shape,
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: 7 + theme.visualDensity.horizontal,
-        horizontal: spacing,
-      ),
-      child: Row(
-        children: [
-          if (hasLeading)
-            Padding(
-              padding: EdgeInsets.only(right: spacing),
-              child: MacosIconTheme.merge(
-                data: MacosIconThemeData(
-                  color: theme.primaryColor,
-                  size: itemSize.iconSize,
-                ),
-                child: item.leading!,
-              ),
-            ),
-          Expanded(
-            child: DefaultTextStyle(
-              style: labelStyle.copyWith(
-                color: null,
-                overflow: TextOverflow.ellipsis,
-              ),
-              child: item.label,
-            ),
+        label: item.semanticLabel,
+        child: Container(
+          width: 134.0 + theme.visualDensity.horizontal,
+          height: itemSize.height + theme.visualDensity.vertical,
+          decoration: ShapeDecoration(
+            color: MacosColors.transparent,
+            shape: item.shape ?? _SidebarItemsConfiguration.of(context).shape,
           ),
-          if (hasTrailing) ...[
-            const Spacer(),
-            DefaultTextStyle(
-              style: labelStyle.copyWith(
-                color: null,
+          padding: EdgeInsets.symmetric(
+            vertical: 7 + theme.visualDensity.horizontal,
+            horizontal: spacing,
+          ),
+          child: Row(
+            children: [
+              if (hasLeading)
+                Padding(
+                  padding: EdgeInsets.only(right: spacing),
+                  child: MacosIconTheme.merge(
+                    data: MacosIconThemeData(
+                      color: theme.primaryColor,
+                      size: itemSize.iconSize,
+                    ),
+                    child: item.leading!,
+                  ),
+                ),
+              Expanded(
+                child: DefaultTextStyle(
+                  style: labelStyle.copyWith(
+                    color: null,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  child: item.label,
+                ),
               ),
-              child: item.trailing!,
-            ),
-          ],
-        ],
-      ),
-    ));
+              if (hasTrailing) ...[
+                const Spacer(),
+                DefaultTextStyle(
+                  style: labelStyle.copyWith(
+                    color: null,
+                  ),
+                  child: item.trailing!,
+                ),
+              ],
+            ],
+          ),
+        ));
   }
 }
 
@@ -426,6 +435,210 @@ class _SidebarItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _DisclosureSidebarHeaderItem extends StatefulWidget {
+  // ignore: use_super_parameters
+  const _DisclosureSidebarHeaderItem({
+    Key? key,
+    required this.item,
+    this.selectedItem,
+    this.onChanged,
+  }) : super(key: key);
+
+  final SidebarItem item;
+
+  final SidebarItem? selectedItem;
+
+  /// A function to perform when the widget is clicked or tapped.
+  ///
+  /// Typically a [Navigator] call
+  final ValueChanged<SidebarItem>? onChanged;
+
+  @override
+  __DisclosureSidebarHeaderState createState() =>
+      __DisclosureSidebarHeaderState();
+}
+
+class __DisclosureSidebarHeaderState extends State<_DisclosureSidebarHeaderItem>
+    with SingleTickerProviderStateMixin {
+  static final Animatable<double> _easeInTween =
+      CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween =
+      Tween<double>(begin: 0, end: 0.25);
+
+  late AnimationController _controller;
+  late Animation<double> _iconTurns;
+  late Animation<double> _heightFactor;
+  late bool _isExpanded;
+  bool _isHovering = false;
+
+  bool get hasLeading => widget.item.leading != null;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(duration: _kExpand, vsync: this);
+    _heightFactor = _controller.drive(_easeInTween);
+    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
+
+    _isExpanded = widget.item.expandDisclosureItems;
+    if (_isExpanded) {
+      _controller.forward();
+    }
+  }
+
+  void _handleTap() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _controller.forward();
+      } else {
+        _controller.reverse().then<void>((void value) {
+          if (!mounted) return;
+          setState(() {
+            // Rebuild without widget.children.
+          });
+        });
+      }
+      PageStorage.of(context).writeState(context, _isExpanded);
+    });
+    // widget.onExpansionChanged?.call(_isExpanded);
+  }
+
+  Widget _buildChildren(BuildContext context, Widget? child) {
+    final theme = MacosTheme.of(context);
+
+    final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+    TextStyle? labelStyle;
+    switch (itemSize) {
+      case SidebarItemSize.small:
+        labelStyle = theme.typography.subheadline;
+        break;
+      case SidebarItemSize.medium:
+        labelStyle = theme.typography.body;
+        break;
+      case SidebarItemSize.large:
+        labelStyle = theme.typography.title3;
+        break;
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+            width: double.infinity,
+            child: MouseRegion(
+              onEnter: (e) => {
+                setState(() {
+                  _isHovering = true;
+                })
+              },
+              onExit: (e) => {
+                setState(() {
+                  _isHovering = false;
+                })
+              },
+              child: _SidebarItem(
+                item: SidebarItem(
+                  label: widget.item.label,
+                  leading: Row(
+                    children: [
+                      if (hasLeading)
+                        Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: MacosIconTheme.merge(
+                            data: MacosIconThemeData(size: itemSize.iconSize),
+                            child: widget.item.leading!,
+                          ),
+                        ),
+                    ],
+                  ),
+                  unselectedColor: MacosColors.transparent,
+                  focusNode: widget.item.focusNode,
+                  semanticLabel: widget.item.semanticLabel,
+                  shape: widget.item.shape,
+                  trailing: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (widget.item.trailing != null) widget.item.trailing!,
+                      if (_isHovering)
+                        RotationTransition(
+                          turns: _iconTurns,
+                          child: Icon(
+                            CupertinoIcons.chevron_right,
+                            size: 14.0,
+                            color: theme.brightness == Brightness.light
+                                ? MacosColors.black
+                                : MacosColors.white,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                onClick: _handleTap,
+                selected: false,
+              ),
+            )),
+        ClipRect(
+          child: DefaultTextStyle(
+            style: labelStyle,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              heightFactor: _heightFactor.value,
+              child: child,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    assert(debugCheckHasMacosTheme(context));
+    final theme = MacosTheme.of(context);
+
+    final bool closed = !_isExpanded && _controller.isDismissed;
+
+    final Widget result = Offstage(
+      offstage: closed,
+      child: TickerMode(
+        enabled: !closed,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: widget.item.disclosureItems!.map((item) {
+            return Padding(
+              padding: EdgeInsets.only(
+                left: 24.0 + theme.visualDensity.horizontal,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: _SidebarItem(
+                  item: item,
+                  onClick: () => widget.onChanged?.call(item),
+                  selected: widget.selectedItem == item,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+
+    return AnimatedBuilder(
+      animation: _controller.view,
+      builder: _buildChildren,
+      child: closed ? null : result,
     );
   }
 }
