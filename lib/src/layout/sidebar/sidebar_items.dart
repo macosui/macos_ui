@@ -545,18 +545,15 @@ class __DisclosureSidebarHeaderState extends State<_DisclosureSidebarHeaderItem>
               child: _SidebarItem(
                 item: SidebarItem(
                   label: widget.item.label,
-                  leading: Row(
-                    children: [
-                      if (hasLeading)
-                        Padding(
+                  leading: (hasLeading)
+                      ? Padding(
                           padding: const EdgeInsets.all(0),
                           child: MacosIconTheme.merge(
                             data: MacosIconThemeData(size: itemSize.iconSize),
                             child: widget.item.leading!,
                           ),
-                        ),
-                    ],
-                  ),
+                        )
+                      : null,
                   unselectedColor: MacosColors.transparent,
                   focusNode: widget.item.focusNode,
                   semanticLabel: widget.item.semanticLabel,
