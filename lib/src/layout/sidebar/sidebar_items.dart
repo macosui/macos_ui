@@ -280,7 +280,7 @@ class _SidebarHeaderItem extends StatelessWidget {
                   ),
                 ),
               Expanded(
-                child: _getTextStyleForLabel(labelStyle, context),
+                child: _buildLabelWithDefaultTextStyle(labelStyle, context),
               ),
               if (hasTrailing) ...[
                 const Spacer(),
@@ -296,7 +296,7 @@ class _SidebarHeaderItem extends StatelessWidget {
         ));
   }
 
-  DefaultTextStyle _getTextStyleForLabel(
+  DefaultTextStyle _buildLabelWithDefaultTextStyle(
       TextStyle labelStyle, BuildContext context) {
     final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
 
@@ -424,7 +424,7 @@ class _SidebarItem extends StatelessWidget {
                     ),
                   ),
                 Expanded(
-                  child: _getTextStyleForLabel(
+                  child: _buildLabelWithDefaultTextStyle(
                     labelStyle,
                     selectedColor,
                     context,
@@ -447,7 +447,7 @@ class _SidebarItem extends StatelessWidget {
     );
   }
 
-  DefaultTextStyle _getTextStyleForLabel(
+  DefaultTextStyle _buildLabelWithDefaultTextStyle(
       TextStyle labelStyle, Color selectedColor, BuildContext context) {
     if (item.section ?? true) {
       final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
