@@ -202,7 +202,7 @@ class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
           child: MacosOverlayFilter(
             color: MacosPulldownButtonTheme.of(context)
                 .pulldownColor
-                ?.withOpacity(0.25),
+                ?.withValues(alpha: 0.25),
             borderRadius: _kBorderRadius,
             child: Padding(
               padding: const EdgeInsets.all(6.0),
@@ -1042,7 +1042,7 @@ _ButtonStyles _getButtonStyles(
           );
           break;
         case PulldownButtonState.pressed:
-          textColor = caretColor = iconColor.withOpacity(0.85);
+          textColor = caretColor = iconColor.withValues(alpha: 0.85);
           bgColor = brightness.resolve(
             const Color.fromRGBO(0, 0, 0, 0.1),
             const Color.fromRGBO(255, 255, 255, 0.1),
@@ -1061,8 +1061,8 @@ _ButtonStyles _getButtonStyles(
         case PulldownButtonState.hovered:
           break;
         case PulldownButtonState.pressed:
-          bgColor = pulldownTheme.backgroundColor!.withOpacity(0.4);
-          caretBgColor = pulldownTheme.highlightColor!.withOpacity(0.9);
+          bgColor = pulldownTheme.backgroundColor!.withValues(alpha: 0.4);
+          caretBgColor = pulldownTheme.highlightColor!.withValues(alpha: 0.9);
           break;
       }
     }

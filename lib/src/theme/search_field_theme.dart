@@ -109,8 +109,8 @@ class MacosSearchFieldThemeData with Diagnosticable {
       identical(this, other) ||
       other is MacosSearchFieldThemeData &&
           runtimeType == other.runtimeType &&
-          highlightColor?.value == other.highlightColor?.value &&
-          resultsBackgroundColor?.value == other.resultsBackgroundColor?.value;
+          highlightColor == other.highlightColor &&
+          resultsBackgroundColor == other.resultsBackgroundColor;
 
   @override
   int get hashCode => highlightColor.hashCode ^ resultsBackgroundColor.hashCode;

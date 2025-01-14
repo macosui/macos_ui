@@ -1046,7 +1046,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         ? const Color.fromRGBO(255, 255, 255, 0.55)
         : const Color.fromRGBO(0, 0, 0, 0.5);
     if (widget.enabled != null && widget.enabled == false) {
-      iconsColor = iconsColor.withOpacity(0.2);
+      iconsColor = iconsColor.withValues(alpha: 0.2);
     }
 
     // Otherwise, listen to the current state of the text entry.
@@ -1251,8 +1251,8 @@ class _MacosTextFieldState extends State<MacosTextField>
 
     final placeholderStyle = textStyle.merge(enabled
         ? resolvedPlaceholderStyle
-        : resolvedPlaceholderStyle!
-            .copyWith(color: resolvedPlaceholderStyle.color!.withOpacity(0.2)));
+        : resolvedPlaceholderStyle!.copyWith(
+            color: resolvedPlaceholderStyle.color!.withValues(alpha: 0.2)));
 
     final Brightness keyboardAppearance =
         widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
@@ -1315,7 +1315,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         if (focusedDecoration.border is Border) {
           BorderSide borderSide(BorderSide fromSide) {
             return BorderSide(
-              color: fromSide.color.withOpacity(0.0),
+              color: fromSide.color.withValues(alpha: 0.0),
               style: fromSide.style,
               width: fromSide.width,
             );
@@ -1334,7 +1334,7 @@ class _MacosTextFieldState extends State<MacosTextField>
     );
 
     final Color selectionColor =
-        MacosTheme.of(context).primaryColor.withOpacity(0.2);
+        MacosTheme.of(context).primaryColor.withValues(alpha: 0.2);
 
     final Widget paddedEditable = Padding(
       padding: widget.padding,

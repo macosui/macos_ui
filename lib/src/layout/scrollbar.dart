@@ -156,7 +156,7 @@ class _RawMacosScrollBarState extends RawScrollbarState<_RawMacosScrollBar> {
     );
     _trackColorTween = ColorTween(
       begin: MacosColors.transparent,
-      end: widget.effectiveThumbColor.withOpacity(0.15),
+      end: widget.effectiveThumbColor.withValues(alpha: 0.15),
     ).animate(_trackColorAnimationController);
     _thumbThicknessAnimationController.addListener(() {
       updateScrollbarPainter();

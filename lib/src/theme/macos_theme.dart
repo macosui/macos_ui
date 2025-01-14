@@ -4,8 +4,8 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 CupertinoDynamicColor _kScrollbarColor = CupertinoDynamicColor.withBrightness(
-  color: MacosColors.systemGrayColor.color.withOpacity(0.8),
-  darkColor: MacosColors.systemGrayColor.darkColor.withOpacity(0.8),
+  color: MacosColors.systemGrayColor.color.withValues(alpha: 0.8),
+  darkColor: MacosColors.systemGrayColor.darkColor.withValues(alpha: 0.8),
 );
 
 /// Applies a macOS-style theme to descendant macOS widgets.

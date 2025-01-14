@@ -261,7 +261,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                 return true;
               },
               child: MacosOverlayFilter(
-                color: popupColor?.withOpacity(0.25),
+                color: popupColor?.withValues(alpha: 0.25),
                 borderRadius: _kBorderRadius,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

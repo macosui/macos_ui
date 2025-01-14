@@ -9,9 +9,9 @@ class MacosColor extends Color {
   ///
   /// * `a` is the alpha value, with 0 being transparent and 255 being fully
   ///   opaque.
-  /// * `r` is [red], from 0 to 255.
-  /// * `g` is [green], from 0 to 255.
-  /// * `b` is [blue], from 0 to 255.
+  /// * `r` is red, from 0 to 255.
+  /// * `g` is green, from 0 to 255.
+  /// * `b` is blue, from 0 to 255.
   ///
   /// Out of range values are brought into range using modulo 255.
   ///
@@ -23,22 +23,27 @@ class MacosColor extends Color {
   /// Create a color from red, green, blue, and opacity, similar to `rgba()`
   /// in CSS.
   ///
-  /// * `r` is [red], from 0 to 255.
-  /// * `g` is [green], from 0 to 255.
-  /// * `b` is [blue], from 0 to 255.
+  /// * `r` is red, from 0 to 255.
+  /// * `g` is green, from 0 to 255.
+  /// * `b` is blue, from 0 to 255.
   /// * `opacity` is alpha channel of this color as a double, with 0.0 being
   ///   transparent and 1.0 being fully opaque.
   ///
   /// Out of range values are brought into range using modulo 255.
   ///
   /// See also [fromARGB], which takes the opacity as an integer value.
-  const MacosColor.fromRGBO(super.r, super.g, super.b, super.opcacity)
+  const MacosColor.fromRGBO(super.r, super.g, super.b, super.opacity)
       : super.fromRGBO();
 
   /// Linearly interpolate between two [MacosColor]s.
   static MacosColor lerp(MacosColor a, MacosColor b, double t) {
     final Color? color = Color.lerp(a, b, t);
-    return MacosColor(color!.value);
+    return MacosColor.fromRGBO(
+      (color!.r * 255).toInt(),
+      (color.g * 255).toInt(),
+      (color.b * 255).toInt(),
+      color.a,
+    );
   }
 
   /// Combine the foreground color as a transparent color over top
@@ -50,33 +55,14 @@ class MacosColor extends Color {
   /// operations for two things that are solid colors with the same shape, but
   /// overlay each other: instead, just paint one with the combined color.
   static MacosColor alphaBlend(MacosColor foreground, MacosColor background) {
-    final int alpha = foreground.alpha;
-    if (alpha == 0x00) {
-      // Foreground completely transparent.
-      return background;
-    }
-    final int invAlpha = 0xff - alpha;
-    int backAlpha = background.alpha;
-    if (backAlpha == 0xff) {
-      // Opaque background case
-      return MacosColor.fromARGB(
-        0xff,
-        (alpha * foreground.red + invAlpha * background.red) ~/ 0xff,
-        (alpha * foreground.green + invAlpha * background.green) ~/ 0xff,
-        (alpha * foreground.blue + invAlpha * background.blue) ~/ 0xff,
-      );
-    } else {
-      // General case
-      backAlpha = (backAlpha * invAlpha) ~/ 0xff;
-      final int outAlpha = alpha + backAlpha;
-      assert(outAlpha != 0x00);
-      return MacosColor.fromARGB(
-        outAlpha,
-        (foreground.red * alpha + background.red * backAlpha) ~/ outAlpha,
-        (foreground.green * alpha + background.green * backAlpha) ~/ outAlpha,
-        (foreground.blue * alpha + background.blue * backAlpha) ~/ outAlpha,
-      );
-    }
+    final newColor = Color.alphaBlend(foreground, background);
+
+    return MacosColor.fromRGBO(
+      (newColor.r * 255).toInt(),
+      (newColor.g * 255).toInt(),
+      (newColor.b * 255).toInt(),
+      newColor.a,
+    );
   }
 
   /// Returns an alpha value representative of the provided [opacity] value.
@@ -102,7 +88,12 @@ class MacosColor extends Color {
   /// Out of range values will have unexpected effects.
   @override
   MacosColor withAlpha(int a) {
-    return MacosColor.fromARGB(a, red, green, blue);
+    return MacosColor.fromARGB(
+      a,
+      (r * 255).toInt(),
+      (g * 255).toInt(),
+      (b * 255).toInt(),
+    );
   }
 
   /// Darkens a [MacosColor] by a [percent] amount (100 = black) without
@@ -110,11 +101,11 @@ class MacosColor extends Color {
   static MacosColor darken(MacosColor c, [int percent = 10]) {
     assert(1 <= percent && percent <= 100);
     var f = 1 - percent / 100;
-    return MacosColor.fromARGB(
-      c.alpha,
-      (c.red * f).round(),
-      (c.green * f).round(),
-      (c.blue * f).round(),
+    return MacosColor.fromRGBO(
+      (c.r * f * 255).round(),
+      (c.g * f * 255).round(),
+      (c.b * f * 255).round(),
+      c.a,
     );
   }
 
@@ -123,11 +114,11 @@ class MacosColor extends Color {
   static MacosColor lighten(MacosColor c, [int percent = 10]) {
     assert(1 <= percent && percent <= 100);
     var p = percent / 100;
-    return MacosColor.fromARGB(
-      c.alpha,
-      c.red + ((255 - c.red) * p).round(),
-      c.green + ((255 - c.green) * p).round(),
-      c.blue + ((255 - c.blue) * p).round(),
+    return MacosColor.fromRGBO(
+      (c.r + ((1.0 - c.r) * p) * 255).toInt(),
+      (c.g + ((1.0 - c.g) * p) * 255).toInt(),
+      (c.b + ((1.0 - c.b) * p) * 255).toInt(),
+      c.a,
     );
   }
 
@@ -139,22 +130,26 @@ class MacosColor extends Color {
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    return other is MacosColor && other.value == value;
+    return other is MacosColor && other.hashCode == hashCode;
   }
 
   @override
-  int get hashCode => value.hashCode;
+  int get hashCode => Object.hash(r, g, b, a);
 
   @override
-  String toString() {
-    return 'MacosColor(0x${value.toRadixString(16).padLeft(8, '0')})';
-  }
+  String toString() =>
+      'MacosColor(alpha: ${a.toStringAsFixed(4)}, red: ${r.toStringAsFixed(4)}, green: ${g.toStringAsFixed(4)}, blue: ${b.toStringAsFixed(4)}, colorSpace: $colorSpace)';
 }
 
 extension ColorX on Color {
   /// Returns a [MacosColor] with the same color values as this [Color].
   MacosColor toMacosColor() {
-    return MacosColor(value);
+    return MacosColor.fromRGBO(
+      (r * 255).floor(),
+      (g * 255).floor(),
+      (b * 255).floor(),
+      a,
+    );
   }
 }
 

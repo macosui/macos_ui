@@ -99,8 +99,8 @@ class HelpButtonThemeData with Diagnosticable {
     return identical(this, other) ||
         other is HelpButtonThemeData &&
             runtimeType == other.runtimeType &&
-            color?.value == other.color?.value &&
-            disabledColor?.value == other.disabledColor?.value;
+            color == other.color &&
+            disabledColor == other.disabledColor;
   }
 
   @override

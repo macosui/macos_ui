@@ -298,12 +298,12 @@ class PushButtonState extends State<PushButton>
     final blendedBackgroundColor = Color.lerp(
       theme.canvasColor,
       backgroundColor,
-      backgroundColor.opacity,
+      backgroundColor.a,
     )!;
 
     return widget.enabled
         ? textLuminance(blendedBackgroundColor)
-        : textLuminance(blendedBackgroundColor).withOpacity(0.25);
+        : textLuminance(blendedBackgroundColor).withValues(alpha: 0.25);
   }
 
   BoxDecoration _getClickEffectBoxDecoration() {

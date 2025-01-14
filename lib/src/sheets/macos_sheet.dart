@@ -54,13 +54,13 @@ class MacosSheet extends StatelessWidget {
     final brightness = MacosTheme.brightnessOf(context);
 
     final outerBorderColor = brightness.resolve(
-      Colors.black.withOpacity(0.23),
-      Colors.black.withOpacity(0.76),
+      Colors.black.withValues(alpha: 0.23),
+      Colors.black.withValues(alpha: 0.76),
     );
 
     final innerBorderColor = brightness.resolve(
-      Colors.white.withOpacity(0.45),
-      Colors.white.withOpacity(0.15),
+      Colors.white.withValues(alpha: 0.45),
+      Colors.white.withValues(alpha: 0.15),
     );
 
     final EdgeInsets effectivePadding =
@@ -114,7 +114,7 @@ Future<T?> showMacosSheet<T>({
   barrierColor ??= MacosDynamicColor.resolve(
     MacosColors.controlBackgroundColor,
     context,
-  ).withOpacity(0.6);
+  ).withValues(alpha: 0.6);
 
   return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
     _MacosSheetRoute<T>(

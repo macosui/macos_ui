@@ -1,6 +1,10 @@
-## [2.1.5]
+## [2.1.6]
 ### 🔄 Updated 🔄
 * add `section` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header.
+
+## [2.1.5]
+### 🛻 Migrated 🛻
+* Migrate to Flutter’s new Color API.
 
 ## [2.1.4]
 ### 🛠️ Fixed 🛠️
