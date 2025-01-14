@@ -431,7 +431,6 @@ class _SidebarItem extends StatelessWidget {
                   ),
                 ),
                 if (hasTrailing) ...[
-                  const Spacer(),
                   DefaultTextStyle(
                     style: labelStyle.copyWith(
                       color: selected ? textLuminance(selectedColor) : null,
