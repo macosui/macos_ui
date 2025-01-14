@@ -280,13 +280,7 @@ class _SidebarHeaderItem extends StatelessWidget {
                   ),
                 ),
               Expanded(
-                child: DefaultTextStyle(
-                  style: labelStyle.copyWith(
-                    color: null,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  child: item.label,
-                ),
+                child: _getTextStyleForLabel(labelStyle, context),
               ),
               if (hasTrailing) ...[
                 const Spacer(),
@@ -300,6 +294,23 @@ class _SidebarHeaderItem extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  DefaultTextStyle _getTextStyleForLabel(
+      TextStyle labelStyle, BuildContext context) {
+    final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
+
+    return DefaultTextStyle(
+      style: labelStyle.copyWith(
+        fontWeight: FontWeight.bold,
+        fontSize: (labelStyle.fontSize ?? 14.0) * 0.85,
+        color: isDarkModeEnabled
+            ? MacosColors.white.withValues(alpha: 0.3)
+            : MacosColors.black.withValues(alpha: 0.3),
+        overflow: TextOverflow.ellipsis,
+      ),
+      child: item.label,
+    );
   }
 }
 
