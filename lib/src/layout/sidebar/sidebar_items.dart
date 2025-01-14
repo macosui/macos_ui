@@ -413,12 +413,10 @@ class _SidebarItem extends StatelessWidget {
                     ),
                   ),
                 Expanded(
-                  child: DefaultTextStyle(
-                    style: labelStyle.copyWith(
-                      color: selected ? textLuminance(selectedColor) : null,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    child: item.label,
+                  child: _getTextStyleForLabel(
+                    labelStyle,
+                    selectedColor,
+                    context,
                   ),
                 ),
                 if (hasTrailing) ...[
@@ -435,6 +433,33 @@ class _SidebarItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  DefaultTextStyle _getTextStyleForLabel(
+      TextStyle labelStyle, Color selectedColor, BuildContext context) {
+    if (item.section ?? true) {
+      final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
+
+      return DefaultTextStyle(
+        style: labelStyle.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: (labelStyle.fontSize ?? 14.0) * 0.85,
+          color: isDarkModeEnabled
+              ? MacosColors.white.withValues(alpha: 0.3)
+              : MacosColors.black.withValues(alpha: 0.3),
+          overflow: TextOverflow.ellipsis,
+        ),
+        child: item.label,
+      );
+    }
+
+    return DefaultTextStyle(
+      style: labelStyle.copyWith(
+        color: selected ? textLuminance(selectedColor) : null,
+        overflow: TextOverflow.ellipsis,
+      ),
+      child: item.label,
     );
   }
 }
@@ -544,6 +569,7 @@ class __DisclosureSidebarHeaderState extends State<_DisclosureSidebarHeaderItem>
               },
               child: _SidebarItem(
                 item: SidebarItem(
+                  section: true,
                   label: widget.item.label,
                   leading: (hasLeading)
                       ? Padding(
@@ -569,8 +595,8 @@ class __DisclosureSidebarHeaderState extends State<_DisclosureSidebarHeaderItem>
                             CupertinoIcons.chevron_right,
                             size: 14.0,
                             color: theme.brightness == Brightness.light
-                                ? MacosColors.black
-                                : MacosColors.white,
+                                ? MacosColors.black.withValues(alpha: 0.3)
+                                : MacosColors.white.withValues(alpha: 0.3),
                           ),
                         ),
                     ],
