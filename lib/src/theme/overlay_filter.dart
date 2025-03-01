@@ -51,7 +51,12 @@ class MacosOverlayFilter extends StatelessWidget {
                     CupertinoColors.systemGrey.color,
                     CupertinoColors.black,
                   )
-                  .withValues(alpha: 0.25),
+                  // BP CHANGE
+                  // REPLACE
+                  // .withValues(alpha: 0.25),
+                  // WITH
+                  .withValues(alpha: 0.15),
+                  // REASON: shadow density is excessive. Lighter is closer to mac OS.
               offset: const Offset(0, 4),
               spreadRadius: 4.0,
               blurRadius: 8.0,
@@ -67,13 +72,24 @@ class MacosOverlayFilter extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: borderRadius,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 20.0,
-              sigmaY: 20.0,
-            ),
+
+          // BP CHANGE
+          // REPLACE
+          // child: BackdropFilter(
+          //   filter: ImageFilter.blur(
+          //     sigmaX: 20.0,
+          //     sigmaY: 20.0,
+          //   ),
+          //   child: child,
+          // ),
+          // WITH
             child: child,
-          ),
+          // REASON: this blur is insane, and nothing like actual mac appearance in 15.x 
+          // Is this a leftover from an earlier macos "glassy" appearance standard?
+          // The blur severely severely alters the pulldown menu panel appearance from 
+          // macOS 15.x appearance in Apple's apps (pages, etc).
+          // Does not belong if standard is "look like 15.x"
+
         ),
       ),
     );

@@ -376,6 +376,16 @@ class MacosColors {
     darkColor: Color.fromRGBO(255, 255, 255, 0.1),
   );
 
+  // BP CHANGE
+  // ADD
+  // Text color for pulldown menus (e.g. ToolBarPullDownButton)
+  // (these colors derived from light/dark toolbar pulldown menus in Apple Pages app)
+  static const pulldownMenuTextColor = CupertinoDynamicColor.withBrightness(
+    color: Color.fromRGBO(37, 37, 37, 1.0),
+    darkColor: Color.fromRGBO(229, 229, 229, 1.0),
+  );
+  // END
+
   /// The accent color selected by the user in system preferences.
   ///
   /// No dark variant.

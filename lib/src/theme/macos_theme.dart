@@ -304,8 +304,17 @@ class MacosThemeData extends Equatable with Diagnosticable {
           ? const Color.fromRGBO(255, 255, 255, 0.247)
           : const Color.fromRGBO(255, 255, 255, 1),
       pulldownColor: isDark
-          ? const Color.fromRGBO(30, 30, 30, 1)
-          : const Color.fromRGBO(242, 242, 247, 1),
+          // BP CHANGE
+          // REPLACE
+          // ? const Color.fromRGBO(30, 30, 30, 1)
+          // : const Color.fromRGBO(242, 242, 247, 1),
+          // WITH
+          ? const Color.fromRGBO(80, 80, 80, 1)
+          : const Color.fromRGBO(235, 235, 235, 1),
+          // REASON: dark color is much too dark, and requires ligtening with a very-low
+          //   alpha value that gives the result a severely non-macOS-15.x transparency 
+          //   effect for pulldown menu panes.
+          //   Change requires darkening light color to match MacOS-15.x appearance.
       iconColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.7)
           : const Color.fromRGBO(0, 0, 0, 0.7),
