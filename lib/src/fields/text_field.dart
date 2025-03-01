@@ -1258,8 +1258,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
     Color? cursorColor;
     cursorColor = MacosDynamicColor.maybeResolve(widget.cursorColor, context);
-    cursorColor ??= textStyle.color; // next best is "match text"
-    cursorColor ??=  // last resort - fall back to theme forground color
+    cursorColor ??=
         themeData.brightness.isDark ? MacosColors.white : MacosColors.black;
     final Color disabledColor =
         MacosDynamicColor.resolve(_kDisabledBackground, context);
