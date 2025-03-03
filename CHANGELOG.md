@@ -1,3 +1,8 @@
+## [2.1.10]
+### 🔄 Updated 🔄
+* Make text field cursor color follow the user’s accent color if not explicitly set (thanks, [@driftwoodstudio](https://github.com/driftwoodstudio)).
+* Expose the `AccentColorListener` class to macos_ui users.
+
 ## [2.1.9]
 ### 🛠️ Fixed 🛠️
 * Fix incorrect highlighting and focusing behavior of `_MacosPopupMenuItemButton`.
