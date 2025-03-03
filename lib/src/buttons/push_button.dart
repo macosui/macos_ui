@@ -458,9 +458,6 @@ class _BoxDecorationBuilder {
             MacosColor.fromRGBO(64, 64, 64, 1.0 * isEnabledFactor),
             MacosColor.fromRGBO(57, 57, 57, 1.0 * isEnabledFactor),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     } else {
       switch (accentColor) {
@@ -511,9 +508,6 @@ class _BoxDecorationBuilder {
             MacosColor.fromRGBO(86, 86, 86, 1.0 * isEnabledFactor),
             MacosColor.fromRGBO(55, 55, 55, 1.0 * isEnabledFactor),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     }
   }
@@ -649,9 +643,6 @@ class _BoxDecorationBuilder {
               blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
             ),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     }
   }

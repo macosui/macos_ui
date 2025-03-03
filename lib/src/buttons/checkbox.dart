@@ -365,9 +365,6 @@ class _BoxDecorationBuilder {
             MacosColor.fromRGBO(148, 148, 148, 1.0 * isEnabledFactor),
             MacosColor.fromRGBO(148, 148, 148, 1.0 * isEnabledFactor),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     } else {
       switch (accentColor) {
@@ -418,9 +415,6 @@ class _BoxDecorationBuilder {
             MacosColor.fromRGBO(86, 86, 86, 1.0 * isEnabledFactor),
             MacosColor.fromRGBO(55, 55, 55, 1.0 * isEnabledFactor),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     }
   }
