@@ -281,7 +281,21 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                 return true;
               },
               child: MacosOverlayFilter(
-                color: popupColor?.withValues(alpha: 0.25),
+
+
+
+                // BP CHANGE
+                // REPLACE
+                // color: popupColor?.withValues(alpha: 0.25),
+                // WITH
+                color: popupColor?.withValues(alpha: 0.85),
+                // REASON
+                // REASON: lightening default dark color at MacosPopupButtonThemeData.popupColor init 
+                // makes lightening here via super-low alpha unnecessary, thereby eliminating
+                // the non-macOS-15.x severe transparency effect.
+
+
+
                 borderRadius: _kBorderRadius,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
