@@ -1,3 +1,7 @@
+## [2.2.0]
+### ✨ New ✨
+* Add support for Swift package manager.
+
 ## [2.1.10]
 ### 🔄 Updated 🔄
 * Make text field cursor color follow the user’s accent color if not explicitly set (thanks, [@driftwoodstudio](https://github.com/driftwoodstudio)).
