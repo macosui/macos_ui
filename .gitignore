@@ -82,3 +82,7 @@ coverage_report
 coverage
 example/macos/Flutter/GeneratedPluginRegistrant.swift
 example/devtools_options.yaml
+
+# Swift package manager
+.build/
+.swiftpm/
