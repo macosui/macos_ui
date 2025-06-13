@@ -230,7 +230,9 @@ See the documentation for customizations and `ToolBar` examples.
 
 ## Modern window look
 
-A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above.
+
+It is recommended to enable the Swift Package Manager when using macos_ui. Instructions on how to do that can be found [here](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers#how-to-turn-on-swift-package-manager). Alternatively, macos_ui can also be used with CocoaPods. To do so, it is necessary to open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
 
 ```podspec
 platform :osx, '10.14.6'
