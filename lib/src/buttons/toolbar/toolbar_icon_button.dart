@@ -1,5 +1,6 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
+import 'package:macos_window_utils/widgets/macos_toolbar_passthrough.dart';
 
 /// An icon button suitable for the toolbar.
 class ToolBarIconButton extends ToolbarItem {
@@ -99,7 +100,7 @@ class ToolBarIconButton extends ToolbarItem {
       if (tooltipMessage != null) {
         iconButton = MacosTooltip(message: tooltipMessage!, child: iconButton);
       }
-      return iconButton;
+      return MacosToolbarPassthrough(child: iconButton);
     } else {
       return ToolbarOverflowMenuItem(label: label, onPressed: onPressed);
     }

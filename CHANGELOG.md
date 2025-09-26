@@ -1,3 +1,7 @@
+## [2.2.1]
+### 🔄 Updated 🔄
+* Wrap toolbar items with `MacosToolbarPassthrough` to prevent window move or resize when interacting with toolbar items.
+
 ## [2.2.0+3]
 * Address DCM lints:
   * Prefer `const BorderRadius.all`

@@ -182,7 +182,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.2.0+3"
+    version: "2.2.1"
   macos_window_utils:
     dependency: transitive
     description:

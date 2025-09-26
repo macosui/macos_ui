@@ -1,5 +1,6 @@
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
+import 'package:macos_window_utils/widgets/macos_toolbar_passthrough.dart';
 
 /// A pulldown button suitable for the toolbar.
 class ToolBarPullDownButton extends ToolbarItem {
@@ -72,7 +73,7 @@ class ToolBarPullDownButton extends ToolbarItem {
           child: pulldownButton,
         );
       }
-      return pulldownButton;
+      return MacosToolbarPassthrough(child: pulldownButton);
     } else {
       // We should show a submenu for the pulldown button items.
       final subMenuKey = GlobalKey<ToolbarPopupState>();
