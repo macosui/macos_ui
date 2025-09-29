@@ -1,3 +1,8 @@
+## [2.2.0+1]
+* Support Dart 3.9.2
+* Update dependencies
+* Address lints
+
 ## [2.2.0]
 ### ✨ New ✨
 * Add support for Swift package manager.
