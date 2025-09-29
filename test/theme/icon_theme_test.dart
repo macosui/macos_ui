@@ -78,7 +78,7 @@ void main() {
     );
 
     final theme = MacosIconTheme.of(capturedContext);
-    expect(theme.color, const MacosColor(0xbe0981ff));
+    expect(theme.color, const MacosColor.fromRGBO(9, 129, 255, 0.749));
     expect(theme.size, 20);
   });
 }
