@@ -115,7 +115,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       startSize: 200,
                                       windowBreakpoint: 700,
                                       resizableSide: ResizableSide.left,
-                                      builder: (_, __) {
+                                      builder: (_, _) {
                                         return const Center(
                                           child: Text('Resizable Pane'),
                                         );
@@ -159,7 +159,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       startSize: 200,
                                       windowBreakpoint: 700,
                                       resizableSide: ResizableSide.left,
-                                      builder: (_, __) {
+                                      builder: (_, _) {
                                         return const Center(
                                           child: Text('Resizable Pane'),
                                         );
@@ -203,7 +203,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       startSize: 200,
                                       windowBreakpoint: 700,
                                       resizableSide: ResizableSide.left,
-                                      builder: (_, __) {
+                                      builder: (_, _) {
                                         return const Center(
                                           child: Text('Resizable Pane'),
                                         );
@@ -293,7 +293,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       startSize: 200,
                                       windowBreakpoint: 700,
                                       resizableSide: ResizableSide.left,
-                                      builder: (_, __) {
+                                      builder: (_, _) {
                                         return const Center(
                                           child: Text('Resizable Pane'),
                                         );
@@ -338,7 +338,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       startSize: 200,
                                       windowBreakpoint: 700,
                                       resizableSide: ResizableSide.left,
-                                      builder: (_, __) {
+                                      builder: (_, _) {
                                         return const Center(
                                           child: Text('Resizable Pane'),
                                         );
@@ -383,7 +383,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                                       startSize: 200,
                                       windowBreakpoint: 700,
                                       resizableSide: ResizableSide.left,
-                                      builder: (_, __) {
+                                      builder: (_, _) {
                                         return const Center(
                                           child: Text('Resizable Pane'),
                                         );

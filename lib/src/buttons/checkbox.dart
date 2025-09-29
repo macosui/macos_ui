@@ -58,19 +58,19 @@ class MacosCheckbox extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty(
-      'state',
-      isMixed
-          ? 'mixed'
-          : value!
-              ? 'checked'
-              : 'unchecked',
-    ));
-    properties.add(FlagProperty(
-      'disabled',
-      value: isDisabled,
-      ifFalse: 'enabled',
-    ));
+    properties.add(
+      StringProperty(
+        'state',
+        isMixed
+            ? 'mixed'
+            : value!
+            ? 'checked'
+            : 'unchecked',
+      ),
+    );
+    properties.add(
+      FlagProperty('disabled', value: isDisabled, ifFalse: 'enabled'),
+    );
     properties.add(DoubleProperty('size', size));
     properties.add(ColorProperty('activeColor', activeColor));
     properties.add(ColorProperty('disabledColor', disabledColor));
@@ -84,49 +84,50 @@ class MacosCheckbox extends StatelessWidget {
     final MacosThemeData theme = MacosTheme.of(context);
     bool isLight = !theme.brightness.isDark;
     return StreamBuilder(
-        stream: AccentColorListener.instance.onChanged,
-        builder: (context, _) {
-          return StreamBuilder<bool>(
-              stream: WindowMainStateListener.instance.onChanged,
-              builder: (context, _) {
-                final accentColor =
-                    MacosTheme.of(context).accentColor ?? AccentColor.blue;
-                final isMainWindow =
-                    MacosTheme.of(context).isMainWindow ?? true;
+      stream: AccentColorListener.instance.onChanged,
+      builder: (context, _) {
+        return StreamBuilder<bool>(
+          stream: WindowMainStateListener.instance.onChanged,
+          builder: (context, _) {
+            final accentColor =
+                MacosTheme.of(context).accentColor ?? AccentColor.blue;
+            final isMainWindow = MacosTheme.of(context).isMainWindow ?? true;
 
-                return GestureDetector(
-                  onTap: () {
-                    if (value == null || value == false) {
-                      onChanged?.call(true);
-                    } else {
-                      onChanged?.call(false);
-                    }
-                  },
-                  child: Semantics(
-                    // value == true because [value] can be null
-                    checked: value == true,
-                    label: semanticLabel,
-                    child: Container(
-                      height: size,
-                      width: size,
-                      alignment: Alignment.center,
-                      child: SizedBox.expand(
-                        child: _DecoratedContainer(
-                          accentColor: accentColor,
-                          isDisabled: isDisabled,
-                          isLight: isLight,
-                          isMainWindow: isMainWindow,
-                          value: value,
-                          isMixed: isMixed,
-                          theme: theme,
-                          size: size,
-                        ),
-                      ),
+            return GestureDetector(
+              onTap: () {
+                if (value == null || value == false) {
+                  onChanged?.call(true);
+                } else {
+                  onChanged?.call(false);
+                }
+              },
+              child: Semantics(
+                // value == true because [value] can be null
+                checked: value == true,
+                label: semanticLabel,
+                child: Container(
+                  height: size,
+                  width: size,
+                  alignment: Alignment.center,
+                  child: SizedBox.expand(
+                    child: _DecoratedContainer(
+                      accentColor: accentColor,
+                      isDisabled: isDisabled,
+                      isLight: isLight,
+                      isMainWindow: isMainWindow,
+                      value: value,
+                      isMixed: isMixed,
+                      theme: theme,
+                      size: size,
                     ),
                   ),
-                );
-              });
-        });
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
 
@@ -197,15 +198,12 @@ class _CheckboxStack extends StatelessWidget {
     final icon = value == false
         ? null
         : isMixed
-            ? CupertinoIcons.minus
-            : CupertinoIcons.checkmark;
+        ? CupertinoIcons.minus
+        : CupertinoIcons.checkmark;
 
     return Stack(
       children: [
-        _InnerDropShadow(
-          value: value,
-          isEnabled: !isDisabled,
-        ),
+        _InnerDropShadow(value: value, isEnabled: !isDisabled),
         Center(
           child: Icon(
             icon,
@@ -217,22 +215,22 @@ class _CheckboxStack extends StatelessWidget {
     );
   }
 
-  _getCheckmarkColor() {
+  MacosColor _getCheckmarkColor() {
     if (isDisabled) {
       return const MacosColor.fromRGBO(172, 172, 172, 1.0);
     }
 
     if (theme.brightness.isDark) {
       return theme.accentColor == AccentColor.graphite && isMainWindow
-          ? CupertinoColors.black
-          : CupertinoColors.white;
+          ? MacosColors.black
+          : MacosColors.white;
     }
 
     if (theme.isMainWindow == false) {
-      return CupertinoColors.black;
+      return MacosColors.black;
     }
 
-    return CupertinoColors.white;
+    return MacosColors.white;
   }
 }
 
@@ -245,10 +243,7 @@ class _InnerDropShadow extends StatelessWidget {
   final bool isEnabled;
 
   /// Creates a widget that paints an inner drop shadow for a checkbox.
-  const _InnerDropShadow({
-    required this.value,
-    required this.isEnabled,
-  });
+  const _InnerDropShadow({required this.value, required this.isEnabled});
 
   @override
   Widget build(BuildContext context) {
@@ -310,10 +305,7 @@ class _BoxDecorationBuilder {
               MacosColor.fromRGBO(74, 74, 74, 1.0 * isEnabledFactor),
               MacosColor.fromRGBO(101, 101, 101, 1.0 * isEnabledFactor),
             ]
-          : const [
-              MacosColors.transparent,
-              MacosColors.transparent,
-            ];
+          : const [MacosColors.transparent, MacosColors.transparent];
     }
 
     if (isDarkModeEnabled) {
@@ -437,7 +429,7 @@ class _BoxDecorationBuilder {
               spreadRadius: -0.5,
               offset: Offset(0.0, 0.5),
               blurStyle: BlurStyle.outer,
-            )
+            ),
           ]
         : const [];
 
