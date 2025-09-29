@@ -215,7 +215,7 @@ class _CheckboxStack extends StatelessWidget {
     );
   }
 
-  MacosColor _getCheckmarkColor() {
+  Color _getCheckmarkColor() {
     if (isDisabled) {
       return const MacosColor.fromRGBO(172, 172, 172, 1.0);
     }
