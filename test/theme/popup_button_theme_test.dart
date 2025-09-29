@@ -52,7 +52,7 @@ void main() {
           .toList();
 
       expect(description, [
-        'highlightColor: Color(alpha: 1.0000, red: 0.5569, green: 0.5569, blue: 0.5765, colorSpace: ColorSpace.sRGB)',
+        'highlightColor: MacosColor(alpha: 1.0000, red: 0.5569, green: 0.5569, blue: 0.5765, colorSpace: ColorSpace.sRGB)',
         'backgroundColor: MacosColor(alpha: 1.0000, red: 0.0157, green: 0.2000, blue: 1.0000, colorSpace: ColorSpace.sRGB)',
         'popupColor: Color(alpha: 0.1000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace: ColorSpace.sRGB)',
       ]);

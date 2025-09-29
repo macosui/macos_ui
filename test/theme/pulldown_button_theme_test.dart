@@ -50,15 +50,12 @@ void main() {
           .map((node) => node.toString())
           .toList();
 
-      expect(
-        description,
-        [
-          'highlightColor: MacosColor(0xff8e8e93)',
-          'backgroundColor: MacosColor(0xff0433ff)',
-          'pulldownColor: Color(0x19000000)',
-          'iconColor: MacosColor(0xff00f900)',
-        ],
-      );
+      expect(description, [
+        'highlightColor: MacosColor(alpha: 1.0000, red: 0.5569, green: 0.5569, blue: 0.5765, colorSpace: ColorSpace.sRGB)',
+        'backgroundColor: MacosColor(alpha: 1.0000, red: 0.0157, green: 0.2000, blue: 1.0000, colorSpace: ColorSpace.sRGB)',
+        'pulldownColor: Color(alpha: 0.1000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace: ColorSpace.sRGB)',
+        'iconColor: MacosColor(alpha: 1.0000, red: 0.0000, green: 0.9765, blue: 0.0000, colorSpace: ColorSpace.sRGB)',
+      ]);
     });
 
     testWidgets('Default values in widget tree', (tester) async {

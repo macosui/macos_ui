@@ -42,13 +42,10 @@ void main() {
           .map((node) => node.toString())
           .toList();
 
-      expect(
-        description,
-        [
-          'color: MacosColor(0xff0433ff)',
-          'disabledColor: MacosColor(0xff8e8e93)',
-        ],
-      );
+      expect(description, [
+        'color: MacosColor(alpha: 1.0000, red: 0.0157, green: 0.2000, blue: 1.0000, colorSpace: ColorSpace.sRGB)',
+        'disabledColor: MacosColor(alpha: 1.0000, red: 0.5569, green: 0.5569, blue: 0.5765, colorSpace: ColorSpace.sRGB)',
+      ]);
     });
 
     testWidgets('Default values in widget tree', (tester) async {
