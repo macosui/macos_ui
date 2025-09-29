@@ -48,13 +48,10 @@ void main() {
           .map((node) => node.toString())
           .toList();
 
-      expect(
-        description,
-        [
-          'highlightColor: Color(0xff007aff)',
-          'resultsBackgroundColor: Color(0xfff2f2f7)',
-        ],
-      );
+      expect(description, [
+        'highlightColor: Color(alpha: 1.0000, red: 0.0000, green: 0.4784, blue: 1.0000, colorSpace: ColorSpace.sRGB)',
+        'resultsBackgroundColor: Color(alpha: 1.0000, red: 0.9490, green: 0.9490, blue: 0.9686, colorSpace: ColorSpace.sRGB)',
+      ]);
     });
 
     testWidgets('Default values in widget tree', (tester) async {

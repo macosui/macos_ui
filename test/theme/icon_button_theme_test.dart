@@ -44,18 +44,15 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'backgroundColor: null',
-        'disabledColor: null',
-        'hoverColor: null',
-        'shape: null',
-        'borderRadius: null',
-        'boxConstraints: null',
-        'padding: null',
-      ],
-    );
+    expect(description, [
+      'backgroundColor: null',
+      'disabledColor: null',
+      'hoverColor: null',
+      'shape: null',
+      'borderRadius: null',
+      'boxConstraints: null',
+      'padding: null',
+    ]);
   });
 
   testWidgets('Default values in widget tree', (tester) async {

@@ -3,11 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
-enum TestOptions {
-  first,
-  second,
-  third,
-}
+enum TestOptions { first, second, third }
 
 Type typeOf<T>() => T;
 
@@ -93,16 +89,13 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'enabled',
-        'size: 16.0',
-        'onColor: null',
-        'offColor: tertiaryLabel(*color = Color(0x4c3c3c43)*, darkColor = Color(0x4cebebf5), highContrastColor = Color(0x603c3c43), darkHighContrastColor = Color(0x60ebebf5), resolved by: UNRESOLVED)',
-        'innerColor: null',
-        'semanticLabel: null',
-      ],
-    );
+    expect(description, [
+      'enabled',
+      'size: 16.0',
+      'onColor: null',
+      'offColor: tertiaryLabel(*color = Color(alpha: 0.2980, red: 0.2353, green: 0.2353, blue: 0.2627, colorSpace: ColorSpace.sRGB)*, darkColor = Color(alpha: 0.2980, red: 0.9216, green: 0.9216, blue: 0.9608, colorSpace: ColorSpace.sRGB), highContrastColor = Color(alpha: 0.3765, red: 0.2353, green: 0.2353, blue: 0.2627, colorSpace: ColorSpace.sRGB), darkHighContrastColor = Color(alpha: 0.3765, red: 0.9216, green: 0.9216, blue: 0.9608, colorSpace: ColorSpace.sRGB), resolved by: UNRESOLVED)',
+      'innerColor: null',
+      'semanticLabel: null',
+    ]);
   });
 }
