@@ -16,21 +16,18 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'value: 0.5',
-        'has onChanged',
-        'min: 0.0',
-        'max: 1.0',
-        'color: systemBlue(*color = Color(0xff007aff)*, darkColor = Color(0xff0a84ff), highContrastColor = Color(0xff0040dd), darkHighContrastColor = Color(0xff409cff), resolved by: UNRESOLVED)',
-        'backgroundColor: CupertinoDynamicColor(*color = Color(0x19000000)*, darkColor = Color(0x19ffffff), resolved by: UNRESOLVED)',
-        'tickBackgroundColor: CupertinoDynamicColor(*color = Color(0xffdcdcdc)*, darkColor = Color(0xff464646), resolved by: UNRESOLVED)',
-        'thumbColor: CupertinoDynamicColor(*color = Color(0xffffffff)*, darkColor = Color(0xff98989d), resolved by: UNRESOLVED)',
-        'splits: 15',
-        'semanticLabel: null',
-      ],
-    );
+    expect(description, [
+      'value: 0.5',
+      'has onChanged',
+      'min: 0.0',
+      'max: 1.0',
+      'color: systemBlue(*color = Color(alpha: 1.0000, red: 0.0000, green: 0.4784, blue: 1.0000, colorSpace: ColorSpace.sRGB)*, darkColor = Color(alpha: 1.0000, red: 0.0392, green: 0.5176, blue: 1.0000, colorSpace: ColorSpace.sRGB), highContrastColor = Color(alpha: 1.0000, red: 0.0000, green: 0.2510, blue: 0.8667, colorSpace: ColorSpace.sRGB), darkHighContrastColor = Color(alpha: 1.0000, red: 0.2510, green: 0.6118, blue: 1.0000, colorSpace: ColorSpace.sRGB), resolved by: UNRESOLVED)',
+      'backgroundColor: CupertinoDynamicColor(*color = Color(alpha: 0.1000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace: ColorSpace.sRGB)*, darkColor = Color(alpha: 0.1000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), resolved by: UNRESOLVED)',
+      'tickBackgroundColor: CupertinoDynamicColor(*color = Color(alpha: 1.0000, red: 0.8627, green: 0.8627, blue: 0.8627, colorSpace: ColorSpace.sRGB)*, darkColor = Color(alpha: 1.0000, red: 0.2745, green: 0.2745, blue: 0.2745, colorSpace: ColorSpace.sRGB), resolved by: UNRESOLVED)',
+      'thumbColor: CupertinoDynamicColor(*color = Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB)*, darkColor = Color(alpha: 1.0000, red: 0.5961, green: 0.5961, blue: 0.6157, colorSpace: ColorSpace.sRGB), resolved by: UNRESOLVED)',
+      'splits: 15',
+      'semanticLabel: null',
+    ]);
   });
 
   testWidgets('Continuous slider can move when tapped', (tester) async {
