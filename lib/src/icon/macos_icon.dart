@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 /// An Icon widget that respects a macOS icon theme.
 class MacosIcon extends StatelessWidget {
@@ -85,10 +86,7 @@ class MacosIcon extends StatelessWidget {
     if (icon == null) {
       return Semantics(
         label: semanticLabel,
-        child: SizedBox(
-          width: iconSize,
-          height: iconSize,
-        ),
+        child: SizedBox(width: iconSize, height: iconSize),
       );
     }
 
@@ -117,7 +115,8 @@ class MacosIcon extends StatelessWidget {
       switch (textDirection) {
         case TextDirection.rtl:
           iconWidget = Transform(
-            transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
+            transform: Matrix4.identity()
+              ..scaleByVector3(Vector3(-1.0, 1.0, 1.0)),
             alignment: Alignment.center,
             transformHitTests: false,
             child: iconWidget,
@@ -134,9 +133,7 @@ class MacosIcon extends StatelessWidget {
         child: SizedBox(
           width: iconSize,
           height: iconSize,
-          child: Center(
-            child: iconWidget,
-          ),
+          child: Center(child: iconWidget),
         ),
       ),
     );
@@ -145,12 +142,9 @@ class MacosIcon extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IconDataProperty(
-      'icon',
-      icon,
-      ifNull: '<empty>',
-      showName: false,
-    ));
+    properties.add(
+      IconDataProperty('icon', icon, ifNull: '<empty>', showName: false),
+    );
     properties.add(DoubleProperty('size', size, defaultValue: null));
     properties.add(ColorProperty('color', color, defaultValue: null));
   }

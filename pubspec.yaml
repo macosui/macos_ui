@@ -15,6 +15,7 @@ dependencies:
   gradient_borders: ^1.0.2
   appkit_ui_element_colors: ^1.0.1
   equatable: ^2.0.7
+  vector_math: ^2.2.0
 
 dev_dependencies:
   flutter_test:
