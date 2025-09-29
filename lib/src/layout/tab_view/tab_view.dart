@@ -26,6 +26,7 @@ enum MacosTabPosition {
 /// {@template macosTabView}
 /// A multipage interface that displays one page at a time.
 ///
+// ignore: unintended_html_in_doc_comment
 /// <image alt='' src='https://docs-assets.developer.apple.com/published/db00e4fdc8/tabview_2x_bf87676c-ac06-41f4-a430-0b95b43cd278.png' width='400' height='400' />
 ///
 /// A tab view contains a row of navigational items, [tabs], that move the
