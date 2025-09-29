@@ -65,9 +65,7 @@ void main() {
                 ContentArea(
                   builder: (context, _) {
                     capturedContext = context;
-                    return const Center(
-                      child: MacosSearchField(),
-                    );
+                    return const Center(child: MacosSearchField());
                   },
                 ),
               ],
@@ -77,7 +75,10 @@ void main() {
       );
 
       final theme = MacosSearchFieldTheme.of(capturedContext);
-      expect(theme.highlightColor, const MacosColor(0xbe0981ff));
+      expect(
+        theme.highlightColor,
+        const MacosColor.fromRGBO(9, 129, 255, 0.749),
+      );
       expect(theme.resultsBackgroundColor, const Color(0xfff2f2f7));
     });
   });
