@@ -281,10 +281,16 @@ class _MacosSwitchState extends State<MacosSwitch>
     final MacosThemeData theme = MacosTheme.of(context);
     MacosColor borderColor =
         MacosDynamicColor.resolve(_kDefaultBorderColor, context).toMacosColor();
-    MacosColor activeColor = MacosColor(MacosDynamicColor.resolve(
+    final resolvedActiveColor = MacosDynamicColor.resolve(
       widget.activeColor ?? theme.primaryColor,
       context,
-    ).value);
+    );
+    MacosColor activeColor = MacosColor.fromRGBO(
+      (resolvedActiveColor.r * 255).toInt(),
+      (resolvedActiveColor.g * 255).toInt(),
+      (resolvedActiveColor.b * 255).toInt(),
+      resolvedActiveColor.a,
+    );
     MacosColor trackColor = widget.trackColor ??
         MacosDynamicColor.resolve(_kDefaultTrackColor, context).toMacosColor();
     MacosColor knobColor = widget.knobColor ??

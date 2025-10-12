@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
@@ -15,7 +16,7 @@ const _kDefaultFontFamily = '.AppleSystemUIFont';
 ///  * [MacosTheme], for aspects of a macos application that can be globally
 ///    adjusted, such as the primary color.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/typography/>
-class MacosTypography with Diagnosticable {
+class MacosTypography extends Equatable with Diagnosticable {
   /// Creates a typography that uses the given values.
   ///
   /// Rather than creating a new typography, consider using [MacosTypography.darkOpaque]
@@ -297,6 +298,21 @@ class MacosTypography with Diagnosticable {
       defaultValue: defaultStyle.caption2,
     ));
   }
+
+  @override
+  List<Object?> get props => [
+        body,
+        callout,
+        caption1,
+        caption2,
+        footnote,
+        headline,
+        largeTitle,
+        subheadline,
+        title1,
+        title2,
+        title3,
+      ];
 }
 
 /// The thickness of the glyphs used to draw the text.

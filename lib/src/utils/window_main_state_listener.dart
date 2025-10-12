@@ -42,11 +42,22 @@ class WindowMainStateListener {
   /// Whether the window is currently the main window.
   bool _isMainWindow = true;
 
+  /// Overrides the value of [_isMainWindow].
+  bool? _isMainWindowOverride;
+
   /// Whether the window is currently the main window.
-  bool get isMainWindow => _isMainWindow;
+  bool get isMainWindow => _isMainWindowOverride ?? _isMainWindow;
 
   /// Notifies listeners when the window’s main state changes.
   final _windowMainStateStreamController = StreamController<bool>.broadcast();
+
+  /// Overrides the value of [isMainWindow].
+  ///
+  /// Passing `null` will remove the override.
+  void overrideIsMainWindow(bool? value) {
+    _isMainWindowOverride = value;
+    _windowMainStateStreamController.add(isMainWindow);
+  }
 
   /// A stream of the window’s main state. Emits a new value whenever the state
   /// changes.

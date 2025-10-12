@@ -29,7 +29,7 @@ export 'package:flutter/material.dart'
         TimeOfDay,
         DayPeriod,
         FlexibleSpaceBar,
-        MaterialState;
+        WidgetState;
 export 'package:flutter/widgets.dart';
 
 export 'utils/utils.dart';

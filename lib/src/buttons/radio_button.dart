@@ -91,7 +91,7 @@ class MacosRadioButton<T> extends StatelessWidget {
     final MacosThemeData theme = MacosTheme.of(context);
     final isLight = !theme.brightness.isDark;
     return GestureDetector(
-      onTap: () => onChanged!(value),
+      onTap: isDisabled ? null : () => onChanged!(value),
       child: Semantics(
         checked: selected,
         label: semanticLabel,

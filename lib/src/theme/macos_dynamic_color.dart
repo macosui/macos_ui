@@ -152,5 +152,11 @@ class ResolvedMacosDynamicColor extends CupertinoDynamicColor {
   final Color resolvedColor;
 
   @override
-  int get value => resolvedColor.value;
+  double get r => resolvedColor.r;
+
+  @override
+  double get g => resolvedColor.g;
+
+  @override
+  double get b => resolvedColor.b;
 }

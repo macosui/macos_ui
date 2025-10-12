@@ -11,7 +11,7 @@ class WidgetTextTitle2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: MacosColors.systemGrayColor.withOpacity(0.5),
+        color: MacosColors.systemGrayColor.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Padding(

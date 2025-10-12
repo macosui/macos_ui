@@ -266,7 +266,7 @@ class _ToolBarState extends State<ToolBar> {
         enableWallpaperTintedArea: kIsWeb ? false : !widget.enableBlur,
         isWidgetVisible: widget.allowWallpaperTintingOverrides,
         backgroundColor: theme.canvasColor,
-        widgetOpacity: widget.decoration?.color?.opacity,
+        widgetOpacity: widget.decoration?.color?.a,
         child: Container(
           alignment: widget.alignment,
           padding: widget.padding,

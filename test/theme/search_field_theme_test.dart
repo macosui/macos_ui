@@ -80,7 +80,7 @@ void main() {
       );
 
       final theme = MacosSearchFieldTheme.of(capturedContext);
-      expect(theme.highlightColor, const Color(0xff007aff));
+      expect(theme.highlightColor, const MacosColor(0xbe0981ff));
       expect(theme.resultsBackgroundColor, const Color(0xfff2f2f7));
     });
   });

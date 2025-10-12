@@ -51,7 +51,7 @@ class MacosOverlayFilter extends StatelessWidget {
                     CupertinoColors.systemGrey.color,
                     CupertinoColors.black,
                   )
-                  .withOpacity(0.25),
+                  .withValues(alpha: 0.25),
               offset: const Offset(0, 4),
               spreadRadius: 4.0,
               blurRadius: 8.0,

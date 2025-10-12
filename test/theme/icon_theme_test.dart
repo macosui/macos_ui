@@ -81,7 +81,7 @@ void main() {
     );
 
     final theme = MacosIconTheme.of(capturedContext);
-    expect(theme.color, CupertinoColors.activeBlue.color);
+    expect(theme.color, const MacosColor(0xbe0981ff));
     expect(theme.size, 20);
   });
 }

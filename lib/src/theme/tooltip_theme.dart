@@ -93,8 +93,8 @@ class MacosTooltipThemeData with Diagnosticable {
         final shadow = [
           BoxShadow(
             color: brightness.isDark
-                ? CupertinoColors.black.withOpacity(0.5)
-                : CupertinoColors.systemGrey3.color.withOpacity(0.5),
+                ? CupertinoColors.black.withValues(alpha: 0.5)
+                : CupertinoColors.systemGrey3.color.withValues(alpha: 0.5),
             offset: const Offset(0, 2),
             spreadRadius: 0.5,
             blurRadius: 4,

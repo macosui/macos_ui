@@ -100,7 +100,7 @@ class TitleBar extends StatelessWidget {
       ),
       child: ClipRect(
         child: BackdropFilter(
-          filter: decoration?.color?.opacity == 1
+          filter: decoration?.color?.a == 1
               ? ImageFilter.blur()
               : ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Container(

@@ -88,3 +88,6 @@ export 'src/theme/search_field_theme.dart';
 export 'src/theme/time_picker_theme.dart';
 export 'src/theme/tooltip_theme.dart';
 export 'src/theme/typography.dart';
+export 'src/enums/accent_color.dart';
+export 'src/utils/window_main_state_listener.dart';
+export 'src/utils/accent_color_listener.dart';

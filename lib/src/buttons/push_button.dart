@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:macos_ui/src/enums/accent_color.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kMiniButtonSize = Size(26.0, 11.0);
@@ -256,8 +255,8 @@ class PushButtonState extends State<PushButton>
   @visibleForTesting
   bool buttonHeldDown = false;
 
-  AccentColor get _accentColor =>
-      AccentColorListener.instance.currentAccentColor ?? AccentColor.blue;
+  AccentColor _getAccentColor(BuildContext context) =>
+      MacosTheme.of(context).accentColor ?? AccentColor.blue;
 
   BoxDecoration _getBoxDecoration() {
     // If the window isn’t currently the main window (that is, it is not in
@@ -265,7 +264,7 @@ class PushButtonState extends State<PushButton>
     final isMainWindow = WindowMainStateListener.instance.isMainWindow;
 
     return _BoxDecorationBuilder.buildBoxDecoration(
-      accentColor: _accentColor,
+      accentColor: _getAccentColor(context),
       isEnabled: widget.enabled,
       isDarkModeEnabled: MacosTheme.of(context).brightness.isDark,
       isSecondary: !isMainWindow || (widget.secondary ?? false),
@@ -284,7 +283,7 @@ class PushButtonState extends State<PushButton>
     return MacosDynamicColor.resolve(
       widget.color ??
           _BoxDecorationBuilder.getGradientColors(
-            accentColor: _accentColor,
+            accentColor: _getAccentColor(context),
             isEnabled: enabled,
             isDarkModeEnabled: theme.brightness.isDark,
             isSecondary: isSecondary || !isWindowMain,
@@ -299,12 +298,12 @@ class PushButtonState extends State<PushButton>
     final blendedBackgroundColor = Color.lerp(
       theme.canvasColor,
       backgroundColor,
-      backgroundColor.opacity,
+      backgroundColor.a,
     )!;
 
     return widget.enabled
         ? textLuminance(blendedBackgroundColor)
-        : textLuminance(blendedBackgroundColor).withOpacity(0.25);
+        : textLuminance(blendedBackgroundColor).withValues(alpha: 0.25);
   }
 
   BoxDecoration _getClickEffectBoxDecoration() {
@@ -459,9 +458,6 @@ class _BoxDecorationBuilder {
             MacosColor.fromRGBO(64, 64, 64, 1.0 * isEnabledFactor),
             MacosColor.fromRGBO(57, 57, 57, 1.0 * isEnabledFactor),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     } else {
       switch (accentColor) {
@@ -512,9 +508,6 @@ class _BoxDecorationBuilder {
             MacosColor.fromRGBO(86, 86, 86, 1.0 * isEnabledFactor),
             MacosColor.fromRGBO(55, 55, 55, 1.0 * isEnabledFactor),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     }
   }
@@ -650,9 +643,6 @@ class _BoxDecorationBuilder {
               blurStyle: isEnabled ? BlurStyle.normal : BlurStyle.outer,
             ),
           ];
-
-        default:
-          throw UnimplementedError();
       }
     }
   }

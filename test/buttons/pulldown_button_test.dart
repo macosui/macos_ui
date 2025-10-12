@@ -180,5 +180,59 @@ void main() {
         ],
       );
     });
+
+    testWidgets(
+      'MacosPulldownMenuItem.onTap shows alert dialog',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context, _) {
+                      return Center(
+                          child: MacosPulldownButton(
+                        title: "test",
+                        items: [
+                          MacosPulldownMenuItem(
+                            title: const Text('Open Alert Dialog'),
+                            onTap: () => showMacosAlertDialog(
+                              context: context,
+                              builder: (context) => MacosAlertDialog(
+                                appIcon: const MacosIcon(CupertinoIcons.eyedropper),
+                                title: const Text('Title'),
+                                message: const Text('Message'),
+                                primaryButton: PushButton(
+                                  controlSize: ControlSize.large,
+                                  onPressed: Navigator.of(context).pop,
+                                  child: const Text('Close'),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ));
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        // Tap the pulldown button.
+        await tester.tap(find.text('test'));
+        await tester.pumpAndSettle();
+        // Tap the menu item to show the alert dialog.
+        await tester.tap(find.text('Open Alert Dialog'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Open Alert Dialog'), findsNothing);
+        expect(find.text('Title'), findsOneWidget);
+        expect(find.text('Message'), findsOneWidget);
+        expect(find.text('Close'), findsOneWidget);
+      },
+    );
   });
 }

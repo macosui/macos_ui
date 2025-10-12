@@ -148,9 +148,9 @@ class MacosIconButtonThemeData with Diagnosticable {
       identical(this, other) ||
       other is MacosIconButtonThemeData &&
           runtimeType == other.runtimeType &&
-          backgroundColor?.value == other.backgroundColor?.value &&
-          disabledColor?.value == other.disabledColor?.value &&
-          hoverColor?.value == other.hoverColor?.value &&
+          backgroundColor == other.backgroundColor &&
+          disabledColor == other.disabledColor &&
+          hoverColor == other.hoverColor &&
           shape == other.shape &&
           borderRadius == other.borderRadius &&
           boxConstraints == other.boxConstraints &&

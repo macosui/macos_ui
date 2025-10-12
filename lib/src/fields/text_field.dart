@@ -1046,7 +1046,7 @@ class _MacosTextFieldState extends State<MacosTextField>
         ? const Color.fromRGBO(255, 255, 255, 0.55)
         : const Color.fromRGBO(0, 0, 0, 0.5);
     if (widget.enabled != null && widget.enabled == false) {
-      iconsColor = iconsColor.withOpacity(0.2);
+      iconsColor = iconsColor.withValues(alpha: 0.2);
     }
 
     // Otherwise, listen to the current state of the text entry.
@@ -1189,257 +1189,320 @@ class _MacosTextFieldState extends State<MacosTextField>
         : TextAlignVertical.top;
   }
 
+  Color? _resolveAccentColor(BuildContext context, AccentColor? accentColor) {
+    if (accentColor == null) {
+      return null;
+    }
+
+    final isDarkModeActive = MacosTheme.of(context).brightness.isDark;
+
+    if (isDarkModeActive) {
+      switch (accentColor) {
+        case AccentColor.blue:
+          return const Color.fromRGBO(0, 122, 255, 1.0);
+        case AccentColor.purple:
+          return const Color.fromRGBO(165, 80, 167, 1.0);
+        case AccentColor.pink:
+          return const Color.fromRGBO(247, 79, 158, 1.0);
+        case AccentColor.red:
+          return const Color.fromRGBO(255, 82, 87, 1.0);
+        case AccentColor.orange:
+          return const Color.fromRGBO(247, 130, 27, 1.0);
+        case AccentColor.yellow:
+          return const Color.fromRGBO(255, 198, 0, 1.0);
+        case AccentColor.green:
+          return const Color.fromRGBO(98, 186, 70, 1.0);
+        case AccentColor.graphite:
+          return const Color.fromRGBO(137, 137, 137, 1.0);
+      }
+    }
+
+    switch (accentColor) {
+      case AccentColor.blue:
+        return const Color.fromRGBO(0, 122, 255, 1.0);
+      case AccentColor.purple:
+        return const Color.fromRGBO(150, 51, 150, 1.0);
+      case AccentColor.pink:
+        return const Color.fromRGBO(247, 79, 158, 1.0);
+      case AccentColor.red:
+        return const Color.fromRGBO(224, 56, 62, 1.0);
+      case AccentColor.orange:
+        return const Color.fromRGBO(247, 130, 27, 1.0);
+      case AccentColor.yellow:
+        return const Color.fromRGBO(255, 199, 38, 1.0);
+      case AccentColor.green:
+        return const Color.fromRGBO(98, 186, 70, 1.0);
+      case AccentColor.graphite:
+        return const Color.fromRGBO(152, 152, 152, 1.0);
+    }
+  }
+
   @override
   // ignore: code-metrics
   Widget build(BuildContext context) {
     super.build(context); // See AutomaticKeepAliveClientMixin.
     assert(debugCheckHasDirectionality(context));
     assert(debugCheckHasMacosTheme(context));
-    final TextEditingController controller = _effectiveController;
+    return StreamBuilder(
+        stream: AccentColorListener.instance.onChanged,
+        builder: (context, _) {
+          final TextEditingController controller = _effectiveController;
 
-    TextSelectionControls? textSelectionControls = widget.selectionControls;
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-        textSelectionControls ??= cupertinoTextSelectionControls;
-        break;
+          TextSelectionControls? textSelectionControls =
+              widget.selectionControls;
+          switch (defaultTargetPlatform) {
+            case TargetPlatform.iOS:
+            case TargetPlatform.android:
+            case TargetPlatform.fuchsia:
+              textSelectionControls ??= cupertinoTextSelectionControls;
+              break;
 
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
-      case TargetPlatform.macOS:
-        textSelectionControls ??= cupertinoDesktopTextSelectionControls;
-        break;
-    }
-
-    final bool enabled = widget.enabled ?? true;
-    final Offset cursorOffset = Offset(
-      _iOSHorizontalCursorOffsetPixels /
-          MediaQuery.of(context).devicePixelRatio,
-      0,
-    );
-    final List<TextInputFormatter> formatters = <TextInputFormatter>[
-      ...?widget.inputFormatters,
-      if (widget.maxLength != null)
-        LengthLimitingTextInputFormatter(
-          widget.maxLength,
-          maxLengthEnforcement: _effectiveMaxLengthEnforcement,
-        ),
-    ];
-    final MacosThemeData themeData = MacosTheme.of(context);
-
-    final TextStyle? resolvedStyle = widget.style?.copyWith(
-      color: MacosDynamicColor.maybeResolve(widget.style?.color, context),
-      backgroundColor: MacosDynamicColor.maybeResolve(
-        widget.style?.backgroundColor,
-        context,
-      ),
-    );
-
-    final textStyle = themeData.typography.body.merge(resolvedStyle);
-
-    final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
-      color: MacosDynamicColor.maybeResolve(
-        widget.placeholderStyle?.color,
-        context,
-      ),
-      backgroundColor: MacosDynamicColor.maybeResolve(
-        widget.placeholderStyle?.backgroundColor,
-        context,
-      ),
-    );
-
-    final placeholderStyle = textStyle.merge(enabled
-        ? resolvedPlaceholderStyle
-        : resolvedPlaceholderStyle!
-            .copyWith(color: resolvedPlaceholderStyle.color!.withOpacity(0.2)));
-
-    final Brightness keyboardAppearance =
-        widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
-    Color? cursorColor;
-    cursorColor = MacosDynamicColor.maybeResolve(widget.cursorColor, context);
-    cursorColor ??=
-        themeData.brightness.isDark ? MacosColors.white : MacosColors.black;
-    final Color disabledColor =
-        MacosDynamicColor.resolve(_kDisabledBackground, context);
-
-    Color? decorationColor =
-        MacosDynamicColor.maybeResolve(widget.decoration?.color, context);
-    if (decorationColor.runtimeType == ResolvedMacosDynamicColor) {
-      if ((decorationColor as ResolvedMacosDynamicColor).color ==
-              const Color(0xffffffff) ||
-          (decorationColor).darkColor == const Color(0xff000000)) {
-        decorationColor = themeData.brightness.isDark
-            ? const Color.fromRGBO(30, 30, 30, 1)
-            : MacosColors.white;
-      }
-    }
-
-    final BoxBorder? border = widget.decoration?.border;
-    Border? resolvedBorder = border as Border?;
-    if (border is Border) {
-      BorderSide resolveBorderSide(BorderSide side) {
-        return side == BorderSide.none
-            ? side
-            : side.copyWith(
-                color: MacosDynamicColor.resolve(side.color, context),
-              );
-      }
-
-      resolvedBorder = border.runtimeType != Border
-          ? border
-          : Border(
-              top: resolveBorderSide(border.top),
-              left: resolveBorderSide(border.left),
-              bottom: resolveBorderSide(border.bottom),
-              right: resolveBorderSide(border.right),
-            );
-    }
-
-    final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
-      border: resolvedBorder,
-      color: enabled ? decorationColor : disabledColor,
-    );
-
-    final BoxDecoration? focusedDecoration = widget.focusedDecoration?.copyWith(
-      border: Border.all(
-        width: 3.0,
-        color: themeData.brightness.isDark
-            ? const Color.fromRGBO(26, 169, 255, 0.3)
-            : const Color.fromRGBO(0, 103, 244, 0.25),
-      ),
-    );
-
-    final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
-      border: () {
-        if (focusedDecoration.border is Border) {
-          BorderSide borderSide(BorderSide fromSide) {
-            return BorderSide(
-              color: fromSide.color.withOpacity(0.0),
-              style: fromSide.style,
-              width: fromSide.width,
-            );
+            case TargetPlatform.linux:
+            case TargetPlatform.windows:
+            case TargetPlatform.macOS:
+              textSelectionControls ??= cupertinoDesktopTextSelectionControls;
+              break;
           }
 
-          return Border(
-            bottom: borderSide((focusedDecoration.border as Border).bottom),
-            top: borderSide((focusedDecoration.border as Border).top),
-            left: borderSide((focusedDecoration.border as Border).left),
-            right: borderSide((focusedDecoration.border as Border).right),
+          final bool enabled = widget.enabled ?? true;
+          final Offset cursorOffset = Offset(
+            _iOSHorizontalCursorOffsetPixels /
+                MediaQuery.of(context).devicePixelRatio,
+            0,
           );
-        }
-        return focusedDecoration.border;
-      }(),
-      color: focusedDecoration.color ?? const Color(0x00000000),
-    );
+          final List<TextInputFormatter> formatters = <TextInputFormatter>[
+            ...?widget.inputFormatters,
+            if (widget.maxLength != null)
+              LengthLimitingTextInputFormatter(
+                widget.maxLength,
+                maxLengthEnforcement: _effectiveMaxLengthEnforcement,
+              ),
+          ];
+          final MacosThemeData themeData = MacosTheme.of(context);
 
-    final Color selectionColor =
-        MacosTheme.of(context).primaryColor.withOpacity(0.2);
-
-    final Widget paddedEditable = Padding(
-      padding: widget.padding,
-      child: RepaintBoundary(
-        child: UnmanagedRestorationScope(
-          bucket: bucket,
-          child: EditableText(
-            key: editableTextKey,
-            controller: controller,
-            readOnly: widget.readOnly,
-            showCursor: widget.showCursor,
-            showSelectionHandles: _showSelectionHandles,
-            focusNode: _effectiveFocusNode,
-            keyboardType: widget.keyboardType,
-            textInputAction: widget.textInputAction,
-            textCapitalization: widget.textCapitalization,
-            style: textStyle,
-            strutStyle: widget.strutStyle,
-            textAlign: widget.textAlign,
-            autofocus: widget.autofocus,
-            obscuringCharacter: widget.obscuringCharacter,
-            obscureText: widget.obscureText,
-            autocorrect: widget.autocorrect,
-            smartDashesType: widget.smartDashesType,
-            smartQuotesType: widget.smartQuotesType,
-            enableSuggestions: widget.enableSuggestions,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
-            expands: widget.expands,
-            selectionColor: selectionColor,
-            selectionControls:
-                widget.selectionEnabled ? textSelectionControls : null,
-            onChanged: widget.onChanged,
-            onSelectionChanged: _handleSelectionChanged,
-            onEditingComplete: widget.onEditingComplete,
-            onSubmitted: widget.onSubmitted,
-            inputFormatters: formatters,
-            rendererIgnoresPointer: true,
-            cursorWidth: widget.cursorWidth,
-            cursorHeight: widget.cursorHeight,
-            cursorRadius: widget.cursorRadius,
-            cursorColor: cursorColor,
-            cursorOpacityAnimates: true,
-            cursorOffset: cursorOffset,
-            paintCursorAboveText: true,
-            autocorrectionTextRectColor: selectionColor,
-            backgroundCursorColor: MacosDynamicColor.resolve(
-              CupertinoColors.inactiveGray,
+          final TextStyle? resolvedStyle = widget.style?.copyWith(
+            color: MacosDynamicColor.maybeResolve(widget.style?.color, context),
+            backgroundColor: MacosDynamicColor.maybeResolve(
+              widget.style?.backgroundColor,
               context,
             ),
-            selectionHeightStyle: widget.selectionHeightStyle,
-            selectionWidthStyle: widget.selectionWidthStyle,
-            scrollPadding: widget.scrollPadding,
-            keyboardAppearance: keyboardAppearance,
-            dragStartBehavior: widget.dragStartBehavior,
-            scrollController: widget.scrollController,
-            scrollPhysics: widget.scrollPhysics,
-            enableInteractiveSelection: widget.enableInteractiveSelection,
-            autofillHints: widget.autofillHints,
-            restorationId: 'editable',
-            mouseCursor: SystemMouseCursors.text,
-            contextMenuBuilder: widget.contextMenuBuilder,
-          ),
-        ),
-      ),
-    );
+          );
 
-    return Semantics(
-      enabled: enabled,
-      onTap: !enabled || widget.readOnly
-          ? null
-          : () {
-              if (!controller.selection.isValid) {
-                controller.selection =
-                    TextSelection.collapsed(offset: controller.text.length);
+          final textStyle = themeData.typography.body.merge(resolvedStyle);
+
+          final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
+            color: MacosDynamicColor.maybeResolve(
+              widget.placeholderStyle?.color,
+              context,
+            ),
+            backgroundColor: MacosDynamicColor.maybeResolve(
+              widget.placeholderStyle?.backgroundColor,
+              context,
+            ),
+          );
+
+          final placeholderStyle = textStyle.merge(enabled
+              ? resolvedPlaceholderStyle
+              : resolvedPlaceholderStyle!.copyWith(
+                  color:
+                      resolvedPlaceholderStyle.color!.withValues(alpha: 0.2)));
+
+          final Brightness keyboardAppearance =
+              widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
+          Color? cursorColor;
+          cursorColor =
+              MacosDynamicColor.maybeResolve(widget.cursorColor, context);
+          cursorColor ??= _resolveAccentColor(
+              context, AccentColorListener.instance.currentAccentColor);
+          cursorColor ??= textStyle.color; // next best is "match text"
+          cursorColor ??= // last resort - fall back to theme forground color
+              themeData.brightness.isDark
+                  ? MacosColors.white
+                  : MacosColors.black;
+          final Color disabledColor =
+              MacosDynamicColor.resolve(_kDisabledBackground, context);
+
+          Color? decorationColor =
+              MacosDynamicColor.maybeResolve(widget.decoration?.color, context);
+          if (decorationColor.runtimeType == ResolvedMacosDynamicColor) {
+            if ((decorationColor as ResolvedMacosDynamicColor).color ==
+                    const Color(0xffffffff) ||
+                (decorationColor).darkColor == const Color(0xff000000)) {
+              decorationColor = themeData.brightness.isDark
+                  ? const Color.fromRGBO(30, 30, 30, 1)
+                  : MacosColors.white;
+            }
+          }
+
+          final BoxBorder? border = widget.decoration?.border;
+          Border? resolvedBorder = border as Border?;
+          if (border is Border) {
+            BorderSide resolveBorderSide(BorderSide side) {
+              return side == BorderSide.none
+                  ? side
+                  : side.copyWith(
+                      color: MacosDynamicColor.resolve(side.color, context),
+                    );
+            }
+
+            resolvedBorder = border.runtimeType != Border
+                ? border
+                : Border(
+                    top: resolveBorderSide(border.top),
+                    left: resolveBorderSide(border.left),
+                    bottom: resolveBorderSide(border.bottom),
+                    right: resolveBorderSide(border.right),
+                  );
+          }
+
+          final BoxDecoration? effectiveDecoration =
+              widget.decoration?.copyWith(
+            border: resolvedBorder,
+            color: enabled ? decorationColor : disabledColor,
+          );
+
+          final BoxDecoration? focusedDecoration =
+              widget.focusedDecoration?.copyWith(
+            border: Border.all(
+              width: 3.0,
+              color: themeData.brightness.isDark
+                  ? const Color.fromRGBO(26, 169, 255, 0.3)
+                  : const Color.fromRGBO(0, 103, 244, 0.25),
+            ),
+          );
+
+          final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
+            border: () {
+              if (focusedDecoration.border is Border) {
+                BorderSide borderSide(BorderSide fromSide) {
+                  return BorderSide(
+                    color: fromSide.color.withValues(alpha: 0.0),
+                    style: fromSide.style,
+                    width: fromSide.width,
+                  );
+                }
+
+                return Border(
+                  bottom:
+                      borderSide((focusedDecoration.border as Border).bottom),
+                  top: borderSide((focusedDecoration.border as Border).top),
+                  left: borderSide((focusedDecoration.border as Border).left),
+                  right: borderSide((focusedDecoration.border as Border).right),
+                );
               }
-              _requestKeyboard();
-            },
-      child: IgnorePointer(
-        ignoring: !enabled,
-        child: AnimatedContainer(
-          /// Value eyeballed from MacOS Big Sur
-          duration: const Duration(milliseconds: 125),
-          decoration: _effectiveFocusNode.hasFocus
-              ? focusedDecoration
-              : focusedPlaceholderDecoration,
-          child: Container(
-            decoration:
-                _effectiveFocusNode.hasFocus ? null : effectiveDecoration,
-            child: _selectionGestureDetectorBuilder.buildGestureDetector(
-              behavior: HitTestBehavior.translucent,
-              child: Align(
-                alignment: Alignment(-1.0, _textAlignVertical.y),
-                widthFactor: 1.0,
-                heightFactor: 1.0,
-                child: _addTextDependentAttachments(
-                  paddedEditable,
-                  textStyle,
-                  placeholderStyle,
+              return focusedDecoration.border;
+            }(),
+            color: focusedDecoration.color ?? const Color(0x00000000),
+          );
+
+          final Color selectionColor =
+              MacosTheme.of(context).primaryColor.withValues(alpha: 0.2);
+
+          final Widget paddedEditable = Padding(
+            padding: widget.padding,
+            child: RepaintBoundary(
+              child: UnmanagedRestorationScope(
+                bucket: bucket,
+                child: EditableText(
+                  key: editableTextKey,
+                  controller: controller,
+                  readOnly: widget.readOnly,
+                  showCursor: widget.showCursor,
+                  showSelectionHandles: _showSelectionHandles,
+                  focusNode: _effectiveFocusNode,
+                  keyboardType: widget.keyboardType,
+                  textInputAction: widget.textInputAction,
+                  textCapitalization: widget.textCapitalization,
+                  style: textStyle,
+                  strutStyle: widget.strutStyle,
+                  textAlign: widget.textAlign,
+                  autofocus: widget.autofocus,
+                  obscuringCharacter: widget.obscuringCharacter,
+                  obscureText: widget.obscureText,
+                  autocorrect: widget.autocorrect,
+                  smartDashesType: widget.smartDashesType,
+                  smartQuotesType: widget.smartQuotesType,
+                  enableSuggestions: widget.enableSuggestions,
+                  maxLines: widget.maxLines,
+                  minLines: widget.minLines,
+                  expands: widget.expands,
+                  selectionColor: selectionColor,
+                  selectionControls:
+                      widget.selectionEnabled ? textSelectionControls : null,
+                  onChanged: widget.onChanged,
+                  onSelectionChanged: _handleSelectionChanged,
+                  onEditingComplete: widget.onEditingComplete,
+                  onSubmitted: widget.onSubmitted,
+                  inputFormatters: formatters,
+                  rendererIgnoresPointer: true,
+                  cursorWidth: widget.cursorWidth,
+                  cursorHeight: widget.cursorHeight,
+                  cursorRadius: widget.cursorRadius,
+                  cursorColor: cursorColor,
+                  cursorOpacityAnimates: true,
+                  cursorOffset: cursorOffset,
+                  paintCursorAboveText: true,
+                  autocorrectionTextRectColor: selectionColor,
+                  backgroundCursorColor: MacosDynamicColor.resolve(
+                    CupertinoColors.inactiveGray,
+                    context,
+                  ),
+                  selectionHeightStyle: widget.selectionHeightStyle,
+                  selectionWidthStyle: widget.selectionWidthStyle,
+                  scrollPadding: widget.scrollPadding,
+                  keyboardAppearance: keyboardAppearance,
+                  dragStartBehavior: widget.dragStartBehavior,
+                  scrollController: widget.scrollController,
+                  scrollPhysics: widget.scrollPhysics,
+                  enableInteractiveSelection: widget.enableInteractiveSelection,
+                  autofillHints: widget.autofillHints,
+                  restorationId: 'editable',
+                  mouseCursor: SystemMouseCursors.text,
+                  contextMenuBuilder: widget.contextMenuBuilder,
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+
+          return Semantics(
+            enabled: enabled,
+            onTap: !enabled || widget.readOnly
+                ? null
+                : () {
+                    if (!controller.selection.isValid) {
+                      controller.selection = TextSelection.collapsed(
+                          offset: controller.text.length);
+                    }
+                    _requestKeyboard();
+                  },
+            child: IgnorePointer(
+              ignoring: !enabled,
+              child: AnimatedContainer(
+                /// Value eyeballed from MacOS Big Sur
+                duration: const Duration(milliseconds: 125),
+                decoration: _effectiveFocusNode.hasFocus
+                    ? focusedDecoration
+                    : focusedPlaceholderDecoration,
+                child: Container(
+                  decoration:
+                      _effectiveFocusNode.hasFocus ? null : effectiveDecoration,
+                  child: _selectionGestureDetectorBuilder.buildGestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    child: Align(
+                      alignment: Alignment(-1.0, _textAlignVertical.y),
+                      widthFactor: 1.0,
+                      heightFactor: 1.0,
+                      child: _addTextDependentAttachments(
+                        paddedEditable,
+                        textStyle,
+                        placeholderStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
