@@ -7,13 +7,15 @@ Pod::Spec.new do |s|
   s.version          = '0.1.0'
   s.summary          = 'Native functionality for the macos_ui Flutter package.'
   s.description      = <<-DESC
-A new flutter plugin project.
+macos_ui is a Flutter package that provides widgets and themes implementing the current macOS design language.
                        DESC
   s.homepage         = 'https://github.com/macosui/macos_ui'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :file => '../LICENSE', :type => 'MIT' }
   s.author           = { 'GroovinChip' => 'groovinchip@gmail.com' }
-  s.source           = { :path => '.' }
-  s.source_files     = 'Classes/**/*'
+  s.source           = { :git => 'https://github.com/macosui/macos_ui.git',
+	                       :tag => s.version.to_s }
+  s.source_files = 'macos_ui/Sources/macos_ui/**/*.swift'
+  s.resource_bundles = {'macos_ui_privacy' => ['macos_ui/Sources/macos_ui/Resources/PrivacyInfo.xcprivacy']}
   s.dependency 'FlutterMacOS'
 
   s.platform = :osx, '10.11'

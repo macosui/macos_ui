@@ -558,11 +558,20 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   const SizedBox(height: 16),
                   const WidgetTextTitle2(widgetName: 'MacosCheckbox'),
                   const SizedBox(height: 8),
-                  MacosCheckbox(
-                    value: switchValue,
-                    onChanged: (value) {
-                      setState(() => switchValue = value);
-                    },
+                  Row(
+                    children: [
+                      MacosCheckbox(
+                        value: switchValue,
+                        onChanged: (value) {
+                          setState(() => switchValue = value);
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      MacosCheckbox(
+                        value: switchValue,
+                        onChanged: null,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
                   const WidgetTextTitle2(widgetName: 'MacosRadioButton'),

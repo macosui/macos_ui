@@ -47,8 +47,6 @@ class MacosUIGalleryApp extends StatelessWidget {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
           title: 'macos_ui Widget Gallery',
-          theme: MacosThemeData.light(),
-          darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: const WidgetGallery(),
@@ -163,36 +161,45 @@ class _WidgetGalleryState extends State<WidgetGallery> {
               itemSize: SidebarItemSize.large,
               items: const [
                 SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage('assets/sf_symbols/button_programmable_2x.png'),
-                  ),
-                  label: Text('Buttons'),
-                ),
-                SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage(
-                      'assets/sf_symbols/lines_measurement_horizontal_2x.png',
+                  label: Text('Basic UI Elements'),
+                  section: true,
+                  expandDisclosureItems: true,
+                  disclosureItems: [
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                            'assets/sf_symbols/button_programmable_2x.png'),
+                      ),
+                      label: Text('Buttons'),
                     ),
-                  ),
-                  label: Text('Indicators'),
-                ),
-                SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage(
-                      'assets/sf_symbols/character_cursor_ibeam_2x.png',
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                          'assets/sf_symbols/lines_measurement_horizontal_2x.png',
+                        ),
+                      ),
+                      label: Text('Indicators'),
                     ),
-                  ),
-                  label: Text('Fields'),
-                ),
-                SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage('assets/sf_symbols/rectangle_3_group_2x.png'),
-                  ),
-                  label: Text('Colors'),
-                ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.square_on_square),
-                  label: Text('Dialogs & Sheets'),
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                          'assets/sf_symbols/character_cursor_ibeam_2x.png',
+                        ),
+                      ),
+                      label: Text('Fields'),
+                    ),
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                            'assets/sf_symbols/rectangle_3_group_2x.png'),
+                      ),
+                      label: Text('Colors'),
+                    ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.square_on_square),
+                      label: Text('Dialogs & Sheets'),
+                    ),
+                  ],
                 ),
                 SidebarItem(
                   leading: MacosImageIcon(
@@ -201,6 +208,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     ),
                   ),
                   label: Text('Layout'),
+                  section: true,
                   disclosureItems: [
                     SidebarItem(
                       leading: MacosIcon(CupertinoIcons.macwindow),
@@ -223,17 +231,25 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                       label: Text('ResizablePane'),
                     ),
                   ],
+                  expandDisclosureItems: true,
                 ),
                 SidebarItem(
-                  leading: MacosImageIcon(
-                    AssetImage(
-                        'assets/sf_symbols/filemenu_and_selection_2x.png'),
-                  ),
-                  label: Text('Selectors'),
-                ),
-                SidebarItem(
-                  leading: MacosIcon(CupertinoIcons.textformat_size),
-                  label: Text('Typography'),
+                  label: Text('Additional UI Elements'),
+                  section: true,
+                  expandDisclosureItems: true,
+                  disclosureItems: [
+                    SidebarItem(
+                      leading: MacosImageIcon(
+                        AssetImage(
+                            'assets/sf_symbols/filemenu_and_selection_2x.png'),
+                      ),
+                      label: Text('Selectors'),
+                    ),
+                    SidebarItem(
+                      leading: MacosIcon(CupertinoIcons.textformat_size),
+                      label: Text('Typography'),
+                    ),
+                  ],
                 ),
               ],
             );

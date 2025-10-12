@@ -27,7 +27,7 @@ class ToolbarOverflowMenu extends StatelessWidget {
         child: MacosOverlayFilter(
           color: MacosPulldownButtonTheme.of(context)
               .pulldownColor
-              ?.withOpacity(0.25),
+              ?.withValues(alpha: 0.25),
           borderRadius: _kBorderRadius,
           child: Padding(
             padding: const EdgeInsets.all(6.0),

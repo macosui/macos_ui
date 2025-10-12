@@ -124,6 +124,12 @@ should avoid allowing your application window to be resized below the height of 
   - [MacosColorWell](#macoscolorwell)
 </details>
 
+<details>
+<summary>Older macOS versions</summary>
+
+- [Older macOS versions](#older-macos-versions)
+</details>
+
 ---
 
 ## Contributing
@@ -224,7 +230,9 @@ See the documentation for customizations and `ToolBar` examples.
 
 ## Modern window look
 
-A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above. Then, open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
+A new look for macOS apps was introduced in Big Sur (macOS 11). To match that look in your Flutter app, macos_ui relies on [macos_window_utils](https://pub.dev/packages/macos_window_utils), which requires a minimum macOS deployment target of 10.14.6. Therefore, make sure to open the `macos/Runner.xcworkspace` folder of your project using Xcode and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above.
+
+It is recommended to enable the Swift Package Manager when using macos_ui. Instructions on how to do that can be found [here](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers#how-to-turn-on-swift-package-manager). Alternatively, macos_ui can also be used with CocoaPods. To do so, it is necessary to open your project's `Podfile` (if it doesn't show up in Xcode, you can find it in your project's `macos` directory via VS Code) and set the minimum deployment version in the first line to `10.14.6` or above:
 
 ```podspec
 platform :osx, '10.14.6'
@@ -472,8 +480,8 @@ A checkbox is a type of button that lets the user choose between two opposite st
 checkbox is considered on when it contains a checkmark and off when it's empty. A checkbox is almost always followed 
 by a title unless it appears in a checklist. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/checkboxes/)
 
-| Unchecked                                                                                                                   | Checked                                                                                                                 | Mixed                                                                                                              |
-| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Unchecked                                            | Checked                                            | Mixed                                            |
+| ---------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------ |
 | ![Unchecked Checkbox](https://imgur.com/Pu4EDAE.png) | ![Checked Checkbox](https://imgur.com/CB3Kmwo.png) | ![Mixed Checkbox](https://imgur.com/T44rV38.png) |
 
 Here's an example of how to create a basic checkbox:
@@ -1011,4 +1019,56 @@ Example usage:
 MacosColorWell(
   onColorSelected: (color) => debugPrint('$color'),
 ),
+```
+
+## Older macOS versions
+
+If you’re targeting older macOS versions (Monterey and earlier), it is necessary to perform the following steps to make the [macos_window_utils](https://pub.dev/packages/macos_window_utils) plugin, which macos_ui depends on, work correctly:
+
+Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
+
+Insert `import macos_window_utils` at the top of the file.
+Then, replace the code above the `super.awakeFromNib()`-line with the following code:
+
+```swift
+let windowFrame = self.frame
+let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
+self.contentViewController = macOSWindowUtilsViewController
+self.setFrame(windowFrame, display: true)
+
+/* Initialize the macos_window_utils plugin */
+MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
+RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
+```
+
+Assuming you're starting with the default configuration, the finished code should look something like this:
+
+```diff
+import Cocoa
+import FlutterMacOS
++import macos_window_utils
+
+class MainFlutterWindow: NSWindow {
+  override func awakeFromNib() {
+-   let flutterViewController = FlutterViewController.init()
+-   let windowFrame = self.frame
+-   self.contentViewController = flutterViewController
+-   self.setFrame(windowFrame, display: true)
+
+-   RegisterGeneratedPlugins(registry: flutterViewController)
+    
++   let windowFrame = self.frame
++   let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
++   self.contentViewController = macOSWindowUtilsViewController
++   self.setFrame(windowFrame, display: true)
+
++   /* Initialize the macos_window_utils plugin */
++   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
++   RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
+
+    super.awakeFromNib()
+  }
+}
 ```

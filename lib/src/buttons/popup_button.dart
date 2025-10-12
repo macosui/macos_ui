@@ -45,23 +45,37 @@ class _MacosPopupMenuItemButton<T> extends StatefulWidget {
 
 class _MacosPopupMenuItemButtonState<T>
     extends State<_MacosPopupMenuItemButton<T>> {
-  bool _isHovered = false;
+  final _focusNode = FocusNode();
+
+  bool _isFocused = false;
+
+  bool get _isHighlighted => _isFocused;
+
+  /// The last time the mouse entered this item.
+  static DateTime _lastMouseEnterTime = DateTime.now();
+
+  /// The last time the focus changed that wasn’t caused by the mouse.
+  static DateTime _lastNonMouseFocusChange = DateTime.now();
 
   void _handleFocusChange(bool focused) {
     if (focused) {
-      final _MenuLimits menuLimits = widget.route.getMenuLimits(
-        widget.buttonRect,
-        widget.constraints.maxHeight,
-        widget.itemIndex,
-      );
-      widget.route.scrollController!.animateTo(
-        menuLimits.scrollOffset,
-        curve: Curves.easeInOut,
-        duration: const Duration(milliseconds: 100),
-      );
-      setState(() => _isHovered = true);
+      final timeSinceMouseEnter =
+          DateTime.now().difference(_lastMouseEnterTime);
+      if (timeSinceMouseEnter > const Duration(milliseconds: 50)) {
+        _lastNonMouseFocusChange = DateTime.now();
+
+        final _MenuLimits menuLimits = widget.route.getMenuLimits(
+          widget.buttonRect,
+          widget.constraints.maxHeight,
+          widget.itemIndex,
+        );
+        widget.route.scrollController!.jumpTo(
+          menuLimits.scrollOffset,
+        );
+      }
+      setState(() => _isFocused = true);
     } else {
-      setState(() => _isHovered = false);
+      setState(() => _isFocused = false);
     }
   }
 
@@ -91,15 +105,21 @@ class _MacosPopupMenuItemButtonState<T>
       child = MouseRegion(
         cursor: SystemMouseCursors.basic,
         onEnter: (_) {
-          setState(() => _isHovered = true);
-        },
-        onExit: (_) {
-          setState(() => _isHovered = false);
+          final timeSinceLastNonMouseFocusChange =
+              DateTime.now().difference(_lastNonMouseFocusChange);
+          if (timeSinceLastNonMouseFocusChange <
+              const Duration(milliseconds: 200)) {
+            return;
+          }
+
+          _lastMouseEnterTime = DateTime.now();
+          FocusScope.of(context).requestFocus(_focusNode);
         },
         child: GestureDetector(
           onTap: _handleOnTap,
           child: Focus(
-            onKey: (FocusNode node, RawKeyEvent event) {
+            focusNode: _focusNode,
+            onKeyEvent: (FocusNode node, KeyEvent event) {
               if (event.logicalKey == LogicalKeyboardKey.enter) {
                 _handleOnTap();
                 return KeyEventResult.handled;
@@ -110,7 +130,7 @@ class _MacosPopupMenuItemButtonState<T>
             autofocus: widget.itemIndex == widget.route.selectedIndex,
             child: Container(
               decoration: BoxDecoration(
-                color: _isHovered
+                color: _isHighlighted
                     ? MacosPopupButtonTheme.of(context).highlightColor
                     : Colors.transparent,
                 borderRadius: _kBorderRadius,
@@ -123,7 +143,7 @@ class _MacosPopupMenuItemButtonState<T>
                           child: MacosIcon(
                             CupertinoIcons.checkmark_alt,
                             size: 16.0,
-                            color: _isHovered
+                            color: _isHighlighted
                                 ? MacosColors.white
                                 : brightness.resolve(
                                     MacosColors.black,
@@ -135,7 +155,7 @@ class _MacosPopupMenuItemButtonState<T>
                   DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 13.0,
-                      color: _isHovered
+                      color: _isHighlighted
                           ? MacosColors.white
                           : brightness.resolve(
                               MacosColors.black,
@@ -261,7 +281,7 @@ class _MacosPopupMenuState<T> extends State<_MacosPopupMenu<T>> {
                 return true;
               },
               child: MacosOverlayFilter(
-                color: popupColor?.withOpacity(0.25),
+                color: popupColor?.withValues(alpha: 0.25),
                 borderRadius: _kBorderRadius,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

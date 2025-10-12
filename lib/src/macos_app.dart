@@ -310,41 +310,65 @@ class _MacosAppState extends State<MacosApp> {
       widget.routerDelegate != null || widget.routerConfig != null;
 
   Widget _macosBuilder(BuildContext context, Widget? child) {
-    final mode = widget.themeMode ?? ThemeMode.system;
-    final platformBrightness = MediaQuery.platformBrightnessOf(context);
-    final useDarkTheme = mode == ThemeMode.dark ||
-        (mode == ThemeMode.system && platformBrightness == Brightness.dark);
+    return StreamBuilder<bool>(
+        stream: WindowMainStateListener.instance.onChanged,
+        builder: (context, _) {
+          return StreamBuilder(
+              stream: AccentColorListener.instance.onChanged,
+              builder: (context, _) {
+                final mode = widget.themeMode ?? ThemeMode.system;
+                final platformBrightness =
+                    MediaQuery.platformBrightnessOf(context);
+                final useDarkTheme = mode == ThemeMode.dark ||
+                    (mode == ThemeMode.system &&
+                        platformBrightness == Brightness.dark);
 
-    late MacosThemeData theme;
-    if (useDarkTheme) {
-      theme = widget.darkTheme ?? MacosThemeData.dark();
-    } else {
-      theme = widget.theme ?? MacosThemeData.light();
-    }
+                final accentColor =
+                    AccentColorListener.instance.currentAccentColor;
+                final isMainWindow =
+                    WindowMainStateListener.instance.isMainWindow;
 
-    return MacosTheme(
-      data: theme,
-      child: DefaultTextStyle(
-        style: TextStyle(color: theme.typography.body.color),
-        child: widget.builder != null
-            // See the MaterialApp source code for the explanation for
-            // wrapping a builder in a builder
-            ? Builder(
-                builder: (context) {
-                  // An Overlay is used here because MacosTooltip needs an
-                  // Overlay as an ancestor in the widget tree.
-                  return Overlay(
-                    initialEntries: [
-                      OverlayEntry(
-                        builder: (context) => widget.builder!(context, child),
-                      ),
-                    ],
-                  );
-                },
-              )
-            : child ?? const SizedBox.shrink(),
-      ),
-    );
+                late MacosThemeData theme;
+                if (useDarkTheme) {
+                  theme = widget.darkTheme ??
+                      MacosThemeData.dark(
+                        accentColor: accentColor,
+                        isMainWindow: isMainWindow,
+                      );
+                } else {
+                  theme = widget.theme ??
+                      MacosThemeData.light(
+                        accentColor: accentColor,
+                        isMainWindow: isMainWindow,
+                      );
+                }
+
+                return MacosTheme(
+                  data: theme,
+                  child: DefaultTextStyle(
+                    style: TextStyle(color: theme.typography.body.color),
+                    child: widget.builder != null
+                        // See the MaterialApp source code for the explanation for
+                        // wrapping a builder in a builder
+                        ? Builder(
+                            builder: (context) {
+                              // An Overlay is used here because MacosTooltip needs an
+                              // Overlay as an ancestor in the widget tree.
+                              return Overlay(
+                                initialEntries: [
+                                  OverlayEntry(
+                                    builder: (context) =>
+                                        widget.builder!(context, child),
+                                  ),
+                                ],
+                              );
+                            },
+                          )
+                        : child ?? const SizedBox.shrink(),
+                  ),
+                );
+              });
+        });
   }
 
   Widget _buildMacosApp(BuildContext context) {

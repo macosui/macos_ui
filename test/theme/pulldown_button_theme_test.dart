@@ -97,7 +97,7 @@ void main() {
 
       final theme = MacosPulldownButtonTheme.of(capturedContext);
       expect(theme.backgroundColor, const Color(0xffffffff));
-      expect(theme.highlightColor, const Color(0xff007aff));
+      expect(theme.highlightColor, const MacosColor(0xbe0981ff));
       expect(theme.pulldownColor, const Color(0xfff2f2f7));
     });
   });
