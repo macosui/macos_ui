@@ -1,6 +1,6 @@
 ## [2.0.4]
 ### 🛠️ Fixed 🛠️
-- Fixed setState called after dispose issue in MacosPulldownButton.
+- Fixed setState called after dispose issue in MacosPulldownButton. 
 
 ## [2.0.3]
 ### 🔄 Updated 🔄
