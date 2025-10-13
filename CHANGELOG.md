@@ -1,3 +1,8 @@
+## [2.2.0+3]
+* Address DCM lints:
+  * Prefer `const BorderRadius.all`
+  * Sort private members
+
 ## [2.2.0+2]
 * Formatter updates
 
