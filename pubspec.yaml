@@ -6,7 +6,7 @@ repository: "https://github.com/GroovinChip/macos_ui"
 
 environment:
   sdk: ">=3.9.2 <4.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=3.35.0"
 
 dependencies:
   flutter:
