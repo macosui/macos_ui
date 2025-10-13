@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:macos_ui/macos_ui.dart';
 
-// TODO(): Remove once mock_canvas in flutter_test reaches stable.
+// TODO: Remove once mock_canvas in flutter_test reaches stable.
 import '../mock_canvas.dart';
 
 void main() {
