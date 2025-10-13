@@ -20,7 +20,7 @@ Guides, codelabs, and other documentation can be found at https://macosui.dev
 ### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Flutter channel
 `macos_ui` is developed against Flutter's `stable` channel. To ensure a smooth development experience with `macos_ui`, you should build your application on Flutter's `stable` channel.
 
-### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Platform Compatibility
+### 🖥️ Platform Compatibility
 
 pub.dev shows that `macos_ui` only supports macOS. This is because `macos_ui` calls some native code, and therefore 
 specifies macOS as a plugin platform in the `pubspec.yaml` file.
@@ -32,6 +32,12 @@ The features of `macos_ui` that will _not_ work on platforms other than macOS du
 * Anything related to `macos_window_utils`
 * The `MacosColors.controlAccentColor()` function
 * The `MacosColorWell` widget
+
+### <img src="https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png" height="14"/> Flutter Compatibility
+
+Starting with version `2.2.0+1`, `macos_ui` requires Flutter `3.35.0` or higher due to a depredation in Flutter 3.35.0. If you use an older Flutter version along with `macos_ui` version `2.2.0+1`, only version `2.2.0` will be available to you when you run `flutter pub get`.
+
+**We therefore strongly recommend that you use Flutter `3.35.0` or higher if developing with `macos_ui` so that you gain access to the latest features and fixes.**
 
 ### <img src="https://imgur.com/TIP0V7H.png" height="14"/> Popups & window resizing
 
