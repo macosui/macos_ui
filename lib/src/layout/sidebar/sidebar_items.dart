@@ -228,6 +228,25 @@ class _SidebarHeaderItem extends StatelessWidget {
   bool get hasLeading => item.leading != null;
   bool get hasTrailing => item.trailing != null;
 
+  DefaultTextStyle _buildLabelWithDefaultTextStyle(
+    TextStyle labelStyle,
+    BuildContext context,
+  ) {
+    final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
+
+    return DefaultTextStyle(
+      style: labelStyle.copyWith(
+        fontWeight: FontWeight.bold,
+        fontSize: (labelStyle.fontSize ?? 14.0) * 0.85,
+        color: isDarkModeEnabled
+            ? MacosColors.white.withValues(alpha: 0.3)
+            : MacosColors.black.withValues(alpha: 0.3),
+        overflow: TextOverflow.ellipsis,
+      ),
+      child: item.label,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
@@ -235,6 +254,7 @@ class _SidebarHeaderItem extends StatelessWidget {
 
     final double spacing = 10.0 + theme.visualDensity.horizontal;
     final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+
     TextStyle? labelStyle;
     switch (itemSize) {
       case SidebarItemSize.small:
@@ -289,25 +309,6 @@ class _SidebarHeaderItem extends StatelessWidget {
       ),
     );
   }
-
-  DefaultTextStyle _buildLabelWithDefaultTextStyle(
-    TextStyle labelStyle,
-    BuildContext context,
-  ) {
-    final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
-
-    return DefaultTextStyle(
-      style: labelStyle.copyWith(
-        fontWeight: FontWeight.bold,
-        fontSize: (labelStyle.fontSize ?? 14.0) * 0.85,
-        color: isDarkModeEnabled
-            ? MacosColors.white.withValues(alpha: 0.3)
-            : MacosColors.black.withValues(alpha: 0.3),
-        overflow: TextOverflow.ellipsis,
-      ),
-      child: item.label,
-    );
-  }
 }
 
 /// A macOS style navigation-list item intended for use in a [Sidebar]
@@ -336,6 +337,36 @@ class _SidebarItem extends StatelessWidget {
 
   void _handleActionTap() => onClick?.call();
 
+  DefaultTextStyle _buildLabelWithDefaultTextStyle(
+    TextStyle labelStyle,
+    Color selectedColor,
+    BuildContext context,
+  ) {
+    if (item.section ?? true) {
+      final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
+
+      return DefaultTextStyle(
+        style: labelStyle.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: (labelStyle.fontSize ?? 14.0) * 0.85,
+          color: isDarkModeEnabled
+              ? MacosColors.white.withValues(alpha: 0.3)
+              : MacosColors.black.withValues(alpha: 0.3),
+          overflow: TextOverflow.ellipsis,
+        ),
+        child: item.label,
+      );
+    }
+
+    return DefaultTextStyle(
+      style: labelStyle.copyWith(
+        color: selected ? textLuminance(selectedColor) : null,
+        overflow: TextOverflow.ellipsis,
+      ),
+      child: item.label,
+    );
+  }
+
   Map<Type, Action<Intent>> get _actionMap => <Type, Action<Intent>>{
     ActivateIntent: CallbackAction<ActivateIntent>(
       onInvoke: (ActivateIntent intent) => _handleActionTap(),
@@ -344,8 +375,8 @@ class _SidebarItem extends StatelessWidget {
       onInvoke: (ButtonActivateIntent intent) => _handleActionTap(),
     ),
   };
-
   bool get hasLeading => item.leading != null;
+
   bool get hasTrailing => item.trailing != null;
 
   @override
@@ -366,6 +397,7 @@ class _SidebarItem extends StatelessWidget {
 
     final double spacing = 10.0 + theme.visualDensity.horizontal;
     final itemSize = _SidebarItemsConfiguration.of(context).itemSize;
+    
     TextStyle? labelStyle;
     switch (itemSize) {
       case SidebarItemSize.small:
@@ -440,36 +472,6 @@ class _SidebarItem extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  DefaultTextStyle _buildLabelWithDefaultTextStyle(
-    TextStyle labelStyle,
-    Color selectedColor,
-    BuildContext context,
-  ) {
-    if (item.section ?? true) {
-      final isDarkModeEnabled = MacosTheme.of(context).brightness.isDark;
-
-      return DefaultTextStyle(
-        style: labelStyle.copyWith(
-          fontWeight: FontWeight.bold,
-          fontSize: (labelStyle.fontSize ?? 14.0) * 0.85,
-          color: isDarkModeEnabled
-              ? MacosColors.white.withValues(alpha: 0.3)
-              : MacosColors.black.withValues(alpha: 0.3),
-          overflow: TextOverflow.ellipsis,
-        ),
-        child: item.label,
-      );
-    }
-
-    return DefaultTextStyle(
-      style: labelStyle.copyWith(
-        color: selected ? textLuminance(selectedColor) : null,
-        overflow: TextOverflow.ellipsis,
-      ),
-      child: item.label,
     );
   }
 }

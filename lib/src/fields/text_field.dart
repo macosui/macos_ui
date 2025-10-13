@@ -951,6 +951,7 @@ class _MacosTextFieldState extends State<MacosTextField>
 
   @override
   bool get selectionEnabled => widget.selectionEnabled;
+
   // End of API for TextSelectionGestureDetectorBuilderDelegate.
 
   @override
@@ -1185,49 +1186,6 @@ class _MacosTextFieldState extends State<MacosTextField>
     );
   }
 
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    if (_controller != null) {
-      _registerController();
-    }
-  }
-
-  @override
-  String? get restorationId => widget.restorationId;
-
-  @override
-  void dispose() {
-    _focusNode?.dispose();
-    _controller?.dispose();
-    _effectiveFocusNode.removeListener(_handleFocusChanged);
-    super.dispose();
-  }
-
-  EditableTextState get _editableText => editableTextKey.currentState!;
-
-  @override
-  bool get wantKeepAlive => _controller?.value.text.isNotEmpty == true;
-
-  // True if any surrounding decoration widgets will be shown.
-  bool get _hasDecoration {
-    return widget.placeholder != null ||
-        widget.clearButtonMode != OverlayVisibilityMode.never ||
-        widget.prefix != null ||
-        widget.suffix != null;
-  }
-
-  // Provide default behavior if widget.textAlignVertical is not set.
-  // TextField has top alignment by default, unless it has decoration
-  // like a prefix or suffix, in which case it's aligned to the center.
-  TextAlignVertical get _textAlignVertical {
-    if (widget.textAlignVertical != null) {
-      return widget.textAlignVertical!;
-    }
-    return widget.maxLines == null || widget.maxLines! > 1
-        ? TextAlignVertical.center
-        : TextAlignVertical.top;
-  }
-
   Color? _resolveAccentColor(BuildContext context, AccentColor? accentColor) {
     if (accentColor == null) {
       return null;
@@ -1274,6 +1232,49 @@ class _MacosTextFieldState extends State<MacosTextField>
       case AccentColor.graphite:
         return const Color.fromRGBO(152, 152, 152, 1.0);
     }
+  }
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    if (_controller != null) {
+      _registerController();
+    }
+  }
+
+  @override
+  String? get restorationId => widget.restorationId;
+
+  @override
+  void dispose() {
+    _focusNode?.dispose();
+    _controller?.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
+    super.dispose();
+  }
+
+  EditableTextState get _editableText => editableTextKey.currentState!;
+
+  @override
+  bool get wantKeepAlive => _controller?.value.text.isNotEmpty == true;
+
+  // True if any surrounding decoration widgets will be shown.
+  bool get _hasDecoration {
+    return widget.placeholder != null ||
+        widget.clearButtonMode != OverlayVisibilityMode.never ||
+        widget.prefix != null ||
+        widget.suffix != null;
+  }
+
+  // Provide default behavior if widget.textAlignVertical is not set.
+  // TextField has top alignment by default, unless it has decoration
+  // like a prefix or suffix, in which case it's aligned to the center.
+  TextAlignVertical get _textAlignVertical {
+    if (widget.textAlignVertical != null) {
+      return widget.textAlignVertical!;
+    }
+    return widget.maxLines == null || widget.maxLines! > 1
+        ? TextAlignVertical.center
+        : TextAlignVertical.top;
   }
 
   @override

@@ -193,6 +193,24 @@ class _CheckboxStack extends StatelessWidget {
   final bool isMainWindow;
   final double size;
 
+  Color _getCheckmarkColor() {
+    if (isDisabled) {
+      return const MacosColor.fromRGBO(172, 172, 172, 1.0);
+    }
+
+    if (theme.brightness.isDark) {
+      return theme.accentColor == AccentColor.graphite && isMainWindow
+          ? MacosColors.black
+          : MacosColors.white;
+    }
+
+    if (theme.isMainWindow == false) {
+      return MacosColors.black;
+    }
+
+    return MacosColors.white;
+  }
+
   @override
   Widget build(BuildContext context) {
     final icon = value == false
@@ -213,24 +231,6 @@ class _CheckboxStack extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Color _getCheckmarkColor() {
-    if (isDisabled) {
-      return const MacosColor.fromRGBO(172, 172, 172, 1.0);
-    }
-
-    if (theme.brightness.isDark) {
-      return theme.accentColor == AccentColor.graphite && isMainWindow
-          ? MacosColors.black
-          : MacosColors.white;
-    }
-
-    if (theme.isMainWindow == false) {
-      return MacosColors.black;
-    }
-
-    return MacosColors.white;
   }
 }
 
