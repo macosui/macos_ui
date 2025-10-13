@@ -5,10 +5,7 @@ import 'package:macos_ui/src/library.dart';
 
 void main() {
   test('copyWith, ==, hashcode basics', () {
-    expect(
-      const MacosIconThemeData(),
-      const MacosIconThemeData().copyWith(),
-    );
+    expect(const MacosIconThemeData(), const MacosIconThemeData().copyWith());
     expect(
       const MacosIconThemeData().hashCode,
       const MacosIconThemeData().copyWith().hashCode,
@@ -16,21 +13,13 @@ void main() {
   });
 
   test('lerps from light to dark', () {
-    final actual = MacosIconThemeData.lerp(
-      _iconTheme,
-      _iconThemeDark,
-      1,
-    );
+    final actual = MacosIconThemeData.lerp(_iconTheme, _iconThemeDark, 1);
 
     expect(actual, _iconThemeDark);
   });
 
   test('lerps from dark to light', () {
-    final actual = MacosIconThemeData.lerp(
-      _iconThemeDark,
-      _iconTheme,
-      1,
-    );
+    final actual = MacosIconThemeData.lerp(_iconThemeDark, _iconTheme, 1);
 
     expect(actual, _iconTheme);
   });
@@ -66,9 +55,7 @@ void main() {
               ContentArea(
                 builder: (context, _) {
                   capturedContext = context;
-                  return const MacosIcon(
-                    CupertinoIcons.add,
-                  );
+                  return const MacosIcon(CupertinoIcons.add);
                 },
               ),
             ],
@@ -83,10 +70,6 @@ void main() {
   });
 }
 
-const _iconTheme = MacosIconThemeData(
-  color: MacosColors.black,
-);
+const _iconTheme = MacosIconThemeData(color: MacosColors.black);
 
-const _iconThemeDark = MacosIconThemeData(
-  color: MacosColors.white,
-);
+const _iconThemeDark = MacosIconThemeData(color: MacosColors.white);

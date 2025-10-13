@@ -52,10 +52,7 @@ void main() {
                           child: MacosTooltip(
                             key: key,
                             message: tooltipText,
-                            child: const SizedBox(
-                              width: 0,
-                              height: 0,
-                            ),
+                            child: const SizedBox(width: 0, height: 0),
                           ),
                         ),
                       ],
@@ -69,9 +66,9 @@ void main() {
       );
 
       _ensureTooltipVisible(key);
-      await tester.pump(const Duration(
-        seconds: 2,
-      )); // faded in, show timer started (and at 0.0)
+      await tester.pump(
+        const Duration(seconds: 2),
+      ); // faded in, show timer started (and at 0.0)
 
       final RenderBox tip = tester.renderObject(
         _findTooltipContainer(tooltipText),

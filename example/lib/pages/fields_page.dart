@@ -105,8 +105,9 @@ class _FieldsPageState extends State<FieldsPage> {
                   SizedBox(
                     width: 300.0,
                     child: MacosSearchField(
-                      results:
-                          countries.map((e) => SearchResultItem(e)).toList(),
+                      results: countries
+                          .map((e) => SearchResultItem(e))
+                          .toList(),
                       placeholder: 'Search for a country...',
                       onResultSelected: (resultItem) {
                         // Retrieve the user-selected search suggestion via its
@@ -125,10 +126,11 @@ class _FieldsPageState extends State<FieldsPage> {
                       results: actionResults,
                       resultHeight: 40.0,
                       emptyWidget: const Center(
-                          child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('No action found!'),
-                      )),
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('No action found!'),
+                        ),
+                      ),
                       placeholder: 'Search for an action...',
                       onResultSelected: (resultItem) {
                         // Retrieve the user-selected search suggestion via its
@@ -353,7 +355,7 @@ const countries = [
   'Virgin Islands (US)',
   'Yemen',
   'Zambia',
-  'Zimbabwe'
+  'Zimbabwe',
 ];
 
 var actionResults = [

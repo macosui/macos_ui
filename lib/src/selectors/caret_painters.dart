@@ -7,10 +7,7 @@ const _buttonRadius = 5.0;
 /// {@endtemplate}
 class DownCaretPainter extends CustomPainter {
   /// {@macro downCaretPainter}
-  const DownCaretPainter({
-    required this.color,
-    required this.backgroundColor,
-  });
+  const DownCaretPainter({required this.color, required this.backgroundColor});
 
   /// The color of the caret.
   final Color color;
@@ -56,10 +53,7 @@ class DownCaretPainter extends CustomPainter {
 /// {@endtemplate}
 class UpCaretPainter extends CustomPainter {
   /// {@macro upCaretPainter}
-  const UpCaretPainter({
-    required this.color,
-    required this.backgroundColor,
-  });
+  const UpCaretPainter({required this.color, required this.backgroundColor});
 
   /// The color of the caret.
   final Color color;

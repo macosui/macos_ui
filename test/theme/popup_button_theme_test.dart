@@ -77,11 +77,12 @@ void main() {
                       },
                       items: <String>['One', 'Two', 'Three', 'Four']
                           .map<MacosPopupMenuItem<String>>((String value) {
-                        return MacosPopupMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                            return MacosPopupMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          })
+                          .toList(),
                     );
                   },
                 ),

@@ -215,12 +215,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
       final weekday = widget.weekdayAbbreviations[i];
       result.add(
         ExcludeSemantics(
-          child: Center(
-            child: Text(
-              weekday,
-              style: headerStyle,
-            ),
-          ),
+          child: Center(child: Text(weekday, style: headerStyle)),
         ),
       );
     }
@@ -295,9 +290,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           ),
         );
       }
-      dateFields.add(
-        Text(separator),
-      );
+      dateFields.add(Text(separator));
     }
 
     dateFields.removeLast();
@@ -410,8 +403,11 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
           child: Column(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 2.0, top: 2.0, bottom: 4.0),
+                padding: const EdgeInsets.only(
+                  left: 2.0,
+                  top: 2.0,
+                  bottom: 4.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -437,9 +433,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                           backgroundColor: MacosColors.transparent,
                           borderRadius: BorderRadius.zero,
                           padding: EdgeInsets.zero,
-                          boxConstraints: const BoxConstraints(
-                            maxWidth: 12.0,
-                          ),
+                          boxConstraints: const BoxConstraints(maxWidth: 12.0),
                           onPressed: () {
                             if (_selectedMonth - 1 < 1) {
                               setState(() {
@@ -466,9 +460,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                           backgroundColor: MacosColors.transparent,
                           borderRadius: BorderRadius.zero,
                           padding: EdgeInsets.zero,
-                          boxConstraints: const BoxConstraints(
-                            maxWidth: 12.0,
-                          ),
+                          boxConstraints: const BoxConstraints(maxWidth: 12.0),
                           onPressed: () {
                             setState(() => _parseInitialDate());
                             widget.onDateChanged.call(_formatAsDateTime());
@@ -484,9 +476,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
                           backgroundColor: MacosColors.transparent,
                           borderRadius: BorderRadius.zero,
                           padding: EdgeInsets.zero,
-                          boxConstraints: const BoxConstraints(
-                            maxWidth: 12.0,
-                          ),
+                          boxConstraints: const BoxConstraints(maxWidth: 12.0),
                           onPressed: () {
                             if (_selectedMonth + 1 > 12) {
                               setState(() {
@@ -555,14 +545,17 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
     );
     final localizations = MaterialLocalizations.of(context);
     final daysInMonth = DateUtils.getDaysInMonth(_selectedYear, _selectedMonth);
-    final dayOffset =
-        DateUtils.firstDayOffset(_selectedYear, _selectedMonth, localizations);
+    final dayOffset = DateUtils.firstDayOffset(
+      _selectedYear,
+      _selectedMonth,
+      localizations,
+    );
     final dayHeaders = _dayHeaders(
       MacosTheme.of(context).typography.caption1.copyWith(
-            color: datePickerTheme.monthViewWeekdayHeaderColor,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.12,
-          ),
+        color: datePickerTheme.monthViewWeekdayHeaderColor,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.12,
+      ),
       localizations,
     );
 
@@ -616,10 +609,7 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
             ),
           );
         } else if (isSelectedDay) {
-          dayText = Text(
-            localizations.formatDecimal(day),
-            style: dayStyle,
-          );
+          dayText = Text(localizations.formatDecimal(day), style: dayStyle);
           decoration = BoxDecoration(
             color: datePickerTheme.monthViewSelectedDateColor,
             borderRadius: const BorderRadius.all(Radius.circular(3.0)),
@@ -642,20 +632,16 @@ class _MacosDatePickerState extends State<MacosDatePicker> {
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.only(right: 2.0),
-                child: dayText ??
-                    Text(
-                      localizations.formatDecimal(day),
-                      style: dayStyle,
-                    ),
+                child:
+                    dayText ??
+                    Text(localizations.formatDecimal(day), style: dayStyle),
               ),
             ),
           ),
         );
 
         if (isDisabled) {
-          dayWidget = ExcludeSemantics(
-            child: dayWidget,
-          );
+          dayWidget = ExcludeSemantics(child: dayWidget);
         }
 
         dayItems.add(dayWidget);

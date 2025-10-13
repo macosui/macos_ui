@@ -44,9 +44,7 @@ class _ToolbarOverflowButtonState extends State<ToolbarOverflowButton> {
       placement: ToolbarPopupPlacement.end,
       child: ToolBarIconButton(
         label: "",
-        icon: const MacosIcon(
-          CupertinoIcons.chevron_right_2,
-        ),
+        icon: const MacosIcon(CupertinoIcons.chevron_right_2),
         onPressed: () {
           popupKey.currentState?.openPopup();
         },

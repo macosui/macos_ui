@@ -18,7 +18,7 @@ class MacosColor extends Color {
   /// See also [fromRGBO], which takes the alpha value as a floating point
   /// value.
   const MacosColor.fromARGB(super.a, super.r, super.g, super.b)
-      : super.fromARGB();
+    : super.fromARGB();
 
   /// Create a color from red, green, blue, and opacity, similar to `rgba()`
   /// in CSS.
@@ -33,7 +33,7 @@ class MacosColor extends Color {
   ///
   /// See also [fromARGB], which takes the opacity as an integer value.
   const MacosColor.fromRGBO(super.r, super.g, super.b, super.opacity)
-      : super.fromRGBO();
+    : super.fromRGBO();
 
   /// Linearly interpolate between two [MacosColor]s.
   static MacosColor lerp(MacosColor a, MacosColor b, double t) {
@@ -287,9 +287,9 @@ class MacosColors {
   /// A background for selected text in a non-key window or view.
   static const unemphasizedSelectedTextBackgroundColor =
       CupertinoDynamicColor.withBrightness(
-    color: MacosColor(0xffDCDCDC),
-    darkColor: MacosColor(0xff464646),
-  );
+        color: MacosColor(0xffDCDCDC),
+        darkColor: MacosColor(0xff464646),
+      );
 
   /// Selected text in a non-key window or view.
   static const unemphasizedSelectedTextColor = MacosColors.white;
@@ -309,8 +309,9 @@ class MacosColors {
   static const selectedControlBackgroundColor = MacosColor(0xff0058d0);
 
   /// The selected content in a non-key window or view.
-  static const unemphasizedSelectedContentBackgroundColor =
-      MacosColor(0xff464646);
+  static const unemphasizedSelectedContentBackgroundColor = MacosColor(
+    0xff464646,
+  );
 
   static const alternatingContentBackgroundColor = MacosColor(0xff2e2c31);
 
@@ -353,9 +354,9 @@ class MacosColors {
   /// the keyboard for interface navigation.
   static const keyboardFocusIndicatorColor =
       CupertinoDynamicColor.withBrightness(
-    color: Color.fromRGBO(0, 103, 244, 0.25),
-    darkColor: Color.fromRGBO(26, 169, 255, 0.3),
-  );
+        color: Color.fromRGBO(0, 103, 244, 0.25),
+        darkColor: Color.fromRGBO(26, 169, 255, 0.3),
+      );
 
   /// The color of the thumb of [MacosSlider].
   static const sliderThumbColor = CupertinoDynamicColor.withBrightness(

@@ -18,15 +18,9 @@ void main() {
 
     await tester.pumpWidget(
       MacosApp(
-        navigatorObservers: [
-          navigatorObserver,
-        ],
+        navigatorObservers: [navigatorObserver],
         home: const MacosWindow(
-          child: MacosScaffold(
-            toolBar: ToolBar(
-              leading: MacosBackButton(),
-            ),
-          ),
+          child: MacosScaffold(toolBar: ToolBar(leading: MacosBackButton())),
         ),
       ),
     );
@@ -80,14 +74,11 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'fillColor: null',
-        'hoverColor: null',
-        'semanticLabel: null',
-        'disabled',
-      ],
-    );
+    expect(description, [
+      'fillColor: null',
+      'hoverColor: null',
+      'semanticLabel: null',
+      'disabled',
+    ]);
   });
 }

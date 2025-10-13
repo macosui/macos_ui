@@ -6,11 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-enum PulldownButtonState {
-  enabled,
-  hovered,
-  pressed,
-}
+enum PulldownButtonState { enabled, hovered, pressed }
 
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = 20.0;
@@ -19,10 +15,7 @@ const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 6.0);
 const BorderRadius _kBorderRadius = BorderRadius.all(Radius.circular(5.0));
 const double _kMenuLeftOffset = 8.0;
 
-enum PulldownMenuAlignment {
-  left,
-  right,
-}
+enum PulldownMenuAlignment { left, right }
 
 // The widget that is the button wrapping the menu items.
 class _MacosPulldownMenuItemButton extends StatefulWidget {
@@ -200,9 +193,9 @@ class _MacosPulldownMenuState extends State<_MacosPulldownMenu> {
         explicitChildNodes: true,
         child: IntrinsicWidth(
           child: MacosOverlayFilter(
-            color: MacosPulldownButtonTheme.of(context)
-                .pulldownColor
-                ?.withValues(alpha: 0.25),
+            color: MacosPulldownButtonTheme.of(
+              context,
+            ).pulldownColor?.withValues(alpha: 0.25),
             borderRadius: _kBorderRadius,
             child: Padding(
               padding: const EdgeInsets.all(6.0),
@@ -294,11 +287,7 @@ class _MacosPulldownMenuRouteLayout extends SingleChildLayoutDelegate {
 }
 
 class _MenuLimits {
-  const _MenuLimits(
-    this.top,
-    this.bottom,
-    this.height,
-  );
+  const _MenuLimits(this.top, this.bottom, this.height);
   final double top;
   final double bottom;
   final double height;
@@ -315,9 +304,9 @@ class _MacosPulldownRoute extends PopupRoute {
     this.itemHeight,
     required this.menuAlignment,
   }) : itemHeights = List<double>.filled(
-          items.length,
-          itemHeight ?? _kMenuItemHeight,
-        );
+         items.length,
+         itemHeight ?? _kMenuItemHeight,
+       );
 
   final List<_MenuItem> items;
   final EdgeInsetsGeometry padding;
@@ -368,10 +357,7 @@ class _MacosPulldownRoute extends PopupRoute {
     }
   }
 
-  _MenuLimits getMenuLimits(
-    Rect buttonRect,
-    double availableHeight,
-  ) {
+  _MenuLimits getMenuLimits(Rect buttonRect, double availableHeight) {
     double computedMaxHeight = availableHeight - 2.0 * _kMenuItemHeight;
 
     final double buttonTop = buttonRect.top;
@@ -381,14 +367,17 @@ class _MacosPulldownRoute extends PopupRoute {
     // bottom may be less than [_kMenuItemHeight] from the edge of the screen.
     // In this case, we want to change the menu limits to align with the top
     // or bottom edge of the button.
-    final double bottomLimit =
-        math.max(availableHeight - _kMenuItemHeight, buttonBottom);
+    final double bottomLimit = math.max(
+      availableHeight - _kMenuItemHeight,
+      buttonBottom,
+    );
 
     double menuTop = buttonTop + buttonRect.height;
     double preferredMenuHeight = 8.0;
     if (items.isNotEmpty) {
-      preferredMenuHeight +=
-          itemHeights.reduce((double total, double height) => total + height);
+      preferredMenuHeight += itemHeights.reduce(
+        (double total, double height) => total + height,
+      );
     }
 
     // If there are too many elements in the menu, we need to shrink it down
@@ -406,11 +395,7 @@ class _MacosPulldownRoute extends PopupRoute {
     }
 
     assert((menuBottom - menuTop - menuHeight).abs() < precisionErrorTolerance);
-    return _MenuLimits(
-      menuTop,
-      menuBottom,
-      menuHeight,
-    );
+    return _MenuLimits(menuTop, menuBottom, menuHeight);
   }
 }
 
@@ -476,11 +461,8 @@ class _MacosPulldownRoutePage extends StatelessWidget {
 // each menu item.
 class _MenuItem extends SingleChildRenderObjectWidget {
   // ignore: use_super_parameters
-  const _MenuItem({
-    Key? key,
-    required this.onLayout,
-    this.item,
-  }) : super(key: key, child: item);
+  const _MenuItem({Key? key, required this.onLayout, this.item})
+    : super(key: key, child: item);
 
   final ValueChanged<Size> onLayout;
 
@@ -538,9 +520,9 @@ class MacosPulldownMenuDivider extends StatelessWidget
         alignment: Alignment.centerLeft,
         child: Container(
           color: MacosTheme.of(context).brightness.resolve(
-                MacosColors.disabledControlTextColor,
-                MacosColors.disabledControlTextColor.darkColor,
-              ),
+            MacosColors.disabledControlTextColor,
+            MacosColors.disabledControlTextColor.darkColor,
+          ),
           height: 0.5,
         ),
       ),
@@ -642,10 +624,11 @@ class MacosPulldownButton extends StatefulWidget {
     this.autofocus = false,
     this.alignment = AlignmentDirectional.centerStart,
     this.menuAlignment = PulldownMenuAlignment.left,
-  })  : assert(itemHeight == null || itemHeight >= _kMenuItemHeight),
-        assert(
-            (title != null || icon != null) && !(title != null && icon != null),
-            "There should be either a title or an icon argument provided, and not both at at the same time.");
+  }) : assert(itemHeight == null || itemHeight >= _kMenuItemHeight),
+       assert(
+         (title != null || icon != null) && !(title != null && icon != null),
+         "There should be either a title or an icon argument provided, and not both at at the same time.",
+       );
 
   /// The list of menu entries for the pull-down menu.
   ///
@@ -721,10 +704,7 @@ class MacosPulldownButton extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DoubleProperty(
-      'itemHeight',
-      itemHeight,
-    ));
+    properties.add(DoubleProperty('itemHeight', itemHeight));
     properties.add(
       FlagProperty('hasAutofocus', value: autofocus, ifFalse: 'noAutofocus'),
     );
@@ -834,7 +814,8 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     final NavigatorState navigator = Navigator.of(context);
     assert(_pulldownRoute == null);
     final RenderBox itemBox = context.findRenderObject()! as RenderBox;
-    final Rect itemRect = itemBox.localToGlobal(
+    final Rect itemRect =
+        itemBox.localToGlobal(
           Offset.zero,
           ancestor: navigator.context.findRenderObject(),
         ) &
@@ -843,8 +824,10 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
       items: menuItems,
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
-      capturedThemes:
-          InheritedTheme.capture(from: context, to: navigator.context),
+      capturedThemes: InheritedTheme.capture(
+        from: context,
+        to: navigator.context,
+      ),
       style: _textStyle!,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       itemHeight: widget.itemHeight,
@@ -877,8 +860,9 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _removeMacosPulldownRoute();
-    WidgetsBinding.instance.focusManager
-        .removeHighlightModeListener(_handleFocusHighlightModeChange);
+    WidgetsBinding.instance.focusManager.removeHighlightModeListener(
+      _handleFocusHighlightModeChange,
+    );
     focusNode!.removeListener(_handleFocusChanged);
     _internalNode?.dispose();
     super.dispose();
@@ -890,8 +874,12 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     final borderRadius = _hasIcon
         ? const BorderRadius.all(Radius.circular(7.0))
         : _kBorderRadius;
-    final buttonStyles =
-        _getButtonStyles(_pullDownButtonState, _enabled, _hasIcon, context);
+    final buttonStyles = _getButtonStyles(
+      _pullDownButtonState,
+      _enabled,
+      _hasIcon,
+      context,
+    );
 
     Widget result = Container(
       decoration: _showHighlight
@@ -921,14 +909,14 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
           _hasIcon
               ? MacosIcon(widget.icon!, color: buttonStyles.textColor)
               : _enabled
-                  ? Text(
-                      widget.title!,
-                      style: TextStyle(color: buttonStyles.textColor),
-                    )
-                  : Text(
-                      widget.disabledTitle ?? widget.title!,
-                      style: TextStyle(color: buttonStyles.textColor),
-                    ),
+              ? Text(
+                  widget.title!,
+                  style: TextStyle(color: buttonStyles.textColor),
+                )
+              : Text(
+                  widget.disabledTitle ?? widget.title!,
+                  style: TextStyle(color: buttonStyles.textColor),
+                ),
           Padding(
             padding: EdgeInsets.only(left: _hasIcon ? 2.0 : 8.0),
             child: SizedBox(
@@ -1093,10 +1081,7 @@ class _ButtonStyles {
 }
 
 class _DownCaretPainter extends CustomPainter {
-  const _DownCaretPainter({
-    required this.color,
-    required this.backgroundColor,
-  });
+  const _DownCaretPainter({required this.color, required this.backgroundColor});
 
   final Color color;
   final Color backgroundColor;

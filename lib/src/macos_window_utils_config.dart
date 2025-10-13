@@ -83,9 +83,7 @@ class MacosWindowUtilsConfig {
     }
     await WindowManipulator.addToolbar();
 
-    await WindowManipulator.setToolbarStyle(
-      toolbarStyle: toolbarStyle,
-    );
+    await WindowManipulator.setToolbarStyle(toolbarStyle: toolbarStyle);
 
     if (removeMenubarInFullScreenMode) {
       final delegate = _FlutterWindowDelegate();

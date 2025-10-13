@@ -3,8 +3,10 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kSheetBorderRadius = BorderRadius.all(Radius.circular(12.0));
-const EdgeInsets _defaultInsetPadding =
-    EdgeInsets.symmetric(horizontal: 140.0, vertical: 48.0);
+const EdgeInsets _defaultInsetPadding = EdgeInsets.symmetric(
+  horizontal: 140.0,
+  vertical: 48.0,
+);
 
 /// {@template macosSheet}
 /// A modal dialog that’s attached to a particular window and prevents further
@@ -72,7 +74,8 @@ class MacosSheet extends StatelessWidget {
       curve: insetAnimationCurve,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: backgroundColor ??
+          color:
+              backgroundColor ??
               brightness.resolve(
                 CupertinoColors.systemGrey6.color,
                 MacosColors.controlBackgroundColor.darkColor,
@@ -81,17 +84,11 @@ class MacosSheet extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: innerBorderColor,
-            ),
+            border: Border.all(width: 2, color: innerBorderColor),
             borderRadius: _kSheetBorderRadius,
           ),
           foregroundDecoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: outerBorderColor,
-            ),
+            border: Border.all(width: 1, color: outerBorderColor),
             borderRadius: _kSheetBorderRadius,
           ),
           child: child,
@@ -116,8 +113,12 @@ Future<T?> showMacosSheet<T>({
     context,
   );
 
-  barrierColor = Color.fromRGBO((barrierColor.r * 255).floor(),
-      (barrierColor.g * 255).floor(), (barrierColor.b * 255).floor(), 0.6);
+  barrierColor = Color.fromRGBO(
+    (barrierColor.r * 255).floor(),
+    (barrierColor.g * 255).floor(),
+    (barrierColor.b * 255).floor(),
+    0.6,
+  );
 
   return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
     _MacosSheetRoute<T>(
@@ -127,7 +128,8 @@ Future<T?> showMacosSheet<T>({
       },
       barrierDismissible: barrierDismissible,
       barrierColor: barrierColor,
-      barrierLabel: barrierLabel ??
+      barrierLabel:
+          barrierLabel ??
           MaterialLocalizations.of(context).modalBarrierDismissLabel,
     ),
   );
@@ -140,10 +142,10 @@ class _MacosSheetRoute<T> extends PopupRoute<T> {
     Color? barrierColor = const Color(0x80000000),
     String? barrierLabel,
     super.settings,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel,
-        _barrierColor = barrierColor;
+  }) : _pageBuilder = pageBuilder,
+       _barrierDismissible = barrierDismissible,
+       _barrierLabel = barrierLabel,
+       _barrierColor = barrierColor;
 
   final RoutePageBuilder _pageBuilder;
 
@@ -190,10 +192,7 @@ class _MacosSheetRoute<T> extends PopupRoute<T> {
   ) {
     if (animation.status == AnimationStatus.reverse) {
       return FadeTransition(
-        opacity: CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeOutSine,
-        ),
+        opacity: CurvedAnimation(parent: animation, curve: Curves.easeOutSine),
         child: child,
       );
     }
@@ -219,11 +218,7 @@ class _SubtleBounceCurve extends Curve {
   @override
   double transform(double t) {
     final simulation = SpringSimulation(
-      const SpringDescription(
-        damping: 14,
-        mass: 1.4,
-        stiffness: 180,
-      ),
+      const SpringDescription(damping: 14, mass: 1.4, stiffness: 180),
       0.0,
       1.0,
       0.1,

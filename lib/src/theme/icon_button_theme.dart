@@ -31,8 +31,8 @@ class MacosIconButtonTheme extends InheritedTheme {
   /// final theme = MacosIconButtonTheme.of(context);
   /// ```
   static MacosIconButtonThemeData of(BuildContext context) {
-    final MacosIconButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosIconButtonTheme>();
+    final MacosIconButtonTheme? buttonTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosIconButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).iconButtonTheme;
   }
 
@@ -123,8 +123,11 @@ class MacosIconButtonThemeData with Diagnosticable {
       hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
       shape: b.shape,
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t),
-      boxConstraints:
-          BoxConstraints.lerp(a.boxConstraints, b.boxConstraints, t),
+      boxConstraints: BoxConstraints.lerp(
+        a.boxConstraints,
+        b.boxConstraints,
+        t,
+      ),
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t),
     );
   }
@@ -173,8 +176,9 @@ class MacosIconButtonThemeData with Diagnosticable {
     properties.add(ColorProperty('disabledColor', disabledColor));
     properties.add(ColorProperty('hoverColor', hoverColor));
     properties.add(EnumProperty<BoxShape?>('shape', shape));
-    properties
-        .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
+    properties.add(
+      DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius),
+    );
     properties.add(
       DiagnosticsProperty<BoxConstraints?>('boxConstraints', boxConstraints),
     );

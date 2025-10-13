@@ -17,18 +17,14 @@ class _ToolbarPageState extends State<ToolbarPage> {
         titleWidth: 100.0,
         actions: [
           ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.folder_badge_plus,
-            ),
+            icon: const MacosIcon(CupertinoIcons.folder_badge_plus),
             onPressed: () => debugPrint('New Folder...'),
             label: 'New Folder',
             showLabel: true,
             tooltipMessage: 'This is a beautiful tooltip',
           ),
           ToolBarIconButton(
-            icon: const MacosIcon(
-              CupertinoIcons.add_circled,
-            ),
+            icon: const MacosIcon(CupertinoIcons.add_circled),
             onPressed: () => debugPrint('Add...'),
             label: 'Add',
             showLabel: true,
@@ -37,17 +33,13 @@ class _ToolbarPageState extends State<ToolbarPage> {
           const ToolBarSpacer(),
           ToolBarIconButton(
             label: 'Delete',
-            icon: const MacosIcon(
-              CupertinoIcons.trash,
-            ),
+            icon: const MacosIcon(CupertinoIcons.trash),
             onPressed: () => debugPrint('pressed'),
             showLabel: false,
           ),
           const ToolBarIconButton(
             label: 'Change View',
-            icon: MacosIcon(
-              CupertinoIcons.list_bullet,
-            ),
+            icon: MacosIcon(CupertinoIcons.list_bullet),
             showLabel: false,
           ),
           ToolBarPullDownButton(
@@ -98,17 +90,13 @@ class _ToolbarPageState extends State<ToolbarPage> {
           const ToolBarDivider(),
           ToolBarIconButton(
             label: 'Table',
-            icon: const MacosIcon(
-              CupertinoIcons.square_grid_3x2,
-            ),
+            icon: const MacosIcon(CupertinoIcons.square_grid_3x2),
             onPressed: () => debugPrint('Table...'),
             showLabel: false,
           ),
           ToolBarIconButton(
             label: 'Toggle Sidebar',
-            icon: const MacosIcon(
-              CupertinoIcons.sidebar_left,
-            ),
+            icon: const MacosIcon(CupertinoIcons.sidebar_left),
             onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
             showLabel: false,
           ),
@@ -146,9 +134,7 @@ class _ToolbarPageState extends State<ToolbarPage> {
           ),
           ToolBarIconButton(
             label: 'Share',
-            icon: const MacosIcon(
-              CupertinoIcons.share,
-            ),
+            icon: const MacosIcon(CupertinoIcons.share),
             onPressed: () => debugPrint('pressed'),
             showLabel: false,
           ),

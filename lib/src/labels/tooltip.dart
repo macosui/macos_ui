@@ -92,8 +92,9 @@ class _MacosTooltipState extends State<MacosTooltip>
       vsync: this,
     )..addStatusListener(_handleStatusChanged);
     // Listen to see when a mouse is added.
-    RendererBinding.instance.mouseTracker
-        .addListener(_handleMouseTrackerChange);
+    RendererBinding.instance.mouseTracker.addListener(
+      _handleMouseTrackerChange,
+    );
     // Listen to global pointer events so that we can hide a tooltip immediately
     // if some other control is clicked on.
     GestureBinding.instance.pointerRouter.addGlobalRoute(_handlePointerEvent);
@@ -244,10 +245,12 @@ class _MacosTooltipState extends State<MacosTooltip>
 
   @override
   void dispose() {
-    GestureBinding.instance.pointerRouter
-        .removeGlobalRoute(_handlePointerEvent);
-    RendererBinding.instance.mouseTracker
-        .removeListener(_handleMouseTrackerChange);
+    GestureBinding.instance.pointerRouter.removeGlobalRoute(
+      _handlePointerEvent,
+    );
+    RendererBinding.instance.mouseTracker.removeListener(
+      _handleMouseTrackerChange,
+    );
     if (_entry != null) _removeEntry();
     _controller.dispose();
     super.dispose();
@@ -392,10 +395,7 @@ class _TooltipOverlay extends StatelessWidget {
                 child: Center(
                   widthFactor: 1.0,
                   heightFactor: 1.0,
-                  child: Text(
-                    message,
-                    style: textStyle,
-                  ),
+                  child: Text(message, style: textStyle),
                 ),
               ),
             ),

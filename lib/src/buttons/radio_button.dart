@@ -28,7 +28,7 @@ class MacosRadioButton<T> extends StatelessWidget {
   /// Whether the button is checked or not
   final T value;
 
-// The currently selected value for a group of radio buttons.
+  // The currently selected value for a group of radio buttons.
   ///
   /// This radio button is considered selected if its [value] matches the
   /// [groupValue].
@@ -73,11 +73,9 @@ class MacosRadioButton<T> extends StatelessWidget {
     //   'state',
     //   value ? 'checked' : 'unchecked',
     // ));
-    properties.add(FlagProperty(
-      'disabled',
-      value: isDisabled,
-      ifFalse: 'enabled',
-    ));
+    properties.add(
+      FlagProperty('disabled', value: isDisabled, ifFalse: 'enabled'),
+    );
     properties.add(DoubleProperty('size', size));
     properties.add(ColorProperty('onColor', onColor));
     properties.add(ColorProperty('offColor', offColor));
@@ -119,8 +117,8 @@ class MacosRadioButton<T> extends StatelessWidget {
                     (isDisabled
                         ? CupertinoColors.quaternarySystemFill
                         : selected || isLight
-                            ? CupertinoColors.white
-                            : CupertinoColors.tertiarySystemFill),
+                        ? CupertinoColors.white
+                        : CupertinoColors.tertiarySystemFill),
                 context,
               ),
               boxShadow: const [

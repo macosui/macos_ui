@@ -7,9 +7,8 @@ import 'package:macos_ui/src/library.dart';
 
 /// Signature of a function that is called to notify that the children
 /// that have been hidden due to overflow has changed.
-typedef OverflowHandlerChangedCallback = void Function(
-  List<int> hiddenChildren,
-);
+typedef OverflowHandlerChangedCallback =
+    void Function(List<int> hiddenChildren);
 
 /// {@template overflowHandler}
 /// Lays out children widgets in a single run, and if there is not
@@ -105,27 +104,35 @@ class OverflowHandler extends MultiChildRenderObjectWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty<MainAxisAlignment>('alignment', alignment));
-    properties.add(EnumProperty<CrossAxisAlignment>(
-      'crossAxisAlignment',
-      crossAxisAlignment,
-    ));
-    properties.add(EnumProperty<TextDirection>(
-      'textDirection',
-      textDirection,
-      defaultValue: null,
-    ));
+    properties.add(
+      EnumProperty<CrossAxisAlignment>(
+        'crossAxisAlignment',
+        crossAxisAlignment,
+      ),
+    );
+    properties.add(
+      EnumProperty<TextDirection>(
+        'textDirection',
+        textDirection,
+        defaultValue: null,
+      ),
+    );
     properties.add(DoubleProperty("overflowBreakpoint", overflowBreakpoint));
     properties.add(EnumProperty<Clip>('clipBehavior', clipBehavior));
-    properties.add(EnumProperty<MainAxisAlignment>(
-      'overflowWidgetAlignment',
-      overflowWidgetAlignment,
-    ));
-    properties.add(FlagProperty(
-      'alwaysDisplayOverflowWidget',
-      value: alwaysDisplayOverflowWidget,
-      ifTrue: 'always display overflow widget',
-      ifFalse: 'do not always display overflow widget',
-    ));
+    properties.add(
+      EnumProperty<MainAxisAlignment>(
+        'overflowWidgetAlignment',
+        overflowWidgetAlignment,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'alwaysDisplayOverflowWidget',
+        value: alwaysDisplayOverflowWidget,
+        ifTrue: 'always display overflow widget',
+        ifFalse: 'do not always display overflow widget',
+      ),
+    );
   }
 }
 
@@ -152,13 +159,13 @@ class RenderOverflowHandler extends RenderBox
     required MainAxisAlignment overflowWidgetAlignment,
     required bool alwaysDisplayOverflowWidget,
     required this.overflowChangedCallback,
-  })  : _alignment = alignment,
-        _crossAxisAlignment = crossAxisAlignment,
-        _textDirection = textDirection,
-        _clipBehavior = clipBehavior,
-        _overflowBreakpoint = overflowBreakpoint,
-        _overflowWidgetAlignment = overflowWidgetAlignment,
-        _alwaysDisplayOverflowWidget = alwaysDisplayOverflowWidget;
+  }) : _alignment = alignment,
+       _crossAxisAlignment = crossAxisAlignment,
+       _textDirection = textDirection,
+       _clipBehavior = clipBehavior,
+       _overflowBreakpoint = overflowBreakpoint,
+       _overflowWidgetAlignment = overflowWidgetAlignment,
+       _alwaysDisplayOverflowWidget = alwaysDisplayOverflowWidget;
 
   double _overflowBreakpoint;
 
@@ -244,18 +251,24 @@ class RenderOverflowHandler extends RenderBox
   bool get _debugHasNecessaryDirections {
     if (firstChild != null && lastChild != firstChild) {
       // i.e. there's more than one child
-      assert(textDirection != null,
-          'Horizontal $runtimeType with multiple children has a null textDirection, so the layout order is undefined.');
+      assert(
+        textDirection != null,
+        'Horizontal $runtimeType with multiple children has a null textDirection, so the layout order is undefined.',
+      );
     }
     if (alignment == MainAxisAlignment.start ||
         alignment == MainAxisAlignment.end) {
-      assert(textDirection != null,
-          'Horizontal $runtimeType with alignment $alignment has a null textDirection, so the alignment cannot be resolved.');
+      assert(
+        textDirection != null,
+        'Horizontal $runtimeType with alignment $alignment has a null textDirection, so the alignment cannot be resolved.',
+      );
     }
     if (crossAxisAlignment == CrossAxisAlignment.start ||
         crossAxisAlignment == CrossAxisAlignment.end) {
-      assert(textDirection != null,
-          'Vertical $runtimeType with crossAxisAlignment $crossAxisAlignment has a null textDirection, so the alignment cannot be resolved.');
+      assert(
+        textDirection != null,
+        'Vertical $runtimeType with crossAxisAlignment $crossAxisAlignment has a null textDirection, so the alignment cannot be resolved.',
+      );
     }
     return true;
   }
@@ -395,8 +408,10 @@ class RenderOverflowHandler extends RenderBox
           mainAxisLimit) {
         // This child is not going to be rendered, but the overflow item is.
         mainAxisExtent += overflowItemMainAxisExtent;
-        crossAxisExtent =
-            math.max(crossAxisExtent, overflowItemCrossAxisExtent);
+        crossAxisExtent = math.max(
+          crossAxisExtent,
+          overflowItemCrossAxisExtent,
+        );
         overflowed = true;
         break;
       }
@@ -467,8 +482,10 @@ class RenderOverflowHandler extends RenderBox
           mainAxisLimit) {
         // This child is not going to be rendered, but the overflow item is.
         mainAxisExtent += overflowItemMainAxisExtent;
-        crossAxisExtent =
-            math.max(crossAxisExtent, overflowItemCrossAxisExtent);
+        crossAxisExtent = math.max(
+          crossAxisExtent,
+          overflowItemCrossAxisExtent,
+        );
         overflowItemVisible = true;
         overflowed = true;
         hiddenChildren.add(childIndex);
@@ -509,7 +526,8 @@ class RenderOverflowHandler extends RenderBox
     containerMainAxisExtent = size.width;
     containerCrossAxisExtent = size.height;
 
-    _hasVisualOverflow = containerMainAxisExtent < mainAxisExtent ||
+    _hasVisualOverflow =
+        containerMainAxisExtent < mainAxisExtent ||
         containerCrossAxisExtent < crossAxisExtent;
 
     // Notify callback if the children we've hidden has changed
@@ -527,8 +545,10 @@ class RenderOverflowHandler extends RenderBox
     // Calculate alignment parameters based on the axis extents.
     double crossAxisOffset = 0;
 
-    final double mainAxisFreeSpace =
-        math.max(0.0, containerMainAxisExtent - mainAxisExtent);
+    final double mainAxisFreeSpace = math.max(
+      0.0,
+      containerMainAxisExtent - mainAxisExtent,
+    );
     double childLeadingSpace = 0.0;
     double childBetweenSpace = 0.0;
 
@@ -547,8 +567,9 @@ class RenderOverflowHandler extends RenderBox
             : 0.0;
         break;
       case MainAxisAlignment.spaceAround:
-        childBetweenSpace =
-            visibleChildCount > 0 ? mainAxisFreeSpace / visibleChildCount : 0.0;
+        childBetweenSpace = visibleChildCount > 0
+            ? mainAxisFreeSpace / visibleChildCount
+            : 0.0;
         childLeadingSpace = childBetweenSpace / 2.0;
         break;
       case MainAxisAlignment.spaceEvenly:
@@ -592,8 +613,9 @@ class RenderOverflowHandler extends RenderBox
           // it to be aligned at the "opposite side" as this looks visually
           // more consistent
           late double overflowChildMainPosition;
-          double endAlignedMainAxisPosition =
-              flipMainAxis ? 0 : containerMainAxisExtent - childMainAxisExtent;
+          double endAlignedMainAxisPosition = flipMainAxis
+              ? 0
+              : containerMainAxisExtent - childMainAxisExtent;
           switch (_overflowWidgetAlignment) {
             case MainAxisAlignment.start:
               // we're already in the right spot
@@ -694,26 +716,34 @@ class RenderOverflowHandler extends RenderBox
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty<MainAxisAlignment>('alignment', alignment));
-    properties.add(EnumProperty<CrossAxisAlignment>(
-      'crossAxisAlignment',
-      crossAxisAlignment,
-    ));
-    properties.add(EnumProperty<TextDirection>(
-      'textDirection',
-      textDirection,
-      defaultValue: null,
-    ));
+    properties.add(
+      EnumProperty<CrossAxisAlignment>(
+        'crossAxisAlignment',
+        crossAxisAlignment,
+      ),
+    );
+    properties.add(
+      EnumProperty<TextDirection>(
+        'textDirection',
+        textDirection,
+        defaultValue: null,
+      ),
+    );
     properties.add(EnumProperty<Clip>('clipBehavior', clipBehavior));
     properties.add(DoubleProperty('overflowBreakpoint', overflowBreakpoint));
-    properties.add(EnumProperty<MainAxisAlignment>(
-      'overflowWidgetAlignment',
-      overflowWidgetAlignment,
-    ));
-    properties.add(FlagProperty(
-      'alwaysDisplayOverflowWidget',
-      value: alwaysDisplayOverflowWidget,
-      ifTrue: 'always display overflow widget',
-      ifFalse: 'do not always display overflow widget',
-    ));
+    properties.add(
+      EnumProperty<MainAxisAlignment>(
+        'overflowWidgetAlignment',
+        overflowWidgetAlignment,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'alwaysDisplayOverflowWidget',
+        value: alwaysDisplayOverflowWidget,
+        ifTrue: 'always display overflow widget',
+        ifFalse: 'do not always display overflow widget',
+      ),
+    );
   }
 }

@@ -20,8 +20,8 @@ class ProgressCircle extends StatelessWidget {
     this.innerColor,
     this.borderColor,
     this.semanticLabel,
-  })  : assert(value == null || value >= 0 && value <= 100),
-        assert(radius >= 0);
+  }) : assert(value == null || value >= 0 && value <= 100),
+       assert(radius >= 0);
 
   /// The value of the progress circle. If non-null, this has to
   /// be non-negative and less the 100. If null, the progress circle
@@ -53,11 +53,13 @@ class ProgressCircle extends StatelessWidget {
     properties.add(ColorProperty('innerColor', innerColor));
     properties.add(ColorProperty('borderColor', borderColor));
     properties.add(StringProperty('semanticLabel', semanticLabel));
-    properties.add(FlagProperty(
-      'determinate',
-      value: isDeterminate,
-      ifFalse: 'indeterminate',
-    ));
+    properties.add(
+      FlagProperty(
+        'determinate',
+        value: isDeterminate,
+        ifFalse: 'indeterminate',
+      ),
+    );
   }
 
   @override
@@ -87,9 +89,7 @@ class ProgressCircle extends StatelessWidget {
     } else {
       return Semantics(
         label: semanticLabel,
-        child: c.CupertinoActivityIndicator(
-          radius: radius,
-        ),
+        child: c.CupertinoActivityIndicator(radius: radius),
       );
     }
   }
@@ -114,11 +114,7 @@ class _DeterminateCirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     /// Draw an arc
-    void drawArc(
-      double value, {
-      Paint? paint,
-      bool useCenter = true,
-    }) {
+    void drawArc(double value, {Paint? paint, bool useCenter = true}) {
       canvas.drawArc(
         Offset.zero & size,
         _startAngle,
@@ -163,8 +159,8 @@ class ProgressBar extends StatelessWidget {
     this.trackColor,
     this.backgroundColor,
     this.semanticLabel,
-  })  : assert(value >= 0 && value <= 100),
-        assert(height >= 0);
+  }) : assert(value >= 0 && value <= 100),
+       assert(height >= 0);
 
   /// The value of the progress bar. If non-null, this has to
   /// be non-negative and less the 100. If null, the progress bar
@@ -240,9 +236,7 @@ class _DeterminateBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Draw the background line
     canvas.drawRRect(
-      const BorderRadius.all(Radius.circular(100)).toRRect(
-        Offset.zero & size,
-      ),
+      const BorderRadius.all(Radius.circular(100)).toRRect(Offset.zero & size),
       Paint()
         ..color = backgroundColor ?? CupertinoColors.secondarySystemFill
         ..style = PaintingStyle.fill,
@@ -252,10 +246,7 @@ class _DeterminateBarPainter extends CustomPainter {
     canvas.drawRRect(
       const BorderRadius.horizontal(left: Radius.circular(100)).toRRect(
         Offset.zero &
-            Size(
-              (value / 100).clamp(0.0, 1.0) * size.width,
-              size.height,
-            ),
+            Size((value / 100).clamp(0.0, 1.0) * size.width, size.height),
       ),
       Paint()
         ..color = activeColor ?? CupertinoColors.activeBlue

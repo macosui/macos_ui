@@ -7,10 +7,7 @@ const _kToolbarItemWidth = 32.0;
 class ToolBarSpacer extends ToolbarItem {
   /// Builds a spacer utility widget for the toolbar. It generates blank space
   /// between the toolbar actions.
-  const ToolBarSpacer({
-    super.key,
-    this.spacerUnits = 1.0,
-  });
+  const ToolBarSpacer({super.key, this.spacerUnits = 1.0});
 
   /// How much space to generate, expressed in multiples of [_kToolbarItemWidth]
   ///
@@ -20,9 +17,7 @@ class ToolBarSpacer extends ToolbarItem {
   @override
   Widget build(BuildContext context, ToolbarItemDisplayMode displayMode) {
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
-      return SizedBox(
-        width: spacerUnits * _kToolbarItemWidth,
-      );
+      return SizedBox(width: spacerUnits * _kToolbarItemWidth);
     } else {
       return const SizedBox.shrink();
     }

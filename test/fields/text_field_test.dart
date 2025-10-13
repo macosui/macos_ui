@@ -13,11 +13,7 @@ void main() {
             children: [
               ContentArea(
                 builder: (context, _) {
-                  return Center(
-                    child: MacosTextField(
-                      controller: controller,
-                    ),
-                  );
+                  return Center(child: MacosTextField(controller: controller));
                 },
               ),
             ],

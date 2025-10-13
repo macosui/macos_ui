@@ -9,10 +9,7 @@ class TabViewPage extends StatefulWidget {
 }
 
 class _TabViewPageState extends State<TabViewPage> {
-  final _controller = MacosTabController(
-    initialIndex: 0,
-    length: 3,
-  );
+  final _controller = MacosTabController(initialIndex: 0, length: 3);
 
   @override
   Widget build(BuildContext context) {
@@ -49,26 +46,14 @@ class _TabViewPageState extends State<TabViewPage> {
               child: MacosTabView(
                 controller: _controller,
                 tabs: const [
-                  MacosTab(
-                    label: 'Tab 1',
-                  ),
-                  MacosTab(
-                    label: 'Tab 2',
-                  ),
-                  MacosTab(
-                    label: 'Tab 3',
-                  ),
+                  MacosTab(label: 'Tab 1'),
+                  MacosTab(label: 'Tab 2'),
+                  MacosTab(label: 'Tab 3'),
                 ],
                 children: const [
-                  Center(
-                    child: Text('Tab 1'),
-                  ),
-                  Center(
-                    child: Text('Tab 2'),
-                  ),
-                  Center(
-                    child: Text('Tab 3'),
-                  ),
+                  Center(child: Text('Tab 1')),
+                  Center(child: Text('Tab 2')),
+                  Center(child: Text('Tab 3')),
                 ],
               ),
             );

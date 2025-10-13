@@ -44,11 +44,9 @@ class MacosDisclosureButton extends StatefulWidget {
     properties.add(ColorProperty('fillColor', fillColor));
     properties.add(ColorProperty('hoverColor', fillColor));
     properties.add(StringProperty('semanticLabel', semanticLabel));
-    properties.add(FlagProperty(
-      'enabled',
-      value: enabled,
-      ifFalse: 'disabled',
-    ));
+    properties.add(
+      FlagProperty('enabled', value: enabled, ifFalse: 'disabled'),
+    );
   }
 
   @override
@@ -161,10 +159,7 @@ class MacosDisclosureButtonState extends State<MacosDisclosureButton>
         child: Semantics(
           button: true,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minWidth: 20,
-              minHeight: 20,
-            ),
+            constraints: const BoxConstraints(minWidth: 20, minHeight: 20),
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: AnimatedBuilder(
@@ -174,8 +169,8 @@ class MacosDisclosureButtonState extends State<MacosDisclosureButton>
                     decoration: BoxDecoration(
                       color: buttonHeldDown
                           ? brightness == Brightness.dark
-                              ? const MacosColor(0xff3C383C)
-                              : const MacosColor(0xffE5E5E5)
+                                ? const MacosColor(0xff3C383C)
+                                : const MacosColor(0xffE5E5E5)
                           : fillColor,
                       borderRadius: const BorderRadius.all(Radius.circular(7)),
                     ),

@@ -81,17 +81,14 @@ class GraphicalTimePickerPainter extends CustomPainter {
     //---Inner shadow---//
     const blurRadius = 3.0;
     final shadowPainter = Paint()
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        blurRadius,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, blurRadius)
       ..color = MacosColors.black;
     final path = Path()
       ..fillType = PathFillType.evenOdd
       ..addRect(
-        const EdgeInsets.all(blurRadius)
-            .copyWith(bottom: -rect2.height / 2)
-            .inflateRect(rect2),
+        const EdgeInsets.all(
+          blurRadius,
+        ).copyWith(bottom: -rect2.height / 2).inflateRect(rect2),
       )
       ..addArc(
         const EdgeInsets.symmetric(horizontal: blurRadius).inflateRect(rect2),
@@ -108,10 +105,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
       color: theme.dayPeriodTextColor,
       fontSize: 13.0,
     );
-    TextSpan span = TextSpan(
-      style: style,
-      text: dayPeriod,
-    );
+    TextSpan span = TextSpan(style: style, text: dayPeriod);
     TextPainter periodPainter = TextPainter(
       text: span,
       textAlign: TextAlign.center,
@@ -126,11 +120,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
     );
   }
 
-  void _paintHours(
-    Canvas canvas,
-    Size size,
-    double scaleFactor,
-  ) {
+  void _paintHours(Canvas canvas, Size size, double scaleFactor) {
     TextStyle style = const TextStyle(
       color: MacosColors.black,
       fontWeight: FontWeight.w300,
@@ -217,11 +207,7 @@ class GraphicalTimePickerPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     // Draw second hand pin hole
-    canvas.drawCircle(
-      size.center(Offset.zero),
-      2.0,
-      secondHandPinPaint,
-    );
+    canvas.drawCircle(size.center(Offset.zero), 2.0, secondHandPinPaint);
 
     // Draw second hand tail
     canvas.drawLine(

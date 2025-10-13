@@ -52,9 +52,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
           ToolBarIconButton(
             label: 'Toggle End Sidebar',
             tooltipMessage: 'Toggle End Sidebar',
-            icon: const MacosIcon(
-              CupertinoIcons.sidebar_right,
-            ),
+            icon: const MacosIcon(CupertinoIcons.sidebar_right),
             onPressed: () => MacosWindowScope.of(context).toggleEndSidebar(),
             showLabel: false,
           ),
@@ -71,10 +69,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                 children: [
                   const WidgetTextTitle1(widgetName: 'PushButton'),
                   Divider(color: MacosTheme.of(context).dividerColor),
-                  Text(
-                    'Primary',
-                    style: MacosTypography.of(context).title2,
-                  ),
+                  Text('Primary', style: MacosTypography.of(context).title2),
                   Row(
                     children: [
                       PushButton(
@@ -247,10 +242,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    'Secondary',
-                    style: MacosTypography.of(context).title2,
-                  ),
+                  Text('Secondary', style: MacosTypography.of(context).title2),
                   Row(
                     children: [
                       PushButton(
@@ -449,9 +441,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         fillColor: Colors.transparent,
                       ),
                       const SizedBox(width: 16.0),
-                      MacosBackButton(
-                        onPressed: () => debugPrint('click'),
-                      ),
+                      MacosBackButton(onPressed: () => debugPrint('click')),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -477,26 +467,20 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   Row(
                     children: [
                       MacosIconButton(
-                        icon: const MacosIcon(
-                          CupertinoIcons.star_fill,
-                        ),
+                        icon: const MacosIcon(CupertinoIcons.star_fill),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(7),
                         onPressed: () {},
                       ),
                       const SizedBox(width: 8),
                       const MacosIconButton(
-                        icon: MacosIcon(
-                          CupertinoIcons.plus_app,
-                        ),
+                        icon: MacosIcon(CupertinoIcons.plus_app),
                         shape: BoxShape.circle,
                         //onPressed: () {},
                       ),
                       const SizedBox(width: 8),
                       MacosIconButton(
-                        icon: const MacosIcon(
-                          CupertinoIcons.minus_square,
-                        ),
+                        icon: const MacosIcon(CupertinoIcons.minus_square),
                         backgroundColor: Colors.transparent,
                         onPressed: () {},
                       ),
@@ -567,10 +551,7 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         },
                       ),
                       const SizedBox(width: 8),
-                      MacosCheckbox(
-                        value: switchValue,
-                        onChanged: null,
-                      ),
+                      MacosCheckbox(value: switchValue, onChanged: null),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -732,11 +713,12 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         },
                         items: <String>['One', 'Two', 'Three', 'Four']
                             .map<MacosPopupMenuItem<String>>((String value) {
-                          return MacosPopupMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                              return MacosPopupMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            })
+                            .toList(),
                       ),
                       const SizedBox(width: 20),
                       MacosPopupButton<String>(
@@ -752,8 +734,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
                     onChanged: (String? newValue) {
                       setState(() => languagePopupValue = newValue!);
                     },
-                    items: languages
-                        .map<MacosPopupMenuItem<String>>((String value) {
+                    items: languages.map<MacosPopupMenuItem<String>>((
+                      String value,
+                    ) {
                       return MacosPopupMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -825,5 +808,5 @@ const languages = [
   'Polish',
   'Ukrainian',
   'Romanian',
-  'Dutch'
+  'Dutch',
 ];

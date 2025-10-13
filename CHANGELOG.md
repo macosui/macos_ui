@@ -1,3 +1,6 @@
+## [2.2.0+2]
+* Formatter updates
+
 ## [2.2.0+1]
 * Support Dart 3.9.2
 * Update dependencies

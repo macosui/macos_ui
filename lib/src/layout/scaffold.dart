@@ -96,9 +96,7 @@ class _MacosScaffoldState extends State<MacosScaffold> {
               ),
             ] else ...[
               // Background color
-              Positioned.fill(
-                child: ColoredBox(color: backgroundColor),
-              ),
+              Positioned.fill(child: ColoredBox(color: backgroundColor)),
 
               // Content Area
               Positioned(
@@ -129,14 +127,13 @@ class _MacosScaffoldState extends State<MacosScaffold> {
 }
 
 class _ScaffoldBody extends MultiChildRenderObjectWidget {
-  const _ScaffoldBody({
-    super.children,
-  });
+  const _ScaffoldBody({super.children});
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    final index = children
-        .indexWhere((e) => e.key == const Key('macos_scaffold_content_area'));
+    final index = children.indexWhere(
+      (e) => e.key == const Key('macos_scaffold_content_area'),
+    );
     return _RenderScaffoldBody(contentAreaIndex: index > -1 ? index : null);
   }
 
@@ -145,8 +142,9 @@ class _ScaffoldBody extends MultiChildRenderObjectWidget {
     BuildContext context,
     _RenderScaffoldBody renderObject,
   ) {
-    final index = children
-        .indexWhere((e) => e.key == const Key('macos_scaffold_content_area'));
+    final index = children.indexWhere(
+      (e) => e.key == const Key('macos_scaffold_content_area'),
+    );
     renderObject.contentAreaIndex = index > -1 ? index : null;
   }
 }

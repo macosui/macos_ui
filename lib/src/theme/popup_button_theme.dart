@@ -31,8 +31,8 @@ class MacosPopupButtonTheme extends InheritedTheme {
   /// MacosPopupButtonTheme theme = MacosPopupButtonTheme.of(context);
   /// ```
   static MacosPopupButtonThemeData of(BuildContext context) {
-    final MacosPopupButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosPopupButtonTheme>();
+    final MacosPopupButtonTheme? buttonTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosPopupButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).popupButtonTheme;
   }
 

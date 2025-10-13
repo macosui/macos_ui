@@ -113,15 +113,15 @@ class _RawMacosScrollBar extends RawScrollbar {
     super.scrollbarOrientation,
     required this.effectiveThumbColor,
     super.radius,
-  })  : assert(thickness != null && thickness < double.infinity),
-        assert(thicknessWhileHovering < double.infinity),
-        super(
-          thumbVisibility: thumbVisibility ?? false,
-          fadeDuration: _kScrollbarFadeDuration,
-          timeToFade: _kScrollbarTimeToFade,
-          notificationPredicate:
-              notificationPredicate ?? defaultScrollNotificationPredicate,
-        );
+  }) : assert(thickness != null && thickness < double.infinity),
+       assert(thicknessWhileHovering < double.infinity),
+       super(
+         thumbVisibility: thumbVisibility ?? false,
+         fadeDuration: _kScrollbarFadeDuration,
+         timeToFade: _kScrollbarTimeToFade,
+         notificationPredicate:
+             notificationPredicate ?? defaultScrollNotificationPredicate,
+       );
 
   final double thicknessWhileHovering;
   final Color effectiveThumbColor;

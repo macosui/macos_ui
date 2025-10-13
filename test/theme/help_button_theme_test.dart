@@ -6,15 +6,21 @@ import 'package:macos_ui/src/library.dart';
 void main() {
   group('HelpButtonTheme tests', () {
     test('lerps from light to dark', () {
-      final actual =
-          HelpButtonThemeData.lerp(_helpButtonTheme, _helpButtonThemeDark, 1);
+      final actual = HelpButtonThemeData.lerp(
+        _helpButtonTheme,
+        _helpButtonThemeDark,
+        1,
+      );
 
       expect(actual, _helpButtonThemeDark);
     });
 
     test('lerps from dark to light', () {
-      final actual =
-          HelpButtonThemeData.lerp(_helpButtonThemeDark, _helpButtonTheme, 1);
+      final actual = HelpButtonThemeData.lerp(
+        _helpButtonThemeDark,
+        _helpButtonTheme,
+        1,
+      );
 
       expect(actual, _helpButtonTheme);
     });

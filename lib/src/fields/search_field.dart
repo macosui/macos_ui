@@ -259,24 +259,25 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     return OverlayEntry(
       builder: (context) => StreamBuilder<List<SearchResultItem?>?>(
         stream: suggestionStream.stream,
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<List<SearchResultItem?>?> snapshot,
-        ) {
-          late var count = widget.maxResultsToShow;
-          if (snapshot.data != null) {
-            count = snapshot.data!.length;
-          }
-          return Positioned(
-            left: offset.dx,
-            width: size.width,
-            child: CompositedTransformFollower(
-              offset: _getYOffset(offset, size, count),
-              link: _layerLink,
-              child: _resultsBuilder(),
-            ),
-          );
-        },
+        builder:
+            (
+              BuildContext context,
+              AsyncSnapshot<List<SearchResultItem?>?> snapshot,
+            ) {
+              late var count = widget.maxResultsToShow;
+              if (snapshot.data != null) {
+                count = snapshot.data!.length;
+              }
+              return Positioned(
+                left: offset.dx,
+                width: size.width,
+                child: CompositedTransformFollower(
+                  offset: _getYOffset(offset, size, count),
+                  link: _layerLink,
+                  child: _resultsBuilder(),
+                ),
+              );
+            },
       ),
     );
   }
@@ -289,10 +290,7 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
     } else {
       if (resultCount > widget.maxResultsToShow) {
         showOverlayAbove = false;
-        return Offset(
-          0,
-          -(widget.resultHeight * widget.maxResultsToShow),
-        );
+        return Offset(0, -(widget.resultHeight * widget.maxResultsToShow));
       } else {
         showOverlayAbove = true;
         return Offset(0, -(widget.resultHeight * resultCount));
@@ -303,67 +301,72 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
   Widget _resultsBuilder() {
     return StreamBuilder<List<SearchResultItem?>?>(
       stream: suggestionStream.stream,
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<List<SearchResultItem?>?> snapshot,
-      ) {
-        if (widget.results == null ||
-            snapshot.data == null ||
-            !isResultExpanded) {
-          return const SizedBox.shrink();
-        } else if (snapshot.data!.isEmpty) {
-          return MacosOverlayFilter(
-            borderRadius: _kBorderRadius,
-            child: widget.emptyWidget,
-          );
-        } else {
-          if (snapshot.data!.length > widget.maxResultsToShow) {
-            height = widget.resultHeight * widget.maxResultsToShow;
-          } else if (snapshot.data!.length == 1) {
-            height = widget.resultHeight;
-          } else {
-            height = snapshot.data!.length * widget.resultHeight;
-          }
-          height += _kResultsOverlayMargin;
+      builder:
+          (
+            BuildContext context,
+            AsyncSnapshot<List<SearchResultItem?>?> snapshot,
+          ) {
+            if (widget.results == null ||
+                snapshot.data == null ||
+                !isResultExpanded) {
+              return const SizedBox.shrink();
+            } else if (snapshot.data!.isEmpty) {
+              return MacosOverlayFilter(
+                borderRadius: _kBorderRadius,
+                child: widget.emptyWidget,
+              );
+            } else {
+              if (snapshot.data!.length > widget.maxResultsToShow) {
+                height = widget.resultHeight * widget.maxResultsToShow;
+              } else if (snapshot.data!.length == 1) {
+                height = widget.resultHeight;
+              } else {
+                height = snapshot.data!.length * widget.resultHeight;
+              }
+              height += _kResultsOverlayMargin;
 
-          return TextFieldTapRegion(
-            child: MacosOverlayFilter(
-              borderRadius: _kBorderRadius,
-              color: MacosSearchFieldTheme.of(context).resultsBackgroundColor,
-              child: SizedBox(
-                height: height,
-                child: ListView.builder(
-                  reverse: showOverlayAbove,
-                  padding: const EdgeInsets.all(6.0),
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    var selectedItem = snapshot.data![index]!;
-                    return _SearchResultItemButton(
-                      resultHeight: widget.resultHeight,
-                      onPressed: () {
-                        searchController!.text = selectedItem.searchKey;
-                        searchController!.selection =
-                            TextSelection.fromPosition(
-                          TextPosition(
-                            offset: searchController!.text.length,
-                          ),
+              return TextFieldTapRegion(
+                child: MacosOverlayFilter(
+                  borderRadius: _kBorderRadius,
+                  color: MacosSearchFieldTheme.of(
+                    context,
+                  ).resultsBackgroundColor,
+                  child: SizedBox(
+                    height: height,
+                    child: ListView.builder(
+                      reverse: showOverlayAbove,
+                      padding: const EdgeInsets.all(6.0),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var selectedItem = snapshot.data![index]!;
+                        return _SearchResultItemButton(
+                          resultHeight: widget.resultHeight,
+                          onPressed: () {
+                            searchController!.text = selectedItem.searchKey;
+                            searchController!.selection =
+                                TextSelection.fromPosition(
+                                  TextPosition(
+                                    offset: searchController!.text.length,
+                                  ),
+                                );
+                            selectedItem.onSelected?.call();
+                            // Hide the results
+                            suggestionStream.sink.add(null);
+                            if (widget.onResultSelected != null) {
+                              widget.onResultSelected!(selectedItem);
+                            }
+                          },
+                          child:
+                              selectedItem.child ??
+                              Text(selectedItem.searchKey),
                         );
-                        selectedItem.onSelected?.call();
-                        // Hide the results
-                        suggestionStream.sink.add(null);
-                        if (widget.onResultSelected != null) {
-                          widget.onResultSelected!(selectedItem);
-                        }
                       },
-                      child: selectedItem.child ?? Text(selectedItem.searchKey),
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          );
-        }
-      },
+              );
+            }
+          },
     );
   }
 
@@ -413,9 +416,9 @@ class _MacosSearchFieldState<T> extends State<MacosSearchField<T>> {
               }
               if (widget.results != null) {
                 for (final suggestion in widget.results!) {
-                  if (suggestion.searchKey
-                      .toLowerCase()
-                      .contains(query.toLowerCase())) {
+                  if (suggestion.searchKey.toLowerCase().contains(
+                    query.toLowerCase(),
+                  )) {
                     searchResult.add(suggestion);
                   }
                 }
@@ -450,11 +453,7 @@ class SearchResultItem {
   /// field.
   ///
   /// Can be further customized via its [child] property.
-  const SearchResultItem(
-    this.searchKey, {
-    this.child,
-    this.onSelected,
-  });
+  const SearchResultItem(this.searchKey, {this.child, this.onSelected});
 
   /// The string to search for.
   final String searchKey;
@@ -527,10 +526,7 @@ class _SearchResultItemButtonState extends State<_SearchResultItemButton> {
               fontSize: 13.0,
               color: _isHovered
                   ? MacosColors.white
-                  : brightness.resolve(
-                      MacosColors.black,
-                      MacosColors.white,
-                    ),
+                  : brightness.resolve(MacosColors.black, MacosColors.white),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),

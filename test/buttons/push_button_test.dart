@@ -93,19 +93,16 @@ void main() {
           .map((node) => node.toString())
           .toList();
 
-      expect(
-        description,
-        [
-          'controlSize: regular',
-          'color: null',
-          'disabledColor: null',
-          'alignment: Alignment.center',
-          'semanticLabel: null',
-          'borderRadius: BorderRadius.circular(4.0)',
-          'disabled',
-          'secondary: null',
-        ],
-      );
+      expect(description, [
+        'controlSize: regular',
+        'color: null',
+        'disabledColor: null',
+        'alignment: Alignment.center',
+        'semanticLabel: null',
+        'borderRadius: BorderRadius.circular(4.0)',
+        'disabled',
+        'secondary: null',
+      ]);
     });
   });
 }

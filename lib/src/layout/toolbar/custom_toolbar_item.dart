@@ -64,10 +64,7 @@ class CustomToolbarItem extends ToolbarItem {
     if (displayMode == ToolbarItemDisplayMode.inToolbar) {
       Widget widget = inToolbarBuilder(context);
       if (tooltipMessage != null) {
-        widget = MacosTooltip(
-          message: tooltipMessage!,
-          child: widget,
-        );
+        widget = MacosTooltip(message: tooltipMessage!, child: widget);
       }
       return widget;
     } else {

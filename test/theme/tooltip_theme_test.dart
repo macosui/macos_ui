@@ -44,40 +44,29 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'height: null',
-        'verticalOffset: null',
-        'padding: null',
-        'margin: null',
-        'decoration: null',
-        'waitDuration: null',
-        'showDuration: null',
-        'textStyle: null',
-      ],
-    );
+    expect(description, [
+      'height: null',
+      'verticalOffset: null',
+      'padding: null',
+      'margin: null',
+      'decoration: null',
+      'waitDuration: null',
+      'showDuration: null',
+      'textStyle: null',
+    ]);
   });
 }
 
 const _tooltipThemeData = MacosTooltipThemeData(
-  decoration: BoxDecoration(
-    color: Colors.red,
-  ),
+  decoration: BoxDecoration(color: Colors.red),
   margin: EdgeInsets.all(6),
   padding: EdgeInsets.all(6),
-  textStyle: TextStyle(
-    color: Colors.black,
-  ),
+  textStyle: TextStyle(color: Colors.black),
 );
 
 const _tooltipThemeDataDark = MacosTooltipThemeData(
-  decoration: BoxDecoration(
-    color: Colors.blue,
-  ),
+  decoration: BoxDecoration(color: Colors.blue),
   margin: EdgeInsets.all(8),
   padding: EdgeInsets.all(8),
-  textStyle: TextStyle(
-    color: Colors.white,
-  ),
+  textStyle: TextStyle(color: Colors.white),
 );

@@ -10,10 +10,8 @@ class ContentArea extends StatelessWidget {
   ///
   /// The width of this
   /// widget is automatically calculated in [MacosScaffoldScope].
-  const ContentArea({
-    required this.builder,
-    this.minWidth = 300,
-  }) : super(key: const Key('macos_scaffold_content_area'));
+  const ContentArea({required this.builder, this.minWidth = 300})
+    : super(key: const Key('macos_scaffold_content_area'));
 
   /// The builder that creates a child to display in this widget.
   final ScrollableWidgetBuilder? builder;
@@ -24,9 +22,7 @@ class ContentArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints.expand().copyWith(
-        minWidth: minWidth,
-      ),
+      constraints: const BoxConstraints.expand().copyWith(minWidth: minWidth),
       child: SafeArea(
         left: false,
         right: false,

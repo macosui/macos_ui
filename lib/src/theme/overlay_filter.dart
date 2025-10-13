@@ -40,7 +40,8 @@ class MacosOverlayFilter extends StatelessWidget {
     return WallpaperTintingOverride(
       child: Container(
         decoration: BoxDecoration(
-          color: color ??
+          color:
+              color ??
               (brightness.isDark
                   ? const Color.fromRGBO(30, 30, 30, 1)
                   : const Color.fromRGBO(242, 242, 247, 1)),
@@ -68,10 +69,7 @@ class MacosOverlayFilter extends StatelessWidget {
         child: ClipRRect(
           borderRadius: borderRadius,
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 20.0,
-              sigmaY: 20.0,
-            ),
+            filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
             child: child,
           ),
         ),

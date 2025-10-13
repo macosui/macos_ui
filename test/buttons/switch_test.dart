@@ -48,18 +48,15 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'unchecked',
-        'size: regular',
-        'dragStartBehavior: start',
-        'disabled',
-        'activeColor: null',
-        'trackColor: null',
-        'knobColor: null',
-        'semanticLabel: null',
-      ],
-    );
+    expect(description, [
+      'unchecked',
+      'size: regular',
+      'dragStartBehavior: start',
+      'disabled',
+      'activeColor: null',
+      'trackColor: null',
+      'knobColor: null',
+      'semanticLabel: null',
+    ]);
   });
 }

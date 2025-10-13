@@ -11,11 +11,7 @@ class HelpButtonTheme extends InheritedTheme {
   /// Create a [HelpButtonTheme].
   ///
   /// The [data] parameter must not be null.
-  const HelpButtonTheme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
+  const HelpButtonTheme({super.key, required this.data, required super.child});
 
   /// The configuration of this theme.
   final HelpButtonThemeData data;
@@ -31,8 +27,8 @@ class HelpButtonTheme extends InheritedTheme {
   /// HelpButtonTheme theme = HelpButtonTheme.of(context);
   /// ```
   static HelpButtonThemeData of(BuildContext context) {
-    final HelpButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
+    final HelpButtonTheme? buttonTheme = context
+        .dependOnInheritedWidgetOfExactType<HelpButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).helpButtonTheme;
   }
 
@@ -58,10 +54,7 @@ class HelpButtonThemeData with Diagnosticable {
   /// Creates a [HelpButtonThemeData].
   ///
   /// The [style] may be null.
-  const HelpButtonThemeData({
-    this.color,
-    this.disabledColor,
-  });
+  const HelpButtonThemeData({this.color, this.disabledColor});
 
   /// The default background color for [HelpButton]
   final Color? color;
@@ -70,10 +63,7 @@ class HelpButtonThemeData with Diagnosticable {
   final Color? disabledColor;
 
   /// Copies one [HelpButtonThemeData] to another.
-  HelpButtonThemeData copyWith({
-    Color? color,
-    Color? disabledColor,
-  }) {
+  HelpButtonThemeData copyWith({Color? color, Color? disabledColor}) {
     return HelpButtonThemeData(
       color: color ?? this.color,
       disabledColor: disabledColor ?? this.disabledColor,
@@ -116,9 +106,6 @@ class HelpButtonThemeData with Diagnosticable {
   /// Merges this [HelpButtonThemeData] with another.
   HelpButtonThemeData merge(HelpButtonThemeData? other) {
     if (other == null) return this;
-    return copyWith(
-      color: other.color,
-      disabledColor: other.disabledColor,
-    );
+    return copyWith(color: other.color, disabledColor: other.disabledColor);
   }
 }

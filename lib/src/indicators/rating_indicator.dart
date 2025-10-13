@@ -28,9 +28,9 @@ class RatingIndicator extends StatelessWidget {
     this.iconSize = 16,
     this.onChanged,
     this.semanticLabel,
-  })  : assert(iconSize >= 0),
-        assert(amount > 0),
-        assert(value >= 0 && value <= amount);
+  }) : assert(iconSize >= 0),
+       assert(amount > 0),
+       assert(value >= 0 && value <= amount);
 
   /// The icon used when the star is rated. [CupertinoIcons.star_fill]
   /// is used by default. If you must replace the star with a custom

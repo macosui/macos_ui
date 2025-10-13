@@ -130,8 +130,10 @@ class PushButton extends StatefulWidget {
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
     this.secondary,
-  }) : assert(pressedOpacity == null ||
-            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
+  }) : assert(
+         pressedOpacity == null ||
+             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0),
+       );
 
   /// The widget below this widget in the tree.
   ///
@@ -170,9 +172,11 @@ class PushButton extends StatefulWidget {
   ///
   /// This defaults to 0.4. If null, opacity will not change on pressed if using
   /// your own custom effects is desired.
-  @Deprecated("'PushButton' animations now match their native macOS’ "
-      "counterparts. Therefore, its opacity no longer changes when it is "
-      "pressed.")
+  @Deprecated(
+    "'PushButton' animations now match their native macOS’ "
+    "counterparts. Therefore, its opacity no longer changes when it is "
+    "pressed.",
+  )
   final double? pressedOpacity;
 
   /// The radius of the button's corners when it has a background color.
@@ -215,11 +219,9 @@ class PushButton extends StatefulWidget {
     properties.add(DiagnosticsProperty('alignment', alignment));
     properties.add(StringProperty('semanticLabel', semanticLabel));
     properties.add(DiagnosticsProperty('borderRadius', borderRadius));
-    properties.add(FlagProperty(
-      'enabled',
-      value: enabled,
-      ifFalse: 'disabled',
-    ));
+    properties.add(
+      FlagProperty('enabled', value: enabled, ifFalse: 'disabled'),
+    );
     properties.add(DiagnosticsProperty('secondary', secondary));
   }
 
@@ -347,11 +349,13 @@ class PushButtonState extends State<PushButton>
                   builder: (context, _) {
                     final Color backgroundColor = _getBackgroundColor();
 
-                    final Color foregroundColor =
-                        _getForegroundColor(backgroundColor);
+                    final Color foregroundColor = _getForegroundColor(
+                      backgroundColor,
+                    );
 
-                    final baseStyle =
-                        theme.typography.body.copyWith(color: foregroundColor);
+                    final baseStyle = theme.typography.body.copyWith(
+                      color: foregroundColor,
+                    );
 
                     return DecoratedBox(
                       decoration: _getBoxDecoration().copyWith(

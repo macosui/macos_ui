@@ -15,14 +15,12 @@ class WidgetTextTitle1 extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 6.0,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 6.0),
         child: Text(
           widgetName,
-          style: MacosTypography.of(context)
-              .title1
-              .copyWith(fontFamily: GoogleFonts.jetBrainsMono().fontFamily),
+          style: MacosTypography.of(
+            context,
+          ).title1.copyWith(fontFamily: GoogleFonts.jetBrainsMono().fontFamily),
         ),
       ),
     );

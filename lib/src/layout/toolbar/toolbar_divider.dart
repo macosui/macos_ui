@@ -6,10 +6,7 @@ class ToolBarDivider extends ToolbarItem {
   /// Builds a macOS-styled divider for the toolbar. It generates a vertical
   /// line (or a horizontal line, if it appears in the overflowed menu) between
   /// the toolbar actions.
-  const ToolBarDivider({
-    super.key,
-    this.padding = const EdgeInsets.all(6.0),
-  });
+  const ToolBarDivider({super.key, this.padding = const EdgeInsets.all(6.0)});
 
   /// Optional padding to use for the divider.
   ///

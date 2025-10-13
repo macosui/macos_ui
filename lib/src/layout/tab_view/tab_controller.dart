@@ -10,13 +10,11 @@ import 'package:flutter/widgets.dart';
 /// {@endtemplate}
 class MacosTabController extends ChangeNotifier {
   /// {@macro macosTabController}
-  MacosTabController({
-    int initialIndex = 0,
-    required this.length,
-  })  : assert(length >= 0),
-        assert(initialIndex >= 0 && (length == 0 || initialIndex < length)),
-        _index = initialIndex,
-        _previousIndex = initialIndex;
+  MacosTabController({int initialIndex = 0, required this.length})
+    : assert(length >= 0),
+      assert(initialIndex >= 0 && (length == 0 || initialIndex < length)),
+      _index = initialIndex,
+      _previousIndex = initialIndex;
 
   /// The total number of tabs.
   ///

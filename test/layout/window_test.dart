@@ -32,9 +32,7 @@ void main() {
           home: MacosWindow(
             disableWallpaperTinting: true,
             sidebar: sidebar,
-            child: const MacosScaffold(
-              children: [],
-            ),
+            child: const MacosScaffold(children: []),
           ),
         );
       }
@@ -44,14 +42,8 @@ void main() {
       final backgroundFinder = find.byType(AnimatedPositioned).at(0);
 
       expectSidebarOpen(tester, {required double width}) {
-        expect(
-          tester.widget<AnimatedPositioned>(sidebarFinder).width,
-          width,
-        );
-        expect(
-          tester.widget<AnimatedPositioned>(backgroundFinder).left,
-          width,
-        );
+        expect(tester.widget<AnimatedPositioned>(sidebarFinder).width, width);
+        expect(tester.widget<AnimatedPositioned>(backgroundFinder).left, width);
       }
 
       expectSidebarClosed(tester) {
@@ -59,10 +51,7 @@ void main() {
           tester.widget<AnimatedPositioned>(sidebarFinder).width,
           minWidth,
         );
-        expect(
-          tester.widget<AnimatedPositioned>(backgroundFinder).left,
-          0,
-        );
+        expect(tester.widget<AnimatedPositioned>(backgroundFinder).left, 0);
       }
 
       testWidgets('initial width equals startWidth', (tester) async {
@@ -105,8 +94,9 @@ void main() {
       testWidgets('drag events past maxWidth have no effect', (tester) async {
         final view = viewBuilder(sidebarBuilder());
         await tester.pumpWidget(view);
-        final gesture =
-            await tester.startGesture(tester.getCenter(resizerFinder));
+        final gesture = await tester.startGesture(
+          tester.getCenter(resizerFinder),
+        );
         await gesture.moveBy(const Offset(overflowDelta, 0));
         await gesture.moveBy(const Offset(-safeDelta, 0));
         await gesture.up();
@@ -133,8 +123,9 @@ void main() {
           'dragging narrower past minWidth but before minWidth - dragClosedBuffer does not close the sidebar',
           (tester) async {
             const dragClosedBuffer = 20.0;
-            final view =
-                viewBuilder(sidebarBuilder(dragClosedBuffer: dragClosedBuffer));
+            final view = viewBuilder(
+              sidebarBuilder(dragClosedBuffer: dragClosedBuffer),
+            );
             await tester.pumpWidget(view);
             await tester.drag(
               resizerFinder,
@@ -150,27 +141,27 @@ void main() {
             await tester.pump(Duration.zero);
           },
         );
-        testWidgets(
-          'dragging narrower past minWidth closes the sidebar',
-          (tester) async {
-            final view = viewBuilder(sidebarBuilder());
-            await tester.pumpWidget(view);
-            await tester.drag(resizerFinder, const Offset(-overflowDelta, 0));
-            await tester.pump();
+        testWidgets('dragging narrower past minWidth closes the sidebar', (
+          tester,
+        ) async {
+          final view = viewBuilder(sidebarBuilder());
+          await tester.pumpWidget(view);
+          await tester.drag(resizerFinder, const Offset(-overflowDelta, 0));
+          await tester.pump();
 
-            expectSidebarClosed(tester);
+          expectSidebarClosed(tester);
 
-            await tester.pump(Duration.zero);
-          },
-        );
+          await tester.pump(Duration.zero);
+        });
 
         testWidgets(
           'dragging narrower past minWidth and then back reopens the sidebar',
           (tester) async {
             final view = viewBuilder(sidebarBuilder());
             await tester.pumpWidget(view);
-            final gesture =
-                await tester.startGesture(tester.getCenter(resizerFinder));
+            final gesture = await tester.startGesture(
+              tester.getCenter(resizerFinder),
+            );
             for (var moved = 0; moved < overflowDelta; moved += 10) {
               await gesture.moveBy(const Offset(-10, 0));
             }
@@ -178,9 +169,11 @@ void main() {
 
             expectSidebarClosed(tester);
 
-            for (var moved = 0;
-                moved < overflowDelta - safeDelta;
-                moved += 10) {
+            for (
+              var moved = 0;
+              moved < overflowDelta - safeDelta;
+              moved += 10
+            ) {
               await gesture.moveBy(const Offset(10, 0));
             }
             await gesture.up();
@@ -195,8 +188,9 @@ void main() {
         testWidgets('drag events past minWidth have no effect', (tester) async {
           final view = viewBuilder(sidebarBuilder());
           await tester.pumpWidget(view);
-          final gesture =
-              await tester.startGesture(tester.getCenter(resizerFinder));
+          final gesture = await tester.startGesture(
+            tester.getCenter(resizerFinder),
+          );
           await gesture.moveBy(const Offset(-overflowDelta, 0));
           await gesture.moveBy(const Offset(safeDelta, 0));
           await gesture.up();
@@ -226,8 +220,9 @@ void main() {
         testWidgets('drag events past minWidth have no effect', (tester) async {
           final view = viewBuilder(sidebarBuilder(dragClosed: false));
           await tester.pumpWidget(view);
-          final gesture =
-              await tester.startGesture(tester.getCenter(resizerFinder));
+          final gesture = await tester.startGesture(
+            tester.getCenter(resizerFinder),
+          );
           await gesture.moveBy(const Offset(-overflowDelta, 0));
           await gesture.moveBy(const Offset(safeDelta, 0));
           await gesture.up();
@@ -246,14 +241,13 @@ void main() {
           'dragging from startWidth has no effect until it passes snapToStartBuffer',
           (tester) async {
             final view = viewBuilder(
-              sidebarBuilder(
-                snapToStartBuffer: snapToStartBuffer,
-              ),
+              sidebarBuilder(snapToStartBuffer: snapToStartBuffer),
             );
             await tester.pumpWidget(view);
 
-            final gesture =
-                await tester.startGesture(tester.getCenter(resizerFinder));
+            final gesture = await tester.startGesture(
+              tester.getCenter(resizerFinder),
+            );
             await gesture.moveBy(const Offset(snapToStartBuffer, 0));
             await tester.pump();
 
@@ -275,9 +269,7 @@ void main() {
           'dragging from outside to within startWidth +/- snapToStartBuffer sets width to startWidth',
           (tester) async {
             final view = viewBuilder(
-              sidebarBuilder(
-                snapToStartBuffer: snapToStartBuffer,
-              ),
+              sidebarBuilder(snapToStartBuffer: snapToStartBuffer),
             );
             await tester.pumpWidget(view);
 

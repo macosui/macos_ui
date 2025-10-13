@@ -80,9 +80,9 @@ class _MacosColorWellState extends State<MacosColorWell> {
 
   Stream<Color>? _onColorChanged;
   Stream<Color> get onColorChanged {
-    _onColorChanged ??= _eventChannel
-        .receiveBroadcastStream()
-        .map((event) => Color(int.parse(event)));
+    _onColorChanged ??= _eventChannel.receiveBroadcastStream().map(
+      (event) => Color(int.parse(event)),
+    );
     return _onColorChanged!;
   }
 

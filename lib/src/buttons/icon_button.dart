@@ -25,8 +25,10 @@ class MacosIconButton extends StatefulWidget {
     ),
     this.padding,
     this.mouseCursor = SystemMouseCursors.basic,
-  }) : assert(pressedOpacity == null ||
-            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
+  }) : assert(
+         pressedOpacity == null ||
+             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0),
+       );
 
   /// The widget to use as the icon.
   ///
@@ -215,10 +217,7 @@ class MacosIconButtonState extends State<MacosIconButton>
     final Color? disabledColor;
 
     if (widget.disabledColor != null) {
-      disabledColor = MacosDynamicColor.resolve(
-        widget.disabledColor!,
-        context,
-      );
+      disabledColor = MacosDynamicColor.resolve(widget.disabledColor!, context);
     } else {
       disabledColor = theme.disabledColor;
     }
@@ -253,13 +252,13 @@ class MacosIconButtonState extends State<MacosIconButton>
                   borderRadius: widget.borderRadius != null
                       ? widget.borderRadius
                       : widget.shape == BoxShape.rectangle
-                          ? const BorderRadius.all(Radius.circular(7))
-                          : null,
+                      ? const BorderRadius.all(Radius.circular(7))
+                      : null,
                   color: !enabled
                       ? disabledColor
                       : _isHovered
-                          ? hoverColor
-                          : backgroundColor,
+                      ? hoverColor
+                      : backgroundColor,
                 ),
                 child: Padding(
                   padding: padding,
@@ -267,10 +266,7 @@ class MacosIconButtonState extends State<MacosIconButton>
                     alignment: widget.alignment,
                     widthFactor: 1.0,
                     heightFactor: 1.0,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: widget.icon,
-                    ),
+                    child: FittedBox(fit: BoxFit.scaleDown, child: widget.icon),
                   ),
                 ),
               ),

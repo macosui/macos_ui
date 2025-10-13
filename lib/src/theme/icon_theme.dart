@@ -12,11 +12,7 @@ class MacosIconTheme extends InheritedTheme {
   /// descendant widgets.
   ///
   /// Both [data] and [child] arguments must not be null.
-  const MacosIconTheme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
+  const MacosIconTheme({super.key, required this.data, required super.child});
 
   /// Creates an icon theme that controls the color, opacity, and size of
   /// descendant widgets, and merges in the current icon theme, if any.
@@ -61,23 +57,26 @@ class MacosIconTheme extends InheritedTheme {
   /// MacosIconThemeData theme = MacosIconTheme.of(context);
   /// ```
   static MacosIconThemeData of(BuildContext context) {
-    final MacosIconThemeData iconThemeData =
-        _getInheritedIconThemeData(context).resolve(context);
+    final MacosIconThemeData iconThemeData = _getInheritedIconThemeData(
+      context,
+    ).resolve(context);
     return iconThemeData.isConcrete
         ? iconThemeData
         : iconThemeData.copyWith(
             size:
                 iconThemeData.size ?? const MacosIconThemeData.fallback().size,
-            color: iconThemeData.color ??
+            color:
+                iconThemeData.color ??
                 const MacosIconThemeData.fallback().color,
-            opacity: iconThemeData.opacity ??
+            opacity:
+                iconThemeData.opacity ??
                 const MacosIconThemeData.fallback().opacity,
           );
   }
 
   static MacosIconThemeData _getInheritedIconThemeData(BuildContext context) {
-    final MacosIconTheme? iconTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosIconTheme>();
+    final MacosIconTheme? iconTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosIconTheme>();
     return iconTheme?.data ?? MacosTheme.of(context).iconTheme;
   }
 
@@ -109,27 +108,20 @@ class MacosIconThemeData with Diagnosticable {
   ///
   /// The opacity applies to both explicit and default icon colors. The value
   /// is clamped between 0.0 and 1.0.
-  const MacosIconThemeData({
-    this.color,
-    double? opacity,
-    this.size,
-  }) : _opacity = opacity;
+  const MacosIconThemeData({this.color, double? opacity, this.size})
+    : _opacity = opacity;
 
   /// Creates an icon theme with some reasonable default values.
   ///
   /// The [color] is blue, the [opacity] is 1.0, and the [size] is 24.0.
   const MacosIconThemeData.fallback()
-      : color = const Color.fromARGB(255, 0, 122, 255),
-        _opacity = 1.0,
-        size = 24.0;
+    : color = const Color.fromARGB(255, 0, 122, 255),
+      _opacity = 1.0,
+      size = 24.0;
 
   /// Creates a copy of this icon theme but with the given fields replaced with
   /// the new values.
-  MacosIconThemeData copyWith({
-    Color? color,
-    double? opacity,
-    double? size,
-  }) {
+  MacosIconThemeData copyWith({Color? color, double? opacity, double? size}) {
     return MacosIconThemeData(
       color: color ?? this.color,
       opacity: opacity ?? this.opacity,

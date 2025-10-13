@@ -39,8 +39,8 @@ class MacosScrollbarTheme extends InheritedWidget {
   /// ScrollbarThemeData theme = ScrollbarTheme.of(context);
   /// ```
   static MacosScrollbarThemeData of(BuildContext context) {
-    final MacosScrollbarTheme? scrollbarTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosScrollbarTheme>();
+    final MacosScrollbarTheme? scrollbarTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosScrollbarTheme>();
     return scrollbarTheme?.data ?? MacosTheme.of(context).scrollbarTheme;
   }
 
@@ -180,16 +180,20 @@ class MacosScrollbarThemeData with Diagnosticable {
     properties.add(
       DiagnosticsProperty<double?>('thickness', thickness, defaultValue: null),
     );
-    properties.add(DiagnosticsProperty<double?>(
-      'thicknessWhileHovering',
-      thicknessWhileHovering,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'thumbVisibility',
-      thumbVisibility,
-      defaultValue: null,
-    ));
+    properties.add(
+      DiagnosticsProperty<double?>(
+        'thicknessWhileHovering',
+        thicknessWhileHovering,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'thumbVisibility',
+        thumbVisibility,
+        defaultValue: null,
+      ),
+    );
     properties.add(
       DiagnosticsProperty<Radius>('radius', radius, defaultValue: null),
     );

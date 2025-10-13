@@ -26,11 +26,7 @@ class MacosTheme extends StatelessWidget {
   /// Creates a [MacosTheme] to change descendant macOS widgets' styling.
   ///
   /// The [data] and [child] parameters must not be null.
-  const MacosTheme({
-    super.key,
-    required this.data,
-    required this.child,
-  });
+  const MacosTheme({super.key, required this.data, required this.child});
 
   /// The [MacosThemeData] styling for this theme.
   final MacosThemeData data;
@@ -47,8 +43,8 @@ class MacosTheme extends StatelessWidget {
   /// Resolves all the colors defined in that [MacosThemeData] against the
   /// given [BuildContext] on a best-effort basis.
   static MacosThemeData of(BuildContext context) {
-    final _InheritedMacosTheme? inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    final _InheritedMacosTheme? inheritedTheme = context
+        .dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
     return (inheritedTheme?.theme.data ?? MacosThemeData.fallback());
   }
 
@@ -59,8 +55,8 @@ class MacosTheme extends StatelessWidget {
   /// Resolves all the colors defined in that [MacosThemeData] against the
   /// given [BuildContext] on a best-effort basis.
   static MacosThemeData? maybeOf(BuildContext context) {
-    final _InheritedMacosTheme? inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    final _InheritedMacosTheme? inheritedTheme = context
+        .dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
     return inheritedTheme?.theme.data;
   }
 
@@ -80,8 +76,8 @@ class MacosTheme extends StatelessWidget {
   /// * [MacosThemeData.brightness], the property takes precedence over
   ///   [MediaQueryData.platformBrightness] for descendant Cupertino widgets.
   static Brightness brightnessOf(BuildContext context) {
-    final _InheritedMacosTheme? inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    final _InheritedMacosTheme? inheritedTheme = context
+        .dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
     return inheritedTheme?.theme.data.brightness ??
         MediaQuery.of(context).platformBrightness;
   }
@@ -102,18 +98,15 @@ class MacosTheme extends StatelessWidget {
   /// * [brightnessOf], which throws if no valid [MacosTheme] or
   ///   [MediaQuery] exists, instead of returning null.
   static Brightness? maybeBrightnessOf(BuildContext context) {
-    final _InheritedMacosTheme? inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
+    final _InheritedMacosTheme? inheritedTheme = context
+        .dependOnInheritedWidgetOfExactType<_InheritedMacosTheme>();
     return inheritedTheme?.theme.data.brightness ??
         MediaQuery.maybeOf(context)?.platformBrightness;
   }
 
   @override
   Widget build(BuildContext context) {
-    return _InheritedMacosTheme(
-      theme: this,
-      child: child,
-    );
+    return _InheritedMacosTheme(theme: this, child: child);
   }
 
   @override
@@ -224,12 +217,14 @@ class MacosThemeData extends Equatable with Diagnosticable {
     canvasColor ??= isDark
         ? const Color.fromRGBO(40, 40, 40, 1.0)
         : const Color.fromRGBO(246, 246, 246, 1.0);
-    typography ??=
-        isDark ? MacosTypography.lightOpaque() : MacosTypography.darkOpaque();
+    typography ??= isDark
+        ? MacosTypography.lightOpaque()
+        : MacosTypography.darkOpaque();
     pushButtonTheme ??= PushButtonThemeData(
       color: primaryColor,
-      secondaryColor:
-          isDark ? const Color.fromRGBO(110, 109, 112, 1.0) : MacosColors.white,
+      secondaryColor: isDark
+          ? const Color.fromRGBO(110, 109, 112, 1.0)
+          : MacosColors.white,
       disabledColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(244, 245, 245, 1.0),
@@ -336,8 +331,9 @@ class MacosThemeData extends Equatable with Diagnosticable {
       monthViewCurrentDateColor: isDark
           ? const Color.fromRGBO(0, 88, 208, 1)
           : const Color.fromRGBO(0, 99, 255, 1),
-      monthViewSelectedDateColor:
-          isDark ? const MacosColor(0xff464646) : const MacosColor(0xffDCDCDC),
+      monthViewSelectedDateColor: isDark
+          ? const MacosColor(0xff464646)
+          : const MacosColor(0xffDCDCDC),
       monthViewHeaderDividerColor: isDark
           ? const Color.fromRGBO(255, 255, 255, 0.1)
           : const Color.fromRGBO(0, 0, 0, 0.1),
@@ -455,18 +451,14 @@ class MacosThemeData extends Equatable with Diagnosticable {
   factory MacosThemeData.light({
     AccentColor? accentColor,
     bool? isMainWindow,
-  }) =>
-      MacosThemeData(
-        brightness: Brightness.light,
-        accentColor: accentColor,
-        isMainWindow: isMainWindow,
-      );
+  }) => MacosThemeData(
+    brightness: Brightness.light,
+    accentColor: accentColor,
+    isMainWindow: isMainWindow,
+  );
 
   /// A default dark theme.
-  factory MacosThemeData.dark({
-    AccentColor? accentColor,
-    bool? isMainWindow,
-  }) =>
+  factory MacosThemeData.dark({AccentColor? accentColor, bool? isMainWindow}) =>
       MacosThemeData(
         brightness: Brightness.dark,
         accentColor: accentColor,
@@ -477,8 +469,8 @@ class MacosThemeData extends Equatable with Diagnosticable {
   ///
   /// This is used by [MacosTheme.of] when no theme has been specified.
   factory MacosThemeData.fallback() => MacosThemeData.light().copyWith(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      );
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
 
   /// The overall theme brightness.
   ///
@@ -555,14 +547,23 @@ class MacosThemeData extends Equatable with Diagnosticable {
       primaryColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       canvasColor: Color.lerp(a.primaryColor, b.primaryColor, t)!,
       typography: MacosTypography.lerp(a.typography, b.typography, t),
-      helpButtonTheme:
-          HelpButtonThemeData.lerp(a.helpButtonTheme, b.helpButtonTheme, t),
+      helpButtonTheme: HelpButtonThemeData.lerp(
+        a.helpButtonTheme,
+        b.helpButtonTheme,
+        t,
+      ),
       pushButtonTheme: a.pushButtonTheme,
-      tooltipTheme:
-          MacosTooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t),
+      tooltipTheme: MacosTooltipThemeData.lerp(
+        a.tooltipTheme,
+        b.tooltipTheme,
+        t,
+      ),
       visualDensity: VisualDensity.lerp(a.visualDensity, b.visualDensity, t),
-      scrollbarTheme:
-          MacosScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
+      scrollbarTheme: MacosScrollbarThemeData.lerp(
+        a.scrollbarTheme,
+        b.scrollbarTheme,
+        t,
+      ),
       iconButtonTheme: MacosIconButtonThemeData.lerp(
         a.iconButtonTheme,
         b.iconButtonTheme,
@@ -677,16 +678,21 @@ class MacosThemeData extends Equatable with Diagnosticable {
     properties.add(ColorProperty('primaryColor', primaryColor));
     properties.add(ColorProperty('canvasColor', canvasColor));
     properties.add(ColorProperty('dividerColor', dividerColor));
-    properties
-        .add(DiagnosticsProperty<MacosTypography>('typography', typography));
-    properties.add(DiagnosticsProperty<PushButtonThemeData>(
-      'pushButtonTheme',
-      pushButtonTheme,
-    ));
-    properties.add(DiagnosticsProperty<HelpButtonThemeData>(
-      'helpButtonTheme',
-      helpButtonTheme,
-    ));
+    properties.add(
+      DiagnosticsProperty<MacosTypography>('typography', typography),
+    );
+    properties.add(
+      DiagnosticsProperty<PushButtonThemeData>(
+        'pushButtonTheme',
+        pushButtonTheme,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<HelpButtonThemeData>(
+        'helpButtonTheme',
+        helpButtonTheme,
+      ),
+    );
     properties.add(
       DiagnosticsProperty<MacosTooltipThemeData>('tooltipTheme', tooltipTheme),
     );
@@ -733,41 +739,33 @@ class MacosThemeData extends Equatable with Diagnosticable {
       ),
     );
     properties.add(
-      DiagnosticsProperty<AccentColor>(
-        'accentColor',
-        accentColor,
-      ),
+      DiagnosticsProperty<AccentColor>('accentColor', accentColor),
     );
-    properties.add(
-      DiagnosticsProperty<bool>(
-        'isMainWindow',
-        isMainWindow,
-      ),
-    );
+    properties.add(DiagnosticsProperty<bool>('isMainWindow', isMainWindow));
   }
 
   @override
   List<Object?> get props => [
-        brightness,
-        primaryColor,
-        canvasColor,
-        typography,
-        pushButtonTheme,
-        dividerColor,
-        helpButtonTheme,
-        tooltipTheme,
-        visualDensity,
-        scrollbarTheme,
-        iconButtonTheme,
-        iconTheme,
-        popupButtonTheme,
-        pulldownButtonTheme,
-        datePickerTheme,
-        timePickerTheme,
-        searchFieldTheme,
-        accentColor,
-        isMainWindow,
-      ];
+    brightness,
+    primaryColor,
+    canvasColor,
+    typography,
+    pushButtonTheme,
+    dividerColor,
+    helpButtonTheme,
+    tooltipTheme,
+    visualDensity,
+    scrollbarTheme,
+    iconButtonTheme,
+    iconTheme,
+    popupButtonTheme,
+    pulldownButtonTheme,
+    datePickerTheme,
+    timePickerTheme,
+    searchFieldTheme,
+    accentColor,
+    isMainWindow,
+  ];
 }
 
 /// Brightness extensions

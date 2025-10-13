@@ -58,58 +58,61 @@ class _MacosSegmentedControlState extends State<MacosSegmentedControl> {
             spreadRadius: 0.5,
           ),
         ],
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(0.5),
         child: IntrinsicHeight(
           child: IntrinsicWidth(
             child: Row(
-              children: widget.tabs.map((t) {
-                final row = Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          widget.controller.index = widget.tabs.indexOf(t);
-                        });
-                      },
-                      child: t.copyWith(
-                        active:
-                            widget.controller.index == widget.tabs.indexOf(t),
-                      ),
-                    ),
-                  ],
-                );
-                bool showDividerColor = true;
-                final last = widget.tabs.indexOf(t) == widget.tabs.length - 1;
-                if ((widget.controller.index - 1 == widget.tabs.indexOf(t)) ||
-                    (widget.controller.index + 1 ==
-                        widget.tabs.indexOf(t) + 1) ||
-                    last) {
-                  showDividerColor = false;
-                }
+              children: widget.tabs
+                  .map((t) {
+                    final row = Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              widget.controller.index = widget.tabs.indexOf(t);
+                            });
+                          },
+                          child: t.copyWith(
+                            active:
+                                widget.controller.index ==
+                                widget.tabs.indexOf(t),
+                          ),
+                        ),
+                      ],
+                    );
+                    bool showDividerColor = true;
+                    final last =
+                        widget.tabs.indexOf(t) == widget.tabs.length - 1;
+                    if ((widget.controller.index - 1 ==
+                            widget.tabs.indexOf(t)) ||
+                        (widget.controller.index + 1 ==
+                            widget.tabs.indexOf(t) + 1) ||
+                        last) {
+                      showDividerColor = false;
+                    }
 
-                if (!last) {
-                  row.children.add(
-                    VerticalDivider(
-                      color: showDividerColor
-                          ? brightness.resolve(
-                              const Color(0xFFC9C9C9),
-                              const Color(0xFF26222C),
-                            )
-                          : MacosColors.transparent,
-                      width: 2.0,
-                      indent: 5.0,
-                      endIndent: 5.0,
-                    ),
-                  );
-                }
+                    if (!last) {
+                      row.children.add(
+                        VerticalDivider(
+                          color: showDividerColor
+                              ? brightness.resolve(
+                                  const Color(0xFFC9C9C9),
+                                  const Color(0xFF26222C),
+                                )
+                              : MacosColors.transparent,
+                          width: 2.0,
+                          indent: 5.0,
+                          endIndent: 5.0,
+                        ),
+                      );
+                    }
 
-                return row;
-              }).toList(growable: false),
+                    return row;
+                  })
+                  .toList(growable: false),
             ),
           ),
         ),

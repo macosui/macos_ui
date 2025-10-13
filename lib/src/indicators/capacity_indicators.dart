@@ -80,8 +80,9 @@ class CapacityIndicator extends StatelessWidget {
     super.debugFillProperties(properties);
     properties.add(DoubleProperty('value', value));
     properties.add(ObjectFlagProperty.has('onChanged', onChanged));
-    properties
-        .add(FlagProperty('discrete', value: discrete, ifFalse: 'continuous'));
+    properties.add(
+      FlagProperty('discrete', value: discrete, ifFalse: 'continuous'),
+    );
     properties.add(IntProperty('splits', splits));
     properties.add(ColorProperty('color', color));
     properties.add(ColorProperty('backgroundColor', backgroundColor));
@@ -101,61 +102,64 @@ class CapacityIndicator extends StatelessWidget {
       label: semanticLabel,
       value: value.toStringAsFixed(2),
       child: Container(
-        constraints:
-            const BoxConstraints(minWidth: _kCapacityIndicatorMinWidth),
-        child: LayoutBuilder(builder: (context, consts) {
-          double width = consts.maxWidth;
-          if (width.isInfinite) width = 100;
-          final splitWidth = width / splits;
-          if (discrete) {
-            final fillToIndex = (value / 100) * splits - 1;
-            return SizedBox(
-              width: width,
-              child: GestureDetector(
-                onPanStart: (event) =>
-                    _handleUpdate(event.localPosition, splitWidth),
-                onPanUpdate: (event) =>
-                    _handleUpdate(event.localPosition, splitWidth),
-                onPanDown: (event) =>
-                    _handleUpdate(event.localPosition, splitWidth),
-                child: Row(
-                  children: List.generate(splits, (index) {
-                    return Container(
-                      padding: EdgeInsets.only(
-                        right: index == splits - 1 ? 0 : 2.0,
-                      ),
-                      width: splitWidth,
-                      child: CapacityIndicatorCell(
-                        value: value > 0 && fillToIndex >= index ? 100 : 0,
-                        backgroundColor: backgroundColor,
-                        borderColor: borderColor,
-                        color: color,
-                      ),
-                    );
-                  }),
+        constraints: const BoxConstraints(
+          minWidth: _kCapacityIndicatorMinWidth,
+        ),
+        child: LayoutBuilder(
+          builder: (context, consts) {
+            double width = consts.maxWidth;
+            if (width.isInfinite) width = 100;
+            final splitWidth = width / splits;
+            if (discrete) {
+              final fillToIndex = (value / 100) * splits - 1;
+              return SizedBox(
+                width: width,
+                child: GestureDetector(
+                  onPanStart: (event) =>
+                      _handleUpdate(event.localPosition, splitWidth),
+                  onPanUpdate: (event) =>
+                      _handleUpdate(event.localPosition, splitWidth),
+                  onPanDown: (event) =>
+                      _handleUpdate(event.localPosition, splitWidth),
+                  child: Row(
+                    children: List.generate(splits, (index) {
+                      return Container(
+                        padding: EdgeInsets.only(
+                          right: index == splits - 1 ? 0 : 2.0,
+                        ),
+                        width: splitWidth,
+                        child: CapacityIndicatorCell(
+                          value: value > 0 && fillToIndex >= index ? 100 : 0,
+                          backgroundColor: backgroundColor,
+                          borderColor: borderColor,
+                          color: color,
+                        ),
+                      );
+                    }),
+                  ),
                 ),
-              ),
-            );
-          } else {
-            return SizedBox(
-              width: width,
-              child: GestureDetector(
-                onPanStart: (event) =>
-                    _handleUpdate(event.localPosition, splitWidth),
-                onPanUpdate: (event) =>
-                    _handleUpdate(event.localPosition, splitWidth),
-                onPanDown: (event) =>
-                    _handleUpdate(event.localPosition, splitWidth),
-                child: CapacityIndicatorCell(
-                  value: value,
-                  backgroundColor: backgroundColor,
-                  borderColor: borderColor,
-                  color: color,
+              );
+            } else {
+              return SizedBox(
+                width: width,
+                child: GestureDetector(
+                  onPanStart: (event) =>
+                      _handleUpdate(event.localPosition, splitWidth),
+                  onPanUpdate: (event) =>
+                      _handleUpdate(event.localPosition, splitWidth),
+                  onPanDown: (event) =>
+                      _handleUpdate(event.localPosition, splitWidth),
+                  child: CapacityIndicatorCell(
+                    value: value,
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    color: color,
+                  ),
                 ),
-              ),
-            );
-          }
-        }),
+              );
+            }
+          },
+        ),
       ),
     );
   }

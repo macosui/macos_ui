@@ -107,18 +107,12 @@ class MacosSwitch extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(FlagProperty(
-      'checked',
-      value: value,
-      ifFalse: 'unchecked',
-    ));
+    properties.add(FlagProperty('checked', value: value, ifFalse: 'unchecked'));
     properties.add(EnumProperty('size', size));
     properties.add(EnumProperty('dragStartBehavior', dragStartBehavior));
-    properties.add(FlagProperty(
-      'enabled',
-      value: onChanged == null,
-      ifFalse: 'disabled',
-    ));
+    properties.add(
+      FlagProperty('enabled', value: onChanged == null, ifFalse: 'disabled'),
+    );
     properties.add(ColorProperty('activeColor', activeColor));
     properties.add(ColorProperty('trackColor', trackColor));
     properties.add(ColorProperty('knobColor', knobColor));
@@ -279,8 +273,10 @@ class _MacosSwitchState extends State<MacosSwitch>
   Widget build(BuildContext context) {
     assert(debugCheckHasMacosTheme(context));
     final MacosThemeData theme = MacosTheme.of(context);
-    MacosColor borderColor =
-        MacosDynamicColor.resolve(_kDefaultBorderColor, context).toMacosColor();
+    MacosColor borderColor = MacosDynamicColor.resolve(
+      _kDefaultBorderColor,
+      context,
+    ).toMacosColor();
     final resolvedActiveColor = MacosDynamicColor.resolve(
       widget.activeColor ?? theme.primaryColor,
       context,
@@ -291,9 +287,11 @@ class _MacosSwitchState extends State<MacosSwitch>
       (resolvedActiveColor.b * 255).toInt(),
       resolvedActiveColor.a,
     );
-    MacosColor trackColor = widget.trackColor ??
+    MacosColor trackColor =
+        widget.trackColor ??
         MacosDynamicColor.resolve(_kDefaultTrackColor, context).toMacosColor();
-    MacosColor knobColor = widget.knobColor ??
+    MacosColor knobColor =
+        widget.knobColor ??
         MacosDynamicColor.resolve(_kDefaultKnobColor, context).toMacosColor();
 
     // Shot in the dark to try and get the border color correct for each
@@ -436,21 +434,21 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
     required ValueChanged<bool>? onChanged,
     required TextDirection textDirection,
     required _MacosSwitchState state,
-  })  : _value = value,
-        _size = size,
-        _activeColor = activeColor,
-        _trackColor = trackColor,
-        _knobPainter = MacosSwitchKnobPainter(color: knobColor),
-        _borderColor = borderColor,
-        _onChanged = onChanged,
-        _textDirection = textDirection,
-        _state = state,
-        super(
-          additionalConstraints: BoxConstraints.tightFor(
-            width: size.trackSize.width,
-            height: size.trackSize.height,
-          ),
-        ) {
+  }) : _value = value,
+       _size = size,
+       _activeColor = activeColor,
+       _trackColor = trackColor,
+       _knobPainter = MacosSwitchKnobPainter(color: knobColor),
+       _borderColor = borderColor,
+       _onChanged = onChanged,
+       _textDirection = textDirection,
+       _state = state,
+       super(
+         additionalConstraints: BoxConstraints.tightFor(
+           width: size.trackSize.width,
+           height: size.trackSize.height,
+         ),
+       ) {
     state.position.addListener(markNeedsPaint);
     state._reaction.addListener(markNeedsPaint);
   }
@@ -652,21 +650,25 @@ class _RenderMacosSwitch extends RenderConstrainedBox {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
-    description.add(FlagProperty(
-      'value',
-      value: value,
-      ifTrue: 'checked',
-      ifFalse: 'unchecked',
-      showName: true,
-    ));
-    description.add(FlagProperty(
-      'isInteractive',
-      value: isInteractive,
-      ifTrue: 'enabled',
-      ifFalse: 'disabled',
-      showName: true,
-      defaultValue: true,
-    ));
+    description.add(
+      FlagProperty(
+        'value',
+        value: value,
+        ifTrue: 'checked',
+        ifFalse: 'unchecked',
+        showName: true,
+      ),
+    );
+    description.add(
+      FlagProperty(
+        'isInteractive',
+        value: isInteractive,
+        ifTrue: 'enabled',
+        ifFalse: 'disabled',
+        showName: true,
+        defaultValue: true,
+      ),
+    );
   }
 }
 

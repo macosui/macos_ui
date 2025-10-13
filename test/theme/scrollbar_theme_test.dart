@@ -45,10 +45,7 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [],
-    );
+    expect(description, []);
   });
 }
 

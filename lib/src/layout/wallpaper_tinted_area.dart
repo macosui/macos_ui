@@ -82,11 +82,10 @@ class _WallpaperTintedAreaLayoutBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (GlobalWallpaperTintingSettings
-        .data.isWallpaperTintingDisabledByWindow) {
+        .data
+        .isWallpaperTintingDisabledByWindow) {
       return Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-        ),
+        decoration: BoxDecoration(color: backgroundColor),
         child: child,
       );
     }
@@ -148,9 +147,7 @@ class _WallpaperTintedAreaTweenAnimationBuilder extends StatelessWidget {
           child: child,
         );
       },
-      child: RepaintBoundary(
-        child: child,
-      ),
+      child: RepaintBoundary(child: child),
     );
   }
 }

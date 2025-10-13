@@ -3,10 +3,7 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:macos_ui/src/library.dart';
 
 const _kDialogBorderRadius = BorderRadius.all(Radius.circular(12.0));
-const _kDefaultDialogConstraints = BoxConstraints(
-  minWidth: 260,
-  maxWidth: 260,
-);
+const _kDefaultDialogConstraints = BoxConstraints(minWidth: 260, maxWidth: 260);
 
 /// A macOS-style AlertDialog.
 ///
@@ -140,23 +137,15 @@ class MacosAlertDialog extends StatelessWidget {
         CupertinoColors.systemGrey6.color,
         MacosColors.controlBackgroundColor.darkColor,
       ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: _kDialogBorderRadius,
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: _kDialogBorderRadius),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: innerBorderColor,
-          ),
+          border: Border.all(width: 2, color: innerBorderColor),
           borderRadius: _kDialogBorderRadius,
         ),
         foregroundDecoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: outerBorderColor,
-          ),
+          border: Border.all(width: 1, color: outerBorderColor),
           borderRadius: _kDialogBorderRadius,
         ),
         child: ConstrainedBox(
@@ -166,10 +155,7 @@ class MacosAlertDialog extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 64,
-                  maxWidth: 64,
-                ),
+                constraints: const BoxConstraints(maxHeight: 64, maxWidth: 64),
                 child: appIcon,
               ),
               const SizedBox(height: 16),
@@ -186,11 +172,7 @@ class MacosAlertDialog extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               if (secondaryButton == null) ...[
-                Row(
-                  children: [
-                    Expanded(child: primaryButton),
-                  ],
-                ),
+                Row(children: [Expanded(child: primaryButton)]),
               ] else ...[
                 if (horizontalActions!) ...[
                   Row(
@@ -199,29 +181,17 @@ class MacosAlertDialog extends StatelessWidget {
                         Expanded(child: secondaryButton!),
                         const SizedBox(width: 8.0),
                       ],
-                      Expanded(
-                        child: primaryButton,
-                      ),
+                      Expanded(child: primaryButton),
                     ],
                   ),
                 ] else ...[
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(child: primaryButton),
-                        ],
-                      ),
+                      Row(children: [Expanded(child: primaryButton)]),
                       const SizedBox(height: 8.0),
                       if (secondaryButton != null) ...[
-                        Row(
-                          children: [
-                            Expanded(
-                              child: secondaryButton!,
-                            ),
-                          ],
-                        ),
+                        Row(children: [Expanded(child: secondaryButton!)]),
                       ],
                     ],
                   ),
@@ -258,8 +228,12 @@ Future<T?> showMacosAlertDialog<T>({
     context,
   );
 
-  barrierColor = Color.fromRGBO((barrierColor.r * 255).floor(),
-      (barrierColor.g * 255).floor(), (barrierColor.b * 255).floor(), 0.6);
+  barrierColor = Color.fromRGBO(
+    (barrierColor.r * 255).floor(),
+    (barrierColor.g * 255).floor(),
+    (barrierColor.b * 255).floor(),
+    0.6,
+  );
 
   return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
     _MacosAlertDialogRoute<T>(
@@ -269,7 +243,8 @@ Future<T?> showMacosAlertDialog<T>({
       },
       barrierDismissible: barrierDismissible,
       barrierColor: barrierColor,
-      barrierLabel: barrierLabel ??
+      barrierLabel:
+          barrierLabel ??
           MaterialLocalizations.of(context).modalBarrierDismissLabel,
     ),
   );
@@ -282,10 +257,10 @@ class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
     Color? barrierColor = const Color(0x80000000),
     String? barrierLabel,
     super.settings,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel,
-        _barrierColor = barrierColor;
+  }) : _pageBuilder = pageBuilder,
+       _barrierDismissible = barrierDismissible,
+       _barrierLabel = barrierLabel,
+       _barrierColor = barrierColor;
 
   final RoutePageBuilder _pageBuilder;
 
@@ -332,10 +307,7 @@ class _MacosAlertDialogRoute<T> extends PopupRoute<T> {
   ) {
     if (animation.status == AnimationStatus.reverse) {
       return FadeTransition(
-        opacity: CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeOutSine,
-        ),
+        opacity: CurvedAnimation(parent: animation, curve: Curves.easeOutSine),
         child: child,
       );
     }
@@ -361,11 +333,7 @@ class _SubtleBounceCurve extends Curve {
   @override
   double transform(double t) {
     final simulation = SpringSimulation(
-      const SpringDescription(
-        damping: 14,
-        mass: 1.4,
-        stiffness: 180,
-      ),
+      const SpringDescription(damping: 14, mass: 1.4, stiffness: 180),
       0.0,
       1.0,
       0.1,

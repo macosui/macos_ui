@@ -21,28 +21,24 @@ void main() {
 
   testWidgets('macos theme MacosThemeData equality 3', (tester) async {
     final macosThemeData1 = MacosThemeData(
-        helpButtonTheme: const HelpButtonThemeData(
-      color: MacosColors.appleRed,
-    ));
+      helpButtonTheme: const HelpButtonThemeData(color: MacosColors.appleRed),
+    );
 
     final macosThemeData2 = MacosThemeData(
-        helpButtonTheme: const HelpButtonThemeData(
-      color: MacosColors.appleGreen,
-    ));
+      helpButtonTheme: const HelpButtonThemeData(color: MacosColors.appleGreen),
+    );
 
     expect(macosThemeData1, isNot(equals(macosThemeData2)));
   });
 
   testWidgets('macos theme MacosThemeData equality 4', (tester) async {
     final macosThemeData1 = MacosThemeData(
-        helpButtonTheme: const HelpButtonThemeData(
-      color: MacosColors.appleRed,
-    ));
+      helpButtonTheme: const HelpButtonThemeData(color: MacosColors.appleRed),
+    );
 
     final macosThemeData2 = MacosThemeData(
-        helpButtonTheme: const HelpButtonThemeData(
-      color: MacosColors.appleRed,
-    ));
+      helpButtonTheme: const HelpButtonThemeData(color: MacosColors.appleRed),
+    );
 
     expect(macosThemeData1, equals(macosThemeData2));
   });

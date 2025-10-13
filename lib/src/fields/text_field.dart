@@ -99,8 +99,8 @@ class _TextFieldSelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
   _TextFieldSelectionGestureDetectorBuilder({
     required _MacosTextFieldState state,
-  })  : _state = state,
-        super(delegate: state);
+  }) : _state = state,
+       super(delegate: state);
 
   final _MacosTextFieldState _state;
 
@@ -111,10 +111,12 @@ class _TextFieldSelectionGestureDetectorBuilder
     // this handler. If the clear button widget recognizes the up event,
     // then do not handle it.
     if (_state._clearGlobalKey.currentContext != null) {
-      final RenderBox renderBox = _state._clearGlobalKey.currentContext!
-          .findRenderObject()! as RenderBox;
-      final Offset localOffset =
-          renderBox.globalToLocal(details.globalPosition);
+      final RenderBox renderBox =
+          _state._clearGlobalKey.currentContext!.findRenderObject()!
+              as RenderBox;
+      final Offset localOffset = renderBox.globalToLocal(
+        details.globalPosition,
+      );
       if (renderBox.hitTest(BoxHitTestResult(), position: localOffset)) {
         return;
       }
@@ -293,31 +295,37 @@ class MacosTextField extends StatefulWidget {
     this.scrollPhysics,
     this.autofillHints,
     this.restorationId,
-  })  : smartDashesType = smartDashesType ??
-            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-        smartQuotesType = smartQuotesType ??
-            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(
-          !expands || (maxLines == null && minLines == null),
-          'minLines and maxLines must be null when expands is true.',
-        ),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
-        assert(maxLength == null || maxLength > 0),
-        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
-        assert(
-            !identical(textInputAction, TextInputAction.newline) ||
-                maxLines == 1 ||
-                !identical(keyboardType, TextInputType.text),
-            'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
-        keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
+  }) : smartDashesType =
+           smartDashesType ??
+           (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+       smartQuotesType =
+           smartQuotesType ??
+           (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(
+         !expands || (maxLines == null && minLines == null),
+         'minLines and maxLines must be null when expands is true.',
+       ),
+       assert(
+         !obscureText || maxLines == 1,
+         'Obscured fields cannot be multiline.',
+       ),
+       assert(maxLength == null || maxLength > 0),
+       // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+       assert(
+         !identical(textInputAction, TextInputAction.newline) ||
+             maxLines == 1 ||
+             !identical(keyboardType, TextInputType.text),
+         'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+       ),
+       keyboardType =
+           keyboardType ??
+           (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
 
   /// Creates a borderless macOS-style text field.
   ///
@@ -412,31 +420,37 @@ class MacosTextField extends StatefulWidget {
     this.autofillHints,
     this.restorationId,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
-  })  : smartDashesType = smartDashesType ??
-            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-        smartQuotesType = smartQuotesType ??
-            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(
-          !expands || (maxLines == null && minLines == null),
-          'minLines and maxLines must be null when expands is true.',
-        ),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
-        assert(maxLength == null || maxLength > 0),
-        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
-        assert(
-            !identical(textInputAction, TextInputAction.newline) ||
-                maxLines == 1 ||
-                !identical(keyboardType, TextInputType.text),
-            'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
-        keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
+  }) : smartDashesType =
+           smartDashesType ??
+           (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+       smartQuotesType =
+           smartQuotesType ??
+           (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(
+         !expands || (maxLines == null && minLines == null),
+         'minLines and maxLines must be null when expands is true.',
+       ),
+       assert(
+         !obscureText || maxLines == 1,
+         'Obscured fields cannot be multiline.',
+       ),
+       assert(maxLength == null || maxLength > 0),
+       // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+       assert(
+         !identical(textInputAction, TextInputAction.newline) ||
+             maxLines == 1 ||
+             !identical(keyboardType, TextInputType.text),
+         'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+       ),
+       keyboardType =
+           keyboardType ??
+           (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
 
   static Widget _defaultContextMenuBuilder(
     BuildContext context,
@@ -724,156 +738,184 @@ class MacosTextField extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<TextEditingController>(
-      'controller',
-      controller,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<FocusNode>(
-      'focusNode',
-      focusNode,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<BoxDecoration>(
-      'decoration',
-      decoration,
-      defaultValue: kDefaultRoundedBorderDecoration,
-    ));
+    properties.add(
+      DiagnosticsProperty<TextEditingController>(
+        'controller',
+        controller,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<FocusNode>(
+        'focusNode',
+        focusNode,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<BoxDecoration>(
+        'decoration',
+        decoration,
+        defaultValue: kDefaultRoundedBorderDecoration,
+      ),
+    );
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
     properties.add(
-      DiagnosticsProperty<TextStyle>(
-        'placeholderStyle',
-        placeholderStyle,
+      DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle),
+    );
+    properties.add(
+      EnumProperty<OverlayVisibilityMode>(
+        'prefix',
+        prefix == null ? null : prefixMode,
       ),
     );
-    properties.add(EnumProperty<OverlayVisibilityMode>(
-      'prefix',
-      prefix == null ? null : prefixMode,
-    ));
-    properties.add(EnumProperty<OverlayVisibilityMode>(
-      'suffix',
-      suffix == null ? null : suffixMode,
-    ));
-    properties.add(EnumProperty<OverlayVisibilityMode>(
-      'clearButtonMode',
-      clearButtonMode,
-    ));
-    properties.add(DiagnosticsProperty<TextInputType>(
-      'keyboardType',
-      keyboardType,
-      defaultValue: TextInputType.text,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'style',
-      style,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'autofocus',
-      autofocus,
-      defaultValue: false,
-    ));
-    properties.add(DiagnosticsProperty<String>(
-      'obscuringCharacter',
-      obscuringCharacter,
-      defaultValue: '•',
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'obscureText',
-      obscureText,
-      defaultValue: false,
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'autocorrect',
-      autocorrect,
-      defaultValue: true,
-    ));
-    properties.add(EnumProperty<SmartDashesType>(
-      'smartDashesType',
-      smartDashesType,
-      defaultValue:
-          obscureText ? SmartDashesType.disabled : SmartDashesType.enabled,
-    ));
-    properties.add(EnumProperty<SmartQuotesType>(
-      'smartQuotesType',
-      smartQuotesType,
-      defaultValue:
-          obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled,
-    ));
-    properties.add(DiagnosticsProperty<bool>(
-      'enableSuggestions',
-      enableSuggestions,
-      defaultValue: true,
-    ));
+    properties.add(
+      EnumProperty<OverlayVisibilityMode>(
+        'suffix',
+        suffix == null ? null : suffixMode,
+      ),
+    );
+    properties.add(
+      EnumProperty<OverlayVisibilityMode>('clearButtonMode', clearButtonMode),
+    );
+    properties.add(
+      DiagnosticsProperty<TextInputType>(
+        'keyboardType',
+        keyboardType,
+        defaultValue: TextInputType.text,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>('style', style, defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false),
+    );
+    properties.add(
+      DiagnosticsProperty<String>(
+        'obscuringCharacter',
+        obscuringCharacter,
+        defaultValue: '•',
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'obscureText',
+        obscureText,
+        defaultValue: false,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>('autocorrect', autocorrect, defaultValue: true),
+    );
+    properties.add(
+      EnumProperty<SmartDashesType>(
+        'smartDashesType',
+        smartDashesType,
+        defaultValue: obscureText
+            ? SmartDashesType.disabled
+            : SmartDashesType.enabled,
+      ),
+    );
+    properties.add(
+      EnumProperty<SmartQuotesType>(
+        'smartQuotesType',
+        smartQuotesType,
+        defaultValue: obscureText
+            ? SmartQuotesType.disabled
+            : SmartQuotesType.enabled,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'enableSuggestions',
+        enableSuggestions,
+        defaultValue: true,
+      ),
+    );
     properties.add(IntProperty('maxLines', maxLines, defaultValue: 1));
     properties.add(IntProperty('minLines', minLines, defaultValue: null));
-    properties.add(DiagnosticsProperty<bool>(
-      'expands',
-      expands,
-      defaultValue: false,
-    ));
+    properties.add(
+      DiagnosticsProperty<bool>('expands', expands, defaultValue: false),
+    );
     properties.add(IntProperty('maxLength', maxLength, defaultValue: null));
-    properties.add(EnumProperty<MaxLengthEnforcement>(
-      'maxLengthEnforcement',
-      maxLengthEnforcement,
-      defaultValue: null,
-    ));
-    properties.add(DoubleProperty(
-      'cursorWidth',
-      cursorWidth,
-      defaultValue: 2.0,
-    ));
-    properties.add(DoubleProperty(
-      'cursorHeight',
-      cursorHeight,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<Radius>(
-      'cursorRadius',
-      cursorRadius,
-      defaultValue: null,
-    ));
-    properties.add(createCupertinoColorProperty(
-      'cursorColor',
-      cursorColor,
-      defaultValue: null,
-    ));
-    properties.add(FlagProperty(
-      'selectionEnabled',
-      value: selectionEnabled,
-      defaultValue: true,
-      ifFalse: 'selection disabled',
-    ));
-    properties.add(DiagnosticsProperty<TextSelectionControls>(
-      'selectionControls',
-      selectionControls,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<ScrollController>(
-      'scrollController',
-      scrollController,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<ScrollPhysics>(
-      'scrollPhysics',
-      scrollPhysics,
-      defaultValue: null,
-    ));
-    properties.add(EnumProperty<TextAlign>(
-      'textAlign',
-      textAlign,
-      defaultValue: TextAlign.start,
-    ));
-    properties.add(DiagnosticsProperty<TextAlignVertical>(
-      'textAlignVertical',
-      textAlignVertical,
-      defaultValue: null,
-    ));
-    properties.add(DiagnosticsProperty<EditableTextContextMenuBuilder>(
-      'contextMenuBuilder',
-      contextMenuBuilder,
-    ));
+    properties.add(
+      EnumProperty<MaxLengthEnforcement>(
+        'maxLengthEnforcement',
+        maxLengthEnforcement,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DoubleProperty('cursorWidth', cursorWidth, defaultValue: 2.0),
+    );
+    properties.add(
+      DoubleProperty('cursorHeight', cursorHeight, defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<Radius>(
+        'cursorRadius',
+        cursorRadius,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      createCupertinoColorProperty(
+        'cursorColor',
+        cursorColor,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'selectionEnabled',
+        value: selectionEnabled,
+        defaultValue: true,
+        ifFalse: 'selection disabled',
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextSelectionControls>(
+        'selectionControls',
+        selectionControls,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<ScrollController>(
+        'scrollController',
+        scrollController,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<ScrollPhysics>(
+        'scrollPhysics',
+        scrollPhysics,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      EnumProperty<TextAlign>(
+        'textAlign',
+        textAlign,
+        defaultValue: TextAlign.start,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextAlignVertical>(
+        'textAlignVertical',
+        textAlignVertical,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<EditableTextContextMenuBuilder>(
+        'contextMenuBuilder',
+        contextMenuBuilder,
+      ),
+    );
   }
 }
 
@@ -897,7 +939,7 @@ class _MacosTextFieldState extends State<MacosTextField>
   bool _showSelectionHandles = false;
 
   late _TextFieldSelectionGestureDetectorBuilder
-      _selectionGestureDetectorBuilder;
+  _selectionGestureDetectorBuilder;
 
   // API for TextSelectionGestureDetectorBuilderDelegate.
   @override
@@ -1070,10 +1112,7 @@ class _MacosTextFieldState extends State<MacosTextField>
                   right: 6.0,
                 ),
                 child: MacosIconTheme(
-                  data: MacosIconThemeData(
-                    color: iconsColor,
-                    size: 16.0,
-                  ),
+                  data: MacosIconThemeData(color: iconsColor, size: 16.0),
                   child: widget.prefix!,
                 ),
               ),
@@ -1244,265 +1283,277 @@ class _MacosTextFieldState extends State<MacosTextField>
     assert(debugCheckHasDirectionality(context));
     assert(debugCheckHasMacosTheme(context));
     return StreamBuilder(
-        stream: AccentColorListener.instance.onChanged,
-        builder: (context, _) {
-          final TextEditingController controller = _effectiveController;
+      stream: AccentColorListener.instance.onChanged,
+      builder: (context, _) {
+        final TextEditingController controller = _effectiveController;
 
-          TextSelectionControls? textSelectionControls =
-              widget.selectionControls;
-          switch (defaultTargetPlatform) {
-            case TargetPlatform.iOS:
-            case TargetPlatform.android:
-            case TargetPlatform.fuchsia:
-              textSelectionControls ??= cupertinoTextSelectionControls;
-              break;
+        TextSelectionControls? textSelectionControls = widget.selectionControls;
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.iOS:
+          case TargetPlatform.android:
+          case TargetPlatform.fuchsia:
+            textSelectionControls ??= cupertinoTextSelectionControls;
+            break;
 
-            case TargetPlatform.linux:
-            case TargetPlatform.windows:
-            case TargetPlatform.macOS:
-              textSelectionControls ??= cupertinoDesktopTextSelectionControls;
-              break;
-          }
+          case TargetPlatform.linux:
+          case TargetPlatform.windows:
+          case TargetPlatform.macOS:
+            textSelectionControls ??= cupertinoDesktopTextSelectionControls;
+            break;
+        }
 
-          final bool enabled = widget.enabled ?? true;
-          final Offset cursorOffset = Offset(
-            _iOSHorizontalCursorOffsetPixels /
-                MediaQuery.of(context).devicePixelRatio,
-            0,
-          );
-          final List<TextInputFormatter> formatters = <TextInputFormatter>[
-            ...?widget.inputFormatters,
-            if (widget.maxLength != null)
-              LengthLimitingTextInputFormatter(
-                widget.maxLength,
-                maxLengthEnforcement: _effectiveMaxLengthEnforcement,
-              ),
-          ];
-          final MacosThemeData themeData = MacosTheme.of(context);
-
-          final TextStyle? resolvedStyle = widget.style?.copyWith(
-            color: MacosDynamicColor.maybeResolve(widget.style?.color, context),
-            backgroundColor: MacosDynamicColor.maybeResolve(
-              widget.style?.backgroundColor,
-              context,
+        final bool enabled = widget.enabled ?? true;
+        final Offset cursorOffset = Offset(
+          _iOSHorizontalCursorOffsetPixels /
+              MediaQuery.of(context).devicePixelRatio,
+          0,
+        );
+        final List<TextInputFormatter> formatters = <TextInputFormatter>[
+          ...?widget.inputFormatters,
+          if (widget.maxLength != null)
+            LengthLimitingTextInputFormatter(
+              widget.maxLength,
+              maxLengthEnforcement: _effectiveMaxLengthEnforcement,
             ),
-          );
+        ];
+        final MacosThemeData themeData = MacosTheme.of(context);
 
-          final textStyle = themeData.typography.body.merge(resolvedStyle);
+        final TextStyle? resolvedStyle = widget.style?.copyWith(
+          color: MacosDynamicColor.maybeResolve(widget.style?.color, context),
+          backgroundColor: MacosDynamicColor.maybeResolve(
+            widget.style?.backgroundColor,
+            context,
+          ),
+        );
 
-          final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
-            color: MacosDynamicColor.maybeResolve(
-              widget.placeholderStyle?.color,
-              context,
-            ),
-            backgroundColor: MacosDynamicColor.maybeResolve(
-              widget.placeholderStyle?.backgroundColor,
-              context,
-            ),
-          );
+        final textStyle = themeData.typography.body.merge(resolvedStyle);
 
-          final placeholderStyle = textStyle.merge(enabled
+        final resolvedPlaceholderStyle = widget.placeholderStyle?.copyWith(
+          color: MacosDynamicColor.maybeResolve(
+            widget.placeholderStyle?.color,
+            context,
+          ),
+          backgroundColor: MacosDynamicColor.maybeResolve(
+            widget.placeholderStyle?.backgroundColor,
+            context,
+          ),
+        );
+
+        final placeholderStyle = textStyle.merge(
+          enabled
               ? resolvedPlaceholderStyle
               : resolvedPlaceholderStyle!.copyWith(
-                  color:
-                      resolvedPlaceholderStyle.color!.withValues(alpha: 0.2)));
+                  color: resolvedPlaceholderStyle.color!.withValues(alpha: 0.2),
+                ),
+        );
 
-          final Brightness keyboardAppearance =
-              widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
-          Color? cursorColor;
-          cursorColor =
-              MacosDynamicColor.maybeResolve(widget.cursorColor, context);
-          cursorColor ??= _resolveAccentColor(
-              context, AccentColorListener.instance.currentAccentColor);
-          cursorColor ??= textStyle.color; // next best is "match text"
-          cursorColor ??= // last resort - fall back to theme forground color
-              themeData.brightness.isDark
-                  ? MacosColors.white
-                  : MacosColors.black;
-          final Color disabledColor =
-              MacosDynamicColor.resolve(_kDisabledBackground, context);
+        final Brightness keyboardAppearance =
+            widget.keyboardAppearance ?? MacosTheme.brightnessOf(context);
+        Color? cursorColor;
+        cursorColor = MacosDynamicColor.maybeResolve(
+          widget.cursorColor,
+          context,
+        );
+        cursorColor ??= _resolveAccentColor(
+          context,
+          AccentColorListener.instance.currentAccentColor,
+        );
+        cursorColor ??= textStyle.color; // next best is "match text"
+        cursorColor ??= // last resort - fall back to theme forground color
+        themeData.brightness.isDark
+            ? MacosColors.white
+            : MacosColors.black;
+        final Color disabledColor = MacosDynamicColor.resolve(
+          _kDisabledBackground,
+          context,
+        );
 
-          Color? decorationColor =
-              MacosDynamicColor.maybeResolve(widget.decoration?.color, context);
-          if (decorationColor.runtimeType == ResolvedMacosDynamicColor) {
-            if ((decorationColor as ResolvedMacosDynamicColor).color ==
-                    const Color(0xffffffff) ||
-                (decorationColor).darkColor == const Color(0xff000000)) {
-              decorationColor = themeData.brightness.isDark
-                  ? const Color.fromRGBO(30, 30, 30, 1)
-                  : MacosColors.white;
-            }
+        Color? decorationColor = MacosDynamicColor.maybeResolve(
+          widget.decoration?.color,
+          context,
+        );
+        if (decorationColor.runtimeType == ResolvedMacosDynamicColor) {
+          if ((decorationColor as ResolvedMacosDynamicColor).color ==
+                  const Color(0xffffffff) ||
+              (decorationColor).darkColor == const Color(0xff000000)) {
+            decorationColor = themeData.brightness.isDark
+                ? const Color.fromRGBO(30, 30, 30, 1)
+                : MacosColors.white;
           }
+        }
 
-          final BoxBorder? border = widget.decoration?.border;
-          Border? resolvedBorder = border as Border?;
-          if (border is Border) {
-            BorderSide resolveBorderSide(BorderSide side) {
-              return side == BorderSide.none
-                  ? side
-                  : side.copyWith(
-                      color: MacosDynamicColor.resolve(side.color, context),
-                    );
-            }
-
-            resolvedBorder = border.runtimeType != Border
-                ? border
-                : Border(
-                    top: resolveBorderSide(border.top),
-                    left: resolveBorderSide(border.left),
-                    bottom: resolveBorderSide(border.bottom),
-                    right: resolveBorderSide(border.right),
+        final BoxBorder? border = widget.decoration?.border;
+        Border? resolvedBorder = border as Border?;
+        if (border is Border) {
+          BorderSide resolveBorderSide(BorderSide side) {
+            return side == BorderSide.none
+                ? side
+                : side.copyWith(
+                    color: MacosDynamicColor.resolve(side.color, context),
                   );
           }
 
-          final BoxDecoration? effectiveDecoration =
-              widget.decoration?.copyWith(
-            border: resolvedBorder,
-            color: enabled ? decorationColor : disabledColor,
-          );
+          resolvedBorder = border.runtimeType != Border
+              ? border
+              : Border(
+                  top: resolveBorderSide(border.top),
+                  left: resolveBorderSide(border.left),
+                  bottom: resolveBorderSide(border.bottom),
+                  right: resolveBorderSide(border.right),
+                );
+        }
 
-          final BoxDecoration? focusedDecoration =
-              widget.focusedDecoration?.copyWith(
-            border: Border.all(
-              width: 3.0,
-              color: themeData.brightness.isDark
-                  ? const Color.fromRGBO(26, 169, 255, 0.3)
-                  : const Color.fromRGBO(0, 103, 244, 0.25),
-            ),
-          );
+        final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
+          border: resolvedBorder,
+          color: enabled ? decorationColor : disabledColor,
+        );
 
-          final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
-            border: () {
-              if (focusedDecoration.border is Border) {
-                BorderSide borderSide(BorderSide fromSide) {
-                  return BorderSide(
-                    color: fromSide.color.withValues(alpha: 0.0),
-                    style: fromSide.style,
-                    width: fromSide.width,
-                  );
-                }
+        final BoxDecoration? focusedDecoration = widget.focusedDecoration
+            ?.copyWith(
+              border: Border.all(
+                width: 3.0,
+                color: themeData.brightness.isDark
+                    ? const Color.fromRGBO(26, 169, 255, 0.3)
+                    : const Color.fromRGBO(0, 103, 244, 0.25),
+              ),
+            );
 
-                return Border(
-                  bottom:
-                      borderSide((focusedDecoration.border as Border).bottom),
-                  top: borderSide((focusedDecoration.border as Border).top),
-                  left: borderSide((focusedDecoration.border as Border).left),
-                  right: borderSide((focusedDecoration.border as Border).right),
+        final focusedPlaceholderDecoration = focusedDecoration?.copyWith(
+          border: () {
+            if (focusedDecoration.border is Border) {
+              BorderSide borderSide(BorderSide fromSide) {
+                return BorderSide(
+                  color: fromSide.color.withValues(alpha: 0.0),
+                  style: fromSide.style,
+                  width: fromSide.width,
                 );
               }
-              return focusedDecoration.border;
-            }(),
-            color: focusedDecoration.color ?? const Color(0x00000000),
-          );
 
-          final Color selectionColor =
-              MacosTheme.of(context).primaryColor.withValues(alpha: 0.2);
+              return Border(
+                bottom: borderSide((focusedDecoration.border as Border).bottom),
+                top: borderSide((focusedDecoration.border as Border).top),
+                left: borderSide((focusedDecoration.border as Border).left),
+                right: borderSide((focusedDecoration.border as Border).right),
+              );
+            }
+            return focusedDecoration.border;
+          }(),
+          color: focusedDecoration.color ?? const Color(0x00000000),
+        );
 
-          final Widget paddedEditable = Padding(
-            padding: widget.padding,
-            child: RepaintBoundary(
-              child: UnmanagedRestorationScope(
-                bucket: bucket,
-                child: EditableText(
-                  key: editableTextKey,
-                  controller: controller,
-                  readOnly: widget.readOnly,
-                  showCursor: widget.showCursor,
-                  showSelectionHandles: _showSelectionHandles,
-                  focusNode: _effectiveFocusNode,
-                  keyboardType: widget.keyboardType,
-                  textInputAction: widget.textInputAction,
-                  textCapitalization: widget.textCapitalization,
-                  style: textStyle,
-                  strutStyle: widget.strutStyle,
-                  textAlign: widget.textAlign,
-                  autofocus: widget.autofocus,
-                  obscuringCharacter: widget.obscuringCharacter,
-                  obscureText: widget.obscureText,
-                  autocorrect: widget.autocorrect,
-                  smartDashesType: widget.smartDashesType,
-                  smartQuotesType: widget.smartQuotesType,
-                  enableSuggestions: widget.enableSuggestions,
-                  maxLines: widget.maxLines,
-                  minLines: widget.minLines,
-                  expands: widget.expands,
-                  selectionColor: selectionColor,
-                  selectionControls:
-                      widget.selectionEnabled ? textSelectionControls : null,
-                  onChanged: widget.onChanged,
-                  onSelectionChanged: _handleSelectionChanged,
-                  onEditingComplete: widget.onEditingComplete,
-                  onSubmitted: widget.onSubmitted,
-                  inputFormatters: formatters,
-                  rendererIgnoresPointer: true,
-                  cursorWidth: widget.cursorWidth,
-                  cursorHeight: widget.cursorHeight,
-                  cursorRadius: widget.cursorRadius,
-                  cursorColor: cursorColor,
-                  cursorOpacityAnimates: true,
-                  cursorOffset: cursorOffset,
-                  paintCursorAboveText: true,
-                  autocorrectionTextRectColor: selectionColor,
-                  backgroundCursorColor: MacosDynamicColor.resolve(
-                    CupertinoColors.inactiveGray,
-                    context,
-                  ),
-                  selectionHeightStyle: widget.selectionHeightStyle,
-                  selectionWidthStyle: widget.selectionWidthStyle,
-                  scrollPadding: widget.scrollPadding,
-                  keyboardAppearance: keyboardAppearance,
-                  dragStartBehavior: widget.dragStartBehavior,
-                  scrollController: widget.scrollController,
-                  scrollPhysics: widget.scrollPhysics,
-                  enableInteractiveSelection: widget.enableInteractiveSelection,
-                  autofillHints: widget.autofillHints,
-                  restorationId: 'editable',
-                  mouseCursor: SystemMouseCursors.text,
-                  contextMenuBuilder: widget.contextMenuBuilder,
+        final Color selectionColor = MacosTheme.of(
+          context,
+        ).primaryColor.withValues(alpha: 0.2);
+
+        final Widget paddedEditable = Padding(
+          padding: widget.padding,
+          child: RepaintBoundary(
+            child: UnmanagedRestorationScope(
+              bucket: bucket,
+              child: EditableText(
+                key: editableTextKey,
+                controller: controller,
+                readOnly: widget.readOnly,
+                showCursor: widget.showCursor,
+                showSelectionHandles: _showSelectionHandles,
+                focusNode: _effectiveFocusNode,
+                keyboardType: widget.keyboardType,
+                textInputAction: widget.textInputAction,
+                textCapitalization: widget.textCapitalization,
+                style: textStyle,
+                strutStyle: widget.strutStyle,
+                textAlign: widget.textAlign,
+                autofocus: widget.autofocus,
+                obscuringCharacter: widget.obscuringCharacter,
+                obscureText: widget.obscureText,
+                autocorrect: widget.autocorrect,
+                smartDashesType: widget.smartDashesType,
+                smartQuotesType: widget.smartQuotesType,
+                enableSuggestions: widget.enableSuggestions,
+                maxLines: widget.maxLines,
+                minLines: widget.minLines,
+                expands: widget.expands,
+                selectionColor: selectionColor,
+                selectionControls: widget.selectionEnabled
+                    ? textSelectionControls
+                    : null,
+                onChanged: widget.onChanged,
+                onSelectionChanged: _handleSelectionChanged,
+                onEditingComplete: widget.onEditingComplete,
+                onSubmitted: widget.onSubmitted,
+                inputFormatters: formatters,
+                rendererIgnoresPointer: true,
+                cursorWidth: widget.cursorWidth,
+                cursorHeight: widget.cursorHeight,
+                cursorRadius: widget.cursorRadius,
+                cursorColor: cursorColor,
+                cursorOpacityAnimates: true,
+                cursorOffset: cursorOffset,
+                paintCursorAboveText: true,
+                autocorrectionTextRectColor: selectionColor,
+                backgroundCursorColor: MacosDynamicColor.resolve(
+                  CupertinoColors.inactiveGray,
+                  context,
                 ),
+                selectionHeightStyle: widget.selectionHeightStyle,
+                selectionWidthStyle: widget.selectionWidthStyle,
+                scrollPadding: widget.scrollPadding,
+                keyboardAppearance: keyboardAppearance,
+                dragStartBehavior: widget.dragStartBehavior,
+                scrollController: widget.scrollController,
+                scrollPhysics: widget.scrollPhysics,
+                enableInteractiveSelection: widget.enableInteractiveSelection,
+                autofillHints: widget.autofillHints,
+                restorationId: 'editable',
+                mouseCursor: SystemMouseCursors.text,
+                contextMenuBuilder: widget.contextMenuBuilder,
               ),
             ),
-          );
+          ),
+        );
 
-          return Semantics(
-            enabled: enabled,
-            onTap: !enabled || widget.readOnly
-                ? null
-                : () {
-                    if (!controller.selection.isValid) {
-                      controller.selection = TextSelection.collapsed(
-                          offset: controller.text.length);
-                    }
-                    _requestKeyboard();
-                  },
-            child: IgnorePointer(
-              ignoring: !enabled,
-              child: AnimatedContainer(
-                /// Value eyeballed from MacOS Big Sur
-                duration: const Duration(milliseconds: 125),
+        return Semantics(
+          enabled: enabled,
+          onTap: !enabled || widget.readOnly
+              ? null
+              : () {
+                  if (!controller.selection.isValid) {
+                    controller.selection = TextSelection.collapsed(
+                      offset: controller.text.length,
+                    );
+                  }
+                  _requestKeyboard();
+                },
+          child: IgnorePointer(
+            ignoring: !enabled,
+            child: AnimatedContainer(
+              /// Value eyeballed from MacOS Big Sur
+              duration: const Duration(milliseconds: 125),
+              decoration: _effectiveFocusNode.hasFocus
+                  ? focusedDecoration
+                  : focusedPlaceholderDecoration,
+              child: Container(
                 decoration: _effectiveFocusNode.hasFocus
-                    ? focusedDecoration
-                    : focusedPlaceholderDecoration,
-                child: Container(
-                  decoration:
-                      _effectiveFocusNode.hasFocus ? null : effectiveDecoration,
-                  child: _selectionGestureDetectorBuilder.buildGestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    child: Align(
-                      alignment: Alignment(-1.0, _textAlignVertical.y),
-                      widthFactor: 1.0,
-                      heightFactor: 1.0,
-                      child: _addTextDependentAttachments(
-                        paddedEditable,
-                        textStyle,
-                        placeholderStyle,
-                      ),
+                    ? null
+                    : effectiveDecoration,
+                child: _selectionGestureDetectorBuilder.buildGestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  child: Align(
+                    alignment: Alignment(-1.0, _textAlignVertical.y),
+                    widthFactor: 1.0,
+                    heightFactor: 1.0,
+                    child: _addTextDependentAttachments(
+                      paddedEditable,
+                      textStyle,
+                      placeholderStyle,
                     ),
                   ),
                 ),
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

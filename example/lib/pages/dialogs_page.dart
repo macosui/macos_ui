@@ -215,15 +215,13 @@ class DemoSheet extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 50),
-              const FlutterLogo(
-                size: 56,
-              ),
+              const FlutterLogo(size: 56),
               const SizedBox(height: 24),
               Text(
                 'Welcome to macos_ui',
-                style: MacosTheme.of(context).typography.largeTitle.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: MacosTheme.of(
+                  context,
+                ).typography.largeTitle.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
               const MacosListTile(

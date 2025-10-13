@@ -334,22 +334,24 @@ class _ToolbarPopupRoute<T> extends PopupRoute<T> {
 
   @override
   Widget buildPage(context, animation, secondaryAnimation) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return _ToolbarPopupRoutePage<T>(
-        target: target,
-        placementOffset: placementOffset,
-        placement: placement,
-        route: this,
-        constraints: constraints,
-        content: content,
-        buttonRect: buttonRect,
-        elevation: elevation,
-        capturedThemes: capturedThemes,
-        verticalOffset: verticalOffset,
-        horizontalOffset: horizontalOffset,
-        position: position,
-      );
-    });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return _ToolbarPopupRoutePage<T>(
+          target: target,
+          placementOffset: placementOffset,
+          placement: placement,
+          route: this,
+          constraints: constraints,
+          content: content,
+          buttonRect: buttonRect,
+          elevation: elevation,
+          capturedThemes: capturedThemes,
+          verticalOffset: verticalOffset,
+          horizontalOffset: horizontalOffset,
+          position: position,
+        );
+      },
+    );
   }
 
   void _dismiss() {
@@ -432,10 +434,8 @@ class _ToolbarPopupRoutePage<T> extends StatelessWidget {
 
 class _ToolbarPopupContentManager extends StatefulWidget {
   // ignore: use_super_parameters
-  const _ToolbarPopupContentManager({
-    Key? key,
-    required this.content,
-  }) : super(key: key);
+  const _ToolbarPopupContentManager({Key? key, required this.content})
+    : super(key: key);
 
   final WidgetBuilder content;
 
@@ -501,8 +501,9 @@ Offset horizontalPositionDependentBox({
   final bool fitsLeft =
       target.dx + verticalOffset + childSize.width <= size.width - margin;
   final bool fitsRight = target.dx - verticalOffset - childSize.width >= margin;
-  final bool tooltipLeft =
-      preferLeft ? fitsLeft || !fitsRight : !(fitsRight || !fitsLeft);
+  final bool tooltipLeft = preferLeft
+      ? fitsLeft || !fitsRight
+      : !(fitsRight || !fitsLeft);
   double x;
   if (tooltipLeft) {
     x = math.min(target.dx + verticalOffset, size.width - margin);
@@ -514,8 +515,10 @@ Offset horizontalPositionDependentBox({
   if (size.height - margin * 2.0 < childSize.height) {
     y = (size.height - childSize.height) / 2.0;
   } else {
-    final double normalizedTargetY =
-        target.dy.clamp(margin, size.height - margin);
+    final double normalizedTargetY = target.dy.clamp(
+      margin,
+      size.height - margin,
+    );
     final double edge = margin + childSize.height / 2.0;
     if (normalizedTargetY < edge) {
       y = margin;

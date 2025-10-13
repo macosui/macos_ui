@@ -5,107 +5,105 @@ import 'package:macos_ui/macos_ui.dart';
 
 void main() {
   group('MacosDatePicker tests', () {
-    testWidgets(
-      'Textual MacosDatePicker renders the expected initial date',
-      (tester) async {
-        final initialDate = DateTime.now().add(const Duration(days: 30));
-        await tester.pumpWidget(
-          MacosApp(
-            home: MacosWindow(
-              disableWallpaperTinting: true,
-              child: MacosScaffold(
-                children: [
-                  ContentArea(
-                    builder: (context, _) {
-                      return Center(
-                        child: MacosDatePicker(
-                          onDateChanged: (date) {},
-                          initialDate: initialDate,
-                          style: DatePickerStyle.textual,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+    testWidgets('Textual MacosDatePicker renders the expected initial date', (
+      tester,
+    ) async {
+      final initialDate = DateTime.now().add(const Duration(days: 30));
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            disableWallpaperTinting: true,
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        onDateChanged: (date) {},
+                        initialDate: initialDate,
+                        style: DatePickerStyle.textual,
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        expect(find.text('/'), findsNWidgets(2));
-        expect(find.text('${initialDate.year}'), findsOneWidget);
-        if (initialDate.month == initialDate.day) {
-          expect(find.text('${initialDate.day}'), findsNWidgets(2));
-          expect(find.text('${initialDate.month}'), findsNWidgets(2));
-        } else {
-          expect(find.text('${initialDate.day}'), findsOneWidget);
-          expect(find.text('${initialDate.month}'), findsOneWidget);
-        }
-      },
-    );
+      expect(find.text('/'), findsNWidgets(2));
+      expect(find.text('${initialDate.year}'), findsOneWidget);
+      if (initialDate.month == initialDate.day) {
+        expect(find.text('${initialDate.day}'), findsNWidgets(2));
+        expect(find.text('${initialDate.month}'), findsNWidgets(2));
+      } else {
+        expect(find.text('${initialDate.day}'), findsOneWidget);
+        expect(find.text('${initialDate.month}'), findsOneWidget);
+      }
+    });
 
-    testWidgets(
-      "Textual MacosDatePicker renders the today's date by default",
-      (tester) async {
-        final today = DateTime.now();
-        await tester.pumpWidget(
-          MacosApp(
-            home: MacosWindow(
-              disableWallpaperTinting: true,
-              child: MacosScaffold(
-                children: [
-                  ContentArea(
-                    builder: (context, _) {
-                      return Center(
-                        child: MacosDatePicker(
-                          onDateChanged: (date) {},
-                          style: DatePickerStyle.textual,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+    testWidgets("Textual MacosDatePicker renders the today's date by default", (
+      tester,
+    ) async {
+      final today = DateTime.now();
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            disableWallpaperTinting: true,
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        onDateChanged: (date) {},
+                        style: DatePickerStyle.textual,
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        expect(find.text('/'), findsNWidgets(2));
-        expect(find.text('${today.year}'), findsOneWidget);
-        if (today.month == today.day) {
-          expect(find.text('${today.day}'), findsNWidgets(2));
-          expect(find.text('${today.month}'), findsNWidgets(2));
-        } else {
-          expect(find.text('${today.day}'), findsOneWidget);
-          expect(find.text('${today.month}'), findsOneWidget);
-        }
-      },
-    );
+      expect(find.text('/'), findsNWidgets(2));
+      expect(find.text('${today.year}'), findsOneWidget);
+      if (today.month == today.day) {
+        expect(find.text('${today.day}'), findsNWidgets(2));
+        expect(find.text('${today.month}'), findsNWidgets(2));
+      } else {
+        expect(find.text('${today.day}'), findsOneWidget);
+        expect(find.text('${today.month}'), findsOneWidget);
+      }
+    });
 
     testWidgets(
       'Textual MacosDatePicker renders the date with respect to "dateFormat" property',
       (tester) async {
         renderWidget(String dateFormat) => MacosApp(
-              home: MacosWindow(
-                disableWallpaperTinting: true,
-                child: MacosScaffold(
-                  children: [
-                    ContentArea(
-                      builder: (context, _) {
-                        return Center(
-                          child: MacosDatePicker(
-                            initialDate: DateTime.parse('2023-04-01'),
-                            onDateChanged: (date) {},
-                            dateFormat: dateFormat,
-                            style: DatePickerStyle.textual,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+          home: MacosWindow(
+            disableWallpaperTinting: true,
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        initialDate: DateTime.parse('2023-04-01'),
+                        onDateChanged: (date) {},
+                        dateFormat: dateFormat,
+                        style: DatePickerStyle.textual,
+                      ),
+                    );
+                  },
                 ),
-              ),
-            );
+              ],
+            ),
+          ),
+        );
 
         getNthTextFromWidget(int index) =>
             (find.byType(Text).at(index).evaluate().first.widget as Text).data
@@ -137,175 +135,165 @@ void main() {
       },
     );
 
-    testWidgets(
-      'Can select the date field element and change the value',
-      (tester) async {
-        final today = DateTime.now();
-        await tester.pumpWidget(
-          MacosApp(
-            home: MacosWindow(
-              child: MacosScaffold(
-                children: [
-                  ContentArea(
-                    builder: (context, _) {
-                      return Center(
-                        child: MacosDatePicker(
-                          onDateChanged: (date) {},
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+    testWidgets('Can select the date field element and change the value', (
+      tester,
+    ) async {
+      final today = DateTime.now();
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(onDateChanged: (date) {}),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        int day = today.day;
-        final dayFieldElement = find.text('${today.day}').first;
-        final upCaretControl = find.byType(CustomPaint).first;
-        final downCaretControl = find.byType(CustomPaint).last;
-        await tester.tap(dayFieldElement);
-        await tester.pumpAndSettle();
-        await tester.tap(upCaretControl);
-        await tester.pumpAndSettle();
-        day++;
-        expect(day, today.day + 1);
-        await tester.tap(downCaretControl);
-        await tester.pumpAndSettle();
-        day--;
-        expect(day, today.day);
-        await tester.tap(downCaretControl);
-        await tester.pumpAndSettle();
-        day--;
-        expect(day, today.day - 1);
-      },
-    );
+      int day = today.day;
+      final dayFieldElement = find.text('${today.day}').first;
+      final upCaretControl = find.byType(CustomPaint).first;
+      final downCaretControl = find.byType(CustomPaint).last;
+      await tester.tap(dayFieldElement);
+      await tester.pumpAndSettle();
+      await tester.tap(upCaretControl);
+      await tester.pumpAndSettle();
+      day++;
+      expect(day, today.day + 1);
+      await tester.tap(downCaretControl);
+      await tester.pumpAndSettle();
+      day--;
+      expect(day, today.day);
+      await tester.tap(downCaretControl);
+      await tester.pumpAndSettle();
+      day--;
+      expect(day, today.day - 1);
+    });
 
-    testWidgets(
-      'Can select the month field element and change the value',
-      (tester) async {
-        final today = DateTime.now();
-        await tester.pumpWidget(
-          MacosApp(
-            home: MacosWindow(
-              child: MacosScaffold(
-                children: [
-                  ContentArea(
-                    builder: (context, _) {
-                      return Center(
-                        child: MacosDatePicker(
-                          onDateChanged: (date) {},
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+    testWidgets('Can select the month field element and change the value', (
+      tester,
+    ) async {
+      final today = DateTime.now();
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(onDateChanged: (date) {}),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        int month = today.month;
-        final monthFieldElement = find.text('${today.month}').first;
-        final upCaretControl = find.byType(CustomPaint).first;
-        final downCaretControl = find.byType(CustomPaint).last;
-        await tester.tap(monthFieldElement);
-        await tester.pumpAndSettle();
-        await tester.tap(upCaretControl);
-        await tester.pumpAndSettle();
-        month++;
-        expect(month, today.month + 1);
-        await tester.tap(downCaretControl);
-        await tester.pumpAndSettle();
-        month--;
-        expect(month, today.month);
-        await tester.tap(downCaretControl);
-        await tester.pumpAndSettle();
-        month--;
-        expect(month, today.month - 1);
-      },
-    );
+      int month = today.month;
+      final monthFieldElement = find.text('${today.month}').first;
+      final upCaretControl = find.byType(CustomPaint).first;
+      final downCaretControl = find.byType(CustomPaint).last;
+      await tester.tap(monthFieldElement);
+      await tester.pumpAndSettle();
+      await tester.tap(upCaretControl);
+      await tester.pumpAndSettle();
+      month++;
+      expect(month, today.month + 1);
+      await tester.tap(downCaretControl);
+      await tester.pumpAndSettle();
+      month--;
+      expect(month, today.month);
+      await tester.tap(downCaretControl);
+      await tester.pumpAndSettle();
+      month--;
+      expect(month, today.month - 1);
+    });
 
-    testWidgets(
-      'Can select the month field element and change the value',
-      (tester) async {
-        final today = DateTime.now();
-        await tester.pumpWidget(
-          MacosApp(
-            home: MacosWindow(
-              child: MacosScaffold(
-                children: [
-                  ContentArea(
-                    builder: (context, _) {
-                      return Center(
-                        child: MacosDatePicker(
-                          onDateChanged: (date) {},
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+    testWidgets('Can select the month field element and change the value', (
+      tester,
+    ) async {
+      final today = DateTime.now();
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(onDateChanged: (date) {}),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        int year = today.year;
-        final yearFieldElement = find.text('${today.year}');
-        final upCaretControl = find.byType(CustomPaint).first;
-        final downCaretControl = find.byType(CustomPaint).last;
-        await tester.tap(yearFieldElement);
-        await tester.pumpAndSettle();
-        await tester.tap(upCaretControl);
-        await tester.pumpAndSettle();
-        year++;
-        expect(year, today.year + 1);
-        await tester.tap(downCaretControl);
-        await tester.pumpAndSettle();
-        year--;
-        expect(year, today.year);
-        await tester.tap(downCaretControl);
-        await tester.pumpAndSettle();
-        year--;
-        expect(year, today.year - 1);
-      },
-    );
+      int year = today.year;
+      final yearFieldElement = find.text('${today.year}');
+      final upCaretControl = find.byType(CustomPaint).first;
+      final downCaretControl = find.byType(CustomPaint).last;
+      await tester.tap(yearFieldElement);
+      await tester.pumpAndSettle();
+      await tester.tap(upCaretControl);
+      await tester.pumpAndSettle();
+      year++;
+      expect(year, today.year + 1);
+      await tester.tap(downCaretControl);
+      await tester.pumpAndSettle();
+      year--;
+      expect(year, today.year);
+      await tester.tap(downCaretControl);
+      await tester.pumpAndSettle();
+      year--;
+      expect(year, today.year - 1);
+    });
 
-    testWidgets(
-      'The selected calendar day matches the expected value',
-      (tester) async {
-        final today = DateTime.now();
-        int selectedDay = 0;
-        await tester.pumpWidget(
-          MacosApp(
-            home: MacosWindow(
-              child: MacosScaffold(
-                children: [
-                  ContentArea(
-                    builder: (context, _) {
-                      return Center(
-                        child: MacosDatePicker(
-                          onDateChanged: (date) {
-                            selectedDay = date.day;
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+    testWidgets('The selected calendar day matches the expected value', (
+      tester,
+    ) async {
+      final today = DateTime.now();
+      int selectedDay = 0;
+      await tester.pumpWidget(
+        MacosApp(
+          home: MacosWindow(
+            child: MacosScaffold(
+              children: [
+                ContentArea(
+                  builder: (context, _) {
+                    return Center(
+                      child: MacosDatePicker(
+                        onDateChanged: (date) {
+                          selectedDay = date.day;
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        int dayToFind = today.day == 21 ? 22 : 21;
-        final dayToSelect = find.text(dayToFind.toString());
-        await tester.tap(dayToSelect);
-        await tester.pumpAndSettle();
-        expect(selectedDay, dayToFind);
-      },
-    );
+      int dayToFind = today.day == 21 ? 22 : 21;
+      final dayToSelect = find.text(dayToFind.toString());
+      await tester.tap(dayToSelect);
+      await tester.pumpAndSettle();
+      expect(selectedDay, dayToFind);
+    });
 
     testWidgets(
       'Can change the month by clicking the left and right calendar view controls',
@@ -480,9 +468,7 @@ void main() {
     (tester) async {
       await tester.pumpWidget(
         MacosApp(
-          supportedLocales: const [
-            Locale('en', 'PL'),
-          ],
+          supportedLocales: const [Locale('en', 'PL')],
           home: MacosWindow(
             child: MacosScaffold(
               children: [

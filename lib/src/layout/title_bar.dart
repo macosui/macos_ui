@@ -93,11 +93,9 @@ class TitleBar extends StatelessWidget {
     final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
 
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        padding: EdgeInsets.only(
-          left: !kIsWeb && isMacOS ? 70 : 0,
-        ),
-      ),
+      data: MediaQuery.of(
+        context,
+      ).copyWith(padding: EdgeInsets.only(left: !kIsWeb && isMacOS ? 70 : 0)),
       child: ClipRect(
         child: BackdropFilter(
           filter: decoration?.color?.a == 1
@@ -106,19 +104,22 @@ class TitleBar extends StatelessWidget {
           child: Container(
             alignment: alignment,
             padding: padding,
-            decoration: BoxDecoration(
-              color: theme.canvasColor,
-              border: Border(
-                bottom: BorderSide(color: dividerColor ?? theme.dividerColor),
-              ),
-            ).copyWith(
-              color: decoration?.color,
-              image: decoration?.image,
-              border: decoration?.border,
-              borderRadius: decoration?.borderRadius,
-              boxShadow: decoration?.boxShadow,
-              gradient: decoration?.gradient,
-            ),
+            decoration:
+                BoxDecoration(
+                  color: theme.canvasColor,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: dividerColor ?? theme.dividerColor,
+                    ),
+                  ),
+                ).copyWith(
+                  color: decoration?.color,
+                  image: decoration?.image,
+                  border: decoration?.border,
+                  borderRadius: decoration?.borderRadius,
+                  boxShadow: decoration?.boxShadow,
+                  gradient: decoration?.gradient,
+                ),
             child: NavigationToolbar(
               middle: _title,
               centerMiddle: centerTitle,

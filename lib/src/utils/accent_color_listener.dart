@@ -93,20 +93,20 @@ class AccentColorListener {
   void _initSystemColorObserver() {
     assert(_systemColorObserverStreamSubscription == null);
 
-    _systemColorObserverStreamSubscription =
-        AppkitUiElementColors.systemColorObserver.stream.listen((_) {
-      _initCurrentAccentColor();
-      _accentColorStreamController.add(null);
-    });
+    _systemColorObserverStreamSubscription = AppkitUiElementColors
+        .systemColorObserver
+        .stream
+        .listen((_) {
+          _initCurrentAccentColor();
+          _accentColorStreamController.add(null);
+        });
   }
 
   /// Returns the hue component of the active accent color selection on macOS.
   Future<double> _getHueComponent() async {
     final color = await AppkitUiElementColors.getColorComponents(
       uiElementColor: UiElementColor.controlAccentColor,
-      components: const {
-        NSColorComponent.hueComponent,
-      },
+      components: const {NSColorComponent.hueComponent},
       colorSpace: NSColorSpace.genericRGB,
       appearance: NSAppearanceName.aqua,
     );

@@ -20,8 +20,10 @@ class HelpButton extends StatefulWidget {
     this.alignment = Alignment.center,
     this.semanticLabel,
     this.mouseCursor = SystemMouseCursors.basic,
-  }) : assert(pressedOpacity == null ||
-            (pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
+  }) : assert(
+         pressedOpacity == null ||
+             (pressedOpacity >= 0.0 && pressedOpacity <= 1.0),
+       );
 
   /// The color of the button's background.
   final Color? color;
@@ -172,8 +174,8 @@ class HelpButtonState extends State<HelpButton>
     final Color foregroundColor = widget.enabled
         ? helpIconLuminance(backgroundColor, theme.brightness.isDark)
         : theme.brightness.isDark
-            ? const Color.fromRGBO(255, 255, 255, 0.25)
-            : const Color.fromRGBO(0, 0, 0, 0.25);
+        ? const Color.fromRGBO(255, 255, 255, 0.25)
+        : const Color.fromRGBO(0, 0, 0, 0.25);
 
     return MouseRegion(
       cursor: widget.mouseCursor!,

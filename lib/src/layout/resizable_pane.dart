@@ -46,16 +46,13 @@ class ResizablePane extends StatefulWidget {
     required this.resizableSide,
     this.windowBreakpoint,
     required this.startSize,
-  })  : child = null,
-        useScrollBar = true,
-        assert(
-          maxSize >= minSize,
-          'minSize should not be more than maxSize.',
-        ),
-        assert(
-          (startSize >= minSize) && (startSize <= maxSize),
-          'startSize must not be less than minSize or more than maxWidth',
-        );
+  }) : child = null,
+       useScrollBar = true,
+       assert(maxSize >= minSize, 'minSize should not be more than maxSize.'),
+       assert(
+         (startSize >= minSize) && (startSize <= maxSize),
+         'startSize must not be less than minSize or more than maxWidth',
+       );
 
   /// Creates a [ResizablePane] without an internal [MacosScrollbar].
   ///
@@ -75,16 +72,13 @@ class ResizablePane extends StatefulWidget {
     required this.resizableSide,
     this.windowBreakpoint,
     required this.startSize,
-  })  : builder = null,
-        useScrollBar = false,
-        assert(
-          maxSize >= minSize,
-          'minSize should not be more than maxSize.',
-        ),
-        assert(
-          (startSize >= minSize) && (startSize <= maxSize),
-          'startSize must not be less than minSize or more than maxWidth',
-        );
+  }) : builder = null,
+       useScrollBar = false,
+       assert(maxSize >= minSize, 'minSize should not be more than maxSize.'),
+       assert(
+         (startSize >= minSize) && (startSize <= maxSize),
+         'startSize must not be less than minSize or more than maxWidth',
+       );
 
   /// The builder that creates a child to display in this widget, which will
   /// use the provided [_scrollController] to enable the scrollbar to work.
@@ -206,14 +200,12 @@ class _ResizablePaneState extends State<ResizablePane> {
             },
             onVerticalDragUpdate: (details) {
               setState(() {
-                final newHeight = _dragStartSize +
+                final newHeight =
+                    _dragStartSize +
                     (_dragStartPosition - details.globalPosition.dy);
                 _size = math.max(
                   widget.minSize,
-                  math.min(
-                    widget.maxSize,
-                    newHeight,
-                  ),
+                  math.min(widget.maxSize, newHeight),
                 );
                 if (_size == widget.minSize) {
                   _cursor = SystemMouseCursors.resizeUp;
@@ -239,15 +231,12 @@ class _ResizablePaneState extends State<ResizablePane> {
               setState(() {
                 final newWidth = _resizeOnRight
                     ? _dragStartSize -
-                        (_dragStartPosition - details.globalPosition.dx)
+                          (_dragStartPosition - details.globalPosition.dx)
                     : _dragStartSize +
-                        (_dragStartPosition - details.globalPosition.dx);
+                          (_dragStartPosition - details.globalPosition.dx);
                 _size = math.max(
                   widget.minSize,
-                  math.min(
-                    widget.maxSize,
-                    newWidth,
-                  ),
+                  math.min(widget.maxSize, newWidth),
                 );
                 if (_size == widget.minSize) {
                   _cursor = _resizeOnRight
@@ -343,12 +332,7 @@ class _ResizablePaneState extends State<ResizablePane> {
               child: _resizeArea,
             ),
           if (widget.isResizable && _resizeOnTop)
-            Positioned(
-              top: 0,
-              width: maxWidth,
-              height: 5,
-              child: _resizeArea,
-            ),
+            Positioned(top: 0, width: maxWidth, height: 5, child: _resizeArea),
         ],
       ),
     );

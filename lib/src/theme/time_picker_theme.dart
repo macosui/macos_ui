@@ -31,8 +31,8 @@ class MacosTimePickerTheme extends InheritedTheme {
   /// final theme = MacosTimePickerTheme.of(context);
   /// ```
   static MacosTimePickerThemeData of(BuildContext context) {
-    final MacosTimePickerTheme? datePickerTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosTimePickerTheme>();
+    final MacosTimePickerTheme? datePickerTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosTimePickerTheme>();
     return datePickerTheme?.data ?? MacosTheme.of(context).timePickerTheme;
   }
 
@@ -168,10 +168,16 @@ class MacosTimePickerThemeData with Diagnosticable {
   ) {
     return MacosTimePickerThemeData(
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
-      selectedElementColor:
-          Color.lerp(a.selectedElementColor, b.selectedElementColor, t),
-      selectedElementTextColor:
-          Color.lerp(a.selectedElementTextColor, b.selectedElementTextColor, t),
+      selectedElementColor: Color.lerp(
+        a.selectedElementColor,
+        b.selectedElementColor,
+        t,
+      ),
+      selectedElementTextColor: Color.lerp(
+        a.selectedElementTextColor,
+        b.selectedElementTextColor,
+        t,
+      ),
       caretColor: Color.lerp(a.caretColor, b.caretColor, t),
       caretControlsBackgroundColor: Color.lerp(
         a.caretControlsBackgroundColor,
@@ -183,24 +189,15 @@ class MacosTimePickerThemeData with Diagnosticable {
         b.caretControlsSeparatorColor,
         t,
       ),
-      clockViewBackgroundColor:
-          Color.lerp(a.clockViewBackgroundColor, b.clockViewBackgroundColor, t),
+      clockViewBackgroundColor: Color.lerp(
+        a.clockViewBackgroundColor,
+        b.clockViewBackgroundColor,
+        t,
+      ),
       hourHandColor: Color.lerp(a.hourHandColor, b.hourHandColor, t),
-      minuteHandColor: Color.lerp(
-        a.minuteHandColor,
-        b.minuteHandColor,
-        t,
-      ),
-      secondHandColor: Color.lerp(
-        a.secondHandColor,
-        b.secondHandColor,
-        t,
-      ),
-      hourTextColor: Color.lerp(
-        a.hourTextColor,
-        b.hourTextColor,
-        t,
-      ),
+      minuteHandColor: Color.lerp(a.minuteHandColor, b.minuteHandColor, t),
+      secondHandColor: Color.lerp(a.secondHandColor, b.secondHandColor, t),
+      hourTextColor: Color.lerp(a.hourTextColor, b.hourTextColor, t),
       dayPeriodTextColor: Color.lerp(
         a.dayPeriodTextColor,
         b.dayPeriodTextColor,
@@ -282,37 +279,32 @@ class MacosTimePickerThemeData with Diagnosticable {
       ColorProperty('selectedElementTextColor', selectedElementTextColor),
     );
     properties.add(ColorProperty('caretColor', caretColor));
-    properties.add(ColorProperty(
-      'caretControlsBackgroundColor',
-      caretControlsBackgroundColor,
-    ));
-    properties.add(ColorProperty(
-      'caretControlsSeparatorColor',
-      caretControlsSeparatorColor,
-    ));
-    properties
-        .add(ColorProperty('monthViewControlsColor', clockViewBackgroundColor));
+    properties.add(
+      ColorProperty(
+        'caretControlsBackgroundColor',
+        caretControlsBackgroundColor,
+      ),
+    );
+    properties.add(
+      ColorProperty('caretControlsSeparatorColor', caretControlsSeparatorColor),
+    );
+    properties.add(
+      ColorProperty('monthViewControlsColor', clockViewBackgroundColor),
+    );
     properties.add(ColorProperty('monthViewHeaderColor', hourHandColor));
-    properties.add(ColorProperty(
-      'monthViewSelectedDateColor',
-      minuteHandColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewSelectedDateTextColor',
-      secondHandColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewCurrentDateColor',
-      hourTextColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewWeekdayHeaderColor',
-      dayPeriodTextColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewHeaderDividerColor',
-      clockViewBorderColor,
-    ));
+    properties.add(
+      ColorProperty('monthViewSelectedDateColor', minuteHandColor),
+    );
+    properties.add(
+      ColorProperty('monthViewSelectedDateTextColor', secondHandColor),
+    );
+    properties.add(ColorProperty('monthViewCurrentDateColor', hourTextColor));
+    properties.add(
+      ColorProperty('monthViewWeekdayHeaderColor', dayPeriodTextColor),
+    );
+    properties.add(
+      ColorProperty('monthViewHeaderDividerColor', clockViewBorderColor),
+    );
     properties.add(ColorProperty('shadowColor', shadowColor));
   }
 }

@@ -43,9 +43,7 @@ class _ResizablePanePageState extends State<ResizablePanePage> {
           windowBreakpoint: 700,
           resizableSide: ResizableSide.right,
           builder: (_, _) {
-            return const Center(
-              child: Text('Left Resizable Pane'),
-            );
+            return const Center(child: Text('Left Resizable Pane'));
           },
         ),
         ContentArea(
@@ -54,18 +52,14 @@ class _ResizablePanePageState extends State<ResizablePanePage> {
               children: [
                 const Flexible(
                   fit: FlexFit.loose,
-                  child: Center(
-                    child: Text('Content Area'),
-                  ),
+                  child: Center(child: Text('Content Area')),
                 ),
                 ResizablePane(
                   minSize: 50,
                   startSize: 200,
                   //windowBreakpoint: 600,
                   builder: (_, _) {
-                    return const Center(
-                      child: Text('Bottom Resizable Pane'),
-                    );
+                    return const Center(child: Text('Bottom Resizable Pane'));
                   },
                   resizableSide: ResizableSide.top,
                 ),

@@ -101,11 +101,12 @@ class _MacosWindowState extends State<MacosWindow> {
   @override
   void initState() {
     super.initState();
-    _sidebarWidth = (widget.sidebar?.startWidth ?? widget.sidebar?.minWidth) ??
+    _sidebarWidth =
+        (widget.sidebar?.startWidth ?? widget.sidebar?.minWidth) ??
         _sidebarWidth;
     _endSidebarWidth =
         (widget.endSidebar?.startWidth ?? widget.endSidebar?.minWidth) ??
-            _endSidebarWidth;
+        _endSidebarWidth;
 
     widget.disableWallpaperTinting
         ? GlobalWallpaperTintingSettings.disableWallpaperTinting()
@@ -181,12 +182,16 @@ class _MacosWindowState extends State<MacosWindow> {
     final sidebar = widget.sidebar;
     final endSidebar = widget.endSidebar;
     if (sidebar?.startWidth != null) {
-      assert((sidebar!.startWidth! >= sidebar.minWidth) &&
-          (sidebar.startWidth! <= sidebar.maxWidth!));
+      assert(
+        (sidebar!.startWidth! >= sidebar.minWidth) &&
+            (sidebar.startWidth! <= sidebar.maxWidth!),
+      );
     }
     if (endSidebar?.startWidth != null) {
-      assert((endSidebar!.startWidth! >= endSidebar.minWidth) &&
-          (endSidebar.startWidth! <= endSidebar.maxWidth!));
+      assert(
+        (endSidebar!.startWidth! >= endSidebar.minWidth) &&
+            (endSidebar.startWidth! <= endSidebar.maxWidth!),
+      );
     }
     final MacosThemeData theme = MacosTheme.of(context);
     late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
@@ -231,8 +236,9 @@ class _MacosWindowState extends State<MacosWindow> {
         final canShowEndSidebar =
             _showEndSidebar && !isAtEndBreakpoint && endSidebar != null;
         final visibleSidebarWidth = canShowSidebar ? _sidebarWidth : 0.0;
-        final visibleEndSidebarWidth =
-            canShowEndSidebar ? _endSidebarWidth : 0.0;
+        final visibleEndSidebarWidth = canShowEndSidebar
+            ? _endSidebarWidth
+            : 0.0;
         final sidebarState = widget.sidebarState;
 
         final layout = Stack(
@@ -284,9 +290,10 @@ class _MacosWindowState extends State<MacosWindow> {
                               if (_sidebarScrollController.hasClients &&
                                   _sidebarScrollController.offset > 0.0)
                                 Divider(
-                                    thickness: 1,
-                                    height: 1,
-                                    color: dividerColor),
+                                  thickness: 1,
+                                  height: 1,
+                                  color: dividerColor,
+                                ),
                               if (sidebar.top != null &&
                                   constraints.maxHeight > 81)
                                 Padding(
@@ -339,9 +346,10 @@ class _MacosWindowState extends State<MacosWindow> {
                                 if (_sidebarScrollController.hasClients &&
                                     _sidebarScrollController.offset > 0.0)
                                   Divider(
-                                      thickness: 1,
-                                      height: 1,
-                                      color: dividerColor),
+                                    thickness: 1,
+                                    height: 1,
+                                    color: dividerColor,
+                                  ),
                                 if (sidebar.top != null &&
                                     constraints.maxHeight > 81)
                                   Padding(
@@ -418,7 +426,8 @@ class _MacosWindowState extends State<MacosWindow> {
                   },
                   onHorizontalDragUpdate: (details) {
                     setState(() {
-                      var newWidth = _sidebarDragStartWidth +
+                      var newWidth =
+                          _sidebarDragStartWidth +
                           details.globalPosition.dx -
                           _sidebarDragStartPosition;
 
@@ -437,10 +446,7 @@ class _MacosWindowState extends State<MacosWindow> {
 
                       _sidebarWidth = math.max(
                         sidebar.minWidth,
-                        math.min(
-                          sidebar.maxWidth!,
-                          newWidth,
-                        ),
+                        math.min(sidebar.maxWidth!, newWidth),
                       );
 
                       if (_sidebarWidth == sidebar.minWidth) {
@@ -494,15 +500,12 @@ class _MacosWindowState extends State<MacosWindow> {
                           SizedBox(height: endSidebar.topOffset),
                         if (_endSidebarScrollController.hasClients &&
                             _endSidebarScrollController.offset > 0.0)
-                          Divider(
-                            thickness: 1,
-                            height: 1,
-                            color: dividerColor,
-                          ),
+                          Divider(thickness: 1, height: 1, color: dividerColor),
                         if (endSidebar.top != null)
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
                             child: endSidebar.top!,
                           ),
                         Expanded(
@@ -544,7 +547,8 @@ class _MacosWindowState extends State<MacosWindow> {
                   },
                   onHorizontalDragUpdate: (details) {
                     setState(() {
-                      var newWidth = _endSidebarDragStartWidth -
+                      var newWidth =
+                          _endSidebarDragStartWidth -
                           details.globalPosition.dx +
                           _endSidebarDragStartPosition;
 
@@ -563,10 +567,7 @@ class _MacosWindowState extends State<MacosWindow> {
 
                       _endSidebarWidth = math.max(
                         endSidebar.minWidth,
-                        math.min(
-                          endSidebar.maxWidth!,
-                          newWidth,
-                        ),
+                        math.min(endSidebar.maxWidth!, newWidth),
                       );
 
                       if (_endSidebarWidth == endSidebar.minWidth) {
@@ -646,8 +647,8 @@ class MacosWindowScope extends InheritedWidget {
     required this.isEndSidebarShown,
     required VoidCallback sidebarToggler,
     required VoidCallback endSidebarToggler,
-  })  : _sidebarToggler = sidebarToggler,
-        _endSidebarToggler = endSidebarToggler;
+  }) : _sidebarToggler = sidebarToggler,
+       _endSidebarToggler = endSidebarToggler;
 
   /// Provides the constraints from the [MacosWindow] to its descendants.
   final BoxConstraints constraints;
@@ -666,8 +667,8 @@ class MacosWindowScope extends InheritedWidget {
   ///
   /// The [context] argument must not be null.
   static MacosWindowScope of(BuildContext context) {
-    final MacosWindowScope? result =
-        context.dependOnInheritedWidgetOfExactType<MacosWindowScope>();
+    final MacosWindowScope? result = context
+        .dependOnInheritedWidgetOfExactType<MacosWindowScope>();
     assert(result != null, 'No MacosWindowScope found in context');
     return result!;
   }

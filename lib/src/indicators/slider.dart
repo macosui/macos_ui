@@ -36,9 +36,9 @@ class MacosSlider extends StatelessWidget {
     this.tickBackgroundColor = MacosColors.tickBackgroundColor,
     this.thumbColor = MacosColors.sliderThumbColor,
     this.semanticLabel,
-  })  : assert(value >= min && value <= max),
-        assert(min < max),
-        assert(splits >= 2);
+  }) : assert(value >= min && value <= max),
+       assert(min < max),
+       assert(splits >= 2);
 
   /// The value of this slider.
   ///
@@ -99,8 +99,9 @@ class MacosSlider extends StatelessWidget {
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('tickBackgroundColor', tickBackgroundColor));
     properties.add(ColorProperty('thumbColor', thumbColor));
-    properties
-        .add(FlagProperty('discrete', value: discrete, ifTrue: 'discrete'));
+    properties.add(
+      FlagProperty('discrete', value: discrete, ifTrue: 'discrete'),
+    );
     properties.add(IntProperty('splits', splits));
     properties.add(StringProperty('semanticLabel', semanticLabel));
   }
@@ -168,8 +169,9 @@ class MacosSlider extends StatelessWidget {
                   children: [
                     Center(
                       child: Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: horizontalPadding),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: horizontalPadding,
+                        ),
                         height: _kSliderHeight,
                         width: width,
                         decoration: BoxDecoration(
@@ -186,8 +188,9 @@ class MacosSlider extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: horizontalPadding),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: horizontalPadding,
+                        ),
                         height: _kSliderHeight,
                         width: width * _percentage,
                         decoration: BoxDecoration(
@@ -200,8 +203,9 @@ class MacosSlider extends StatelessWidget {
                     ),
                     if (discrete)
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizontalPadding),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: horizontalPadding,
+                        ),
                         child: SizedBox(
                           height: _kOverallHeight,
                           width: width,
@@ -229,8 +233,10 @@ class MacosSlider extends StatelessWidget {
                             horizontal: horizontalPadding,
                           ),
                           child: _ContinuousThumb(
-                            color:
-                                MacosDynamicColor.resolve(thumbColor, context),
+                            color: MacosDynamicColor.resolve(
+                              thumbColor,
+                              context,
+                            ),
                           ),
                         ),
                       ),
@@ -244,8 +250,10 @@ class MacosSlider extends StatelessWidget {
                             horizontal: horizontalPadding,
                           ),
                           child: _DiscreteThumb(
-                            color:
-                                MacosDynamicColor.resolve(thumbColor, context),
+                            color: MacosDynamicColor.resolve(
+                              thumbColor,
+                              context,
+                            ),
                           ),
                         ),
                       ),
@@ -261,9 +269,7 @@ class MacosSlider extends StatelessWidget {
 }
 
 class _ContinuousThumb extends StatelessWidget {
-  const _ContinuousThumb({
-    required this.color,
-  });
+  const _ContinuousThumb({required this.color});
 
   final Color color;
 
@@ -274,8 +280,9 @@ class _ContinuousThumb extends StatelessWidget {
       width: _kContinuousThumbSize,
       decoration: BoxDecoration(
         color: color,
-        borderRadius:
-            const BorderRadius.all(Radius.circular(_kContinuousThumbSize)),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(_kContinuousThumbSize),
+        ),
         boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.1),
@@ -290,9 +297,7 @@ class _ContinuousThumb extends StatelessWidget {
 }
 
 class _DiscreteThumb extends StatelessWidget {
-  const _DiscreteThumb({
-    required this.color,
-  });
+  const _DiscreteThumb({required this.color});
 
   final Color color;
   @override

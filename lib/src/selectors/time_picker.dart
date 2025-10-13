@@ -214,10 +214,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                     TimePickerFieldElement(
                       isSelected: _isHourSelected,
                       element: localizations.formatHour(
-                        TimeOfDay(
-                          hour: _selectedHour,
-                          minute: _selectedMinute,
-                        ),
+                        TimeOfDay(hour: _selectedHour, minute: _selectedMinute),
                       ),
                       onSelected: () {
                         setState(() {
@@ -232,10 +229,7 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                     TimePickerFieldElement(
                       isSelected: _isMinuteSelected,
                       element: localizations.formatMinute(
-                        TimeOfDay(
-                          hour: _selectedHour,
-                          minute: _selectedMinute,
-                        ),
+                        TimeOfDay(hour: _selectedHour, minute: _selectedMinute),
                       ),
                       onSelected: () {
                         setState(() {
@@ -271,7 +265,8 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                 height: 10.0,
                 width: 12.0,
                 child: IgnorePointer(
-                  ignoring: !_isHourSelected &&
+                  ignoring:
+                      !_isHourSelected &&
                       !_isMinuteSelected &&
                       !_isPeriodSelected,
                   child: GestureDetector(
@@ -303,7 +298,8 @@ class _MacosTimePickerState extends State<MacosTimePicker> {
                 height: 10.0,
                 width: 12.0,
                 child: IgnorePointer(
-                  ignoring: !_isHourSelected &&
+                  ignoring:
+                      !_isHourSelected &&
                       !_isMinuteSelected &&
                       !_isPeriodSelected,
                   child: GestureDetector(

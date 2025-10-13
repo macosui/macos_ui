@@ -38,9 +38,7 @@ void main() {
                               children: [
                                 const Flexible(
                                   fit: FlexFit.loose,
-                                  child: Center(
-                                    child: Text('Hello there'),
-                                  ),
+                                  child: Center(child: Text('Hello there')),
                                 ),
                                 resizablePane,
                               ],
@@ -90,8 +88,9 @@ void main() {
           testWidgets('initial size equals startSize', (tester) async {
             await tester.pumpWidget(view);
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var initialSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
@@ -108,8 +107,9 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             expect(
               verticallyResizable
                   ? resizablePaneRenderObject.size.height
@@ -129,42 +129,43 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
             expect(currentSize, maxSize);
           });
 
-          testWidgets(
-            'drag events past maxSize have no effect $side',
-            (tester) async {
-              await tester.pumpWidget(view);
+          testWidgets('drag events past maxSize have no effect $side', (
+            tester,
+          ) async {
+            await tester.pumpWidget(view);
 
-              final dragStartLocation = tester.getCenter(dragFinder);
-              final drag = await tester.startGesture(dragStartLocation);
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, overflowDelta)
-                    : Offset(overflowDelta, 0),
-              );
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, -10.0 * directionModifier)
-                    : Offset(-10.0 * directionModifier, 0),
-              );
-              await drag.up();
-              await tester.pump();
+            final dragStartLocation = tester.getCenter(dragFinder);
+            final drag = await tester.startGesture(dragStartLocation);
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, overflowDelta)
+                  : Offset(overflowDelta, 0),
+            );
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, -10.0 * directionModifier)
+                  : Offset(-10.0 * directionModifier, 0),
+            );
+            await drag.up();
+            await tester.pump();
 
-              var resizablePaneRenderObject =
-                  tester.renderObject<RenderBox>(resizablePaneFinder);
-              var currentSize = verticallyResizable
-                  ? resizablePaneRenderObject.size.height
-                  : resizablePaneRenderObject.size.width;
-              expect(currentSize, maxSize);
-            },
-          );
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
+            var currentSize = verticallyResizable
+                ? resizablePaneRenderObject.size.height
+                : resizablePaneRenderObject.size.width;
+            expect(currentSize, maxSize);
+          });
 
           testWidgets('dragging narrower works', (tester) async {
             await tester.pumpWidget(view);
@@ -177,15 +178,13 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
-            expect(
-              currentSize,
-              startSize - safeDelta * directionModifier,
-            );
+            expect(currentSize, startSize - safeDelta * directionModifier);
           });
 
           testWidgets('dragging narrower respects minSize', (tester) async {
@@ -199,42 +198,43 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
             expect(currentSize, minSize);
           });
 
-          testWidgets(
-            'drag events past minSize have no effect',
-            (tester) async {
-              await tester.pumpWidget(view);
+          testWidgets('drag events past minSize have no effect', (
+            tester,
+          ) async {
+            await tester.pumpWidget(view);
 
-              final dragStartLocation = tester.getCenter(dragFinder);
-              final drag = await tester.startGesture(dragStartLocation);
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, -overflowDelta)
-                    : Offset(-overflowDelta, 0),
-              );
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, 10.0 * directionModifier)
-                    : Offset(10.0 * directionModifier, 0),
-              );
-              await drag.up();
-              await tester.pump();
+            final dragStartLocation = tester.getCenter(dragFinder);
+            final drag = await tester.startGesture(dragStartLocation);
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, -overflowDelta)
+                  : Offset(-overflowDelta, 0),
+            );
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, 10.0 * directionModifier)
+                  : Offset(10.0 * directionModifier, 0),
+            );
+            await drag.up();
+            await tester.pump();
 
-              var resizablePaneRenderObject =
-                  tester.renderObject<RenderBox>(resizablePaneFinder);
-              var currentSize = verticallyResizable
-                  ? resizablePaneRenderObject.size.height
-                  : resizablePaneRenderObject.size.width;
-              expect(currentSize, minSize);
-            },
-          );
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
+            var currentSize = verticallyResizable
+                ? resizablePaneRenderObject.size.height
+                : resizablePaneRenderObject.size.width;
+            expect(currentSize, minSize);
+          });
         },
       );
       group(
@@ -262,9 +262,7 @@ void main() {
                               children: [
                                 const Flexible(
                                   fit: FlexFit.loose,
-                                  child: Center(
-                                    child: Text('Hello there'),
-                                  ),
+                                  child: Center(child: Text('Hello there')),
                                 ),
                                 resizablePane,
                               ],
@@ -314,8 +312,9 @@ void main() {
           testWidgets('initial size equals startSize', (tester) async {
             await tester.pumpWidget(view);
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var initialSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
@@ -332,8 +331,9 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             expect(
               verticallyResizable
                   ? resizablePaneRenderObject.size.height
@@ -353,42 +353,43 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
             expect(currentSize, maxSize);
           });
 
-          testWidgets(
-            'drag events past maxSize have no effect $side',
-            (tester) async {
-              await tester.pumpWidget(view);
+          testWidgets('drag events past maxSize have no effect $side', (
+            tester,
+          ) async {
+            await tester.pumpWidget(view);
 
-              final dragStartLocation = tester.getCenter(dragFinder);
-              final drag = await tester.startGesture(dragStartLocation);
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, overflowDelta)
-                    : Offset(overflowDelta, 0),
-              );
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, -10.0 * directionModifier)
-                    : Offset(-10.0 * directionModifier, 0),
-              );
-              await drag.up();
-              await tester.pump();
+            final dragStartLocation = tester.getCenter(dragFinder);
+            final drag = await tester.startGesture(dragStartLocation);
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, overflowDelta)
+                  : Offset(overflowDelta, 0),
+            );
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, -10.0 * directionModifier)
+                  : Offset(-10.0 * directionModifier, 0),
+            );
+            await drag.up();
+            await tester.pump();
 
-              var resizablePaneRenderObject =
-                  tester.renderObject<RenderBox>(resizablePaneFinder);
-              var currentSize = verticallyResizable
-                  ? resizablePaneRenderObject.size.height
-                  : resizablePaneRenderObject.size.width;
-              expect(currentSize, maxSize);
-            },
-          );
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
+            var currentSize = verticallyResizable
+                ? resizablePaneRenderObject.size.height
+                : resizablePaneRenderObject.size.width;
+            expect(currentSize, maxSize);
+          });
 
           testWidgets('dragging narrower works', (tester) async {
             await tester.pumpWidget(view);
@@ -401,15 +402,13 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
-            expect(
-              currentSize,
-              startSize - safeDelta * directionModifier,
-            );
+            expect(currentSize, startSize - safeDelta * directionModifier);
           });
 
           testWidgets('dragging narrower respects minSize', (tester) async {
@@ -423,42 +422,43 @@ void main() {
             );
             await tester.pump();
 
-            var resizablePaneRenderObject =
-                tester.renderObject<RenderBox>(resizablePaneFinder);
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
             var currentSize = verticallyResizable
                 ? resizablePaneRenderObject.size.height
                 : resizablePaneRenderObject.size.width;
             expect(currentSize, minSize);
           });
 
-          testWidgets(
-            'drag events past minSize have no effect',
-            (tester) async {
-              await tester.pumpWidget(view);
+          testWidgets('drag events past minSize have no effect', (
+            tester,
+          ) async {
+            await tester.pumpWidget(view);
 
-              final dragStartLocation = tester.getCenter(dragFinder);
-              final drag = await tester.startGesture(dragStartLocation);
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, -overflowDelta)
-                    : Offset(-overflowDelta, 0),
-              );
-              await drag.moveBy(
-                verticallyResizable
-                    ? Offset(0, 10.0 * directionModifier)
-                    : Offset(10.0 * directionModifier, 0),
-              );
-              await drag.up();
-              await tester.pump();
+            final dragStartLocation = tester.getCenter(dragFinder);
+            final drag = await tester.startGesture(dragStartLocation);
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, -overflowDelta)
+                  : Offset(-overflowDelta, 0),
+            );
+            await drag.moveBy(
+              verticallyResizable
+                  ? Offset(0, 10.0 * directionModifier)
+                  : Offset(10.0 * directionModifier, 0),
+            );
+            await drag.up();
+            await tester.pump();
 
-              var resizablePaneRenderObject =
-                  tester.renderObject<RenderBox>(resizablePaneFinder);
-              var currentSize = verticallyResizable
-                  ? resizablePaneRenderObject.size.height
-                  : resizablePaneRenderObject.size.width;
-              expect(currentSize, minSize);
-            },
-          );
+            var resizablePaneRenderObject = tester.renderObject<RenderBox>(
+              resizablePaneFinder,
+            );
+            var currentSize = verticallyResizable
+                ? resizablePaneRenderObject.size.height
+                : resizablePaneRenderObject.size.width;
+            expect(currentSize, minSize);
+          });
         },
       );
     }

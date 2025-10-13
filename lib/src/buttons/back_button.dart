@@ -41,11 +41,9 @@ class MacosBackButton extends StatefulWidget {
     properties.add(ColorProperty('fillColor', fillColor));
     properties.add(ColorProperty('hoverColor', fillColor));
     properties.add(StringProperty('semanticLabel', semanticLabel));
-    properties.add(FlagProperty(
-      'enabled',
-      value: enabled,
-      ifFalse: 'disabled',
-    ));
+    properties.add(
+      FlagProperty('enabled', value: enabled, ifFalse: 'disabled'),
+    );
   }
 
   @override
@@ -191,11 +189,11 @@ class MacosBackButtonState extends State<MacosBackButton>
                     decoration: BoxDecoration(
                       color: buttonHeldDown
                           ? brightness == Brightness.dark
-                              ? const Color(0xff3C383C)
-                              : const Color(0xffE5E5E5)
+                                ? const Color(0xff3C383C)
+                                : const Color(0xffE5E5E5)
                           : _isHovered
-                              ? hoverColor
-                              : fillColor,
+                          ? hoverColor
+                          : fillColor,
                       borderRadius: const BorderRadius.all(Radius.circular(7)),
                     ),
                     child: Icon(

@@ -46,14 +46,11 @@ void main() {
         .map((node) => node.toString())
         .toList();
 
-    expect(
-      description,
-      [
-        'fillColor: null',
-        'hoverColor: null',
-        'semanticLabel: null',
-        'disabled',
-      ],
-    );
+    expect(description, [
+      'fillColor: null',
+      'hoverColor: null',
+      'semanticLabel: null',
+      'disabled',
+    ]);
   });
 }

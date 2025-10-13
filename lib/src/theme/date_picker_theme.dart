@@ -31,8 +31,8 @@ class MacosDatePickerTheme extends InheritedTheme {
   /// final theme = MacosDatePickerTheme.of(context);
   /// ```
   static MacosDatePickerThemeData of(BuildContext context) {
-    final MacosDatePickerTheme? datePickerTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosDatePickerTheme>();
+    final MacosDatePickerTheme? datePickerTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosDatePickerTheme>();
     return datePickerTheme?.data ?? MacosTheme.of(context).datePickerTheme;
   }
 
@@ -178,10 +178,16 @@ class MacosDatePickerThemeData with Diagnosticable {
   ) {
     return MacosDatePickerThemeData(
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
-      selectedElementColor:
-          Color.lerp(a.selectedElementColor, b.selectedElementColor, t),
-      selectedElementTextColor:
-          Color.lerp(a.selectedElementTextColor, b.selectedElementTextColor, t),
+      selectedElementColor: Color.lerp(
+        a.selectedElementColor,
+        b.selectedElementColor,
+        t,
+      ),
+      selectedElementTextColor: Color.lerp(
+        a.selectedElementTextColor,
+        b.selectedElementTextColor,
+        t,
+      ),
       caretColor: Color.lerp(a.caretColor, b.caretColor, t),
       caretControlsBackgroundColor: Color.lerp(
         a.caretControlsBackgroundColor,
@@ -193,10 +199,16 @@ class MacosDatePickerThemeData with Diagnosticable {
         b.caretControlsSeparatorColor,
         t,
       ),
-      monthViewControlsColor:
-          Color.lerp(a.monthViewControlsColor, b.monthViewControlsColor, t),
-      monthViewHeaderColor:
-          Color.lerp(a.monthViewHeaderColor, b.monthViewHeaderColor, t),
+      monthViewControlsColor: Color.lerp(
+        a.monthViewControlsColor,
+        b.monthViewControlsColor,
+        t,
+      ),
+      monthViewHeaderColor: Color.lerp(
+        a.monthViewHeaderColor,
+        b.monthViewHeaderColor,
+        t,
+      ),
       monthViewSelectedDateColor: Color.lerp(
         a.monthViewSelectedDateColor,
         b.monthViewSelectedDateColor,
@@ -222,8 +234,11 @@ class MacosDatePickerThemeData with Diagnosticable {
         b.monthViewHeaderDividerColor,
         t,
       ),
-      monthViewDateColor:
-          Color.lerp(a.monthViewDateColor, b.monthViewDateColor, t),
+      monthViewDateColor: Color.lerp(
+        a.monthViewDateColor,
+        b.monthViewDateColor,
+        t,
+      ),
       shadowColor: Color.lerp(a.shadowColor, b.shadowColor, t),
     );
   }
@@ -299,37 +314,37 @@ class MacosDatePickerThemeData with Diagnosticable {
       ColorProperty('selectedElementTextColor', selectedElementTextColor),
     );
     properties.add(ColorProperty('caretColor', caretColor));
-    properties.add(ColorProperty(
-      'caretControlsBackgroundColor',
-      caretControlsBackgroundColor,
-    ));
-    properties.add(ColorProperty(
-      'caretControlsSeparatorColor',
-      caretControlsSeparatorColor,
-    ));
-    properties
-        .add(ColorProperty('monthViewControlsColor', monthViewControlsColor));
+    properties.add(
+      ColorProperty(
+        'caretControlsBackgroundColor',
+        caretControlsBackgroundColor,
+      ),
+    );
+    properties.add(
+      ColorProperty('caretControlsSeparatorColor', caretControlsSeparatorColor),
+    );
+    properties.add(
+      ColorProperty('monthViewControlsColor', monthViewControlsColor),
+    );
     properties.add(ColorProperty('monthViewHeaderColor', monthViewHeaderColor));
-    properties.add(ColorProperty(
-      'monthViewSelectedDateColor',
-      monthViewSelectedDateColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewSelectedDateTextColor',
-      monthViewSelectedDateTextColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewCurrentDateColor',
-      monthViewCurrentDateColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewWeekdayHeaderColor',
-      monthViewWeekdayHeaderColor,
-    ));
-    properties.add(ColorProperty(
-      'monthViewHeaderDividerColor',
-      monthViewHeaderDividerColor,
-    ));
+    properties.add(
+      ColorProperty('monthViewSelectedDateColor', monthViewSelectedDateColor),
+    );
+    properties.add(
+      ColorProperty(
+        'monthViewSelectedDateTextColor',
+        monthViewSelectedDateTextColor,
+      ),
+    );
+    properties.add(
+      ColorProperty('monthViewCurrentDateColor', monthViewCurrentDateColor),
+    );
+    properties.add(
+      ColorProperty('monthViewWeekdayHeaderColor', monthViewWeekdayHeaderColor),
+    );
+    properties.add(
+      ColorProperty('monthViewHeaderDividerColor', monthViewHeaderDividerColor),
+    );
     properties.add(ColorProperty('monthViewDateColor', monthViewDateColor));
     properties.add(ColorProperty('shadowColor', shadowColor));
   }

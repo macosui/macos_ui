@@ -71,11 +71,11 @@ class MacosApp extends StatefulWidget {
     this.themeMode,
     this.theme,
     this.darkTheme,
-  })  : routeInformationProvider = null,
-        routeInformationParser = null,
-        routerDelegate = null,
-        backButtonDispatcher = null,
-        routerConfig = null;
+  }) : routeInformationProvider = null,
+       routeInformationParser = null,
+       routerDelegate = null,
+       backButtonDispatcher = null,
+       routerConfig = null;
 
   /// Creates a [MacosApp] that uses the [Router] instead of a [Navigator].
   MacosApp.router({
@@ -106,16 +106,16 @@ class MacosApp extends StatefulWidget {
     this.themeMode,
     this.theme,
     this.darkTheme,
-  })  : assert(routerDelegate != null || routerConfig != null),
-        assert(supportedLocales.isNotEmpty),
-        navigatorObservers = null,
-        navigatorKey = null,
-        onGenerateRoute = null,
-        home = null,
-        onGenerateInitialRoutes = null,
-        onUnknownRoute = null,
-        routes = null,
-        initialRoute = null;
+  }) : assert(routerDelegate != null || routerConfig != null),
+       assert(supportedLocales.isNotEmpty),
+       navigatorObservers = null,
+       navigatorKey = null,
+       onGenerateRoute = null,
+       home = null,
+       onGenerateInitialRoutes = null,
+       onUnknownRoute = null,
+       routes = null,
+       initialRoute = null;
 
   /// {@macro flutter.widgets.widgetsApp.navigatorKey}
   final GlobalKey<NavigatorState>? navigatorKey;
@@ -311,64 +311,66 @@ class _MacosAppState extends State<MacosApp> {
 
   Widget _macosBuilder(BuildContext context, Widget? child) {
     return StreamBuilder<bool>(
-        stream: WindowMainStateListener.instance.onChanged,
-        builder: (context, _) {
-          return StreamBuilder(
-              stream: AccentColorListener.instance.onChanged,
-              builder: (context, _) {
-                final mode = widget.themeMode ?? ThemeMode.system;
-                final platformBrightness =
-                    MediaQuery.platformBrightnessOf(context);
-                final useDarkTheme = mode == ThemeMode.dark ||
-                    (mode == ThemeMode.system &&
-                        platformBrightness == Brightness.dark);
+      stream: WindowMainStateListener.instance.onChanged,
+      builder: (context, _) {
+        return StreamBuilder(
+          stream: AccentColorListener.instance.onChanged,
+          builder: (context, _) {
+            final mode = widget.themeMode ?? ThemeMode.system;
+            final platformBrightness = MediaQuery.platformBrightnessOf(context);
+            final useDarkTheme =
+                mode == ThemeMode.dark ||
+                (mode == ThemeMode.system &&
+                    platformBrightness == Brightness.dark);
 
-                final accentColor =
-                    AccentColorListener.instance.currentAccentColor;
-                final isMainWindow =
-                    WindowMainStateListener.instance.isMainWindow;
+            final accentColor = AccentColorListener.instance.currentAccentColor;
+            final isMainWindow = WindowMainStateListener.instance.isMainWindow;
 
-                late MacosThemeData theme;
-                if (useDarkTheme) {
-                  theme = widget.darkTheme ??
-                      MacosThemeData.dark(
-                        accentColor: accentColor,
-                        isMainWindow: isMainWindow,
-                      );
-                } else {
-                  theme = widget.theme ??
-                      MacosThemeData.light(
-                        accentColor: accentColor,
-                        isMainWindow: isMainWindow,
-                      );
-                }
+            late MacosThemeData theme;
+            if (useDarkTheme) {
+              theme =
+                  widget.darkTheme ??
+                  MacosThemeData.dark(
+                    accentColor: accentColor,
+                    isMainWindow: isMainWindow,
+                  );
+            } else {
+              theme =
+                  widget.theme ??
+                  MacosThemeData.light(
+                    accentColor: accentColor,
+                    isMainWindow: isMainWindow,
+                  );
+            }
 
-                return MacosTheme(
-                  data: theme,
-                  child: DefaultTextStyle(
-                    style: TextStyle(color: theme.typography.body.color),
-                    child: widget.builder != null
-                        // See the MaterialApp source code for the explanation for
-                        // wrapping a builder in a builder
-                        ? Builder(
-                            builder: (context) {
-                              // An Overlay is used here because MacosTooltip needs an
-                              // Overlay as an ancestor in the widget tree.
-                              return Overlay(
-                                initialEntries: [
-                                  OverlayEntry(
-                                    builder: (context) =>
-                                        widget.builder!(context, child),
-                                  ),
-                                ],
-                              );
-                            },
-                          )
-                        : child ?? const SizedBox.shrink(),
-                  ),
-                );
-              });
-        });
+            return MacosTheme(
+              data: theme,
+              child: DefaultTextStyle(
+                style: TextStyle(color: theme.typography.body.color),
+                child: widget.builder != null
+                    // See the MaterialApp source code for the explanation for
+                    // wrapping a builder in a builder
+                    ? Builder(
+                        builder: (context) {
+                          // An Overlay is used here because MacosTooltip needs an
+                          // Overlay as an ancestor in the widget tree.
+                          return Overlay(
+                            initialEntries: [
+                              OverlayEntry(
+                                builder: (context) =>
+                                    widget.builder!(context, child),
+                              ),
+                            ],
+                          );
+                        },
+                      )
+                    : child ?? const SizedBox.shrink(),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildMacosApp(BuildContext context) {
@@ -478,10 +480,7 @@ class MacosScrollBehavior extends ScrollBehavior {
           case TargetPlatform.linux:
           case TargetPlatform.macOS:
           case TargetPlatform.windows:
-            return MacosScrollbar(
-              controller: details.controller,
-              child: child,
-            );
+            return MacosScrollbar(controller: details.controller, child: child);
           case TargetPlatform.android:
           case TargetPlatform.fuchsia:
           case TargetPlatform.iOS:

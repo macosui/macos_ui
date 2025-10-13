@@ -17,12 +17,8 @@ List<PlatformMenuItem> menuBarItems() {
         PlatformMenu(
           label: 'macos_ui Widget Gallery',
           menus: [
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.about,
-            ),
-            PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.quit,
-            ),
+            PlatformProvidedMenuItem(type: PlatformProvidedMenuItemType.about),
+            PlatformProvidedMenuItem(type: PlatformProvidedMenuItemType.quit),
           ],
         ),
         PlatformMenu(

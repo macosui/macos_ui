@@ -242,77 +242,99 @@ class MacosTypography extends Equatable with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     final defaultStyle = MacosTypography.darkOpaque();
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'largeTitle',
-      largeTitle,
-      defaultValue: defaultStyle.largeTitle,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'title1',
-      title1,
-      defaultValue: defaultStyle.title1,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'title2',
-      title2,
-      defaultValue: defaultStyle.title2,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'title3',
-      title3,
-      defaultValue: defaultStyle.title3,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'headline',
-      headline,
-      defaultValue: defaultStyle.headline,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'subheadline',
-      subheadline,
-      defaultValue: defaultStyle.subheadline,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'body',
-      body,
-      defaultValue: defaultStyle.body,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'callout',
-      callout,
-      defaultValue: defaultStyle.callout,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'footnote',
-      footnote,
-      defaultValue: defaultStyle.footnote,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'caption1',
-      caption1,
-      defaultValue: defaultStyle.caption1,
-    ));
-    properties.add(DiagnosticsProperty<TextStyle>(
-      'caption2',
-      caption2,
-      defaultValue: defaultStyle.caption2,
-    ));
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'largeTitle',
+        largeTitle,
+        defaultValue: defaultStyle.largeTitle,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'title1',
+        title1,
+        defaultValue: defaultStyle.title1,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'title2',
+        title2,
+        defaultValue: defaultStyle.title2,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'title3',
+        title3,
+        defaultValue: defaultStyle.title3,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'headline',
+        headline,
+        defaultValue: defaultStyle.headline,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'subheadline',
+        subheadline,
+        defaultValue: defaultStyle.subheadline,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'body',
+        body,
+        defaultValue: defaultStyle.body,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'callout',
+        callout,
+        defaultValue: defaultStyle.callout,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'footnote',
+        footnote,
+        defaultValue: defaultStyle.footnote,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'caption1',
+        caption1,
+        defaultValue: defaultStyle.caption1,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'caption2',
+        caption2,
+        defaultValue: defaultStyle.caption2,
+      ),
+    );
   }
 
   @override
   List<Object?> get props => [
-        body,
-        callout,
-        caption1,
-        caption2,
-        footnote,
-        headline,
-        largeTitle,
-        subheadline,
-        title1,
-        title2,
-        title3,
-      ];
+    body,
+    callout,
+    caption1,
+    caption2,
+    footnote,
+    headline,
+    largeTitle,
+    subheadline,
+    title1,
+    title2,
+    title3,
+  ];
 }
 
 /// The thickness of the glyphs used to draw the text.
@@ -431,9 +453,11 @@ class MacosFontWeight implements FontWeight {
     if (a == null && b == null) {
       return null;
     }
-    return values[_lerpInt((a ?? normal).index, (b ?? normal).index, t)
-        .round()
-        .clamp(0, 8)];
+    return values[_lerpInt(
+      (a ?? normal).index,
+      (b ?? normal).index,
+      t,
+    ).round().clamp(0, 8)];
   }
 
   @override

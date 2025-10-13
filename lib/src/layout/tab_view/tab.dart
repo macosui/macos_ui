@@ -2,9 +2,7 @@ import 'package:macos_ui/src/library.dart';
 import 'package:macos_ui/src/theme/macos_colors.dart';
 import 'package:macos_ui/src/theme/macos_theme.dart';
 
-const _kTabBorderRadius = BorderRadius.all(
-  Radius.circular(4.0),
-);
+const _kTabBorderRadius = BorderRadius.all(Radius.circular(4.0));
 
 /// {@template macosTab}
 /// A macOS-style navigational button used to move between the views of a
@@ -12,11 +10,7 @@ const _kTabBorderRadius = BorderRadius.all(
 /// {@endtemplate}
 class MacosTab extends StatelessWidget {
   /// {@macro macosTab}
-  const MacosTab({
-    super.key,
-    required this.label,
-    this.active = false,
-  });
+  const MacosTab({super.key, required this.label, this.active = false});
 
   /// The display label for this tab.
   final String label;
@@ -35,10 +29,7 @@ class MacosTab extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: _kTabBorderRadius,
           color: active
-              ? brightness.resolve(
-                  MacosColors.white,
-                  const Color(0xFF646669),
-                )
+              ? brightness.resolve(MacosColors.white, const Color(0xFF646669))
               : MacosColors.transparent,
         ),
         child: Padding(
@@ -50,13 +41,7 @@ class MacosTab extends StatelessWidget {
   }
 
   /// Copies this [MacosTab] into another.
-  MacosTab copyWith({
-    String? label,
-    bool? active,
-  }) {
-    return MacosTab(
-      label: label ?? this.label,
-      active: active ?? this.active,
-    );
+  MacosTab copyWith({String? label, bool? active}) {
+    return MacosTab(label: label ?? this.label, active: active ?? this.active);
   }
 }

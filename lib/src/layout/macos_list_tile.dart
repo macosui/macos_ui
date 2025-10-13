@@ -56,16 +56,14 @@ class MacosListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DefaultTextStyle(
-                    style: MacosTheme.of(context).typography.headline.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: MacosTheme.of(
+                      context,
+                    ).typography.headline.copyWith(fontWeight: FontWeight.bold),
                     child: title,
                   ),
                   if (subtitle != null)
                     DefaultTextStyle(
-                      style: MacosTheme.of(context)
-                          .typography
-                          .subheadline
+                      style: MacosTheme.of(context).typography.subheadline
                           .copyWith(
                             color: MacosTheme.brightnessOf(context).isDark
                                 ? MacosColors.systemGrayColor

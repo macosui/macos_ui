@@ -168,7 +168,8 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     SidebarItem(
                       leading: MacosImageIcon(
                         AssetImage(
-                            'assets/sf_symbols/button_programmable_2x.png'),
+                          'assets/sf_symbols/button_programmable_2x.png',
+                        ),
                       ),
                       label: Text('Buttons'),
                     ),
@@ -191,7 +192,8 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     SidebarItem(
                       leading: MacosImageIcon(
                         AssetImage(
-                            'assets/sf_symbols/rectangle_3_group_2x.png'),
+                          'assets/sf_symbols/rectangle_3_group_2x.png',
+                        ),
                       ),
                       label: Text('Colors'),
                     ),
@@ -241,7 +243,8 @@ class _WidgetGalleryState extends State<WidgetGallery> {
                     SidebarItem(
                       leading: MacosImageIcon(
                         AssetImage(
-                            'assets/sf_symbols/filemenu_and_selection_2x.png'),
+                          'assets/sf_symbols/filemenu_and_selection_2x.png',
+                        ),
                       ),
                       label: Text('Selectors'),
                     ),
@@ -266,9 +269,7 @@ class _WidgetGalleryState extends State<WidgetGallery> {
           maxWidth: 300,
           shownByDefault: false,
           builder: (context, _) {
-            return const Center(
-              child: Text('End Sidebar'),
-            );
+            return const Center(child: Text('End Sidebar'));
           },
         ),
         child: [

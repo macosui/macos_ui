@@ -66,16 +66,20 @@ class TestRecordCanvas implements Canvas {
   @override
   void save() {
     _saveCount += 1;
-    invocations
-        .add(RecordInvocation(_MethodCall(#save), stack: StackTrace.current));
+    invocations.add(
+      RecordInvocation(_MethodCall(#save), stack: StackTrace.current),
+    );
   }
 
   @override
   void saveLayer(Rect? bounds, Paint paint) {
     _saveCount += 1;
-    invocations.add(RecordInvocation(
+    invocations.add(
+      RecordInvocation(
         _MethodCall(#saveLayer, <dynamic>[bounds, paint]),
-        stack: StackTrace.current));
+        stack: StackTrace.current,
+      ),
+    );
   }
 
   @override
@@ -83,7 +87,8 @@ class TestRecordCanvas implements Canvas {
     _saveCount -= 1;
     assert(_saveCount >= 0);
     invocations.add(
-        RecordInvocation(_MethodCall(#restore), stack: StackTrace.current));
+      RecordInvocation(_MethodCall(#restore), stack: StackTrace.current),
+    );
   }
 
   @override
@@ -93,8 +98,7 @@ class TestRecordCanvas implements Canvas {
 }
 
 /// A [PaintingContext] for tests that use [TestRecordingCanvas].
-class TestRecordPaintingContext extends ClipContext
-    implements PaintingContext {
+class TestRecordPaintingContext extends ClipContext implements PaintingContext {
   /// Creates a [PaintingContext] for tests that use [TestRecordingCanvas].
   TestRecordPaintingContext(this.canvas);
 
@@ -115,8 +119,12 @@ class TestRecordPaintingContext extends ClipContext
     Clip clipBehavior = Clip.hardEdge,
     ClipRectLayer? oldLayer,
   }) {
-    clipRectAndPaint(clipRect.shift(offset), clipBehavior,
-        clipRect.shift(offset), () => painter(this, offset));
+    clipRectAndPaint(
+      clipRect.shift(offset),
+      clipBehavior,
+      clipRect.shift(offset),
+      () => painter(this, offset),
+    );
     return null;
   }
 
@@ -130,8 +138,12 @@ class TestRecordPaintingContext extends ClipContext
     Clip clipBehavior = Clip.antiAlias,
     ClipRRectLayer? oldLayer,
   }) {
-    clipRRectAndPaint(clipRRect.shift(offset), clipBehavior,
-        bounds.shift(offset), () => painter(this, offset));
+    clipRRectAndPaint(
+      clipRRect.shift(offset),
+      clipBehavior,
+      bounds.shift(offset),
+      () => painter(this, offset),
+    );
     return null;
   }
 
@@ -145,8 +157,12 @@ class TestRecordPaintingContext extends ClipContext
     Clip clipBehavior = Clip.antiAlias,
     ClipPathLayer? oldLayer,
   }) {
-    clipPathAndPaint(clipPath.shift(offset), clipBehavior, bounds.shift(offset),
-        () => painter(this, offset));
+    clipPathAndPaint(
+      clipPath.shift(offset),
+      clipBehavior,
+      bounds.shift(offset),
+      () => painter(this, offset),
+    );
     return null;
   }
 

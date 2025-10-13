@@ -25,9 +25,7 @@ void main() {
               children: [
                 ContentArea(
                   builder: (context, _) {
-                    return HelpButton(
-                      onPressed: mockOnPressedFunction.handler,
-                    );
+                    return HelpButton(onPressed: mockOnPressedFunction.handler);
                   },
                 ),
               ],
@@ -85,16 +83,13 @@ void main() {
           .map((node) => node.toString())
           .toList();
 
-      expect(
-        description,
-        [
-          'color: null',
-          'disabledColor: null',
-          'pressedOpacity: 0.4',
-          'alignment: Alignment.center',
-          'semanticLabel: null',
-        ],
-      );
+      expect(description, [
+        'color: null',
+        'disabledColor: null',
+        'pressedOpacity: 0.4',
+        'alignment: Alignment.center',
+        'semanticLabel: null',
+      ]);
     });
   });
 }

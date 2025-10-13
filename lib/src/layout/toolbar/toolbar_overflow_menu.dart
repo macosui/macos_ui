@@ -9,10 +9,7 @@ class ToolbarOverflowMenu extends StatelessWidget {
   /// as a popup below the [ToolbarOverflowButton].
   ///
   /// Has a similar styling to a pulldown menu.
-  const ToolbarOverflowMenu({
-    super.key,
-    required this.children,
-  });
+  const ToolbarOverflowMenu({super.key, required this.children});
 
   /// The list of children widgets to lay out vertically inside the menu.
   final List<Widget> children;
@@ -25,9 +22,9 @@ class ToolbarOverflowMenu extends StatelessWidget {
       explicitChildNodes: true,
       child: IntrinsicWidth(
         child: MacosOverlayFilter(
-          color: MacosPulldownButtonTheme.of(context)
-              .pulldownColor
-              ?.withValues(alpha: 0.25),
+          color: MacosPulldownButtonTheme.of(
+            context,
+          ).pulldownColor?.withValues(alpha: 0.25),
           borderRadius: _kBorderRadius,
           child: Padding(
             padding: const EdgeInsets.all(6.0),

@@ -31,8 +31,8 @@ class MacosPulldownButtonTheme extends InheritedTheme {
   /// MacosPulldownButtonTheme theme = MacosPulldownButtonTheme.of(context);
   /// ```
   static MacosPulldownButtonThemeData of(BuildContext context) {
-    final MacosPulldownButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<MacosPulldownButtonTheme>();
+    final MacosPulldownButtonTheme? buttonTheme = context
+        .dependOnInheritedWidgetOfExactType<MacosPulldownButtonTheme>();
     return buttonTheme?.data ?? MacosTheme.of(context).pulldownButtonTheme;
   }
 

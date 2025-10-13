@@ -62,10 +62,7 @@ class ToolBarPullDownButton extends ToolbarItem {
               const Color.fromRGBO(255, 255, 255, 0.5),
             ),
           ),
-          child: MacosPulldownButton(
-            icon: icon,
-            items: items,
-          ),
+          child: MacosPulldownButton(icon: icon, items: items),
         ),
       );
 
@@ -84,8 +81,10 @@ class ToolBarPullDownButton extends ToolbarItem {
       // Convert the original pulldown menu items to toolbar overflow menu items.
       items?.forEach((element) {
         if (element is MacosPulldownMenuItem) {
-          assert(element.label != null,
-              'When you use a MacosPulldownButton in the Toolbar, you must set the label property for all MacosPulldownMenuItems.');
+          assert(
+            element.label != null,
+            'When you use a MacosPulldownButton in the Toolbar, you must set the label property for all MacosPulldownMenuItems.',
+          );
           subMenuItems.add(
             ToolbarOverflowMenuItem(
               label: element.label!,
@@ -117,9 +116,9 @@ class ToolBarPullDownButton extends ToolbarItem {
             placement: ToolbarPopupPlacement.start,
             child: MouseRegion(
               onHover: (e) {
-                subMenuKey.currentState
-                    ?.openPopup()
-                    .then((value) => setState(() => isSelected = false));
+                subMenuKey.currentState?.openPopup().then(
+                  (value) => setState(() => isSelected = false),
+                );
                 setState(() => isSelected = true);
               },
               child: ToolbarOverflowMenuItem(
