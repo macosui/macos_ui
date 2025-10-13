@@ -225,7 +225,9 @@ class _CapacityCellPainter extends CustomPainter {
 
     /// Draw background
     canvas.drawRRect(
-      BorderRadius.circular(radius).toRRect(Offset.zero & size),
+      const BorderRadius.all(
+        Radius.circular(radius),
+      ).toRRect(Offset.zero & size),
       Paint()..color = backgroundColor,
     );
 
@@ -242,7 +244,9 @@ class _CapacityCellPainter extends CustomPainter {
 
     /// Draw border
     canvas.drawRRect(
-      BorderRadius.circular(radius).toRRect(Offset.zero & size),
+      const BorderRadius.all(
+        Radius.circular(radius),
+      ).toRRect(Offset.zero & size),
       Paint()
         ..color = borderColor
         ..style = PaintingStyle.stroke

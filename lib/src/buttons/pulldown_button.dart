@@ -1093,7 +1093,9 @@ class _DownCaretPainter extends CustomPainter {
 
     /// Draw background
     canvas.drawRRect(
-      BorderRadius.circular(radius).toRRect(Offset.zero & size),
+      const BorderRadius.all(
+        Radius.circular(radius),
+      ).toRRect(Offset.zero & size),
       Paint()..color = backgroundColor,
     );
 
