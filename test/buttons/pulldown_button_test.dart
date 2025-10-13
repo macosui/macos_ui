@@ -57,6 +57,48 @@ void main() {
       expect(mockOnPressedFunction.called, 2);
     });
 
+    testWidgets('MacosPulldownButton displays correctly items ',
+            (WidgetTester tester) async {
+          await tester.pumpWidget(MacosApp(
+            home: MacosWindow(
+              child: MacosScaffold(
+                children: [
+                  ContentArea(
+                    builder: (context, _) {
+                      return Center(
+                        child: MacosPulldownButton(
+                          title: "Menu",
+                          items: [
+                            MacosPulldownMenuItem(
+                              title: const Text('New folder'),
+                              onTap: () {},
+                            ),
+                            MacosPulldownMenuItem(
+                              title: const Text('Document'),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ));
+
+          // Verify that the title is rendered on the button.
+          expect(find.text('Menu'), findsOneWidget);
+
+          // tap on the button to open the pulldown menu.
+          await tester.tap(find.text('Menu'));
+          await tester.pumpAndSettle();
+
+          // Verify that the menu items are displayed.
+          expect(find.text('New folder'), findsOneWidget);
+          expect(find.text('Document'), findsOneWidget);
+        });
+
     testWidgets(
       'MacosPulldownButtonItems\' onTap callback is called when defined',
       (WidgetTester tester) async {

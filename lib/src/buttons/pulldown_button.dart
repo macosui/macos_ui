@@ -835,9 +835,9 @@ class _MacosPulldownButtonState extends State<MacosPulldownButton>
     );
 
     navigator.push(_pulldownRoute!).then<void>((_) {
+      if (!mounted) return;
       setState(() => _pullDownButtonState = PulldownButtonState.enabled);
       _removeMacosPulldownRoute();
-      if (!mounted) return;
     });
 
     widget.onTap?.call();

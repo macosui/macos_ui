@@ -1,3 +1,7 @@
+## [2.2.2]
+### 🛠 Fixed 🛠
+- Fixed setState called after dispose issue in MacosPulldownButton.
+
 ## [2.2.1]
 ### 🔄 Updated 🔄
 * Wrap toolbar items with `MacosToolbarPassthrough` to prevent window move or resize when interacting with toolbar items.
