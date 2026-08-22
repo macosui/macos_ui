@@ -195,18 +195,15 @@ class _MacosWindowState extends State<MacosWindow> {
     }
     final MacosThemeData theme = MacosTheme.of(context);
     late Color backgroundColor = widget.backgroundColor ?? theme.canvasColor;
-    late Color sidebarBackgroundColor;
+    late Color? sidebarBackgroundColor;
     late Color endSidebarBackgroundColor;
     Color dividerColor = theme.dividerColor;
 
     final isMac = !kIsWeb && defaultTargetPlatform == TargetPlatform.macOS;
 
     // Respect the sidebar color override from parent if one is given
-    if (sidebar?.decoration?.color != null) {
-      sidebarBackgroundColor = sidebar!.decoration!.color!;
-    } else {
-      sidebarBackgroundColor = MacosColors.transparent;
-    }
+    sidebarBackgroundColor =
+        sidebar?.decoration?.color ?? (kIsWeb ? theme.canvasColor : null);
 
     // Set the application window's brightness on macOS
     MacOSBrightnessOverrideHandler.ensureMatchingBrightness(theme.brightness);
@@ -264,7 +261,11 @@ class _MacosWindowState extends State<MacosWindow> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
-                  color: sidebarBackgroundColor,
+                  // The sidebar background is painted exactly once by the inner
+                  // ColoredBox (web) / DecoratedBox (macOS) below. Painting it
+                  // here too would blend a semi-transparent
+                  // Sidebar.decoration.color twice, making it darker than
+                  // requested.
                   constraints: BoxConstraints(
                     minWidth: sidebar.minWidth,
                     maxWidth: sidebar.maxWidth!,
@@ -273,7 +274,7 @@ class _MacosWindowState extends State<MacosWindow> {
                   ).normalize(),
                   child: kIsWeb
                       ? ColoredBox(
-                          color: theme.canvasColor,
+                          color: sidebarBackgroundColor ?? theme.canvasColor,
                           child: Column(
                             children: [
                               // If an app is running on macOS, apply
@@ -326,10 +327,12 @@ class _MacosWindowState extends State<MacosWindow> {
                       : TransparentMacOSSidebar(
                           state: sidebarState,
                           child: DecoratedBox(
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(0, 0, 0, 1.0),
-                              backgroundBlendMode: BlendMode.clear,
-                            ),
+                            decoration:
+                                (sidebar.decoration ?? const BoxDecoration())
+                                    .copyWith(
+                                      // Only paint if the caller set a color; null preserves native transparency.
+                                      color: sidebarBackgroundColor,
+                                    ),
                             child: Column(
                               children: [
                                 // If an app is running on macOS, apply

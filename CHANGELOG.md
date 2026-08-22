@@ -1,3 +1,7 @@
+## [2.2.3]
+### 🛠 Fixed 🛠
+- Fixed sidebar background painting when wallpaper tinting is disabled: the macOS sidebar now stays transparent unless a decoration color is provided (previously showed a black strip). Addresses #587.
+
 ## [2.2.2]
 ### 🛠 Fixed 🛠
 - Fixed setState called after dispose issue in MacosPulldownButton.

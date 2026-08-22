@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:macos_window_utils/widgets/transparent_macos_sidebar.dart';
 
 void main() {
   group('MacosWindow', () {
@@ -15,6 +16,7 @@ void main() {
         bool dragClosed = true,
         double? dragClosedBuffer,
         double? snapToStartBuffer,
+        BoxDecoration? decoration,
       }) {
         return Sidebar(
           builder: (context, scrollController) => const Text('Hello there'),
@@ -24,6 +26,7 @@ void main() {
           dragClosed: dragClosed,
           dragClosedBuffer: dragClosedBuffer,
           snapToStartBuffer: snapToStartBuffer,
+          decoration: decoration,
         );
       }
 
@@ -53,6 +56,50 @@ void main() {
         );
         expect(tester.widget<AnimatedPositioned>(backgroundFinder).left, 0);
       }
+
+      // The sidebar background is painted by the DecoratedBox inside the
+      // TransparentMacOSSidebar. Grabbing its decoration lets us assert what
+      // color (if any) is painted for the sidebar.
+      BoxDecoration sidebarDecoration(WidgetTester tester) {
+        final decoratedBox = tester.widget<DecoratedBox>(
+          find
+              .descendant(
+                of: find.byType(TransparentMacOSSidebar),
+                matching: find.byType(DecoratedBox),
+              )
+              .first,
+        );
+        return decoratedBox.decoration as BoxDecoration;
+      }
+
+      group('background', () {
+        testWidgets(
+          'stays transparent when no decoration color is provided, so the '
+          'native sidebar material shows through',
+          (tester) async {
+            await tester.pumpWidget(viewBuilder(sidebarBuilder()));
+
+            expect(sidebarDecoration(tester).color, isNull);
+
+            await tester.pump(Duration.zero);
+          },
+        );
+
+        testWidgets('is painted with the provided Sidebar.decoration color', (
+          tester,
+        ) async {
+          const color = MacosColors.systemBlueColor;
+          await tester.pumpWidget(
+            viewBuilder(
+              sidebarBuilder(decoration: const BoxDecoration(color: color)),
+            ),
+          );
+
+          expect(sidebarDecoration(tester).color, color);
+
+          await tester.pump(Duration.zero);
+        });
+      });
 
       testWidgets('initial width equals startWidth', (tester) async {
         final sidebar = sidebarBuilder();
