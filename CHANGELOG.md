@@ -1,3 +1,7 @@
+## [2.2.4]
+### 🛠 Fixed 🛠
+- A hidden `Sidebar` now stays out of sight and out of input. A hidden start sidebar (below `windowBreakpoint`, toggled off, or drag-closed) slides off-screen like the end sidebar; previously it stayed at the window's leading edge beneath the content, visible wherever the content paints no background. While hidden, neither sidebar takes pointer, focus or semantics; previously a hidden end sidebar could still receive keyboard focus. Addresses #593.
+
 ## [2.2.3]
 ### 🛠 Fixed 🛠
 - Fixed sidebar background painting when wallpaper tinting is disabled: the macOS sidebar now stays transparent unless a decoration color is provided (previously showed a black strip). Addresses #587.

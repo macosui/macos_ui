@@ -257,132 +257,148 @@ class _MacosWindowState extends State<MacosWindow> {
                 curve: curve,
                 duration: duration,
                 height: height,
+                // A hidden sidebar slides off the leading edge, as the end
+                // sidebar slides off the trailing one, and takes no pointer,
+                // focus or semantics. Left at x = 0 it stayed visible
+                // wherever the content paints nothing, and reachable.
+                left: visibleSidebarWidth - _sidebarWidth,
                 width: _sidebarWidth,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  // The sidebar background is painted exactly once by the inner
-                  // ColoredBox (web) / DecoratedBox (macOS) below. Painting it
-                  // here too would blend a semi-transparent
-                  // Sidebar.decoration.color twice, making it darker than
-                  // requested.
-                  constraints: BoxConstraints(
-                    minWidth: sidebar.minWidth,
-                    maxWidth: sidebar.maxWidth!,
-                    minHeight: height,
-                    maxHeight: height,
-                  ).normalize(),
-                  child: kIsWeb
-                      ? ColoredBox(
-                          color: sidebarBackgroundColor ?? theme.canvasColor,
-                          child: Column(
-                            children: [
-                              // If an app is running on macOS, apply
-                              // sidebar.topOffset as needed in order to avoid
-                              // the traffic lights. Otherwise, position the
-                              // sidebar by the top of the application's bounds
-                              // based on the presence of sidebar.top.
-                              if (!kIsWeb && sidebar.topOffset > 0) ...[
-                                SizedBox(height: sidebar.topOffset),
-                              ] else if (sidebar.top != null) ...[
-                                const SizedBox(height: 12),
-                              ] else
-                                const SizedBox.shrink(),
-                              if (_sidebarScrollController.hasClients &&
-                                  _sidebarScrollController.offset > 0.0)
-                                Divider(
-                                  thickness: 1,
-                                  height: 1,
-                                  color: dividerColor,
-                                ),
-                              if (sidebar.top != null &&
-                                  constraints.maxHeight > 81)
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0,
-                                  ),
-                                  child: sidebar.top!,
-                                ),
-                              Expanded(
-                                child: MacosScrollbar(
-                                  controller: _sidebarScrollController,
-                                  child: Padding(
-                                    padding: sidebar.padding,
-                                    child: sidebar.builder(
-                                      context,
-                                      _sidebarScrollController,
+                child: IgnorePointer(
+                  ignoring: !canShowSidebar,
+                  child: ExcludeFocus(
+                    excluding: !canShowSidebar,
+                    child: ExcludeSemantics(
+                      excluding: !canShowSidebar,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        // The sidebar background is painted exactly once by the inner
+                        // ColoredBox (web) / DecoratedBox (macOS) below. Painting it
+                        // here too would blend a semi-transparent
+                        // Sidebar.decoration.color twice, making it darker than
+                        // requested.
+                        constraints: BoxConstraints(
+                          minWidth: sidebar.minWidth,
+                          maxWidth: sidebar.maxWidth!,
+                          minHeight: height,
+                          maxHeight: height,
+                        ).normalize(),
+                        child: kIsWeb
+                            ? ColoredBox(
+                                color:
+                                    sidebarBackgroundColor ?? theme.canvasColor,
+                                child: Column(
+                                  children: [
+                                    // If an app is running on macOS, apply
+                                    // sidebar.topOffset as needed in order to avoid
+                                    // the traffic lights. Otherwise, position the
+                                    // sidebar by the top of the application's bounds
+                                    // based on the presence of sidebar.top.
+                                    if (!kIsWeb && sidebar.topOffset > 0) ...[
+                                      SizedBox(height: sidebar.topOffset),
+                                    ] else if (sidebar.top != null) ...[
+                                      const SizedBox(height: 12),
+                                    ] else
+                                      const SizedBox.shrink(),
+                                    if (_sidebarScrollController.hasClients &&
+                                        _sidebarScrollController.offset > 0.0)
+                                      Divider(
+                                        thickness: 1,
+                                        height: 1,
+                                        color: dividerColor,
+                                      ),
+                                    if (sidebar.top != null &&
+                                        constraints.maxHeight > 81)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0,
+                                        ),
+                                        child: sidebar.top!,
+                                      ),
+                                    Expanded(
+                                      child: MacosScrollbar(
+                                        controller: _sidebarScrollController,
+                                        child: Padding(
+                                          padding: sidebar.padding,
+                                          child: sidebar.builder(
+                                            context,
+                                            _sidebarScrollController,
+                                          ),
+                                        ),
+                                      ),
                                     ),
+                                    if (sidebar.bottom != null &&
+                                        constraints.maxHeight > 141)
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: sidebar.bottom!,
+                                      ),
+                                  ],
+                                ),
+                              )
+                            : TransparentMacOSSidebar(
+                                state: sidebarState,
+                                child: DecoratedBox(
+                                  decoration:
+                                      (sidebar.decoration ??
+                                              const BoxDecoration())
+                                          .copyWith(
+                                            // Only paint if the caller set a color; null preserves native transparency.
+                                            color: sidebarBackgroundColor,
+                                          ),
+                                  child: Column(
+                                    children: [
+                                      // If an app is running on macOS, apply
+                                      // sidebar.topOffset as needed in order to avoid
+                                      // the traffic lights. Otherwise, position the
+                                      // sidebar by the top of the application's bounds
+                                      // based on the presence of sidebar.top.
+                                      if (!kIsWeb && sidebar.topOffset > 0) ...[
+                                        SizedBox(height: sidebar.topOffset),
+                                      ] else if (sidebar.top != null) ...[
+                                        const SizedBox(height: 12),
+                                      ] else
+                                        const SizedBox.shrink(),
+                                      if (_sidebarScrollController.hasClients &&
+                                          _sidebarScrollController.offset > 0.0)
+                                        Divider(
+                                          thickness: 1,
+                                          height: 1,
+                                          color: dividerColor,
+                                        ),
+                                      if (sidebar.top != null &&
+                                          constraints.maxHeight > 81)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0,
+                                          ),
+                                          child: sidebar.top!,
+                                        ),
+                                      Expanded(
+                                        child: MacosScrollbar(
+                                          controller: _sidebarScrollController,
+                                          child: Padding(
+                                            padding: sidebar.padding,
+                                            child: sidebar.builder(
+                                              context,
+                                              _sidebarScrollController,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      if (sidebar.bottom != null &&
+                                          constraints.maxHeight > 141)
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: sidebar.bottom!,
+                                        ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              if (sidebar.bottom != null &&
-                                  constraints.maxHeight > 141)
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: sidebar.bottom!,
-                                ),
-                            ],
-                          ),
-                        )
-                      : TransparentMacOSSidebar(
-                          state: sidebarState,
-                          child: DecoratedBox(
-                            decoration:
-                                (sidebar.decoration ?? const BoxDecoration())
-                                    .copyWith(
-                                      // Only paint if the caller set a color; null preserves native transparency.
-                                      color: sidebarBackgroundColor,
-                                    ),
-                            child: Column(
-                              children: [
-                                // If an app is running on macOS, apply
-                                // sidebar.topOffset as needed in order to avoid
-                                // the traffic lights. Otherwise, position the
-                                // sidebar by the top of the application's bounds
-                                // based on the presence of sidebar.top.
-                                if (!kIsWeb && sidebar.topOffset > 0) ...[
-                                  SizedBox(height: sidebar.topOffset),
-                                ] else if (sidebar.top != null) ...[
-                                  const SizedBox(height: 12),
-                                ] else
-                                  const SizedBox.shrink(),
-                                if (_sidebarScrollController.hasClients &&
-                                    _sidebarScrollController.offset > 0.0)
-                                  Divider(
-                                    thickness: 1,
-                                    height: 1,
-                                    color: dividerColor,
-                                  ),
-                                if (sidebar.top != null &&
-                                    constraints.maxHeight > 81)
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
-                                    ),
-                                    child: sidebar.top!,
-                                  ),
-                                Expanded(
-                                  child: MacosScrollbar(
-                                    controller: _sidebarScrollController,
-                                    child: Padding(
-                                      padding: sidebar.padding,
-                                      child: sidebar.builder(
-                                        context,
-                                        _sidebarScrollController,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                if (sidebar.bottom != null &&
-                                    constraints.maxHeight > 141)
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: sidebar.bottom!,
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
 
@@ -484,51 +500,66 @@ class _MacosWindowState extends State<MacosWindow> {
                 duration: duration,
                 height: height,
                 width: _endSidebarWidth,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  color: endSidebarBackgroundColor,
-                  constraints: BoxConstraints(
-                    minWidth: endSidebar.minWidth,
-                    maxWidth: endSidebar.maxWidth!,
-                    minHeight: height,
-                    maxHeight: height,
-                  ).normalize(),
-                  child: WallpaperTintedArea(
-                    backgroundColor: endSidebarBackgroundColor,
-                    insertRepaintBoundary: true,
-                    child: Column(
-                      children: [
-                        if (endSidebar.topOffset > 0)
-                          SizedBox(height: endSidebar.topOffset),
-                        if (_endSidebarScrollController.hasClients &&
-                            _endSidebarScrollController.offset > 0.0)
-                          Divider(thickness: 1, height: 1, color: dividerColor),
-                        if (endSidebar.top != null)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                            ),
-                            child: endSidebar.top!,
-                          ),
-                        Expanded(
-                          child: MacosScrollbar(
-                            controller: _endSidebarScrollController,
-                            child: Padding(
-                              padding: endSidebar.padding,
-                              child: endSidebar.builder(
-                                context,
-                                _endSidebarScrollController,
+                // Off-screen alone does not keep a hidden sidebar out of
+                // focus traversal.
+                child: IgnorePointer(
+                  ignoring: !canShowEndSidebar,
+                  child: ExcludeFocus(
+                    excluding: !canShowEndSidebar,
+                    child: ExcludeSemantics(
+                      excluding: !canShowEndSidebar,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        color: endSidebarBackgroundColor,
+                        constraints: BoxConstraints(
+                          minWidth: endSidebar.minWidth,
+                          maxWidth: endSidebar.maxWidth!,
+                          minHeight: height,
+                          maxHeight: height,
+                        ).normalize(),
+                        child: WallpaperTintedArea(
+                          backgroundColor: endSidebarBackgroundColor,
+                          insertRepaintBoundary: true,
+                          child: Column(
+                            children: [
+                              if (endSidebar.topOffset > 0)
+                                SizedBox(height: endSidebar.topOffset),
+                              if (_endSidebarScrollController.hasClients &&
+                                  _endSidebarScrollController.offset > 0.0)
+                                Divider(
+                                  thickness: 1,
+                                  height: 1,
+                                  color: dividerColor,
+                                ),
+                              if (endSidebar.top != null)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
+                                  child: endSidebar.top!,
+                                ),
+                              Expanded(
+                                child: MacosScrollbar(
+                                  controller: _endSidebarScrollController,
+                                  child: Padding(
+                                    padding: endSidebar.padding,
+                                    child: endSidebar.builder(
+                                      context,
+                                      _endSidebarScrollController,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                              if (endSidebar.bottom != null)
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: endSidebar.bottom!,
+                                ),
+                            ],
                           ),
                         ),
-                        if (endSidebar.bottom != null)
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: endSidebar.bottom!,
-                          ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
