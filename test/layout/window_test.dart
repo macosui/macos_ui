@@ -343,5 +343,308 @@ void main() {
         );
       });
     });
+
+    group('a hidden start sidebar is off-screen and out of input', () {
+      const probeKey = Key('sidebar probe');
+      const probeLabel = 'sidebar probe';
+      late FocusNode probeFocus;
+      late BuildContext contentContext;
+
+      setUp(() => probeFocus = FocusNode(debugLabel: probeLabel));
+      tearDown(() => probeFocus.dispose());
+
+      final sidebarFinder = find.byType(AnimatedPositioned).at(1);
+      final resizerFinder = find.byType(AnimatedPositioned).at(3);
+
+      // The content paints nothing, as a ContentArea does, so anything the
+      // sidebar leaves beneath it shows through.
+      pumpWindow(WidgetTester tester, {double width = 1000}) async {
+        tester.view.physicalSize = Size(width, 600);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              disableWallpaperTinting: true,
+              sidebar: Sidebar(
+                minWidth: 100,
+                startWidth: 150,
+                maxWidth: 300,
+                windowBreakpoint: 700,
+                builder: (context, scrollController) => Focus(
+                  focusNode: probeFocus,
+                  child: Semantics(
+                    label: probeLabel,
+                    // A ColoredBox takes hits; a childless SizedBox never
+                    // does, so it could not show whether the sidebar does.
+                    child: const ColoredBox(
+                      key: probeKey,
+                      color: MacosColors.systemRedColor,
+                      child: SizedBox.expand(),
+                    ),
+                  ),
+                ),
+              ),
+              child: ContentArea(
+                builder: (context, scrollController) {
+                  contentContext = context;
+                  return const SizedBox.expand();
+                },
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+      }
+
+      // find.semantics searches the live tree; find.bySemanticsLabel can
+      // still report a node after it has been excluded.
+      expectHidden(WidgetTester tester) {
+        expect(
+          tester.getRect(find.byKey(probeKey)).right,
+          lessThanOrEqualTo(0),
+        );
+        expect(find.byKey(probeKey).hitTestable(), findsNothing);
+        expect(probeFocus.canRequestFocus, isFalse);
+        expect(find.semantics.byLabel(probeLabel), findsNothing);
+      }
+
+      expectShown(WidgetTester tester) {
+        expect(
+          tester.getRect(sidebarFinder),
+          const Rect.fromLTWH(0, 0, 150, 600),
+        );
+        expect(find.byKey(probeKey).hitTestable(), findsOneWidget);
+        expect(probeFocus.canRequestFocus, isTrue);
+        expect(find.semantics.byLabel(probeLabel), findsOne);
+      }
+
+      testWidgets('a shown sidebar is on-screen and takes input', (
+        tester,
+      ) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        expectShown(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('below windowBreakpoint', (tester) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester, width: 600);
+
+        expectHidden(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('toggled off, and shown again when toggled back on', (
+        tester,
+      ) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        MacosWindowScope.of(contentContext).toggleSidebar();
+        await tester.pumpAndSettle();
+
+        expectHidden(tester);
+
+        MacosWindowScope.of(contentContext).toggleSidebar();
+        await tester.pumpAndSettle();
+
+        expectShown(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('takes no input while it slides away', (tester) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        MacosWindowScope.of(contentContext).toggleSidebar();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 50));
+
+        final rect = tester.getRect(find.byKey(probeKey));
+        expect(rect.left, lessThan(0));
+        expect(rect.left + rect.width * 0.95, greaterThan(0));
+        expect(
+          find.byKey(probeKey).hitTestable(at: const Alignment(0.9, 0)),
+          findsNothing,
+        );
+        expect(find.semantics.byLabel(probeLabel), findsNothing);
+
+        await tester.pumpAndSettle();
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('dragged closed', (tester) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        await tester.drag(resizerFinder, const Offset(-500, 0));
+        await tester.pumpAndSettle();
+
+        expectHidden(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+    });
+
+    group('a hidden end sidebar is out of input', () {
+      const endSidebarKey = Key('end sidebar');
+      const probeKey = Key('end sidebar probe');
+      const probeLabel = 'end sidebar probe';
+      late FocusNode probeFocus;
+      late BuildContext contentContext;
+
+      setUp(() => probeFocus = FocusNode(debugLabel: probeLabel));
+      tearDown(() => probeFocus.dispose());
+
+      final endSidebarFinder = find.byKey(endSidebarKey);
+      final resizerFinder = find.byType(AnimatedPositioned).last;
+
+      pumpWindow(WidgetTester tester, {double width = 1000}) async {
+        tester.view.physicalSize = Size(width, 600);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          MacosApp(
+            home: MacosWindow(
+              disableWallpaperTinting: true,
+              endSidebar: Sidebar(
+                key: endSidebarKey,
+                minWidth: 100,
+                startWidth: 150,
+                maxWidth: 300,
+                windowBreakpoint: 700,
+                shownByDefault: true,
+                builder: (context, scrollController) => Focus(
+                  focusNode: probeFocus,
+                  child: Semantics(
+                    label: probeLabel,
+                    child: const ColoredBox(
+                      key: probeKey,
+                      color: MacosColors.systemRedColor,
+                      child: SizedBox.expand(),
+                    ),
+                  ),
+                ),
+              ),
+              child: ContentArea(
+                builder: (context, scrollController) {
+                  contentContext = context;
+                  return const SizedBox.expand();
+                },
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+      }
+
+      expectHidden(WidgetTester tester, {double windowWidth = 1000}) {
+        expect(
+          tester.getRect(find.byKey(probeKey)).left,
+          greaterThanOrEqualTo(windowWidth),
+        );
+        expect(find.byKey(probeKey).hitTestable(), findsNothing);
+        expect(probeFocus.canRequestFocus, isFalse);
+        expect(find.semantics.byLabel(probeLabel), findsNothing);
+      }
+
+      expectShown(WidgetTester tester) {
+        expect(
+          tester.getRect(endSidebarFinder),
+          const Rect.fromLTWH(850, 0, 150, 600),
+        );
+        expect(find.byKey(probeKey).hitTestable(), findsOneWidget);
+        expect(probeFocus.canRequestFocus, isTrue);
+        expect(find.semantics.byLabel(probeLabel), findsOne);
+      }
+
+      testWidgets('a shown end sidebar is on-screen and takes input', (
+        tester,
+      ) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        expectShown(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('below windowBreakpoint', (tester) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester, width: 600);
+
+        expectHidden(tester, windowWidth: 600);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('toggled off, and shown again when toggled back on', (
+        tester,
+      ) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        MacosWindowScope.of(contentContext).toggleEndSidebar();
+        await tester.pumpAndSettle();
+
+        expectHidden(tester);
+
+        MacosWindowScope.of(contentContext).toggleEndSidebar();
+        await tester.pumpAndSettle();
+
+        expectShown(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('takes no input while it slides away', (tester) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        MacosWindowScope.of(contentContext).toggleEndSidebar();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 50));
+
+        final rect = tester.getRect(find.byKey(probeKey));
+        expect(rect.right, greaterThan(1000));
+        expect(rect.left + rect.width * 0.05, lessThan(1000));
+        expect(
+          find.byKey(probeKey).hitTestable(at: const Alignment(-0.9, 0)),
+          findsNothing,
+        );
+        expect(find.semantics.byLabel(probeLabel), findsNothing);
+
+        await tester.pumpAndSettle();
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+
+      testWidgets('dragged closed', (tester) async {
+        final semantics = tester.ensureSemantics();
+        await pumpWindow(tester);
+
+        await tester.drag(resizerFinder, const Offset(500, 0));
+        await tester.pumpAndSettle();
+
+        expectHidden(tester);
+
+        semantics.dispose();
+        await tester.pump(Duration.zero);
+      });
+    });
   });
 }
