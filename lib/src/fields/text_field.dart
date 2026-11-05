@@ -283,6 +283,7 @@ class MacosTextField extends StatefulWidget {
     this.cursorHeight,
     this.cursorRadius = const Radius.circular(2.0),
     this.cursorColor,
+    this.selectionColor,
     this.selectionHeightStyle = ui.BoxHeightStyle.tight,
     this.selectionWidthStyle = ui.BoxWidthStyle.tight,
     this.keyboardAppearance,
@@ -407,6 +408,7 @@ class MacosTextField extends StatefulWidget {
     this.cursorHeight,
     this.cursorRadius = const Radius.circular(2.0),
     this.cursorColor,
+    this.selectionColor,
     this.selectionHeightStyle = ui.BoxHeightStyle.tight,
     this.selectionWidthStyle = ui.BoxWidthStyle.tight,
     this.keyboardAppearance,
@@ -684,6 +686,13 @@ class MacosTextField extends StatefulWidget {
   /// and [CupertinoColors.activeOrange] in the dark theme.
   final Color? cursorColor;
 
+  /// The color of the selection highlight.
+  ///
+  /// Defaults to an opaque tint of the accent color, close to the one macOS
+  /// paints behind selected text (`NSColor.selectedTextBackgroundColor`) in the
+  /// light and in the dark appearance.
+  final Color? selectionColor;
+
   /// Controls how tall the selection highlight boxes are computed to be.
   ///
   /// See [ui.BoxHeightStyle] for details on available styles.
@@ -864,6 +873,13 @@ class MacosTextField extends StatefulWidget {
       createCupertinoColorProperty(
         'cursorColor',
         cursorColor,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      createCupertinoColorProperty(
+        'selectionColor',
+        selectionColor,
         defaultValue: null,
       ),
     );
@@ -1186,6 +1202,18 @@ class _MacosTextFieldState extends State<MacosTextField>
     );
   }
 
+  /// An opaque selection color derived from [accent], like the one macOS
+  /// paints behind selected text: a light tint of the accent over white in the
+  /// light appearance, a muted one over gray in the dark appearance. With the
+  /// blue accent they come out as `#B3D7FF` and about `#3F638B`, the system's
+  /// own values.
+  static Color _defaultSelectionColor(Color accent, Brightness brightness) {
+    final base = brightness.isDark
+        ? const Color(0xFF5A5A5A)
+        : const Color(0xFFFFFFFF);
+    return Color.lerp(base, accent.withValues(alpha: 1), 0.3)!;
+  }
+
   Color? _resolveAccentColor(BuildContext context, AccentColor? accentColor) {
     if (accentColor == null) {
       return null;
@@ -1442,9 +1470,16 @@ class _MacosTextFieldState extends State<MacosTextField>
           color: focusedDecoration.color ?? const Color(0x00000000),
         );
 
-        final Color selectionColor = MacosTheme.of(
-          context,
-        ).primaryColor.withValues(alpha: 0.2);
+        final Color selectionColor =
+            MacosDynamicColor.maybeResolve(widget.selectionColor, context) ??
+            _defaultSelectionColor(
+              _resolveAccentColor(
+                    context,
+                    AccentColorListener.instance.currentAccentColor,
+                  ) ??
+                  themeData.primaryColor,
+              themeData.brightness,
+            );
 
         final Widget paddedEditable = Padding(
           padding: widget.padding,
