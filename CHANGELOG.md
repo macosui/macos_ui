@@ -1,3 +1,10 @@
+## [2.3.0]
+### ✨ New ✨
+- `MacosTextField.selectionColor` sets the color of the selection highlight.
+
+### 🔄 Updated 🔄
+- The default selection highlight of `MacosTextField` is an opaque tint of the accent color, close to the one macOS paints behind selected text, instead of the accent at 20% opacity, which was hard to read in the dark appearance.
+
 ## [2.2.3]
 ### 🛠 Fixed 🛠
 - Fixed sidebar background painting when wallpaper tinting is disabled: the macOS sidebar now stays transparent unless a decoration color is provided (previously showed a black strip). Addresses #587.
