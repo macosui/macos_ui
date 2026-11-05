@@ -1,5 +1,6 @@
 ## [2.2.3]
 ### 🛠 Fixed 🛠
+- Fixed shift-click in `MacosTextField` on desktop platforms: the selection it extends is no longer collapsed when the mouse button is released.
 - Fixed sidebar background painting when wallpaper tinting is disabled: the macOS sidebar now stays transparent unless a decoration color is provided (previously showed a black strip). Addresses #587.
 
 ## [2.2.2]

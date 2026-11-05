@@ -121,7 +121,18 @@ class _TextFieldSelectionGestureDetectorBuilder
         return;
       }
     }
-    if (delegate.selectionEnabled) {
+    // On desktop platforms the selection is set on tap down, where a
+    // shift-click extends it: placing the caret again on tap up would collapse
+    // that selection as soon as the mouse button is released.
+    final isDesktop = switch (defaultTargetPlatform) {
+      TargetPlatform.macOS ||
+      TargetPlatform.linux ||
+      TargetPlatform.windows => true,
+      TargetPlatform.android ||
+      TargetPlatform.fuchsia ||
+      TargetPlatform.iOS => false,
+    };
+    if (delegate.selectionEnabled && !isDesktop) {
       renderEditable.selectPosition(cause: SelectionChangedCause.tap);
     }
     _state._requestKeyboard();
